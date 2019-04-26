@@ -1,10 +1,12 @@
-# Reactify
+# Everyday
 
-> A material design reactjs admin template
+> A system for your everyday needs
+
+> A Project by OC Digital
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 
@@ -14,5 +16,3 @@ npm start
 # build for production with minification
 npm run build
 ```
-
-For a detailed explanation on how things work, check out the [guide](https://github.com/facebook/create-react-app).

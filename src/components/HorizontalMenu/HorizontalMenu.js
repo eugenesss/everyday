@@ -1,0 +1,94 @@
+/**
+ * Horizontal Menu
+ */
+import React, { Component } from "react";
+
+import { NavLink } from "react-router-dom";
+import navLinks from "./NavLinks";
+
+import NavMenuItem from "./NavMenuItem";
+
+class HorizontalMenu extends Component {
+  render() {
+    return (
+      <div className="horizontal-menu">
+        <ul className="list-unstyled nav">
+          <li className="nav-item">
+            <NavLink
+              to="/app/dashboard/"
+              className="nav-link no-arrow"
+              activeClassName="active"
+            >
+              <i className="zmdi zmdi-view-dashboard" />
+              Dashboard
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <a href="javascript:void(0);" className="nav-link">
+              <i className="zmdi zmdi-group-work" />
+              <span className="menu-title">CRM</span>
+            </a>
+            <ul className="list-unstyled sub-menu">
+              {navLinks.crm.map((menu, key) => (
+                <NavMenuItem menu={menu} key={key} />
+              ))}
+            </ul>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              to="/app/proj/"
+              className="nav-link no-arrow"
+              activeClassName="active"
+            >
+              <i className="zmdi zmdi-roller" />
+              Project Management
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <a href="javascript:void(0);" className="nav-link">
+              <i className="zmdi zmdi-money" />
+              <span className="menu-title">Accounting</span>
+            </a>
+            <ul className="list-unstyled sub-menu">
+              {navLinks.account.map((menu, key) => (
+                <NavMenuItem menu={menu} key={key} />
+              ))}
+            </ul>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              to="/app/report/"
+              className="nav-link no-arrow"
+              activeClassName="active"
+            >
+              <i className="zmdi zmdi-chart" />
+              Reports
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              to="/app/task/"
+              className="nav-link no-arrow"
+              activeClassName="active"
+            >
+              <i className="zmdi zmdi-assignment-o" />
+              Tasks
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              to="/app/reminder/"
+              className="nav-link no-arrow"
+              activeClassName="active"
+            >
+              <i className="zmdi zmdi-notifications-none" />
+              Reminders
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+    );
+  }
+}
+
+export default HorizontalMenu;
