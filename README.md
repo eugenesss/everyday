@@ -1,8 +1,8 @@
 # Everyday
 
-> A system for your everyday needs
+#### A Project by OC Digital
 
-> A Project by OC Digital
+> A system for your everyday needs
 
 ## Build Setup
 
