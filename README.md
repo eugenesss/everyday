@@ -1,7 +1,5 @@
 # Everyday
 
-#### A Project by OC Digital
-
 > A system for your everyday needs
 
 ## Build Setup
@@ -16,3 +14,5 @@ npm start
 # build for production with minification
 npm run build
 ```
+
+A Project by OC Digital
