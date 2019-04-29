@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { show } from "redux-modal";
+//import { show } from "redux-modal";
 
 //Component Req
 import MUIDataTable from "mui-datatables";
@@ -13,14 +13,9 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import NumberFormat from "react-number-format";
 import Moment from "moment";
 
-import { getMyDeal } from "Actions";
-
 class MyDealsList extends Component {
-  constructor(props) {
-    super(props);
-  }
-  componentWillMount() {
-    this.props.getMyDeal();
+  componentDidMount() {
+    // this.props.getMyDeal();
   }
   refresh() {
     this.props.getMyDeal();
@@ -53,7 +48,7 @@ class MyDealsList extends Component {
   }
   render() {
     const { myDeal, myDealLoading } = this.props;
-    const data = myDeal.map(deal => this.convertData(deal));
+    const data = myDeal && myDeal.map(deal => this.convertData(deal));
     const columns = [
       {
         name: "DealID",
@@ -228,6 +223,6 @@ const mapStateToProps = ({ deal }) => {
   return { myDeal, myDealLoading };
 };
 export default connect(
-  mapStateToProps,
-  { getMyDeal, show }
+  null,
+  {}
 )(MyDealsList);

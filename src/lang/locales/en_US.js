@@ -1,9 +1,35 @@
 module.exports = {
-  "sidebar.app": "App",
-  "sidebar.acct": "Accounting",
+  "sidebar.app": "app",
+  "sidebar.homebase": "Homebase",
+
+  "sidebar.crm": "CRM",
   "sidebar.leads": "Leads",
+  "sidebar.lead": "Lead",
+  "sidebar.newLead": "New Lead",
   "sidebar.customers": "Customers",
+  "sidebar.customer": "Customer",
+  "sidebar.newCustomer": "New Customer",
   "sidebar.accounts": "Accounts",
+  "sidebar.account": "Account",
+  "sidebar.newAccount": "New Account",
+  "sidebar.deals": "Deals",
+  "sidebar.deal": "Deal",
+  "sidebar.newDeal": "New Deal",
+
+  "sidebar.proj": "Project Management",
+
+  "sidebar.acct": "Accounting",
+  "sidebar.quotations": "Quotations",
+  "sidebar.quotation": "Quotation",
+  "sidebar.newQuotation": "New Quotation",
+  "sidebar.invoices": "Invoices",
+  "sidebar.invoice": "Invoice",
+  "sidebar.newInvoice": "New Invoice",
+  "sidebar.credit_note": "Credit Note",
+  "sidebar.newCredit_note": "New Credit Note",
+
+  "sidebar.reports": "Reports",
+  "sidebar.reminders": "Reminders",
 
   "sidebar.news": "News",
   "sidebar.horizontal": "Horizontal",
@@ -23,7 +49,6 @@ module.exports = {
   "sidebar.pricing": "Pricing",
   "sidebar.terms&Conditions": "Terms & Conditions",
   "sidebar.feedback": "Feedback",
-  "sidebar.report": "Report",
   "sidebar.faq(s)": "Faq(s)",
   "sidebar.advancedComponent": "Advance Component",
   "sidebar.blank": "Blank",
@@ -117,7 +142,7 @@ module.exports = {
   "sidebar.marketCap": "Market cap",
   "sidebar.wallet": "wallet",
   "sidebar.trade": "trade",
-  "sidebar.crm": "CRM",
+
   "sidebar.dashboard": "dashboard",
   "widgets.totalEarns": "Total Earns",
   "widgets.emailsStatistics": "Emails Statistics",
@@ -770,6 +795,5 @@ module.exports = {
   "widgets.LiveChatSupport": "Live Chat Support",
   "sidebar.projects": "projects",
   "sidebar.projectDetail": "project Detail",
-  "sidebar.clients": "clients",
-  "sidebar.reports": "reports"
+  "sidebar.clients": "clients"
 };

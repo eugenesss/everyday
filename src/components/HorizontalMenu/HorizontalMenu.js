@@ -15,17 +15,17 @@ class HorizontalMenu extends Component {
         <ul className="list-unstyled nav">
           <li className="nav-item">
             <NavLink
-              to="/app/dashboard/"
+              to="/app/homebase/"
               className="nav-link no-arrow"
               activeClassName="active"
             >
-              <i className="zmdi zmdi-view-dashboard" />
-              Dashboard
+              <i className="zmdi zmdi-home text-danger" />
+              Homebase
             </NavLink>
           </li>
           <li className="nav-item">
             <a href="javascript:void(0);" className="nav-link">
-              <i className="zmdi zmdi-group-work" />
+              <i className="zmdi zmdi-group-work text-primary" />
               <span className="menu-title">CRM</span>
             </a>
             <ul className="list-unstyled sub-menu">
@@ -36,6 +36,16 @@ class HorizontalMenu extends Component {
           </li>
           <li className="nav-item">
             <NavLink
+              to="/app/reminders/"
+              className="nav-link no-arrow"
+              activeClassName="active"
+            >
+              <i className="zmdi zmdi-notifications-none text-warning" />
+              Reminders
+            </NavLink>
+          </li>
+          {/* <li className="nav-item">
+            <NavLink
               to="/app/proj/"
               className="nav-link no-arrow"
               activeClassName="active"
@@ -43,10 +53,10 @@ class HorizontalMenu extends Component {
               <i className="zmdi zmdi-roller" />
               Project Management
             </NavLink>
-          </li>
+          </li> */}
           <li className="nav-item">
             <a href="javascript:void(0);" className="nav-link">
-              <i className="zmdi zmdi-money" />
+              <i className="zmdi zmdi-money text-success" />
               <span className="menu-title">Accounting</span>
             </a>
             <ul className="list-unstyled sub-menu">
@@ -57,34 +67,24 @@ class HorizontalMenu extends Component {
           </li>
           <li className="nav-item">
             <NavLink
-              to="/app/report/"
+              to="/app/reports/"
               className="nav-link no-arrow"
               activeClassName="active"
             >
-              <i className="zmdi zmdi-chart" />
+              <i className="zmdi zmdi-chart text-info" />
               Reports
             </NavLink>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <NavLink
-              to="/app/task/"
+              to="/app/tasks/"
               className="nav-link no-arrow"
               activeClassName="active"
             >
               <i className="zmdi zmdi-assignment-o" />
               Tasks
             </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              to="/app/reminder/"
-              className="nav-link no-arrow"
-              activeClassName="active"
-            >
-              <i className="zmdi zmdi-notifications-none" />
-              Reminders
-            </NavLink>
-          </li>
+          </li> */}
         </ul>
       </div>
     );

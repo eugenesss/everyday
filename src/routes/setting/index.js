@@ -11,23 +11,25 @@ export default class settingSwitcher extends Component {
   render() {
     const { match } = this.props;
     return (
-      <Switch>
-        {/* ------- /All Setting Page ------- */}
-        <Route
-          exact
-          path={`${match.url}/`}
-          component={Async_setting_page_component}
-        />
-        {/* ------- /User Management ------- */}
-        <Route
-          exact
-          path={`${match.url}/user_management`}
-          component={Async_setting_user_component}
-        />
+      <div className="saas-dashboard">
+        <Switch>
+          {/* ------- /All Setting Page ------- */}
+          <Route
+            exact
+            path={`${match.url}/`}
+            component={Async_setting_page_component}
+          />
+          {/* ------- /User Management ------- */}
+          <Route
+            exact
+            path={`${match.url}/user_management`}
+            component={Async_setting_user_component}
+          />
 
-        {/* ------- /404 ------- */}
-        <Redirect to="/404" />
-      </Switch>
+          {/* ------- /404 ------- */}
+          <Redirect to="/404" />
+        </Switch>
+      </div>
     );
   }
 }

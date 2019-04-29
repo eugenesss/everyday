@@ -1,7 +1,7 @@
 {
-  "name": "ocrm",
+  "name": "everyday",
   "version": "0.0.0",
-  "description": "OC System",
+  "description": "Everday, a System for your Everyday Needs",
   "scripts": {
     "start": "webpack-dev-server --mode development --inline --progress",
     "build": "webpack --mode production"

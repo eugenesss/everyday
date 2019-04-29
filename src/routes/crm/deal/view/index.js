@@ -56,22 +56,9 @@ class crm_view_deal extends Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>CRM | View Deal</title>
+          <title>Everyday | View Deal</title>
         </Helmet>
-        <PageTitleBar
-          title="View Deal"
-          match={this.props.match}
-          backButton
-          addButton="/ocrm/crm/create/deals"
-          moreButton={{
-            edit: { modal: "EDIT_DEAL_MODAL", var: { dealToEdit: dealView } },
-            delete: {
-              title: "Delete Deal",
-              message: "Are you sure you wish to delete this Deal?",
-              action: this.handleDelete.bind(this)
-            }
-          }}
-        />
+        <PageTitleBar title="View Deal" match={this.props.match} />
         {loading ? (
           <FullPageLoader />
         ) : (

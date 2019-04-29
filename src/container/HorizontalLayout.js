@@ -14,7 +14,7 @@ class RctHorizontalApp extends Component {
   render() {
     const { match, location } = this.props;
     if (location.pathname === "/") {
-      return <Redirect to={"/app/dashboard"} />;
+      return <Redirect to={"/app/homebase"} />;
     }
     return (
       <RctHorizontalLayout>

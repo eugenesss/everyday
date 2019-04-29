@@ -1,118 +1,106 @@
-/**
- * Notification Component
- */
-import React, { Component } from "react";
-import { Scrollbars } from "react-custom-scrollbars";
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu } from "reactstrap";
+
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
-import { Badge } from "reactstrap";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 
-// api
-import api from "Api";
+import Moment from "moment";
+// import UserAvatar from "Components/User/UserAvatar";
+import { RctCard } from "Components/RctCard";
 
-// intl messages
-import IntlMessages from "Util/IntlMessages";
+// import { logoutUser } from "Actions";
 
 class UserBlock extends Component {
   state = {
-    notifications: null
+    buttonLoading: false
   };
 
-  componentDidMount() {
-    this.getNotifications();
+  componentWillUnmount() {
+    clearTimeout(this.timer);
   }
-
-  // get notifications
-  getNotifications() {
-    api
-      .get("notifications.js")
-      .then(response => {
-        this.setState({ notifications: response.data });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  logoutUser() {
+    this.props.logoutUser();
   }
 
   render() {
-    const { notifications } = this.state;
+    const { location, user } = this.props;
+    const { buttonLoading } = this.state;
     return (
-      <UncontrolledDropdown
-        nav
-        className="list-inline-item notification-dropdown"
-      >
+      <UncontrolledDropdown nav className="list-inline-item cart-dropdown">
         <DropdownToggle nav className="p-0">
           <Tooltip title="User" placement="bottom">
-            <IconButton aria-label="bell">
+            <IconButton aria-label="user">
               <i className="zmdi zmdi-face" />
             </IconButton>
           </Tooltip>
         </DropdownToggle>
-        <DropdownMenu right>
+        <DropdownMenu>
           <div className="dropdown-content">
-            <div className="dropdown-top d-flex justify-content-between rounded-top bg-primary">
-              <span className="text-white font-weight-bold">
-                <IntlMessages id="widgets.recentNotifications" />
-              </span>
-              <Badge color="warning">1 NEW</Badge>
-            </div>
-            <Scrollbars
-              className="rct-scroll"
-              autoHeight
-              autoHeightMin={100}
-              autoHeightMax={280}
-            >
-              <ul className="list-unstyled dropdown-list">
-                {notifications &&
-                  notifications.map((notification, key) => (
-                    <li key={key}>
-                      <div className="media">
-                        <div className="mr-10">
-                          <img
-                            src={notification.userAvatar}
-                            alt="user profile"
-                            className="media-object rounded-circle"
-                            width="50"
-                            height="50"
-                          />
-                        </div>
-                        <div className="media-body pt-5">
-                          <div className="d-flex justify-content-between">
-                            <h5 className="mb-5 text-primary">
-                              {notification.userName}
-                            </h5>
-                            <span className="text-muted fs-12">
-                              {notification.date}
-                            </span>
-                          </div>
-                          <span className="text-muted fs-12 d-block">
-                            {notification.notification}
-                          </span>
-                          <Button className="btn-xs mr-10">
-                            <i className="zmdi zmdi-mail-reply mr-2" />{" "}
-                            <IntlMessages id="button.reply" />
-                          </Button>
-                          <Button className="btn-xs">
-                            <i className="zmdi zmdi-thumb-up mr-2" />{" "}
-                            <IntlMessages id="button.like" />
-                          </Button>
-                        </div>
+            <Fragment>
+              <RctCard customClasses="profile-head mb-0">
+                <div className="profile-top border-bottom">
+                  <div className="user-image text-center mb-15 mt-30">
+                    {/*  <UserAvatar
+                      customClasses="img-fluid rounded-circle rct-notify mx-auto"
+                      user={user}
+                      size={80}
+                    /> */}
+                  </div>
+                  <div className="user-list-content">
+                    <div className="text-center">
+                      <h3 className="fw-bold">{user && user.fullName}</h3>
+                      <p>
+                        {user && user.role}
+                        <br />
+                        <small className="">
+                          Member Since{" "}
+                          {user && Moment(user.createdAt).fromNow()}
+                        </small>
+                      </p>
+                      <div className="social-list clearfix mb-30">
+                        <ul className="list-inline d-inline-block mb-10">
+                          <li className="list-inline-item">
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              className="btn bg-primary text-white"
+                              onClick={() =>
+                                this.props.history.push(
+                                  `/ocrm/users/profile/${user.id}`
+                                )
+                              }
+                            >
+                              View Profile
+                            </Button>
+                          </li>
+                          <li className="list-inline-item">
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              className="btn bg-danger text-white"
+                              disabled={buttonLoading}
+                              onClick={() => this.logoutUser()}
+                            >
+                              Logout
+                              {buttonLoading && (
+                                <CircularProgress
+                                  size={14}
+                                  style={{ position: "absolute" }}
+                                />
+                              )}
+                            </Button>
+                          </li>
+                        </ul>
                       </div>
-                    </li>
-                  ))}
-              </ul>
-            </Scrollbars>
-          </div>
-          <div className="dropdown-foot p-2 bg-white rounded-bottom">
-            <Button
-              variant="contained"
-              color="primary"
-              className="mr-10 btn-xs bg-primary"
-            >
-              <IntlMessages id="button.viewAll" />
-            </Button>
+                    </div>
+                  </div>
+                </div>
+              </RctCard>
+            </Fragment>
           </div>
         </DropdownMenu>
       </UncontrolledDropdown>
@@ -120,4 +108,15 @@ class UserBlock extends Component {
   }
 }
 
-export default UserBlock;
+// map state to props
+const mapStateToProps = ({ settings, authUser }) => {
+  const { user } = authUser;
+  return { settings, user };
+};
+
+export default withRouter(
+  connect(
+    null,
+    {}
+  )(UserBlock)
+);

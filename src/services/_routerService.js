@@ -1,6 +1,6 @@
 // routes
 import {
-  AsyncDashboardComponent,
+  AsyncHomebaseComponent,
   Async_proj_component,
   Async_report_component,
   Async_task_component,
@@ -12,8 +12,8 @@ import Setting from "Routes/setting";
 
 export default [
   {
-    path: "dashboard",
-    component: AsyncDashboardComponent
+    path: "homebase",
+    component: AsyncHomebaseComponent
   },
   {
     path: "crm",
@@ -28,15 +28,15 @@ export default [
     component: Accounting
   },
   {
-    path: "report",
+    path: "reports",
     component: Async_report_component
   },
   {
-    path: "task",
+    path: "tasks",
     component: Async_task_component
   },
   {
-    path: "reminder",
+    path: "reminders",
     component: Async_reminder_component
   },
   {

@@ -40,25 +40,7 @@ class Signin extends Component {
       <QueueAnim type="bottom" duration={2000}>
         <div className="rct-session-wrapper">
           {loading && <LinearProgress />}
-          <AppBar position="static" className="session-header">
-            <Toolbar>
-              <div className="container">
-                <div className="d-flex justify-content-between">
-                  <div className="session-logo">
-                    <Link to="/">
-                      <img
-                        src={AppConfig.appLogo}
-                        alt="session-logo"
-                        className="img-fluid"
-                        width="110"
-                        height="35"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </Toolbar>
-          </AppBar>
+
           <div className="session-inner-wrapper" style={{ marginTop: "5%" }}>
             <div className="container">
               <div className="row row-eq-height">
@@ -66,13 +48,24 @@ class Signin extends Component {
                 <div className="col-sm-6 col-md-6 col-lg-8">
                   <div
                     className="session-body text-center"
-                    style={{ padding: "7% 10%" }}
+                    style={{ padding: "5% 10%" }}
                   >
                     <div className="session-head mb-30">
+                      <h1 className="mb-20">
+                        <Link to="/">
+                          <img
+                            src={AppConfig.appLogo}
+                            alt="session-logo"
+                            className="img-fluid"
+                            width="180"
+                            // height="35"
+                          />
+                        </Link>
+                      </h1>
                       <h2 className="font-weight-bold">
                         Sign in to {AppConfig.brandName}
                       </h2>
-                      <p className="mb-0">
+                      <p className="mb-0 text-white">
                         Most powerful CRM in SG, some say Batam
                       </p>
                     </div>

@@ -6,25 +6,25 @@ import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import IntlMessages from "Util/IntlMessages";
 
-class Reminders extends Component {
+class acct_credit_note extends Component {
   constructor(props) {
     super(props);
   }
   render() {
     const { match } = this.props;
     return (
-      <div className="saas-dashboard">
+      <React.Fragment>
         <Helmet>
-          <title>Everyday | Reminders</title>
-          <meta name="description" content="Set Useful Reminders Everyday" />
+          <title>Everyday | Credit Note</title>
+          <meta name="description" content="Everyday Quotation Management" />
         </Helmet>
         <PageTitleBar
-          title={<IntlMessages id="sidebar.reminders" />}
+          title={<IntlMessages id="sidebar.credit_note" />}
           match={match}
         />
-      </div>
+      </React.Fragment>
     );
   }
 }
 
-export default Reminders;
+export default acct_credit_note;

@@ -21,8 +21,8 @@ class crm_account extends Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>CRM | Accounts</title>
-          <meta name="description" content="OCRM Accounts Management" />
+          <title>Everyday | Accounts</title>
+          <meta name="description" content="Everyday Accounts Management" />
         </Helmet>
         <PageTitleBar
           title={<IntlMessages id="sidebar.accounts" />}

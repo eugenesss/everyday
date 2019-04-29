@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 //Sub Components
-/* import MyLeadsList from "Components/CRM/Leads/MyLeadsList";
- */
+import MyLeadsList from "Components/CRM/Lead/MyLeadsList";
 import LeadsList from "Components/CRM/Lead/LeadsList";
 
 //Page Req
@@ -23,19 +22,18 @@ class crm_lead extends Component {
 
   render() {
     return (
-      <div className="data-table-wrapper">
+      <React.Fragment>
         <Helmet>
-          <title>CRM | Leads</title>
-          <meta name="description" content="OCRM Leads Generation" />
+          <title>Everyday | Leads</title>
+          <meta name="description" content="Everyday Leads Generation" />
         </Helmet>
         <PageTitleBar
           title={<IntlMessages id="sidebar.leads" />}
           match={this.props.match}
         />
-        {/* <MyLeadsList />
-         */}
+        <MyLeadsList />
         <LeadsList />
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -19,10 +19,10 @@ class crm_customer extends Component {
   render() {
     const { match } = this.props;
     return (
-      <div className="data-table-wrapper">
+      <React.Fragment>
         <Helmet>
-          <title>CRM | Customers</title>
-          <meta name="description" content="OCRM Customers Retention" />
+          <title>Everyday | Customers</title>
+          <meta name="description" content="Everyday Customers Retention" />
         </Helmet>
         <PageTitleBar
           title={<IntlMessages id="sidebar.customers" />}
@@ -30,7 +30,7 @@ class crm_customer extends Component {
         />
         {/* <MyCustomersList /> */}
         <CustomersList />
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -3,21 +3,21 @@ export default {
   crm: [
     {
       menu_title: "Leads",
-      menu_icon: "zmdi zmdi-account-circle",
+      menu_icon: "zmdi zmdi-account-circle text-primary",
       child_routes: [
         {
           path: "/app/crm/leads",
           menu_title: "View All Leads"
         },
         {
-          path: "/app/crm/new/leads",
+          path: "/app/crm/new/lead",
           menu_title: "Create New Lead"
         }
       ]
     },
     {
       menu_title: "Customers",
-      menu_icon: "zmdi zmdi-accounts-outline",
+      menu_icon: "zmdi zmdi-accounts-outline text-primary",
       child_routes: [
         {
           path: "/app/crm/customers",
@@ -31,7 +31,7 @@ export default {
     },
     {
       menu_title: "Accounts",
-      menu_icon: "zmdi zmdi-city-alt",
+      menu_icon: "zmdi zmdi-city-alt text-primary",
       child_routes: [
         {
           path: "/app/crm/accounts",
@@ -45,7 +45,7 @@ export default {
     },
     {
       menu_title: "Deals",
-      menu_icon: "zmdi zmdi-case",
+      menu_icon: "zmdi zmdi-case text-primary",
       child_routes: [
         {
           path: "/app/crm/deals",
@@ -90,7 +90,7 @@ export default {
   account: [
     {
       menu_title: "Quotations",
-      menu_icon: "zmdi zmdi-receipt",
+      menu_icon: "zmdi zmdi-receipt text-success",
       child_routes: [
         {
           path: "/app/acct/quotations",
@@ -104,7 +104,7 @@ export default {
     },
     {
       menu_title: "Invoices",
-      menu_icon: "zmdi zmdi-shopping-cart",
+      menu_icon: "zmdi zmdi-shopping-cart text-success",
       child_routes: [
         {
           path: "/app/acct/invoices",
@@ -117,16 +117,16 @@ export default {
       ]
     },
     {
-      menu_title: "Payments",
-      menu_icon: "zmdi zmdi-store",
+      menu_title: "Credit Note",
+      menu_icon: "zmdi zmdi-store text-success",
       child_routes: [
         {
-          path: "/app/acct/payments",
-          menu_title: "View Payments"
+          path: "/app/acct/credit_note",
+          menu_title: "View Credit Note"
         },
         {
-          path: "/app/new/payment",
-          menu_title: "New Payments"
+          path: "/app/new/credit_note",
+          menu_title: "New Credit Note"
         }
       ]
     }

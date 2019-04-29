@@ -1,8 +1,9 @@
 /*=========== Session Style =========*/
 .session-wrapper {
-  background-image: url("../../assets/img/rct-session-banner.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  // background-image: url("../../assets/img/rct-session-banner.jpg");
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  background: $everyday;
   left: 0;
   position: fixed;
   right: 0;
@@ -48,24 +49,24 @@
 }
 .error-wrapper {
   @extend .session-wrapper;
-  background: $info;
-  background-image: none;
+  background: $everyday;
+  //background-image: none;
   overflow-x: hidden;
 }
 .error-body {
   h2 {
     font-weight: 900;
-    text-shadow: 9px 10px 1px rgba(0,0,0,0.08);
+    text-shadow: 9px 10px 1px rgba(0, 0, 0, 0.08);
   }
 }
 .oops {
-  font-size: 3.75rem; //60px;
+  font-size: 3.25rem; //60px;
 }
 .bold {
   font-size: 13.75rem; //220px;
 }
 .error-msg {
-  font-size: 4.375rem; //70px;
+  font-size: 3.375rem; //70px;
 }
 .rct-session-wrapper {
   @extend .session-wrapper;
@@ -80,7 +81,7 @@
   }
   .session-inner-wrapper {
     .session-body {
-      background-color: $block-bg;
+      background-color: $everydaySecondary;
       border-radius: $block-border-radius;
       padding: 2rem 6.25rem; //30px 100px;
       p {
@@ -119,7 +120,7 @@
     .rct-img-overlay {
       position: absolute;
       bottom: 0px;
-      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, #000000 100%);
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
       padding: 0.9375rem 0.9375rem 1.563rem;
       border-bottom-left-radius: 6px;
       border-bottom-right-radius: 6px;
@@ -157,8 +158,9 @@
           font-size: 1rem;
           margin-bottom: 5px !important;
         }
-        p.mb-20, .session-head.mb-30 {
-        	margin-bottom: 0.9375 !important;
+        p.mb-20,
+        .session-head.mb-30 {
+          margin-bottom: 0.9375 !important;
         }
       }
     }
@@ -178,7 +180,7 @@
     }
   }
 }
-@media(max-width: 600px) {
+@media (max-width: 600px) {
   .error-body {
     .bold {
       font-size: 8.75rem;
@@ -188,15 +190,15 @@
     }
   }
 }
-@media (max-width: 575px)  {
+@media (max-width: 575px) {
   .circle-btn-xs {
-  	min-width: 85px !important;
-  	padding: 5px 5px 3px!important;
+    min-width: 85px !important;
+    padding: 5px 5px 3px !important;
   }
   .rct-session-wrapper {
     .session-head h2 {
-    	font-size: 1.4rem;
-    	margin-bottom: 0.4rem;
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
     }
     header {
       a.mr-15 {

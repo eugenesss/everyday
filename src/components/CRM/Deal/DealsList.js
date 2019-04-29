@@ -12,14 +12,9 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import NumberFormat from "react-number-format";
 import Moment from "moment";
 
-import { getAllDeal } from "Actions";
-
 class DealsList extends Component {
-  constructor(props) {
-    super(props);
-  }
-  componentWillMount() {
-    this.props.getAllDeal();
+  componentDidMount() {
+    // this.props.getAllDeal();
   }
   refresh() {
     this.props.getAllDeal();
@@ -46,7 +41,7 @@ class DealsList extends Component {
   }
   render() {
     const { allDeal, allDealLoading } = this.props;
-    const data = allDeal.map(deal => this.convertData(deal));
+    const data = allDeal && allDeal.map(deal => this.convertData(deal));
     const columns = [
       {
         name: "DealID",
@@ -183,6 +178,6 @@ const mapStateToProps = ({ deal }) => {
   return { allDeal, allDealLoading };
 };
 export default connect(
-  mapStateToProps,
-  { getAllDeal }
+  null,
+  {}
 )(DealsList);

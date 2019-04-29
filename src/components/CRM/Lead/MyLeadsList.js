@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { show } from "redux-modal";
 
 //Page req
 import MUIDataTable from "mui-datatables";
@@ -17,7 +16,7 @@ import LeadInterestLevel from "./LeadInterestLevel";
 
 class MyLeadsList extends Component {
   componentDidMount() {
-    this.props.getMyLead();
+    // this.props.getMyLead();
   }
   //Convert API to DataTable Array
   convertData(lead) {
@@ -61,7 +60,7 @@ class MyLeadsList extends Component {
 
   render() {
     const { myLeads, myLeadLoading } = this.props;
-    const data = myLeads.map(lead => this.convertData(lead));
+    const data = myLeads && myLeads.map(lead => this.convertData(lead));
     const columns = [
       {
         name: "ID",
@@ -178,7 +177,7 @@ class MyLeadsList extends Component {
       }
     };
     return (
-      <RctCollapsibleCard fullBlock>
+      <RctCollapsibleCard heading={"You are now viewing: My Leads"} fullBlock>
         <MUIDataTable
           title={"My Leads"}
           columns={columns}
@@ -197,6 +196,6 @@ const mapStateToProps = ({ lead }) => {
 };
 
 export default connect(
-  mapStateToProps,
-  { show, getMyLead }
+  null,
+  {}
 )(MyLeadsList);

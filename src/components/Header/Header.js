@@ -13,6 +13,7 @@ import { withRouter } from "react-router-dom";
 
 // components
 import QuickLinks from "./QuickLinks";
+import QuickAdd from "./QuickAdd";
 import Notifications from "./Notifications";
 import UserBlock from "./UserBlock";
 import ToDo from "./ToDo";
@@ -36,14 +37,14 @@ class Header extends Component {
             <div className="site-logo">
               <Link to="/" className="logo-mini">
                 <img
-                  src={require("Assets/img/appLogo.png")}
+                  src={require("Assets/img/appLogo_light.png")}
                   className="mr-15"
                   alt="site logo"
-                  width="35"
-                  height="35"
+                  width="120"
+                  //height="35"
                 />
               </Link>
-              <Link to="/" className="logo-normal">
+              {/* <Link to="/" className="logo-normal">
                 <img
                   src={require("Assets/img/appLogoText.png")}
                   className="img-fluid"
@@ -51,9 +52,10 @@ class Header extends Component {
                   width="67"
                   height="17"
                 />
-              </Link>
+              </Link> */}
             </div>
             <ul className="list-inline mb-0 navbar-left">
+              <QuickAdd />
               <QuickLinks />
             </ul>
           </div>

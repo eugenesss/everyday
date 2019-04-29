@@ -5,38 +5,57 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import {
   Async_acct_quotation_component,
   Async_acct_invoice_component,
-  Async_acct_payment_component
+  Async_acct_credit_note_component,
+  Async_acct_new_quotation_component,
+  Async_acct_new_invoice_component,
+  Async_acct_new_credit_note_component
 } from "Components/AsyncComponent/AsyncComponent";
 
 export default class crmSwitcher extends Component {
   render() {
     const { match } = this.props;
     return (
-      <Switch>
-        {/* ------- /Quotations ------- */}
-        <Route
-          exact
-          path={`${match.url}/quotations`}
-          component={Async_acct_quotation_component}
-        />
+      <div className="saas-dashboard">
+        <Switch>
+          {/* ------- /Quotations ------- */}
+          <Route
+            exact
+            path={`${match.url}/quotations`}
+            component={Async_acct_quotation_component}
+          />
 
-        {/* ------- /Invoice ------- */}
-        <Route
-          exact
-          path={`${match.url}/invoices`}
-          component={Async_acct_invoice_component}
-        />
+          {/* ------- /Invoice ------- */}
+          <Route
+            exact
+            path={`${match.url}/invoices`}
+            component={Async_acct_invoice_component}
+          />
 
-        {/* ------- /Payments ------- */}
-        <Route
-          exact
-          path={`${match.url}/payments`}
-          component={Async_acct_payment_component}
-        />
+          {/* ------- /Payments ------- */}
+          <Route
+            exact
+            path={`${match.url}/credit_note`}
+            component={Async_acct_credit_note_component}
+          />
 
-        {/* ------- /404 ------- */}
-        <Redirect to="/404" />
-      </Switch>
+          {/* ------- /Create ------- */}
+          <Route
+            path={`${match.url}/new/quotation`}
+            component={Async_acct_new_quotation_component}
+          />
+          <Route
+            path={`${match.url}/new/invoice`}
+            component={Async_acct_new_invoice_component}
+          />
+          <Route
+            path={`${match.url}/new/credit_note`}
+            component={Async_acct_new_credit_note_component}
+          />
+
+          {/* ------- /404 ------- */}
+          <Redirect to="/404" />
+        </Switch>
+      </div>
     );
   }
 }

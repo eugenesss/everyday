@@ -15,7 +15,7 @@ const getDisplayString = sub => {
   if (arr.length > 1) {
     return (
       <IntlMessages
-        id={`${arr[0].charAt(0) +
+        id={`${arr[0].charAt(0).toUpperCase() +
           arr[0].slice(1) +
           arr[1].charAt(0).toUpperCase() +
           arr[1].slice(1)}`}

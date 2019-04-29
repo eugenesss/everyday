@@ -12,6 +12,7 @@ import RctThemeProvider from "./RctThemeProvider";
 //Horizontal Layout
 import HorizontalLayout from "./HorizontalLayout";
 import Login from "Routes/login";
+import NotFound from "./error_pages/Err404";
 
 /**
  * Initial Path To Check Whether User Is Logged In Or Not
@@ -24,7 +25,7 @@ class App extends Component {
   render() {
     const { location, match, user } = this.props;
     if (location.pathname === "/") {
-      return <Redirect to={"/app/dashboard/saas"} />;
+      return <Redirect to={"/app/homebase"} />;
     }
     return (
       <RctThemeProvider>
@@ -35,6 +36,7 @@ class App extends Component {
           component={HorizontalLayout}
         />
         <Route path={`/login`} exact component={Login} />
+        <Route path={"/404"} exact component={NotFound} />
       </RctThemeProvider>
     );
   }
