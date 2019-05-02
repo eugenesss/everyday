@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 //Sub Components
-import MyLeadsList from "Components/CRM/Lead/MyLeadsList";
 import LeadsList from "Components/CRM/Lead/LeadsList";
 
 //Page Req
@@ -31,7 +30,6 @@ class crm_lead extends Component {
           title={<IntlMessages id="sidebar.leads" />}
           match={this.props.match}
         />
-        <MyLeadsList />
         <LeadsList />
       </React.Fragment>
     );

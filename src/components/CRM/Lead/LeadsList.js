@@ -2,25 +2,33 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 
-// Page req
+//Page req
 import MUIDataTable from "mui-datatables";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
-//Sub Component
+//Sub Components
 import LeadInterestLevel from "./LeadInterestLevel";
 
-//import { getLead } from "Actions";
+//import { getMyLead } from "Actions";
 
 class LeadsList extends Component {
-  componentDidMount() {
-    // this.props.getLead();
+  state = {
+    nowShowing: "All Leads",
+    options: [
+      "All Leads",
+      "My Leads",
+      "Open Leads",
+      "Hot Leads",
+      "Warm Leads",
+      "Cold Leads"
+    ]
+  };
 
-    const data =
-      this.props.allLeads &&
-      this.props.allLeads.map(lead => this.convertData(lead));
+  componentDidMount() {
+    // this.props.getMyLead();
   }
   //Convert API to DataTable Array
   convertData(lead) {
@@ -30,32 +38,48 @@ class LeadsList extends Component {
       lead.contact.fullName,
       lead.companyName,
       lead.contact.emailAddress,
-      lead.status.name,
+      lead.status,
       lead.source !== null ? lead.source.name : null,
       lead.interest,
-      lead.owner.fullName,
       lead.contact.mobile,
+      lead.owner.fullName,
       lead.industry !== null ? lead.industry.name : null,
       lead.website,
       lead.contact.office,
-      lead.contact.fax
+      lead.contact.fax,
+      lead
     );
     return data;
   }
-  reloadGetLead() {
-    this.props.getLead();
+  /*   toggleEditModal(leadToEdit) {
+    this.props.show("EDIT_LEAD_MODAL", {
+      leadToEdit: leadToEdit
+    });
   }
+  toggleConvertModal(leadToConvert) {
+    this.props.show("CONVERT_LEAD_MODAL", {
+      leadCheck: leadToConvert
+    });
+  }
+  toggleLeadOwnerModal(leadToEdit) {
+    this.props.show("CHANGE_LEAD_OWNER_MODAL", {
+      leadToEdit: leadToEdit
+    });
+  } */
+  reloadGetMyLead() {
+    this.props.getMyLead();
+  }
+
   render() {
-    const { allLeads, allLeadLoading } = this.props;
-    //const data = allLeads;
+    const { myLeads, myLeadLoading } = this.props;
+    const data = myLeads && myLeads.map(lead => this.convertData(lead));
     const columns = [
       {
-        name: "id",
+        name: "ID",
         options: { display: "excluded", filter: false, sort: false }
       },
       {
-        label: "Name",
-        name: "fullName",
+        name: "Name",
         options: {
           customBodyRender: (value, tableMeta) => {
             return (
@@ -64,30 +88,89 @@ class LeadsList extends Component {
           }
         }
       },
-      { label: "Company", name: "companyName" },
-      { label: "Email", name: "emailAddress" },
-      { label: "Status", name: "status" },
-      { label: "Source", name: "source" },
+      "Company",
+      "Email",
       {
-        label: "Interest Level",
-        name: "interest",
+        name: "Status"
+        /* options: {
+          customBodyRender: value => {
+            return <StatusLabel status={value} />;
+          }
+        } */
+      },
+      {
+        name: "Source"
+        /*  options: {
+          display: false,
+          customBodyRender: value => {
+            return value ? <LeadSourceBadge source={value} /> : "";
+          }
+        } */
+      },
+      {
+        name: "Interest Level",
         options: {
           customBodyRender: value => {
             return <LeadInterestLevel interest={value} />;
           }
         }
       },
-      { label: "Lead Owner", name: "owner" },
-      { label: "Mobile", name: "mobile", options: { display: false } },
-      { label: "Industry", name: "industry", options: { display: false } },
-      { label: "Website", name: "website", options: { display: false } },
-      { label: "Office", name: "office", options: { display: false } },
-      { label: "Fax", name: "fax", options: { display: false } }
+      { name: "Mobile", options: { display: false } },
+      { name: "Lead Owner", options: { display: false } },
+      { name: "Industry", options: { display: false } },
+      { name: "Website", options: { display: false } },
+      { name: "Office", options: { display: false } },
+      { name: "Fax", options: { display: false } },
+      {
+        name: "Actions",
+        options: {
+          filter: false,
+          sort: false,
+          customBodyRender: value => {
+            return (
+              <React.Fragment>
+                <Tooltip id="tooltip-icon" title="Edit">
+                  <IconButton
+                    className="text-primary mr-2"
+                    aria-label="Edit Lead"
+                    onClick={() => {
+                      this.toggleEditModal(value);
+                    }}
+                  >
+                    <i className="zmdi zmdi-edit" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip id="tooltip-icon" title="Convert">
+                  <IconButton
+                    className="text-success mr-2"
+                    aria-label="Convert Lead"
+                    onClick={() => {
+                      this.toggleConvertModal(value);
+                    }}
+                  >
+                    <i className="zmdi zmdi-check-all" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip id="tooltip-icon" title="Change Owner">
+                  <IconButton
+                    className="text-warning mr-2"
+                    aria-label="Change Owner"
+                    onClick={() => {
+                      this.toggleLeadOwnerModal(value);
+                    }}
+                  >
+                    <i className="zmdi zmdi-accounts-list" />
+                  </IconButton>
+                </Tooltip>
+              </React.Fragment>
+            );
+          }
+        }
+      }
     ];
     const options = {
       filterType: "dropdown",
       responsive: "stacked",
-      selectableRows: false,
       textLabels: { body: { noMatch: "No Leads to display" } },
       customToolbar: () => {
         return (
@@ -96,7 +179,7 @@ class LeadsList extends Component {
               className="text-secondary"
               aria-label="Refresh List"
               onClick={() => {
-                this.reloadGetLead();
+                this.reloadGetMyLead();
               }}
             >
               <i className="zmdi zmdi-refresh" />
@@ -106,24 +189,23 @@ class LeadsList extends Component {
       }
     };
     return (
-      <RctCollapsibleCard fullBlock>
+      <RctCollapsibleCard heading={"You are now viewing: My Leads"} fullBlock>
         <MUIDataTable
-          title={"All Leads"}
+          title={"My Leads"}
           columns={columns}
-          data={allLeads}
+          data={data}
           options={options}
         />
-        {allLeadLoading && <RctSectionLoader />}
+        {myLeadLoading && <RctSectionLoader />}
       </RctCollapsibleCard>
     );
   }
 }
-
-/* // map state to props
+// map state to props
 const mapStateToProps = ({ lead }) => {
-  const { allLeads, allLeadLoading } = lead;
-  return { allLeads, allLeadLoading };
-}; */
+  const { myLeads, myLeadLoading } = lead;
+  return { myLeads, myLeadLoading };
+};
 
 export default connect(
   null,

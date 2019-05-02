@@ -1,7 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-export default
-   axios.create({
-      baseURL: 'http://reactify.theironnetwork.org/data/',
-      timeout: 2000
-   });
+export default axios.create({
+  baseURL: "http://reactify.theironnetwork.org/data/",
+  timeout: 6000
+});

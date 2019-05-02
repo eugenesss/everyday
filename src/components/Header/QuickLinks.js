@@ -37,38 +37,38 @@ const QuickLinks = ({ location }) => (
           </div>
           <ul className="list-unstyled mb-0 dropdown-list">
             <li>
-              <Link to={`/${getAppLayout(location)}/crm/new/lead`}>
+              <Link to={`/${getAppLayout(location)}/crm/leads`}>
                 <i className="zmdi zmdi-account-circle text-primary mr-10" />
                 <IntlMessages id="sidebar.leads" />
               </Link>
             </li>
             <li>
-              <Link to={`/${getAppLayout(location)}/crm/new/customer`}>
+              <Link to={`/${getAppLayout(location)}/crm/customers`}>
                 <i className="zmdi zmdi-accounts-outline text-primary mr-10" />
                 <IntlMessages id="sidebar.deals" />
               </Link>
             </li>
             <li>
-              <Link to={`/${getAppLayout(location)}/crm/new/account`}>
-                <i className="zmdi zmdi-city-alt text-primary mr-10" />
+              <Link to={`/${getAppLayout(location)}/acct/quotations`}>
+                <i className="zmdi zmdi-city-alt text-success mr-10" />
                 <IntlMessages id="sidebar.quotations" />
               </Link>
             </li>
             <li>
-              <Link to={`/${getAppLayout(location)}/crm/new/deal`}>
-                <i className="text-primary zmdi zmdi-case mr-10" />
+              <Link to={`/${getAppLayout(location)}/acct/invoices`}>
+                <i className="text-success zmdi zmdi-case mr-10" />
                 <IntlMessages id="sidebar.invoices" />
               </Link>
             </li>
             <li>
-              <Link to={`/${getAppLayout(location)}/acct/new/quotation`}>
-                <i className="zmdi zmdi-receipt text-success  mr-10" />
+              <Link to={`/${getAppLayout(location)}/reminders`}>
+                <i className="zmdi zmdi-receipt text-warning  mr-10" />
                 <IntlMessages id="sidebar.reminders" />
               </Link>
             </li>
             <li>
-              <Link to={`/${getAppLayout(location)}/acct/new/invoice`}>
-                <i className="text-success zmdi zmdi-shopping-cart mr-10" />
+              <Link to={`/${getAppLayout(location)}/reports`}>
+                <i className="text-info zmdi zmdi-shopping-cart mr-10" />
                 <IntlMessages id="sidebar.reports" />
               </Link>
             </li>
