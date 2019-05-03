@@ -12,24 +12,21 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 //Sub Components
 import LeadInterestLevel from "./LeadInterestLevel";
 
+//Select Button
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
+
 //import { getMyLead } from "Actions";
 
 class LeadsList extends Component {
-  state = {
-    nowShowing: "All Leads",
-    options: [
-      "All Leads",
-      "My Leads",
-      "Open Leads",
-      "Hot Leads",
-      "Warm Leads",
-      "Cold Leads"
-    ]
-  };
-
   componentDidMount() {
     // this.props.getMyLead();
   }
+
   //Convert API to DataTable Array
   convertData(lead) {
     var data = [];
@@ -51,27 +48,12 @@ class LeadsList extends Component {
     );
     return data;
   }
-  /*   toggleEditModal(leadToEdit) {
-    this.props.show("EDIT_LEAD_MODAL", {
-      leadToEdit: leadToEdit
-    });
-  }
-  toggleConvertModal(leadToConvert) {
-    this.props.show("CONVERT_LEAD_MODAL", {
-      leadCheck: leadToConvert
-    });
-  }
-  toggleLeadOwnerModal(leadToEdit) {
-    this.props.show("CHANGE_LEAD_OWNER_MODAL", {
-      leadToEdit: leadToEdit
-    });
-  } */
   reloadGetMyLead() {
     this.props.getMyLead();
   }
 
   render() {
-    const { myLeads, myLeadLoading } = this.props;
+    const { myLeads, myLeadLoading, title } = this.props;
     const data = myLeads && myLeads.map(lead => this.convertData(lead));
     const columns = [
       {
@@ -189,9 +171,9 @@ class LeadsList extends Component {
       }
     };
     return (
-      <RctCollapsibleCard heading={"You are now viewing: My Leads"} fullBlock>
+      <RctCollapsibleCard fullBlock>
         <MUIDataTable
-          title={"My Leads"}
+          title={title}
           columns={columns}
           data={data}
           options={options}

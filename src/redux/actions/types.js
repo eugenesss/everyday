@@ -14,3 +14,11 @@ export const SET_LANGUAGE = "SET_LANGUAGE";
 export const START_USER_TOUR = "START_USER_TOUR";
 export const STOP_USER_TOUR = "STOP_USER_TOUR";
 export const TOGGLE_DARK_SIDENAV = "TOGGLE_DARK_SIDENAV";
+
+/**
+ * Lead Actions
+ */
+export const CHANGE_LEAD_VIEW = "CHANGE_LEAD_VIEW";
+export const SHOW_ALL_LEADS = "SHOW_ALL_LEADS";
+export const SHOW_MY_LEADS = "SHOW_MY_LEADS";
+export const SHOW_OPEN_LEADS = "SHOW_OPEN_LEADS";
