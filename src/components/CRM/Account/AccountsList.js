@@ -34,7 +34,7 @@ class AccountsList extends Component {
     this.props.getAccount();
   }
   render() {
-    const { allAccount, allAccountLoading } = this.props;
+    const { allAccount, allAccountLoading, title } = this.props;
     //const data = allAccount.map(acct => this.convertData(acct));
     const columns = [
       {
@@ -84,7 +84,7 @@ class AccountsList extends Component {
       <RctCollapsibleCard fullBlock>
         {allAccountLoading && <RctSectionLoader />}
         <MUIDataTable
-          title={"All Accounts"}
+          title={title}
           columns={columns}
           data={allAccount}
           options={options}

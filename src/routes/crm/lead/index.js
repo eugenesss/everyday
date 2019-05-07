@@ -10,12 +10,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // intl messages
 import IntlMessages from "Util/IntlMessages";
-import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
+import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 //import { getLead, getMyLead } from "Actions";
 
@@ -45,10 +40,6 @@ class crm_lead extends Component {
   changeValue(newValue) {
     this.setState({ ...this.state, nowShowing: newValue });
   }
-  /*   reloadTable() {
-    this.props.getLead();
-    this.props.getMyLead();
-  } */
 
   render() {
     return (
@@ -59,21 +50,13 @@ class crm_lead extends Component {
         </Helmet>
         <PageTitleBar
           title={
-            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-              <DropdownToggle caret>{this.state.nowShowing}</DropdownToggle>
-              <DropdownMenu>
-                {this.state.options.map((opt, key) => {
-                  return (
-                    <DropdownItem
-                      onClick={() => this.changeValue(opt)}
-                      key={key}
-                    >
-                      {opt}
-                    </DropdownItem>
-                  );
-                })}
-              </DropdownMenu>
-            </Dropdown>
+            <ListViewSelector
+              dropdownOpen={this.state.dropdownOpen}
+              toggle={this.toggle.bind(this)}
+              options={this.state.options}
+              nowShowing={this.state.nowShowing}
+              onChangeValue={this.changeValue.bind(this)}
+            />
           }
           createLink="/crm/new/lead"
         />

@@ -1,25 +1,27 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { show } from "redux-modal";
 
-import { viewLead, viewLeadEnd, deleteLead } from "Actions";
+// import { viewLead, viewLeadEnd, deleteLead } from "Actions";
 
 //Page Components
-import LeadCard from "Components/CRM/Leads/LeadCard";
-import LeadDetails from "Components/CRM/View/Tabs/Details/LeadDetails";
-import AddressDetails from "Components/CRM/View/Tabs/Details/AddressDetails";
-import DetailsDescription from "Components/CRM/View/Tabs/Details/DetailsDescription";
-import ActivityTab from "Components/CRM/View/Tabs/Activity";
-import ViewNote from "Components/CRM/Note/ViewNote";
+import LeadCard from "Components/CRM/Lead/LeadCard";
+import LeadDetails from "Components/CRM/View/Details/LeadDetails";
+import AddressDetails from "Components/CRM/View/Details/AddressDetails";
+//import DetailsDescription from "Components/CRM/View/Tabs/Details/DetailsDescription";
+// import ActivityTab from "Components/CRM/View/Tabs/Activity";
+// import ViewNote from "Components/CRM/Note/ViewNote";
 
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 //Page Req
-import FullPageLoader from "Components/RctPageLoader/FullPageLoader";
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
+import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 class crm_view_lead extends Component {
   constructor(props) {
@@ -28,70 +30,81 @@ class crm_view_lead extends Component {
   }
 
   componentWillMount() {
-    var id = this.props.match.params.id;
-    this.props.viewLead(id);
+    // var id = this.props.match.params.id;
+    // this.props.viewLead(id);
     setTimeout(() => {
       this.setState({
         loading: false
       });
     }, 800);
   }
-  componentWillUnmount() {
-    this.props.viewLeadEnd();
-  }
-
-  refresh() {
-    var id = this.props.match.params.id;
-    this.props.viewLead(id);
-  }
-
-  toggleEditModal(leadToEdit) {
-    this.props.show("EDIT_LEAD_MODAL", {
-      leadToEdit: leadToEdit
-    });
-  }
-
-  handleDelete() {
-    var id = this.props.match.params.id;
-    this.props.deleteLead(id);
-    //Move to another page
-    this.setState({ loading: true });
-    setTimeout(() => {
-      this.props.history.push(`/app/crm/leads`);
-    }, 400);
-  }
 
   render() {
     const { loading } = this.state;
-    const { leadView, contactView, user } = this.props;
+    const { lead } = this.props;
 
     return (
       <React.Fragment>
-        <Helmet>
-          <title>CRM | View Lead</title>
-        </Helmet>
-        <PageTitleBar title="View Lead" match={this.props.match} />
         {loading ? (
-          <FullPageLoader />
-        ) : (
+          <RctPageLoader />
+        ) : lead ? (
           <React.Fragment>
-            <RctCollapsibleCard colClasses="col-md-12" fullBlock>
-              <LeadCard lead={leadView} contact={contactView} />
+            <Helmet>
+              <title>Everyday | View Lead</title>
+            </Helmet>
+            <PageTitleBar title="View Lead" createLink="/crm/new/lead" />
+            <RctCollapsibleCard fullBlock>
+              <LeadCard lead={lead} loading={loading} />
             </RctCollapsibleCard>
-            <RctCollapsibleCard colClasses="col-md-7">
-              <ViewNote contact={contactView} />
-            </RctCollapsibleCard>
-            <RctCollapsibleCard heading="Details" colClasses="col-md-12">
-              <LeadDetails contact={contactView} lead={leadView} />
-              <br />
-              <AddressDetails contact={contactView} />
-              <br />
-              <DetailsDescription related={contactView} />
-            </RctCollapsibleCard>
-            <RctCollapsibleCard colClasses="col-md-12" heading="Activities">
-              <ActivityTab lead={leadView} />
-            </RctCollapsibleCard>
+            <TabsWrapper>
+              <div
+                icon={
+                  <i className="zmdi-hc-lg zmdi zmdi-coffee text-success" />
+                }
+                label="DETAILS"
+              >
+                <React.Fragment>
+                  {/* 
+                <LeadDetails lead={leadView} />
+                <br />
+                <AddressDetails contact={contactView} />
+                <br />
+                <DetailsDescription related={contactView} />
+                 */}
+                </React.Fragment>
+              </div>
+
+              <div
+                icon={
+                  <i className="zmdi-hc-lg zmdi zmdi-assignment text-primary" />
+                }
+                label="ACTIVITIES" /* contact={contactView} */
+              >
+                Activities
+              </div>
+              <div
+                icon={
+                  <i className="zmdi-hc-lg zmdi zmdi-assignment text-primary" />
+                }
+                label="REMINDERS" /* contact={contactView} */
+              >
+                Reminders
+              </div>
+              <div
+                icon={
+                  <i className="zmdi-hc-lg zmdi zmdi-assignment text-primary" />
+                }
+                label="NOTES" /* contact={contactView} */
+              >
+                {/*  <ViewNote /> */}
+              </div>
+            </TabsWrapper>
           </React.Fragment>
+        ) : (
+          <PageErrorMessage
+            heading="Not Found"
+            message="This could be because of a network problem or the record might have been deleted"
+          />
         )}
       </React.Fragment>
     );
@@ -106,7 +119,7 @@ const mapStateToProps = ({ lead, authUser }) => {
 
 export default withRouter(
   connect(
-    mapStateToProps,
-    { viewLead, viewLeadEnd, show, deleteLead }
+    null,
+    {}
   )(crm_view_lead)
 );

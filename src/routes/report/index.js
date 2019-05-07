@@ -11,17 +11,13 @@ class Reports extends Component {
     super(props);
   }
   render() {
-    const { match } = this.props;
     return (
       <div className="saas-dashboard">
         <Helmet>
           <title>Everyday | Reports</title>
           <meta name="description" content="Everyday Informational Reports" />
         </Helmet>
-        <PageTitleBar
-          title={<IntlMessages id="sidebar.reports" />}
-          match={match}
-        />
+        <PageTitleBar title={<IntlMessages id="sidebar.reports" />} />
       </div>
     );
   }
