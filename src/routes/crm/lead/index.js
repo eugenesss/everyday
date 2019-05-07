@@ -60,12 +60,7 @@ class crm_lead extends Component {
         <PageTitleBar
           title={
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-              <DropdownToggle
-                //color="default"
-                caret
-              >
-                {this.state.nowShowing}
-              </DropdownToggle>
+              <DropdownToggle caret>{this.state.nowShowing}</DropdownToggle>
               <DropdownMenu>
                 {this.state.options.map((opt, key) => {
                   return (
@@ -80,7 +75,7 @@ class crm_lead extends Component {
               </DropdownMenu>
             </Dropdown>
           }
-          match={this.props.match}
+          createLink="/crm/new/lead"
         />
         <LeadsList title={this.state.nowShowing} />
       </React.Fragment>

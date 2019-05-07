@@ -45,7 +45,7 @@ class Notifications extends Component {
       >
         <DropdownToggle nav className="p-0">
           <Tooltip title="Notifications" placement="bottom">
-            <IconButton className="shake" aria-label="bell">
+            <IconButton className="shake text-white" aria-label="bell">
               <i className="zmdi zmdi-notifications-active" />
               <Badge
                 color="danger"

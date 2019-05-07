@@ -12,14 +12,6 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 //Sub Components
 import LeadInterestLevel from "./LeadInterestLevel";
 
-//Select Button
-import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
-
 //import { getMyLead } from "Actions";
 
 class LeadsList extends Component {

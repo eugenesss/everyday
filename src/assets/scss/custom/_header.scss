@@ -2,12 +2,13 @@
 
 .app-header {
   .rct-header {
-    background-color: $navbar-bg;
+    background: $everyday;
+    // background-color: $navbar-bg;
     z-index: -9 !important;
     box-shadow: 0px 1px 10px -1px rgba(0, 0, 0, 0.2) !important;
     .site-logo {
       padding: 1rem 2rem 0.8rem 1.5rem;
-      background: $everyday;
+      // background: $everyday;
     }
     .navbar-left {
       margin-left: 0.85rem;

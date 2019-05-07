@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 //sub components
 import CustomersList from "Components/CRM/Customer/CustomersList";
-//import MyCustomersList from "Components/CRM/Customer/MyCustomersList";
 
 // page req
 import { Helmet } from "react-helmet";
@@ -17,7 +16,6 @@ class crm_customer extends Component {
     super(props);
   }
   render() {
-    const { match } = this.props;
     return (
       <React.Fragment>
         <Helmet>
@@ -26,9 +24,8 @@ class crm_customer extends Component {
         </Helmet>
         <PageTitleBar
           title={<IntlMessages id="sidebar.customers" />}
-          match={match}
+          createLink="/crm/new/customer"
         />
-        {/* <MyCustomersList /> */}
         <CustomersList />
       </React.Fragment>
     );

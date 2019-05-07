@@ -10,14 +10,12 @@ import IntlMessages from "Util/IntlMessages";
 
 //sub components
 import AccountsList from "Components/CRM/Account/AccountsList";
-import MyAccountsList from "Components/CRM/Account/MyAccountsList";
 
 class crm_account extends Component {
   constructor(props) {
     super(props);
   }
   render() {
-    const { match } = this.props;
     return (
       <React.Fragment>
         <Helmet>
@@ -26,9 +24,8 @@ class crm_account extends Component {
         </Helmet>
         <PageTitleBar
           title={<IntlMessages id="sidebar.accounts" />}
-          match={match}
+          createLink="/crm/new/account"
         />
-        <MyAccountsList />
         <AccountsList />
       </React.Fragment>
     );

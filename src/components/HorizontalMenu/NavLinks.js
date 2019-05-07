@@ -2,60 +2,28 @@
 export default {
   crm: [
     {
-      menu_title: "Leads",
+      menu_title: "sidebar.leads",
       menu_icon: "zmdi zmdi-account-circle text-primary",
-      child_routes: [
-        {
-          path: "/app/crm/leads",
-          menu_title: "View All Leads"
-        },
-        {
-          path: "/app/crm/new/lead",
-          menu_title: "Create New Lead"
-        }
-      ]
+      path: "/app/crm/leads",
+      child_routes: null
     },
     {
-      menu_title: "Customers",
+      menu_title: "sidebar.customers",
       menu_icon: "zmdi zmdi-accounts-outline text-primary",
-      child_routes: [
-        {
-          path: "/app/crm/customers",
-          menu_title: "View All Customers"
-        },
-        {
-          path: "/app/crm/new/customer",
-          menu_title: "Create New Customer"
-        }
-      ]
+      path: "/app/crm/customers",
+      child_routes: null
     },
     {
-      menu_title: "Accounts",
+      menu_title: "sidebar.accounts",
       menu_icon: "zmdi zmdi-city-alt text-primary",
-      child_routes: [
-        {
-          path: "/app/crm/accounts",
-          menu_title: "View All Accounts"
-        },
-        {
-          path: "/app/crm/new/account",
-          menu_title: "Create New Account"
-        }
-      ]
+      path: "/app/crm/accounts",
+      child_routes: null
     },
     {
-      menu_title: "Deals",
+      menu_title: "sidebar.deals",
       menu_icon: "zmdi zmdi-case text-primary",
-      child_routes: [
-        {
-          path: "/app/crm/deals",
-          menu_title: "View All Deals"
-        },
-        {
-          path: "/app/crm/new/deal",
-          menu_title: "Create New Deal"
-        }
-      ]
+      path: "/app/crm/deals",
+      child_routes: null
     }
   ],
   project: [

@@ -41,18 +41,8 @@ class Header extends Component {
                   className="mr-15"
                   alt="site logo"
                   width="120"
-                  //height="35"
                 />
               </Link>
-              {/* <Link to="/" className="logo-normal">
-                <img
-                  src={require("Assets/img/appLogoText.png")}
-                  className="img-fluid"
-                  alt="site-logo"
-                  width="67"
-                  height="17"
-                />
-              </Link> */}
             </div>
             <ul className="list-inline mb-0 navbar-left">
               <QuickAdd />
@@ -65,7 +55,11 @@ class Header extends Component {
 
             <li className="list-inline-item">
               <Tooltip title="Settings" placement="bottom">
-                <IconButton aria-label="settings" href="/app/settings">
+                <IconButton
+                  className="text-white"
+                  aria-label="settings"
+                  href="/app/settings"
+                >
                   <i className="zmdi zmdi-settings" />
                 </IconButton>
               </Tooltip>
@@ -74,6 +68,7 @@ class Header extends Component {
             <li className="list-inline-item">
               <Tooltip title="Full Screen" placement="bottom">
                 <IconButton
+                  className="text-white"
                   aria-label="fullScreen"
                   onClick={() => this.toggleScreenFull()}
                 >

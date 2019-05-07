@@ -45,7 +45,7 @@ class ToDo extends Component {
       >
         <DropdownToggle nav className="p-0">
           <Tooltip title="To Do List" placement="bottom">
-            <IconButton aria-label="bell">
+            <IconButton className="text-white" aria-label="bell">
               <i className="zmdi zmdi-view-list" />
             </IconButton>
           </Tooltip>

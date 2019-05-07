@@ -21,7 +21,7 @@ const QuickLinks = ({ location }) => (
   >
     <DropdownToggle nav className="header-icon p-0">
       <Tooltip title="Quick Add" placement="bottom">
-        <i className="zmdi zmdi-plus" />
+        <i className="zmdi zmdi-plus text-white" />
       </Tooltip>
     </DropdownToggle>
     <DropdownMenu>

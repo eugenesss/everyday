@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 //sub components
-import MyDealsList from "Components/CRM/Deal/MyDealsList";
 import DealsList from "Components/CRM/Deal/DealsList";
 
 // page req
@@ -10,7 +9,7 @@ import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import IntlMessages from "Util/IntlMessages";
 
-import { getAllDeal, getMyDeal } from "Actions";
+// import { getAllDeal, getMyDeal } from "Actions";
 
 class crm_deal extends Component {
   /*   reloadTable() {
@@ -18,7 +17,6 @@ class crm_deal extends Component {
   } */
 
   render() {
-    const { match } = this.props;
     return (
       <React.Fragment>
         <Helmet>
@@ -27,9 +25,8 @@ class crm_deal extends Component {
         </Helmet>
         <PageTitleBar
           title={<IntlMessages id="sidebar.deals" />}
-          match={match}
+          createLink="/crm/new/deal"
         />
-        <MyDealsList />
         <DealsList />
       </React.Fragment>
     );

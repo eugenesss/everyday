@@ -33,7 +33,7 @@ class UserBlock extends Component {
       <UncontrolledDropdown nav className="list-inline-item cart-dropdown">
         <DropdownToggle nav className="p-0">
           <Tooltip title="User" placement="bottom">
-            <IconButton aria-label="user">
+            <IconButton className="text-white" aria-label="user">
               <i className="zmdi zmdi-face" />
             </IconButton>
           </Tooltip>
