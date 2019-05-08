@@ -40,7 +40,7 @@ class DealsList extends Component {
     return data;
   }
   render() {
-    const { allDeal, allDealLoading } = this.props;
+    const { allDeal, allDealLoading, title } = this.props;
     const data = allDeal && allDeal.map(deal => this.convertData(deal));
     const columns = [
       {
@@ -162,7 +162,7 @@ class DealsList extends Component {
     return (
       <RctCollapsibleCard fullBlock>
         <MUIDataTable
-          title={"All Deals"}
+          title={title}
           columns={columns}
           data={data}
           options={options}
