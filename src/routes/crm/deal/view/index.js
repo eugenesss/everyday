@@ -1,25 +1,24 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { viewDeal, viewDealEnd, deleteDeal } from "Actions";
+// import { viewDeal, viewDealEnd, deleteDeal } from "Actions";
 
 //Page Components
 import DealCard from "Components/CRM/Deal/DealCard";
+/* 
 import AccountCard from "Components/CRM/Account/AccountCard";
 import ContactCard from "Components/CRM/Contact/ContactCard";
 import { ActivityTab, RelatedTab, DetailsTab } from "Components/CRM/View/Tabs";
 import ContactSwipeable from "Components/CRM/View/ContactSwipeable";
-import SelectDealStage from "Components/CRM/Deal/Stage/SelectDealStage";
+import SelectDealStage from "Components/CRM/Deal/Stage/SelectDealStage"; */
 
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-import IntlMessages from "Util/IntlMessages";
 
 //Page Req
-import FullPageLoader from "Components/RctPageLoader/FullPageLoader";
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
-import ViewNote from "Components/CRM/Note/ViewNote";
 
 class crm_view_deal extends Component {
   constructor(props) {
@@ -28,8 +27,8 @@ class crm_view_deal extends Component {
   }
 
   componentWillMount() {
-    var id = this.props.match.params.id;
-    this.props.viewDeal(id);
+    /*     var id = this.props.match.params.id;
+    this.props.viewDeal(id); */
     setTimeout(() => {
       this.setState({
         loading: false
@@ -38,16 +37,7 @@ class crm_view_deal extends Component {
   }
 
   componentWillUnmount() {
-    this.props.viewDealEnd();
-  }
-  handleDelete() {
-    var id = this.props.match.params.id;
-    this.props.deleteDeal(id);
-    //Move to another page
-    this.setState({ loading: true });
-    setTimeout(() => {
-      this.props.history.push(`/ocrm/crm/deals`);
-    }, 400);
+    // this.props.viewDealEnd();
   }
 
   render() {
@@ -58,15 +48,15 @@ class crm_view_deal extends Component {
         <Helmet>
           <title>Everyday | View Deal</title>
         </Helmet>
-        <PageTitleBar title="View Deal" match={this.props.match} />
+        <PageTitleBar title="View Deal" createLink="/crm/new/deal" />
         {loading ? (
-          <FullPageLoader />
+          <RctPageLoader />
         ) : (
           <React.Fragment>
-            <div className="row">
-              <RctCollapsibleCard fullBlock colClasses="col-md-12">
-                <DealCard deal={dealView} />
-              </RctCollapsibleCard>
+            <RctCollapsibleCard fullBlock>
+              <DealCard />
+            </RctCollapsibleCard>
+            {/* <div className="row">
             </div>
             <div className="row">
               <RctCollapsibleCard
@@ -115,7 +105,7 @@ class crm_view_deal extends Component {
               <RelatedTab deal={dealView} />
               <ActivityTab />
               <DetailsTab deal={dealView} />
-            </ContactSwipeable>
+            </ContactSwipeable> */}
           </React.Fragment>
         )}
       </React.Fragment>
@@ -130,6 +120,6 @@ const mapStateToProps = ({ deal }) => {
 };
 
 export default connect(
-  mapStateToProps,
-  { viewDeal, viewDealEnd, deleteDeal }
+  null,
+  {}
 )(crm_view_deal);

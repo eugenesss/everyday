@@ -13,7 +13,8 @@ import {
   Async_crm_new_deal_component,
   Async_crm_single_lead,
   Async_crm_single_customer,
-  Async_crm_single_account
+  Async_crm_single_account,
+  Async_crm_single_deal
 } from "Components/AsyncComponent/AsyncComponent";
 
 export default class crmSwitcher extends Component {
@@ -61,6 +62,10 @@ export default class crmSwitcher extends Component {
             path={`${match.url}/deals`}
             component={Async_crm_deal_component}
           />
+          <Route
+            path={`${match.url}/deals/:id`}
+            component={Async_crm_single_deal}
+          />
 
           {/* ------- /Create ------- */}
           <Route
@@ -79,7 +84,6 @@ export default class crmSwitcher extends Component {
             path={`${match.url}/new/deal`}
             component={Async_crm_new_deal_component}
           />
-
           {/* ------- /404 ------- */}
           <Redirect to="/404" />
         </Switch>
