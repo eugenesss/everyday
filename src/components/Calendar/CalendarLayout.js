@@ -182,7 +182,6 @@ class CalendarLayout extends Component {
                 <RctCollapsibleCard customClasses={"center"}>
                   <Row className="justify-content-center">
                     <ReactCalendar
-                      hover={new Date}
                       value={this.state.selectedDate}
                       onClickDay={(e) => {this.onChangeDate(e)}}
                     />
