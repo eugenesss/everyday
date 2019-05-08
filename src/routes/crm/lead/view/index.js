@@ -4,13 +4,11 @@ import { connect } from "react-redux";
 
 // import { viewLead, viewLeadEnd, deleteLead } from "Actions";
 
-//Page Components
+//Lead Components
 import LeadCard from "Components/CRM/Lead/LeadCard";
-import LeadDetails from "Components/CRM/View/Details/LeadDetails";
+import LeadDetails from "Components/CRM/Lead/LeadDetails";
 import AddressDetails from "Components/CRM/View/Details/AddressDetails";
-//import DetailsDescription from "Components/CRM/View/Tabs/Details/DetailsDescription";
-// import ActivityTab from "Components/CRM/View/Tabs/Activity";
-// import ViewNote from "Components/CRM/Note/ViewNote";
+import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
 
 // Global Req
 import { Helmet } from "react-helmet";
@@ -54,48 +52,29 @@ class crm_view_lead extends Component {
             </Helmet>
             <PageTitleBar title="View Lead" createLink="/crm/new/lead" />
             <RctCollapsibleCard fullBlock>
-              <LeadCard lead={lead} loading={loading} />
+              <LeadCard
+                fullName="Lead One"
+                companyName="Company One"
+                status="Contacted"
+                ownerName="Admin Admin"
+              />
             </RctCollapsibleCard>
             <TabsWrapper>
-              <div
-                icon={
-                  <i className="zmdi-hc-lg zmdi zmdi-coffee text-success" />
-                }
-                label="DETAILS"
-              >
+              <div icon="zmdi-coffee text-success" label="DETAILS">
                 <React.Fragment>
-                  {/* 
-                <LeadDetails lead={leadView} />
-                <br />
-                <AddressDetails contact={contactView} />
-                <br />
-                <DetailsDescription related={contactView} />
-                 */}
+                  <LeadDetails />
+                  <AddressDetails />
+                  <DescriptionDetails />
                 </React.Fragment>
               </div>
 
-              <div
-                icon={
-                  <i className="zmdi-hc-lg zmdi zmdi-assignment text-primary" />
-                }
-                label="ACTIVITIES" /* contact={contactView} */
-              >
+              <div icon="zmdi-pizza text-warning" label="ACTIVITIES">
                 Activities
               </div>
-              <div
-                icon={
-                  <i className="zmdi-hc-lg zmdi zmdi-assignment text-primary" />
-                }
-                label="REMINDERS" /* contact={contactView} */
-              >
+              <div icon="zmdi-local-florist text-info" label="REMINDERS">
                 Reminders
               </div>
-              <div
-                icon={
-                  <i className="zmdi-hc-lg zmdi zmdi-assignment text-primary" />
-                }
-                label="NOTES" /* contact={contactView} */
-              >
+              <div icon="zmdi-assignment text-danger" label="NOTES">
                 {/*  <ViewNote /> */}
               </div>
             </TabsWrapper>

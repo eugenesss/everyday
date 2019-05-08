@@ -37,7 +37,7 @@ class ContactSwipeable extends Component {
             {children.map((child, key) => (
               <Tab
                 key={key}
-                icon={child.props.icon}
+                icon={<i className={`zmdi-hc-2x zmdi ${child.props.icon}`} />}
                 label={child.props.label}
               />
             ))}

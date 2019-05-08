@@ -1,69 +1,75 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { Badge } from "reactstrap";
-import UserAvatar from "Components/User/UserAvatar";
-import StatusLabel from "Components/CRM/Leads/LeadStatusBadge";
+import { Link } from "react-router-dom";
+import { getAppLayout } from "Helpers/helpers";
+import Avatar from "Components/Everyday/Avatar";
 
-const CustomerCard = ({ customer }) => {
+const CustomerCard = ({
+  fullName,
+  jobTitle,
+  account,
+  email,
+  mobile,
+  office,
+  fax,
+  ownerName
+}) => {
   return (
-    <div className="lazy-up">
-      <div className="card border-0" style={{ padding: "3% 6%" }}>
-        <div className="media">
-          <div className="media-left mr-50">
-            <UserAvatar user={contact} size={80} />
-          </div>
-          <div className="media-body ml-10">
-            <h3 className="mb-0">
-              {contact.firstName + " " + contact.lastName}
-            </h3>
-            <span className="text-muted fs-12 d-block">{contact.jobTitle}</span>
-            <span className="text-muted fs-14 mb-5 d-block">
-              <i className="zmdi zmdi-city-alt" />{" "}
-              {lead ? (
-                lead.companyName
-              ) : customer.account ? (
-                <NavLink to={`/ocrm/crm/accounts/${customer.account.id}`}>
-                  {customer.account.name}
-                </NavLink>
-              ) : null}
-            </span>
-            <span className="mb-10 fs-14 d-block">
-              {lead ? (
-                <div>
-                  <Badge className="bg-purple fs-10 mr-2" pill>
-                    Lead
-                  </Badge>{" "}
-                  <StatusLabel status={lead.status} />
-                </div>
-              ) : (
-                <Badge className="bg-rss fs-10" pill>
-                  Customer
-                </Badge>
-              )}
-            </span>
+    <div className="user-profile-widget">
+      <div className="py-70" style={{ background: "#fac257" }} />
+      <div style={{ padding: "1.25rem 6%" }}>
+        <div className="d-flex user-avatar">
+          <Avatar fullName={fullName} size={100} customClasses="mr-20 ml-15" />
+          <div className="user-info text-white pt-20">
+            <h1 className="mb-0">{fullName}</h1>
+            <span>{jobTitle}</span>
           </div>
         </div>
-        {Object.assign([], Object.entries(contact))
-          .filter(
-            field =>
-              !!field[1] &&
-              ["mobile", "office", "fax", "emailAddress"].includes(field[0])
-          )
-          .map(val => (
-            <div
-              key={val}
-              className="card-foot d-flex justify-content-between mt-10 fs-14"
-            >
-              <div className="text-capitalize">
-                {val[0] == "emailAddress" ? "Email" : val[0]}
-              </div>
-              <div>{val[1]}</div>
-            </div>
-          ))}
-        <div className="card-foot d-flex justify-content-between mt-10 fs-14">
-          <div>Owner</div>
-          <div>{lead ? lead.owner.fullName : customer.owner.fullName}</div>
-        </div>
+        <ul className="list-unstyled my-25">
+          {account && (
+            <li className="border-bottom py-10 d-flex align-items-center">
+              <i className="zmdi zmdi-city-alt mr-20 fs-12" />
+              <Link
+                to={`/${getAppLayout(location)}/crm/account/view/${account.id}`}
+              >
+                {account.name}
+              </Link>
+            </li>
+          )}
+          {email && (
+            <li className="border-bottom py-10 d-flex align-items-center">
+              <i className="zmdi zmdi-email mr-20 fs-12" />
+              <a href="mail-to:phoebe@gmail.com" className="fs-14 text-dark">
+                {email}
+              </a>
+            </li>
+          )}
+          {mobile && (
+            <li className="border-bottom py-10 d-flex align-items-center">
+              <i className="zmdi zmdi-phone mr-20 fs-14" />
+              <a href="tel:011234567890" className="fs-14 text-dark">
+                {mobile}
+              </a>
+            </li>
+          )}
+          {office && (
+            <li className="border-bottom py-10 fs-14 d-flex align-items-center">
+              <i className="zmdi zmdi-store mr-20 fs-14" />
+              {office}
+            </li>
+          )}
+          {fax && (
+            <li className="border-bottom py-10 fs-14 d-flex align-items-center">
+              <i className="zmdi zmdi-local-printshop mr-20 fs-14" />
+              {fax}
+            </li>
+          )}
+          {ownerName && (
+            <li className="border-bottom py-10 fs-14 d-flex align-items-center">
+              <i className="zmdi zmdi-account-box mr-20 fs-14" />
+              {ownerName}
+            </li>
+          )}
+        </ul>
       </div>
     </div>
   );

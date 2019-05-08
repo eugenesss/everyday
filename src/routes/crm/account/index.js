@@ -4,7 +4,10 @@ import { connect } from "react-redux";
 // page req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+import ListSummary from "Components/CRM/ListSummary/ListSummary";
+import ListSummaryItem from "Components/CRM/ListSummary/ListSummaryItem";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
+import ShowListSummaryButton from "Components/CRM/ListSummary/ShowListSummaryButton";
 
 //import { getAccount } from "Actions";
 
@@ -18,7 +21,8 @@ class crm_account extends Component {
     this.state = {
       dropdownOpen: false,
       nowShowing: "All Accounts",
-      options: ["All Accounts", "My Accounts", "Open Accounts"]
+      options: ["All Accounts", "My Accounts", "Open Accounts"],
+      showSummary: false
     };
   }
 
@@ -30,6 +34,11 @@ class crm_account extends Component {
   changeValue(newValue) {
     this.setState({ ...this.state, nowShowing: newValue });
   }
+  showSummary() {
+    this.setState(prevState => ({
+      showSummary: !prevState.showSummary
+    }));
+  }
 
   render() {
     return (
@@ -40,16 +49,47 @@ class crm_account extends Component {
         </Helmet>
         <PageTitleBar
           title={
-            <ListViewSelector
-              dropdownOpen={this.state.dropdownOpen}
-              toggle={this.toggle.bind(this)}
-              options={this.state.options}
-              nowShowing={this.state.nowShowing}
-              onChangeValue={this.changeValue.bind(this)}
-            />
+            <div className="d-flex">
+              <ListViewSelector
+                dropdownOpen={this.state.dropdownOpen}
+                toggle={this.toggle.bind(this)}
+                options={this.state.options}
+                nowShowing={this.state.nowShowing}
+                onChangeValue={this.changeValue.bind(this)}
+              />
+              <ShowListSummaryButton action={this.showSummary.bind(this)} />
+            </div>
           }
           createLink="/crm/new/account"
         />
+        {this.state.showSummary && (
+          <ListSummary>
+            <ListSummaryItem
+              heading={"New Lead"}
+              number={"10"}
+              positive={true}
+              percentage="20"
+            />
+            <ListSummaryItem
+              heading={"Cold Lead"}
+              number={"10"}
+              positive={false}
+              percentage="20"
+            />
+            <ListSummaryItem
+              heading={"Hot Lead"}
+              number={"10"}
+              positive={true}
+              percentage="20"
+            />
+            <ListSummaryItem
+              heading={"Open Leads"}
+              number={"10"}
+              positive={true}
+              percentage="20"
+            />
+          </ListSummary>
+        )}
         <AccountsList title={this.state.nowShowing} />
       </React.Fragment>
     );

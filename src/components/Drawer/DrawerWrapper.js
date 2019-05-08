@@ -13,12 +13,12 @@ import { Scrollbars } from "react-custom-scrollbars";
 /* import { DashboardView, ReportView } from "./listData";
 import ReportContent from "./ReportContent"; */
 
-const drawerWidth = 220;
+const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
     width: "100%",
-    height: `calc(100vh - 100px)`,
+    height: `calc(100vh - 200px)`,
     zIndex: -1,
     marginBottom: 20,
     overflow: "hidden"
@@ -30,6 +30,7 @@ const styles = theme => ({
     height: "100%"
   },
   appBar: {
+    //zIndex: theme.zIndex.drawer + 1,
     position: "absolute",
     width: `calc(100% - ${drawerWidth}px)`,
     zIndex: 90
@@ -80,8 +81,8 @@ class DrawerWrapper extends Component {
       <div className={classes.root}>
         <div className={classes.appFrame}>
           <AppBar className={classNames(classes.appBar)}>
-            <Toolbar className="bg-secondary">
-              <Typography variant="title" color="inherit" noWrap>
+            <Toolbar className="bg-warning">
+              <Typography variant="h6" color="inherit" noWrap>
                 {view}
               </Typography>
             </Toolbar>

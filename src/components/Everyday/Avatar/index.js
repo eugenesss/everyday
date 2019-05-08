@@ -24,7 +24,7 @@ const IconAvatar = ({ fullName, size, customClasses }) => {
   return (
     <Avatar
       className={`size-${size} rounded-circle ${customClasses}`}
-      style={{ fontSize: getFontSize(), margin: "auto" }}
+      style={{ fontSize: getFontSize() }}
     >
       {getInitials(fullName)}
     </Avatar>
