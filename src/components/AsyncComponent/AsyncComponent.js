@@ -120,6 +120,12 @@ export const Async_reminder_component = Loadable({
   loading: () => <RctPageLoader />
 });
 
+// calendar
+export const Async_calendar_component = Loadable({
+  loader: () => import("Routes/calendar"),
+  loading: () => <RctPageLoader />
+})
+
 // settings
 export const Async_setting_page_component = Loadable({
   loader: () => import("Routes/setting/setting_page"),

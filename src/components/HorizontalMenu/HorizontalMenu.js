@@ -75,6 +75,16 @@ class HorizontalMenu extends Component {
               Reports
             </NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink
+              to="/app/calendar/"
+              className="nav-link no-arrow"
+              activeClassName="active"
+            >
+              <i className="zmdi zmdi-calendar text-secondary" />
+              Calendar
+            </NavLink>
+          </li>
           {/* <li className="nav-item">
             <NavLink
               to="/app/tasks/"
