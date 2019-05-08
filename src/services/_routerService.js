@@ -4,7 +4,8 @@ import {
   Async_proj_component,
   Async_report_component,
   Async_task_component,
-  Async_reminder_component
+  Async_reminder_component,
+  Async_calendar_component
 } from "Components/AsyncComponent/AsyncComponent";
 import Crm from "Routes/crm";
 import Accounting from "Routes/accounting";
@@ -38,6 +39,10 @@ export default [
   {
     path: "reminders",
     component: Async_reminder_component
+  },
+  {
+    path: "calendar",
+    component: Async_calendar_component
   },
   {
     path: "settings",
