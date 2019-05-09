@@ -1,50 +1,56 @@
 import React from "react";
-import { Badge } from "reactstrap";
-import { Avatar } from "@material-ui/core";
+import Avatar from "Components/Everyday/Avatar";
 
-const AccountCard = ({ account }) => {
+const AccountCard = ({
+  name,
+  industry,
+  ownerName,
+  office,
+  fax,
+  address,
+  address2,
+  state,
+  city,
+  zip
+}) => {
   return (
-    <div className="lazy-up">
-      <div className="card border-0" style={{ padding: "3% 6%" }}>
-        <div className="media">
-          <div className="media-left mr-50 mb-10">
-            <Avatar className="size-80">
-              {account.name.charAt(0).toUpperCase()}
-            </Avatar>
-          </div>
-          <div className="media-body ml-10">
-            <h3 className="mb-0">{account.name}</h3>
-            <span className="text-muted fs-14 mb-0 d-block">
-              {account.industry && account.industry.name}
-            </span>
-            <span className="text-muted fs-12 mb-5 d-block">
-              {account.address} {account.address2}
-            </span>
-            <span className="mb-10 fs-14 d-block">
-              <Badge className="bg-orange fs-10 mr-2" pill>
-                Account
-              </Badge>
-            </span>
+    <div className="user-profile-widget">
+      <div className="py-70" style={{ background: "#e46464" }} />
+      <div style={{ padding: "1.25rem 6%" }}>
+        <div className="d-flex user-avatar">
+          <Avatar fullName={name} size={100} customClasses="mr-20 ml-15" />
+          <div className="user-info text-white pt-20">
+            <h1 className="mb-0">{name}</h1>
+            <span>{industry}</span>
           </div>
         </div>
-        {Object.assign([], Object.entries(account))
-          .filter(
-            field =>
-              !!field[1] && ["office", "fax", "website"].includes(field[0])
-          )
-          .map(val => (
-            <div
-              key={val}
-              className="card-foot d-flex justify-content-between mt-10 fs-14"
-            >
-              <div className="text-capitalize">{val[0]}</div>
-              <div>{val[1]}</div>
-            </div>
-          ))}
-        <div className="card-foot d-flex justify-content-between mt-10 fs-14">
-          <div>Owner</div>
-          <div>{account.owner.firstName + " " + account.owner.lastName}</div>
-        </div>
+        <ul className="list-unstyled my-25">
+          {office && (
+            <li className="border-bottom py-10 fs-14 d-flex align-items-center">
+              <i className="zmdi zmdi-phone mr-20 fs-14" />
+              {office}
+            </li>
+          )}
+          {fax && (
+            <li className="border-bottom py-10 fs-14 d-flex align-items-center">
+              <i className="zmdi zmdi-local-printshop mr-20 fs-14" />
+              {fax}
+            </li>
+          )}
+          {address && (
+            <li className="border-bottom py-10 fs-14 d-flex align-items-center">
+              <i className="zmdi zmdi-pin-drop mr-20 fs-14" />
+              {`${address}, ${address2}`} <br />
+              {`${state}, ${city}, ${zip}`}
+            </li>
+          )}
+          {ownerName && (
+            <li className="border-bottom py-10 fs-14 d-flex align-items-center">
+              <i className="zmdi zmdi-account-box mr-20 fs-14" />
+              {ownerName}
+            </li>
+          )}
+        </ul>
       </div>
     </div>
   );

@@ -1,16 +1,16 @@
 import React from "react";
 import moment from "moment";
 
-const CreatedBy = ({ createdBy, createdAt }) => {
+const NameTimeStamp = ({ name, timeStamp }) => {
   return (
     <React.Fragment>
-      {createdBy}
+      {name}
       <br />
       <span style={{ fontSize: "10px", fontWeight: 300 }}>
-        {moment(createdAt).format("MMMM Do YYYY, h:mma")}
+        {moment(timeStamp, "dd mm yyyy hh:mm").format("MMMM Do YYYY, h:mma")}
       </span>
     </React.Fragment>
   );
 };
 
-export default CreatedBy;
+export default NameTimeStamp;

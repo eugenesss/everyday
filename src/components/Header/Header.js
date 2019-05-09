@@ -38,7 +38,7 @@ class Header extends Component {
             <div className="site-logo">
               <Link to="/" className="logo-mini">
                 <img
-                  src={require("Assets/img/appLogo_light.png")}
+                  src={require("Assets/img/appLogo_yellow.png")}
                   className="mr-15"
                   alt="site logo"
                   width="120"

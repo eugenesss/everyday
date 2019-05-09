@@ -1,42 +1,26 @@
 import React from "react";
-import DetailsHeader from "./DetailsHeader";
-import { Table } from "reactstrap";
+import DetailsHeader from "Components/CRM/View/Details/DetailsHeader";
+import SingleDetail from "Components/CRM/View/Details/SingleDetail";
+import DetailsTable from "Components/CRM/View/Details/DetailsTable";
 
 const AddressDetails = ({ contact }) => {
   return (
-    <React.Fragment>
+    <div className="pb-10">
       <DetailsHeader title="Address Details" />
-      <Table className="b-0" borderless>
-        <tbody>
-          <tr>
-            <td className="text-right">
-              <strong>Address</strong>
-            </td>
-            <td colSpan={5}>contact</td>
-          </tr>
-          <tr>
-            <td className="text-right">
-              <strong>Address 2</strong>
-            </td>
-            <td colSpan={5}>add2</td>
-          </tr>
-          <tr>
-            <td className="text-right">
-              <strong>City</strong>
-            </td>
-            <td>city</td>
-            <td className="text-right">
-              <strong>State</strong>
-            </td>
-            <td>state</td>
-            <td className="text-right">
-              <strong>Zip</strong>
-            </td>
-            <td>zip</td>
-          </tr>
-        </tbody>
-      </Table>
-    </React.Fragment>
+      <DetailsTable>
+        <tr>
+          <SingleDetail title="Address" value="Address 1" colSpan={5} />
+        </tr>
+        <tr>
+          <SingleDetail title="Address 2" value="Address 2" colSpan={5} />
+        </tr>
+        <tr>
+          <SingleDetail title="City" value="source" />
+          <SingleDetail title="State" value="jobTitle" />
+          <SingleDetail title="Zip" value="jobTitle" />
+        </tr>
+      </DetailsTable>
+    </div>
   );
 };
 
