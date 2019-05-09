@@ -68,7 +68,7 @@ class crm_view_lead extends Component {
                 </React.Fragment>
               </div>
 
-              <div icon="zmdi-pizza text-warning" label="ACTIVITIES">
+              <div icon="zmdi-pizza text-warning" label="EVENTS">
                 Activities
               </div>
               <div icon="zmdi-local-florist text-info" label="REMINDERS">

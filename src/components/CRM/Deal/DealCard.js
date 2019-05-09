@@ -4,28 +4,27 @@ import NumberFormat from "react-number-format";
 import DealTypeBadge from "Components/CRM/Deal/DealTypeBadge";
 import LeadSourceBadge from "Components/CRM/Leads/LeadSourceBadge"; */
 
-const DealCard = ({ deal }) => {
+const DealCard = ({ name, stage, chance, type, ownerName, amount }) => {
   return (
     <div className="lazy-up">
       <div
         className="card text-white"
-        style={{ padding: "3% 6%", background: "#9e7fb3" }}
+        style={{ padding: "2% 4%", background: "#3c537b" }}
       >
         <div className="media">
           <div className="media-body d-flex justify-content-between mlr-10">
             <div className="mt-15">
-              <h1 className="mb-10">DealName</h1>
+              <h1 className="mb-10">{name}</h1>
               <p className="mb-5 d-block">
-                <span className="mr-1">Negotiation - 60%</span>
-                <span className="mr-1">New Business</span>
-                <span className="mr-1">Referral</span>
+                <span className="mr-1">{`${stage} - ${chance}%`}</span>
+                <span className="mr-1">{type}</span>
               </p>
-              <span className="d-block fs-12">Owner - admin admin</span>
+              <span className="d-block fs-12">Owner - {ownerName}</span>
             </div>
             <div className="mt-30">
               <h1 className="text-white">
                 <NumberFormat
-                  value={10000}
+                  value={amount}
                   displayType={"text"}
                   thousandSeparator={true}
                   prefix={"$"}

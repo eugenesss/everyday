@@ -16,7 +16,7 @@ import QuickLinks from "./QuickLinks";
 import QuickAdd from "./QuickAdd";
 import Notifications from "./Notifications";
 import UserBlock from "./UserBlock";
-import ToDo from "./ToDo";
+// import ToDo from "./ToDo";
 import MiniCalendar from "./MiniCalendar";
 
 class Header extends Component {
@@ -52,7 +52,7 @@ class Header extends Component {
           </div>
           <ul className="navbar-right list-inline mb-0">
             <Notifications />
-            <ToDo />
+            {/* <ToDo /> */}
             <MiniCalendar />
             <li className="list-inline-item">
               <Tooltip title="Settings" placement="bottom">

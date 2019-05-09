@@ -10,8 +10,8 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 
 //Page Req
-import DealStageContent from "./DealStageContent";
-import DealStageIndicatorForm from "./DealStageIndicatorForm";
+// import DealStageContent from "./DealStageContent";
+// import DealStageIndicatorForm from "./DealStageIndicatorForm";
 
 class SelectDealStage extends Component {
   state = {
@@ -149,7 +149,7 @@ class SelectDealStage extends Component {
 
         <div>
           <div className="row" style={{ padding: "2% 2%" }}>
-            <div className="col-md-6">
+            {/*  <div className="col-md-6">
               {" "}
               <DealStageIndicatorForm />
             </div>
@@ -158,7 +158,7 @@ class SelectDealStage extends Component {
                 step={activeStep}
                 desc={steps[activeStep].description}
               />
-            </div>
+            </div> */}
           </div>
           <div className="pl-40 mb-20">
             <Button

@@ -67,17 +67,15 @@ class crm_view_customer extends Component {
             </div>
             <TabsWrapper>
               <div icon="zmdi-coffee text-success" label="DETAILS">
-                <React.Fragment>
-                  <CustomerDetails />
-                  <AddressDetails />
-                  <DescriptionDetails />
-                </React.Fragment>
+                <CustomerDetails />
+                <AddressDetails />
+                <DescriptionDetails />
               </div>
 
               <div icon="zmdi-drink text-secondary" label="RELATED">
                 Related
               </div>
-              <div icon="zmdi-pizza text-warning" label="ACTIVITIES">
+              <div icon="zmdi-pizza text-warning" label="EVENTS">
                 Activities
               </div>
               <div icon="zmdi-local-florist text-info" label="REMINDERS">
