@@ -14,15 +14,14 @@ class Reports extends Component {
   }
   render() {
     return (
-      <div className="saas-dashboard">
+      <div className="todo-dashboard">
         <Helmet>
           <title>Everyday | Reports</title>
           <meta name="description" content="Everyday Informational Reports" />
         </Helmet>
-        <PageTitleBar title={<IntlMessages id="sidebar.reports" />} />
-        <RctCollapsibleCard fullBlock>
-          <ReportDrawer />
-        </RctCollapsibleCard>
+        {/* <PageTitleBar title={<IntlMessages id="sidebar.reports" />} /> */}
+        <ReportDrawer />
+        <RctCollapsibleCard fullBlock />
       </div>
     );
   }

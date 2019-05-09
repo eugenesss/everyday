@@ -59,44 +59,20 @@ export default {
     {
       menu_title: "Quotations",
       menu_icon: "zmdi zmdi-receipt text-success",
-      child_routes: [
-        {
-          path: "/app/acct/quotations",
-          menu_title: "View Quotations"
-        },
-        {
-          path: "/app/acct/new/quotation",
-          menu_title: "New Quotations"
-        }
-      ]
+      path: "/app/acct/quotations",
+      child_routes: null
     },
     {
       menu_title: "Invoices",
       menu_icon: "zmdi zmdi-shopping-cart text-success",
-      child_routes: [
-        {
-          path: "/app/acct/invoices",
-          menu_title: "View Invoices"
-        },
-        {
-          path: "/app/acct/new/invoice",
-          menu_title: "New Invoices"
-        }
-      ]
+      path: "/app/acct/invoices",
+      child_routes: null
     },
     {
       menu_title: "Credit Note",
       menu_icon: "zmdi zmdi-store text-success",
-      child_routes: [
-        {
-          path: "/app/acct/credit_note",
-          menu_title: "View Credit Note"
-        },
-        {
-          path: "/app/new/credit_note",
-          menu_title: "New Credit Note"
-        }
-      ]
+      path: "/app/acct/credit_note",
+      child_routes: null
     }
   ]
 };
