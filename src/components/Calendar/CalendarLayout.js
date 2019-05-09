@@ -9,7 +9,9 @@ import ReactCalendar from 'react-calendar'
 import moment from 'moment';
 
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
-import CalendarToolbar from "Components/Calendar/CalendarToolbar"
+import CalendarToolbar from "Components/Calendar/CalendarToolbar";
+import OnSelectSlotDialog from "Components/Calendar/OnSelectSlotDialog";
+import AddEventDialog from "Components/Calendar/AddEventDialog";
 
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -18,7 +20,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import Popover from '@material-ui/core/Popover';
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -50,15 +51,65 @@ class CalendarLayout extends Component {
     super(props);
     this.handleViewIndexChange = this.handleViewIndexChange.bind(this)
     this.state = {
-      onClickMenu: false,
+      onClickDialog: false,
+      addEventDialog: false,
       selectedDate: new Date(),
-      events: [],
+      eventToAdd: null,
       viewIndex: 0,
       index: "My Calendar",
       indexOptions: [
         "My Calendar",
         "Company Calendar",
-      ]
+      ],
+      myEvents: [
+        {
+          'title': 'My Event All Day 1',
+          'allDay': true,
+          'start': new Date(2019, 4, 10),
+          'end': new Date(2019, 4, 10)
+        },
+        {
+          'title': 'My Event 2',
+          'start': new Date(2019, 4, 13, 5, 30, 0),
+          'end': new Date(2019, 4, 20, 9, 45, 0)
+        },
+        {
+          'title': 'My Event 3',
+          'start': new Date(2019, 4, 26, 7, 0, 0),
+          'end': new Date(2019, 4, 26, 9, 0, 0),
+          desc: 'Big conference for important people'
+        }
+        
+      ],
+      companyEvents: [
+        {
+          'title': 'My Event All Day 1',
+          'allDay': true,
+          'start': new Date(2019, 4, 10),
+          'end': new Date(2019, 4, 10)
+        },
+        {
+          'title': 'Company Event All Day 1',
+          'allDay': true,
+          'start': new Date(2019, 4, 6),
+          'end': new Date(2019, 4, 6)
+        },
+        {
+          'title': 'My Event 2',
+          'start': new Date(2019, 4, 13, 5, 30, 0),
+          'end': new Date(2019, 4, 20, 9, 45, 0)
+        },
+        {
+          'title': 'Company Event 2',
+          'start': new Date(2019, 4, 7),
+          'end': new Date(2019, 4, 7)
+        },
+        {
+          'title': 'Company Event 3',
+          'start': new Date(2019, 4, 14),
+          'end': new Date(2019, 4, 15)
+        },
+      ],
     };
   }
 
@@ -84,12 +135,22 @@ class CalendarLayout extends Component {
   }
 
   //Calendar Slot
-  onClickSlot = (event, target) => {
-    this.setState({ onClickMenu: true, });
+  handleSlotDialog = (event) => {
+    this.setState({ onClickDialog: true, eventToAdd: event});
   };
-  handleClose = () => {
-    this.setState({ onClickMenu: false, });
+  handleCloseSlotDialog = () => {
+    this.setState({ onClickDialog: false, });
   };
+
+  //Add Event
+  handleAddEventDialog = () => {
+    this.setState({ onClickDialog: false, addEventDialog: true });
+  }
+  handleCloseAddEventDialog = () => {
+    this.setState({ onClickDialog: false, addEventDialog: false });
+  }
+
+
 
   render() {
     const { match, classes } = this.props;
@@ -135,7 +196,6 @@ class CalendarLayout extends Component {
                 <Tab label="Month"/>
                 <Tab label="Week"/>
                 <Tab label="Day"/>
-                <Tab label="Agenda"/>
               </Tabs>
             </AppBar>
           </Col>
@@ -149,12 +209,12 @@ class CalendarLayout extends Component {
             <RctCollapsibleCard>
               <BigCalendar
                 selectable
-                events={this.state.events}
+                events={this.state.index == "My Calendar" ? this.state.myEvents : this.state.companyEvents}
                 views={["month"]}
                 step={30}
                 showMultiDayTimes
                 defaultDate={new Date}
-                onSelectSlot={this.onClickSlot}
+                onSelectSlot={this.handleSlotDialog}
                 components={{
                   toolbar: CalendarToolbar
                 }}
@@ -164,12 +224,14 @@ class CalendarLayout extends Component {
           <TabContainer>
             <RctCollapsibleCard>
               <BigCalendar
-                events={this.state.events}
+                selectable
+                events={this.state.index == "My Calendar" ? this.state.myEvents : this.state.companyEvents}
                 defaultView={"week"}
                 views={["week"]}
                 step={30}
                 showMultiDayTimes
                 defaultDate={new Date}
+                onSelectSlot={this.handleSlotDialog}
                 components={{
                   toolbar: CalendarToolbar
                 }}
@@ -191,13 +253,15 @@ class CalendarLayout extends Component {
               <Col>
                 <RctCollapsibleCard>
                   <BigCalendar
+                    selectable
                     date={this.state.selectedDate}
                     onNavigate={(date) => { this.setState({ selectedDate: date })}}
-                    events={this.state.events}
+                    events={this.state.index == "My Calendar" ? this.state.myEvents : this.state.companyEvents}
                     defaultView={"day"}
                     views={["day"]}
                     step={30}
                     showMultiDayTimes
+                    onSelectSlot={this.handleSlotDialog}
                     components={{
                       toolbar: CalendarToolbar
                     }}
@@ -206,22 +270,18 @@ class CalendarLayout extends Component {
               </Col>
             </Row>
           </TabContainer>
-          <TabContainer>
-            <RctCollapsibleCard>
-              <BigCalendar
-                events={this.state.events}
-                defaultView={"agenda"}
-                views={["agenda"]}
-                step={30}
-                showMultiDayTimes
-                defaultDate={new Date()}
-                components={{
-                  toolbar: CalendarToolbar
-                }}
-              />
-            </RctCollapsibleCard>
-          </TabContainer>
         </SwipeableViews>
+        <OnSelectSlotDialog
+          open={this.state.onClickDialog}
+          handleClose={this.handleCloseSlotDialog.bind(this)}
+          eventToAdd={this.state.eventToAdd}
+          handleAddEventDialog={this.handleAddEventDialog.bind(this)}
+        />
+        <AddEventDialog
+          open={this.state.addEventDialog}
+          handleClose={this.handleCloseAddEventDialog.bind(this)}
+          eventToAdd={this.state.eventToAdd}
+        />
       </React.Fragment>
     );
   }

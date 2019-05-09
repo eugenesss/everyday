@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu } from "reactstrap";
 import ReactCalendar from 'react-calendar'
 import { withRouter } from "react-router-dom";
-import { Redirect } from 'react-router-dom'
 
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";

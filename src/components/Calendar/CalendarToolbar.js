@@ -1,7 +1,9 @@
 import React from "react";
-import Icon from '@material-ui/core/Icon';
 import { connect } from "react-redux";
 import { Col, Row } from "reactstrap";
+
+import DateConvert from "Components/Date";
+
 import Button from '@material-ui/core/Button';
 import Fab from "@material-ui/core/Fab";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -9,74 +11,7 @@ import Chip from '@material-ui/core/Chip';
 
 
 const CalendarToolbar = (toolbar) => {
-  var convertDate = () => {
-    var today = new Date()
-    var date = today.getDate();
-    var year = today.getFullYear();
-    var month;
-    switch (today.getMonth() + 1) {
-      case 1:
-        month = "Jan"
-        break;
-      case 2:
-        month = "Feb"
-        break;
-      case 3:
-        month = "Mar"
-        break;
-      case 4:
-        month = "Apr"
-        break;
-      case 5:
-        month = "May"
-        break;
-      case 6:
-        month = "Jun"
-        break;
-      case 7:
-        month = "Jul"
-        break;
-      case 8:
-        month = "Aug"
-        break;
-      case 9:
-        month = "Sep"
-        break;
-      case 10:
-        month = "Oct"
-        break;
-      case 11:
-        month = "Nov"
-        break;
-      case 12:
-        month = "Dec"
-        break;
-    }
-    var day;
-    switch (today.getDay()) {
-      case 0:
-        day = "Sunday";
-        break;
-      case 1:
-        day = "Monday";
-        break;
-      case 2:
-         day = "Tuesday";
-        break;
-      case 3:
-        day = "Wednesday";
-        break;
-      case 4:
-        day = "Thursday";
-        break;
-      case 5:
-        day = "Friday";
-        break;
-      case 6:
-        day = "Saturday";
-    }
-    return (day + " - " + date + " / " + month + " / " + year)
-  }
+  var today = new Date()
 
   const goToToday = () => {
     toolbar.onNavigate('TODAY');
@@ -93,10 +28,10 @@ const CalendarToolbar = (toolbar) => {
           <div className="toolbar-container mb-10">
             <Row>
               <Col>
-                  <Button variant="contained" color="primary" onClick={goToToday} className="mr-10">
-                    Today
-                  </Button>
-                  <Chip label={convertDate()} variant="outlined" />
+                <Button variant="contained" color="primary" onClick={goToToday} className="mr-10">
+                  Today
+                </Button>
+                <Chip label={<DateConvert dd={today.getDate()} mm={today.getMonth()} yyyy={today.getFullYear()} d={today.getDay()}/>} variant="outlined" />
               </Col>
               <Col>
                 <h2 className="text-right">{toolbar.label}</h2>
@@ -110,7 +45,7 @@ const CalendarToolbar = (toolbar) => {
                 <Button variant="contained" color="primary" onClick={goToToday} className="mr-10">
                   Today
                 </Button>
-                <Chip label={convertDate()} variant="outlined" />
+                <Chip label={<DateConvert dd={today.getDate()} mm={today.getMonth()} yyyy={today.getFullYear()} d={today.getDay()}/>} variant="outlined" />
               </Col>
               <Col>
                 <h2 className="text-center">{toolbar.label}</h2>
