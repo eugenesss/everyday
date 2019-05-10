@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 
-class user_management extends Component {
+class Users extends Component {
   state = {};
   render() {
     return (
       <div>
-        <p>user_management</p>
+        <p>Users</p>
       </div>
     );
   }
 }
 
-export default user_management;
+export default Users;

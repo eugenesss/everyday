@@ -127,11 +127,47 @@ export const Async_calendar_component = Loadable({
 })
 
 // settings
-export const Async_setting_page_component = Loadable({
-  loader: () => import("Routes/setting/setting_page"),
+// General
+export const Async_setting_gen_companyDetails_component = Loadable({
+  loader: () => import("Routes/setting/general/companyDetails"),
   loading: () => <RctPageLoader />
 });
-export const Async_setting_user_component = Loadable({
-  loader: () => import("Routes/setting/user"),
+export const Async_setting_gen_personalInformation_component = Loadable({
+  loader: () => import("Routes/setting/general/personalInformation"),
+  loading: () => <RctPageLoader />
+});
+// User & Controls
+export const Async_setting_user_users_component = Loadable({
+  loader: () => import("Routes/setting/users-and-controls/users"),
+  loading: () => <RctPageLoader />
+});
+export const Async_setting_user_rolesPermissions_component = Loadable({
+  loader: () => import("Routes/setting/users-and-controls/roles-and-permissions"),
+  loading: () => <RctPageLoader />
+});
+// Accounting
+export const Async_setting_acc_creditNote_component = Loadable({
+  loader: () => import("Routes/setting/accounting/creditNote"),
+  loading: () => <RctPageLoader />
+});
+export const Async_setting_acc_general_component = Loadable({
+  loader: () => import("Routes/setting/accounting/general"),
+  loading: () => <RctPageLoader />
+});
+export const Async_setting_acc_invoice_component = Loadable({
+  loader: () => import("Routes/setting/accounting/invoice"),
+  loading: () => <RctPageLoader />
+});
+export const Async_setting_acc_quotation_component = Loadable({
+  loader: () => import("Routes/setting/accounting/quotation"),
+  loading: () => <RctPageLoader />
+});
+// Cron Job
+export const Async_setting_cron_leadReminders_component = Loadable({
+  loader: () => import("Routes/setting/cronJob/LeadReminders"),
+  loading: () => <RctPageLoader />
+});
+export const Async_setting_cron_quotationReminders_component = Loadable({
+  loader: () => import("Routes/setting/cronJob/quotationReminders"),
   loading: () => <RctPageLoader />
 });
