@@ -32,7 +32,7 @@ class system_settings extends Component {
                 >
                   Personal Information
                 </NavLink>
-                <NavLink to="/app/settings/" className="fs-18 no-arrow">
+                <NavLink to="/app/settings/" className="fs-15 no-arrow">
                   Company Details
                 </NavLink>
               </SettingList>
@@ -45,7 +45,7 @@ class system_settings extends Component {
                 >
                   Users
                 </NavLink>
-                <NavLink to="/app/settings/" className="fs-18 no-arrow">
+                <NavLink to="/app/settings/" className="fs-15 no-arrow">
                   Roles & Permissions
                 </NavLink>
               </SettingList>
@@ -58,13 +58,13 @@ class system_settings extends Component {
                 >
                   General
                 </NavLink>
-                <NavLink to="/app/settings/" className="fs-18 no-arrow">
+                <NavLink to="/app/settings/" className="fs-15 no-arrow">
                   Quotation
                 </NavLink>
-                <NavLink to="/app/settings/" className="fs-18 no-arrow">
+                <NavLink to="/app/settings/" className="fs-15 no-arrow">
                   Invoice
                 </NavLink>
-                <NavLink to="/app/settings/" className="fs-18 no-arrow">
+                <NavLink to="/app/settings/" className="fs-15 no-arrow">
                   Credit Note
                 </NavLink>
               </SettingList>
@@ -77,7 +77,7 @@ class system_settings extends Component {
                 >
                   Lead Reminders
                 </NavLink>
-                <NavLink to="/app/settings/" className="fs-18 no-arrow">
+                <NavLink to="/app/settings/" className="fs-15 no-arrow">
                   Quotation
                 </NavLink>
               </SettingList>

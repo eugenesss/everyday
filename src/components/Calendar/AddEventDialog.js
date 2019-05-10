@@ -38,24 +38,15 @@ class AddEventDialog extends Component {
 
   render() {
     const { classes, handleClose, eventToAdd, ...other } = this.props;
-    var start
-    var sDate
-    var sMonth
-    var sYear
-    var sDay
-    var end
-    var eDate
-    var eMonth
-    var eYear
-    var dateStart
-    var dateEnd
+    var start, sDate, sMonth, sYear, sDay, dateStart
+    var end, eDate, eMonth, eYear, dateEnd
     if(eventToAdd != null){
       start = eventToAdd.start
       sDate = start.getDate()
       sMonth = start.getMonth() + 1
       sYear = start.getFullYear()
       sDay = start.getDay()
-      end = eventToAdd.start
+      end = eventToAdd.end
       eDate = end.getDate()
       eMonth = end.getMonth() + 1
       eYear = end.getFullYear()
@@ -173,6 +164,19 @@ class AddEventDialog extends Component {
                 variant="outlined"
               />
             </Row>
+            <Row className="justify-content-end" style={{marginRight: "0.5rem"}}>
+              <span style={{display: "inline-block"}}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="text-white mb-10 mt-20"
+                  onClick={handleClose}
+                  //disabled={}
+                >
+                  Add
+                </Button>
+              </span>
+        </Row> 
           </Form>
         </DialogContent>
       </Dialog>
