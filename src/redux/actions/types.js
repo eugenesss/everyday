@@ -22,3 +22,9 @@ export const CHANGE_LEAD_VIEW = "CHANGE_LEAD_VIEW";
 export const SHOW_ALL_LEADS = "SHOW_ALL_LEADS";
 export const SHOW_MY_LEADS = "SHOW_MY_LEADS";
 export const SHOW_OPEN_LEADS = "SHOW_OPEN_LEADS";
+
+/**
+ * Report Actions
+ */
+export const CHANGE_REPORT_VIEW = "CHANGE_REPORT_VIEW";
+export const OPEN_NESTED_VIEW = "OPEN_NESTED_VIEW";

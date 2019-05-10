@@ -1,64 +1,85 @@
 import React from "react";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import Collapse from "@material-ui/core/Collapse";
 
-export const DashboardView = ({ toggleChange }) => {
-  return (
-    <List subheader={<ListSubheader>Dashboard View</ListSubheader>}>
-      <ListItem button onClick={() => toggleChange("Sales Dashboard")}>
-        <ListItemIcon>
-          <i className="zmdi zmdi-inbox zmdi-hc-lg" />
-        </ListItemIcon>
-        <ListItemText primary="Sales Dashboard" />
-      </ListItem>
-    </List>
-  );
-};
+import DrawerListCollapsible from "../DrawerComponent/DrawerListCollapsible";
+import DrawerListItem from "../DrawerComponent/DrawerListItem";
 
-export const ReportView = ({ toggleChange, openNestedReport, reportState }) => {
+export const AllReports = ({
+  nestedView,
+  openNestedView,
+  changeReportView
+}) => {
   return (
-    <List subheader={<ListSubheader>Reports View</ListSubheader>}>
-      <ListItem button onClick={() => toggleChange("Leads Report")}>
-        <ListItemText primary="Leads Report" />
-      </ListItem>
-      <ListItem button onClick={() => openNestedReport("deal")}>
-        <ListItemText primary="Deals Report" />
-        {reportState.deal ? (
-          <i className="zmdi zmdi-chevron-down zmdi-hc-lg" />
-        ) : (
-          <i className="zmdi zmdi-chevron-up zmdi-hc-lg" />
-        )}
-      </ListItem>
-      <Collapse
-        component="li"
-        in={reportState.deal}
-        timeout="auto"
-        unmountOnExit
+    <List subheader={<ListSubheader>All Reports</ListSubheader>}>
+      <DrawerListCollapsible
+        icon="zmdi-case"
+        title="Deals"
+        state={nestedView.deals}
+        openNested={() => openNestedView("deals")}
       >
-        <List component="div" disablePadding>
-          <ListItem
-            button
-            onClick={() => toggleChange("Deals Report")}
-            className="pl-40"
-          >
-            <ListItemText secondary="Overview" />
-          </ListItem>
-        </List>
-      </Collapse>
-
-      <ListItem button onClick={() => toggleChange("Accounts Report")}>
-        <ListItemText primary="Accounts Report" />
-      </ListItem>
-      <ListItem button onClick={() => toggleChange("Customers Report")}>
-        <ListItemText primary="Customers Report" />
-      </ListItem>
-      <ListItem button onClick={() => toggleChange("Individual Report")}>
-        <ListItemText primary="Individual Report" />
-      </ListItem>
+        <DrawerListItem
+          onClickListItem={() => changeReportView("All Deals", "allDeals")}
+          title="All Deals"
+          secondary
+        />
+      </DrawerListCollapsible>
+      <DrawerListCollapsible
+        icon="zmdi-account-circle"
+        title="Leads"
+        state={nestedView.leads}
+        openNested={() => openNestedView("leads")}
+      >
+        <DrawerListItem
+          onClickListItem={() =>
+            changeReportView("Leads Report", "leadsReport")
+          }
+          title="leads report"
+          secondary
+        />
+      </DrawerListCollapsible>
+      <DrawerListCollapsible
+        icon="zmdi-money-box"
+        title="Sales"
+        state={nestedView.sales}
+        openNested={() => openNestedView("sales")}
+      >
+        <DrawerListItem
+          onClickListItem={() =>
+            changeReportView("Sales Report", "salesReport")
+          }
+          title="Invoice Report"
+          secondary
+        />
+        <DrawerListItem
+          onClickListItem={() =>
+            changeReportView("Sales Report", "salesReport")
+          }
+          title="Total Income"
+          secondary
+        />
+        <DrawerListItem
+          onClickListItem={() =>
+            changeReportView("Sales Report", "salesReport")
+          }
+          title="Proposal Report"
+          secondary
+        />
+        <DrawerListItem
+          onClickListItem={() =>
+            changeReportView("Sales Report", "salesReport")
+          }
+          title="Total Value of Customers"
+          secondary
+        />
+      </DrawerListCollapsible>
+      <DrawerListItem
+        onClickListItem={() =>
+          changeReportView("Individual Report", "individual")
+        }
+        title="Individual"
+        icon="zmdi-account"
+      />
     </List>
   );
 };

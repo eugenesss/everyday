@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import IntlMessages from "Util/IntlMessages";
-import ReportDrawer from "Components/Report/ReportDrawer";
+import ReportDrawer from "Components/Report";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 
 class Reports extends Component {

@@ -57,19 +57,19 @@ export default {
   ],
   account: [
     {
-      menu_title: "Quotations",
+      menu_title: "sidebar.quotations",
       menu_icon: "zmdi zmdi-receipt text-success",
       path: "/app/acct/quotations",
       child_routes: null
     },
     {
-      menu_title: "Invoices",
+      menu_title: "sidebar.invoices",
       menu_icon: "zmdi zmdi-shopping-cart text-success",
       path: "/app/acct/invoices",
       child_routes: null
     },
     {
-      menu_title: "Credit Note",
+      menu_title: "sidebar.credit_note",
       menu_icon: "zmdi zmdi-store text-success",
       path: "/app/acct/credit_note",
       child_routes: null
