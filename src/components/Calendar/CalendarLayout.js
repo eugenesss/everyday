@@ -24,6 +24,16 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
+import { 
+  onChangeEventView,
+  onChangeCalendarView,
+  onChangeDayView,
+  showSelectedSlot,
+  hideSelectedSlot,
+  showCreateEvent,
+  hideCreateEvent,
+} from "Actions";
+
 function TabContainer({ children }) {
   return (
     <Typography component="div" style={{ paddingLeft: 8}}>
@@ -32,7 +42,6 @@ function TabContainer({ children }) {
   );
 }
 
-// let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment))
 
 const styles = theme => ({
@@ -44,131 +53,56 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     width: 500,
   },
+  tabs: {
+    marginLeft: 8
+  }
 });
 
 class CalendarLayout extends Component {
   constructor(props) {
     super(props);
-    this.handleViewIndexChange = this.handleViewIndexChange.bind(this)
-    this.state = {
-      onClickDialog: false,
-      addEventDialog: false,
-      selectedDate: new Date(),
-      eventToAdd: null,
-      viewIndex: 0,
-      index: "My Calendar",
-      indexOptions: [
-        "My Calendar",
-        "Company Calendar",
-      ],
-      myEvents: [
-        {
-          'title': 'My Event All Day 1',
-          'allDay': true,
-          'start': new Date(2019, 4, 10),
-          'end': new Date(2019, 4, 10)
-        },
-        {
-          'title': 'My Event 2',
-          'start': new Date(2019, 4, 13, 5, 30, 0),
-          'end': new Date(2019, 4, 20, 9, 45, 0)
-        },
-        {
-          'title': 'My Event 3',
-          'start': new Date(2019, 4, 26, 7, 0, 0),
-          'end': new Date(2019, 4, 26, 9, 0, 0),
-          desc: 'Big conference for important people'
-        }
-        
-      ],
-      companyEvents: [
-        {
-          'title': 'My Event All Day 1',
-          'allDay': true,
-          'start': new Date(2019, 4, 10),
-          'end': new Date(2019, 4, 10)
-        },
-        {
-          'title': 'Company Event All Day 1',
-          'allDay': true,
-          'start': new Date(2019, 4, 6),
-          'end': new Date(2019, 4, 6)
-        },
-        {
-          'title': 'My Event 2',
-          'start': new Date(2019, 4, 13, 5, 30, 0),
-          'end': new Date(2019, 4, 20, 9, 45, 0)
-        },
-        {
-          'title': 'Company Event 2',
-          'start': new Date(2019, 4, 7),
-          'end': new Date(2019, 4, 7)
-        },
-        {
-          'title': 'Company Event 3',
-          'start': new Date(2019, 4, 14),
-          'end': new Date(2019, 4, 15)
-        },
-      ],
-    };
   }
 
-  //My Calendar || Company Calendar
-  handleIndexChange(newValue) {
-    this.setState({ index: newValue });
+  componentDidMount() {
+    this.props.onChangeEventView("My Calendar")
   }
-
-  //Tab Index
-  handleViewIndexChange(event, value) {
-    this.setState({ viewIndex: value })
-  }
-  handleSwipeViewIndexChange(value) {
-    this.setState({ viewIndex: value })
-  }
-
-  //On Change Date To View (Day View)
-  onChangeDate(newDate) {
-    this.setState({ selectedDate: newDate })
-  }
-  handleNavigate(date, view, action) {
-    this.setState({ selectedDate: moment(date).toDate() })
-  }
-
-  //Calendar Slot
-  handleSlotDialog = (event) => {
-    this.setState({ onClickDialog: true, eventToAdd: event});
-  };
-  handleCloseSlotDialog = () => {
-    this.setState({ onClickDialog: false, });
-  };
-
-  //Add Event
-  handleAddEventDialog = () => {
-    this.setState({ onClickDialog: false, addEventDialog: true });
-  }
-  handleCloseAddEventDialog = () => {
-    this.setState({ onClickDialog: false, addEventDialog: false });
-  }
-
-
 
   render() {
-    const { match, classes } = this.props;
+    const { 
+      match, classes,
+
+      eventView,
+      eventViewOptions,
+      showEvents,
+      viewIndex,
+      dayView,
+      isSlotSelected,
+      slotSelected,
+      isCreateEvent,
+      eventToCreate,
+      
+      onChangeEventView,
+      onChangeCalendarView,
+      onChangeDayView,
+      showSelectedSlot,
+      hideSelectedSlot,
+      showCreateEvent,
+      hideCreateEvent,
+    } = this.props;
+
     return (
       <React.Fragment>
         <Row className={"align-items-center"}>
           <Col md={3}>
             <TextField
-              value={this.state.index}
-              error={!this.state.index}
-              required
+              value={eventView}
               fullWidth
-              id="Calendar"
               select
+              id="Calendar"
               label="Calendar"
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
-              onChange={e => this.handleIndexChange(e.target.value)}
+              onChange={e => onChangeEventView(e.target.value)}
               SelectProps={{
                 MenuProps: {
                   className: classes.menu,
@@ -177,18 +111,18 @@ class CalendarLayout extends Component {
               margin="normal"
               variant="outlined"
             >
-              {this.state.indexOptions.map(option => (
+              {eventViewOptions.map(option => (
                 <MenuItem key={option} value={option}>
                   {option}
                 </MenuItem>
               ))}
             </TextField>
           </Col>
-          <Col style={{marginLeft: 8}}>
+          <Col className={classes.tabs}>
             <AppBar position="static" color="default">
               <Tabs
-                value={this.state.viewIndex}
-                onChange={this.handleViewIndexChange}
+                value={viewIndex}
+                onChange={onChangeCalendarView}
                 indicatorColor="primary"
                 textColor="primary"
                 variant="fullWidth"
@@ -202,19 +136,19 @@ class CalendarLayout extends Component {
         </Row>
         <SwipeableViews
           axis={'x'}
-          index={this.state.viewIndex}
-          onChangeIndex={this.handleSwipeViewIndexChange}
+          index={viewIndex}
+          onChangeIndex={onChangeCalendarView}
         >
           <TabContainer>
             <RctCollapsibleCard>
               <BigCalendar
                 selectable
-                events={this.state.index == "My Calendar" ? this.state.myEvents : this.state.companyEvents}
+                events={showEvents}
                 views={["month"]}
                 step={30}
                 showMultiDayTimes
                 defaultDate={new Date}
-                onSelectSlot={this.handleSlotDialog}
+                onSelectSlot={showSelectedSlot}
                 components={{
                   toolbar: CalendarToolbar
                 }}
@@ -225,13 +159,13 @@ class CalendarLayout extends Component {
             <RctCollapsibleCard>
               <BigCalendar
                 selectable
-                events={this.state.index == "My Calendar" ? this.state.myEvents : this.state.companyEvents}
+                events={showEvents}
                 defaultView={"week"}
                 views={["week"]}
                 step={30}
                 showMultiDayTimes
                 defaultDate={new Date}
-                onSelectSlot={this.handleSlotDialog}
+                onSelectSlot={showSelectedSlot}
                 components={{
                   toolbar: CalendarToolbar
                 }}
@@ -244,8 +178,8 @@ class CalendarLayout extends Component {
                 <RctCollapsibleCard customClasses={"center"}>
                   <Row className="justify-content-center">
                     <ReactCalendar
-                      value={this.state.selectedDate}
-                      onClickDay={(e) => {this.onChangeDate(e)}}
+                      value={dayView}
+                      onClickDay={(e) => { onChangeDayView(e) }}
                     />
                   </Row>
                 </RctCollapsibleCard>
@@ -254,14 +188,14 @@ class CalendarLayout extends Component {
                 <RctCollapsibleCard>
                   <BigCalendar
                     selectable
-                    date={this.state.selectedDate}
-                    onNavigate={(date) => { this.setState({ selectedDate: date })}}
-                    events={this.state.index == "My Calendar" ? this.state.myEvents : this.state.companyEvents}
+                    date={dayView}
+                    onNavigate={(date) => { onChangeDayView(date) }}
+                    events={showEvents}
                     defaultView={"day"}
                     views={["day"]}
                     step={30}
                     showMultiDayTimes
-                    onSelectSlot={this.handleSlotDialog}
+                    onSelectSlot={showSelectedSlot}
                     components={{
                       toolbar: CalendarToolbar
                     }}
@@ -272,15 +206,15 @@ class CalendarLayout extends Component {
           </TabContainer>
         </SwipeableViews>
         <OnSelectSlotDialog
-          open={this.state.onClickDialog}
-          handleClose={this.handleCloseSlotDialog.bind(this)}
-          eventToAdd={this.state.eventToAdd}
-          handleAddEventDialog={this.handleAddEventDialog.bind(this)}
+          open={isSlotSelected}
+          handleClose={hideSelectedSlot}
+          slotSelected={slotSelected}
+          showCreateEvent={showCreateEvent}
         />
         <AddEventDialog
-          open={this.state.addEventDialog}
-          handleClose={this.handleCloseAddEventDialog.bind(this)}
-          eventToAdd={this.state.eventToAdd}
+          open={isCreateEvent}
+          handleClose={hideCreateEvent}
+          eventToCreate={eventToCreate}
         />
       </React.Fragment>
     );
@@ -291,6 +225,13 @@ CalendarLayout.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+// map state to props
+const mapStateToProps = ({ calendarState }) => {
+  const { eventView, eventViewOptions, showEvents, viewIndex, dayView, isSlotSelected, slotSelected, isCreateEvent, eventToCreate } = calendarState;
+  return { eventView, eventViewOptions,  showEvents, viewIndex, dayView, isSlotSelected, slotSelected, isCreateEvent, eventToCreate };
+};
+
 export default connect(
-  null
+  mapStateToProps,
+  { onChangeEventView, onChangeCalendarView, onChangeDayView, showSelectedSlot, hideSelectedSlot, showCreateEvent, hideCreateEvent,}
 )(withStyles(styles)(CalendarLayout));
