@@ -60,8 +60,10 @@ class AccountsList extends Component {
     const options = {
       filterType: "dropdown",
       responsive: "stacked",
-      selectableRows: false,
+      // selectableRows: false,
       rowsPerPage: 15,
+      download: false,
+      print: false,
       rowsPerPageOptions: [15, 30, 60, 100],
       textLabels: { body: { noMatch: "No Accounts to display" } },
       customToolbar: () => {

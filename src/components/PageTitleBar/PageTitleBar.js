@@ -2,6 +2,7 @@ import React from "react";
 import { Fab } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import Tooltip from "@material-ui/core/Tooltip";
 
 // helpers
 import { getAppLayout } from "Helpers/helpers";
@@ -16,15 +17,17 @@ const PageTitleBar = ({ title, createLink, location }) => {
       )}
       {createLink && (
         <Link to={`/${getAppLayout(location)}${createLink}`}>
-          <Fab
-            size="small"
-            variant="round"
-            color="primary"
-            className="text-white"
-            aria-label="add"
-          >
-            <i className="zmdi zmdi-plus" />
-          </Fab>
+          <Tooltip title="Add New" placement="bottom">
+            <Fab
+              size="small"
+              variant="round"
+              color="primary"
+              className="text-white"
+              aria-label="add"
+            >
+              <i className="zmdi zmdi-plus" />
+            </Fab>
+          </Tooltip>
         </Link>
       )}
     </div>

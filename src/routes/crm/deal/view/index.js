@@ -4,12 +4,9 @@ import { connect } from "react-redux";
 
 //Page Components
 import DealCard from "Components/CRM/Deal/DealCard";
-/* 
-import AccountCard from "Components/CRM/Account/AccountCard";
-import ContactCard from "Components/CRM/Contact/ContactCard";
-import { ActivityTab, RelatedTab, DetailsTab } from "Components/CRM/View/Tabs";
-import ContactSwipeable from "Components/CRM/View/ContactSwipeable";
-import SelectDealStage from "Components/CRM/Deal/Stage/SelectDealStage"; */
+import DealDetails from "Components/CRM/Deal/DealDetails";
+import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
+import ViewDealStage from "Components/CRM/View/Deal/ViewDealStage";
 
 // Global Req
 import { Helmet } from "react-helmet";
@@ -17,7 +14,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 //Page Req
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 
 class crm_view_deal extends Component {
@@ -42,7 +39,7 @@ class crm_view_deal extends Component {
 
   render() {
     const { loading } = this.state;
-    const { dealView } = this.props;
+    const { deal } = this.props;
     return (
       <React.Fragment>
         <Helmet>
@@ -54,8 +51,34 @@ class crm_view_deal extends Component {
         ) : (
           <React.Fragment>
             <RctCollapsibleCard fullBlock>
-              <DealCard />
+              <DealCard
+                name={"Deal Name"}
+                stage={"Negotiation"}
+                chance={50}
+                type={"New Business"}
+                ownerName={"admin admin"}
+                amount={10000}
+              />
             </RctCollapsibleCard>
+            <RctCollapsibleCard heading={"Select Deal Stage"} fullBlock>
+              {/*  <ViewDealStage deal={deal} /> */}
+            </RctCollapsibleCard>
+            <TabsWrapper>
+              <div icon="zmdi-coffee text-success" label="DETAILS">
+                <DealDetails />
+                <DescriptionDetails />
+              </div>
+              <div icon="zmdi-pizza text-warning" label="EVENTS">
+                Activities
+              </div>
+              <div icon="zmdi-local-florist text-info" label="REMINDERS">
+                Reminders
+              </div>
+              <div icon="zmdi-assignment text-danger" label="NOTES">
+                {/*  <ViewNote /> */}
+              </div>
+            </TabsWrapper>
+
             {/* <div className="row">
             </div>
             <div className="row">
@@ -64,7 +87,7 @@ class crm_view_deal extends Component {
                 heading="Stage"
                 fullBlock
               >
-                <SelectDealStage deal={dealView} />
+                <ViewDealStage deal={dealView} />
               </RctCollapsibleCard>
             </div>
             <div className="row">

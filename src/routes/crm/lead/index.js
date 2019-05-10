@@ -8,11 +8,12 @@ import LeadsList from "Components/CRM/Lead/LeadsList";
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
-// intl messages
-import IntlMessages from "Util/IntlMessages";
+// List View
+import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
+
+// ListSummary
 import ListSummary from "Components/CRM/ListSummary/ListSummary";
 import ListSummaryItem from "Components/CRM/ListSummary/ListSummaryItem";
-import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 import ShowListSummaryButton from "Components/CRM/ListSummary/ShowListSummaryButton";
 
 //import { getLead, getMyLead } from "Actions";

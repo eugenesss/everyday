@@ -10,11 +10,8 @@ import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 //Sub Components
-import LeadInterestLevel from "./LeadInterestLevel";
 
-//import { getMyLead } from "Actions";
-
-class LeadsList extends Component {
+class CreditNoteList extends Component {
   componentDidMount() {
     // this.props.getMyLead();
   }
@@ -40,13 +37,14 @@ class LeadsList extends Component {
     );
     return data;
   }
+
   reloadGetMyLead() {
     this.props.getMyLead();
   }
 
   render() {
-    const { myLeads, myLeadLoading, title } = this.props;
-    const data = myLeads && myLeads.map(lead => this.convertData(lead));
+    const { quotations, myLeadLoading, title } = this.props;
+    const data = quotations && quotations.map(lead => this.convertData(lead));
     const columns = [
       {
         name: "ID",
@@ -80,14 +78,6 @@ class LeadsList extends Component {
             return value ? <LeadSourceBadge source={value} /> : "";
           }
         } */
-      },
-      {
-        name: "Interest Level",
-        options: {
-          customBodyRender: value => {
-            return <LeadInterestLevel interest={value} />;
-          }
-        }
       },
       { name: "Mobile", options: { display: false } },
       { name: "Lead Owner", options: { display: false } },
@@ -147,7 +137,7 @@ class LeadsList extends Component {
       responsive: "stacked",
       download: false,
       print: false,
-      textLabels: { body: { noMatch: "No Leads to display" } },
+      textLabels: { body: { noMatch: "No Quotations to display" } },
       customToolbar: () => {
         return (
           <Tooltip id="tooltip-icon" title="Refresh">
@@ -186,4 +176,4 @@ const mapStateToProps = ({ lead }) => {
 export default connect(
   null,
   {}
-)(LeadsList);
+)(CreditNoteList);

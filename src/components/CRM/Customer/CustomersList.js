@@ -81,7 +81,9 @@ class CustomersList extends Component {
     const options = {
       filterType: "dropdown",
       responsive: "stacked",
-      selectableRows: false,
+      // selectableRows: false,
+      download: false,
+      print: false,
       rowsPerPage: 15,
       rowsPerPageOptions: [15, 30, 60, 100],
       textLabels: { body: { noMatch: "No Customers to display" } },

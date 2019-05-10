@@ -141,7 +141,9 @@ class DealsList extends Component {
     const options = {
       filterType: "dropdown",
       responsive: "stacked",
-      selectableRows: false,
+      // selectableRows: false,
+      download: false,
+      print: false,
       textLabels: { body: { noMatch: "No Deals to display" } },
       customToolbar: () => {
         return (
