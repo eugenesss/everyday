@@ -4,15 +4,12 @@ import {
   CHANGE_QUOTATION_LIST_VIEW,
   TOGGLE_QUOTATION_SUMMARY,
   GET_QUOTATION_FAILURE,
+  GET_QUOTATION_SUCCESS,
   GET_ALL_QUOTATION,
   GET_MY_QUOTATION,
   GET_OPEN_QUOTATION,
-  GET_CLOSED_QUOTATION,
-  GET_ALL_QUOTATION_SUCCESS,
-  GET_MY_QUOTATION_SUCCESS,
-  GET_OPEN_QUOTATION_SUCCESS,
-  GET_CLOSED_QUOTATION_SUCCESS
-} from "Actions/types";
+  GET_CLOSED_QUOTATION
+} from "Types";
 
 const INIT_STATE = {
   quotationList: {
@@ -76,7 +73,7 @@ export default (state = INIT_STATE, action) => {
      * Get Quotes
      */
     case GET_QUOTATION_FAILURE:
-      NotificationManager.warning("Error in fetching Quotation");
+      NotificationManager.warning("Error in fetching Quotation Data");
       console.log(action.payload);
       return {
         ...state,
@@ -90,10 +87,7 @@ export default (state = INIT_STATE, action) => {
         ...state,
         quotationList: { ...state.quotationList, loading: true }
       };
-    case GET_ALL_QUOTATION_SUCCESS:
-    case GET_MY_QUOTATION_SUCCESS:
-    case GET_OPEN_QUOTATION_SUCCESS:
-    case GET_CLOSED_QUOTATION_SUCCESS:
+    case GET_QUOTATION_SUCCESS:
       return {
         ...state,
         quotationList: {

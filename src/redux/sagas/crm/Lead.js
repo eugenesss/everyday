@@ -7,14 +7,8 @@ import {
   select,
   delay
 } from "redux-saga/effects";
-import { CHANGE_LEAD_LIST_VIEW, GET_ALL_LEAD } from "Actions/types";
-import {
-  getAllLeadSuccess,
-  getMyLeadSuccess,
-  getOpenLeadSuccess,
-  getClosedLeadSuccess,
-  getLeadFailure
-} from "Actions";
+import { CHANGE_LEAD_LIST_VIEW, GET_ALL_LEAD } from "Types";
+import { getLeadSuccess, getLeadFailure } from "Actions";
 
 import api from "Api";
 
@@ -52,9 +46,19 @@ const getOpenLeadRequest = async () => {
   ];
   return result;
 };
-const getClosedLeadRequest = async () => {
+const getHotLeadRequest = async () => {
   const result = [
-    ["Closed Lead", "Closed Lead", "singapore", 30, "$100,000"],
+    ["Hot Lead", "Hot Lead", "singapore", 30, "$100,000"],
+    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
+    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
+    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
+    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
+  ];
+  return result;
+};
+const getColdLeadRequest = async () => {
+  const result = [
+    ["Cold Lead", "Cold Lead", "singapore", 30, "$100,000"],
     ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
     ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
     ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
@@ -70,25 +74,34 @@ function* changeLeadList({ payload }) {
   let data;
   try {
     if (payload == "All Leads") {
-      yield delay(500);
+      // All Leads
       data = yield call(getAllLeadRequest);
-      yield put(getAllLeadSuccess(data));
+      yield delay(500);
+      yield put(getLeadSuccess(data));
     } else if (payload == "My Leads") {
+      // My Leads
       data = yield call(getMyLeadRequest);
       yield delay(500);
-      yield put(getMyLeadSuccess(data));
+      yield put(getLeadSuccess(data));
     } else if (payload == "Open Leads") {
+      // Open Leads
       data = yield call(getOpenLeadRequest);
       yield delay(500);
-      yield put(getOpenLeadSuccess(data));
-    } else if (payload == "Closed Leads") {
-      data = yield call(getClosedLeadRequest);
+      yield put(getLeadSuccess(data));
+    } else if (payload == "Hot Leads") {
+      // Hot Leads
+      data = yield call(getHotLeadRequest);
       yield delay(500);
-      yield put(getClosedLeadSuccess(data));
+      yield put(getLeadSuccess(data));
+    } else if (payload == "Cold Leads") {
+      // Cold Leads
+      data = yield call(getColdLeadRequest);
+      yield delay(500);
+      yield put(getLeadSuccess(data));
     } else {
       yield delay(500);
       data = yield call(getAllLeadRequest);
-      yield put(getAllLeadSuccess(data));
+      yield put(getLeadSuccess(data));
     }
   } catch (error) {
     yield put(getLeadFailure(error));
@@ -97,7 +110,7 @@ function* changeLeadList({ payload }) {
 function* getAllLeadFromDB() {
   try {
     const data = yield call(getAllLeadRequest);
-    yield put(getAllLeadSuccess(data));
+    yield put(getLeadSuccess(data));
   } catch (error) {
     yield put(getLeadFailure(error));
   }

@@ -14,11 +14,13 @@ import LeadInterestLevel from "./LeadInterestLevel";
 const LeadList = ({ tableData, loading, title, action }) => {
   const columns = [
     {
-      name: "ID",
+      label: "ID",
+      name: "id",
       options: { display: "excluded", filter: false, sort: false }
     },
     {
-      name: "Name",
+      label: "Name",
+      name: "name",
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
@@ -27,28 +29,25 @@ const LeadList = ({ tableData, loading, title, action }) => {
         }
       }
     },
-    "Company",
-    "Email",
+    { label: "Company", name: "companyName" },
+    { label: "Email", name: "emailAddress" },
+    { label: "Status", name: "status" },
+    { label: "Source", name: "source" },
     {
-      name: "Status"
-    },
-    {
-      name: "Source"
-    },
-    {
-      name: "Interest Level",
+      label: "Interest Level",
+      name: "interest",
       options: {
         customBodyRender: value => {
           return <LeadInterestLevel interest={value} />;
         }
       }
     },
-    { name: "Mobile", options: { display: false } },
-    { name: "Lead Owner", options: { display: false } },
-    { name: "Industry", options: { display: false } },
-    { name: "Website", options: { display: false } },
-    { name: "Office", options: { display: false } },
-    { name: "Fax", options: { display: false } }
+    { label: "Mobile", name: "mobile", options: { display: false } },
+    { label: "Lead Owner", name: "owner", options: { display: false } },
+    { label: "Industry", name: "industry", options: { display: false } },
+    { label: "Website", name: "website", options: { display: false } },
+    { label: "Office", name: "office", options: { display: false } },
+    { label: "Fax", name: "fax", options: { display: false } }
   ];
   if (action == true) {
     columns.push({

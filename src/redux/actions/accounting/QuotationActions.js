@@ -7,11 +7,8 @@ import {
   GET_MY_QUOTATION,
   GET_OPEN_QUOTATION,
   GET_CLOSED_QUOTATION,
-  GET_ALL_QUOTATION_SUCCESS,
-  GET_MY_QUOTATION_SUCCESS,
-  GET_OPEN_QUOTATION_SUCCESS,
-  GET_CLOSED_QUOTATION_SUCCESS
-} from "../types";
+  GET_QUOTATION_SUCCESS
+} from "Types";
 
 /**
  * Change List View
@@ -42,14 +39,18 @@ export const getQuotationFailure = error => ({
 });
 
 /**
+ * Get Quotes Success
+ */
+export const getQuotationSuccess = data => ({
+  type: GET_QUOTATION_SUCCESS,
+  payload: data
+});
+
+/**
  * Get All Quotes
  */
 export const getAllQuotation = () => ({
   type: GET_ALL_QUOTATION
-});
-export const getAllQuotationSuccess = data => ({
-  type: GET_ALL_QUOTATION_SUCCESS,
-  payload: data
 });
 
 /**
@@ -58,29 +59,17 @@ export const getAllQuotationSuccess = data => ({
 export const getMyQuotation = () => ({
   type: GET_MY_QUOTATION
 });
-export const getMyQuotationSuccess = data => ({
-  type: GET_MY_QUOTATION_SUCCESS,
-  payload: data
-});
 
 /**
- * Get My Quotes
+ * Get Open Quotes
  */
 export const getOpenQuotation = () => ({
   type: GET_OPEN_QUOTATION
 });
-export const getOpenQuotationSuccess = data => ({
-  type: GET_OPEN_QUOTATION_SUCCESS,
-  payload: data
-});
 
 /**
- * Get My Quotes
+ * Get Closed Quotes
  */
 export const getClosedQuotation = () => ({
   type: GET_CLOSED_QUOTATION
-});
-export const getClosedQuotationSuccess = data => ({
-  type: GET_CLOSED_QUOTATION_SUCCESS,
-  payload: data
 });

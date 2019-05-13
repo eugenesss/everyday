@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 //sub components
-import CustomersList from "Components/CRM/Customer/CustomersList";
+import CustomerList from "Components/CRM/Customer/CustomerList";
 
 // page req
 import { Helmet } from "react-helmet";
@@ -14,35 +14,28 @@ import ListSummary from "Components/Everyday/ListSummary/ListSummary";
 import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
-//import { getAllCustomer } from "Actions";
+import {
+  changeCustomerView,
+  toggleCustomerDropDown,
+  toggleCustomerSummary,
+  getAllCustomer
+} from "Actions";
 
 class crm_customer extends Component {
-  constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false,
-      nowShowing: "All Customers",
-      options: ["All Customers", "My Customers", "Open Customers"],
-      showSummary: false
-    };
-  }
-
-  toggle() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
-  }
-  changeValue(newValue) {
-    this.setState({ ...this.state, nowShowing: newValue });
-  }
-  showSummary() {
-    this.setState(prevState => ({
-      showSummary: !prevState.showSummary
-    }));
+  componentDidMount() {
+    this.props.getAllCustomer();
   }
 
   render() {
+    const {
+      dropdownOpen,
+      options,
+      nowShowing,
+      showSummary,
+      action,
+      tableData,
+      loading
+    } = this.props.customerState.customerList;
     return (
       <React.Fragment>
         <Helmet>
@@ -53,18 +46,20 @@ class crm_customer extends Component {
           title={
             <div className="d-flex">
               <ListViewSelector
-                dropdownOpen={this.state.dropdownOpen}
-                toggle={this.toggle.bind(this)}
-                options={this.state.options}
-                nowShowing={this.state.nowShowing}
-                onChangeValue={this.changeValue.bind(this)}
+                dropdownOpen={dropdownOpen}
+                toggle={this.props.toggleCustomerDropDown}
+                options={options}
+                nowShowing={nowShowing}
+                onChangeValue={this.props.changeCustomerView}
               />
-              <ShowListSummaryButton action={this.showSummary.bind(this)} />
+              <ShowListSummaryButton
+                action={this.props.toggleCustomerSummary}
+              />
             </div>
           }
           createLink="/crm/new/customer"
         />
-        {this.state.showSummary && (
+        {showSummary && (
           <ListSummary>
             <ListSummaryItem
               heading={"New Lead"}
@@ -92,13 +87,27 @@ class crm_customer extends Component {
             />
           </ListSummary>
         )}
-        <CustomersList title={this.state.nowShowing} />
+        <CustomerList
+          title={nowShowing}
+          action={action}
+          tableData={tableData}
+          loading={loading}
+        />
       </React.Fragment>
     );
   }
 }
+const mapStateToProps = ({ crmState }) => {
+  const { customerState } = crmState;
+  return { customerState };
+};
 
 export default connect(
-  null,
-  {}
+  mapStateToProps,
+  {
+    changeCustomerView,
+    toggleCustomerDropDown,
+    toggleCustomerSummary,
+    getAllCustomer
+  }
 )(crm_customer);

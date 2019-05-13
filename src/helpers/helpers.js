@@ -68,13 +68,12 @@ export function getAppLayout(url) {
   return path[1];
 }
 
-export function listOptions() {
-  const options = {
-    filterType: "dropdown",
-    responsive: "stacked",
-    download: false,
-    print: false,
-    textLabels: { body: { noMatch: "No data to display" } }
-  };
-  return options;
-}
+export const listOptions = {
+  filterType: "dropdown",
+  responsive: "stacked",
+  download: false,
+  print: false,
+  rowsPerPage: 15,
+  rowsPerPageOptions: [15, 30, 60, 100],
+  textLabels: { body: { noMatch: "No data to display" } }
+};

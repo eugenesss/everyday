@@ -3,15 +3,13 @@ import {
   CHANGE_LEAD_LIST_VIEW,
   TOGGLE_LEAD_SUMMARY,
   GET_LEAD_FAILURE,
+  GET_LEAD_SUCCESS,
   GET_ALL_LEAD,
   GET_MY_LEAD,
   GET_OPEN_LEAD,
-  GET_CLOSED_LEAD,
-  GET_ALL_LEAD_SUCCESS,
-  GET_MY_LEAD_SUCCESS,
-  GET_OPEN_LEAD_SUCCESS,
-  GET_CLOSED_LEAD_SUCCESS
-} from "../types";
+  GET_HOT_LEAD,
+  GET_COLD_LEAD
+} from "Types";
 
 /**
  * Change List View
@@ -42,45 +40,44 @@ export const getLeadFailure = error => ({
 });
 
 /**
- * Get All Quotes
+ * Get Lead Success
+ */
+export const getLeadSuccess = data => ({
+  type: GET_LEAD_SUCCESS,
+  payload: data
+});
+
+/**
+ * Get All Leads
  */
 export const getAllLead = () => ({
   type: GET_ALL_LEAD
 });
-export const getAllLeadSuccess = data => ({
-  type: GET_ALL_LEAD_SUCCESS,
-  payload: data
-});
 
 /**
- * Get My Quotes
+ * Get My Leads
  */
 export const getMyLead = () => ({
   type: GET_MY_LEAD
 });
-export const getMyLeadSuccess = data => ({
-  type: GET_MY_LEAD_SUCCESS,
-  payload: data
-});
 
 /**
- * Get My Quotes
+ * Get Open Leads
  */
 export const getOpenLead = () => ({
   type: GET_OPEN_LEAD
 });
-export const getOpenLeadSuccess = data => ({
-  type: GET_OPEN_LEAD_SUCCESS,
-  payload: data
+
+/**
+ * Get Hot Leads
+ */
+export const getHotLead = () => ({
+  type: GET_HOT_LEAD
 });
 
 /**
- * Get My Quotes
+ * Get Cold Leads
  */
-export const getClosedLead = () => ({
-  type: GET_CLOSED_LEAD
-});
-export const getClosedLeadSuccess = data => ({
-  type: GET_CLOSED_LEAD_SUCCESS,
-  payload: data
+export const getColdLead = () => ({
+  type: GET_COLD_LEAD
 });

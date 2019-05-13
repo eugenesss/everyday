@@ -8,7 +8,7 @@ const DataList = ({ title, columns, tableData }) => {
       title={title}
       columns={columns}
       data={tableData}
-      options={listOptions()}
+      options={listOptions}
     />
   );
 };

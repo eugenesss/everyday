@@ -59,6 +59,7 @@ module.exports = {
   resolve: {
     alias: {
       Actions: path.resolve(__dirname, "src/redux/actions/"),
+      Types: path.resolve(__dirname, "src/redux/types/"),
       Components: path.resolve(__dirname, "src/components/"),
       Assets: path.resolve(__dirname, "src/assets/"),
       Util: path.resolve(__dirname, "src/util/"),

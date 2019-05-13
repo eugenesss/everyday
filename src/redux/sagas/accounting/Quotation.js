@@ -7,14 +7,8 @@ import {
   select,
   delay
 } from "redux-saga/effects";
-import { CHANGE_QUOTATION_LIST_VIEW, GET_ALL_QUOTATION } from "Actions/types";
-import {
-  getAllQuotationSuccess,
-  getMyQuotationSuccess,
-  getOpenQuotationSuccess,
-  getClosedQuotationSuccess,
-  getQuotationFailure
-} from "Actions";
+import { CHANGE_QUOTATION_LIST_VIEW, GET_ALL_QUOTATION } from "Types";
+import { getQuotationSuccess, getQuotationFailure } from "Actions";
 
 import api from "Api";
 
@@ -72,23 +66,23 @@ function* changeQuoteList({ payload }) {
     if (payload == "All Quotations") {
       yield delay(500);
       data = yield call(getAllQuoteRequest);
-      yield put(getAllQuotationSuccess(data));
+      yield put(getQuotationSuccess(data));
     } else if (payload == "My Quotations") {
       data = yield call(getMyQuoteRequest);
       yield delay(500);
-      yield put(getMyQuotationSuccess(data));
+      yield put(getQuotationSuccess(data));
     } else if (payload == "Open Quotations") {
       data = yield call(getOpenQuoteRequest);
       yield delay(500);
-      yield put(getOpenQuotationSuccess(data));
+      yield put(getQuotationSuccess(data));
     } else if (payload == "Closed Quotations") {
       data = yield call(getClosedQuoteRequest);
       yield delay(500);
-      yield put(getClosedQuotationSuccess(data));
+      yield put(getQuotationSuccess(data));
     } else {
       yield delay(500);
       data = yield call(getAllQuoteRequest);
-      yield put(getAllQuotationSuccess(data));
+      yield put(getQuotationSuccess(data));
     }
   } catch (error) {
     yield put(getQuotationFailure(error));
@@ -97,7 +91,7 @@ function* changeQuoteList({ payload }) {
 function* getAllQuoteFromDB() {
   try {
     const data = yield call(getAllQuoteRequest);
-    yield put(getAllQuotationSuccess(data));
+    yield put(getQuotationSuccess(data));
   } catch (error) {
     yield put(getQuotationFailure(error));
   }

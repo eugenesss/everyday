@@ -18,7 +18,7 @@ import {
   TOGGLE_DARK_SIDENAV,
   AGENCY_TOGGLE_MENU,
   CHANGE_AGENCY_LAYOUT_BG
-} from "./types";
+} from "Types";
 
 /**
  * Redux Action To Emit Collapse Sidebar

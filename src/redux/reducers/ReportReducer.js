@@ -1,4 +1,4 @@
-import { CHANGE_REPORT_VIEW, OPEN_NESTED_VIEW } from "Actions/types";
+import { CHANGE_REPORT_VIEW, OPEN_NESTED_VIEW } from "Types";
 
 const INIT_STATE = {
   title: "",

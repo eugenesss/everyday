@@ -99,7 +99,8 @@ class crm_lead extends Component {
   }
 }
 
-const mapStateToProps = ({ leadState }) => {
+const mapStateToProps = ({ crmState }) => {
+  const { leadState } = crmState;
   return { leadState };
 };
 
