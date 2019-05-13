@@ -3,7 +3,7 @@
  */
 import { NotificationManager } from "react-notifications";
 import moment from "moment";
-import { 
+import {
   GET_ALL_EVENTS,
   GET_MY_EVENTS,
   CHANGE_DAY_VIEW,
@@ -14,8 +14,8 @@ import {
   SHOW_SELECTED_EVENT,
   SHOW_CREATE_EVENT,
   HIDE_CREATE_EVENT,
-  SHOW_UPDATE_EVENT,
- } from "Actions/types";
+  SHOW_UPDATE_EVENT
+} from "Types";
 
 /**
  * initial auth user
@@ -24,14 +24,14 @@ const INIT_STATE = {
   eventToCreate: {
     constants: {
       sDate: "",
-      eDate: "",
+      eDate: ""
     },
     startDate: "",
     endDate: "",
     startTime: "",
     endTime: "",
     title: "",
-    desc: "",
+    desc: ""
   },
   isCreateEvent: false,
   slotSelected: null,
@@ -39,59 +39,56 @@ const INIT_STATE = {
   dayView: new Date(),
   viewIndex: 0,
   eventView: "My Calendar",
-  eventViewOptions: [
-    "My Calendar",
-    "Company Calendar",
-  ],
+  eventViewOptions: ["My Calendar", "Company Calendar"],
   myEvents: [
     {
-      'title': 'My Event All Day 1',
-      'allDay': true,
-      'start': new Date(2019, 4, 10),
-      'end': new Date(2019, 4, 10)
+      title: "My Event All Day 1",
+      allDay: true,
+      start: new Date(2019, 4, 10),
+      end: new Date(2019, 4, 10)
     },
     {
-      'title': 'My Event 2',
-      'start': new Date(2019, 4, 13, 5, 30, 0),
-      'end': new Date(2019, 4, 20, 9, 45, 0)
+      title: "My Event 2",
+      start: new Date(2019, 4, 13, 5, 30, 0),
+      end: new Date(2019, 4, 20, 9, 45, 0)
     },
     {
-      'title': 'My Event 3',
-      'start': new Date(2019, 4, 26, 7, 0, 0),
-      'end': new Date(2019, 4, 26, 9, 0, 0),
-      desc: 'Big conference for important people'
+      title: "My Event 3",
+      start: new Date(2019, 4, 26, 7, 0, 0),
+      end: new Date(2019, 4, 26, 9, 0, 0),
+      desc: "Big conference for important people"
     }
   ],
   companyEvents: [
     {
-      'title': 'My Event All Day 1',
-      'allDay': true,
-      'start': new Date(2019, 4, 10),
-      'end': new Date(2019, 4, 10)
+      title: "My Event All Day 1",
+      allDay: true,
+      start: new Date(2019, 4, 10),
+      end: new Date(2019, 4, 10)
     },
     {
-      'title': 'Company Event All Day 1',
-      'allDay': true,
-      'start': new Date(2019, 4, 6),
-      'end': new Date(2019, 4, 6)
+      title: "Company Event All Day 1",
+      allDay: true,
+      start: new Date(2019, 4, 6),
+      end: new Date(2019, 4, 6)
     },
     {
-      'title': 'My Event 2',
-      'start': new Date(2019, 4, 13, 5, 30, 0),
-      'end': new Date(2019, 4, 20, 9, 45, 0)
+      title: "My Event 2",
+      start: new Date(2019, 4, 13, 5, 30, 0),
+      end: new Date(2019, 4, 20, 9, 45, 0)
     },
     {
-      'title': 'Company Event 2',
-      'start': new Date(2019, 4, 7),
-      'end': new Date(2019, 4, 7)
+      title: "Company Event 2",
+      start: new Date(2019, 4, 7),
+      end: new Date(2019, 4, 7)
     },
     {
-      'title': 'Company Event 3',
-      'start': new Date(2019, 4, 14),
-      'end': new Date(2019, 4, 15)
-    },
+      title: "Company Event 3",
+      start: new Date(2019, 4, 14),
+      end: new Date(2019, 4, 15)
+    }
   ],
-  showEvents: [],
+  showEvents: []
 };
 
 function convertMonth(mm) {
@@ -124,15 +121,13 @@ function convertMonth(mm) {
 }
 
 export default (state = INIT_STATE, action) => {
-  
   switch (action.type) {
-
     case CHANGE_DAY_VIEW:
       return {
         ...state,
         dayView: action.payload,
         viewIndex: 2
-      }
+      };
 
     case CHANGE_EVENT_VIEW:
       switch (action.payload) {
@@ -151,52 +146,61 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         viewIndex: action.payload
-      }
-    
+      };
+
     case SHOW_SELECTED_SLOT:
       return {
         ...state,
         slotSelected: action.payload,
-        isSlotSelected: true,
-      }
+        isSlotSelected: true
+      };
 
     case HIDE_SELECTED_SLOT:
       return {
         ...state,
         slotSelected: null,
-        isSlotSelected: false,
-      }
+        isSlotSelected: false
+      };
 
     case SHOW_CREATE_EVENT:
-      var sDate = state.slotSelected.start
-      var eDate = state.slotSelected.end
-      var startDate = sDate.getDate() + " / " + convertMonth(sDate.getMonth()) + " / " + sDate.getFullYear()
-      var endDate = eDate.getDate() + " / " + convertMonth(eDate.getMonth()) + " / " + eDate.getFullYear()
-      var startTime = sDate.getHours() + " : " + sDate.getMinutes()
-      var endTime = eDate.getHours() + " : " + eDate.getMinutes()
+      var sDate = state.slotSelected.start;
+      var eDate = state.slotSelected.end;
+      var startDate =
+        sDate.getDate() +
+        " / " +
+        convertMonth(sDate.getMonth()) +
+        " / " +
+        sDate.getFullYear();
+      var endDate =
+        eDate.getDate() +
+        " / " +
+        convertMonth(eDate.getMonth()) +
+        " / " +
+        eDate.getFullYear();
+      var startTime = sDate.getHours() + " : " + sDate.getMinutes();
+      var endTime = eDate.getHours() + " : " + eDate.getMinutes();
       return {
         ...state,
         isCreateEvent: true,
         isSlotSelected: false,
         eventToCreate: {
-          constants : {
+          constants: {
             sDate: sDate,
-            eDate: eDate,
+            eDate: eDate
           },
           startDate: startDate,
           endDate: endDate,
           startTime: startTime,
-          endTime: endTime,
+          endTime: endTime
         }
-      }
-    
+      };
+
     case HIDE_CREATE_EVENT:
       return {
         ...state,
-        isCreateEvent: false,
-      }
+        isCreateEvent: false
+      };
 
-    
     default:
       return { ...state };
   }

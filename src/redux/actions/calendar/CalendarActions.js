@@ -12,8 +12,8 @@ import {
   SHOW_SELECTED_EVENT,
   SHOW_CREATE_EVENT,
   HIDE_CREATE_EVENT,
-  SHOW_UPDATE_EVENT,
-} from "../types";
+  SHOW_UPDATE_EVENT
+} from "Types";
 
 /**
  * Change Selected Date - Day View
@@ -44,15 +44,15 @@ export const showSelectedSlot = newValue => ({
   payload: newValue
 });
 export const hideSelectedSlot = () => ({
-  type: HIDE_SELECTED_SLOT,
-})
+  type: HIDE_SELECTED_SLOT
+});
 /**
  * Show / Hide Create Event
  */
 export const showCreateEvent = newValue => ({
   type: SHOW_CREATE_EVENT,
   payload: newValue
-})
-export const hideCreateEvent =() => ({
-  type: HIDE_CREATE_EVENT,
-})
+});
+export const hideCreateEvent = () => ({
+  type: HIDE_CREATE_EVENT
+});
