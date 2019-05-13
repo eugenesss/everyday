@@ -4,7 +4,10 @@
 import { combineReducers } from "redux";
 import settings from "./settings";
 
+// accounting
 import QuotationReducer from "./accounting/QuotationReducer";
+import InvoiceReducer from "./accounting/InvoiceReducer";
+import CreditNoteReducer from "./accounting/CreditNoteReducer";
 
 // crm
 import LeadReducer from "./crm/LeadReducer";
@@ -28,7 +31,9 @@ const reducers = combineReducers({
     dealState: DealReducer
   }),
   accountingState: combineReducers({
-    quotationState: QuotationReducer
+    quotationState: QuotationReducer,
+    invoiceState: InvoiceReducer,
+    creditNoteState: CreditNoteReducer
   }),
   reportState: reportReducer,
   calendarState: calendarCalendarReducer,

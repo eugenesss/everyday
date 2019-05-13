@@ -16,33 +16,30 @@ import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSumma
 // List
 import CreditNoteList from "Components/Accounting/CreditNote/CreditNoteList";
 
-class acct_credit_note extends Component {
-  constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false,
-      nowShowing: "All Credit Notes",
-      options: ["All Credit Notes", "Open Credit Notes", "Closed Credit Notes"],
-      showSummary: false
-    };
-  }
+// Actions
+import {
+  changeCreditNoteView,
+  toggleCreditNoteDropDown,
+  toggleCreditNoteSummary,
+  getAllCreditNote
+} from "Actions";
 
-  toggle() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
-  }
-  changeValue(newValue) {
-    this.setState({ ...this.state, nowShowing: newValue });
-  }
-  showSummary() {
-    this.setState(prevState => ({
-      showSummary: !prevState.showSummary
-    }));
+class acct_credit_note extends Component {
+  componentDidMount() {
+    this.props.getAllCreditNote();
   }
 
   render() {
+    const {
+      dropdownOpen,
+      options,
+      nowShowing,
+      showSummary,
+      action,
+      tableData,
+      loading
+    } = this.props.creditNoteState.creditNoteList;
+
     return (
       <React.Fragment>
         <Helmet>
@@ -53,18 +50,20 @@ class acct_credit_note extends Component {
           title={
             <div className="d-flex">
               <ListViewSelector
-                dropdownOpen={this.state.dropdownOpen}
-                toggle={this.toggle.bind(this)}
-                options={this.state.options}
-                nowShowing={this.state.nowShowing}
-                onChangeValue={this.changeValue.bind(this)}
+                dropdownOpen={dropdownOpen}
+                toggle={this.props.toggleCreditNoteDropDown}
+                options={options}
+                nowShowing={nowShowing}
+                onChangeValue={this.props.changeCreditNoteView}
               />
-              <ShowListSummaryButton action={this.showSummary.bind(this)} />
+              <ShowListSummaryButton
+                action={this.props.toggleCreditNoteSummary}
+              />
             </div>
           }
           createLink="/acct/new/credit_note"
         />
-        {this.state.showSummary && (
+        {showSummary && (
           <ListSummary>
             <ListSummaryItem
               heading={"New Credit Notes"}
@@ -86,10 +85,27 @@ class acct_credit_note extends Component {
             />
           </ListSummary>
         )}
-        <CreditNoteList title={this.state.nowShowing} />
+        <CreditNoteList
+          title={nowShowing}
+          action={action}
+          tableData={tableData}
+          loading={loading}
+        />
       </React.Fragment>
     );
   }
 }
+const mapStateToProps = ({ accountingState }) => {
+  const { creditNoteState } = accountingState;
+  return { creditNoteState };
+};
 
-export default acct_credit_note;
+export default connect(
+  mapStateToProps,
+  {
+    changeCreditNoteView,
+    toggleCreditNoteDropDown,
+    toggleCreditNoteSummary,
+    getAllCreditNote
+  }
+)(acct_credit_note);
