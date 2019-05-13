@@ -27,7 +27,7 @@ const reducers = combineReducers({
     accountState: AccountReducer,
     dealState: DealReducer
   }),
-  accountState: combineReducers({
+  accountingState: combineReducers({
     quotationState: QuotationReducer
   }),
   reportState: reportReducer,

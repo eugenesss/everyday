@@ -95,7 +95,8 @@ class acct_quotation extends Component {
   }
 }
 
-const mapStateToProps = ({ quotationState }) => {
+const mapStateToProps = ({ accountingState }) => {
+  const { quotationState } = accountingState;
   return { quotationState };
 };
 
