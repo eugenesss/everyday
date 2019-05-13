@@ -13,6 +13,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
+import { onChangeDayView } from 'Actions';
+
 const styles = () => ({
   calendar: {
     width: "auto"
@@ -25,6 +27,7 @@ class MiniCalendar extends Component {
   };
 
   handleOnClickDay(newDate) {
+    this.props.onChangeDayView(newDate)
     this.props.history.push('/app/calendar/')
   }
 
@@ -68,6 +71,9 @@ MiniCalendar.propTypes = {
 
 
 export default withRouter(
-  connect(null)
+  connect(
+    null,
+    { onChangeDayView }
+  )
   (withStyles(styles)(MiniCalendar))
 );

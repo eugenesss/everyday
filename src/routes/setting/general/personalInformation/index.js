@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 
-class user_management extends Component {
+class PersonalInformation extends Component {
   state = {};
   render() {
     return (
       <div>
-        <p>user_management</p>
+        <p>PersonalInformation</p>
       </div>
     );
   }
 }
 
-export default user_management;
+export default PersonalInformation;

@@ -3,8 +3,7 @@
  */
 import { combineReducers } from "redux";
 import settings from "./settings";
-import authUserReducer from "./AuthUserReducer";
-import reportReducer from "./ReportReducer";
+
 import QuotationReducer from "./accounting/QuotationReducer";
 
 // crm
@@ -12,6 +11,12 @@ import LeadReducer from "./crm/LeadReducer";
 import CustomerReducer from "./crm/CustomerReducer";
 import AccountReducer from "./crm/AccountReducer";
 import DealReducer from "./crm/DealReducer";
+
+// system
+import authUserReducer from "./AuthUserReducer";
+import reportReducer from "./ReportReducer";
+import calendarCalendarReducer from "./calendar/CalendarReducer";
+import usersReducer from "./settings/users/UsersReducer";
 
 const reducers = combineReducers({
   settings,
@@ -22,8 +27,12 @@ const reducers = combineReducers({
     accountState: AccountReducer,
     dealState: DealReducer
   }),
-  quotationState: QuotationReducer,
-  reportState: reportReducer
+  accountState: combineReducers({
+    quotationState: QuotationReducer
+  }),
+  reportState: reportReducer,
+  calendarState: calendarCalendarReducer,
+  usersState: usersReducer
 });
 
 export default reducers;

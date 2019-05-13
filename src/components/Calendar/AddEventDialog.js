@@ -21,7 +21,6 @@ const styles = theme => ({
   dialogPaper: {
     overflow: "visible"
   },
-  
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
@@ -37,49 +36,36 @@ class AddEventDialog extends Component {
   }
 
   render() {
-    const { classes, handleClose, eventToAdd, ...other } = this.props;
-    var start
-    var sDate
-    var sMonth
-    var sYear
-    var sDay
-    var end
-    var eDate
-    var eMonth
-    var eYear
-    var dateStart
-    var dateEnd
-    if(eventToAdd != null){
-      start = eventToAdd.start
-      sDate = start.getDate()
-      sMonth = start.getMonth() + 1
-      sYear = start.getFullYear()
-      sDay = start.getDay()
-      end = eventToAdd.start
-      eDate = end.getDate()
-      eMonth = end.getMonth() + 1
-      eYear = end.getFullYear()
-      dateStart = sDate + " / " + sMonth + " / " + sYear
-      dateEnd =  eDate + " / " + eMonth + " / " + eYear
-    }
-    
+    const { classes, handleClose, eventToCreate, open, dispatch, ...other } = this.props;
     return (
-      <Dialog fullWidth maxWidth={'md'} PaperProps={{ className: classes.dialogPaper }} onClose={handleClose} aria-labelledby="simple-dialog-title" {...other}>
+      <Dialog fullWidth maxWidth={'md'} PaperProps={{ className: classes.dialogPaper }} onClose={handleClose} aria-labelledby="simple-dialog-title" open={open} {...other}>
         <DialogTitle id="simple-dialog-title rounded bg-primary">
           <Row>
             <Col>Add Event</Col> 
-            <Col><div className="float-right"><Chip label={eventToAdd ? (<DateConvert dd={sDate} mm={sMonth} yyyy={sYear} d={sDay}/>) : ""} variant="outlined"/></div></Col> 
+            <Col>
+              <div className="float-right">
+                <Chip 
+                  label={open ? (
+                      <DateConvert 
+                        dd={eventToCreate.constants.sDate.getDate()} 
+                        mm={eventToCreate.constants.sDate.getMonth()}
+                        yyyy={eventToCreate.constants.sDate.getFullYear()}
+                        d={eventToCreate.constants.sDate.getDay()}/>
+                    ) : ""} 
+                  variant="outlined"/>
+              </div>
+            </Col> 
           </Row>
           
         </DialogTitle>
         <DialogContent>
           <Form>
             <Row form className={"align-items-center"}>
-              <Col md={6}>
+              <Col md={5}>
                 <TextField
-                  value={dateStart}
+                  value={eventToCreate.startDate}
                   required
-                  error={!dateStart}
+                  error={!eventToCreate.startDate}
                   className={classes.textField}
                   id="Start Date"
                   label="Start Date"
@@ -87,11 +73,29 @@ class AddEventDialog extends Component {
                   variant="outlined"
                 />
               </Col>
+              <Col md={1}>
+                <UncontrolledDropdown nav className="list-inline-item notification-dropdown">
+                  <DropdownToggle nav className="p-0">
+                    <Tooltip title="Calendar" placement="bottom">
+                      <Button variant="contained" color="primary">Date</Button>
+                    </Tooltip>
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <div className="dropdown-content" style={{width: "auto !important"}}>
+                      <ReactCalendar 
+                        className={classes.calendar}
+                        // value={this.state.selectedDate}
+                        // onClickDay={(e) => {this.handleOnClickDay(e)}}
+                      />
+                    </div>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </Col>
               <Col md={5}>
                 <TextField
-                  value={dateEnd}
+                  value={eventToCreate.endDate}
                   required
-                  error={!dateEnd}
+                  error={!eventToCreate.endDate}
                   className={classes.textField}
                   id="End Date"
                   label="End Date"
@@ -121,9 +125,8 @@ class AddEventDialog extends Component {
             <Row form>
               <Col md={6}>
                 <TextField
-                  value={"09 : 00 : 00 AM"}
+                  value={eventToCreate.startTime}
                   required
-                  //error={!dateEnd}
                   className={classes.textField}
                   id="Start Time"
                   label="Start Time"
@@ -133,9 +136,8 @@ class AddEventDialog extends Component {
               </Col>
               <Col md={6}>
                 <TextField
-                  value={"11 : 00 : 00 AM"}
+                  value={eventToCreate.startTime}
                   required
-                  //error={!dateEnd}
                   className={classes.textField}
                   id="End Time"
                   label="End Time"
@@ -149,7 +151,6 @@ class AddEventDialog extends Component {
                 value={""}
                 required
                 fullWidth
-                //error={!dateEnd}
                 className={classes.textField}
                 id="Title"
                 label="Title"
@@ -165,7 +166,6 @@ class AddEventDialog extends Component {
                 multiline
                 rows="5"
                 rowsMax="8"
-                //error={!dateEnd}
                 className={classes.textField}
                 id="Description"
                 label="Description"
@@ -173,6 +173,18 @@ class AddEventDialog extends Component {
                 variant="outlined"
               />
             </Row>
+            <Row className="justify-content-end" style={{marginRight: "0.5rem"}}>
+              <span style={{display: "inline-block"}}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="text-white mb-10 mt-20"
+                  onClick={handleClose}
+                >
+                  Add
+                </Button>
+              </span>
+            </Row> 
           </Form>
         </DialogContent>
       </Dialog>

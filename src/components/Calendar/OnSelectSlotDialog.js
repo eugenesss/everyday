@@ -14,25 +14,23 @@ import Chip from '@material-ui/core/Chip';
 class OnSelectSlotDialog extends Component {
 
   render() {
-    const { handleClose, handleAddEventDialog, eventToAdd, ...other } = this.props;
+    const { handleClose, showCreateEvent, slotSelected, dispatch, ...other } = this.props;
     return (
       <Dialog maxWidth={'lg'} onClose={handleClose} aria-labelledby="simple-dialog-title" {...other}>
         <DialogTitle id="simple-dialog-title">
-          { eventToAdd ? (
-              <Chip label={eventToAdd ? (<DateConvert dd={eventToAdd.start.getDay()} mm={eventToAdd.start.getMonth()} yyyy={eventToAdd.start.getFullYear()} d={eventToAdd.start.getDay()}/>) : ""} variant="outlined"/>
-            ) : null
+          { slotSelected ? (
+              <Chip label={slotSelected ? (<DateConvert dd={slotSelected.start.getDate()} mm={slotSelected.start.getMonth()} yyyy={slotSelected.start.getFullYear()} d={slotSelected.start.getDay()}/>) : ""} variant="outlined"/>
+            ) : ""
           }
         </DialogTitle>
-        <div>
-          <List>
-            <ListItem button onClick={() => handleAddEventDialog()}>
-              <Fab color="primary" variant="extended" aria-label="Add Event">
-                <i class="zmdi zmdi-calendar-note" />
-              </Fab>
-              <ListItemText primary={"Add Event"} />
-            </ListItem>
-          </List>
-        </div>
+        <List>
+          <ListItem button onClick={showCreateEvent}>
+            <Fab color="primary" variant="extended" aria-label="Add Event">
+              <i className="zmdi zmdi-calendar-note" />
+            </Fab>
+            <ListItemText primary={"Add Event"} />
+          </ListItem>
+        </List>
       </Dialog>
     );
   }
