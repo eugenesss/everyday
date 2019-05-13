@@ -4,13 +4,15 @@
 import { combineReducers } from "redux";
 import settings from "./settings";
 import authUserReducer from "./AuthUserReducer";
-import leadReducer from "./crm/LeadReducer";
+import LeadReducer from "./crm/LeadReducer";
 import reportReducer from "./ReportReducer";
+import QuotationReducer from "./accounting/QuotationReducer";
 
 const reducers = combineReducers({
   settings,
   authUser: authUserReducer,
-  leadState: leadReducer,
+  leadState: LeadReducer,
+  quotationState: QuotationReducer,
   reportState: reportReducer
 });
 

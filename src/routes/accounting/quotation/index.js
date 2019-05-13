@@ -9,40 +9,36 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // ListSummary
-import ListSummary from "Components/CRM/ListSummary/ListSummary";
-import ListSummaryItem from "Components/CRM/ListSummary/ListSummaryItem";
-import ShowListSummaryButton from "Components/CRM/ListSummary/ShowListSummaryButton";
+import ListSummary from "Components/Everyday/ListSummary/ListSummary";
+import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
+import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // List
 import QuotationList from "Components/Accounting/Quotation/QuotationList";
 
-class acct_quotation extends Component {
-  constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false,
-      nowShowing: "All Quotations",
-      options: ["All Quotations", "Open Quotations", "Closed Quotations"],
-      showSummary: false
-    };
-  }
+// Actions
+import {
+  changeQuotationView,
+  toggleQuotationDropDown,
+  toggleQuotationSummary,
+  getAllQuotation
+} from "Actions";
 
-  toggle() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
-  }
-  changeValue(newValue) {
-    this.setState({ ...this.state, nowShowing: newValue });
-  }
-  showSummary() {
-    this.setState(prevState => ({
-      showSummary: !prevState.showSummary
-    }));
+class acct_quotation extends Component {
+  componentDidMount() {
+    this.props.getAllQuotation();
   }
 
   render() {
+    const {
+      dropdownOpen,
+      options,
+      nowShowing,
+      showSummary,
+      action,
+      tableData,
+      loading
+    } = this.props.quotationState.quotationList;
     return (
       <React.Fragment>
         <Helmet>
@@ -53,18 +49,20 @@ class acct_quotation extends Component {
           title={
             <div className="d-flex">
               <ListViewSelector
-                dropdownOpen={this.state.dropdownOpen}
-                toggle={this.toggle.bind(this)}
-                options={this.state.options}
-                nowShowing={this.state.nowShowing}
-                onChangeValue={this.changeValue.bind(this)}
+                dropdownOpen={dropdownOpen}
+                toggle={this.props.toggleQuotationDropDown}
+                options={options}
+                nowShowing={nowShowing}
+                onChangeValue={this.props.changeQuotationView}
               />
-              <ShowListSummaryButton action={this.showSummary.bind(this)} />
+              <ShowListSummaryButton
+                action={this.props.toggleQuotationSummary}
+              />
             </div>
           }
           createLink="/acct/new/quotation"
         />
-        {this.state.showSummary && (
+        {showSummary && (
           <ListSummary>
             <ListSummaryItem
               heading={"New Quotations"}
@@ -86,10 +84,27 @@ class acct_quotation extends Component {
             />
           </ListSummary>
         )}
-        <QuotationList title={this.state.nowShowing} />
+        <QuotationList
+          title={nowShowing}
+          action={action}
+          tableData={tableData}
+          loading={loading}
+        />
       </React.Fragment>
     );
   }
 }
 
-export default acct_quotation;
+const mapStateToProps = ({ quotationState }) => {
+  return { quotationState };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    changeQuotationView,
+    toggleQuotationDropDown,
+    toggleQuotationSummary,
+    getAllQuotation
+  }
+)(acct_quotation);

@@ -4,10 +4,12 @@ import { connect } from "react-redux";
 // page req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-import ListSummary from "Components/CRM/ListSummary/ListSummary";
-import ListSummaryItem from "Components/CRM/ListSummary/ListSummaryItem";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
-import ShowListSummaryButton from "Components/CRM/ListSummary/ShowListSummaryButton";
+
+// List Summary
+import ListSummary from "Components/Everyday/ListSummary/ListSummary";
+import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
+import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 //import { getAccount } from "Actions";
 

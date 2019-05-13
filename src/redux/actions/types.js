@@ -15,14 +15,47 @@ export const START_USER_TOUR = "START_USER_TOUR";
 export const STOP_USER_TOUR = "STOP_USER_TOUR";
 export const TOGGLE_DARK_SIDENAV = "TOGGLE_DARK_SIDENAV";
 
+//=============================
+//  CRM ACTION TYPES
+//=============================
 /**
  * Lead Actions
  */
-export const CHANGE_LEAD_VIEW = "CHANGE_LEAD_VIEW";
-export const SHOW_ALL_LEADS = "SHOW_ALL_LEADS";
-export const SHOW_MY_LEADS = "SHOW_MY_LEADS";
-export const SHOW_OPEN_LEADS = "SHOW_OPEN_LEADS";
+export const LEAD_LIST_DROPDOWN = "LEAD_LIST_DROPDOWN";
+export const TOGGLE_LEAD_SUMMARY = "TOGGLE_LEAD_SUMMARY";
+export const CHANGE_LEAD_LIST_VIEW = "CHANGE_LEAD_LIST_VIEW";
+export const GET_LEAD_FAILURE = "GET_LEAD_FAILURE";
+export const GET_ALL_LEAD = "GET_ALL_LEAD";
+export const GET_MY_LEAD = "GET_MY_LEAD";
+export const GET_OPEN_LEAD = "GET_OPEN_LEAD";
+export const GET_CLOSED_LEAD = "GET_CLOSED_LEAD";
+export const GET_ALL_LEAD_SUCCESS = "GET_ALL_LEAD_SUCCESS";
+export const GET_MY_LEAD_SUCCESS = "GET_MY_LEAD_SUCCESS";
+export const GET_OPEN_LEAD_SUCCESS = "GET_OPEN_LEAD_SUCCESS";
+export const GET_CLOSED_LEAD_SUCCESS = "GET_CLOSED_LEAD_SUCCESS";
 
+//=============================
+//  ACCOUNTING ACTION TYPES
+//=============================
+/**
+ * Quotation Actions
+ */
+export const QUOTATION_LIST_DROPDOWN = "QUOTATION_LIST_DROPDOWN";
+export const TOGGLE_QUOTATION_SUMMARY = "TOGGLE_QUOTATION_SUMMARY";
+export const CHANGE_QUOTATION_LIST_VIEW = "CHANGE_QUOTATION_LIST_VIEW";
+export const GET_QUOTATION_FAILURE = "GET_QUOTATION_FAILURE";
+export const GET_ALL_QUOTATION = "GET_ALL_QUOTATION";
+export const GET_MY_QUOTATION = "GET_MY_QUOTATION";
+export const GET_OPEN_QUOTATION = "GET_OPEN_QUOTATION";
+export const GET_CLOSED_QUOTATION = "GET_CLOSED_QUOTATION";
+export const GET_ALL_QUOTATION_SUCCESS = "GET_ALL_QUOTATION_SUCCESS";
+export const GET_MY_QUOTATION_SUCCESS = "GET_MY_QUOTATION_SUCCESS";
+export const GET_OPEN_QUOTATION_SUCCESS = "GET_OPEN_QUOTATION_SUCCESS";
+export const GET_CLOSED_QUOTATION_SUCCESS = "GET_CLOSED_QUOTATION_SUCCESS";
+
+//=============================
+//  SYSTEM ACTION TYPES
+//=============================
 /**
  * Report Actions
  */

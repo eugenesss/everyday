@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 //Sub Components
-import LeadsList from "Components/CRM/Lead/LeadsList";
+import LeadList from "Components/CRM/Lead/LeadList";
 
 //Page Req
 import { Helmet } from "react-helmet";
@@ -12,46 +12,33 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // ListSummary
-import ListSummary from "Components/CRM/ListSummary/ListSummary";
-import ListSummaryItem from "Components/CRM/ListSummary/ListSummaryItem";
-import ShowListSummaryButton from "Components/CRM/ListSummary/ShowListSummaryButton";
+import ListSummary from "Components/Everyday/ListSummary/ListSummary";
+import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
+import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
-//import { getLead, getMyLead } from "Actions";
+// Actions
+import {
+  changeLeadView,
+  toggleLeadDropDown,
+  toggleLeadSummary,
+  getAllLead
+} from "Actions";
 
 class crm_lead extends Component {
-  constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false,
-      nowShowing: "All Leads",
-      options: [
-        "All Leads",
-        "My Leads",
-        "Open Leads",
-        "Hot Leads",
-        "Warm Leads",
-        "Cold Leads"
-      ],
-      showSummary: false
-    };
-  }
-
-  toggle() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
-  }
-  changeValue(newValue) {
-    this.setState({ ...this.state, nowShowing: newValue });
-  }
-  showSummary() {
-    this.setState(prevState => ({
-      showSummary: !prevState.showSummary
-    }));
+  componentDidMount() {
+    this.props.getAllLead();
   }
 
   render() {
+    const {
+      dropdownOpen,
+      options,
+      nowShowing,
+      showSummary,
+      action,
+      tableData,
+      loading
+    } = this.props.leadState.leadList;
     return (
       <React.Fragment>
         <Helmet>
@@ -62,18 +49,18 @@ class crm_lead extends Component {
           title={
             <div className="d-flex">
               <ListViewSelector
-                dropdownOpen={this.state.dropdownOpen}
-                toggle={this.toggle.bind(this)}
-                options={this.state.options}
-                nowShowing={this.state.nowShowing}
-                onChangeValue={this.changeValue.bind(this)}
+                dropdownOpen={dropdownOpen}
+                toggle={this.props.toggleLeadDropDown}
+                options={options}
+                nowShowing={nowShowing}
+                onChangeValue={this.props.changeLeadView}
               />
-              <ShowListSummaryButton action={this.showSummary.bind(this)} />
+              <ShowListSummaryButton action={this.props.toggleLeadSummary} />
             </div>
           }
           createLink="/crm/new/lead"
         />
-        {this.state.showSummary && (
+        {showSummary && (
           <ListSummary>
             <ListSummaryItem
               heading={"New Lead"}
@@ -101,13 +88,27 @@ class crm_lead extends Component {
             />
           </ListSummary>
         )}
-        <LeadsList title={this.state.nowShowing} />
+        <LeadList
+          title={nowShowing}
+          action={action}
+          tableData={tableData}
+          loading={loading}
+        />
       </React.Fragment>
     );
   }
 }
 
+const mapStateToProps = ({ leadState }) => {
+  return { leadState };
+};
+
 export default connect(
-  null,
-  {}
+  mapStateToProps,
+  {
+    changeLeadView,
+    toggleLeadDropDown,
+    toggleLeadSummary,
+    getAllLead
+  }
 )(crm_lead);

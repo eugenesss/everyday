@@ -24,15 +24,14 @@ class HorizontalMenu extends Component {
             </NavLink>
           </li>
           <li className="nav-item">
-            <a href="javascript:void(0);" className="nav-link">
-              <i className="zmdi zmdi-group-work text-primary" />
-              <span className="menu-title">CRM</span>
-            </a>
-            <ul className="list-unstyled sub-menu">
-              {navLinks.crm.map((menu, key) => (
-                <NavMenuItem menu={menu} key={key} />
-              ))}
-            </ul>
+            <NavLink
+              to="/app/calendar/"
+              className="nav-link no-arrow"
+              activeClassName="active"
+            >
+              <i className="zmdi zmdi-calendar text-secondary" />
+              Calendar
+            </NavLink>
           </li>
           <li className="nav-item">
             <NavLink
@@ -53,7 +52,18 @@ class HorizontalMenu extends Component {
               <i className="zmdi zmdi-roller" />
               Project Management
             </NavLink>
-          </li> */}
+    </li> */}
+          <li className="nav-item">
+            <a href="javascript:void(0);" className="nav-link">
+              <i className="zmdi zmdi-group-work text-primary" />
+              <span className="menu-title">CRM</span>
+            </a>
+            <ul className="list-unstyled sub-menu">
+              {navLinks.crm.map((menu, key) => (
+                <NavMenuItem menu={menu} key={key} />
+              ))}
+            </ul>
+          </li>
           <li className="nav-item">
             <a href="javascript:void(0);" className="nav-link">
               <i className="zmdi zmdi-money text-success" />
@@ -75,16 +85,7 @@ class HorizontalMenu extends Component {
               Reports
             </NavLink>
           </li>
-          <li className="nav-item">
-            <NavLink
-              to="/app/calendar/"
-              className="nav-link no-arrow"
-              activeClassName="active"
-            >
-              <i className="zmdi zmdi-calendar text-secondary" />
-              Calendar
-            </NavLink>
-          </li>
+
           {/* <li className="nav-item">
             <NavLink
               to="/app/tasks/"

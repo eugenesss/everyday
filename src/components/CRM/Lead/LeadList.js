@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 //Page req
 import DataList from "Components/Everyday/DataList";
@@ -8,31 +8,48 @@ import Tooltip from "@material-ui/core/Tooltip";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
-const QuotationList = ({ tableData, loading, title, action }) => {
+//Sub Components
+import LeadInterestLevel from "./LeadInterestLevel";
+
+const LeadList = ({ tableData, loading, title, action }) => {
   const columns = [
     {
-      label: "ID",
-      name: "id",
+      name: "ID",
       options: { display: "excluded", filter: false, sort: false }
     },
     {
-      label: "Name",
-      name: "name",
+      name: "Name",
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
-            <Link to={`quotations/view/${tableMeta.rowData[0]}`}>{value}</Link>
+            <NavLink to={`leads/${tableMeta.rowData[0]}`}>{value}</NavLink>
           );
         }
       }
     },
-    { label: "Related", name: "account" },
-    { label: "Amount", name: "amount" },
-    { label: "Date Sent", name: "dateSent" },
-    { label: "Due Date", name: "dueDate" },
-    { label: "Status", name: "status" }
+    "Company",
+    "Email",
+    {
+      name: "Status"
+    },
+    {
+      name: "Source"
+    },
+    {
+      name: "Interest Level",
+      options: {
+        customBodyRender: value => {
+          return <LeadInterestLevel interest={value} />;
+        }
+      }
+    },
+    { name: "Mobile", options: { display: false } },
+    { name: "Lead Owner", options: { display: false } },
+    { name: "Industry", options: { display: false } },
+    { name: "Website", options: { display: false } },
+    { name: "Office", options: { display: false } },
+    { name: "Fax", options: { display: false } }
   ];
-
   if (action == true) {
     columns.push({
       name: "Actions",
@@ -53,20 +70,23 @@ const QuotationList = ({ tableData, loading, title, action }) => {
                   <i className="zmdi zmdi-edit" />
                 </IconButton>
               </Tooltip>
+              <Tooltip id="tooltip-icon" title="Convert">
+                <IconButton
+                  className="text-success mr-2"
+                  aria-label="Convert Lead"
+                  onClick={() => {
+                    this.toggleConvertModal(value);
+                  }}
+                >
+                  <i className="zmdi zmdi-check-all" />
+                </IconButton>
+              </Tooltip>
             </React.Fragment>
           );
         }
       }
     });
   }
-
-  const options = {
-    filterType: "dropdown",
-    responsive: "stacked",
-    download: false,
-    print: false,
-    textLabels: { body: { noMatch: "No Quotations to display" } }
-  };
   return (
     <RctCollapsibleCard fullBlock>
       <DataList title={title} columns={columns} tableData={tableData} />
@@ -75,4 +95,4 @@ const QuotationList = ({ tableData, loading, title, action }) => {
   );
 };
 
-export default QuotationList;
+export default LeadList;

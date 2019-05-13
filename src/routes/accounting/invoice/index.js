@@ -9,9 +9,9 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // ListSummary
-import ListSummary from "Components/CRM/ListSummary/ListSummary";
-import ListSummaryItem from "Components/CRM/ListSummary/ListSummaryItem";
-import ShowListSummaryButton from "Components/CRM/ListSummary/ShowListSummaryButton";
+import ListSummary from "Components/Everyday/ListSummary/ListSummary";
+import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
+import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // List
 import InvoiceList from "Components/Accounting/Invoice/InvoiceList";

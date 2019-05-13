@@ -4,8 +4,9 @@
 import { all } from "redux-saga/effects";
 
 // Sagas
-import leadSagas from "./Lead";
+import leadSagas from "./crm/Lead";
+import quoteSagas from "./accounting/Quotation";
 
 export default function* rootSaga(getState) {
-  yield all([]);
+  yield all([quoteSagas(), leadSagas()]);
 }

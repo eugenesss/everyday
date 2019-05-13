@@ -137,7 +137,7 @@ class InvoiceList extends Component {
       responsive: "stacked",
       download: false,
       print: false,
-      textLabels: { body: { noMatch: "No Quotations to display" } },
+      textLabels: { body: { noMatch: "No Invoices to display" } },
       customToolbar: () => {
         return (
           <Tooltip id="tooltip-icon" title="Refresh">

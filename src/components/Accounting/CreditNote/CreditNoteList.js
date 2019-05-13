@@ -137,7 +137,7 @@ class CreditNoteList extends Component {
       responsive: "stacked",
       download: false,
       print: false,
-      textLabels: { body: { noMatch: "No Quotations to display" } },
+      textLabels: { body: { noMatch: "No Credit Notes to display" } },
       customToolbar: () => {
         return (
           <Tooltip id="tooltip-icon" title="Refresh">
