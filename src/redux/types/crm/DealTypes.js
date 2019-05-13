@@ -1,0 +1,13 @@
+/**
+ * Deal Actions
+ */
+export const DEAL_LIST_DROPDOWN = "DEAL_LIST_DROPDOWN";
+export const TOGGLE_DEAL_SUMMARY = "TOGGLE_DEAL_SUMMARY";
+export const CHANGE_DEAL_LIST_VIEW = "CHANGE_DEAL_LIST_VIEW";
+export const GET_DEAL_FAILURE = "GET_DEAL_FAILURE";
+export const GET_DEAL_SUCCESS = "GET_DEAL_SUCCESS";
+export const GET_ALL_DEAL = "GET_ALL_DEAL";
+export const GET_MY_DEAL = "GET_MY_DEAL";
+export const GET_OPEN_DEAL = "GET_OPEN_DEAL";
+export const GET_CLOSED_DEAL = "GET_CLOSED_DEAL";
+export const GET_WON_DEAL = "GET_WON_DEAL";

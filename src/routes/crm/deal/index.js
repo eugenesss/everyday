@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 //sub components
-import DealsList from "Components/CRM/Deal/DealsList";
+import DealList from "Components/CRM/Deal/DealList";
 
 // page req
 import { Helmet } from "react-helmet";
@@ -14,45 +14,25 @@ import ListSummary from "Components/Everyday/ListSummary/ListSummary";
 import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
-// import { getAllDeal, getMyDeal } from "Actions";
+// Actions
+import {
+  changeDealView,
+  toggleDealDropDown,
+  toggleDealSummary,
+  getAllDeal
+} from "Actions";
 
 class crm_deal extends Component {
-  constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false,
-      nowShowing: "All Deals",
-      options: [
-        "All Deals",
-        "My Deals",
-        "Open Deals",
-        "Closed Deals",
-        "Won Deals"
-      ],
-      showSummary: false
-    };
-  }
-
-  toggle() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
-  }
-  changeValue(newValue) {
-    this.setState({ ...this.state, nowShowing: newValue });
-  }
-  showSummary() {
-    this.setState(prevState => ({
-      showSummary: !prevState.showSummary
-    }));
-  }
-
-  /*   reloadTable() {
-    this.props.getAllDeal();
-  } */
-
   render() {
+    const {
+      dropdownOpen,
+      options,
+      nowShowing,
+      showSummary,
+      action,
+      tableData,
+      loading
+    } = this.props.dealState.dealList;
     return (
       <React.Fragment>
         <Helmet>
@@ -63,18 +43,18 @@ class crm_deal extends Component {
           title={
             <div className="d-flex">
               <ListViewSelector
-                dropdownOpen={this.state.dropdownOpen}
-                toggle={this.toggle.bind(this)}
-                options={this.state.options}
-                nowShowing={this.state.nowShowing}
-                onChangeValue={this.changeValue.bind(this)}
+                dropdownOpen={dropdownOpen}
+                toggle={this.props.toggleDealDropDown}
+                options={options}
+                nowShowing={nowShowing}
+                onChangeValue={this.props.changeDealView}
               />
-              <ShowListSummaryButton action={this.showSummary.bind(this)} />
+              <ShowListSummaryButton action={this.props.toggleDealSummary} />
             </div>
           }
           createLink="/crm/new/deal"
         />
-        {this.state.showSummary && (
+        {showSummary && (
           <ListSummary>
             <ListSummaryItem
               heading={"New Lead"}
@@ -102,13 +82,22 @@ class crm_deal extends Component {
             />
           </ListSummary>
         )}
-        <DealsList title={this.state.nowShowing} />
+        <DealList
+          title={nowShowing}
+          action={action}
+          tableData={tableData}
+          loading={loading}
+        />
       </React.Fragment>
     );
   }
 }
+const mapStateToProps = ({ crmState }) => {
+  const { dealState } = crmState;
+  return { dealState };
+};
 
 export default connect(
-  null,
-  {}
+  mapStateToProps,
+  { changeDealView, toggleDealDropDown, toggleDealSummary, getAllDeal }
 )(crm_deal);

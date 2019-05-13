@@ -11,38 +11,28 @@ import ListSummary from "Components/Everyday/ListSummary/ListSummary";
 import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
-//import { getAccount } from "Actions";
-
 //sub components
-import AccountsList from "Components/CRM/Account/AccountsList";
+import AccountList from "Components/CRM/Account/AccountList";
+
+// Actions
+import {
+  changeAccountView,
+  toggleAccountDropDown,
+  toggleAccountSummary,
+  getAllAccount
+} from "Actions";
 
 class crm_account extends Component {
-  constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false,
-      nowShowing: "All Accounts",
-      options: ["All Accounts", "My Accounts", "Open Accounts"],
-      showSummary: false
-    };
-  }
-
-  toggle() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
-  }
-  changeValue(newValue) {
-    this.setState({ ...this.state, nowShowing: newValue });
-  }
-  showSummary() {
-    this.setState(prevState => ({
-      showSummary: !prevState.showSummary
-    }));
-  }
-
   render() {
+    const {
+      dropdownOpen,
+      options,
+      nowShowing,
+      showSummary,
+      action,
+      tableData,
+      loading
+    } = this.props.accountState.accountList;
     return (
       <React.Fragment>
         <Helmet>
@@ -53,18 +43,18 @@ class crm_account extends Component {
           title={
             <div className="d-flex">
               <ListViewSelector
-                dropdownOpen={this.state.dropdownOpen}
-                toggle={this.toggle.bind(this)}
-                options={this.state.options}
-                nowShowing={this.state.nowShowing}
-                onChangeValue={this.changeValue.bind(this)}
+                dropdownOpen={dropdownOpen}
+                toggle={this.props.toggleAccountDropDown}
+                options={options}
+                nowShowing={nowShowing}
+                onChangeValue={this.props.changeAccountView}
               />
-              <ShowListSummaryButton action={this.showSummary.bind(this)} />
+              <ShowListSummaryButton action={this.props.toggleAccountSummary} />
             </div>
           }
           createLink="/crm/new/account"
         />
-        {this.state.showSummary && (
+        {showSummary && (
           <ListSummary>
             <ListSummaryItem
               heading={"New Lead"}
@@ -92,13 +82,27 @@ class crm_account extends Component {
             />
           </ListSummary>
         )}
-        <AccountsList title={this.state.nowShowing} />
+        <AccountList
+          title={nowShowing}
+          action={action}
+          tableData={tableData}
+          loading={loading}
+        />
       </React.Fragment>
     );
   }
 }
+const mapStateToProps = ({ crmState }) => {
+  const { accountState } = crmState;
+  return { accountState };
+};
 
 export default connect(
-  null,
-  {}
+  mapStateToProps,
+  {
+    changeAccountView,
+    toggleAccountDropDown,
+    toggleAccountSummary,
+    getAllAccount
+  }
 )(crm_account);
