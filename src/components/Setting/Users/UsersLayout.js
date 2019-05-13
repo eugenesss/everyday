@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import UsersLayout from "Components/Setting/Users/UsersLayout"
+// sub components
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 
-class Users extends Component {
+import UsersList from "Components/Setting/Users/UsersList"
+
+
+class UsersLayout extends Component {
   constructor(props) {
     super(props);
   }
@@ -11,12 +15,13 @@ class Users extends Component {
   render() {
     return (
       <React.Fragment>
-        <UsersLayout/>
+        <UsersList/>
       </React.Fragment>
     );
   }
 }
 
 export default connect(
-  null
-)(Users);
+  null,
+  { }
+)(UsersLayout);

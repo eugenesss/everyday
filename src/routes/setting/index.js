@@ -3,13 +3,10 @@ import { connect } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Col, Row, Form } from "reactstrap";
 
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+
 import { withRouter } from "react-router-dom";
 
 import { Helmet } from "react-helmet";
-import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-import Paper from '@material-ui/core/Paper';
 // async components
 import {
   Async_setting_gen_personalInformation_component,
@@ -25,15 +22,9 @@ import {
 } from "Components/AsyncComponent/AsyncComponent";
 import SettingsDirectory from "Components/Setting/SettingsDirectory"
 
-const styles = theme => ({
-  paper: {
-    marginBottom: theme.spacing.unit * 2,
-  }
-});
-
 class Settings extends Component {
   render() {
-    const { match, classes } = this.props;
+    const { match } = this.props;
     if (location.pathname === "/app/settings") {
       return <Redirect to={"/app/settings/general/personal-information"} />;
     }
@@ -43,18 +34,11 @@ class Settings extends Component {
           <title>Everyday | System Settings</title>
           <meta name="description" content="Everyday System" />
         </Helmet>
-        <PageTitleBar
-          title="System Settings"
-          match={match}
-          enableBreadCrumb={false}
-        />
         <Row>
-        <Col md={3}>
-          <Paper className={classes.paper}>
+          <Col md={2}>
             <SettingsDirectory/>
-          </Paper>
-        </Col>
-          <Col md={9}>
+          </Col>
+          <Col md={10}>
             <Switch>
               {/* ------- General ------- */}
               <Route
@@ -67,7 +51,7 @@ class Settings extends Component {
                 path={`${match.url}/general/company-details`}
                 component={ Async_setting_gen_companyDetails_component }
               />
-              {/* ------- Roles & Permissions ------- */}
+              {/* ------- Users and Controls ------- */}
               <Route
                 exact
                 path={`${match.url}/users-and-controls/users`}
@@ -120,13 +104,7 @@ class Settings extends Component {
   }
 }
 
-Settings.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
 export default withRouter(
-  connect( null ) (
-    withStyles(styles)
+  connect( null ) 
     (Settings)
-  )
 );

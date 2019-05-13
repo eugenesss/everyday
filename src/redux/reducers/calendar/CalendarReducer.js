@@ -130,7 +130,8 @@ export default (state = INIT_STATE, action) => {
     case CHANGE_DAY_VIEW:
       return {
         ...state,
-        dayView: action.payload
+        dayView: action.payload,
+        viewIndex: 2
       }
 
     case CHANGE_EVENT_VIEW:

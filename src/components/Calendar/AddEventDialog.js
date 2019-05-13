@@ -21,7 +21,6 @@ const styles = theme => ({
   dialogPaper: {
     overflow: "visible"
   },
-  
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
@@ -38,7 +37,6 @@ class AddEventDialog extends Component {
 
   render() {
     const { classes, handleClose, eventToCreate, open, dispatch, ...other } = this.props;
-    console.log(eventToCreate)
     return (
       <Dialog fullWidth maxWidth={'md'} PaperProps={{ className: classes.dialogPaper }} onClose={handleClose} aria-labelledby="simple-dialog-title" open={open} {...other}>
         <DialogTitle id="simple-dialog-title rounded bg-primary">
@@ -186,7 +184,7 @@ class AddEventDialog extends Component {
                   Add
                 </Button>
               </span>
-        </Row> 
+            </Row> 
           </Form>
         </DialogContent>
       </Dialog>

@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 class RolesAndPermissions extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <div>
@@ -11,4 +15,6 @@ class RolesAndPermissions extends Component {
   }
 }
 
-export default RolesAndPermissions;
+export default connect(
+  null
+)(RolesAndPermissions);

@@ -30,6 +30,13 @@ export const SHOW_CREATE_EVENT = "SHOW_CREATE_EVENT";
 export const HIDE_CREATE_EVENT = "HIDE_CREATE_EVENT";
 export const SHOW_UPDATE_EVENT = "SHOW_UPDATE_EVENT";
 
+/**
+ * Users Actions
+ */
+export const GET_ALL_USERS = "GET_ALL_USERS";
+export const SHOW_ADD_USER = "SHOW_ADD_USER";
+export const HIDE_ADD_USER = "HIDE_ADD_USER";
+
 
 /**
  * Lead Actions
