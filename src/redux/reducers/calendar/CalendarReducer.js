@@ -1,5 +1,5 @@
 /**
- * Auth User Reducers
+ * Calendar Reducers
  */
 import { NotificationManager } from "react-notifications";
 import moment from "moment";
@@ -17,9 +17,6 @@ import {
   SHOW_UPDATE_EVENT
 } from "Types";
 
-/**
- * initial auth user
- */
 const INIT_STATE = {
   eventToCreate: {
     constants: {

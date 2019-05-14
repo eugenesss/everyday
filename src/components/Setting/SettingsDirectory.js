@@ -70,7 +70,7 @@ class SettingsDirectory extends Component {
         <Scrollbars
             className="rct-scroll"
             autoHeight
-            autoHeightMin={'calc(100vh - 100px)'}
+            autoHeightMin={'100vh'}
             // autoHeightMax={'calc(100vh - 100px)'}
         >
           <List

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import UsersLayout from "Components/Setting/Users/UsersLayout"
+import UsersLayout from "Components/Setting/UserControl/Users/UsersLayout"
 
 class Users extends Component {
   constructor(props) {

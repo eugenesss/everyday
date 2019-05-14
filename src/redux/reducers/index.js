@@ -19,8 +19,9 @@ import DealReducer from "./crm/DealReducer";
 // system
 import authUserReducer from "./system/AuthUserReducer";
 import reportReducer from "./system/ReportReducer";
-import calendarCalendarReducer from "./calendar/CalendarReducer";
-import usersReducer from "./settings/users/UsersReducer";
+import calendarReducer from "./calendar/CalendarReducer";
+import usersReducer from "./settings/userControl/UsersReducer";
+import rolesReducer from "./settings/userControl/RolesReducer";
 
 const reducers = combineReducers({
   settings,
@@ -37,8 +38,9 @@ const reducers = combineReducers({
     creditNoteState: CreditNoteReducer
   }),
   reportState: reportReducer,
-  calendarState: calendarCalendarReducer,
+  calendarState: calendarReducer,
   usersState: usersReducer,
+  rolesState: rolesReducer,
   modal
 });
 

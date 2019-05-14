@@ -9,7 +9,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
-import AddUserDialog from "Components/Setting/Users/AddUserDialog"
+import AddUserDialog from "Components/Setting/UserControl/Users/AddUserDialog"
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -19,7 +19,7 @@ import { getAllUsers, showAddUser, hideAddUser } from "Actions";
 const styles = theme => ({
   icon: {
    height: 24,
-   width: 24
+   width: 24,
   }
 });
 
@@ -41,7 +41,6 @@ class UsersList extends Component {
       user.email,
       user.contact,
       user.role,
-      user.linkedIn,
       user
     );
     return data;
@@ -77,7 +76,8 @@ class UsersList extends Component {
         options: {
           customBodyRender: (value, tableMeta) => {
             return (
-              <NavLink to={`user/${tableMeta.rowData[0]}`}>{value}</NavLink>
+              // <NavLink to={`user/${tableMeta.rowData[0]}`}>{value}</NavLink>
+              <div>{value}</div>
             );
           }
         }
@@ -94,7 +94,6 @@ class UsersList extends Component {
           }
         }
       },
-      { name: "LinkedIn", options: { display: false } },
       {
         name: "Actions",
         options: {
@@ -179,8 +178,6 @@ UsersList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-
-//map state to props
 const mapStateToProps = ({ usersState }) => {
   const { users, usersLoading, isAddUser, userToAdd } = usersState;
   return { users, usersLoading, isAddUser, userToAdd };

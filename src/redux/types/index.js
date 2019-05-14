@@ -3,6 +3,7 @@ export * from "./system/AppSettingTypes";
 export * from "./system/SystemSettings";
 export * from "./system/CalendarTypes";
 export * from "./system/UserTypes";
+export * from "./system/RoleTypes";
 
 // Accounting Types
 export * from "./accounting/QuotationTypes";

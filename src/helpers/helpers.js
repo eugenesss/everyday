@@ -77,3 +77,78 @@ export const listOptions = {
   rowsPerPageOptions: [15, 30, 60, 100],
   textLabels: { body: { noMatch: "No data to display" } }
 };
+
+/**
+ * Convert Month
+ */
+export function convertMonth(mm) {
+  var month
+  switch (mm) {
+    case 0:
+      month = "Jan"
+      break;
+    case 1:
+      month = "Feb"
+      break;
+    case 2:
+      month = "Mar"
+      break;
+    case 3:
+      month = "Apr"
+      break;
+    case 4:
+      month = "May"
+      break;
+    case 5:
+      month = "Jun"
+      break;
+    case 6:
+      month = "Jul"
+      break;
+    case 7:
+      month = "Aug"
+      break;
+    case 8:
+      month = "Sep"
+      break;
+    case 9:
+      month = "Oct"
+      break;
+    case 10:
+      month = "Nov"
+      break;
+    case 11:
+      month = "Dec"
+      break;
+  }
+  return month
+}
+/**
+ * Convert Day
+ */
+export function convertDay(d){
+  var day
+  switch (d) {
+    case 0:
+      day = "Sunday";
+      break;
+    case 1:
+      day = "Monday";
+      break;
+    case 2:
+       day = "Tuesday";
+      break;
+    case 3:
+      day = "Wednesday";
+      break;
+    case 4:
+      day = "Thursday";
+      break;
+    case 5:
+      day = "Friday";
+      break;
+    case 6:
+      day = "Saturday";
+  }
+  return day
+}

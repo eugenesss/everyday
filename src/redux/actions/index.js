@@ -21,4 +21,6 @@ export * from "./system/ReportActions";
 // Calendar Actions
 export * from "./calendar/CalendarActions";
 // User Actions
-export * from "./settings/users/UsersActions";
+export * from "./settings/userControl/UsersActions";
+// Role Actions
+export * from "./settings/UserControl/RolesActions";
