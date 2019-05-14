@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Col, Row } from "reactstrap";
 
+import Button from "@material-ui/core/Button";
 import TextField from '@material-ui/core/TextField';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -32,19 +33,19 @@ const styles = theme => ({
   },
 });
 
-function CustomTableRow({position, name, children, classes, ...props}) {
+function CustomTableRow({position, name, children, classes, counter = 0, ...props}) {
   let table = []
-  table.push(<TableCell component="th" scope="row">{name}</TableCell>)
+  table.push(<TableCell component="th" scope="row" key={counter++}>{name}</TableCell>)
   for (let i = 0; i < position - 1; i++) {
-    table.push(<TableCell/>)
+    table.push(<TableCell key={counter++}/>)
   }
-  table.push(<TableCell align="center">{children}</TableCell>)
+  table.push(<TableCell align="center" key={counter++}>{children}</TableCell>)
   for (let y = 0; y < 4 - position; y++) {
-    table.push(<TableCell/>)
+    table.push(<TableCell key={counter++}/>)
   }
 
   return (
-    <TableRow className={classes.row} {...props}>
+    <TableRow className={classes.row} {...props} >
       {table}
     </TableRow>
   )
@@ -162,6 +163,26 @@ class RoleManager extends Component {
                 </CustomTableRow>
               </TableBody>
             </Table>
+          </Row>
+          <Row>
+            <Col>
+              <Button
+                variant="contained"
+                color="secondary"
+                className="text-white mb-10 mt-10"
+              >
+                Delete
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                variant="contained"
+                color="primary"
+                className="text-white mb-10 mt-10 float-right"
+              >
+                Save
+              </Button>
+            </Col>
           </Row>
         </div>
       </React.Fragment>

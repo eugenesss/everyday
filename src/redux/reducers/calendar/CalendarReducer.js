@@ -2,6 +2,7 @@
  * Calendar Reducers
  */
 import { NotificationManager } from "react-notifications";
+import { convertMonth } from "Helpers/helpers";
 import moment from "moment";
 import {
   GET_ALL_EVENTS,
@@ -83,39 +84,16 @@ const INIT_STATE = {
       title: "Company Event 3",
       start: new Date(2019, 4, 14),
       end: new Date(2019, 4, 15)
+    },
+    {
+      title: "My Event 3",
+      start: new Date(2019, 4, 26, 7, 0, 0),
+      end: new Date(2019, 4, 26, 9, 0, 0),
+      desc: "Big conference for important people"
     }
   ],
   showEvents: []
 };
-
-function convertMonth(mm) {
-  switch (mm) {
-    case 0:
-      return "Jan";
-    case 1:
-      return "Feb";
-    case 2:
-      return "Mar";
-    case 3:
-      return "Apr";
-    case 4:
-      return "May";
-    case 5:
-      return "Jun";
-    case 6:
-      return "Jul";
-    case 7:
-      return "Aug";
-    case 8:
-      return "Sep";
-    case 9:
-      return "Oct";
-    case 10:
-      return "Nov";
-    case 11:
-      return "Dec";
-  }
-}
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
@@ -130,8 +108,10 @@ export default (state = INIT_STATE, action) => {
       switch (action.payload) {
         case "My Calendar":
           var showEvents = state.myEvents;
-        case "Company Calender":
+          break;
+        case "Company Calendar":
           var showEvents = state.companyEvents;
+          break;
       }
       return {
         ...state,
