@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Col, Row } from "reactstrap";
 
-import DateConvert from "Components/Date";
+import { convertMonth, convertDay } from "Helpers/helpers";
 
 import Button from '@material-ui/core/Button';
 import Fab from "@material-ui/core/Fab";
@@ -31,7 +31,12 @@ const CalendarToolbar = (toolbar) => {
                 <Button variant="contained" color="primary" onClick={goToToday} className="mr-10">
                   Today
                 </Button>
-                <Chip label={<DateConvert dd={today.getDate()} mm={today.getMonth()} yyyy={today.getFullYear()} d={today.getDay()}/>} variant="outlined" />
+                <Chip label={
+                   convertDay(today.getDay()) + " - " +
+                   today.getDate() + " / " + 
+                   convertMonth(today.getMonth()) + " / " + 
+                   today.getFullYear()
+                } variant="outlined" />
               </Col>
               <Col>
                 <h2 className="text-right">{toolbar.label}</h2>
@@ -45,7 +50,12 @@ const CalendarToolbar = (toolbar) => {
                 <Button variant="contained" color="primary" onClick={goToToday} className="mr-10">
                   Today
                 </Button>
-                <Chip label={<DateConvert dd={today.getDate()} mm={today.getMonth()} yyyy={today.getFullYear()} d={today.getDay()}/>} variant="outlined" />
+                <Chip label={
+                  convertDay(today.getDay()) + " - " +
+                  today.getDate() + " / " + 
+                  convertMonth(today.getMonth()) + " / " + 
+                  today.getFullYear()
+                } variant="outlined" />
               </Col>
               <Col>
                 <h2 className="text-center">{toolbar.label}</h2>

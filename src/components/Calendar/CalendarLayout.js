@@ -2,23 +2,22 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Col, Row } from "reactstrap";
 
-// sub components
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import BigCalendar from 'react-big-calendar';
 import ReactCalendar from 'react-calendar'
+import SwipeableViews from 'react-swipeable-views';
 import moment from 'moment';
 
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import CalendarToolbar from "Components/Calendar/CalendarToolbar";
-import OnSelectSlotDialog from "Components/Calendar/OnSelectSlotDialog";
+import SelectSlotDialog from "Components/Calendar/SelectSlotDialog";
 import AddEventDialog from "Components/Calendar/AddEventDialog";
 
-import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 import PropTypes from 'prop-types';
@@ -205,7 +204,7 @@ class CalendarLayout extends Component {
             </Row>
           </TabContainer>
         </SwipeableViews>
-        <OnSelectSlotDialog
+        <SelectSlotDialog
           open={isSlotSelected}
           handleClose={hideSelectedSlot}
           slotSelected={slotSelected}

@@ -1,23 +1,28 @@
 /**
- * Auth User Reducers
+ * Users Reducers
  */
 import { NotificationManager } from "react-notifications";
 import { GET_ALL_USERS, SHOW_ADD_USER, HIDE_ADD_USER } from "Types";
 
-/**
- * initial auth user
- */
 const INIT_STATE = {
+  users: [
+    {
+      fullName: "Lim Jeng",
+      email: "limjeng@ocdigitalnetwork.com",
+      contact: "98765432",
+      role: [],
+      linkedIn: "asd.linkedin.com"
+    }
+  ],
+  usersLoading: false,
+  isAddUser: false,
   userToAdd: {
     firstName: "",
     lastName: "",
     email: "",
     contact: "",
-    role: ""
-  },
-  users: [],
-  usersLoading: false,
-  isAddUser: false
+    role: "",
+  }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -26,17 +31,16 @@ export default (state = INIT_STATE, action) => {
       return { ...state };
 
     case SHOW_ADD_USER:
-      console.log("add");
       return {
         ...state,
-        isAddUser: true
-      };
-
+        isAddUser: true,
+      }
+    
     case HIDE_ADD_USER:
       return {
         ...state,
-        isAddUser: false
-      };
+        isAddUser: false,
+      }
 
     default:
       return { ...state };

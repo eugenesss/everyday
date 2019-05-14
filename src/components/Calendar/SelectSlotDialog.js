@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import DateConvert from "Components/Date";
+import { convertMonth, convertDay } from "Helpers/helpers";
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -9,17 +9,19 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Fab from '@material-ui/core/Fab';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import Chip from '@material-ui/core/Chip';
 
-class OnSelectSlotDialog extends Component {
+class SelectSlotDialog extends Component {
 
   render() {
     const { handleClose, showCreateEvent, slotSelected, dispatch, ...other } = this.props;
     return (
-      <Dialog maxWidth={'lg'} onClose={handleClose} aria-labelledby="simple-dialog-title" {...other}>
+      <Dialog fullWidth maxWidth={'xs'} onClose={handleClose} aria-labelledby="simple-dialog-title" {...other}>
         <DialogTitle id="simple-dialog-title">
           { slotSelected ? (
-              <Chip label={slotSelected ? (<DateConvert dd={slotSelected.start.getDate()} mm={slotSelected.start.getMonth()} yyyy={slotSelected.start.getFullYear()} d={slotSelected.start.getDay()}/>) : ""} variant="outlined"/>
+              convertDay(slotSelected.start.getDay()) + " - " +
+              slotSelected.start.getDate() + " / " + 
+              convertMonth(slotSelected.start.getMonth()) + " / " + 
+              slotSelected.start.getFullYear()
             ) : ""
           }
         </DialogTitle>
@@ -40,4 +42,4 @@ class OnSelectSlotDialog extends Component {
 
 export default connect(
   null
-)(OnSelectSlotDialog);
+)(SelectSlotDialog);

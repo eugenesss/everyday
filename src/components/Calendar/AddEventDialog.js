@@ -4,15 +4,14 @@ import { Col, Row, Form } from "reactstrap";
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu } from "reactstrap";
 import ReactCalendar from 'react-calendar'
 
-import DateConvert from "Components/Date";
-
 import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
-import Chip from '@material-ui/core/Chip';
 import Tooltip from "@material-ui/core/Tooltip";
+
+import { convertMonth, convertDay } from "Helpers/helpers";
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -44,15 +43,12 @@ class AddEventDialog extends Component {
             <Col>Add Event</Col> 
             <Col>
               <div className="float-right">
-                <Chip 
-                  label={open ? (
-                      <DateConvert 
-                        dd={eventToCreate.constants.sDate.getDate()} 
-                        mm={eventToCreate.constants.sDate.getMonth()}
-                        yyyy={eventToCreate.constants.sDate.getFullYear()}
-                        d={eventToCreate.constants.sDate.getDay()}/>
-                    ) : ""} 
-                  variant="outlined"/>
+                {open ? (
+                  convertDay(eventToCreate.constants.sDate.getDay()) + " - " +
+                  eventToCreate.constants.sDate.getDate() + " / " + 
+                  convertMonth(eventToCreate.constants.sDate.getMonth()) + " / " +
+                  eventToCreate.constants.sDate.getFullYear()
+                ) : "" }
               </div>
             </Col> 
           </Row>
