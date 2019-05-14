@@ -3,6 +3,7 @@
  */
 import { combineReducers } from "redux";
 import settings from "./settings";
+import { reducer as modal } from "redux-modal";
 
 // accounting
 import QuotationReducer from "./accounting/QuotationReducer";
@@ -16,8 +17,8 @@ import AccountReducer from "./crm/AccountReducer";
 import DealReducer from "./crm/DealReducer";
 
 // system
-import authUserReducer from "./AuthUserReducer";
-import reportReducer from "./ReportReducer";
+import authUserReducer from "./system/AuthUserReducer";
+import reportReducer from "./system/ReportReducer";
 import calendarCalendarReducer from "./calendar/CalendarReducer";
 import usersReducer from "./settings/users/UsersReducer";
 
@@ -37,7 +38,8 @@ const reducers = combineReducers({
   }),
   reportState: reportReducer,
   calendarState: calendarCalendarReducer,
-  usersState: usersReducer
+  usersState: usersReducer,
+  modal
 });
 
 export default reducers;

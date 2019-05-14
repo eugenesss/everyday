@@ -19,7 +19,7 @@ const InvoiceList = ({ tableData, loading, title, action }) => {
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
-            <NavLink to={`leads/${tableMeta.rowData[0]}`}>{value}</NavLink>
+            <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
           );
         }
       }

@@ -88,6 +88,20 @@ export const Async_acct_credit_note_component = Loadable({
   loading: () => <RctPageLoader />
 });
 
+// accounting management view
+export const Async_acct_single_quotation = Loadable({
+  loader: () => import("Routes/accounting/quotation/view"),
+  loading: () => <RctPageLoader />
+});
+export const Async_acct_single_invoice = Loadable({
+  loader: () => import("Routes/accounting/invoice/view"),
+  loading: () => <RctPageLoader />
+});
+export const Async_acct_single_credit_note = Loadable({
+  loader: () => import("Routes/accounting/credit_note/view"),
+  loading: () => <RctPageLoader />
+});
+
 // accounting management new
 export const Async_acct_new_quotation_component = Loadable({
   loader: () => import("Routes/accounting/new/quotation"),
@@ -124,7 +138,7 @@ export const Async_reminder_component = Loadable({
 export const Async_calendar_component = Loadable({
   loader: () => import("Routes/calendar"),
   loading: () => <RctPageLoader />
-})
+});
 
 // settings
 // General
@@ -142,7 +156,8 @@ export const Async_setting_user_users_component = Loadable({
   loading: () => <RctPageLoader />
 });
 export const Async_setting_user_rolesPermissions_component = Loadable({
-  loader: () => import("Routes/setting/users-and-controls/roles-and-permissions"),
+  loader: () =>
+    import("Routes/setting/users-and-controls/roles-and-permissions"),
   loading: () => <RctPageLoader />
 });
 // Accounting

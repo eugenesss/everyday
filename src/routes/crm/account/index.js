@@ -23,6 +23,10 @@ import {
 } from "Actions";
 
 class crm_account extends Component {
+  componentDidMount() {
+    this.props.getAllAccount();
+  }
+
   render() {
     const {
       dropdownOpen,

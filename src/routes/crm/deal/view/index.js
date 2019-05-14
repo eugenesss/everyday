@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import { viewDeal, viewDealEnd, deleteDeal } from "Actions";
 
 //Page Components
 import DealCard from "Components/CRM/Deal/DealCard";
 import DealDetails from "Components/CRM/Deal/DealDetails";
 import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
-import ViewDealStage from "Components/CRM/View/Deal/ViewDealStage";
+// import ViewDealStage from "Components/CRM/View/Deal/ViewDealStage";
 
 // Global Req
 import { Helmet } from "react-helmet";

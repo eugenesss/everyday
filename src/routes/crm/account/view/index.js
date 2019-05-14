@@ -47,7 +47,7 @@ class crm_view_account extends Component {
       <React.Fragment>
         {loading ? (
           <RctPageLoader />
-        ) : account ? (
+        ) : !account ? (
           <React.Fragment>
             <Helmet>
               <title>Everyday | View Account</title>

@@ -17,11 +17,7 @@ class crm_new_account extends Component {
           <title>Everyday | New Account</title>
           <meta name="description" content="Everyday Account Creation" />
         </Helmet>
-        <PageTitleBar
-          title={<IntlMessages id="sidebar.newAccount" />}
-          match={this.props.match}
-          enableBreadCrumb={false}
-        />
+        <PageTitleBar title={<IntlMessages id="sidebar.newAccount" />} />
       </React.Fragment>
     );
   }

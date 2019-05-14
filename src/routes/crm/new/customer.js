@@ -17,11 +17,7 @@ class crm_new_customer extends Component {
           <title>Everyday | New Customer</title>
           <meta name="description" content="Everyday Customers Creation" />
         </Helmet>
-        <PageTitleBar
-          title={<IntlMessages id="sidebar.newCustomer" />}
-          match={this.props.match}
-          enableBreadCrumb={false}
-        />
+        <PageTitleBar title={<IntlMessages id="sidebar.newCustomer" />} />
       </React.Fragment>
     );
   }

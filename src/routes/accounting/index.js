@@ -8,7 +8,10 @@ import {
   Async_acct_credit_note_component,
   Async_acct_new_quotation_component,
   Async_acct_new_invoice_component,
-  Async_acct_new_credit_note_component
+  Async_acct_new_credit_note_component,
+  Async_acct_single_quotation,
+  Async_acct_single_invoice,
+  Async_acct_single_credit_note
 } from "Components/AsyncComponent/AsyncComponent";
 
 export default class crmSwitcher extends Component {
@@ -23,6 +26,10 @@ export default class crmSwitcher extends Component {
             path={`${match.url}/quotations`}
             component={Async_acct_quotation_component}
           />
+          <Route
+            path={`${match.url}/quotations/:id`}
+            component={Async_acct_single_quotation}
+          />
 
           {/* ------- /Invoice ------- */}
           <Route
@@ -30,12 +37,20 @@ export default class crmSwitcher extends Component {
             path={`${match.url}/invoices`}
             component={Async_acct_invoice_component}
           />
+          <Route
+            path={`${match.url}/invoices/:id`}
+            component={Async_acct_single_invoice}
+          />
 
           {/* ------- /Payments ------- */}
           <Route
             exact
             path={`${match.url}/credit_note`}
             component={Async_acct_credit_note_component}
+          />
+          <Route
+            path={`${match.url}/credit_note/:id`}
+            component={Async_acct_single_credit_note}
           />
 
           {/* ------- /Create ------- */}

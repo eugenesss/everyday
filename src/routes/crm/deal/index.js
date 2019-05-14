@@ -23,6 +23,10 @@ import {
 } from "Actions";
 
 class crm_deal extends Component {
+  componentDidMount() {
+    this.props.getAllDeal();
+  }
+
   render() {
     const {
       dropdownOpen,
