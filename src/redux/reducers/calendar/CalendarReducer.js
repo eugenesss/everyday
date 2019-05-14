@@ -83,6 +83,12 @@ const INIT_STATE = {
       title: "Company Event 3",
       start: new Date(2019, 4, 14),
       end: new Date(2019, 4, 15)
+    },
+    {
+      title: "My Event 3",
+      start: new Date(2019, 4, 26, 7, 0, 0),
+      end: new Date(2019, 4, 26, 9, 0, 0),
+      desc: "Big conference for important people"
     }
   ],
   showEvents: []
@@ -130,8 +136,10 @@ export default (state = INIT_STATE, action) => {
       switch (action.payload) {
         case "My Calendar":
           var showEvents = state.myEvents;
-        case "Company Calender":
+          break;
+        case "Company Calendar":
           var showEvents = state.companyEvents;
+          break;
       }
       return {
         ...state,

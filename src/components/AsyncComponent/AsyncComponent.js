@@ -132,8 +132,8 @@ export const Async_setting_gen_companyDetails_component = Loadable({
   loader: () => import("Routes/setting/general/companyDetails"),
   loading: () => <RctPageLoader />
 });
-export const Async_setting_gen_personalInformation_component = Loadable({
-  loader: () => import("Routes/setting/general/personalInformation"),
+export const Async_setting_gen_myProfile_component = Loadable({
+  loader: () => import("Routes/setting/general/myProfile"),
   loading: () => <RctPageLoader />
 });
 // User & Controls

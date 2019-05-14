@@ -9,7 +9,7 @@ import { withRouter } from "react-router-dom";
 import { Helmet } from "react-helmet";
 // async components
 import {
-  Async_setting_gen_personalInformation_component,
+  Async_setting_gen_myProfile_component,
   Async_setting_gen_companyDetails_component,
   Async_setting_user_users_component,
   Async_setting_user_rolesPermissions_component,
@@ -26,7 +26,7 @@ class Settings extends Component {
   render() {
     const { match } = this.props;
     if (location.pathname === "/app/settings") {
-      return <Redirect to={"/app/settings/general/personal-information"} />;
+      return <Redirect to={"/app/settings/general/my-profile"} />;
     }
     return (
       <div className="saas-dashboard">
@@ -43,8 +43,8 @@ class Settings extends Component {
               {/* ------- General ------- */}
               <Route
                 exact
-                path={`${match.url}/general/personal-information`}
-                component={ Async_setting_gen_personalInformation_component }
+                path={`${match.url}/general/my-profile`}
+                component={ Async_setting_gen_myProfile_component }
               />
               <Route
                 exact

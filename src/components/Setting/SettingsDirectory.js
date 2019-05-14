@@ -83,8 +83,8 @@ class SettingsDirectory extends Component {
             </ListItem>
             <Collapse in={this.state.openGen} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/general/personal-information')} selected={location.pathname === '/app/settings/general/personal-information'}>
-                  <ListItemText inset secondary={"Personal Information"} />
+                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/general/my-profile')} selected={location.pathname === '/app/settings/general/my-profile'}>
+                  <ListItemText inset secondary={"My Profile"} />
                 </ListItem>
                 <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/general/company-details')} selected={location.pathname === '/app/settings/general/company-details'}>
                   <ListItemText inset secondary={"Company Details"} />

@@ -88,7 +88,6 @@ class CalendarLayout extends Component {
       showCreateEvent,
       hideCreateEvent,
     } = this.props;
-
     return (
       <React.Fragment>
         <Row className={"align-items-center"}>
