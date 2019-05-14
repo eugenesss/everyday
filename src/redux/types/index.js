@@ -1,6 +1,6 @@
 // System Types
 export * from "./system/AppSettingTypes";
-export * from "./system/SystemSettings";
+export * from "./system/ReportTypes";
 export * from "./system/CalendarTypes";
 export * from "./system/UserTypes";
 export * from "./system/RoleTypes";

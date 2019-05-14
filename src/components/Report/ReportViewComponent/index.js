@@ -1,16 +1,18 @@
 import React from "react";
-import ReportDefaultMessage from "./ReportDefaultMessage";
-import ReportMaintenanceMessage from "./ReportMaintenanceMessage";
+import ReportDefaultMessage from "./DefaultMessages/ReportDefaultMessage";
+import ReportMaintenanceMessage from "./DefaultMessages/ReportMaintenanceMessage";
 
 // Report Components
-import DealReport from "./ReportComponent/DealsReport";
+import DealsReport from "./ReportComponent/DealsReport";
+import LeadsReport from "./ReportComponent/LeadsReport";
+import IndividualReport from "./ReportComponent/IndividualReport";
 
 const ReportRender = ({ componentToRender }) => {
   switch (componentToRender) {
     case "allDeals":
-      return <DealReport />;
+      return <DealsReport />;
     case "leadsReport":
-      return <ReportMaintenanceMessage />;
+      return <LeadsReport />;
     case "proposalReport":
       return <ReportMaintenanceMessage />;
     case "invoiceReport":
@@ -18,7 +20,7 @@ const ReportRender = ({ componentToRender }) => {
     case "customerValue":
       return <ReportMaintenanceMessage />;
     case "individual":
-      return <ReportMaintenanceMessage />;
+      return <IndividualReport />;
     default:
       return <ReportDefaultMessage />;
   }

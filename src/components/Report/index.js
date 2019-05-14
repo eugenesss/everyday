@@ -95,7 +95,9 @@ class ReportDrawer extends Component {
               ref="chatScroll"
               style={{ height: "calc(100vh - 160px)" }}
             >
-              <ReportViewComponent componentToRender={componentToRender} />
+              <div className="p-20">
+                <ReportViewComponent componentToRender={componentToRender} />
+              </div>
             </Scrollbars>
           </main>
         </div>

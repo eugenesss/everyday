@@ -29,20 +29,20 @@ class HorizontalMenu extends Component {
               className="nav-link no-arrow"
               activeClassName="active"
             >
-              <i className="zmdi zmdi-calendar text-secondary" />
+              <i className="zmdi zmdi-calendar text-warning" />
               Calendar
             </NavLink>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <NavLink
               to="/app/reminders/"
               className="nav-link no-arrow"
               activeClassName="active"
             >
-              <i className="zmdi zmdi-notifications-none text-warning" />
+              <i className="zmdi zmdi-notifications-none text-secondary" />
               Reminders
             </NavLink>
-          </li>
+          </li> */}
           {/* <li className="nav-item">
             <NavLink
               to="/app/proj/"

@@ -10,13 +10,13 @@ import {
   reportOnChangeDate,
   reportOnFocusChange,
   reportResetDate,
-  getDealReport
+  getLeadReport
 } from "Actions";
 
-class DealsReport extends Component {
+class LeadsReport extends Component {
   render() {
     const { startDate, endDate, focusedInput } = this.props.dateRange;
-    const { loading } = this.props.dealReportData;
+    const { loading } = this.props.leadReportData;
     return (
       <React.Fragment>
         <div className="row">
@@ -28,32 +28,27 @@ class DealsReport extends Component {
                 onDatesChange={this.props.reportOnChangeDate}
                 focusedInput={focusedInput}
                 onFocusChange={this.props.reportOnFocusChange}
-                handleSubmit={this.props.getDealReport}
+                handleSubmit={this.props.getLeadReport}
                 reset={this.props.reportResetDate}
               />
-            </RctCollapsibleCard>
-          </div>
-          <div className="col-md-6">
-            <RctCollapsibleCard heading={"Overall Deal by Owners"}>
-              {loading && <RctSectionLoader />}
             </RctCollapsibleCard>
           </div>
         </div>
         <div className="row">
           <div className="col-md-6">
-            <RctCollapsibleCard heading={"Total Deals by Type"}>
-              Report
+            <RctCollapsibleCard heading={"Leads Created by Source this year"}>
+              {loading && <RctSectionLoader />}
             </RctCollapsibleCard>
           </div>
           <div className="col-md-6">
-            <RctCollapsibleCard heading={"Overall Deal Stages"}>
+            <RctCollapsibleCard heading={"Overall Leads Status"}>
               Report
             </RctCollapsibleCard>
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
-            <RctCollapsibleCard heading={"Deals in Stage"}>
+            <RctCollapsibleCard heading={"Leads Created By Staff"}>
               Report
             </RctCollapsibleCard>
           </div>
@@ -63,8 +58,8 @@ class DealsReport extends Component {
   }
 }
 const mapStateToProps = ({ reportState }) => {
-  const { dateRange, dealReportData } = reportState;
-  return { dateRange, dealReportData };
+  const { dateRange, leadReportData } = reportState;
+  return { dateRange, leadReportData };
 };
 
 export default connect(
@@ -73,6 +68,6 @@ export default connect(
     reportOnChangeDate,
     reportOnFocusChange,
     reportResetDate,
-    getDealReport
+    getLeadReport
   }
-)(DealsReport);
+)(LeadsReport);
