@@ -61,14 +61,8 @@ const QuickLinks = ({ location }) => (
               </Link>
             </li>
             <li>
-              <Link to={`/${getAppLayout(location)}/reminders`}>
-                <i className="zmdi zmdi-receipt text-warning  mr-10" />
-                <IntlMessages id="sidebar.reminders" />
-              </Link>
-            </li>
-            <li>
               <Link to={`/${getAppLayout(location)}/reports`}>
-                <i className="text-info zmdi zmdi-shopping-cart mr-10" />
+                <i className="text-info zmdi zmdi-chart mr-10" />
                 <IntlMessages id="sidebar.reports" />
               </Link>
             </li>
