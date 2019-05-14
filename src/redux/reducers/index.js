@@ -3,8 +3,12 @@
  */
 import { combineReducers } from "redux";
 import settings from "./settings";
+import { reducer as modal } from "redux-modal";
 
+// accounting
 import QuotationReducer from "./accounting/QuotationReducer";
+import InvoiceReducer from "./accounting/InvoiceReducer";
+import CreditNoteReducer from "./accounting/CreditNoteReducer";
 
 // crm
 import LeadReducer from "./crm/LeadReducer";
@@ -13,11 +17,11 @@ import AccountReducer from "./crm/AccountReducer";
 import DealReducer from "./crm/DealReducer";
 
 // system
-import authUserReducer from "./AuthUserReducer";
-import reportReducer from "./ReportReducer";
-import calendarCalendarReducer from "./calendar/CalendarReducer";
+import authUserReducer from "./system/AuthUserReducer";
+import reportReducer from "./system/ReportReducer";
+import calendarReducer from "./calendar/CalendarReducer";
 import usersReducer from "./settings/userControl/UsersReducer";
-import rolesReducer from "./settings/userControl/RolesReducer"
+import rolesReducer from "./settings/userControl/RolesReducer";
 
 const reducers = combineReducers({
   settings,
@@ -29,12 +33,15 @@ const reducers = combineReducers({
     dealState: DealReducer
   }),
   accountingState: combineReducers({
-    quotationState: QuotationReducer
+    quotationState: QuotationReducer,
+    invoiceState: InvoiceReducer,
+    creditNoteState: CreditNoteReducer
   }),
   reportState: reportReducer,
-  calendarState: calendarCalendarReducer,
+  calendarState: calendarReducer,
   usersState: usersReducer,
   rolesState: rolesReducer,
+  modal
 });
 
 export default reducers;

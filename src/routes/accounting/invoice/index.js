@@ -16,33 +16,30 @@ import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSumma
 // List
 import InvoiceList from "Components/Accounting/Invoice/InvoiceList";
 
-class acct_invoice extends Component {
-  constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false,
-      nowShowing: "All Invoices",
-      options: ["All Invoices", "Open Invoices", "Closed Invoices"],
-      showSummary: false
-    };
-  }
+// Actions
+import {
+  changeInvoiceView,
+  toggleInvoiceDropDown,
+  toggleInvoiceSummary,
+  getAllInvoice
+} from "Actions";
 
-  toggle() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
-  }
-  changeValue(newValue) {
-    this.setState({ ...this.state, nowShowing: newValue });
-  }
-  showSummary() {
-    this.setState(prevState => ({
-      showSummary: !prevState.showSummary
-    }));
+class acct_invoice extends Component {
+  componentDidMount() {
+    this.props.getAllInvoice();
   }
 
   render() {
+    const {
+      dropdownOpen,
+      options,
+      nowShowing,
+      showSummary,
+      action,
+      tableData,
+      loading
+    } = this.props.invoiceState.invoiceList;
+
     return (
       <React.Fragment>
         <Helmet>
@@ -53,18 +50,18 @@ class acct_invoice extends Component {
           title={
             <div className="d-flex">
               <ListViewSelector
-                dropdownOpen={this.state.dropdownOpen}
-                toggle={this.toggle.bind(this)}
-                options={this.state.options}
-                nowShowing={this.state.nowShowing}
-                onChangeValue={this.changeValue.bind(this)}
+                dropdownOpen={dropdownOpen}
+                toggle={this.props.toggleInvoiceDropDown}
+                options={options}
+                nowShowing={nowShowing}
+                onChangeValue={this.props.changeInvoiceView}
               />
-              <ShowListSummaryButton action={this.showSummary.bind(this)} />
+              <ShowListSummaryButton action={this.props.toggleInvoiceSummary} />
             </div>
           }
           createLink="/acct/new/invoice"
         />
-        {this.state.showSummary && (
+        {showSummary && (
           <ListSummary>
             <ListSummaryItem
               heading={"New Invoices"}
@@ -86,10 +83,27 @@ class acct_invoice extends Component {
             />
           </ListSummary>
         )}
-        <InvoiceList title={this.state.nowShowing} />
+        <InvoiceList
+          title={nowShowing}
+          action={action}
+          tableData={tableData}
+          loading={loading}
+        />
       </React.Fragment>
     );
   }
 }
+const mapStateToProps = ({ accountingState }) => {
+  const { invoiceState } = accountingState;
+  return { invoiceState };
+};
 
-export default acct_invoice;
+export default connect(
+  mapStateToProps,
+  {
+    changeInvoiceView,
+    toggleInvoiceDropDown,
+    toggleInvoiceSummary,
+    getAllInvoice
+  }
+)(acct_invoice);

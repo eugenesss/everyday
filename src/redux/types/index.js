@@ -7,6 +7,8 @@ export * from "./system/RoleTypes";
 
 // Accounting Types
 export * from "./accounting/QuotationTypes";
+export * from "./accounting/InvoiceTypes";
+export * from "./accounting/CreditNoteTypes";
 
 // CRM Types
 export * from "./crm/LeadTypes";

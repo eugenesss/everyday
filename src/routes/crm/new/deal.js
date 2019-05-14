@@ -17,11 +17,7 @@ class crm_new_deal extends Component {
           <title>Everyday | New Deal</title>
           <meta name="description" content="Everyday Deals Creation" />
         </Helmet>
-        <PageTitleBar
-          title={<IntlMessages id="sidebar.newDeal" />}
-          match={this.props.match}
-          enableBreadCrumb={false}
-        />
+        <PageTitleBar title={<IntlMessages id="sidebar.newDeal" />} />
       </React.Fragment>
     );
   }

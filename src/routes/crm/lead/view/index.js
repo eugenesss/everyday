@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-// import { viewLead, viewLeadEnd, deleteLead } from "Actions";
-
 //Lead Components
 import LeadCard from "Components/CRM/Lead/LeadCard";
 import LeadDetails from "Components/CRM/Lead/LeadDetails";
@@ -19,7 +17,6 @@ import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 class crm_view_lead extends Component {
   constructor(props) {
@@ -45,7 +42,7 @@ class crm_view_lead extends Component {
       <React.Fragment>
         {loading ? (
           <RctPageLoader />
-        ) : lead ? (
+        ) : !lead ? (
           <React.Fragment>
             <Helmet>
               <title>Everyday | View Lead</title>

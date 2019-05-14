@@ -45,7 +45,7 @@ class crm_view_customer extends Component {
       <React.Fragment>
         {loading ? (
           <RctPageLoader />
-        ) : customer ? (
+        ) : !customer ? (
           <React.Fragment>
             <Helmet>
               <title>Everyday | View Customer</title>
