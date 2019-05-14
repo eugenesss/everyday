@@ -34,7 +34,7 @@ export const AllReports = ({
           onClickListItem={() =>
             changeReportView("Leads Report", "leadsReport")
           }
-          title="leads report"
+          title="Leads report"
           secondary
         />
       </DrawerListCollapsible>
@@ -46,28 +46,21 @@ export const AllReports = ({
       >
         <DrawerListItem
           onClickListItem={() =>
-            changeReportView("Sales Report", "salesReport")
-          }
-          title="Invoice Report"
-          secondary
-        />
-        <DrawerListItem
-          onClickListItem={() =>
-            changeReportView("Sales Report", "salesReport")
-          }
-          title="Total Income"
-          secondary
-        />
-        <DrawerListItem
-          onClickListItem={() =>
-            changeReportView("Sales Report", "salesReport")
+            changeReportView("Proposal Report", "proposalReport")
           }
           title="Proposal Report"
           secondary
         />
         <DrawerListItem
           onClickListItem={() =>
-            changeReportView("Sales Report", "salesReport")
+            changeReportView("Invoice Report", "invoiceReport")
+          }
+          title="Invoice Report"
+          secondary
+        />
+        <DrawerListItem
+          onClickListItem={() =>
+            changeReportView("Total Value of Customers", "customerValue")
           }
           title="Total Value of Customers"
           secondary

@@ -15,12 +15,14 @@ import { AllReports } from "./ListData";
 import ReportViewComponent from "./ReportViewComponent";
 import { changeReportView, openNestedView } from "Actions";
 
+import { DateRangePicker } from "react-dates";
+
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
     width: "100%",
-    height: `calc(100vh - 200px)`,
+    height: `calc(100vh - 100px)`,
     zIndex: -1,
     marginBottom: 20,
     overflow: "hidden"
@@ -44,7 +46,7 @@ const styles = theme => ({
     width: drawerWidth
   },
   toolBar: { background: "#3c537b" },
-  drawerHeader: theme.mixins.toolbar,
+  drawerHeader: { ...theme.mixins.toolbar, background: "#3c537b" },
   content: {
     backgroundColor: theme.palette.background.default,
     width: "100%",
