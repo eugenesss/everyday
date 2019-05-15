@@ -4,6 +4,7 @@ export * from "./system/SystemSettings";
 export * from "./system/CalendarTypes";
 export * from "./system/UserTypes";
 export * from "./system/RoleTypes";
+export * from "./system/ProfileTypes"
 
 // Accounting Types
 export * from "./accounting/QuotationTypes";

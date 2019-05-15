@@ -1,5 +1,5 @@
 /**
- * Redux App Settings Actions
+ * Roles Actions
  */
 import {
   GET_ALL_ROLES,
@@ -15,7 +15,7 @@ export const getAllRoles = () => ({
 /**
  * Change Selected Role
  */
-export const changeSelectedRole = (newValue) => ({
+export const onChangeSelectedRole = (newValue) => ({
   type: CHANGE_SELECTED_ROLE,
   payload: newValue
 })

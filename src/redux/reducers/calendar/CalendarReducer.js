@@ -41,9 +41,8 @@ const INIT_STATE = {
   myEvents: [
     {
       title: "My Event All Day 1",
-      allDay: true,
-      start: new Date(2019, 4, 10),
-      end: new Date(2019, 4, 10)
+      start: new Date(2019, 4, 10, 6, 45, 0),
+      end: new Date(2019, 4, 10, 8, 0, 0)
     },
     {
       title: "My Event 2",
@@ -60,15 +59,13 @@ const INIT_STATE = {
   companyEvents: [
     {
       title: "My Event All Day 1",
-      allDay: true,
-      start: new Date(2019, 4, 10),
-      end: new Date(2019, 4, 10)
+      start: new Date(2019, 4, 10, 6, 45, 0),
+      end: new Date(2019, 4, 10, 8, 0, 0)
     },
     {
       title: "Company Event All Day 1",
-      allDay: true,
-      start: new Date(2019, 4, 6),
-      end: new Date(2019, 4, 6)
+      start: new Date(2019, 4, 6, 9, 0, 0),
+      end: new Date(2019, 4, 6, 10, 0, 0)
     },
     {
       title: "My Event 2",

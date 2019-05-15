@@ -9,7 +9,8 @@ import SwipeableViews from 'react-swipeable-views';
 import moment from 'moment';
 
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
-import CalendarToolbar from "Components/Calendar/CalendarToolbar";
+import CustomToolbar from "Components/Calendar/CustomToolbar";
+import CalendarAgenda from "Components/Calendar/CalendarAgenda";
 import SelectSlotDialog from "Components/Calendar/SelectSlotDialog";
 import AddEventDialog from "Components/Calendar/AddEventDialog";
 
@@ -33,9 +34,9 @@ import {
   hideCreateEvent,
 } from "Actions";
 
-function TabContainer({ children }) {
+function TabContainer({ children, classes}) {
   return (
-    <Typography component="div" style={{ paddingLeft: 8}}>
+    <Typography component="div" className={classes.tabs}>
       {children}
     </Typography>
   );
@@ -47,13 +48,20 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
+    width: "auto"
   },
   root: {
     backgroundColor: theme.palette.background.paper,
     width: 500,
   },
   tabs: {
-    marginLeft: 8
+    marginLeft: 8,
+  },
+  displayBlock: {
+    display: "block",
+  },
+  displayInlineTable: {
+    display: "inline-table"
   }
 });
 
@@ -132,77 +140,101 @@ class CalendarLayout extends Component {
             </AppBar>
           </Col>
         </Row>
-        <SwipeableViews
-          axis={'x'}
-          index={viewIndex}
-          onChangeIndex={onChangeCalendarView}
-        >
-          <TabContainer>
-            <RctCollapsibleCard>
-              <BigCalendar
-                selectable
-                events={showEvents}
-                views={["month"]}
-                step={30}
-                showMultiDayTimes
-                defaultDate={new Date}
-                onSelectSlot={showSelectedSlot}
-                components={{
-                  toolbar: CalendarToolbar
-                }}
+        <Row >
+          <Col md={3} className={classes.displayInlineTable}>
+              <h2 className={classes.textField + " mt-20"}>Events Today</h2>
+              <CalendarAgenda
+                showEvents={showEvents}
+                classes={classes}
+                defaultDate={"today"}
               />
-            </RctCollapsibleCard>
-          </TabContainer>
-          <TabContainer>
-            <RctCollapsibleCard>
-              <BigCalendar
-                selectable
-                events={showEvents}
-                defaultView={"week"}
-                views={["week"]}
-                step={30}
-                showMultiDayTimes
-                defaultDate={new Date}
-                onSelectSlot={showSelectedSlot}
-                components={{
-                  toolbar: CalendarToolbar
-                }}
+              <h2 className={classes.textField + " mt-20"}>Events Tomorrow</h2>
+              <CalendarAgenda
+                showEvents={showEvents}
+                classes={classes}
+                defaultDate={"tomorrow"}
               />
-            </RctCollapsibleCard>
-          </TabContainer>
-          <TabContainer>
-            <Row>
-              <Col md={3}> 
-                <RctCollapsibleCard customClasses={"center"}>
-                  <Row className="justify-content-center">
-                    <ReactCalendar
-                      value={dayView}
-                      onClickDay={(e) => { onChangeDayView(e) }}
-                    />
-                  </Row>
-                </RctCollapsibleCard>
-              </Col>
-              <Col>
+              <h2 className={classes.textField + " mt-20"}>Events Day After Tomorrow</h2>
+              <CalendarAgenda
+                showEvents={showEvents}
+                classes={classes}
+                defaultDate={"dayAftTom"}
+              />
+          </Col>
+          <Col md={9}>
+            <SwipeableViews
+              axis={'x'}
+              index={viewIndex}
+              onChangeIndex={onChangeCalendarView}
+            >
+              <TabContainer classes={classes}>
                 <RctCollapsibleCard>
                   <BigCalendar
                     selectable
-                    date={dayView}
-                    onNavigate={(date) => { onChangeDayView(date) }}
                     events={showEvents}
-                    defaultView={"day"}
-                    views={["day"]}
-                    step={30}
+                    views={["month"]}
+                    step={60}
                     showMultiDayTimes
+                    defaultDate={new Date}
                     onSelectSlot={showSelectedSlot}
                     components={{
-                      toolbar: CalendarToolbar
+                      toolbar: CustomToolbar
                     }}
                   />
                 </RctCollapsibleCard>
-              </Col>
-            </Row>
-          </TabContainer>
-        </SwipeableViews>
+              </TabContainer>
+              <TabContainer classes={classes}>
+                <RctCollapsibleCard>
+                  <BigCalendar
+                    selectable
+                    events={showEvents}
+                    defaultView={"week"}
+                    views={["week"]}
+                    step={60}
+                    showMultiDayTimes
+                    defaultDate={new Date}
+                    onSelectSlot={showSelectedSlot}
+                    components={{
+                      toolbar: CustomToolbar
+                    }}
+                  />
+                </RctCollapsibleCard>
+              </TabContainer>
+              <TabContainer classes={classes}>
+                <Row>
+                  <Col md={3}> 
+                    <RctCollapsibleCard customClasses={"center"}>
+                      <Row className="justify-content-center">
+                        <ReactCalendar
+                          value={dayView}
+                          onClickDay={(e) => { onChangeDayView(e) }}
+                        />
+                      </Row>
+                    </RctCollapsibleCard>
+                  </Col>
+                  <Col>
+                    <RctCollapsibleCard>
+                      <BigCalendar
+                        selectable
+                        date={dayView}
+                        onNavigate={(date) => { onChangeDayView(date) }}
+                        events={showEvents}
+                        defaultView={"day"}
+                        views={["day"]}
+                        step={60}
+                        showMultiDayTimes
+                        onSelectSlot={showSelectedSlot}
+                        components={{
+                          toolbar: CustomToolbar
+                        }}
+                      />
+                    </RctCollapsibleCard>
+                  </Col>
+                </Row>
+              </TabContainer>
+            </SwipeableViews>
+          </Col>
+        </Row>
         <SelectSlotDialog
           open={isSlotSelected}
           handleClose={hideSelectedSlot}

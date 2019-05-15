@@ -1,5 +1,5 @@
 /**
- * Redux App Settings Actions
+ * Users Actions
  */
 import { GET_ALL_USERS, SHOW_ADD_USER, HIDE_ADD_USER } from "Types";
 

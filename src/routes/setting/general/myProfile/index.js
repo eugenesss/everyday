@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import MyProfileLayout from "Components/Setting/General/MyProfile/MyProfileLayout"
+import ProfileLayout from "Components/Setting/General/Profile/ProfileLayout"
 
 class MyProfile extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class MyProfile extends Component {
   render() {
     return (
       <React.Fragment>
-        <MyProfileLayout/>
+        <ProfileLayout/>
       </React.Fragment>
     );
   }

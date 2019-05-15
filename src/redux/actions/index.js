@@ -23,4 +23,6 @@ export * from "./calendar/CalendarActions";
 // User Actions
 export * from "./settings/userControl/UsersActions";
 // Role Actions
-export * from "./settings/UserControl/RolesActions";
+export * from "./settings/userControl/RolesActions";
+// Profile Actions
+export * from "./settings/general/ProfileActions";
