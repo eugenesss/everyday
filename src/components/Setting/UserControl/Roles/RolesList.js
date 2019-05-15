@@ -11,7 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import { getAllRoles, changeSelectedRole } from 'Actions'
+import { getAllRoles, onChangeSelectedRole } from 'Actions'
 
 const styles = theme => ({
   root: {
@@ -49,7 +49,7 @@ class RolesList extends Component {
       selectedRole,
 
       getAllRoles,
-      changeSelectedRole,
+      onChangeSelectedRole,
      } = this.props;
     return (
       <React.Fragment>
@@ -79,7 +79,7 @@ class RolesList extends Component {
               <ListItem 
                 button
                 selected={!selectedRole}
-                onClick={() => changeSelectedRole("Super Admin")}
+                onClick={() => onChangeSelectedRole("Super Admin")}
               >
                 <ListItemText inset primary={"Super Admin"} className={classes.listItem}/>
               </ListItem>
@@ -88,7 +88,7 @@ class RolesList extends Component {
                   key={role.id}
                   button
                   selected={selectedRole ? selectedRole.id == role.id : false}
-                  onClick={() => changeSelectedRole(role)}
+                  onClick={() => onChangeSelectedRole(role)}
                 >
                   <ListItemText primary={role.name} className={classes.listItem}/>
                 </ListItem>
@@ -112,5 +112,5 @@ const mapStateToProps = ({ rolesState }) => {
 
 export default connect(
   mapStateToProps,
-  { getAllRoles, changeSelectedRole }
+  { getAllRoles, onChangeSelectedRole }
 )(withStyles(styles)(RolesList));

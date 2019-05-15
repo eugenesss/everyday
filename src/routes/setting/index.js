@@ -22,9 +22,18 @@ import {
 } from "Components/AsyncComponent/AsyncComponent";
 import SettingsDirectory from "Components/Setting/SettingsDirectory"
 
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  displayBlock: {
+    display: "block"
+  },
+});
+
 class Settings extends Component {
   render() {
-    const { match } = this.props;
+    const { match, classes } = this.props;
     if (location.pathname === "/app/settings") {
       return <Redirect to={"/app/settings/general/my-profile"} />;
     }
@@ -35,10 +44,10 @@ class Settings extends Component {
           <meta name="description" content="Everyday System" />
         </Helmet>
         <Row>
-          <Col md={2}>
+          <Col md={2} className={classes.displayBlock}>
             <SettingsDirectory/>
           </Col>
-          <Col md={10}>
+          <Col md={10} className={classes.displayBlock}>
             <Switch>
               {/* ------- General ------- */}
               <Route
@@ -104,7 +113,12 @@ class Settings extends Component {
   }
 }
 
+Settings.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
 export default withRouter(
-  connect( null ) 
-    (Settings)
+  connect( null )
+  (withStyles(styles)(Settings))
+
 );
