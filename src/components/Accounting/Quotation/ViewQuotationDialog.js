@@ -5,25 +5,26 @@ import DialogRoot from "Components/Dialog/DialogRoot";
 // Components
 import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
+import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 
-class ViewCreditNoteDialog extends Component {
+class ViewQuotationDialog extends Component {
   state = {};
   render() {
-    const { show, handleHide, viewCreditNote } = this.props;
+    const { show, handleHide, viewQuotation } = this.props;
 
     return (
       <DialogRoot
         show={show}
         handleHide={handleHide}
         size="md"
-        title="Credit Note"
+        title="Quotation"
       >
+        <AccountingDetails type="quotation" />
         <TabsWrapper>
-          <div icon="zmdi-shopping-cart-plus text-success" label="CREDIT NOTE">
-            {viewCreditNote}
+          <div icon="zmdi-shopping-basket text-success" label="QUOTATION">
             <ViewTemplate />
           </div>
-          <div icon="zmdi-shopping-cart text-warning" label="INVOICE CREDITED">
+          <div icon="zmdi-pizza text-warning" label="EVENTS">
             Activities
           </div>
           <div icon="zmdi-local-florist text-info" label="REMINDERS">
@@ -38,6 +39,6 @@ class ViewCreditNoteDialog extends Component {
   }
 }
 
-export default connectModal({ name: "view_credit_note", destroyOnHide: true })(
-  ViewCreditNoteDialog
+export default connectModal({ name: "view_quotation", destroyOnHide: true })(
+  ViewQuotationDialog
 );

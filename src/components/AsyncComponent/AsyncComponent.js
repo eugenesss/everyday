@@ -89,12 +89,16 @@ export const Async_acct_credit_note_component = Loadable({
 });
 
 // accounting management view
-export const Async_acct_single_quotation = Loadable({
-  loader: () => import("Routes/accounting/quotation/view"),
+export const Async_view_quotation = Loadable({
+  loader: () => import("Components/Accounting/Quotation/ViewQuotationDialog"),
   loading: () => <RctPageLoader />
 });
-export const Async_acct_single_invoice = Loadable({
-  loader: () => import("Routes/accounting/invoice/view"),
+export const Async_view_invoice = Loadable({
+  loader: () => import("Components/Accounting/Invoice/ViewInvoiceDialog"),
+  loading: () => <RctPageLoader />
+});
+export const Async_view_credit_note = Loadable({
+  loader: () => import("Components/Accounting/CreditNote/ViewCreditNoteDialog"),
   loading: () => <RctPageLoader />
 });
 
