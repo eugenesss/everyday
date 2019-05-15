@@ -2,13 +2,23 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-// import { viewCustomer, viewCustomerEnd, deleteCustomer } from "Actions";
-
 //Page Components
 import AccountCard from "Components/CRM/Account/AccountCard";
+
+// Details Tab
 import AccountDetails from "Components/CRM/Account/AccountDetails";
 import AddressDetails from "Components/CRM/View/Details/AddressDetails";
 import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
+
+// Events Tab
+import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
+import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
+
+// Related Tab
+import RelatedDeals from "Components/CRM/View/Related/RelatedDeals";
+import RelatedCustomers from "Components/CRM/View/Related/RelatedCustomers";
+
+// Notes Tab
 
 // Global Req
 import { Helmet } from "react-helmet";
@@ -19,6 +29,12 @@ import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+
+// Actions
+// get Account - account details, open events, closed events, notes
+// addNoteToAccount(acctID), onNoteChange, clearNote
+// Add events dialog
+// Delete Account, Edit Account, Transfer Account
 
 class crm_view_account extends Component {
   constructor(props) {
@@ -77,15 +93,16 @@ class crm_view_account extends Component {
                   <DescriptionDetails />
                 </React.Fragment>
               </div>
-
               <div icon="zmdi-drink text-secondary" label="RELATED">
-                Related
+                <RelatedDeals />
+                <br />
+                <RelatedCustomers />
               </div>
-              <div icon="zmdi-pizza text-warning" label="EVENTS">
-                Activities
+              <div icon="zmdi-pizza text-warning" label="UPCOMING">
+                <UpcomingEvents />
               </div>
-              <div icon="zmdi-local-florist text-info" label="REMINDERS">
-                Reminders
+              <div icon="zmdi-local-florist text-info" label="CLOSED">
+                <ClosedEvents />
               </div>
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 {/*  <ViewNote /> */}

@@ -17,12 +17,168 @@ import api from "Api";
 //=========================
 const getAllLeadRequest = async () => {
   const result = [
-    ["All Lead", "All Lead", "Minneapolis", 30, "$100,000", "hello", "eheje"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"],
-    ["Frankie Parry", "Agency Legal", "Jacksonville", 71, "$210,000"]
+    [
+      "All Lead",
+      "Lead One",
+      "Minneapolis",
+      "lead@one.com",
+      "$100,000",
+      "Google",
+      60
+    ],
+    [
+      "All Lead",
+      "Lead Two",
+      "Dallas",
+      "lead@test.com",
+      "$200,000",
+      "Google",
+      20
+    ],
+    [
+      "All Lead",
+      "Lead Three",
+      "Santa Ana",
+      "lead@test.com",
+      "$10,000",
+      "SEM",
+      80
+    ],
+    [
+      "All Lead",
+      "Lead Four",
+      "St. Petersburg",
+      "lead@test.com",
+      "$400,000",
+      "SEO",
+      100
+    ],
+    [
+      "All Lead",
+      "Lead Five",
+      "Toledo",
+      "lead@test.com",
+      "$6,000",
+      "Call In",
+      40
+    ],
+    [
+      "All Lead",
+      "Lead Six",
+      "JacksonVille",
+      "lead@test.com",
+      "$210,000",
+      "Referrals",
+      60
+    ],
+    [
+      "All Lead",
+      "Lead One",
+      "Minneapolis",
+      "lead@one.com",
+      "$100,000",
+      "Google",
+      60
+    ],
+    [
+      "All Lead",
+      "Lead Two",
+      "Dallas",
+      "lead@test.com",
+      "$200,000",
+      "Google",
+      0
+    ],
+    [
+      "All Lead",
+      "Lead Three",
+      "Santa Ana",
+      "lead@test.com",
+      "$10,000",
+      "SEM",
+      80
+    ],
+    [
+      "All Lead",
+      "Lead Four",
+      "St. Petersburg",
+      "lead@test.com",
+      "$400,000",
+      "SEO",
+      100
+    ],
+    [
+      "All Lead",
+      "Lead Five",
+      "Toledo",
+      "lead@test.com",
+      "$6,000",
+      "Call In",
+      40
+    ],
+    [
+      "All Lead",
+      "Lead Six",
+      "JacksonVille",
+      "lead@test.com",
+      "$210,000",
+      "Referrals",
+      60
+    ],
+    [
+      "All Lead",
+      "Lead One",
+      "Minneapolis",
+      "lead@one.com",
+      "$100,000",
+      "Google",
+      100
+    ],
+    [
+      "All Lead",
+      "Lead Two",
+      "Dallas",
+      "lead@test.com",
+      "$200,000",
+      "Google",
+      0
+    ],
+    [
+      "All Lead",
+      "Lead Three",
+      "Santa Ana",
+      "lead@test.com",
+      "$10,000",
+      "SEM",
+      80
+    ],
+    [
+      "All Lead",
+      "Lead Four",
+      "St. Petersburg",
+      "lead@test.com",
+      "$400,000",
+      "SEO",
+      100
+    ],
+    [
+      "All Lead",
+      "Lead Five",
+      "Toledo",
+      "lead@test.com",
+      "$6,000",
+      "Call In",
+      40
+    ],
+    [
+      "All Lead",
+      "Lead Six",
+      "JacksonVille",
+      "lead@test.com",
+      "$210,000",
+      "Referrals",
+      60
+    ]
   ];
   return result;
 };

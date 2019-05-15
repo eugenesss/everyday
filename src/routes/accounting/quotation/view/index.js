@@ -28,7 +28,7 @@ class acct_view_quotation extends Component {
         <div className="row">
           <div className="col-md-4">
             <RctCollapsibleCard>
-              <AccountingDetails />
+              <AccountingDetails type="quotation" />
             </RctCollapsibleCard>
           </div>
           <div className="col-md-8">

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { show } from "redux-modal";
 
 // page req
 import { Helmet } from "react-helmet";
@@ -24,10 +25,21 @@ import {
   getAllCreditNote
 } from "Actions";
 
+import ViewCreditNoteDialog from "Components/Accounting/CreditNote/ViewCreditNoteDialog";
+
 class acct_credit_note extends Component {
+  constructor(props) {
+    super(props);
+    this.handleOpen = this.handleOpen.bind(this);
+  }
   componentDidMount() {
     this.props.getAllCreditNote();
   }
+  handleOpen = creditNoteID => () => {
+    this.props.show("view_credit_note", {
+      viewCreditNote: `This is a ${creditNoteID} modal`
+    });
+  };
 
   render() {
     const {
@@ -90,7 +102,9 @@ class acct_credit_note extends Component {
           action={action}
           tableData={tableData}
           loading={loading}
+          handleOpen={this.handleOpen}
         />
+        <ViewCreditNoteDialog />
       </React.Fragment>
     );
   }
@@ -103,6 +117,7 @@ const mapStateToProps = ({ accountingState }) => {
 export default connect(
   mapStateToProps,
   {
+    show,
     changeCreditNoteView,
     toggleCreditNoteDropDown,
     toggleCreditNoteSummary,

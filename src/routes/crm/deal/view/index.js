@@ -3,9 +3,17 @@ import { connect } from "react-redux";
 
 //Page Components
 import DealCard from "Components/CRM/Deal/DealCard";
+// import ViewDealStage from "Components/CRM/View/Deal/ViewDealStage";
+
+// Details Tab
 import DealDetails from "Components/CRM/Deal/DealDetails";
 import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
-// import ViewDealStage from "Components/CRM/View/Deal/ViewDealStage";
+
+// Events Tab
+import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
+import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
+
+// Notes Tab
 
 // Global Req
 import { Helmet } from "react-helmet";
@@ -15,6 +23,12 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+
+// Actions
+// getDeal - deal details, history, events, notes
+// Edit Deal, Delete Deal, Update Stage/Amount, getDealStage,
+// addNoteToDeal(dealID), onNoteChange, clearNote
+// Add Event Dialog
 
 class crm_view_deal extends Component {
   constructor(props) {
@@ -67,11 +81,14 @@ class crm_view_deal extends Component {
                 <DealDetails />
                 <DescriptionDetails />
               </div>
-              <div icon="zmdi-pizza text-warning" label="EVENTS">
-                Activities
+              <div icon="zmdi-book-image text-secondary" label="HISTORY">
+                history
               </div>
-              <div icon="zmdi-local-florist text-info" label="REMINDERS">
-                Reminders
+              <div icon="zmdi-pizza text-warning" label="UPCOMING">
+                <UpcomingEvents />
+              </div>
+              <div icon="zmdi-local-florist text-info" label="CLOSED">
+                <ClosedEvents />
               </div>
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 {/*  <ViewNote /> */}

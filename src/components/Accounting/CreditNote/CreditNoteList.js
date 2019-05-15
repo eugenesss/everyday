@@ -1,35 +1,41 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 //Page req
 import DataList from "Components/Everyday/DataList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import { Button } from "reactstrap";
 
-const CreditNoteList = ({ tableData, loading, title, action }) => {
+import { listOptions } from "Helpers/helpers";
+
+const CreditNoteList = ({ tableData, loading, title, action, handleOpen }) => {
   const columns = [
     {
       name: "ID",
       options: { display: "excluded", filter: false, sort: false }
     },
     {
-      name: "Name",
+      name: "Credit Note #",
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
-            <NavLink to={`leads/${tableMeta.rowData[0]}`}>{value}</NavLink>
+            <Button
+              className="fs-13 p-0"
+              onClick={handleOpen(tableMeta.rowData[0])}
+              color="link"
+            >
+              {value}
+            </Button>
           );
         }
       }
     },
-    { label: "Company", name: "Company" },
-    { name: "Mobile", options: { display: false } },
-    { name: "Lead Owner", options: { display: false } },
-    { name: "Industry", options: { display: false } },
-    { name: "Website", options: { display: false } },
-    { name: "Office", options: { display: false } },
-    { name: "Fax", options: { display: false } }
+    { label: "Date Sent", name: "Date Sent" },
+    { label: "Customer", name: "Customer" },
+    { label: "Status", name: "Status" },
+    { label: "Amount", name: "Amount" },
+    { label: "Remaining Amount", name: "Remaining Amount" }
   ];
 
   if (action == true) {

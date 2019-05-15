@@ -142,3 +142,14 @@ export function convertDay(d) {
   }
   return day;
 }
+
+export const listOptions = {
+  filterType: "dropdown",
+  responsive: "stacked",
+  download: false,
+  print: false,
+  selectableRows: true,
+  rowsPerPage: 15,
+  rowsPerPageOptions: [15, 30, 60, 100],
+  textLabels: { body: { noMatch: "No data to display" } }
+};

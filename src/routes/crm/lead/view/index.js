@@ -4,9 +4,17 @@ import { connect } from "react-redux";
 
 //Lead Components
 import LeadCard from "Components/CRM/Lead/LeadCard";
+
+// Details Tab
 import LeadDetails from "Components/CRM/Lead/LeadDetails";
 import AddressDetails from "Components/CRM/View/Details/AddressDetails";
 import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
+
+// Events Tab
+import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
+import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
+
+// Notes Tab
 
 // Global Req
 import { Helmet } from "react-helmet";
@@ -17,6 +25,12 @@ import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+
+//Actions
+// getLead - open activities, closed activities, lead details, lead notes
+// addNoteToLead(leadID) onNoteChange, clearNote
+// Add events dialog
+// Delete Lead, Convert Lead, Edit Lead, Transfer Lead
 
 class crm_view_lead extends Component {
   constructor(props) {
@@ -57,22 +71,19 @@ class crm_view_lead extends Component {
               />
             </RctCollapsibleCard>
             <TabsWrapper>
-              <div icon="zmdi-coffee text-success" label="DETAILS">
-                <React.Fragment>
-                  <LeadDetails />
-                  <AddressDetails />
-                  <DescriptionDetails />
-                </React.Fragment>
+              <div icon="zmdi-coffee text-info" label="DETAILS">
+                <LeadDetails />
+                <AddressDetails />
+                <DescriptionDetails />
               </div>
-
-              <div icon="zmdi-pizza text-warning" label="EVENTS">
-                Activities
+              <div icon="zmdi-pizza text-warning" label="UPCOMING">
+                <UpcomingEvents />
               </div>
-              <div icon="zmdi-local-florist text-info" label="REMINDERS">
-                Reminders
+              <div icon="zmdi-local-florist text-info" label="CLOSED">
+                <ClosedEvents />
               </div>
               <div icon="zmdi-assignment text-danger" label="NOTES">
-                {/*  <ViewNote /> */}
+                notes
               </div>
             </TabsWrapper>
           </React.Fragment>

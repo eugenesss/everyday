@@ -10,13 +10,13 @@ const AccountingDetails = ({
   office,
   fax,
   ownerName,
-  invoice
+  type
 }) => {
   return (
     <div className="user-profile-widget">
       <div
         className="py-70"
-        style={{ background: invoice ? "#2d7a84" : "#9e7fb3" }}
+        style={{ background: type == "invoice" ? "#2d7a84" : "#9e7fb3" }}
       />
       <div style={{ padding: "1.25rem 6%" }}>
         <div className="d-flex user-avatar">

@@ -97,10 +97,6 @@ export const Async_acct_single_invoice = Loadable({
   loader: () => import("Routes/accounting/invoice/view"),
   loading: () => <RctPageLoader />
 });
-export const Async_acct_single_credit_note = Loadable({
-  loader: () => import("Routes/accounting/credit_note/view"),
-  loading: () => <RctPageLoader />
-});
 
 // accounting management new
 export const Async_acct_new_quotation_component = Loadable({

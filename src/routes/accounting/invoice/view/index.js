@@ -26,7 +26,7 @@ class acct_view_invoice extends Component {
         <div className="row">
           <div className="col-md-4">
             <RctCollapsibleCard>
-              <AccountingDetails invoice />
+              <AccountingDetails type="invoice" />
             </RctCollapsibleCard>
           </div>
           <div className="col-md-8">

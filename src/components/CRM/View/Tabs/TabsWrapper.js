@@ -50,7 +50,9 @@ class ContactSwipeable extends Component {
           onChangeIndex={index => this.handleChangeIndex(index)}
         >
           {children.map((child, key) => (
-            <TabContainer key={key}>{child}</TabContainer>
+            <TabContainer key={key}>
+              <div className="px-40 py-10">{child}</div>
+            </TabContainer>
           ))}
         </SwipeableViews>
       </RctCollapsibleCard>
