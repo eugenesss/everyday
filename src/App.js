@@ -8,7 +8,6 @@ import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsPr
 
 //date moment - material ui
 import moment from "moment";
-//import MomentUtils from "@date-io/moment";
 import MomentUtils from "material-ui-pickers/utils/moment-utils";
 // css
 import "./lib/reactifyCss";

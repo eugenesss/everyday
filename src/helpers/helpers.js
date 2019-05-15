@@ -68,66 +68,56 @@ export function getAppLayout(url) {
   return path[1];
 }
 
-export const listOptions = {
-  filterType: "dropdown",
-  responsive: "stacked",
-  download: false,
-  print: false,
-  rowsPerPage: 15,
-  rowsPerPageOptions: [15, 30, 60, 100],
-  textLabels: { body: { noMatch: "No data to display" } }
-};
-
 /**
  * Convert Month
  */
 export function convertMonth(mm) {
-  var month
+  var month;
   switch (mm) {
     case 0:
-      month = "Jan"
+      month = "Jan";
       break;
     case 1:
-      month = "Feb"
+      month = "Feb";
       break;
     case 2:
-      month = "Mar"
+      month = "Mar";
       break;
     case 3:
-      month = "Apr"
+      month = "Apr";
       break;
     case 4:
-      month = "May"
+      month = "May";
       break;
     case 5:
-      month = "Jun"
+      month = "Jun";
       break;
     case 6:
-      month = "Jul"
+      month = "Jul";
       break;
     case 7:
-      month = "Aug"
+      month = "Aug";
       break;
     case 8:
-      month = "Sep"
+      month = "Sep";
       break;
     case 9:
-      month = "Oct"
+      month = "Oct";
       break;
     case 10:
-      month = "Nov"
+      month = "Nov";
       break;
     case 11:
-      month = "Dec"
+      month = "Dec";
       break;
   }
-  return month
+  return month;
 }
 /**
  * Convert Day
  */
-export function convertDay(d){
-  var day
+export function convertDay(d) {
+  var day;
   switch (d) {
     case 0:
       day = "Sunday";
@@ -136,7 +126,7 @@ export function convertDay(d){
       day = "Monday";
       break;
     case 2:
-       day = "Tuesday";
+      day = "Tuesday";
       break;
     case 3:
       day = "Wednesday";
@@ -150,5 +140,5 @@ export function convertDay(d){
     case 6:
       day = "Saturday";
   }
-  return day
+  return day;
 }

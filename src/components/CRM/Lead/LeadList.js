@@ -86,6 +86,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
       }
     });
   }
+
   return (
     <RctCollapsibleCard fullBlock>
       <DataList title={title} columns={columns} tableData={tableData} />
