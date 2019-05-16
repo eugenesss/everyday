@@ -2,7 +2,13 @@
  * Users Reducers
  */
 import { NotificationManager } from "react-notifications";
-import { GET_ALL_USERS, SHOW_ADD_USER, HIDE_ADD_USER } from "Types";
+import { 
+  GET_ALL_USERS,
+  SHOW_ADD_USER,
+  HIDE_ADD_USER,
+  SHOW_USER_CONTROLS,
+  HIDE_USER_CONTROLS,
+ } from "Types";
 
 const INIT_STATE = {
   users: [
@@ -16,6 +22,7 @@ const INIT_STATE = {
   ],
   usersLoading: false,
   isAddUser: false,
+  isUserControl: false,
   userToAdd: {
     firstName: "",
     lastName: "",
@@ -40,6 +47,18 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         isAddUser: false,
+      }
+    
+    case SHOW_USER_CONTROLS:
+      return {
+        ...state,
+        isUserControl: true,
+      }
+    
+    case HIDE_USER_CONTROLS:
+      return {
+        ...state,
+        isUserControl: false,
       }
 
     default:

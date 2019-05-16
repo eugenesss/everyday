@@ -13,7 +13,6 @@ export default (state = INIT_STATE, action) => {
   switch (action.type) {
 
     case CHANGE_FEED_VIEW:
-      console.log(action)
       return {
         ...state,
         viewIndex: action.payload

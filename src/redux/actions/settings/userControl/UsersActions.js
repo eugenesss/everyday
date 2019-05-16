@@ -1,7 +1,13 @@
 /**
  * Users Actions
  */
-import { GET_ALL_USERS, SHOW_ADD_USER, HIDE_ADD_USER } from "Types";
+import { 
+  GET_ALL_USERS,
+  SHOW_ADD_USER,
+  HIDE_ADD_USER,
+  SHOW_USER_CONTROLS,
+  HIDE_USER_CONTROLS,
+} from "Types";
 
 /**
  * Get All Users
@@ -21,3 +27,15 @@ export const showAddUser = () => ({
 export const hideAddUser = () => ({
   type: HIDE_ADD_USER
 });
+/**
+ * Show User Controls
+ */
+export const showUserControls = () => ({
+  type: SHOW_USER_CONTROLS
+})
+/**
+ * Hide User Controls
+ */
+export const hideUserControls =() => ({
+  type: HIDE_USER_CONTROLS
+})

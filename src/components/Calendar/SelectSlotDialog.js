@@ -7,39 +7,35 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Fab from '@material-ui/core/Fab';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
 
-class SelectSlotDialog extends Component {
+import DialogRoot from "Components/Dialog/DialogRoot"
 
-  render() {
-    const { handleClose, showCreateEvent, slotSelected, dispatch, ...other } = this.props;
-    return (
-      <Dialog fullWidth maxWidth={'xs'} onClose={handleClose} aria-labelledby="simple-dialog-title" {...other}>
-        <DialogTitle id="simple-dialog-title">
-          { slotSelected ? (
-              convertDay(slotSelected.start.getDay()) + " - " +
-              slotSelected.start.getDate() + " / " + 
-              convertMonth(slotSelected.start.getMonth()) + " / " + 
-              slotSelected.start.getFullYear()
-            ) : ""
-          }
-        </DialogTitle>
-        <List>
-          <ListItem button onClick={showCreateEvent}>
-            <Fab color="primary" variant="extended" aria-label="Add Event">
-              <i className="zmdi zmdi-calendar-note" />
-            </Fab>
-            <ListItemText primary={"Add Event"} />
-          </ListItem>
-        </List>
-      </Dialog>
-    );
-  }
+const SelectSlotDialog = ({ handleClose, showCreateEvent, slotSelected, open, ...other }) => {
+  return (
+    <DialogRoot
+      show={open}
+      handleHide={handleClose}
+      size="xs"
+      title={
+        slotSelected ? (
+          convertDay(slotSelected.start.getDay()) + " - " +
+          slotSelected.start.getDate() + " / " + 
+          convertMonth(slotSelected.start.getMonth()) + " / " + 
+          slotSelected.start.getFullYear()
+        ) : ""
+      }
+    >
+      <List>
+        <ListItem button onClick={showCreateEvent}>
+          <Fab color="primary" variant="extended" aria-label="Add Event">
+            <i className="zmdi zmdi-calendar-note" />
+          </Fab>
+          <ListItemText primary={"Add Event"} />
+        </ListItem>
+      </List>
+    </DialogRoot>
+  );
 }
 
 
-
-export default connect(
-  null
-)(SelectSlotDialog);
+export default SelectSlotDialog;
