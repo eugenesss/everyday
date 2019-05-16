@@ -9,6 +9,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import DealCard from "Components/CRM/Deal/DealCard";
 // import ViewDealStage from "Components/CRM/View/Deal/ViewDealStage";
 
@@ -24,59 +25,49 @@ import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 import ActivityLog from "Components/Everyday/ActivityLog";
 
 // History Tab
-import StageHistory from "Components/CRM/View/Deal/StageHistory";
+import DealHistory from "Components/CRM/View/Deal/DealHistory";
 
 // Notes Tab
 import NewNote from "Components/Form/Note/NewNote";
 import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
+import { getSingleDeal, clearSingleDeal } from "Actions";
 // getDeal - deal details, history, events, notes
 // Edit Deal, Delete Deal, Update Stage/Amount, getDealStage,
 // addNoteToDeal(dealID), onNoteChange, clearNote
 // Add Event Dialog
 
 class crm_view_deal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { loading: true };
-  }
-
   componentWillMount() {
-    /*     var id = this.props.match.params.id;
-    this.props.viewDeal(id); */
-    setTimeout(() => {
-      this.setState({
-        loading: false
-      });
-    }, 800);
+    var id = this.props.match.params.id;
+    this.props.getSingleDeal(id);
   }
 
   componentWillUnmount() {
-    // this.props.viewDealEnd();
+    this.props.clearSingleDeal();
   }
 
   render() {
-    const { loading } = this.state;
-    const { deal } = this.props;
+    const { loading, deal } = this.props.dealToView;
     return (
       <React.Fragment>
-        <Helmet>
-          <title>Everyday | View Deal</title>
-        </Helmet>
-        <PageTitleBar title="View Deal" createLink="/crm/new/deal" />
         {loading ? (
           <RctPageLoader />
-        ) : (
+        ) : deal ? (
           <React.Fragment>
+            <Helmet>
+              <title>Everyday | View Deal</title>
+            </Helmet>
+            <PageTitleBar title="View Deal" createLink="/crm/new/deal" />
             <RctCollapsibleCard fullBlock>
               <DealCard
-                name={"Deal Name"}
-                stage={"Negotiation"}
-                chance={50}
-                type={"New Business"}
-                ownerName={"admin admin"}
-                amount={10000}
+                name={deal.name}
+                stage={deal.stage.name}
+                chance={deal.stage.chance}
+                type={deal.type.name}
+                ownerName={deal.owner.fullName}
+                amount={deal.amount}
               />
             </RctCollapsibleCard>
             <RctCollapsibleCard heading={"Select Deal Stage"} fullBlock>
@@ -84,15 +75,16 @@ class crm_view_deal extends Component {
             </RctCollapsibleCard>
             <TabsWrapper>
               <div icon="zmdi-coffee text-success" label="DETAILS">
-                <DealDetails />
-                <DescriptionDetails />
+                <DealDetails deal={deal} />
+                <DescriptionDetails desc={deal.description} />
               </div>
               <div icon="zmdi-book-image text-secondary" label="HISTORY">
-                <StageHistory />
+                <DealHistory history={deal.history} />
               </div>
               <div icon="zmdi-pizza text-warning" label="EVENTS">
-                <UpcomingEvents />
-                <ClosedEvents />
+                <UpcomingEvents events={deal.upcomingEvents} />
+                <hr />
+                <ClosedEvents events={deal.closedEvents} />
               </div>
               <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
                 <ActivityLog />
@@ -103,12 +95,17 @@ class crm_view_deal extends Component {
                     <NewNote /* onAddNote="function" */ />
                   </div>
                   <div className="col-md-8">
-                    <DisplayAllNotes />
+                    <DisplayAllNotes notes={deal.notes} />
                   </div>
                 </div>
               </div>
             </TabsWrapper>
           </React.Fragment>
+        ) : (
+          <PageErrorMessage
+            heading="Not Found"
+            message="This could be because of a network problem or the record might have been deleted"
+          />
         )}
       </React.Fragment>
     );
@@ -116,12 +113,13 @@ class crm_view_deal extends Component {
 }
 
 // map state to props
-const mapStateToProps = ({ deal }) => {
-  const { dealView } = deal;
-  return { dealView };
+const mapStateToProps = ({ crmState }) => {
+  const { dealState } = crmState;
+  const { dealToView } = dealState;
+  return { dealToView };
 };
 
 export default connect(
-  null,
-  {}
+  mapStateToProps,
+  { getSingleDeal, clearSingleDeal }
 )(crm_view_deal);

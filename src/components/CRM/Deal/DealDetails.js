@@ -1,4 +1,5 @@
 import React from "react";
+import Moment from "moment";
 import NumberFormat from "react-number-format";
 import DetailsHeader from "Components/CRM/View/Details/DetailsHeader";
 import SingleDetail from "Components/CRM/View/Details/SingleDetail";
@@ -11,12 +12,12 @@ const DealDetails = ({ deal }) => {
       <DetailsHeader title="Deal Details" />
       <DetailsTable>
         <tr>
-          <SingleDetail title="Owner" value="ownerName" />
+          <SingleDetail title="Owner" value={deal.owner.fullName} />
           <SingleDetail
             title="Amount"
             value={
               <NumberFormat
-                value={10000}
+                value={deal.amount}
                 displayType={"text"}
                 thousandSeparator={true}
                 prefix={"$"}
@@ -25,31 +26,46 @@ const DealDetails = ({ deal }) => {
           />
         </tr>
         <tr>
-          <SingleDetail title="Name" value="dealName" />
-          <SingleDetail title="Stage" value="stage" />
+          <SingleDetail title="Name" value={deal.name} />
+          <SingleDetail title="Stage" value={deal.stage.name} />
         </tr>
         <tr>
-          <SingleDetail title="Closing Date" value="source" />
-          <SingleDetail title="Source" value="jobTitle" />
+          <SingleDetail
+            title="Closing Date"
+            value={Moment(deal.closingDate).format("D MMMM YYYY")}
+          />
+          <SingleDetail
+            title="Source"
+            value={deal.source && deal.source.name}
+          />
         </tr>
         <tr>
-          <SingleDetail title="Account" value="office" />
-          <SingleDetail title="Type" value="fax" />
+          <SingleDetail title="Account" value={deal.account.name} />
+          <SingleDetail title="Type" value={deal.type && deal.type.name} />
         </tr>
         <tr>
-          <SingleDetail title="Customer" value="office" />
+          <SingleDetail
+            title="Customer"
+            value={deal.customer && deal.customer.fullName}
+          />
         </tr>
         <tr>
           <SingleDetail
             title="Modified By"
             value={
-              <NameTimeStamp name="admin admin" timeStamp="08-05-2019 09:30 " />
+              <NameTimeStamp
+                name={deal.modifiedBy.fullName}
+                timeStamp="08-05-2019 09:30 "
+              />
             }
           />
           <SingleDetail
             title="Created By"
             value={
-              <NameTimeStamp name="admin admin" timeStamp="08-05-2019 09:30 " />
+              <NameTimeStamp
+                name={deal.createdBy.fullName}
+                timeStamp="08-05-2019 09:30 "
+              />
             }
           />
         </tr>

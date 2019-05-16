@@ -6,6 +6,10 @@ import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 //Page Components
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
+import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import CustomerCard from "Components/CRM/Customer/CustomerCard";
 
 // Details Tab
@@ -27,12 +31,6 @@ import ActivityLog from "Components/Everyday/ActivityLog";
 import NewNote from "Components/Form/Note/NewNote";
 import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
-//Page Req
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
-
 // Actions
 import { getSingleCustomer, clearSingleCustomer } from "Actions";
 // addNoteToCustomer(custID), onNoteChange, clearNote
@@ -50,7 +48,6 @@ class crm_view_customer extends Component {
 
   render() {
     const { loading, customer } = this.props.customerToView;
-    console.log(customer);
     return (
       <React.Fragment>
         {loading ? (

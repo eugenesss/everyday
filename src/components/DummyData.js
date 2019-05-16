@@ -127,6 +127,32 @@ export const cust = {
   account: null,
   deals: null
 };
+
+export const account = {
+  id: 1,
+  name: "Account One",
+  industry: { name: "Accounting", color: "" },
+  website: "www.accountOne.com",
+  office: "1234 5678",
+  fax: null,
+  owner: user,
+  createdBy: user,
+  createdAt: 1330192800000,
+  modifiedBy: user,
+  modifiedAt: 1330192800000,
+  address: address,
+  address2: address2,
+  city: "Singapore",
+  state: "Singapore",
+  zip: "654321",
+  description: longText,
+  customers: [cust],
+  deals: null,
+  upcomingEvents: [upcomingEvent, upcomingEvent, upcomingEvent, upcomingEvent],
+  closedEvents: null,
+  notes: [note, note, note]
+};
+
 export const cust2 = {
   id: 2,
   fullName: "Customer Two",
@@ -145,10 +171,107 @@ export const cust2 = {
   upcomingEvents: [upcomingEvent, upcomingEvent, upcomingEvent, upcomingEvent],
   closedEvents: null,
   notes: null,
-  account: null,
+  account: account,
   deals: null
 };
 
-export const leadList = [lead, lead2, lead2, lead, lead, lead];
+const stage1 = {
+  name: "Prospecting",
+  chance: 10,
+  step: 1,
+  end: false,
+  description:
+    "This stage refers to any initial calls, conversations or emails with a potential lead."
+};
+const stage2 = {
+  name: "Qualification",
+  chance: 25,
+  step: 2,
+  end: false,
+  description: "This stage refers to a confirmed meeting with the lead."
+};
+const stage3 = {
+  name: "Proposal",
+  chance: 50,
+  step: 3,
+  end: false,
+  description:
+    "This stage refers to any discussion on budget, proposal or issue of quotations."
+};
+const stage4 = {
+  name: "Negotiation",
+  chance: 70,
+  step: 4,
+  end: false,
+  description:
+    "This stage refers to any form of further negotiation portraying some form of buying signal after initial proposal stage."
+};
+const stage5 = {
+  name: "Buying Signal",
+  chance: 90,
+  step: 5,
+  end: false,
+  description:
+    "This stage refers to strong buying signals from the client Eg. Verbal agreement."
+};
+const stage6 = {
+  name: "Closed Won",
+  chance: 100,
+  step: 6,
+  end: true,
+  description: "This stage refers to a successful signed sales order."
+};
+const stage7 = {
+  name: "Closed Lost",
+  chance: 0,
+  step: 7,
+  end: true,
+  description: "Client has declined the sales order."
+};
 
+const dealHistory = {
+  stageName: "Prospecting",
+  amount: 1000,
+  chance: 10,
+  closingDate: new Date(),
+  duration: 10,
+  createdAt: 1330192800000,
+  createdBy: user
+};
+
+export const deal = {
+  id: 1,
+  name: "Deal One",
+  stage: stage3,
+  type: { name: "New Business" },
+  source: { name: "Cold Call" },
+  amount: 20000,
+  closingDate: new Date(),
+  account: account,
+  customer: cust2,
+  owner: user,
+  createdBy: user,
+  createdAt: 1330192800000,
+  modifiedBy: user,
+  modifiedAt: 1330192800000,
+  description: longText,
+  upcomingEvents: [upcomingEvent, upcomingEvent],
+  closedEvents: null,
+  notes: [note, note],
+  history: [dealHistory, dealHistory]
+};
+
+export const dealList = [deal, deal, deal];
+
+export const dealStage = [
+  stage1,
+  stage2,
+  stage3,
+  stage4,
+  stage5,
+  stage6,
+  stage7
+];
+export const leadList = [lead, lead2, lead2, lead, lead, lead];
 export const customerList = [cust, cust2, cust, cust2];
+export const accountList = [account, account, account];

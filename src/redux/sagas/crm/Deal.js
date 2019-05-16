@@ -7,57 +7,39 @@ import {
   select,
   delay
 } from "redux-saga/effects";
-import { CHANGE_DEAL_LIST_VIEW, GET_ALL_DEAL } from "Types";
-import { getDealSuccess, getDealFailure } from "Actions";
+import { CHANGE_DEAL_LIST_VIEW, GET_ALL_DEAL, GET_SINGLE_DEAL } from "Types";
+import { getDealSuccess, getDealFailure, getSingleDealSuccess } from "Actions";
 
 import api from "Api";
+
+import { dealList, deal } from "Components/DummyData";
 
 //=========================
 // REQUESTS
 //=========================
 const getAllDealRequest = async () => {
-  const result = [
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"]
-  ];
+  const result = dealList;
   return result;
 };
 const getMyDealRequest = async () => {
-  const result = [
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"]
-  ];
+  const result = dealList;
   return result;
 };
 const getOpenDealRequest = async () => {
-  const result = [
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"]
-  ];
+  const result = dealList;
   return result;
 };
 const getClosedDealRequest = async () => {
-  const result = [
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"]
-  ];
+  const result = dealList;
   return result;
 };
 const getWonDealRequest = async () => {
-  const result = [
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"],
-    [1, 2, "All dal", "All ", "all deal", 30, "$100,000", "hello", "eheje"]
-  ];
+  const result = dealList;
+  return result;
+};
+const getDealRequest = async dealID => {
+  console.log(`fetching ${dealID}`);
+  const result = deal;
   return result;
 };
 
@@ -109,6 +91,15 @@ function* getAllDealFromDB() {
     yield put(getDealFailure(error));
   }
 }
+function* getDealFromDB({ payload }) {
+  try {
+    const data = yield call(getDealRequest, payload);
+    yield delay(500);
+    yield put(getSingleDealSuccess(data));
+  } catch (error) {
+    yield put(getDealFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -119,10 +110,17 @@ export function* changeViewWatcher() {
 export function* getAllDealWatcher() {
   yield takeEvery(GET_ALL_DEAL, getAllDealFromDB);
 }
+export function* getSingleDealWatcher() {
+  yield takeEvery(GET_SINGLE_DEAL, getDealFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
 //=======================
 export default function* rootSaga() {
-  yield all([fork(changeViewWatcher), fork(getAllDealWatcher)]);
+  yield all([
+    fork(changeViewWatcher),
+    fork(getAllDealWatcher),
+    fork(getSingleDealWatcher)
+  ]);
 }

@@ -9,7 +9,10 @@ import {
   GET_MY_DEAL,
   GET_OPEN_DEAL,
   GET_CLOSED_DEAL,
-  GET_WON_DEAL
+  GET_WON_DEAL,
+  GET_SINGLE_DEAL,
+  GET_SINGLE_DEAL_SUCCESS,
+  CLEAR_SINGLE_DEAL
 } from "Types";
 
 const INIT_STATE = {
@@ -27,7 +30,8 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
-  }
+  },
+  dealToView: { loading: false, deal: null }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -77,10 +81,7 @@ export default (state = INIT_STATE, action) => {
     case GET_DEAL_FAILURE:
       NotificationManager.warning("Error in fetching Deal Data");
       console.log(action.payload);
-      return {
-        ...state,
-        dealList: { ...state.dealList, loading: false }
-      };
+      return INIT_STATE;
     case GET_ALL_DEAL:
     case GET_MY_DEAL:
     case GET_OPEN_DEAL:
@@ -98,6 +99,29 @@ export default (state = INIT_STATE, action) => {
           loading: false,
           tableData: action.payload
         }
+      };
+
+    /**
+     * Get Single Deal
+     */
+    case GET_SINGLE_DEAL:
+      return {
+        ...state,
+        dealToView: { ...state.dealToView, loading: true }
+      };
+    case GET_SINGLE_DEAL_SUCCESS:
+      return {
+        ...state,
+        dealToView: {
+          ...state.dealToView,
+          loading: false,
+          deal: action.payload
+        }
+      };
+    case CLEAR_SINGLE_DEAL:
+      return {
+        ...state,
+        dealToView: INIT_STATE.dealToView
       };
 
     default:

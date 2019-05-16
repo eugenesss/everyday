@@ -10,11 +10,12 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 const AccountList = ({ tableData, loading, title, action }) => {
   const columns = [
     {
-      name: "ID",
+      name: "id",
       options: { display: "excluded", filter: false, sort: false }
     },
     {
-      name: "Account Name",
+      label: "Account Name",
+      name: "name",
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
@@ -23,11 +24,27 @@ const AccountList = ({ tableData, loading, title, action }) => {
         }
       }
     },
-    { name: "Industry" },
-    { name: "Website" },
-    { name: "Office" },
-    { name: "Account Owner" },
-    { name: "Fax", options: { display: false } }
+    {
+      label: "Industry",
+      name: "industry",
+      options: {
+        customBodyRender: value => {
+          return value ? value.name : "";
+        }
+      }
+    },
+    { label: "Website", name: "website" },
+    { label: "Office", name: "office" },
+    {
+      label: "Owner",
+      name: "owner",
+      options: {
+        customBodyRender: value => {
+          return value.fullName;
+        }
+      }
+    },
+    { label: "Fax", name: "fax", options: { display: false } }
   ];
 
   if (action == true) {

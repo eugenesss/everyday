@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Page Components
@@ -36,39 +35,28 @@ import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 
 // Actions
-// get Account - account details, open events, closed events, notes
+import { getSingleAccount, clearSingleAccount } from "Actions";
 // addNoteToAccount(acctID), onNoteChange, clearNote
 // Add events dialog
 // Delete Account, Edit Account, Transfer Account
 
 class crm_view_account extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { loading: true };
-  }
-
   componentWillMount() {
-    // var id = this.props.match.params.id;
-    // this.props.viewCustomer(id);
-    setTimeout(() => {
-      this.setState({
-        loading: false
-      });
-    }, 600);
+    var id = this.props.match.params.id;
+    this.props.getSingleAccount(id);
   }
 
   componentWillUnmount() {
-    // this.props.viewCustomerEnd();
+    this.props.clearSingleAccount();
   }
 
   render() {
-    const { loading } = this.state;
-    const { account } = this.props;
+    const { loading, account } = this.props.accountToView;
     return (
       <React.Fragment>
         {loading ? (
           <RctPageLoader />
-        ) : !account ? (
+        ) : account ? (
           <React.Fragment>
             <Helmet>
               <title>Everyday | View Account</title>
@@ -77,35 +65,42 @@ class crm_view_account extends Component {
             <div className="row">
               <RctCollapsibleCard colClasses="col-md-6 col-lg-6" fullBlock>
                 <AccountCard
-                  name="Account One"
-                  industry="Fashion"
-                  ownerName="admin admin"
-                  office="12345678"
-                  fax=""
-                  address="1 Address Street"
-                  address2="An Account Building"
-                  state="Singapore"
-                  city="Singapore"
-                  zip="654321"
+                  name={account.name}
+                  industry={account.industry && account.industry.name}
+                  ownerName={account.owner.fullName}
+                  office={account.office}
+                  fax={account.fax}
+                  address={account.address}
+                  address2={account.address2}
+                  state={account.state}
+                  city={account.city}
+                  zip={account.zip}
                 />
               </RctCollapsibleCard>
             </div>
             <TabsWrapper>
               <div icon="zmdi-coffee text-success" label="DETAILS">
                 <React.Fragment>
-                  <AccountDetails />
-                  <AddressDetails />
-                  <DescriptionDetails />
+                  <AccountDetails account={account} />
+                  <AddressDetails
+                    address={account.address}
+                    address2={account.address2}
+                    state={account.state}
+                    city={account.city}
+                    zip={account.zip}
+                  />
+                  <DescriptionDetails desc={account.description} />
                 </React.Fragment>
               </div>
               <div icon="zmdi-drink text-secondary" label="RELATED">
-                <RelatedDeals />
-                <br />
-                <RelatedCustomers />
+                <RelatedDeals deals={account.deals} />
+                <hr />
+                <RelatedCustomers customers={account.customers} />
               </div>
               <div icon="zmdi-pizza text-warning" label="EVENTS">
-                <UpcomingEvents />
-                <ClosedEvents />
+                <UpcomingEvents events={account.upcomingEvents} />
+                <hr />
+                <ClosedEvents events={account.closedEvents} />
               </div>
               <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
                 <ActivityLog />
@@ -116,7 +111,7 @@ class crm_view_account extends Component {
                     <NewNote /* onAddNote="function" */ />
                   </div>
                   <div className="col-md-8">
-                    <DisplayAllNotes />
+                    <DisplayAllNotes notes={account.notes} />
                   </div>
                 </div>
               </div>
@@ -132,5 +127,13 @@ class crm_view_account extends Component {
     );
   }
 }
+const mapStateToProps = ({ crmState }) => {
+  const { accountState } = crmState;
+  const { accountToView } = accountState;
+  return { accountToView };
+};
 
-export default crm_view_account;
+export default connect(
+  mapStateToProps,
+  { getSingleAccount, clearSingleAccount }
+)(crm_view_account);

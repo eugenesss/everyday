@@ -14,7 +14,7 @@ import Moment from "moment";
 const DealList = ({ tableData, loading, title, action }) => {
   const columns = [
     {
-      name: "DealID",
+      name: "id",
       options: {
         display: "excluded",
         filter: false,
@@ -23,25 +23,8 @@ const DealList = ({ tableData, loading, title, action }) => {
       }
     },
     {
-      name: "AccountID",
-      options: {
-        display: "excluded",
-        filter: false,
-        sort: false,
-        download: false
-      }
-    },
-    {
-      name: "CustomerID",
-      options: {
-        display: "excluded",
-        filter: false,
-        sort: false,
-        download: false
-      }
-    },
-    {
-      name: "Deal Name",
+      label: "Deal Name",
+      name: "name",
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
@@ -51,7 +34,8 @@ const DealList = ({ tableData, loading, title, action }) => {
       }
     },
     {
-      name: "Amount",
+      label: "Amount",
+      name: "amount",
       options: {
         customBodyRender: value => {
           return (
@@ -66,14 +50,28 @@ const DealList = ({ tableData, loading, title, action }) => {
       }
     },
     {
-      name: "Stage"
+      label: "Stage",
+      name: "stage",
+      options: {
+        customBodyRender: value => {
+          return value.name;
+        }
+      }
     },
     {
-      name: "Chance",
-      options: { display: false }
+      label: "Chance",
+      name: "stage",
+      options: {
+        filter: false,
+        display: false,
+        customBodyRender: value => {
+          return value.chance;
+        }
+      }
     },
     {
-      name: "Closing Date",
+      label: "Closing Date",
+      name: "closingDate",
       options: {
         customBodyRender: value => {
           return Moment(value).format("D MMMM YYYY");
@@ -81,30 +79,56 @@ const DealList = ({ tableData, loading, title, action }) => {
       }
     },
     {
-      name: "Account",
+      label: "Account",
+      name: "account",
       options: {
-        customBodyRender: (value, tableMeta) => {
-          return (
-            <NavLink to={`accounts/${tableMeta.rowData[1]}`}>{value}</NavLink>
-          );
+        customBodyRender: value => {
+          return <NavLink to={`accounts/${value.id}`}>{value.name}</NavLink>;
         }
       }
     },
     {
-      name: "Customer",
+      label: "Customer",
+      name: "customer",
       options: {
-        customBodyRender: (value, tableMeta) => {
+        customBodyRender: value => {
           return value ? (
-            <NavLink to={`customers/${tableMeta.rowData[2]}`}>{value}</NavLink>
+            <NavLink to={`customers/${value.id}`}>{value.name}</NavLink>
           ) : (
             ""
           );
         }
       }
     },
-    { name: "Deal Owner" },
-    { name: "Source", options: { display: false } },
-    { name: "Type", options: { display: false } }
+    {
+      label: "Deal Owner",
+      name: "owner",
+      options: {
+        customBodyRender: value => {
+          return value.fullName;
+        }
+      }
+    },
+    {
+      label: "Source",
+      name: "source",
+      options: {
+        display: false,
+        customBodyRender: value => {
+          return value.name;
+        }
+      }
+    },
+    {
+      label: "Type",
+      name: "type",
+      options: {
+        display: false,
+        customBodyRender: value => {
+          return value.name;
+        }
+      }
+    }
   ];
 
   if (action == true) {

@@ -7,7 +7,10 @@ import {
   GET_ACCOUNT_SUCCESS,
   GET_ALL_ACCOUNT,
   GET_MY_ACCOUNT,
-  GET_OPEN_ACCOUNT
+  GET_OPEN_ACCOUNT,
+  GET_SINGLE_ACCOUNT,
+  GET_SINGLE_ACCOUNT_SUCCESS,
+  CLEAR_SINGLE_ACCOUNT
 } from "Types";
 
 const INIT_STATE = {
@@ -19,7 +22,8 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
-  }
+  },
+  accountToView: { loading: false, account: null }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -69,10 +73,7 @@ export default (state = INIT_STATE, action) => {
     case GET_ACCOUNT_FAILURE:
       NotificationManager.warning("Error in fetching Account Data");
       console.log(action.payload);
-      return {
-        ...state,
-        accountList: { ...state.accountList, loading: false }
-      };
+      return INIT_STATE;
     case GET_ALL_ACCOUNT:
     case GET_MY_ACCOUNT:
     case GET_OPEN_ACCOUNT:
@@ -88,6 +89,29 @@ export default (state = INIT_STATE, action) => {
           loading: false,
           tableData: action.payload
         }
+      };
+
+    /**
+     * Get Single Account
+     */
+    case GET_SINGLE_ACCOUNT:
+      return {
+        ...state,
+        accountToView: { ...state.accountToView, loading: true }
+      };
+    case GET_SINGLE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        accountToView: {
+          ...state.accountToView,
+          loading: false,
+          account: action.payload
+        }
+      };
+    case CLEAR_SINGLE_ACCOUNT:
+      return {
+        ...state,
+        accountToView: INIT_STATE.accountToView
       };
 
     default:

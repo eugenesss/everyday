@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import DetailsHeader from "Components/CRM/View/Details/DetailsHeader";
 import SingleDetail from "Components/CRM/View/Details/SingleDetail";
 import DetailsTable from "Components/CRM/View/Details/DetailsTable";
@@ -13,7 +14,13 @@ const CustomerDetails = ({ customer }) => {
           <SingleDetail title="Owner" value={customer.owner.fullName} />
           <SingleDetail
             title="Account"
-            value={customer.account && customer.account.name}
+            value={
+              customer.account && (
+                <Link to={`/app/crm/accounts/${customer.account.id}`}>
+                  {customer.account.name}
+                </Link>
+              )
+            }
           />
         </tr>
         <tr>

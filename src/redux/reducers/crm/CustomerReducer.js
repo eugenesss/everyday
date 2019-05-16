@@ -76,10 +76,7 @@ export default (state = INIT_STATE, action) => {
     case GET_CUSTOMER_FAILURE:
       NotificationManager.warning("Error in fetching Customer Data");
       console.log(action.payload);
-      return {
-        ...state,
-        customerList: { ...state.customerList, loading: false }
-      };
+      return INIT_STATE;
     case GET_ALL_CUSTOMER:
     case GET_MY_CUSTOMER:
     case GET_OPEN_CUSTOMER:

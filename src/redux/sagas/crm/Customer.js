@@ -84,6 +84,7 @@ function* getAllCustomerFromDB() {
 function* getCustomerFromDB({ payload }) {
   try {
     const data = yield call(getCustomerRequest, payload);
+    yield delay(500);
     yield put(getSingleCustomerSuccess(data));
   } catch (error) {
     yield put(getCustomerFailure(error));

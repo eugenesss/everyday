@@ -78,11 +78,7 @@ export default (state = INIT_STATE, action) => {
     case GET_LEAD_FAILURE:
       NotificationManager.warning("Error in fetching Lead Data");
       console.log(action.payload);
-      return {
-        ...state,
-        leadList: { ...state.leadList, loading: false },
-        leadToView: { ...state.leadToView, loading: false }
-      };
+      return INIT_STATE;
     case GET_ALL_LEAD:
     case GET_MY_LEAD:
     case GET_OPEN_LEAD:
