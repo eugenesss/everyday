@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import DetailsHeader from "Components/CRM/View/Details/DetailsHeader";
+import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -11,7 +11,7 @@ import TableRow from "@material-ui/core/TableRow";
 const RelatedCustomers = ({ customers }) => {
   return (
     <div>
-      <DetailsHeader title="Customers" />
+      <TabsHeader title="Customers" />
       <div className="table-responsive">
         <Table>
           <TableHead>

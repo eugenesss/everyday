@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import DetailsHeader from "Components/CRM/View/Details/DetailsHeader";
+import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
 import SingleDetail from "Components/CRM/View/Details/SingleDetail";
 import DetailsTable from "Components/CRM/View/Details/DetailsTable";
 import NameTimeStamp from "Components/Everyday/NameTimeStamp";
@@ -8,7 +8,7 @@ import NameTimeStamp from "Components/Everyday/NameTimeStamp";
 const CustomerDetails = ({ customer }) => {
   return (
     <div className="pb-10">
-      <DetailsHeader title="Customer Details" />
+      <TabsHeader title="Customer Details" />
       <DetailsTable>
         <tr>
           <SingleDetail title="Owner" value={customer.owner.fullName} />

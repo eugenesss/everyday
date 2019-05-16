@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
-import DetailsHeader from "Components/CRM/View/Details/DetailsHeader";
+import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
 import Button from "@material-ui/core/Button";
 
 class NewNote extends Component {
@@ -30,7 +30,7 @@ class NewNote extends Component {
   render() {
     return (
       <div>
-        <DetailsHeader title="New Note" />
+        <TabsHeader title="New Note" />
         <form className="pr-40" noValidate autoComplete="off">
           <TextField
             id="noteTitle"

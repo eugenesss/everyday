@@ -1,5 +1,5 @@
 import React from "react";
-import DetailsHeader from "Components/CRM/View/Details/DetailsHeader";
+import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -10,7 +10,7 @@ import TableRow from "@material-ui/core/TableRow";
 const UpcomingEvents = ({ events }) => {
   return (
     <div>
-      <DetailsHeader title="Upcoming Events" />
+      <TabsHeader title="Upcoming Events" />
       <div className="table-responsive">
         <Table>
           <TableHead>

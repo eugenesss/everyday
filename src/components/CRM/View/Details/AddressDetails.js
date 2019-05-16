@@ -1,12 +1,12 @@
 import React from "react";
-import DetailsHeader from "Components/CRM/View/Details/DetailsHeader";
+import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
 import SingleDetail from "Components/CRM/View/Details/SingleDetail";
 import DetailsTable from "Components/CRM/View/Details/DetailsTable";
 
 const AddressDetails = ({ address, address2, city, state, zip }) => {
   return (
     <div className="pb-10">
-      <DetailsHeader title="Address Details" />
+      <TabsHeader title="Address Details" />
       <DetailsTable>
         <tr>
           <SingleDetail title="Address" value={address} colSpan={5} />

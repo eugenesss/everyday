@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 //Page Components
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
+import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import AccountCard from "Components/CRM/Account/AccountCard";
 
 // Details Tab
@@ -27,12 +31,6 @@ import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-
-//Page Req
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 
 // Actions
 import { getSingleAccount, clearSingleAccount } from "Actions";

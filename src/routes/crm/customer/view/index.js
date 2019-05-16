@@ -8,7 +8,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 //Page Components
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
+import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import CustomerCard from "Components/CRM/Customer/CustomerCard";
 

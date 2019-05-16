@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-//Lead Components
+//Page Components
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
+import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import LeadCard from "Components/CRM/Lead/LeadCard";
 
 // Details Tab
@@ -24,12 +28,6 @@ import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-
-//Page Req
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
-import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 
 //Actions
 import { getSingleLead, clearSingleLead } from "Actions";

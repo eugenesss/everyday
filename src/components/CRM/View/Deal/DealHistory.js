@@ -1,5 +1,5 @@
 import React from "react";
-import DetailsHeader from "Components/CRM/View/Details/DetailsHeader";
+import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -12,7 +12,7 @@ import { getTheDate } from "Helpers/helpers";
 const DealHistory = ({ history }) => {
   return (
     <div>
-      <DetailsHeader title="Deal History" />
+      <TabsHeader title="Deal History" />
       <div className="table-responsive">
         <Table>
           <TableHead>
