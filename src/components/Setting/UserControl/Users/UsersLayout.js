@@ -8,7 +8,6 @@ class UsersLayout extends Component {
     super(props);
   }
 
-
   render() {
     return (
       <React.Fragment>

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Col, Row } from "reactstrap";
 
-import UserBlock from "Components/Setting/General/Profile/UserBlock";
-import UserFeedBlock from "Components/Setting/General/Profile/UserFeedBlock"
+import UserBlock from "./UserBlock";
+import UserFeedBlock from "./UserFeedBlock"
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';

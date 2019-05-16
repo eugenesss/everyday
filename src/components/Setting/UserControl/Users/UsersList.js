@@ -9,12 +9,13 @@ import Tooltip from "@material-ui/core/Tooltip";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
-import AddUserDialog from "Components/Setting/UserControl/Users/AddUserDialog"
+import AddUserDialog from "./AddUserDialog";
+import UserControlDialog from "./UserControlDialog"
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import { getAllUsers, showAddUser, hideAddUser } from "Actions";
+import { getAllUsers, showAddUser, hideAddUser, showUserControls, hideUserControls } from "Actions";
 
 const styles = theme => ({
   icon: {
@@ -61,9 +62,12 @@ class UsersList extends Component {
       usersLoading, 
       isAddUser,
       userToAdd,
+      isUserControl,
 
       showAddUser,
       hideAddUser,
+      showUserControls,
+      hideUserControls,
      } = this.props;
     const data = users && users.map(user => this.convertData(user));
     const columns = [
@@ -109,10 +113,18 @@ class UsersList extends Component {
                       this.onClickDelete(value);
                     }}
                   >
-                    <i className="zmdi zmdi-delete" />
+                    <i className={"zmdi zmdi-delete " + classes.icon} />
                   </IconButton>
                 </Tooltip>
-                
+                <Tooltip id="tooltip-icon" title="More">
+                  <IconButton
+                    className="text-primary mr-2"
+                    aria-label="More Options"
+                    onClick={() => { showUserControls() }}
+                  >
+                    <i className={"zmdi zmdi-edit " + classes.icon} />
+                  </IconButton>
+                </Tooltip>
               </React.Fragment>
             );
           }
@@ -123,6 +135,7 @@ class UsersList extends Component {
       filterType: "dropdown",
       filter: false,
       sort: false,
+      viewColumns: false,
       responsive: "scroll",
       selectableRows: false,
       download: false,
@@ -168,6 +181,10 @@ class UsersList extends Component {
           handleClose={hideAddUser}
           userToAdd={userToAdd}
         />
+        <UserControlDialog
+          open={isUserControl}
+          handleClose={hideUserControls}
+        />
         {usersLoading && <RctSectionLoader />}
       </RctCollapsibleCard>
     );
@@ -179,12 +196,12 @@ UsersList.propTypes = {
 };
 
 const mapStateToProps = ({ usersState }) => {
-  const { users, usersLoading, isAddUser, userToAdd } = usersState;
-  return { users, usersLoading, isAddUser, userToAdd };
+  const { users, usersLoading, isAddUser, userToAdd, isUserControl } = usersState;
+  return { users, usersLoading, isAddUser, userToAdd, isUserControl };
 };
 
 export default connect(
   mapStateToProps,
-  { getAllUsers, showAddUser, hideAddUser }
+  { getAllUsers, showAddUser, hideAddUser, showUserControls, hideUserControls }
 )(withStyles(styles)(UsersList));
 

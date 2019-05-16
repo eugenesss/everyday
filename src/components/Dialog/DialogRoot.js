@@ -18,7 +18,7 @@ const DialogRoot = ({ show, handleHide, children, titleBg, title, size }) => {
         <DialogTitle id="max-width-dialog-title">{title}</DialogTitle>
         <DialogContent>{children}</DialogContent>
         <DialogActions>
-          <Button onClick={handleHide} color="primary">
+          <Button onClick={handleHide} color="primary" variant="contained">
             Close
           </Button>
         </DialogActions>
