@@ -32,36 +32,28 @@ import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 
 //Actions
-// getLead - open activities, closed activities, lead details, lead notes
+import { getSingleLead, clearSingleLead } from "Actions";
 // addNoteToLead(leadID) onNoteChange, clearNote
 // Add events dialog
 // Delete Lead, Convert Lead, Edit Lead, Transfer Lead
 
 class crm_view_lead extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { loading: true };
-  }
-
   componentWillMount() {
-    // var id = this.props.match.params.id;
-    // this.props.viewLead(id);
-    setTimeout(() => {
-      this.setState({
-        loading: false
-      });
-    }, 800);
+    var id = this.props.match.params.id;
+    this.props.getSingleLead(id);
+  }
+  componentWillUnmount() {
+    this.props.clearSingleLead();
   }
 
   render() {
-    const { loading } = this.state;
-    const { lead } = this.props;
+    const { lead, loading } = this.props.leadToView;
 
     return (
       <React.Fragment>
         {loading ? (
           <RctPageLoader />
-        ) : !lead ? (
+        ) : lead ? (
           <React.Fragment>
             <Helmet>
               <title>Everyday | View Lead</title>
@@ -69,21 +61,29 @@ class crm_view_lead extends Component {
             <PageTitleBar title="View Lead" createLink="/crm/new/lead" />
             <RctCollapsibleCard fullBlock>
               <LeadCard
-                fullName="Lead One"
-                companyName="Company One"
-                status="Contacted"
-                ownerName="Admin Admin"
+                fullName={lead.fullName}
+                companyName={lead.companyName}
+                status={lead.status.name}
+                statusColor={lead.status.color}
+                ownerName={lead.owner.fullName}
               />
             </RctCollapsibleCard>
             <TabsWrapper>
               <div icon="zmdi-coffee text-primary" label="DETAILS">
-                <LeadDetails />
-                <AddressDetails />
-                <DescriptionDetails />
+                <LeadDetails lead={lead} />
+                <AddressDetails
+                  address={lead.address}
+                  address2={lead.address2}
+                  city={lead.city}
+                  state={lead.state}
+                  zip={lead.zip}
+                />
+                <DescriptionDetails desc={lead.description} />
               </div>
               <div icon="zmdi-pizza text-warning" label="EVENTS">
-                <UpcomingEvents />
-                <ClosedEvents />
+                <UpcomingEvents events={lead.upcomingEvents} />
+                <hr />
+                <ClosedEvents events={lead.closedEvents} />
               </div>
               <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
                 <ActivityLog />
@@ -94,7 +94,7 @@ class crm_view_lead extends Component {
                     <NewNote /* onAddNote="function" */ />
                   </div>
                   <div className="col-md-8">
-                    <DisplayAllNotes />
+                    <DisplayAllNotes notes={lead.notes} />
                   </div>
                 </div>
               </div>
@@ -111,15 +111,13 @@ class crm_view_lead extends Component {
   }
 }
 // map state to props
-const mapStateToProps = ({ lead, authUser }) => {
-  const { leadView, contactView } = lead;
-  const { user } = authUser;
-  return { leadView, contactView, user };
+const mapStateToProps = ({ crmState }) => {
+  const { leadState } = crmState;
+  const { leadToView } = leadState;
+  return { leadToView };
 };
 
-export default withRouter(
-  connect(
-    null,
-    {}
-  )(crm_view_lead)
-);
+export default connect(
+  mapStateToProps,
+  { getSingleLead, clearSingleLead }
+)(crm_view_lead);

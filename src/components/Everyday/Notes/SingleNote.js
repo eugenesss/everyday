@@ -14,19 +14,19 @@ const SingleNote = ({ note, onClickEdit, onClickDelete, action }) => {
     >
       <div className="post-content d-flex">
         <div className="post-img mr-10">
-          <Avatar fullName={"admin admin"} size={40} />
+          <Avatar fullName={note.createdBy.fullName} size={40} />
         </div>
         <div className="post-info">
-          <h4 className="mb-5">{"data.title"}</h4>
-          <p>{"data.body"}</p>
+          <h4 className="mb-5">{note.title}</h4>
+          <p>{note.content}</p>
           <div className="meta-info fs-12 text-muted mb-5">
             <span className="mr-15 d-inline-block">
               <i className="zmdi zmdi-calendar mr-5" />
-              01 Apr 2019
+              {getTheDate(note.createdAt, "M DD YYYY")}
             </span>
             <span className="mr-15 d-inline-block">
               <i className="zmdi zmdi-time mr-5" />
-              4:40pm
+              4.40pm
             </span>
           </div>
         </div>

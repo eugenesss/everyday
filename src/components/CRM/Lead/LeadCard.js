@@ -23,17 +23,14 @@ const LeadCard = ({
               </p>
               <span className="d-block fs-12">Owner - {ownerName}</span>
               <p className="mb-5">
-                <span className="fs-12" style={{ color: "#00d014" }}>
+                <span className="fs-12" style={{ color: statusColor }}>
                   {status}
                 </span>
               </p>
             </div>
           </div>
         </div>
-        <div
-          className="w-100 py-10 text-white"
-          style={{ background: "#00d014" }}
-        />
+        <div className="w-100 py-10" style={{ background: statusColor }} />
       </div>
     </div>
   );

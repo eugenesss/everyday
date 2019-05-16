@@ -10,32 +10,44 @@ const CustomerDetails = ({ customer }) => {
       <DetailsHeader title="Customer Details" />
       <DetailsTable>
         <tr>
-          <SingleDetail title="Owner" value="ownerName" />
-          <SingleDetail title="Account" value="companyName" />
+          <SingleDetail title="Owner" value={customer.owner.fullName} />
+          <SingleDetail
+            title="Account"
+            value={customer.account && customer.account.name}
+          />
         </tr>
         <tr>
-          <SingleDetail title="Source" value="status" />
-          <SingleDetail title="Email" value="emailAddress" />
+          <SingleDetail
+            title="Source"
+            value={customer.source && customer.source.name}
+          />
+          <SingleDetail title="Email" value={customer.email} />
         </tr>
         <tr>
-          <SingleDetail title="Mobile" value="source" />
-          <SingleDetail title="Job Title" value="jobTitle" />
+          <SingleDetail title="Mobile" value={customer.mobile} />
+          <SingleDetail title="Job Title" value={customer.jobTitle} />
         </tr>
         <tr>
-          <SingleDetail title="Office" value="office" />
-          <SingleDetail title="Fax" value="fax" />
+          <SingleDetail title="Office" value={customer.office} />
+          <SingleDetail title="Fax" value={customer.fax} />
         </tr>
         <tr>
           <SingleDetail
             title="Modified By"
             value={
-              <NameTimeStamp name="admin admin" timeStamp="08-05-2019 09:30 " />
+              <NameTimeStamp
+                name={customer.modifiedBy.fullName}
+                timeStamp="08-05-2019 09:30 "
+              />
             }
           />
           <SingleDetail
             title="Created By"
             value={
-              <NameTimeStamp name="admin admin" timeStamp="08-05-2019 09:30 " />
+              <NameTimeStamp
+                name={customer.createdBy.fullName}
+                timeStamp="08-05-2019 09:30 "
+              />
             }
           />
         </tr>

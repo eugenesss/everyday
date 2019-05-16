@@ -9,10 +9,10 @@ import TableRow from "@material-ui/core/TableRow";
 import { Badge } from "reactstrap";
 import IconButton from "@material-ui/core/IconButton";
 
-const RelatedDeals = ({ relatedDeals }) => {
+const RelatedDeals = ({ deals }) => {
   return (
     <div>
-      <DetailsHeader title="Deals" />
+      <DetailsHeader title="Related Deals" />
       <div className="table-responsive">
         <Table>
           <TableHead>
@@ -27,25 +27,27 @@ const RelatedDeals = ({ relatedDeals }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow hover>
-              <TableCell>{"employee.employeeName"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-
-              <TableCell>
-                <Badge color="success">Done</Badge>
-              </TableCell>
-              <TableCell>
-                <IconButton className="text-success" aria-label="Delete">
-                  <i className="zmdi zmdi-check-all" />
-                </IconButton>
-                <IconButton className="text-danger" aria-label="Add an alarm">
-                  <i className="zmdi zmdi-close" />
-                </IconButton>
-              </TableCell>
-            </TableRow>
+            {deals ? (
+              deals.map((deal, key) => {
+                return (
+                  <TableRow key={key} hover>
+                    <TableCell>{deal.name}</TableCell>
+                    <TableCell>{deal.amount}</TableCell>
+                    <TableCell>{deal.stage.name}</TableCell>
+                    <TableCell>{deal.stage.chance}</TableCell>
+                    <TableCell>{deal.closingDate}</TableCell>
+                    <TableCell>{deal.type && deal.type.name}</TableCell>
+                    <TableCell>{deal.owner.fullName}</TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <TableRow>
+                <TableCell colSpan={8} className="text-center">
+                  <i>No Related Deals</i>
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </div>

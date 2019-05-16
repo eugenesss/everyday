@@ -9,7 +9,10 @@ import {
   GET_OPEN_LEAD,
   GET_HOT_LEAD,
   GET_COLD_LEAD,
-  GET_LEAD_SUCCESS
+  GET_LEAD_SUCCESS,
+  GET_SINGLE_LEAD,
+  GET_SINGLE_LEAD_SUCCESS,
+  CLEAR_SINGLE_LEAD
 } from "Types";
 
 const INIT_STATE = {
@@ -21,6 +24,10 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
+  },
+  leadToView: {
+    loading: false,
+    lead: null
   }
 };
 
@@ -73,7 +80,8 @@ export default (state = INIT_STATE, action) => {
       console.log(action.payload);
       return {
         ...state,
-        leadList: { ...state.leadList, loading: false }
+        leadList: { ...state.leadList, loading: false },
+        leadToView: { ...state.leadToView, loading: false }
       };
     case GET_ALL_LEAD:
     case GET_MY_LEAD:
@@ -94,6 +102,25 @@ export default (state = INIT_STATE, action) => {
         }
       };
 
+    /**
+     * Get Single Lead
+     */
+    case GET_SINGLE_LEAD:
+      return { ...state, leadToView: { ...state.leadToView, loading: true } };
+    case GET_SINGLE_LEAD_SUCCESS:
+      return {
+        ...state,
+        leadToView: {
+          ...state.leadToView,
+          loading: false,
+          lead: action.payload
+        }
+      };
+    case CLEAR_SINGLE_LEAD:
+      return {
+        ...state,
+        leadToView: INIT_STATE.leadToView
+      };
     default:
       return { ...state };
   }

@@ -3,7 +3,7 @@ import List from "@material-ui/core/List";
 import { Scrollbars } from "react-custom-scrollbars";
 import SingleNote from "./SingleNote";
 
-const DisplayAllNotes = ({ notesData, onClickEdit, onClickDelete, action }) => {
+const DisplayAllNotes = ({ notes, onClickEdit, onClickDelete, action }) => {
   return (
     <div className="blog-list-wrap">
       <Scrollbars
@@ -14,13 +14,15 @@ const DisplayAllNotes = ({ notesData, onClickEdit, onClickDelete, action }) => {
         autoHide
       >
         <List className="p-0">
-          <SingleNote /* note onClickEdit onClickDelete action */ />
-          <SingleNote /* note onClickEdit onClickDelete action */ />
-          <SingleNote /* note onClickEdit onClickDelete action */ />
-          <SingleNote /* note onClickEdit onClickDelete action */ />
-          <SingleNote /* note onClickEdit onClickDelete action */ />
-          <SingleNote /* note onClickEdit onClickDelete action */ />
-          <SingleNote /* note onClickEdit onClickDelete action */ />
+          {notes &&
+            notes.map((note, key) => {
+              return (
+                <SingleNote
+                  key={key}
+                  note={note} /* note onClickEdit onClickDelete action */
+                />
+              );
+            })}
         </List>
       </Scrollbars>
     </div>

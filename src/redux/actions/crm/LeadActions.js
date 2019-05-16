@@ -8,7 +8,10 @@ import {
   GET_MY_LEAD,
   GET_OPEN_LEAD,
   GET_HOT_LEAD,
-  GET_COLD_LEAD
+  GET_COLD_LEAD,
+  GET_SINGLE_LEAD,
+  GET_SINGLE_LEAD_SUCCESS,
+  CLEAR_SINGLE_LEAD
 } from "Types";
 
 /**
@@ -80,4 +83,19 @@ export const getHotLead = () => ({
  */
 export const getColdLead = () => ({
   type: GET_COLD_LEAD
+});
+
+/**
+ * Get Single Lead
+ */
+export const getSingleLead = leadID => ({
+  type: GET_SINGLE_LEAD,
+  payload: leadID
+});
+export const getSingleLeadSuccess = leadData => ({
+  type: GET_SINGLE_LEAD_SUCCESS,
+  payload: leadData
+});
+export const clearSingleLead = () => ({
+  type: CLEAR_SINGLE_LEAD
 });

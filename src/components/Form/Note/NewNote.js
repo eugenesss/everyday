@@ -29,7 +29,7 @@ class NewNote extends Component {
 
   render() {
     return (
-      <div className="pt-40">
+      <div>
         <DetailsHeader title="New Note" />
         <form className="pr-40" noValidate autoComplete="off">
           <TextField

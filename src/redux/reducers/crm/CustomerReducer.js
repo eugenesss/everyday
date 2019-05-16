@@ -7,7 +7,10 @@ import {
   GET_CUSTOMER_SUCCESS,
   GET_ALL_CUSTOMER,
   GET_MY_CUSTOMER,
-  GET_OPEN_CUSTOMER
+  GET_OPEN_CUSTOMER,
+  GET_SINGLE_CUSTOMER,
+  GET_SINGLE_CUSTOMER_SUCCESS,
+  CLEAR_SINGLE_CUSTOMER
 } from "Types";
 
 const INIT_STATE = {
@@ -19,6 +22,10 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
+  },
+  customerToView: {
+    loading: false,
+    customer: null
   }
 };
 
@@ -90,6 +97,28 @@ export default (state = INIT_STATE, action) => {
         }
       };
 
+    /**
+     * Get Single Customer
+     */
+    case GET_SINGLE_CUSTOMER:
+      return {
+        ...state,
+        customerToView: { ...state.customerToView, loading: true }
+      };
+    case GET_SINGLE_CUSTOMER_SUCCESS:
+      return {
+        ...state,
+        customerToView: {
+          ...state.customerToView,
+          loading: false,
+          customer: action.payload
+        }
+      };
+    case CLEAR_SINGLE_CUSTOMER:
+      return {
+        ...state,
+        customerToView: INIT_STATE.customerToView
+      };
     default:
       return { ...state };
   }
