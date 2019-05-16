@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+// Global Req
+import { Helmet } from "react-helmet";
+import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+
 //Page Components
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import DealCard from "Components/CRM/Deal/DealCard";
 // import ViewDealStage from "Components/CRM/View/Deal/ViewDealStage";
 
@@ -13,16 +20,15 @@ import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 
+// Acitivty Tab
+import ActivityLog from "Components/Everyday/ActivityLog";
+
+// History Tab
+import StageHistory from "Components/CRM/View/Deal/StageHistory";
+
 // Notes Tab
-
-// Global Req
-import { Helmet } from "react-helmet";
-import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-
-//Page Req
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import NewNote from "Components/Form/Note/NewNote";
+import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
 // getDeal - deal details, history, events, notes
@@ -82,69 +88,26 @@ class crm_view_deal extends Component {
                 <DescriptionDetails />
               </div>
               <div icon="zmdi-book-image text-secondary" label="HISTORY">
-                history
+                <StageHistory />
               </div>
-              <div icon="zmdi-pizza text-warning" label="UPCOMING">
+              <div icon="zmdi-pizza text-warning" label="EVENTS">
                 <UpcomingEvents />
-              </div>
-              <div icon="zmdi-local-florist text-info" label="CLOSED">
                 <ClosedEvents />
               </div>
+              <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
+                <ActivityLog />
+              </div>
               <div icon="zmdi-assignment text-danger" label="NOTES">
-                {/*  <ViewNote /> */}
+                <div className="row">
+                  <div className="col-md-4">
+                    <NewNote /* onAddNote="function" */ />
+                  </div>
+                  <div className="col-md-8">
+                    <DisplayAllNotes />
+                  </div>
+                </div>
               </div>
             </TabsWrapper>
-
-            {/* <div className="row">
-            </div>
-            <div className="row">
-              <RctCollapsibleCard
-                colClasses="col-md-12"
-                heading="Stage"
-                fullBlock
-              >
-                <ViewDealStage deal={dealView} />
-              </RctCollapsibleCard>
-            </div>
-            <div className="row">
-              <RctCollapsibleCard colClasses="col-md-7">
-                <ViewNote deal={dealView} />
-              </RctCollapsibleCard>
-            </div>
-            <div className="row">
-              <RctCollapsibleCard
-                colClasses="col-md-6"
-                heading="Related Account"
-                fullBlock
-              >
-                {dealView.account ? (
-                  <AccountCard account={dealView.account} />
-                ) : (
-                  <RctSectionLoader />
-                )}
-              </RctCollapsibleCard>
-              <RctCollapsibleCard
-                colClasses="col-md-6"
-                heading="Related Customer"
-                fullBlock
-              >
-                {dealView.customer ? (
-                  <ContactCard
-                    customer={dealView.customer}
-                    contact={dealView.customer.contact}
-                  />
-                ) : (
-                  <div style={{ padding: "8% 6%", textAlign: "center" }}>
-                    <p>No Customer Linked</p>
-                  </div>
-                )}
-              </RctCollapsibleCard>
-            </div>
-            <ContactSwipeable>
-              <RelatedTab deal={dealView} />
-              <ActivityTab />
-              <DetailsTab deal={dealView} />
-            </ContactSwipeable> */}
           </React.Fragment>
         )}
       </React.Fragment>

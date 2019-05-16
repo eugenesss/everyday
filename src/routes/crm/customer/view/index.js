@@ -22,7 +22,12 @@ import RelatedAccounts from "Components/CRM/View/Related/RelatedAccounts";
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 
+// Activity Log
+import ActivityLog from "Components/Everyday/ActivityLog";
+
 // Notes Tab
+import NewNote from "Components/Form/Note/NewNote";
+import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 //Page Req
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
@@ -92,14 +97,22 @@ class crm_view_customer extends Component {
                 <br />
                 <RelatedAccounts />
               </div>
-              <div icon="zmdi-pizza text-warning" label="UPCOMING">
+              <div icon="zmdi-pizza text-warning" label="EVENTS">
                 <UpcomingEvents />
-              </div>
-              <div icon="zmdi-local-florist text-info" label="CLOSED">
                 <ClosedEvents />
               </div>
+              <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
+                <ActivityLog />
+              </div>
               <div icon="zmdi-assignment text-danger" label="NOTES">
-                {/*  <ViewNote /> */}
+                <div className="row">
+                  <div className="col-md-4">
+                    <NewNote /* onAddNote="function" */ />
+                  </div>
+                  <div className="col-md-8">
+                    <DisplayAllNotes />
+                  </div>
+                </div>
               </div>
             </TabsWrapper>
           </React.Fragment>

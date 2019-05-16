@@ -14,7 +14,12 @@ import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 
+// Activity Log Tab
+import ActivityLog from "Components/Everyday/ActivityLog";
+
 // Notes Tab
+import NewNote from "Components/Form/Note/NewNote";
+import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Global Req
 import { Helmet } from "react-helmet";
@@ -71,19 +76,27 @@ class crm_view_lead extends Component {
               />
             </RctCollapsibleCard>
             <TabsWrapper>
-              <div icon="zmdi-coffee text-info" label="DETAILS">
+              <div icon="zmdi-coffee text-primary" label="DETAILS">
                 <LeadDetails />
                 <AddressDetails />
                 <DescriptionDetails />
               </div>
-              <div icon="zmdi-pizza text-warning" label="UPCOMING">
+              <div icon="zmdi-pizza text-warning" label="EVENTS">
                 <UpcomingEvents />
-              </div>
-              <div icon="zmdi-local-florist text-info" label="CLOSED">
                 <ClosedEvents />
               </div>
+              <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
+                <ActivityLog />
+              </div>
               <div icon="zmdi-assignment text-danger" label="NOTES">
-                notes
+                <div className="row">
+                  <div className="col-md-4">
+                    <NewNote /* onAddNote="function" */ />
+                  </div>
+                  <div className="col-md-8">
+                    <DisplayAllNotes />
+                  </div>
+                </div>
               </div>
             </TabsWrapper>
           </React.Fragment>

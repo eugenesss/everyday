@@ -4,8 +4,17 @@ import DialogRoot from "Components/Dialog/DialogRoot";
 
 // Components
 import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
-import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
+
+// Invoice Tab
+import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
+
+// Event Tab
+import ActivityLog from "Components/Everyday/ActivityLog";
+
+// Notes Tab
+import NewNote from "Components/Form/Note/NewNote";
+import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 class ViewInvoiceDialog extends Component {
   state = {};
@@ -19,14 +28,20 @@ class ViewInvoiceDialog extends Component {
           <div icon="zmdi-shopping-cart text-success" label="INVOICE">
             <ViewTemplate />
           </div>
-          <div icon="zmdi-pizza text-warning" label="EVENTS">
-            Activities
-          </div>
-          <div icon="zmdi-local-florist text-info" label="REMINDERS">
-            Reminders
+          <div icon="zmdi-pizza text-warning" label="ACTIVITY LOG">
+            <ActivityLog />
           </div>
           <div icon="zmdi-assignment text-danger" label="NOTES">
-            Notes
+            <div className="row">
+              <div className="col-md-12">
+                <DisplayAllNotes />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <NewNote /* onAddNote="function" */ />
+              </div>
+            </div>
           </div>
         </TabsWrapper>
       </DialogRoot>
