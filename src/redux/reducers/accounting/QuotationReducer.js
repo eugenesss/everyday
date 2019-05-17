@@ -8,7 +8,10 @@ import {
   GET_ALL_QUOTATION,
   GET_MY_QUOTATION,
   GET_OPEN_QUOTATION,
-  GET_CLOSED_QUOTATION
+  GET_CLOSED_QUOTATION,
+  GET_SINGLE_QUOTATION,
+  GET_SINGLE_QUOTATION_SUCCESS,
+  CLEAR_SINGLE_QUOTATION
 } from "Types";
 
 const INIT_STATE = {
@@ -25,7 +28,8 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
-  }
+  },
+  quotationToView: { loading: false, quotation: null }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -75,10 +79,7 @@ export default (state = INIT_STATE, action) => {
     case GET_QUOTATION_FAILURE:
       NotificationManager.warning("Error in fetching Quotation Data");
       console.log(action.payload);
-      return {
-        ...state,
-        quotationList: { ...state.quotationList, loading: false }
-      };
+      return INIT_STATE;
     case GET_ALL_QUOTATION:
     case GET_MY_QUOTATION:
     case GET_OPEN_QUOTATION:
@@ -95,6 +96,29 @@ export default (state = INIT_STATE, action) => {
           loading: false,
           tableData: action.payload
         }
+      };
+
+    /**
+     * Get Single Quotation
+     */
+    case GET_SINGLE_QUOTATION:
+      return {
+        ...state,
+        quotationToView: { ...state.quotationToView, loading: true }
+      };
+    case GET_SINGLE_QUOTATION_SUCCESS:
+      return {
+        ...state,
+        quotationToView: {
+          ...state.quotationToView,
+          loading: false,
+          quotation: action.payload
+        }
+      };
+    case CLEAR_SINGLE_QUOTATION:
+      return {
+        ...state,
+        quotationToView: INIT_STATE.quotationToView
       };
 
     default:

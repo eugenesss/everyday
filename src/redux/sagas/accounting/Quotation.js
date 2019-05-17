@@ -7,53 +7,43 @@ import {
   select,
   delay
 } from "redux-saga/effects";
-import { CHANGE_QUOTATION_LIST_VIEW, GET_ALL_QUOTATION } from "Types";
-import { getQuotationSuccess, getQuotationFailure } from "Actions";
+import {
+  CHANGE_QUOTATION_LIST_VIEW,
+  GET_ALL_QUOTATION,
+  GET_SINGLE_QUOTATION
+} from "Types";
+import {
+  getQuotationSuccess,
+  getQuotationFailure,
+  getSingleQuotationSuccess
+} from "Actions";
 
 import api from "Api";
+
+import { quote, quoteList } from "Components/DummyData";
 
 //=========================
 // REQUESTS
 //=========================
 const getAllQuoteRequest = async () => {
-  const result = [
-    ["All Quote", "All Quote", "Minneapolis", 30, "$100,000", "hello", "eheje"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"],
-    ["Frankie Parry", "Agency Legal", "Jacksonville", 71, "$210,000"]
-  ];
+  const result = quoteList;
   return result;
 };
 const getMyQuoteRequest = async () => {
-  const result = [
-    ["My Quote", "My Quote", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = quoteList;
   return result;
 };
 const getOpenQuoteRequest = async () => {
-  const result = [
-    ["Open Quote", "Open Quote", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = quoteList;
   return result;
 };
 const getClosedQuoteRequest = async () => {
-  const result = [
-    ["Closed Quote", "Closed Quote", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = quoteList;
+  return result;
+};
+const getQuoteRequest = async quoteID => {
+  console.log(`fetching ${quoteID}`);
+  const result = quote;
   return result;
 };
 
@@ -91,16 +81,21 @@ function* changeQuoteList({ payload }) {
 function* getAllQuoteFromDB() {
   try {
     const data = yield call(getAllQuoteRequest);
+    yield delay(500);
     yield put(getQuotationSuccess(data));
   } catch (error) {
     yield put(getQuotationFailure(error));
   }
 }
-/*
-function* getMyQuoteFromDB() {
-  const data = yield call(getMyQuoteRequest);
-  yield put(getMyQuotationSuccess(data));
-} */
+function* getQuoteFromDB({ payload }) {
+  try {
+    const data = yield call(getQuoteRequest, payload);
+    yield delay(500);
+    yield put(getSingleQuotationSuccess(data));
+  } catch (error) {
+    yield put(getQuotationFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -111,10 +106,9 @@ export function* changeViewWatcher() {
 export function* getAllQuoteWatcher() {
   yield takeEvery(GET_ALL_QUOTATION, getAllQuoteFromDB);
 }
-/*
-export function* getMyQuoteWatcher() {
-  yield takeEvery(GET_MY_QUOTATION, getMyQuoteFromDB);
-} */
+export function* getSingleQuotationWatcher() {
+  yield takeEvery(GET_SINGLE_QUOTATION, getQuoteFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -122,7 +116,7 @@ export function* getMyQuoteWatcher() {
 export default function* rootSaga() {
   yield all([
     fork(changeViewWatcher),
-    fork(getAllQuoteWatcher)
-    // fork(getMyQuoteWatcher)
+    fork(getAllQuoteWatcher),
+    fork(getSingleQuotationWatcher)
   ]);
 }

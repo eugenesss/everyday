@@ -76,6 +76,7 @@ function* changeCustomerList({ payload }) {
 function* getAllCustomerFromDB() {
   try {
     const data = yield call(getAllCustomerRequest);
+    yield delay(500);
     yield put(getCustomerSuccess(data));
   } catch (error) {
     yield put(getCustomerFailure(error));

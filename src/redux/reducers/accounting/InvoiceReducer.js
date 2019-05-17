@@ -8,7 +8,10 @@ import {
   GET_ALL_INVOICE,
   GET_MY_INVOICE,
   GET_OPEN_INVOICE,
-  GET_CLOSED_INVOICE
+  GET_CLOSED_INVOICE,
+  GET_SINGLE_INVOICE,
+  GET_SINGLE_INVOICE_SUCCESS,
+  CLEAR_SINGLE_INVOICE
 } from "Types";
 
 const INIT_STATE = {
@@ -25,7 +28,8 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
-  }
+  },
+  invoiceToView: { loading: false, invoice: null }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -75,10 +79,7 @@ export default (state = INIT_STATE, action) => {
     case GET_INVOICE_FAILURE:
       NotificationManager.warning("Error in fetching Invoice Data");
       console.log(action.payload);
-      return {
-        ...state,
-        invoiceList: { ...state.invoiceList, loading: false }
-      };
+      return INIT_STATE;
     case GET_ALL_INVOICE:
     case GET_MY_INVOICE:
     case GET_OPEN_INVOICE:
@@ -95,6 +96,29 @@ export default (state = INIT_STATE, action) => {
           loading: false,
           tableData: action.payload
         }
+      };
+
+    /**
+     * Get Single Invoice
+     */
+    case GET_SINGLE_INVOICE:
+      return {
+        ...state,
+        invoiceToView: { ...state.invoiceToView, loading: true }
+      };
+    case GET_SINGLE_INVOICE_SUCCESS:
+      return {
+        ...state,
+        invoiceToView: {
+          ...state.invoiceToView,
+          loading: false,
+          invoice: action.payload
+        }
+      };
+    case CLEAR_SINGLE_INVOICE:
+      return {
+        ...state,
+        invoiceToView: INIT_STATE.invoiceToView
       };
 
     default:

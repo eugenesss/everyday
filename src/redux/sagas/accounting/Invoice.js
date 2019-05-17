@@ -7,53 +7,44 @@ import {
   select,
   delay
 } from "redux-saga/effects";
-import { CHANGE_INVOICE_LIST_VIEW, GET_ALL_INVOICE } from "Types";
-import { getInvoiceSuccess, getInvoiceFailure } from "Actions";
+import {
+  CHANGE_INVOICE_LIST_VIEW,
+  GET_ALL_INVOICE,
+  GET_SINGLE_INVOICE
+} from "Types";
+import {
+  getInvoiceSuccess,
+  getInvoiceFailure,
+  getSingleInvoiceSuccess
+} from "Actions";
 
 import api from "Api";
+
+import { invoice, invoiceList } from "Components/DummyData";
+import { get } from "http";
 
 //=========================
 // REQUESTS
 //=========================
 const getAllInvoiceRequest = async () => {
-  const result = [
-    ["All Quote", "All Quote", "Minneapolis", 30, "$100,000", "hello", "eheje"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"],
-    ["Frankie Parry", "Agency Legal", "Jacksonville", 71, "$210,000"]
-  ];
+  const result = invoiceList;
   return result;
 };
 const getMyInvoiceRequest = async () => {
-  const result = [
-    ["My Quote", "My Quote", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = invoiceList;
   return result;
 };
 const getOpenInvoiceRequest = async () => {
-  const result = [
-    ["Open Quote", "Open Quote", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = invoiceList;
   return result;
 };
 const getClosedInvoiceRequest = async () => {
-  const result = [
-    ["Closed Quote", "Closed Quote", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = invoiceList;
+  return result;
+};
+const getInvoiceRequest = async invID => {
+  console.log(`fetching ${invID}`);
+  const result = invoice;
   return result;
 };
 
@@ -95,11 +86,22 @@ function* changeInvoiceList({ payload }) {
 function* getAllInvoiceFromDB() {
   try {
     const data = yield call(getAllInvoiceRequest);
+    yield delay(500);
     yield put(getInvoiceSuccess(data));
   } catch (error) {
     yield put(getInvoiceFailure(error));
   }
 }
+function* getInvoiceFromDB({ payload }) {
+  try {
+    const data = yield call(getInvoiceRequest, payload);
+    yield delay(500);
+    yield put(getSingleInvoiceSuccess(data));
+  } catch (error) {
+    yield put(getInvoiceFailure(error));
+  }
+}
+
 //=======================
 // WATCHER FUNCTIONS
 //=======================
@@ -109,10 +111,17 @@ export function* changeViewWatcher() {
 export function* getAllInvoiceWatcher() {
   yield takeEvery(GET_ALL_INVOICE, getAllInvoiceFromDB);
 }
+export function* getSingleInvoiceWatcher() {
+  yield takeEvery(GET_SINGLE_INVOICE, getInvoiceFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
 //=======================
 export default function* rootSaga() {
-  yield all([fork(changeViewWatcher), fork(getAllInvoiceWatcher)]);
+  yield all([
+    fork(changeViewWatcher),
+    fork(getAllInvoiceWatcher),
+    fork(getSingleInvoiceWatcher)
+  ]);
 }

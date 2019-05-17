@@ -7,53 +7,43 @@ import {
   select,
   delay
 } from "redux-saga/effects";
-import { CHANGE_CREDIT_NOTE_LIST_VIEW, GET_ALL_CREDIT_NOTE } from "Types";
-import { getCreditNoteSuccess, getCreditNoteFailure } from "Actions";
+import {
+  CHANGE_CREDIT_NOTE_LIST_VIEW,
+  GET_ALL_CREDIT_NOTE,
+  GET_SINGLE_CREDIT_NOTE
+} from "Types";
+import {
+  getCreditNoteSuccess,
+  getCreditNoteFailure,
+  getSingleCreditNoteSuccess
+} from "Actions";
 
 import api from "Api";
+
+import { creditNote, creditNoteList } from "Components/DummyData";
 
 //=========================
 // REQUESTS
 //=========================
 const getAllCreditNoteRequest = async () => {
-  const result = [
-    ["All Quote", "All Quote", "Minneapolis", 30, "$100,000", "hello", "eheje"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"],
-    ["Frankie Parry", "Agency Legal", "Jacksonville", 71, "$210,000"]
-  ];
+  const result = creditNoteList;
   return result;
 };
 const getMyCreditNoteRequest = async () => {
-  const result = [
-    ["My Quote", "My Quote", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = creditNoteList;
   return result;
 };
 const getOpenCreditNoteRequest = async () => {
-  const result = [
-    ["Open Quote", "Open Quote", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = creditNoteList;
   return result;
 };
 const getClosedCreditNoteRequest = async () => {
-  const result = [
-    ["Closed Quote", "Closed Quote", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = creditNoteList;
+  return result;
+};
+const getCreditNoteRequest = async credID => {
+  console.log(`fetching ${credID}`);
+  const result = creditNote;
   return result;
 };
 
@@ -95,11 +85,22 @@ function* changeCreditNoteList({ payload }) {
 function* getAllCreditNoteFromDB() {
   try {
     const data = yield call(getAllCreditNoteRequest);
+    yield delay(500);
     yield put(getCreditNoteSuccess(data));
   } catch (error) {
     yield put(getCreditNoteFailure(error));
   }
 }
+function* getCreditNoteFromDB({ payload }) {
+  try {
+    const data = yield call(getCreditNoteRequest, payload);
+    yield delay(500);
+    yield put(getSingleCreditNoteSuccess(data));
+  } catch (error) {
+    yield put(getCreditNoteFailure(error));
+  }
+}
+
 //=======================
 // WATCHER FUNCTIONS
 //=======================
@@ -109,10 +110,17 @@ export function* changeViewWatcher() {
 export function* getAllCreditNoteWatcher() {
   yield takeEvery(GET_ALL_CREDIT_NOTE, getAllCreditNoteFromDB);
 }
+export function* getSingleCreditNoteWatcher() {
+  yield takeEvery(GET_SINGLE_CREDIT_NOTE, getCreditNoteFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
 //=======================
 export default function* rootSaga() {
-  yield all([fork(changeViewWatcher), fork(getAllCreditNoteWatcher)]);
+  yield all([
+    fork(changeViewWatcher),
+    fork(getAllCreditNoteWatcher),
+    fork(getSingleCreditNoteWatcher)
+  ]);
 }

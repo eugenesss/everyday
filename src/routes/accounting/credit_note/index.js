@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { show } from "redux-modal";
 
 // page req
 import { Helmet } from "react-helmet";
@@ -16,7 +15,6 @@ import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSumma
 
 // List
 import CreditNoteList from "Components/Accounting/CreditNote/CreditNoteList";
-import { Async_view_credit_note } from "Components/AsyncComponent/AsyncComponent";
 
 // Actions
 import {
@@ -27,18 +25,9 @@ import {
 } from "Actions";
 
 class acct_credit_note extends Component {
-  constructor(props) {
-    super(props);
-    this.handleOpen = this.handleOpen.bind(this);
-  }
   componentDidMount() {
     this.props.getAllCreditNote();
   }
-  handleOpen = creditNoteID => () => {
-    this.props.show("view_credit_note", {
-      viewCreditNote: `This is a ${creditNoteID} modal`
-    });
-  };
 
   render() {
     const {
@@ -101,9 +90,7 @@ class acct_credit_note extends Component {
           action={action}
           tableData={tableData}
           loading={loading}
-          handleOpen={this.handleOpen}
         />
-        <Async_view_credit_note />
       </React.Fragment>
     );
   }
@@ -116,7 +103,6 @@ const mapStateToProps = ({ accountingState }) => {
 export default connect(
   mapStateToProps,
   {
-    show,
     changeCreditNoteView,
     toggleCreditNoteDropDown,
     toggleCreditNoteSummary,

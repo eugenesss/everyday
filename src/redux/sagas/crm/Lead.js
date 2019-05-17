@@ -87,6 +87,7 @@ function* changeLeadList({ payload }) {
 function* getAllLeadFromDB() {
   try {
     const data = yield call(getAllLeadRequest);
+    yield delay(500);
     yield put(getLeadSuccess(data));
   } catch (error) {
     yield put(getLeadFailure(error));

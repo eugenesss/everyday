@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 //Page req
 import DataList from "Components/Everyday/DataList";
@@ -7,37 +7,44 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
-import { Button } from "reactstrap";
-
-const QuotationList = ({ tableData, loading, title, action, handleOpen }) => {
+const QuotationList = ({ tableData, loading, title, action }) => {
   const columns = [
     {
-      label: "ID",
       name: "id",
       options: { display: "excluded", filter: false, sort: false }
     },
     {
-      label: "Name",
-      name: "name",
+      label: "Quotation #",
+      name: "quoteID",
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
-            <Button
-              className="fs-13 p-0"
-              onClick={handleOpen(tableMeta.rowData[0])}
-              color="link"
-            >
-              {value}
-            </Button>
+            <NavLink to={`quotations/${tableMeta.rowData[0]}`}>{value}</NavLink>
           );
         }
       }
     },
-    { label: "Related", name: "account" },
-    { label: "Amount", name: "amount" },
-    { label: "Date Sent", name: "dateSent" },
+    {
+      label: "Related",
+      name: "account",
+      options: {
+        customBodyRender: value => {
+          return value ? value.name : "";
+        }
+      }
+    },
+    { label: "Amount", name: "totalAmt" },
+    { label: "Date Sent", name: "sentOn" },
     { label: "Due Date", name: "dueDate" },
-    { label: "Status", name: "status" }
+    {
+      label: "Status",
+      name: "status",
+      options: {
+        customBodyRender: value => {
+          return value.name;
+        }
+      }
+    }
   ];
 
   if (action == true) {
@@ -67,13 +74,6 @@ const QuotationList = ({ tableData, loading, title, action, handleOpen }) => {
     });
   }
 
-  const options = {
-    filterType: "dropdown",
-    responsive: "stacked",
-    download: false,
-    print: false,
-    textLabels: { body: { noMatch: "No Quotations to display" } }
-  };
   return (
     <RctCollapsibleCard fullBlock>
       <DataList title={title} columns={columns} tableData={tableData} />

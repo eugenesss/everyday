@@ -7,7 +7,10 @@ import {
   GET_MY_QUOTATION,
   GET_OPEN_QUOTATION,
   GET_CLOSED_QUOTATION,
-  GET_QUOTATION_SUCCESS
+  GET_QUOTATION_SUCCESS,
+  GET_SINGLE_QUOTATION,
+  GET_SINGLE_QUOTATION_SUCCESS,
+  CLEAR_SINGLE_QUOTATION
 } from "Types";
 
 /**
@@ -72,4 +75,19 @@ export const getOpenQuotation = () => ({
  */
 export const getClosedQuotation = () => ({
   type: GET_CLOSED_QUOTATION
+});
+
+/**
+ * Get Single Quote
+ */
+export const getSingleQuotation = quoteID => ({
+  type: GET_SINGLE_QUOTATION,
+  payload: quoteID
+});
+export const getSingleQuotationSuccess = quoteData => ({
+  type: GET_SINGLE_QUOTATION_SUCCESS,
+  payload: quoteData
+});
+export const clearSingleQuotation = () => ({
+  type: CLEAR_SINGLE_QUOTATION
 });

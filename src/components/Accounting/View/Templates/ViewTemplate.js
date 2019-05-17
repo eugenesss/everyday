@@ -1,35 +1,6 @@
 import React from "react";
-const products = [
-  {
-    id: 1,
-    qty: 1,
-    name: "iPhone 5 32GB White & Silver (GSM) Unlocked",
-    price: 749,
-    total: 749
-  },
-  {
-    id: 2,
-    qty: 1,
-    name: "iPhone 5 32GB White & Silver (GSM) Unlocked",
-    price: 749,
-    total: 749
-  },
-  {
-    id: 3,
-    qty: 1,
-    name: "iPhone 5 32GB White & Silver (GSM) Unlocked",
-    price: 749,
-    total: 749
-  },
-  {
-    id: 4,
-    qty: 1,
-    name: "iPhone 5 32GB White & Silver (GSM) Unlocked",
-    price: 749,
-    total: 749
-  }
-];
-const ViewTemplate = ({}) => {
+
+const ViewTemplate = ({ order, id }) => {
   return (
     <div className="p-50">
       <div className="d-flex justify-content-between mb-50">
@@ -53,30 +24,40 @@ const ViewTemplate = ({}) => {
           </div>
         </div>
         <div className="invoice-address text-right">
-          <span>QUOT-9048392</span>
-          <span>Created Date: Jun 15, 2016</span>
-          <span>Expiry Date: Jun 26, 2016</span>
+          <span>{id}</span>
+          <span>Created Date: {order.sentOn}</span>
+          <span>Expiry Date: {order.expireOn}</span>
         </div>
       </div>
       <div className="d-flex justify-content-between mb-30 add-full-card">
-        <div className="add-card">
-          <h4 className="mb-15">Bill To</h4>
-          <span className="name">Jack Perez</span>
-          <span>2nd Floor</span>
-          <span>St John Street, Aberdeenshire 2541</span>
-          <span>United Kingdom</span>
-          <span>Phone: 031-432-678</span>
-          <span>Email: youemail@gmail.com</span>
-        </div>
-        <div className="add-card">
-          <h4 className="mb-15">Ship To</h4>
-          <span className="name">Jack Perez</span>
-          <span>2nd Floor</span>
-          <span>St John Street, Aberdeenshire 2541</span>
-          <span>United Kingdom</span>
-          <span>Phone: 031-432-678</span>
-          <span>Email: youemail@gmail.com</span>
-        </div>
+        {order.billingAddress && (
+          <div className="add-card">
+            <h4 className="mb-15">Bill To</h4>
+            <span className="name">{order.billingAddress.billTo}</span>
+            <span>{order.billingAddress.unit}</span>
+            <span>{order.billingAddress.address}</span>
+            <span>{order.billingAddress.address2}</span>
+            <span>{`${order.billingAddress.country}, ${
+              order.billingAddress.zip
+            }`}</span>
+            <span>Phone: {order.billingAddress.phone}</span>
+            <span>Email: {order.billingAddress.email}</span>
+          </div>
+        )}
+        {order.shippingAddress && (
+          <div className="add-card">
+            <h4 className="mb-15">Ship To</h4>
+            <span className="name">{order.shippingAddress.billTo}</span>
+            <span>{order.shippingAddress.unit}</span>
+            <span>{order.shippingAddress.address}</span>
+            <span>{order.shippingAddress.address2}</span>
+            <span>{`${order.shippingAddress.country}, ${
+              order.shippingAddress.zip
+            }`}</span>
+            <span>Phone: {order.shippingAddress.phone}</span>
+            <span>Email: {order.shippingAddress.email}</span>
+          </div>
+        )}
       </div>
 
       <div className="table-responsive mb-40">
@@ -91,35 +72,38 @@ const ViewTemplate = ({}) => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product, key) => (
-              <tr key={key}>
-                <td>{key}</td>
-                <td>{product.name}</td>
-                <td>{product.qty}</td>
-                <td>${product.price.toFixed(2)}</td>
-                <td>${product.total.toFixed(2)}</td>
-              </tr>
-            ))}
+            {order.products &&
+              order.products.map((product, key) => (
+                <tr key={key}>
+                  <td>{key}</td>
+                  <td>{product.name}</td>
+                  <td>{product.qty}</td>
+                  <td>${product.price.toFixed(2)}</td>
+                  <td>${product.total.toFixed(2)}</td>
+                </tr>
+              ))}
             <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td className="fw-bold">Subtotal</td>
-              <td>$1607.00</td>
+              <td>${order.netAmt}</td>
             </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td className="fw-bold">Shipping</td>
-              <td>$0.00</td>
-            </tr>
+            {order.shipping && (
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td className="fw-bold">Shipping</td>
+                <td>${order.shipping}</td>
+              </tr>
+            )}
             <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td className="fw-bold">Total</td>
-              <td>$1607.00</td>
+              <td>${order.totalAmt}</td>
             </tr>
           </tbody>
         </table>
@@ -127,11 +111,7 @@ const ViewTemplate = ({}) => {
       <div className="note-wrapper row">
         <div className="invoice-note col-sm-12 col-md-8">
           <h3>Terms & Conditions</h3>
-          <p className="fs-12">
-            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-            weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah
-            plickers sifteo edmodo ifttt zimbra.
-          </p>
+          <p className="fs-12">{order.terms}</p>
         </div>
       </div>
     </div>

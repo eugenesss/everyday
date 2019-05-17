@@ -8,7 +8,10 @@ import {
   GET_ALL_CREDIT_NOTE,
   GET_MY_CREDIT_NOTE,
   GET_OPEN_CREDIT_NOTE,
-  GET_CLOSED_CREDIT_NOTE
+  GET_CLOSED_CREDIT_NOTE,
+  GET_SINGLE_CREDIT_NOTE,
+  GET_SINGLE_CREDIT_NOTE_SUCCESS,
+  CLEAR_SINGLE_CREDIT_NOTE
 } from "Types";
 
 const INIT_STATE = {
@@ -75,10 +78,7 @@ export default (state = INIT_STATE, action) => {
     case GET_CREDIT_NOTE_FAILURE:
       NotificationManager.warning("Error in fetching Credit Note Data");
       console.log(action.payload);
-      return {
-        ...state,
-        creditNoteList: { ...state.creditNoteList, loading: false }
-      };
+      return INIT_STATE;
     case GET_ALL_CREDIT_NOTE:
     case GET_MY_CREDIT_NOTE:
     case GET_OPEN_CREDIT_NOTE:
@@ -95,6 +95,29 @@ export default (state = INIT_STATE, action) => {
           loading: false,
           tableData: action.payload
         }
+      };
+
+    /**
+     * Get Single Credit Note
+     */
+    case GET_SINGLE_CREDIT_NOTE:
+      return {
+        ...state,
+        creditNoteToView: { ...state.creditNoteToView, loading: true }
+      };
+    case GET_SINGLE_CREDIT_NOTE_SUCCESS:
+      return {
+        ...state,
+        creditNoteToView: {
+          ...state.creditNoteToView,
+          loading: false,
+          creditNote: action.payload
+        }
+      };
+    case CLEAR_SINGLE_CREDIT_NOTE:
+      return {
+        ...state,
+        creditNoteToView: INIT_STATE.creditNoteToView
       };
 
     default:

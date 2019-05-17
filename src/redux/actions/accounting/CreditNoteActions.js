@@ -7,7 +7,10 @@ import {
   GET_MY_CREDIT_NOTE,
   GET_OPEN_CREDIT_NOTE,
   GET_CLOSED_CREDIT_NOTE,
-  GET_CREDIT_NOTE_SUCCESS
+  GET_CREDIT_NOTE_SUCCESS,
+  GET_SINGLE_CREDIT_NOTE,
+  GET_SINGLE_CREDIT_NOTE_SUCCESS,
+  CLEAR_SINGLE_CREDIT_NOTE
 } from "Types";
 
 /**
@@ -72,4 +75,19 @@ export const getOpenCreditNote = () => ({
  */
 export const getClosedCreditNote = () => ({
   type: GET_CLOSED_CREDIT_NOTE
+});
+
+/**
+ * Get Single Invoice
+ */
+export const getSingleCreditNote = credID => ({
+  type: GET_SINGLE_CREDIT_NOTE,
+  payload: credID
+});
+export const getSingleCreditNoteSuccess = data => ({
+  type: GET_SINGLE_CREDIT_NOTE_SUCCESS,
+  payload: data
+});
+export const clearSingleCreditNote = () => ({
+  type: CLEAR_SINGLE_CREDIT_NOTE
 });

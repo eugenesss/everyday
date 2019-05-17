@@ -76,6 +76,7 @@ function* changeAccountList({ payload }) {
 function* getAllAccountFromDB() {
   try {
     const data = yield call(getAllAccountRequest);
+    yield delay(500);
     yield put(getAccountSuccess(data));
   } catch (error) {
     yield put(getAccountFailure(error));

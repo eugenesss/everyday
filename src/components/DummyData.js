@@ -275,3 +275,141 @@ export const dealStage = [
 export const leadList = [lead, lead2, lead2, lead, lead, lead];
 export const customerList = [cust, cust2, cust, cust2];
 export const accountList = [account, account, account];
+
+const products = [
+  {
+    id: 1,
+    qty: 1,
+    name: "iPhone 5 32GB White & Silver (GSM) Unlocked",
+    price: 749,
+    total: 749
+  },
+  {
+    id: 2,
+    qty: 1,
+    name: "iPhone 5 32GB White & Silver (GSM) Unlocked",
+    price: 749,
+    total: 749
+  },
+  {
+    id: 3,
+    qty: 1,
+    name: "iPhone 5 32GB White & Silver (GSM) Unlocked",
+    price: 749,
+    total: 749
+  },
+  {
+    id: 4,
+    qty: 1,
+    name: "iPhone 5 32GB White & Silver (GSM) Unlocked",
+    price: 749,
+    total: 749
+  }
+];
+
+export const quote = {
+  id: 1,
+  quoteID: "QUOT-100001",
+  status: { name: "Unsent" },
+  account: null,
+  owner: user,
+  createdBy: user,
+  createdAt: 1330192800000,
+  modifiedBy: user,
+  modifiedAt: 1330192800000,
+  products: null,
+  shipping: null,
+  tax: null,
+  discount: null,
+  totalAmt: 10000,
+  netAmt: 9000,
+  sentOn: 1330192800000,
+  expireOn: 1830192800000,
+  billingAddress: {
+    billTo: "Bill Man",
+    unit: null,
+    address: address,
+    address2: address2,
+    country: "Singapore",
+    zip: "654321",
+    email: "customer@invoice.com",
+    phone: "1234-4566"
+  },
+  shippingAddress: {
+    shipTo: "Ship Man",
+    unit: "02-12",
+    address: address,
+    address2: address2,
+    country: "Singapore",
+    zip: "654321",
+    email: "customer@invoice.com",
+    phone: "1234-4566"
+  },
+  terms: longText,
+  notes: null
+};
+
+export const invoice = {
+  id: 1,
+  invoiceID: "INV-100001",
+  status: { name: "Paid" },
+  account: null,
+  owner: user,
+  createdBy: user,
+  createdAt: 1330192800000,
+  modifiedBy: user,
+  modifiedAt: 1330192800000,
+  products: null,
+  shipping: null,
+  tax: null,
+  discount: null,
+  totalAmt: 10000,
+  netAmt: 9000,
+  sentOn: 1330192800000,
+  expireOn: 1830192800000,
+  billingAddress: {
+    billTo: "Bill Man",
+    unit: null,
+    address: address,
+    address2: address2,
+    country: "Singapore",
+    zip: "654321",
+    email: "customer@invoice.com",
+    phone: "1234-4566"
+  },
+  shippingAddress: {
+    shipTo: "Ship Man",
+    unit: "02-12",
+    address: address,
+    address2: address2,
+    country: "Singapore",
+    zip: "654321",
+    email: "customer@invoice.com",
+    phone: "1234-4566"
+  },
+  terms: longText,
+  notes: [note, note, note]
+};
+
+export const creditNote = {
+  id: 1,
+  creditID: "CN-100001",
+  status: { name: "Closed" },
+  account: null,
+  owner: user,
+  createdBy: user,
+  createdAt: 1330192800000,
+  modifiedBy: user,
+  modifiedAt: 1330192800000,
+  amtToCredit: 10000,
+  amtCredited: 1000,
+  amtRemaining: 9000,
+  creditedInvoice: null,
+  sentOn: 1330192800000,
+  expireOn: 1830192800000,
+  notes: [note, note, note]
+};
+
+export const quoteList = [quote, quote, quote, quote];
+export const invoiceList = [invoice, invoice, invoice];
+export const creditNoteList = [creditNote, creditNote, creditNote, creditNote];

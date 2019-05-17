@@ -7,40 +7,45 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
-import { Button } from "reactstrap";
 
-const InvoiceList = ({ tableData, loading, title, action, handleOpen }) => {
+const InvoiceList = ({ tableData, loading, title, action }) => {
   const columns = [
     {
-      name: "ID",
+      name: "id",
       options: { display: "excluded", filter: false, sort: false }
     },
     {
-      name: "Name",
+      label: "Invoice #",
+      name: "invoiceID",
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
-            <Button
-              className="fs-13 p-0"
-              onClick={handleOpen(tableMeta.rowData[0])}
-              color="link"
-            >
-              {value}
-            </Button>
+            <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
           );
         }
       }
     },
-    { label: "Company", name: "Company" },
-    { label: "Company", name: "Company" },
-    { label: "Company", name: "Company" },
-    { label: "Company", name: "Company" },
-    { name: "Mobile", options: { display: false } },
-    { name: "Lead Owner", options: { display: false } },
-    { name: "Industry", options: { display: false } },
-    { name: "Website", options: { display: false } },
-    { name: "Office", options: { display: false } },
-    { name: "Fax", options: { display: false } }
+    { label: "Amount", name: "totalAmt" },
+    {
+      label: "Related",
+      name: "account",
+      options: {
+        customBodyRender: value => {
+          return value ? value.name : "";
+        }
+      }
+    },
+    { label: "Sent Date", name: "sentOn" },
+    { label: "Expiry Date", name: "expireOn" },
+    {
+      label: "Status",
+      name: "status",
+      options: {
+        customBodyRender: value => {
+          return value.name;
+        }
+      }
+    }
   ];
 
   if (action == true) {

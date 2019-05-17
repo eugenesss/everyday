@@ -7,7 +7,10 @@ import {
   GET_MY_INVOICE,
   GET_OPEN_INVOICE,
   GET_CLOSED_INVOICE,
-  GET_INVOICE_SUCCESS
+  GET_INVOICE_SUCCESS,
+  GET_SINGLE_INVOICE,
+  GET_SINGLE_INVOICE_SUCCESS,
+  CLEAR_SINGLE_INVOICE
 } from "Types";
 
 /**
@@ -72,4 +75,19 @@ export const getOpenInvoice = () => ({
  */
 export const getClosedInvoice = () => ({
   type: GET_CLOSED_INVOICE
+});
+
+/**
+ * Get Single Invoice
+ */
+export const getSingleInvoice = invID => ({
+  type: GET_SINGLE_INVOICE,
+  payload: invID
+});
+export const getSingleInvoiceSuccess = data => ({
+  type: GET_SINGLE_INVOICE_SUCCESS,
+  payload: data
+});
+export const clearSingleInvoice = () => ({
+  type: CLEAR_SINGLE_INVOICE
 });

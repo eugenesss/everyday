@@ -1,39 +1,52 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 //Page req
 import DataList from "Components/Everyday/DataList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
-import { Button } from "reactstrap";
 
-const CreditNoteList = ({ tableData, loading, title, action, handleOpen }) => {
+const CreditNoteList = ({ tableData, loading, title, action }) => {
   const columns = [
     {
-      name: "ID",
+      name: "id",
       options: { display: "excluded", filter: false, sort: false }
     },
     {
-      name: "Credit Note #",
+      label: "Credit Note #",
+      name: "creditID",
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
-            <Button
-              className="fs-13 p-0"
-              onClick={handleOpen(tableMeta.rowData[0])}
-              color="link"
-            >
+            <NavLink to={`credit_note/${tableMeta.rowData[0]}`}>
               {value}
-            </Button>
+            </NavLink>
           );
         }
       }
     },
-    { label: "Date Sent", name: "Date Sent" },
-    { label: "Customer", name: "Customer" },
-    { label: "Status", name: "Status" },
-    { label: "Amount", name: "Amount" },
-    { label: "Remaining Amount", name: "Remaining Amount" }
+    { label: "Date Sent", name: "sentOn" },
+    {
+      label: "Account",
+      name: "account",
+      options: {
+        customBodyRender: value => {
+          return value ? value.name : "";
+        }
+      }
+    },
+    {
+      label: "Status",
+      name: "status",
+      options: {
+        customBodyRender: value => {
+          return value.name;
+        }
+      }
+    },
+    { label: "Amount", name: "amtToCredit" },
+    { label: "Remaining Amount", name: "amtRemaining" }
   ];
 
   if (action == true) {

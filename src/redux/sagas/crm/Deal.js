@@ -86,6 +86,7 @@ function* changeDealList({ payload }) {
 function* getAllDealFromDB() {
   try {
     const data = yield call(getAllDealRequest);
+    yield delay(500);
     yield put(getDealSuccess(data));
   } catch (error) {
     yield put(getDealFailure(error));
