@@ -23,17 +23,26 @@ import NewNote from "Components/Form/Note/NewNote";
 import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
-// import { getSingleQuotation, clearSingleQuotation } from "Actions";
+import { getSingleInvoice, clearSingleInvoice } from "Actions";
 // addNoteToQuotation(acctID), onNoteChange, clearNote
 // Add events dialog
 // Delete Quotation, Edit Quotation, Transfer Quotation
 
 class acct_view_invoice extends Component {
-  state = {};
+  componentWillMount() {
+    var id = this.props.match.params.id;
+    this.props.getSingleInvoice(id);
+  }
+
+  componentWillUnmount() {
+    this.props.clearSingleInvoice();
+  }
+
   render() {
+    const { loading, invoice } = this.props.invoiceToView;
     return loading ? (
       <RctPageLoader />
-    ) : !invoice ? (
+    ) : invoice ? (
       <React.Fragment>
         <Helmet>
           <title>Everyday | View Invoice</title>
@@ -43,7 +52,7 @@ class acct_view_invoice extends Component {
           <div className="col-md-4">
             <RctCollapsibleCard>
               <AccountingDetails
-                type="Invoice"
+                type="invoice"
                 accountID={invoice.invoiceID}
                 status={invoice.status.name}
                 account={invoice.account && invoice.account.name}
@@ -83,5 +92,13 @@ class acct_view_invoice extends Component {
     );
   }
 }
+const mapStateToProps = ({ accountingState }) => {
+  const { invoiceState } = accountingState;
+  const { invoiceToView } = invoiceState;
+  return { invoiceToView };
+};
 
-export default acct_view_invoice;
+export default connect(
+  mapStateToProps,
+  { getSingleInvoice, clearSingleInvoice }
+)(acct_view_invoice);

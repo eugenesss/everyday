@@ -413,3 +413,21 @@ export const creditNote = {
 export const quoteList = [quote, quote, quote, quote];
 export const invoiceList = [invoice, invoice, invoice];
 export const creditNoteList = [creditNote, creditNote, creditNote, creditNote];
+
+// List Summary
+export const leadSummary = [
+  {
+    summaryType: "Total Cold Leads",
+    number: 20,
+    positive: null,
+    difference: null
+  },
+  {
+    summaryType: "Total Hot Leads",
+    number: 15,
+    positive: null,
+    difference: null
+  },
+  { summaryType: "New Leads", number: 2, positive: 0, difference: 20 },
+  { summaryType: "Open Leads", number: 8, positive: 1, difference: 50 }
+];

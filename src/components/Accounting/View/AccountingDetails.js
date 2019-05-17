@@ -9,9 +9,13 @@ const AccountingDetails = ({
   owner,
   type
 }) => {
-  let bgColor = "#7fb38b";
+  /* let bgColor = "#7fb38b";
   type == "invoice" && (bgColor = "#7f8cb3");
-  type == "credit_note" && (bgColor = "#7f82b3");
+  type == "credit_note" && (bgColor = "#7f82b3"); */
+  const bgColor =
+    (type == "quotation" && "#7fb38b") ||
+    (type == "invoice" && "#7f8cb3") ||
+    (type == "credit_note" && "#7f82b3");
   return (
     <div className="user-profile-widget">
       <div className="py-70" style={{ background: bgColor }} />

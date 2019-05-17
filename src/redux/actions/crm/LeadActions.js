@@ -11,7 +11,10 @@ import {
   GET_COLD_LEAD,
   GET_SINGLE_LEAD,
   GET_SINGLE_LEAD_SUCCESS,
-  CLEAR_SINGLE_LEAD
+  CLEAR_SINGLE_LEAD,
+  GET_LEAD_SUMMARY,
+  GET_LEAD_SUMMARY_SUCCESS,
+  GET_LEAD_SUMMARY_FAILURE
 } from "Types";
 
 /**
@@ -98,4 +101,19 @@ export const getSingleLeadSuccess = leadData => ({
 });
 export const clearSingleLead = () => ({
   type: CLEAR_SINGLE_LEAD
+});
+
+/**
+ * Get Lead Summary
+ */
+export const getLeadSummary = () => ({
+  type: GET_LEAD_SUMMARY
+});
+export const getLeadSummarySuccess = data => ({
+  type: GET_LEAD_SUMMARY_SUCCESS,
+  payload: data
+});
+export const getLeadSummaryFailure = error => ({
+  type: GET_LEAD_SUMMARY_FAILURE,
+  payload: error
 });

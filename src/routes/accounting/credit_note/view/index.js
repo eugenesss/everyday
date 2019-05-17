@@ -1,9 +1,16 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
+// Global Req
+import { Helmet } from "react-helmet";
+import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // Components
 import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 
 // Credit Note Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
@@ -18,48 +25,92 @@ import ActivityLog from "Components/Everyday/ActivityLog";
 import NewNote from "Components/Form/Note/NewNote";
 import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
+// Actions
+import { getSingleCreditNote, clearSingleCreditNote } from "Actions";
+
 class acct_view_credit_note extends Component {
-  state = {};
+  componentWillMount() {
+    var id = this.props.match.params.id;
+    this.props.getSingleCreditNote(id);
+  }
+
+  componentWillUnmount() {
+    this.props.clearSingleCreditNote();
+  }
+
   render() {
-    return (
-      <div className="row">
-        <div className="col-md-4">
-          <RctCollapsibleCard>
-            <AccountingDetails type="credit_note" />
-          </RctCollapsibleCard>
-        </div>
-        <div className="col-md-8">
-          <TabsWrapper>
-            <div
-              icon="zmdi-shopping-cart-plus text-success"
-              label="CREDIT NOTE"
-            >
-              <ViewTemplate />
-            </div>
-            <div
-              icon="zmdi-shopping-cart text-warning"
-              label="INVOICE CREDITED"
-            >
-              <CreditedInvoices />
-            </div>
-            <div icon="zmdi-pizza text-info" label="ACTIVITY LOG">
-              <ActivityLog />
-            </div>
-            <div icon="zmdi-assignment text-danger" label="NOTES">
-              <div className="row">
-                <div className="col-md-5">
-                  <NewNote /* onAddNote="function" */ />
-                </div>
-                <div className="col-md-7">
-                  <DisplayAllNotes />
+    const { loading, creditNote } = this.props.creditNoteToView;
+    return loading ? (
+      <RctPageLoader />
+    ) : creditNote ? (
+      <React.Fragment>
+        <Helmet>
+          <title>Everyday | View Credit Note</title>
+        </Helmet>
+        <PageTitleBar
+          title="View Credit Note"
+          createLink="/acct/new/credit_note"
+        />
+        <div className="row">
+          <div className="col-md-4">
+            <RctCollapsibleCard>
+              <AccountingDetails
+                type="credit_note"
+                accountID={creditNote.creditID}
+                status={creditNote.status.name}
+                account={creditNote.account && creditNote.account.name}
+                sentDate={creditNote.sentOn}
+                owner={creditNote.owner.fullName}
+              />
+            </RctCollapsibleCard>
+          </div>
+          <div className="col-md-8">
+            <TabsWrapper>
+              <div
+                icon="zmdi-shopping-cart-plus text-success"
+                label="CREDIT NOTE"
+              >
+                {/* <ViewTemplate /> */}
+              </div>
+              <div
+                icon="zmdi-shopping-cart text-warning"
+                label="INVOICE CREDITED"
+              >
+                <CreditedInvoices />
+              </div>
+              <div icon="zmdi-pizza text-info" label="ACTIVITY LOG">
+                <ActivityLog />
+              </div>
+              <div icon="zmdi-assignment text-danger" label="NOTES">
+                <div className="row">
+                  <div className="col-md-5">
+                    <NewNote /* onAddNote="function" */ />
+                  </div>
+                  <div className="col-md-7">
+                    <DisplayAllNotes notes={creditNote.notes} />
+                  </div>
                 </div>
               </div>
-            </div>
-          </TabsWrapper>
+            </TabsWrapper>
+          </div>
         </div>
-      </div>
+      </React.Fragment>
+    ) : (
+      <PageErrorMessage
+        heading="Not Found"
+        message="This could be because of a network problem or the record might have been deleted"
+      />
     );
   }
 }
 
-export default acct_view_credit_note;
+const mapStateToProps = ({ accountingState }) => {
+  const { creditNoteState } = accountingState;
+  const { creditNoteToView } = creditNoteState;
+  return { creditNoteToView };
+};
+
+export default connect(
+  mapStateToProps,
+  { getSingleCreditNote, clearSingleCreditNote }
+)(acct_view_credit_note);

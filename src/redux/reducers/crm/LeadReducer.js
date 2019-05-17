@@ -12,18 +12,25 @@ import {
   GET_LEAD_SUCCESS,
   GET_SINGLE_LEAD,
   GET_SINGLE_LEAD_SUCCESS,
-  CLEAR_SINGLE_LEAD
+  CLEAR_SINGLE_LEAD,
+  GET_LEAD_SUMMARY,
+  GET_LEAD_SUMMARY_SUCCESS,
+  GET_LEAD_SUMMARY_FAILURE
 } from "Types";
 
 const INIT_STATE = {
   leadList: {
     dropdownOpen: false,
-    showSummary: false,
     nowShowing: "All Leads",
     options: ["All Leads", "My Leads", "Open Leads", "Hot Leads", "Cold Leads"],
     action: false,
     loading: false,
     tableData: []
+  },
+  leadSummary: {
+    summary: [],
+    showSummary: false,
+    loading: false
   },
   leadToView: {
     loading: false,
@@ -39,14 +46,6 @@ export default (state = INIT_STATE, action) => {
         leadList: {
           ...state.leadList,
           dropdownOpen: !state.leadList.dropdownOpen
-        }
-      };
-    case TOGGLE_LEAD_SUMMARY:
-      return {
-        ...state,
-        leadList: {
-          ...state.leadList,
-          showSummary: !state.leadList.showSummary
         }
       };
     case CHANGE_LEAD_LIST_VIEW:
@@ -71,6 +70,39 @@ export default (state = INIT_STATE, action) => {
           }
         };
       }
+
+    /**
+     * Lead Summary
+     */
+    case TOGGLE_LEAD_SUMMARY:
+      return {
+        ...state,
+        leadSummary: {
+          ...state.leadSummary,
+          showSummary: !state.leadSummary.showSummary
+        }
+      };
+    case GET_LEAD_SUMMARY:
+      return {
+        ...state,
+        leadSummary: {
+          ...state.leadSummary,
+          loading: true
+        }
+      };
+    case GET_LEAD_SUMMARY_SUCCESS:
+      return {
+        ...state,
+        leadSummary: {
+          ...state.leadSummary,
+          summary: action.payload,
+          loading: false
+        }
+      };
+    case GET_LEAD_SUMMARY_FAILURE:
+      NotificationManager.warning("Error in fetching Lead Summary");
+      console.log(action.payload);
+      return INIT_STATE.leadSummary;
 
     /**
      * Get Leads
@@ -117,6 +149,7 @@ export default (state = INIT_STATE, action) => {
         ...state,
         leadToView: INIT_STATE.leadToView
       };
+
     default:
       return { ...state };
   }

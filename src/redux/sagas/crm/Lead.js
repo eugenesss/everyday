@@ -7,12 +7,23 @@ import {
   select,
   delay
 } from "redux-saga/effects";
-import { CHANGE_LEAD_LIST_VIEW, GET_ALL_LEAD, GET_SINGLE_LEAD } from "Types";
-import { getLeadSuccess, getLeadFailure, getSingleLeadSuccess } from "Actions";
+import {
+  CHANGE_LEAD_LIST_VIEW,
+  GET_ALL_LEAD,
+  GET_SINGLE_LEAD,
+  GET_LEAD_SUMMARY
+} from "Types";
+import {
+  getLeadSuccess,
+  getLeadFailure,
+  getSingleLeadSuccess,
+  getLeadSummarySuccess,
+  getLeadSummaryFailure
+} from "Actions";
 
 import api from "Api";
 
-import { leadList, lead, lead2 } from "Components/DummyData";
+import { leadList, lead, lead2, leadSummary } from "Components/DummyData";
 
 //=========================
 // REQUESTS
@@ -40,7 +51,10 @@ const getColdLeadRequest = async () => {
 const getLeadRequest = async leadID => {
   console.log(`fetching lead ${leadID}`);
   const result = leadID == 1 ? lead : lead2;
-
+  return result;
+};
+const getLeadSummaryRequest = async () => {
+  const result = leadSummary;
   return result;
 };
 
@@ -102,6 +116,14 @@ function* getLeadFromDB({ payload }) {
     yield put(getLeadFailure(error));
   }
 }
+function* getLeadSummaryFromDB() {
+  try {
+    const data = yield call(getLeadSummaryRequest);
+    yield put(getLeadSummarySuccess(data));
+  } catch (error) {
+    yield put(getLeadSummaryFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -115,6 +137,9 @@ export function* getAllLeadWatcher() {
 export function* getSingleLeadWatcher() {
   yield takeEvery(GET_SINGLE_LEAD, getLeadFromDB);
 }
+export function* getLeadSummaryWatcher() {
+  yield takeEvery(GET_LEAD_SUMMARY, getLeadSummaryFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -123,6 +148,7 @@ export default function* rootSaga() {
   yield all([
     fork(changeViewWatcher),
     fork(getAllLeadWatcher),
-    fork(getSingleLeadWatcher)
+    fork(getSingleLeadWatcher),
+    fork(getLeadSummaryWatcher)
   ]);
 }

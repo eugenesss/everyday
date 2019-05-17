@@ -28,7 +28,8 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
-  }
+  },
+  creditNoteToView: { loading: false, creditNote: null }
 };
 
 export default (state = INIT_STATE, action) => {

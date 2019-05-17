@@ -15,18 +15,21 @@ import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 import ListSummary from "Components/Everyday/ListSummary/ListSummary";
 import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 // Actions
 import {
   changeLeadView,
   toggleLeadDropDown,
   toggleLeadSummary,
-  getAllLead
+  getAllLead,
+  getLeadSummary
 } from "Actions";
 
 class crm_lead extends Component {
   componentDidMount() {
     this.props.getAllLead();
+    this.props.getLeadSummary();
   }
 
   render() {
@@ -34,11 +37,11 @@ class crm_lead extends Component {
       dropdownOpen,
       options,
       nowShowing,
-      showSummary,
       action,
       tableData,
       loading
-    } = this.props.leadState.leadList;
+    } = this.props.leadList;
+    const { showSummary, summary } = this.props.leadSummary;
     return (
       <React.Fragment>
         <Helmet>
@@ -61,32 +64,23 @@ class crm_lead extends Component {
           createLink="/crm/new/lead"
         />
         {showSummary && (
-          <ListSummary>
-            <ListSummaryItem
-              heading={"New Lead"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Cold Lead"}
-              number={"10"}
-              positive={false}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Hot Lead"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Open Leads"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-          </ListSummary>
+          <div className="col-md-8">
+            <ListSummary>
+              {summary &&
+                summary.map((sum, key) => {
+                  return (
+                    <ListSummaryItem
+                      key={key}
+                      heading={sum.summaryType}
+                      number={sum.number}
+                      positive={sum.positive}
+                      percentage={sum.difference}
+                    />
+                  );
+                })}
+            </ListSummary>
+            {/* <RctSectionLoader /> */}
+          </div>
         )}
         <LeadList
           title={nowShowing}
@@ -101,7 +95,8 @@ class crm_lead extends Component {
 
 const mapStateToProps = ({ crmState }) => {
   const { leadState } = crmState;
-  return { leadState };
+  const { leadList, leadSummary } = leadState;
+  return { leadList, leadSummary };
 };
 
 export default connect(
@@ -110,6 +105,7 @@ export default connect(
     changeLeadView,
     toggleLeadDropDown,
     toggleLeadSummary,
-    getAllLead
+    getAllLead,
+    getLeadSummary
   }
 )(crm_lead);
