@@ -15,8 +15,6 @@ import { AllReports } from "./ListData";
 import ReportViewComponent from "./ReportViewComponent";
 import { changeReportView, openNestedView } from "Actions";
 
-import { DateRangePicker } from "react-dates";
-
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -46,7 +44,7 @@ const styles = theme => ({
     width: drawerWidth
   },
   toolBar: { background: "#3c537b" },
-  drawerHeader: { ...theme.mixins.toolbar, background: "#3c537b" },
+  drawerHeader: theme.mixins.toolbar,
   content: {
     backgroundColor: theme.palette.background.default,
     width: "100%",
@@ -68,7 +66,7 @@ class ReportDrawer extends Component {
       <div className={classes.root}>
         <div className={classes.appFrame}>
           <AppBar className={classNames(classes.appBar)}>
-            <Toolbar className={classes.toolBar}>
+            <Toolbar className="bg-info">
               <Typography variant="h6" color="inherit" noWrap>
                 {title}
               </Typography>
@@ -80,7 +78,7 @@ class ReportDrawer extends Component {
               paper: classes.drawerPaper
             }}
           >
-            <div className={classes.drawerHeader} />
+            <div className={`${classes.drawerHeader} bg-info`} />
             <Divider />
             <AllReports
               nestedView={nestedView}

@@ -6,7 +6,10 @@ import {
   GET_CUSTOMER_SUCCESS,
   GET_ALL_CUSTOMER,
   GET_MY_CUSTOMER,
-  GET_OPEN_CUSTOMER
+  GET_OPEN_CUSTOMER,
+  GET_SINGLE_CUSTOMER,
+  GET_SINGLE_CUSTOMER_SUCCESS,
+  CLEAR_SINGLE_CUSTOMER
 } from "Types";
 
 /**
@@ -64,4 +67,19 @@ export const getMyCustomer = () => ({
  */
 export const getOpenCustomer = () => ({
   type: GET_OPEN_CUSTOMER
+});
+
+/**
+ * Get Single Customer
+ */
+export const getSingleCustomer = custID => ({
+  type: GET_SINGLE_CUSTOMER,
+  payload: custID
+});
+export const getSingleCustomerSuccess = custData => ({
+  type: GET_SINGLE_CUSTOMER_SUCCESS,
+  payload: custData
+});
+export const clearSingleCustomer = () => ({
+  type: CLEAR_SINGLE_CUSTOMER
 });

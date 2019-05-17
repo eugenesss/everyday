@@ -10,15 +10,12 @@ import Tooltip from "@material-ui/core/Tooltip";
 const CustomerList = ({ tableData, loading, title, action }) => {
   const columns = [
     {
-      name: "ID",
+      name: "id",
       options: { display: "excluded", filter: false, sort: false }
     },
     {
-      name: "AccountID",
-      options: { display: "excluded", filter: false, sort: false }
-    },
-    {
-      name: "Name",
+      label: "Name",
+      name: "fullName",
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
@@ -28,22 +25,31 @@ const CustomerList = ({ tableData, loading, title, action }) => {
       }
     },
     {
-      name: "Account",
+      label: "Account",
+      name: "account",
       options: {
-        customBodyRender: (value, tableMeta) => {
+        customBodyRender: value => {
           return (
             value != null && (
-              <NavLink to={`accounts/${tableMeta.rowData[1]}`}>{value}</NavLink>
+              <NavLink to={`accounts/${value.id}`}>{value.name}</NavLink>
             )
           );
         }
       }
     },
-    { label: "Email" },
-    { name: "Mobile" },
-    { name: "Customer Owner" },
-    { name: "Office", options: { display: false } },
-    { name: "Fax", options: { display: false } }
+    { label: "Email", name: "email" },
+    { label: "Mobile", name: "mobile" },
+    {
+      label: "Owner",
+      name: "owner",
+      options: {
+        customBodyRender: value => {
+          return value.fullName;
+        }
+      }
+    },
+    { label: "Office", name: "office", options: { display: false } },
+    { label: "Fax", name: "fax", options: { display: false } }
   ];
   if (action == true) {
     columns.push({

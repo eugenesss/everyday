@@ -7,8 +7,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import { Button } from "reactstrap";
 
-const QuotationList = ({ tableData, loading, title, action }) => {
+const QuotationList = ({ tableData, loading, title, action, handleOpen }) => {
   const columns = [
     {
       label: "ID",
@@ -21,7 +22,13 @@ const QuotationList = ({ tableData, loading, title, action }) => {
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
-            <Link to={`quotations/view/${tableMeta.rowData[0]}`}>{value}</Link>
+            <Button
+              className="fs-13 p-0"
+              onClick={handleOpen(tableMeta.rowData[0])}
+              color="link"
+            >
+              {value}
+            </Button>
           );
         }
       }

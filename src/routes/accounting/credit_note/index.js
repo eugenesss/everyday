@@ -16,6 +16,7 @@ import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSumma
 
 // List
 import CreditNoteList from "Components/Accounting/CreditNote/CreditNoteList";
+import { Async_view_credit_note } from "Components/AsyncComponent/AsyncComponent";
 
 // Actions
 import {
@@ -24,8 +25,6 @@ import {
   toggleCreditNoteSummary,
   getAllCreditNote
 } from "Actions";
-
-import ViewCreditNoteDialog from "Components/Accounting/CreditNote/ViewCreditNoteDialog";
 
 class acct_credit_note extends Component {
   constructor(props) {
@@ -104,7 +103,7 @@ class acct_credit_note extends Component {
           loading={loading}
           handleOpen={this.handleOpen}
         />
-        <ViewCreditNoteDialog />
+        <Async_view_credit_note />
       </React.Fragment>
     );
   }

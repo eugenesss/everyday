@@ -1,9 +1,9 @@
 import React from "react";
 
-const SingleDetail = ({ title, value, colSpan }) => {
+const SingleDetail = ({ left, title, value, colSpan }) => {
   return (
     <React.Fragment>
-      <td className="text-right">
+      <td className={left ? "" : "text-right"}>
         <strong>{title}</strong>
       </td>
       <td colSpan={colSpan}>{value}</td>

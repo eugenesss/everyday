@@ -163,7 +163,8 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: "./public/index.html",
       filename: "./index.html",
-      favicon: "./public/favicon.ico"
+      favicon: "./public/favicon.ico",
+      chunksSortMode: "none"
     }),
     new MiniCssExtractPlugin({
       filename: "[name].css",

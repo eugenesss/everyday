@@ -7,43 +7,39 @@ import {
   select,
   delay
 } from "redux-saga/effects";
-import { CHANGE_CUSTOMER_LIST_VIEW, GET_ALL_CUSTOMER } from "Types";
-import { getCustomerSuccess, getCustomerFailure } from "Actions";
+import {
+  CHANGE_CUSTOMER_LIST_VIEW,
+  GET_ALL_CUSTOMER,
+  GET_SINGLE_CUSTOMER
+} from "Types";
+import {
+  getCustomerFailure,
+  getCustomerSuccess,
+  getSingleCustomerSuccess
+} from "Actions";
 
 import api from "Api";
+
+import { customerList, cust, cust2 } from "Components/DummyData";
 
 //=========================
 // REQUESTS
 //=========================
 const getAllCustomerRequest = async () => {
-  const result = [
-    ["All Lead", "All Lead", "Minneapolis", 30, "$100,000", "hello", "eheje"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"],
-    ["Frankie Parry", "Agency Legal", "Jacksonville", 71, "$210,000"]
-  ];
+  const result = customerList;
   return result;
 };
 const getMyCustomerRequest = async () => {
-  const result = [
-    ["My Lead", "My Lead", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = customerList;
   return result;
 };
 const getOpenCustomerRequest = async () => {
-  const result = [
-    ["Open Lead", "Open Lead", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = customerList;
+  return result;
+};
+const getCustomerRequest = async custID => {
+  console.log(`fetching ${custID}`);
+  const result = custID == 1 ? cust : cust2;
   return result;
 };
 
@@ -85,6 +81,15 @@ function* getAllCustomerFromDB() {
     yield put(getCustomerFailure(error));
   }
 }
+function* getCustomerFromDB({ payload }) {
+  try {
+    const data = yield call(getCustomerRequest, payload);
+    yield delay(500);
+    yield put(getSingleCustomerSuccess(data));
+  } catch (error) {
+    yield put(getCustomerFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -95,10 +100,17 @@ export function* changeViewWatcher() {
 export function* getAllCustomerWatcher() {
   yield takeEvery(GET_ALL_CUSTOMER, getAllCustomerFromDB);
 }
+export function* getSingleCustomerWatcher() {
+  yield takeEvery(GET_SINGLE_CUSTOMER, getCustomerFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
 //=======================
 export default function* rootSaga() {
-  yield all([fork(changeViewWatcher), fork(getAllCustomerWatcher)]);
+  yield all([
+    fork(changeViewWatcher),
+    fork(getAllCustomerWatcher),
+    fork(getSingleCustomerWatcher)
+  ]);
 }

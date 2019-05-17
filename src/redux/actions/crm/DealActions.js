@@ -8,7 +8,10 @@ import {
   GET_MY_DEAL,
   GET_OPEN_DEAL,
   GET_CLOSED_DEAL,
-  GET_WON_DEAL
+  GET_WON_DEAL,
+  GET_SINGLE_DEAL,
+  GET_SINGLE_DEAL_SUCCESS,
+  CLEAR_SINGLE_DEAL
 } from "Types";
 
 /**
@@ -80,4 +83,19 @@ export const getClosedDeal = () => ({
  */
 export const getWonDeal = () => ({
   type: GET_WON_DEAL
+});
+
+/**
+ * Get Single Deal
+ */
+export const getSingleDeal = dealId => ({
+  type: GET_SINGLE_DEAL,
+  payload: dealId
+});
+export const getSingleDealSuccess = dealData => ({
+  type: GET_SINGLE_DEAL_SUCCESS,
+  payload: dealData
+});
+export const clearSingleDeal = () => ({
+  type: CLEAR_SINGLE_DEAL
 });

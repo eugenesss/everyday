@@ -149,7 +149,7 @@ export const listOptions = {
   download: false,
   print: false,
   selectableRows: true,
-  rowsPerPage: 15,
-  rowsPerPageOptions: [15, 30, 60, 100],
+  rowsPerPage: 10,
+  rowsPerPageOptions: [10, 30, 60, 100],
   textLabels: { body: { noMatch: "No data to display" } }
 };

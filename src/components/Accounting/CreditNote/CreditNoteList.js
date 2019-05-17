@@ -7,8 +7,6 @@ import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import { Button } from "reactstrap";
 
-import { listOptions } from "Helpers/helpers";
-
 const CreditNoteList = ({ tableData, loading, title, action, handleOpen }) => {
   const columns = [
     {

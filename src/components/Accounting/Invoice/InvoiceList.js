@@ -7,8 +7,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import { Button } from "reactstrap";
 
-const InvoiceList = ({ tableData, loading, title, action }) => {
+const InvoiceList = ({ tableData, loading, title, action, handleOpen }) => {
   const columns = [
     {
       name: "ID",
@@ -19,7 +20,13 @@ const InvoiceList = ({ tableData, loading, title, action }) => {
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
-            <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
+            <Button
+              className="fs-13 p-0"
+              onClick={handleOpen(tableMeta.rowData[0])}
+              color="link"
+            >
+              {value}
+            </Button>
           );
         }
       }

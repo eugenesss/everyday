@@ -1,18 +1,16 @@
 import React from "react";
-import DetailsHeader from "Components/CRM/View/Details/DetailsHeader";
+import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { Badge } from "reactstrap";
-import IconButton from "@material-ui/core/IconButton";
 
-const UpcomingEvents = ({ upcomingEvents }) => {
+const UpcomingEvents = ({ events }) => {
   return (
     <div>
-      <DetailsHeader title="Upcoming Events" />
+      <TabsHeader title="Upcoming Events" />
       <div className="table-responsive">
         <Table>
           <TableHead>
@@ -28,139 +26,28 @@ const UpcomingEvents = ({ upcomingEvents }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow hover>
-              <TableCell>{"employee.employeeName"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>${"employee"}</TableCell>
-              <TableCell>
-                <Badge color="success">Done</Badge>
-              </TableCell>
-              <TableCell>
-                <IconButton className="text-success" aria-label="Delete">
-                  <i className="zmdi zmdi-check-all" />
-                </IconButton>
-                <IconButton className="text-danger" aria-label="Add an alarm">
-                  <i className="zmdi zmdi-close" />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>{"employee.employeeName"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>${"employee"}</TableCell>
-              <TableCell>
-                <Badge color="success">Done</Badge>
-              </TableCell>
-              <TableCell>
-                <IconButton className="text-success" aria-label="Delete">
-                  <i className="zmdi zmdi-check-all" />
-                </IconButton>
-                <IconButton className="text-danger" aria-label="Add an alarm">
-                  <i className="zmdi zmdi-close" />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>{"employee.employeeName"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>${"employee"}</TableCell>
-              <TableCell>
-                <Badge color="success">Done</Badge>
-              </TableCell>
-              <TableCell>
-                <IconButton className="text-success" aria-label="Delete">
-                  <i className="zmdi zmdi-check-all" />
-                </IconButton>
-                <IconButton className="text-danger" aria-label="Add an alarm">
-                  <i className="zmdi zmdi-close" />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>{"employee.employeeName"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>${"employee"}</TableCell>
-              <TableCell>
-                <Badge color="success">Done</Badge>
-              </TableCell>
-              <TableCell>
-                <IconButton className="text-success" aria-label="Delete">
-                  <i className="zmdi zmdi-check-all" />
-                </IconButton>
-                <IconButton className="text-danger" aria-label="Add an alarm">
-                  <i className="zmdi zmdi-close" />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>{"employee.employeeName"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>${"employee"}</TableCell>
-              <TableCell>
-                <Badge color="success">Done</Badge>
-              </TableCell>
-              <TableCell>
-                <IconButton className="text-success" aria-label="Delete">
-                  <i className="zmdi zmdi-check-all" />
-                </IconButton>
-                <IconButton className="text-danger" aria-label="Add an alarm">
-                  <i className="zmdi zmdi-close" />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>{"employee.employeeName"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>${"employee"}</TableCell>
-              <TableCell>
-                <Badge color="success">Done</Badge>
-              </TableCell>
-              <TableCell>
-                <IconButton className="text-success" aria-label="Delete">
-                  <i className="zmdi zmdi-check-all" />
-                </IconButton>
-                <IconButton className="text-danger" aria-label="Add an alarm">
-                  <i className="zmdi zmdi-close" />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>{"employee.employeeName"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>{"employee"}</TableCell>
-              <TableCell>${"employee"}</TableCell>
-              <TableCell>
-                <Badge color="success">Done</Badge>
-              </TableCell>
-              <TableCell>
-                <IconButton className="text-success" aria-label="Delete">
-                  <i className="zmdi zmdi-check-all" />
-                </IconButton>
-                <IconButton className="text-danger" aria-label="Add an alarm">
-                  <i className="zmdi zmdi-close" />
-                </IconButton>
-              </TableCell>
-            </TableRow>
+            {events ? (
+              events.map((event, key) => {
+                return (
+                  <TableRow key={key} hover>
+                    <TableCell>{event.subject}</TableCell>
+                    <TableCell>{event.type}</TableCell>
+                    <TableCell>{event.status.name}</TableCell>
+                    <TableCell>{event.dueDate}</TableCell>
+                    <TableCell>{}</TableCell>
+                    <TableCell>{}</TableCell>
+                    <TableCell>{event.owner.fullName}</TableCell>
+                    <TableCell>{event.modifiedAt}</TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <TableRow>
+                <TableCell colSpan={8} className="text-center">
+                  <i>No Upcoming Events</i>
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </div>

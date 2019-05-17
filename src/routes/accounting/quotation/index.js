@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { show } from "redux-modal";
 
 // page req
 import { Helmet } from "react-helmet";
@@ -15,6 +16,7 @@ import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSumma
 
 // List
 import QuotationList from "Components/Accounting/Quotation/QuotationList";
+import { Async_view_quotation } from "Components/AsyncComponent/AsyncComponent";
 
 // Actions
 import {
@@ -25,9 +27,18 @@ import {
 } from "Actions";
 
 class acct_quotation extends Component {
+  constructor(props) {
+    super(props);
+    this.handleOpen = this.handleOpen.bind(this);
+  }
   componentDidMount() {
     this.props.getAllQuotation();
   }
+  handleOpen = quotationId => () => {
+    this.props.show("view_quotation", {
+      viewQuotation: `This is a ${quotationId} modal`
+    });
+  };
 
   render() {
     const {
@@ -89,7 +100,9 @@ class acct_quotation extends Component {
           action={action}
           tableData={tableData}
           loading={loading}
+          handleOpen={this.handleOpen}
         />
+        <Async_view_quotation />
       </React.Fragment>
     );
   }
@@ -103,6 +116,7 @@ const mapStateToProps = ({ accountingState }) => {
 export default connect(
   mapStateToProps,
   {
+    show,
     changeQuotationView,
     toggleQuotationDropDown,
     toggleQuotationSummary,

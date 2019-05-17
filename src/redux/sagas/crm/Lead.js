@@ -7,219 +7,40 @@ import {
   select,
   delay
 } from "redux-saga/effects";
-import { CHANGE_LEAD_LIST_VIEW, GET_ALL_LEAD } from "Types";
-import { getLeadSuccess, getLeadFailure } from "Actions";
+import { CHANGE_LEAD_LIST_VIEW, GET_ALL_LEAD, GET_SINGLE_LEAD } from "Types";
+import { getLeadSuccess, getLeadFailure, getSingleLeadSuccess } from "Actions";
 
 import api from "Api";
+
+import { leadList, lead, lead2 } from "Components/DummyData";
 
 //=========================
 // REQUESTS
 //=========================
 const getAllLeadRequest = async () => {
-  const result = [
-    [
-      "All Lead",
-      "Lead One",
-      "Minneapolis",
-      "lead@one.com",
-      "$100,000",
-      "Google",
-      60
-    ],
-    [
-      "All Lead",
-      "Lead Two",
-      "Dallas",
-      "lead@test.com",
-      "$200,000",
-      "Google",
-      20
-    ],
-    [
-      "All Lead",
-      "Lead Three",
-      "Santa Ana",
-      "lead@test.com",
-      "$10,000",
-      "SEM",
-      80
-    ],
-    [
-      "All Lead",
-      "Lead Four",
-      "St. Petersburg",
-      "lead@test.com",
-      "$400,000",
-      "SEO",
-      100
-    ],
-    [
-      "All Lead",
-      "Lead Five",
-      "Toledo",
-      "lead@test.com",
-      "$6,000",
-      "Call In",
-      40
-    ],
-    [
-      "All Lead",
-      "Lead Six",
-      "JacksonVille",
-      "lead@test.com",
-      "$210,000",
-      "Referrals",
-      60
-    ],
-    [
-      "All Lead",
-      "Lead One",
-      "Minneapolis",
-      "lead@one.com",
-      "$100,000",
-      "Google",
-      60
-    ],
-    [
-      "All Lead",
-      "Lead Two",
-      "Dallas",
-      "lead@test.com",
-      "$200,000",
-      "Google",
-      0
-    ],
-    [
-      "All Lead",
-      "Lead Three",
-      "Santa Ana",
-      "lead@test.com",
-      "$10,000",
-      "SEM",
-      80
-    ],
-    [
-      "All Lead",
-      "Lead Four",
-      "St. Petersburg",
-      "lead@test.com",
-      "$400,000",
-      "SEO",
-      100
-    ],
-    [
-      "All Lead",
-      "Lead Five",
-      "Toledo",
-      "lead@test.com",
-      "$6,000",
-      "Call In",
-      40
-    ],
-    [
-      "All Lead",
-      "Lead Six",
-      "JacksonVille",
-      "lead@test.com",
-      "$210,000",
-      "Referrals",
-      60
-    ],
-    [
-      "All Lead",
-      "Lead One",
-      "Minneapolis",
-      "lead@one.com",
-      "$100,000",
-      "Google",
-      100
-    ],
-    [
-      "All Lead",
-      "Lead Two",
-      "Dallas",
-      "lead@test.com",
-      "$200,000",
-      "Google",
-      0
-    ],
-    [
-      "All Lead",
-      "Lead Three",
-      "Santa Ana",
-      "lead@test.com",
-      "$10,000",
-      "SEM",
-      80
-    ],
-    [
-      "All Lead",
-      "Lead Four",
-      "St. Petersburg",
-      "lead@test.com",
-      "$400,000",
-      "SEO",
-      100
-    ],
-    [
-      "All Lead",
-      "Lead Five",
-      "Toledo",
-      "lead@test.com",
-      "$6,000",
-      "Call In",
-      40
-    ],
-    [
-      "All Lead",
-      "Lead Six",
-      "JacksonVille",
-      "lead@test.com",
-      "$210,000",
-      "Referrals",
-      60
-    ]
-  ];
+  const result = leadList;
   return result;
 };
 const getMyLeadRequest = async () => {
-  const result = [
-    ["My Lead", "My Lead", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = leadList;
   return result;
 };
 const getOpenLeadRequest = async () => {
-  const result = [
-    ["Open Lead", "Open Lead", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = leadList;
   return result;
 };
 const getHotLeadRequest = async () => {
-  const result = [
-    ["Hot Lead", "Hot Lead", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = leadList;
   return result;
 };
 const getColdLeadRequest = async () => {
-  const result = [
-    ["Cold Lead", "Cold Lead", "singapore", 30, "$100,000"],
-    ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-    ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-    ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-    ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"]
-  ];
+  const result = leadList;
+  return result;
+};
+const getLeadRequest = async leadID => {
+  console.log(`fetching lead ${leadID}`);
+  const result = leadID == 1 ? lead : lead2;
+
   return result;
 };
 
@@ -271,6 +92,15 @@ function* getAllLeadFromDB() {
     yield put(getLeadFailure(error));
   }
 }
+function* getLeadFromDB({ payload }) {
+  try {
+    const data = yield call(getLeadRequest, payload);
+    yield delay(500);
+    yield put(getSingleLeadSuccess(data));
+  } catch (error) {
+    yield put(getLeadFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -281,6 +111,9 @@ export function* changeViewWatcher() {
 export function* getAllLeadWatcher() {
   yield takeEvery(GET_ALL_LEAD, getAllLeadFromDB);
 }
+export function* getSingleLeadWatcher() {
+  yield takeEvery(GET_SINGLE_LEAD, getLeadFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -288,7 +121,7 @@ export function* getAllLeadWatcher() {
 export default function* rootSaga() {
   yield all([
     fork(changeViewWatcher),
-    fork(getAllLeadWatcher)
-    // fork(getMyLeadWatcher)
+    fork(getAllLeadWatcher),
+    fork(getSingleLeadWatcher)
   ]);
 }

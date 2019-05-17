@@ -7,7 +7,10 @@ import {
   GET_CUSTOMER_SUCCESS,
   GET_ALL_CUSTOMER,
   GET_MY_CUSTOMER,
-  GET_OPEN_CUSTOMER
+  GET_OPEN_CUSTOMER,
+  GET_SINGLE_CUSTOMER,
+  GET_SINGLE_CUSTOMER_SUCCESS,
+  CLEAR_SINGLE_CUSTOMER
 } from "Types";
 
 const INIT_STATE = {
@@ -19,6 +22,10 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
+  },
+  customerToView: {
+    loading: false,
+    customer: null
   }
 };
 
@@ -69,10 +76,7 @@ export default (state = INIT_STATE, action) => {
     case GET_CUSTOMER_FAILURE:
       NotificationManager.warning("Error in fetching Customer Data");
       console.log(action.payload);
-      return {
-        ...state,
-        customerList: { ...state.customerList, loading: false }
-      };
+      return INIT_STATE;
     case GET_ALL_CUSTOMER:
     case GET_MY_CUSTOMER:
     case GET_OPEN_CUSTOMER:
@@ -90,6 +94,28 @@ export default (state = INIT_STATE, action) => {
         }
       };
 
+    /**
+     * Get Single Customer
+     */
+    case GET_SINGLE_CUSTOMER:
+      return {
+        ...state,
+        customerToView: { ...state.customerToView, loading: true }
+      };
+    case GET_SINGLE_CUSTOMER_SUCCESS:
+      return {
+        ...state,
+        customerToView: {
+          ...state.customerToView,
+          loading: false,
+          customer: action.payload
+        }
+      };
+    case CLEAR_SINGLE_CUSTOMER:
+      return {
+        ...state,
+        customerToView: INIT_STATE.customerToView
+      };
     default:
       return { ...state };
   }

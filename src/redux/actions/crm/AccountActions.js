@@ -6,7 +6,10 @@ import {
   GET_ACCOUNT_SUCCESS,
   GET_ALL_ACCOUNT,
   GET_MY_ACCOUNT,
-  GET_OPEN_ACCOUNT
+  GET_OPEN_ACCOUNT,
+  GET_SINGLE_ACCOUNT,
+  GET_SINGLE_ACCOUNT_SUCCESS,
+  CLEAR_SINGLE_ACCOUNT
 } from "Types";
 
 /**
@@ -64,4 +67,19 @@ export const getMyAccount = () => ({
  */
 export const getOpenAccount = () => ({
   type: GET_OPEN_ACCOUNT
+});
+
+/**
+ * Get Single Account
+ */
+export const getSingleAccount = acctID => ({
+  type: GET_SINGLE_ACCOUNT,
+  payload: acctID
+});
+export const getSingleAccountSuccess = acctData => ({
+  type: GET_SINGLE_ACCOUNT_SUCCESS,
+  payload: acctData
+});
+export const clearSingleAccount = () => ({
+  type: CLEAR_SINGLE_ACCOUNT
 });

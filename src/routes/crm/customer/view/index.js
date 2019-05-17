@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 // Global Req
@@ -7,6 +6,10 @@ import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 //Page Components
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
+import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import CustomerCard from "Components/CRM/Customer/CustomerCard";
 
 // Details Tab
@@ -16,52 +19,40 @@ import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
 
 // Related Tab
 import RelatedDeals from "Components/CRM/View/Related/RelatedDeals";
-import RelatedAccounts from "Components/CRM/View/Related/RelatedAccounts";
 
 // Events Tab
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 
-// Notes Tab
+// Activity Log
+import ActivityLog from "Components/Everyday/ActivityLog";
 
-//Page Req
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import TabsWrapper from "Components/CRM/View/Tabs/TabsWrapper";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+// Notes Tab
+import NewNote from "Components/Form/Note/NewNote";
+import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
-// getCustomer - cust details, open events, closed events, notes
+import { getSingleCustomer, clearSingleCustomer } from "Actions";
 // addNoteToCustomer(custID), onNoteChange, clearNote
 // Add events dialog
 // Delete Customer, Edit Customer, Transfer Customer
 
 class crm_view_customer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { loading: true };
-  }
   componentWillMount() {
-    // var id = this.props.match.params.id;
-    // this.props.viewCustomer(id);
-    setTimeout(() => {
-      this.setState({
-        loading: false
-      });
-    }, 600);
+    var id = this.props.match.params.id;
+    this.props.getSingleCustomer(id);
   }
   componentWillUnmount() {
-    // this.props.viewCustomerEnd();
+    this.props.clearSingleCustomer();
   }
 
   render() {
-    const { loading } = this.state;
-    const { customer } = this.props;
+    const { loading, customer } = this.props.customerToView;
     return (
       <React.Fragment>
         {loading ? (
           <RctPageLoader />
-        ) : !customer ? (
+        ) : customer ? (
           <React.Fragment>
             <Helmet>
               <title>Everyday | View Customer</title>
@@ -73,33 +64,46 @@ class crm_view_customer extends Component {
             <div className="row">
               <RctCollapsibleCard colClasses="col-md-6 col-lg-6" fullBlock>
                 <CustomerCard
-                  fullName="customer one"
-                  jobTitle="job title"
-                  ownerName="admin admin"
-                  mobile="1234-5678"
-                  email="customer1@one.com"
+                  fullName={customer.fullName}
+                  ownerName={customer.owner.fullName}
+                  jobTitle={customer.jobTitle}
+                  mobile={customer.mobile}
+                  email={customer.email}
                 />
               </RctCollapsibleCard>
             </div>
             <TabsWrapper>
               <div icon="zmdi-coffee text-success" label="DETAILS">
-                <CustomerDetails />
-                <AddressDetails />
-                <DescriptionDetails />
+                <CustomerDetails customer={customer} />
+                <AddressDetails
+                  address={customer.address}
+                  address2={customer.address2}
+                  city={customer.city}
+                  state={customer.state}
+                  zip={customer.zip}
+                />
+                <DescriptionDetails desc={customer.description} />
               </div>
               <div icon="zmdi-drink text-secondary" label="RELATED">
-                <RelatedDeals />
-                <br />
-                <RelatedAccounts />
+                <RelatedDeals deals={customer.deals} />
               </div>
-              <div icon="zmdi-pizza text-warning" label="UPCOMING">
-                <UpcomingEvents />
+              <div icon="zmdi-pizza text-warning" label="EVENTS">
+                <UpcomingEvents events={customer.upcomingEvents} />
+                <hr />
+                <ClosedEvents events={customer.closedEvents} />
               </div>
-              <div icon="zmdi-local-florist text-info" label="CLOSED">
-                <ClosedEvents />
+              <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
+                <ActivityLog />
               </div>
               <div icon="zmdi-assignment text-danger" label="NOTES">
-                {/*  <ViewNote /> */}
+                <div className="row">
+                  <div className="col-md-4">
+                    <NewNote /* onAddNote="function" */ />
+                  </div>
+                  <div className="col-md-8">
+                    <DisplayAllNotes notes={customer.notes} />
+                  </div>
+                </div>
               </div>
             </TabsWrapper>
           </React.Fragment>
@@ -113,5 +117,14 @@ class crm_view_customer extends Component {
     );
   }
 }
+// map state to props
+const mapStateToProps = ({ crmState }) => {
+  const { customerState } = crmState;
+  const { customerToView } = customerState;
+  return { customerToView };
+};
 
-export default crm_view_customer;
+export default connect(
+  mapStateToProps,
+  { getSingleCustomer, clearSingleCustomer }
+)(crm_view_customer);

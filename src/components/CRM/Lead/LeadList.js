@@ -20,7 +20,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Name",
-      name: "name",
+      name: "fullName",
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
@@ -30,9 +30,25 @@ const LeadList = ({ tableData, loading, title, action }) => {
       }
     },
     { label: "Company", name: "companyName" },
-    { label: "Email", name: "emailAddress" },
-    { label: "Status", name: "status" },
-    { label: "Source", name: "source" },
+    { label: "Email", name: "email" },
+    {
+      label: "Status",
+      name: "status",
+      options: {
+        customBodyRender: value => {
+          return value.name;
+        }
+      }
+    },
+    {
+      label: "Source",
+      name: "source",
+      options: {
+        customBodyRender: value => {
+          return value.name;
+        }
+      }
+    },
     {
       label: "Interest Level",
       name: "interest",
@@ -43,8 +59,26 @@ const LeadList = ({ tableData, loading, title, action }) => {
       }
     },
     { label: "Mobile", name: "mobile", options: { display: false } },
-    { label: "Lead Owner", name: "owner", options: { display: false } },
-    { label: "Industry", name: "industry", options: { display: false } },
+    {
+      label: "Owner",
+      name: "owner",
+      options: {
+        display: false,
+        customBodyRender: value => {
+          return value.fullName;
+        }
+      }
+    },
+    {
+      label: "Industry",
+      name: "industry",
+      options: {
+        display: false,
+        customBodyRender: value => {
+          return value ? value.name : " ";
+        }
+      }
+    },
     { label: "Website", name: "website", options: { display: false } },
     { label: "Office", name: "office", options: { display: false } },
     { label: "Fax", name: "fax", options: { display: false } }
