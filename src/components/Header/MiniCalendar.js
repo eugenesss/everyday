@@ -15,11 +15,15 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { onChangeDayView } from 'Actions';
 
-const styles = () => ({
-  calendar: {
-    width: "auto"
-  },
-});
+// const styles = () => ({
+//   calendar: {
+//     width: "auto"
+//   },
+//   icon: {
+//     height: 24,
+//     width: 24,
+//   }
+// });
 
 class MiniCalendar extends Component {
   state = {
@@ -41,7 +45,7 @@ class MiniCalendar extends Component {
         <DropdownToggle nav className="p-0">
           <Tooltip title="Calendar" placement="bottom">
             <IconButton className="text-white" aria-label="calendar">
-              <i className="zmdi zmdi-calendar" />
+              <i className={"zmdi zmdi-calendar " + classes.icon}/>
             </IconButton>
           </Tooltip>
         </DropdownToggle>
@@ -74,6 +78,4 @@ export default withRouter(
   connect(
     null,
     { onChangeDayView }
-  )
-  (withStyles(styles)(MiniCalendar))
-);
+  )(MiniCalendar));

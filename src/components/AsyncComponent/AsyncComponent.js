@@ -175,10 +175,16 @@ export const Async_setting_acc_quotation_component = Loadable({
 });
 // Cron Job
 export const Async_setting_cron_leadReminders_component = Loadable({
-  loader: () => import("Routes/setting/cronJob/LeadReminders"),
+  loader: () => import("Routes/setting/reminders/LeadReminders"),
   loading: () => <RctPageLoader />
 });
 export const Async_setting_cron_quotationReminders_component = Loadable({
-  loader: () => import("Routes/setting/cronJob/quotationReminders"),
+  loader: () => import("Routes/setting/reminders/quotationReminders"),
+  loading: () => <RctPageLoader />
+});
+
+//Chat
+export const Async_chat_component = Loadable({
+  loader: () => import("Routes/chat"),
   loading: () => <RctPageLoader />
 });

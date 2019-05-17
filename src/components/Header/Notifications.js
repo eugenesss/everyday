@@ -37,6 +37,7 @@ class Notifications extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     const { notifications } = this.state;
     return (
       <UncontrolledDropdown
@@ -46,7 +47,7 @@ class Notifications extends Component {
         <DropdownToggle nav className="p-0">
           <Tooltip title="Notifications" placement="bottom">
             <IconButton className="shake text-white" aria-label="bell">
-              <i className="zmdi zmdi-notifications-active" />
+              <i className={"zmdi zmdi-notifications-active " + classes.icon}/>
               <Badge
                 color="danger"
                 className="badge-xs badge-top-right rct-notify"

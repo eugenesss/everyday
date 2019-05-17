@@ -19,6 +19,20 @@ import UserBlock from "./UserBlock";
 // import ToDo from "./ToDo";
 import MiniCalendar from "./MiniCalendar";
 
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  icon: {
+    height: 24,
+    width: 24,
+  },
+  calendar: {
+    width: "auto"
+  }
+});
+
+
 class Header extends Component {
   state = {
     customizer: false,
@@ -31,6 +45,7 @@ class Header extends Component {
   }
 
   render() {
+    const { classes } = this.props
     return (
       <AppBar position="static" className="rct-header">
         <Toolbar className="d-flex justify-content-between w-100 pl-0">
@@ -51,9 +66,19 @@ class Header extends Component {
             </ul>
           </div>
           <ul className="navbar-right list-inline mb-0">
-            <Notifications />
-            {/* <ToDo /> */}
-            <MiniCalendar />
+            {/* <li className="list-inline-item">
+              <Tooltip title="Chat" placement="bottom">
+                <IconButton
+                  className="text-white"
+                  aria-label="chat"
+                  href="/app/chat"
+                >
+                  <i className="zmdi zmdi-comments" />
+                </IconButton>
+              </Tooltip>
+            </li> */}
+            <Notifications classes={classes}/>
+            <MiniCalendar classes={classes}/>
             <li className="list-inline-item">
               <Tooltip title="Settings" placement="bottom">
                 <IconButton
@@ -61,11 +86,11 @@ class Header extends Component {
                   aria-label="settings"
                   href="/app/settings"
                 >
-                  <i className="zmdi zmdi-settings" />
+                  <i className={"zmdi zmdi-settings " + classes.icon} />
                 </IconButton>
               </Tooltip>
             </li>
-            <UserBlock />
+            <UserBlock classes={classes}/>
             <li className="list-inline-item">
               <Tooltip title="Full Screen" placement="bottom">
                 <IconButton
@@ -73,7 +98,7 @@ class Header extends Component {
                   aria-label="fullScreen"
                   onClick={() => this.toggleScreenFull()}
                 >
-                  <i className="zmdi zmdi-crop-free" />
+                  <i className={"zmdi zmdi-crop-free " + classes.icon}/>
                 </IconButton>
               </Tooltip>
             </li>
@@ -84,9 +109,13 @@ class Header extends Component {
   }
 }
 
+Header.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
 // map state to props
 const mapStateToProps = ({ settings }) => {
   return settings;
 };
 
-export default withRouter(connect(mapStateToProps)(Header));
+export default withRouter(connect(mapStateToProps)(withStyles(styles)(Header)));

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import CreditNoteLayout from "Components/Setting/Accounting/CreditNote/CreditNoteLayout"
 
 class CreditNote extends Component {
   state = {};
   render() {
     return (
-      <div>
-        <p>CreditNote</p>
-      </div>
+      <React.Fragment>
+        <CreditNoteLayout/>
+      </React.Fragment>
     );
   }
 }
