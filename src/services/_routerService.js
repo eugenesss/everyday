@@ -5,11 +5,14 @@ import {
   Async_report_component,
   Async_task_component,
   Async_reminder_component,
-  Async_calendar_component
+  Async_calendar_component,
+  Async_chat_component,
+  Async_user_profile_component,
 } from "Components/AsyncComponent/AsyncComponent";
 import Crm from "Routes/crm";
 import Accounting from "Routes/accounting";
 import Setting from "Routes/setting";
+import UserProfile from "Routes/userProfile"
 
 export default [
   {
@@ -47,5 +50,13 @@ export default [
   {
     path: "settings",
     component: Setting
-  }
+  },
+  {
+    path: "chat",
+    component: Async_chat_component
+  },
+  {
+    path: "user",
+    component: UserProfile
+  },
 ];

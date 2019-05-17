@@ -38,7 +38,7 @@ class SettingsDirectory extends Component {
         openGen: true,
         openUser: true,
         openAcc: true,
-        openCron: true,
+        openRem: true,
     }
   }
   
@@ -53,8 +53,8 @@ class SettingsDirectory extends Component {
       case "acc":
         this.setState(state => ({ openAcc: !state.openAcc }));
         break;
-      case "cron":
-        this.setState(state => ({ openCron: !state.openCron }));
+      case "rem":
+        this.setState(state => ({ openRem: !state.openRem }));
         break;
     }
   };
@@ -128,16 +128,16 @@ class SettingsDirectory extends Component {
               </List>
             </Collapse>
 
-            <ListItem button onClick={() => this.handleClick("cron")}>
-              <ListItemText inset primary={"Cron Job"} className={classes.listItem}/>
-              {this.state.openCron ? <ExpandLess /> : <ExpandMore />}
+            <ListItem button onClick={() => this.handleClick("rem")}>
+              <ListItemText inset primary={"Reminders"} className={classes.listItem}/>
+              {this.state.openRem ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse in={this.state.openCron} timeout="auto" unmountOnExit>
+            <Collapse in={this.state.openRem} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/cron-job/lead-reminders')} selected={location.pathname === '/app/settings/cron-job/lead-reminders'}>
+                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/reminders/lead-reminders')} selected={location.pathname === '/app/settings/reminders/lead-reminders'}>
                   <ListItemText inset secondary={"Lead Reminders"} />
                 </ListItem>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/cron-job/quotation-reminders')} selected={location.pathname === '/app/settings/cron-job/quotation-reminders'}>
+                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/reminders/quotation-reminders')} selected={location.pathname === '/app/settings/reminders/quotation-reminders'}>
                   <ListItemText inset secondary={"Quotation Reminders"} />
                 </ListItem>
               </List>

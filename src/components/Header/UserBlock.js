@@ -27,14 +27,14 @@ class UserBlock extends Component {
   }
 
   render() {
-    const { location, user } = this.props;
+    const { location, user, classes } = this.props;
     const { buttonLoading } = this.state;
     return (
       <UncontrolledDropdown nav className="list-inline-item cart-dropdown">
         <DropdownToggle nav className="p-0">
           <Tooltip title="User" placement="bottom">
             <IconButton className="text-white" aria-label="user">
-              <i className="zmdi zmdi-face" />
+              <i className={"zmdi zmdi-face " + classes.icon} />
             </IconButton>
           </Tooltip>
         </DropdownToggle>
@@ -49,18 +49,11 @@ class UserBlock extends Component {
                       user={user}
                       size={80}
                     /> */}
+                    <img src={require('Assets/avatars/user-37.jpg')} alt="user profile" className="rounded-circle bordered" width="120" height="120" />
                   </div>
                   <div className="user-list-content">
                     <div className="text-center">
                       <h3 className="fw-bold">{user && user.fullName}</h3>
-                      <p>
-                        {user && user.role}
-                        <br />
-                        <small className="">
-                          Member Since{" "}
-                          {user && Moment(user.createdAt).fromNow()}
-                        </small>
-                      </p>
                       <div className="social-list clearfix mb-30">
                         <ul className="list-inline d-inline-block mb-10">
                           <li className="list-inline-item">
@@ -70,7 +63,7 @@ class UserBlock extends Component {
                               className="btn bg-primary text-white"
                               onClick={() =>
                                 this.props.history.push(
-                                  `/ocrm/users/profile/${user.id}`
+                                  `/app/settings/general/my-profile`
                                 )
                               }
                             >

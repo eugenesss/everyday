@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import QuotationLayout from "Components/Setting/Accounting/Quotation/QuotationLayout"
 
 class Quotation extends Component {
   state = {};
   render() {
     return (
-      <div>
-        <p>Quotation</p>
-      </div>
+      <React.Fragment>
+        <QuotationLayout/>
+      </React.Fragment>
     );
   }
 }

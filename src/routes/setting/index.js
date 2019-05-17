@@ -92,15 +92,15 @@ class Settings extends Component {
                 path={`${match.url}/accounting/quotation`}
                 component={ Async_setting_acc_quotation_component }
               />
-              {/* ------- Cron Job ------- */}
+              {/* ------- Reminders ------- */}
               <Route
                 exact
-                path={`${match.url}/cron-job/lead-reminders`}
+                path={`${match.url}/reminders/lead-reminders`}
                 component={ Async_setting_cron_leadReminders_component }
               />
               <Route
                 exact
-                path={`${match.url}/cron-job/quotation-reminders`}
+                path={`${match.url}/reminders/quotation-reminders`}
                 component={ Async_setting_cron_quotationReminders_component }
               />
               {/* ------- /404 ------- */}

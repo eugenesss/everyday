@@ -1,7 +1,7 @@
 import React from "react";
 
 import DialogRoot from "Components/Dialog/DialogRoot";
-import UserControlForm from "Components/Form/Setting/UserControlForm";
+import UserControlForm from "Components/Form/Setting/General/UserControlForm";
 
 
 const UserControlDialog = ({handleClose, open}) => {
