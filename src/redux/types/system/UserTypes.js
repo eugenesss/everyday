@@ -1,7 +1,18 @@
 /**
  * Users Action Types
  */
+
+//API Calls
 export const GET_ALL_USERS = "GET_ALL_USERS";
+export const GET_ALL_USERS_SUCCESS = "GET_USER_SUCCESS";
+
+export const GET_USER_PROFILE = "GET_USER_PROFILE";
+export const GET_USER_PROFILE_SUCCESS = "GET_USER_PROFILE_SUCCESS"
+export const GET_USER_PROFILE_END = "GET_USER_PROFILE_END";
+
+export const GET_USER_FAILURE = "GET_USER_FAILURE";
+
+//State Changes
 export const SHOW_ADD_USER = "SHOW_ADD_USER";
 export const HIDE_ADD_USER = "HIDE_ADD_USER";
 export const SHOW_USER_CONTROLS = "SHOW_USER_CONTROLS";

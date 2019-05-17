@@ -4,42 +4,50 @@
 import { NotificationManager } from "react-notifications";
 import { 
   GET_ALL_ROLES,
+  GET_ALL_ROLES_SUCCESS,
+  
+  GET_ROLE_FAILURE,
+
   CHANGE_SELECTED_ROLE,
  } from "Types";
 
 const INIT_STATE = {
   selectedRole: null,
-  crudPermissions: [
-    { action: "User" },
-    { action: "Lead" },
-    { action: "Customer" },
-    { action: "Account"},
-    { action: "Deal "},
-  ],
-  roles: [
-    {
-      id: 0,
-      name: "Director",
-      permissions: [],
-    },
-    {
-      id: 1,
-      name: "Developer",
-      permissions: [],
-    },
-    {
-      id: 2,
-      name: "Member",
-      permissions: [],
-    }
-  ],
+  rolesLoading: false,
+  crudPermissions: [],
+  roles: [],
 };
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
+    /**
+     * Get All Roles
+     */
     case GET_ALL_ROLES:
-      return { ...state };
+      return { 
+        ...state,
+        rolesLoading: true
+      };
+    case GET_ALL_ROLES_SUCCESS:
+        action.payload.roles.push(action.payload.roles.splice(0, 1)[0])
+      return {
+        ...state,
+        rolesLoading: false,
+        roles: action.payload.roles,
+        crudPermissions: action.payload.crud,
+      }
 
+    /**
+     * Get Role Failure
+     */
+    case GET_ROLE_FAILURE: 
+      NotificationManager.warning("Error in fetching Role Data");
+      console.log(action.payload);
+      return INIT_STATE;
+
+    /**
+     * State Changes
+     */
     case CHANGE_SELECTED_ROLE:
       var selectedRole = action.payload
       if(action.payload == "Super Admin")

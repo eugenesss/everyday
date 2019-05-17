@@ -1,23 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React from "react";
 
 import UsersList from "Components/Setting/UserControl/Users/UsersList"
 
-class UsersLayout extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
+const UsersLayout = () => {
     return (
       <React.Fragment>
         <UsersList/>
       </React.Fragment>
     );
   }
-}
 
-export default connect(
-  null,
-  { }
-)(UsersLayout);
+export default UsersLayout;

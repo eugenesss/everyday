@@ -1,23 +1,21 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
-//Page req
 import MUIDataTable from "mui-datatables";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import AddUserDialog from "./AddUserDialog";
 import UserControlDialog from "./UserControlDialog"
-
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-
 import { getAllUsers, showAddUser, hideAddUser, showUserControls, hideUserControls } from "Actions";
 
-const styles = theme => ({
+const styles = () => ({
   icon: {
    height: 24,
    width: 24,
@@ -48,7 +46,7 @@ class UsersList extends Component {
   }
 
   onClickReload = () => {
-    console.log("reload")
+    this.props.getAllUsers()
   }
   onClickDelete = (user) => {
     console.log(user)
@@ -80,8 +78,7 @@ class UsersList extends Component {
         options: {
           customBodyRender: (value, tableMeta) => {
             return (
-              // <NavLink to={`user/${tableMeta.rowData[0]}`}>{value}</NavLink>
-              <div>{value}</div>
+              <NavLink to={`/app/user/${tableMeta.rowData[0]}`}>{value}</NavLink>
             );
           }
         }
@@ -133,13 +130,13 @@ class UsersList extends Component {
     ];
     const options = {
       filterType: "dropdown",
-      filter: false,
-      sort: false,
-      viewColumns: false,
       responsive: "scroll",
-      selectableRows: false,
-      download: false,
+      sort: false,
       print: false,
+      filter: false,
+      download: false,
+      viewColumns: false,
+      selectableRows: false,
       textLabels: { body: { noMatch: "No Users to display" } },
       customToolbar: () => {
         return (

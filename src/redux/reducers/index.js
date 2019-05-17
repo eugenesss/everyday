@@ -22,7 +22,6 @@ import reportReducer from "./system/ReportReducer";
 import calendarReducer from "./calendar/CalendarReducer";
 import usersReducer from "./settings/userControl/UsersReducer";
 import rolesReducer from "./settings/userControl/RolesReducer";
-import profileReducer from "./settings/general/ProfileReducer"
 
 const reducers = combineReducers({
   settings,
@@ -42,7 +41,6 @@ const reducers = combineReducers({
   calendarState: calendarReducer,
   usersState: usersReducer,
   rolesState: rolesReducer,
-  profileState: profileReducer,
   modal
 });
 

@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Col, Row } from "reactstrap";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
 import UserBlock from "./UserBlock";
 import UserFeedBlock from "./UserFeedBlock"
 
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { getAllUsers } from "Actions" //AuthUser
 
-const styles = theme => ({
+const styles = () => ({
   bannerStyle: {
     overflow: "hidden",
     objectFit: "cover"
@@ -27,9 +28,12 @@ class ProfileLayout extends Component {
     super(props);
   }
 
-  
+  componentDidMount() { 
+    this.props.getAllUsers() //AuthUser
+  }
+
   render() {
-    const { classes } = this.props
+    const { classes, me } = this.props
     return (
       <React.Fragment>
         <Row>
@@ -37,7 +41,7 @@ class ProfileLayout extends Component {
         </Row>
         <Row>
           <Col lg={4} className={classes.userBlock}>
-            <UserBlock/>
+            <UserBlock user={me}/>
           </Col>
           <Col lg={8} className={classes.userFeedBlock}>
             <UserFeedBlock/>
@@ -53,7 +57,12 @@ ProfileLayout.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+const mapStateToProps = ({ usersState }) => {
+  const { me } = usersState;
+  return { me };
+};
+
 export default connect(
-  null,
-  { }
+  mapStateToProps,
+  { getAllUsers }
 )(withStyles(styles)(ProfileLayout));
