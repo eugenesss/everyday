@@ -2,14 +2,17 @@ import { all, call, fork, put, takeEvery, select, delay } from "redux-saga/effec
 import { 
   GET_ALL_USERS,
   GET_USER_PROFILE,
+  ADD_USER,
 } from "Types";
 import { 
   getAllUsersSuccess,
+  addUserSuccess,
+  addUserFailure,
   getUserProfileSuccess,
   getUserFailure,
  } from "Actions";
-import api from "Api";
-import { users } from "Components/UserDummyData";
+//import api from "Api";
+import { users, addUser } from "Components/UserDummyData";
 
 //=========================
 // REQUESTS
@@ -18,6 +21,15 @@ const getAllUsersRequest = async () => {
   try {
     //const result = await api.get("/user");
     const result = users;
+    return result;
+  } catch (err) {
+    return err;
+  }
+}
+const addUserRequest = async (newUser) => {
+  try {
+    //const result = await api.post("/user", newUser);
+    const result = addUser(newUser)
     return result;
   } catch (err) {
     return err;
@@ -47,6 +59,16 @@ function* getAllUsersFromDB() {
     yield put(getUserFailure(err));
   }
 }
+function* addUserToDB() {
+  const getNewUser = state => state.usersState.userAdd;
+  const newUser = yield select(getNewUser)
+  try {
+    const data = yield call(addUserRequest, newUser);
+    yield put(addUserSuccess(data));
+  } catch (err)  {
+    yield put(addUserFailure(err));
+  }
+}
 function* getUserProfileFromDB({ payload }) {
   try {
     const data = yield call(getUserProfileRequest, payload);
@@ -62,6 +84,9 @@ function* getUserProfileFromDB({ payload }) {
 export function* getAllUsersWatcher() {
   yield takeEvery(GET_ALL_USERS, getAllUsersFromDB);
 }
+export function* addUserWatcher() {
+  yield takeEvery(ADD_USER, addUserToDB)
+}
 export function* getUserProfileWatcher() {
   yield takeEvery(GET_USER_PROFILE, getUserProfileFromDB);
 }
@@ -72,6 +97,7 @@ export function* getUserProfileWatcher() {
 export default function* rootSaga() {
   yield all([,
     fork(getAllUsersWatcher),
+    fork(addUserWatcher),
     fork(getUserProfileWatcher),
   ]);
 }

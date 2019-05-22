@@ -29,7 +29,6 @@ export default (state = INIT_STATE, action) => {
         rolesLoading: true
       };
     case GET_ALL_ROLES_SUCCESS:
-        action.payload.roles.push(action.payload.roles.splice(0, 1)[0])
       return {
         ...state,
         rolesLoading: false,

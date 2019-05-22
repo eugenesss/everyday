@@ -11,7 +11,7 @@ const UserBlock = ({ user }) => {
         <Row className={"align-items-center pl-20 pb-20 border-bottom"}>
           <img src={require('Assets/avatars/user-37.jpg')} alt="user profile" className="rounded-circle bordered" width="150" height="150" />
           <div className={"ml-20"}>
-              <h1>{user.fullName}</h1>
+              <h1>{user.name}</h1>
               <div>{user.email}</div>
           </div>
         </Row>

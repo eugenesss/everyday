@@ -36,7 +36,7 @@ class UsersList extends Component {
     var data = [];
     data.push(
       user.id,
-      user.fullName,
+      user.name,
       user.email,
       user.contact,
       user.role,
@@ -59,7 +59,6 @@ class UsersList extends Component {
       users, 
       usersLoading, 
       isAddUser,
-      userToAdd,
       isUserControl,
 
       showAddUser,
@@ -176,7 +175,6 @@ class UsersList extends Component {
         <AddUserDialog
           open={isAddUser}
           handleClose={hideAddUser}
-          userToAdd={userToAdd}
         />
         <UserControlDialog
           open={isUserControl}
@@ -193,8 +191,8 @@ UsersList.propTypes = {
 };
 
 const mapStateToProps = ({ usersState }) => {
-  const { users, usersLoading, isAddUser, userToAdd, isUserControl } = usersState;
-  return { users, usersLoading, isAddUser, userToAdd, isUserControl };
+  const { users, usersLoading, isAddUser, isUserControl } = usersState;
+  return { users, usersLoading, isAddUser, isUserControl };
 };
 
 export default connect(

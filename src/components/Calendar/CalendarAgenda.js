@@ -24,7 +24,7 @@ const CalendarAgenda = ({showEvents, classes, defaultDate}) => {
       <React.Fragment>
         <BigCalendar
           events={showEvents}
-          className={classes.textField}
+          className={classes.textField + " " + classes.agendaToday}
           defaultView={"agenda"}
           views={["agenda"]}
           toolbar={false}

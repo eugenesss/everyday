@@ -1,8 +1,6 @@
 const user1 = {
   id: 0,
-  firstName: "Eugene",
-  lastName: "Sim",
-  fullName: "Eugene Sim",
+  name: "Eugene Sim",  
   contact: "+65-9338-0142",
   email: "eugene@ocdigitalnetwork.com",
   //password: "eugene123",
@@ -10,13 +8,12 @@ const user1 = {
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
   isEmailVerified: true,
+  role: ["Development Manager"]
   //role: [role[9]["id"]],
 };
 const user2 = {
   id: 1,
-  firstName: "Jeng",
-  lastName: "Lim",
-  fullName: "Jeng Lim",
+  name: "Jeng Lim",
   contact: "+65-8778-7074",
   email: "limjeng@ocdigitalnetwork.com",
   //password: "jeng123!@#",
@@ -24,13 +21,11 @@ const user2 = {
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
   isEmailVerified: true,
-  //role: [role[10]["id"]],
+  role: ["Development Member"],
 };
 const user3 = {
   id: 2,
-  firstName: "Benny",
-  lastName: "Ong",
-  fullName: "Benny Ong",
+  name: "Benny Ong",
   contact: "+65-9001-6292",
   email: "benny@ocdigitalnetwork.com",
   //password: "benny123!@#",
@@ -38,13 +33,11 @@ const user3 = {
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
   isEmailVerified: true,
-  //role: [role[1]["id"]],
+  role: ["Director"],
 };
 const user4 = {
   id: 3,
-  firstName: "John",
-  lastName: "Chang",
-  fullName: "John Chang",
+  name: "John Chang",
   contact: "+65-9010-7786",
   email: "john@ocdigitalnetwork.com",
   //password: "john123!@#",
@@ -52,7 +45,14 @@ const user4 = {
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
   isEmailVerified: true,
-  //role: [role[1]["id"]],
+  role: ["Director", "Sales Manager"],
 };
 
-export const users = [user1, user2, user3, user4];
+export var users = [user1, user2, user3, user4];
+
+export const addUser = (newUser) => {
+  newUser.id = users.length
+  users.push(newUser)
+  return newUser
+}
+
