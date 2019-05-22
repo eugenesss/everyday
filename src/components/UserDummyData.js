@@ -59,7 +59,7 @@ const user4 = {
 export var users = [user1, user2, user3, user4];
 
 export const addUser = newUser => {
-  newUser.id = users.length;
+  newUser.id = users.length + 1;
   users.push(newUser);
   return newUser;
 };
