@@ -9,7 +9,10 @@ import {
   GET_DEAL_REPORT,
   GET_DEAL_REPORT_SUCCESS,
   GET_LEAD_REPORT,
-  GET_LEAD_REPORT_SUCCESS
+  GET_LEAD_REPORT_SUCCESS,
+  GET_INDIVIDUAL_REPORT,
+  GET_INDIVIDUAL_REPORT_SUCCESS,
+  ON_CHANGE_STAFF_SELECT
 } from "Types";
 
 const INIT_STATE = {
@@ -18,7 +21,8 @@ const INIT_STATE = {
   componentToRender: "",
   dateRange: { startDate: null, endDate: null, focusedInput: null },
   dealReportData: { loading: false },
-  leadReportData: { loading: false }
+  leadReportData: { loading: false },
+  individualData: { loading: false, staff: "" }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -105,6 +109,32 @@ export default (state = INIT_STATE, action) => {
           ...state.leadReportData,
           loading: false,
           ...action.payload
+        }
+      };
+
+    /**
+     * Get Individual Report
+     */
+    case GET_INDIVIDUAL_REPORT:
+      return {
+        ...state,
+        individualData: { ...state.individualData, loading: true }
+      };
+    case GET_INDIVIDUAL_REPORT_SUCCESS:
+      return {
+        ...state,
+        individualData: {
+          ...state.individualData,
+          loading: false,
+          ...action.payload
+        }
+      };
+    case ON_CHANGE_STAFF_SELECT:
+      return {
+        ...state,
+        individualData: {
+          ...state.individualData,
+          staff: action.payload
         }
       };
 

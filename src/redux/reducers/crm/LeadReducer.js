@@ -15,7 +15,12 @@ import {
   CLEAR_SINGLE_LEAD,
   GET_LEAD_SUMMARY,
   GET_LEAD_SUMMARY_SUCCESS,
-  GET_LEAD_SUMMARY_FAILURE
+  GET_LEAD_SUMMARY_FAILURE,
+  HANDLE_CHANGE_NEW_LEAD,
+  SUBMIT_NEW_LEAD,
+  CLEAR_NEW_LEAD,
+  NEW_LEAD_SUCCESS,
+  NEW_LEAD_ERROR
 } from "Types";
 
 const INIT_STATE = {
@@ -35,6 +40,10 @@ const INIT_STATE = {
   leadToView: {
     loading: false,
     lead: null
+  },
+  leadForm: {
+    loading: false,
+    lead: {}
   }
 };
 
@@ -149,6 +158,31 @@ export default (state = INIT_STATE, action) => {
         ...state,
         leadToView: INIT_STATE.leadToView
       };
+
+    /**
+     * New Lead
+     */
+    case HANDLE_CHANGE_NEW_LEAD:
+      return {
+        ...state,
+        leadForm: {
+          ...state.leadForm,
+          lead: {
+            ...state.leadForm.lead,
+            [action.payload.field]: action.payload.value
+          }
+        }
+      };
+    case SUBMIT_NEW_LEAD:
+      return { ...state, leadForm: { ...state.leadForm, loading: true } };
+    case CLEAR_NEW_LEAD:
+      return { ...state, leadForm: INIT_STATE.leadForm };
+    case NEW_LEAD_SUCCESS:
+      return { ...state, leadForm: INIT_STATE.leadForm };
+    case NEW_LEAD_ERROR:
+      NotificationManager.error("Error in POST API");
+      console.log(action.payload);
+      return { ...state, leadForm: { ...state.leadForm, loading: false } };
 
     default:
       return { ...state };

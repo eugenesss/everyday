@@ -11,14 +11,17 @@ import {
   CHANGE_LEAD_LIST_VIEW,
   GET_ALL_LEAD,
   GET_SINGLE_LEAD,
-  GET_LEAD_SUMMARY
+  GET_LEAD_SUMMARY,
+  SUBMIT_NEW_LEAD
 } from "Types";
 import {
   getLeadSuccess,
   getLeadFailure,
   getSingleLeadSuccess,
   getLeadSummarySuccess,
-  getLeadSummaryFailure
+  getLeadSummaryFailure,
+  newLeadSuccess,
+  newLeadError
 } from "Actions";
 
 import api from "Api";
@@ -55,6 +58,11 @@ const getLeadRequest = async leadID => {
 };
 const getLeadSummaryRequest = async () => {
   const result = leadSummary;
+  return result;
+};
+const postLeadRequest = async lead => {
+  console.log(lead);
+  const result = {};
   return result;
 };
 
@@ -124,6 +132,16 @@ function* getLeadSummaryFromDB() {
     yield put(getLeadSummaryFailure(error));
   }
 }
+function* postLeadToDB() {
+  try {
+    const getLeadState = state => state.crmState.leadState.leadForm.lead;
+    const lead = yield select(getLeadState);
+    const data = yield call(postLeadRequest, lead);
+    yield put(newLeadSuccess(data));
+  } catch (error) {
+    yield put(newLeadError(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -140,6 +158,9 @@ export function* getSingleLeadWatcher() {
 export function* getLeadSummaryWatcher() {
   yield takeEvery(GET_LEAD_SUMMARY, getLeadSummaryFromDB);
 }
+export function* postLeadWatcher() {
+  yield takeEvery(SUBMIT_NEW_LEAD, postLeadToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -149,6 +170,7 @@ export default function* rootSaga() {
     fork(changeViewWatcher),
     fork(getAllLeadWatcher),
     fork(getSingleLeadWatcher),
-    fork(getLeadSummaryWatcher)
+    fork(getLeadSummaryWatcher),
+    fork(postLeadWatcher)
   ]);
 }

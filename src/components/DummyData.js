@@ -43,6 +43,13 @@ const note = {
   createdBy: user
 };
 
+export const interestLevel = [
+  { id: 1, name: "Rare", level: 20 },
+  { id: 2, name: "Medium Rare", level: 40 },
+  { id: 3, name: "Medium", level: 60 },
+  { id: 4, name: "Well Done", level: 100 }
+];
+
 export const lead = {
   id: 1,
   fullName: "Testing Lead",
@@ -131,6 +138,30 @@ export const cust = {
 export const account = {
   id: 1,
   name: "Account One",
+  industry: { name: "Accounting", color: "" },
+  website: "www.accountOne.com",
+  office: "1234 5678",
+  fax: null,
+  owner: user,
+  createdBy: user,
+  createdAt: 1330192800000,
+  modifiedBy: user,
+  modifiedAt: 1330192800000,
+  address: address,
+  address2: address2,
+  city: "Singapore",
+  state: "Singapore",
+  zip: "654321",
+  description: longText,
+  customers: [cust],
+  deals: null,
+  upcomingEvents: [upcomingEvent, upcomingEvent, upcomingEvent, upcomingEvent],
+  closedEvents: null,
+  notes: [note, note, note]
+};
+export const account2 = {
+  id: 1,
+  name: "Account Two",
   industry: { name: "Accounting", color: "" },
   website: "www.accountOne.com",
   office: "1234 5678",
@@ -274,7 +305,7 @@ export const dealStage = [
 ];
 export const leadList = [lead, lead2, lead2, lead, lead, lead];
 export const customerList = [cust, cust2, cust, cust2];
-export const accountList = [account, account, account];
+export const accountList = [account, account2, account];
 
 const products = [
   {

@@ -8,7 +8,10 @@ import {
   GET_DEAL_REPORT,
   GET_DEAL_REPORT_SUCCESS,
   GET_LEAD_REPORT,
-  GET_LEAD_REPORT_SUCCESS
+  GET_LEAD_REPORT_SUCCESS,
+  GET_INDIVIDUAL_REPORT,
+  GET_INDIVIDUAL_REPORT_SUCCESS,
+  ON_CHANGE_STAFF_SELECT
 } from "Types";
 
 /**
@@ -66,4 +69,20 @@ export const getLeadReport = () => ({
 export const getLeadReportSuccess = data => ({
   type: GET_LEAD_REPORT_SUCCESS,
   payload: data
+});
+
+/**
+ * Get Individual Report
+ */
+export const getIndividualReport = staffID => ({
+  type: GET_INDIVIDUAL_REPORT,
+  payload: staffID
+});
+export const getIndividualReportSuccess = data => ({
+  type: GET_INDIVIDUAL_REPORT_SUCCESS,
+  payload: data
+});
+export const onChangeStaffSelect = value => ({
+  type: ON_CHANGE_STAFF_SELECT,
+  payload: value
 });

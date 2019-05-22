@@ -1,5 +1,5 @@
 const user1 = {
-  id: 0,
+  id: 1,
   firstName: "Eugene",
   lastName: "Sim",
   fullName: "Eugene Sim",
@@ -9,11 +9,11 @@ const user1 = {
   description:
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
-  isEmailVerified: true,
+  isEmailVerified: true
   //role: [role[9]["id"]],
 };
 const user2 = {
-  id: 1,
+  id: 2,
   firstName: "Jeng",
   lastName: "Lim",
   fullName: "Jeng Lim",
@@ -23,11 +23,11 @@ const user2 = {
   description:
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
-  isEmailVerified: true,
+  isEmailVerified: true
   //role: [role[10]["id"]],
 };
 const user3 = {
-  id: 2,
+  id: 3,
   firstName: "Benny",
   lastName: "Ong",
   fullName: "Benny Ong",
@@ -37,11 +37,11 @@ const user3 = {
   description:
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
-  isEmailVerified: true,
+  isEmailVerified: true
   //role: [role[1]["id"]],
 };
 const user4 = {
-  id: 3,
+  id: 4,
   firstName: "John",
   lastName: "Chang",
   fullName: "John Chang",
@@ -51,7 +51,7 @@ const user4 = {
   description:
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
-  isEmailVerified: true,
+  isEmailVerified: true
   //role: [role[1]["id"]],
 };
 

@@ -14,7 +14,12 @@ import {
   CLEAR_SINGLE_LEAD,
   GET_LEAD_SUMMARY,
   GET_LEAD_SUMMARY_SUCCESS,
-  GET_LEAD_SUMMARY_FAILURE
+  GET_LEAD_SUMMARY_FAILURE,
+  HANDLE_CHANGE_NEW_LEAD,
+  SUBMIT_NEW_LEAD,
+  CLEAR_NEW_LEAD,
+  NEW_LEAD_SUCCESS,
+  NEW_LEAD_ERROR
 } from "Types";
 
 /**
@@ -115,5 +120,27 @@ export const getLeadSummarySuccess = data => ({
 });
 export const getLeadSummaryFailure = error => ({
   type: GET_LEAD_SUMMARY_FAILURE,
+  payload: error
+});
+
+/**
+ * New Lead
+ */
+export const handleChangeNewLead = (field, value) => ({
+  type: HANDLE_CHANGE_NEW_LEAD,
+  payload: { value, field }
+});
+export const submitNewLead = () => ({
+  type: SUBMIT_NEW_LEAD
+});
+export const clearNewLead = () => ({
+  type: CLEAR_NEW_LEAD
+});
+export const newLeadSuccess = lead => ({
+  type: NEW_LEAD_SUCCESS,
+  payload: lead
+});
+export const newLeadError = error => ({
+  type: NEW_LEAD_ERROR,
   payload: error
 });

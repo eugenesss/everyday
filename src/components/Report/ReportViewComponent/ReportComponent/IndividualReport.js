@@ -3,15 +3,35 @@ import { connect } from "react-redux";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
+// Components
+import ReportStaffPicker from "../ReportStaffPicker";
+
+// Actions
+import { getAllUsers, onChangeStaffSelect } from "Actions";
+
 class IndividualReport extends Component {
-  state = {};
+  componentWillMount() {
+    this.props.getAllUsers();
+  }
+
   render() {
+    const { users } = this.props;
+    const { loading, staff } = this.props.individualData;
     return (
       <React.Fragment>
         <div className="row">
-          <div className="col-md-12">
-            <RctCollapsibleCard>
-              <div>staff picker</div> <div>month picker / all time</div>
+          <div className="col-md-6">
+            <RctCollapsibleCard heading="1. Select Staff">
+              <ReportStaffPicker
+                selectedStaff={staff}
+                allStaff={users}
+                handleChange={this.props.onChangeStaffSelect}
+              />
+            </RctCollapsibleCard>
+          </div>
+          <div className="col-md-6">
+            <RctCollapsibleCard heading="2. Select Date">
+              month and year select
             </RctCollapsibleCard>
           </div>
         </div>
@@ -61,12 +81,16 @@ class IndividualReport extends Component {
   }
 }
 
-const mapStateToProps = ({ reportState }) => {
-  const {} = reportState;
-  return {};
+const mapStateToProps = ({ reportState, usersState }) => {
+  const { individualData } = reportState;
+  const { users } = usersState;
+  return { individualData, users };
 };
 
 export default connect(
-  null,
-  {}
+  mapStateToProps,
+  {
+    getAllUsers,
+    onChangeStaffSelect
+  }
 )(IndividualReport);
