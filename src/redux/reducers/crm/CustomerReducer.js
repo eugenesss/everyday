@@ -10,7 +10,12 @@ import {
   GET_OPEN_CUSTOMER,
   GET_SINGLE_CUSTOMER,
   GET_SINGLE_CUSTOMER_SUCCESS,
-  CLEAR_SINGLE_CUSTOMER
+  CLEAR_SINGLE_CUSTOMER,
+  HANDLE_CHANGE_CUSTOMER,
+  SUBMIT_CUSTOMER,
+  CLEAR_CUSTOMER_FORM,
+  SUBMIT_CUSTOMER_SUCCESS,
+  SUBMIT_CUSTOMER_ERROR
 } from "Types";
 
 const INIT_STATE = {
@@ -26,6 +31,10 @@ const INIT_STATE = {
   customerToView: {
     loading: false,
     customer: null
+  },
+  customerForm: {
+    loading: false,
+    customer: {}
   }
 };
 
@@ -116,6 +125,38 @@ export default (state = INIT_STATE, action) => {
         ...state,
         customerToView: INIT_STATE.customerToView
       };
+
+    /**
+     * New Customer
+     */
+    case HANDLE_CHANGE_CUSTOMER:
+      return {
+        ...state,
+        customerForm: {
+          ...state.customerForm,
+          customer: {
+            ...state.customerForm.customer,
+            [action.payload.field]: action.payload.value
+          }
+        }
+      };
+    case SUBMIT_CUSTOMER:
+      return {
+        ...state,
+        customerForm: { ...state.customerForm, loading: true }
+      };
+    case CLEAR_CUSTOMER_FORM:
+      return { ...state, customerForm: INIT_STATE.customerForm };
+    case SUBMIT_CUSTOMER_SUCCESS:
+      return { ...state, customerForm: INIT_STATE.customerForm };
+    case SUBMIT_CUSTOMER_ERROR:
+      NotificationManager.error("Error in POST API");
+      console.log(action.payload);
+      return {
+        ...state,
+        customerForm: { ...state.customerForm, loading: false }
+      };
+
     default:
       return { ...state };
   }

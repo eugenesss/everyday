@@ -20,7 +20,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Name",
-      name: "fullName",
+      name: "name",
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
@@ -65,7 +65,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
       options: {
         display: false,
         customBodyRender: value => {
-          return value.fullName;
+          return value.name;
         }
       }
     },

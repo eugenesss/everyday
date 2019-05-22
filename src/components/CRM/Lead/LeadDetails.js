@@ -12,7 +12,7 @@ const LeadDetails = ({ lead }) => {
       <TabsHeader title="Lead Details" />
       <DetailsTable>
         <tr>
-          <SingleDetail title="Owner" value={lead.owner.fullName} />
+          <SingleDetail title="Owner" value={lead.owner.name} />
           <SingleDetail title="Company" value={lead.companyName} />
         </tr>
         <tr>
@@ -48,7 +48,7 @@ const LeadDetails = ({ lead }) => {
             title="Modified By"
             value={
               <NameTimeStamp
-                name={lead.modifiedBy.fullName}
+                name={lead.modifiedBy.name}
                 timeStamp="08-05-2019 09:30 "
               />
             }
@@ -57,7 +57,7 @@ const LeadDetails = ({ lead }) => {
             title="Created By"
             value={
               <NameTimeStamp
-                name={lead.createdBy.fullName}
+                name={lead.createdBy.name}
                 timeStamp="08-05-2019 09:30 "
               />
             }

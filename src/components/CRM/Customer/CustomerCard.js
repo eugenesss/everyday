@@ -4,7 +4,7 @@ import { getAppLayout } from "Helpers/helpers";
 import Avatar from "Components/Everyday/Avatar";
 
 const CustomerCard = ({
-  fullName,
+  name,
   jobTitle,
   account,
   email,
@@ -18,9 +18,9 @@ const CustomerCard = ({
       <div className="py-70" style={{ background: "#fac257" }} />
       <div style={{ padding: "1.25rem 6%" }}>
         <div className="d-flex user-avatar">
-          <Avatar fullName={fullName} size={100} customClasses="mr-20 ml-15" />
+          <Avatar name={name} size={100} customClasses="mr-20 ml-15" />
           <div className="user-info text-white pt-20">
-            <h1 className="mb-0">{fullName}</h1>
+            <h1 className="mb-0">{name}</h1>
             <span>{jobTitle}</span>
           </div>
         </div>

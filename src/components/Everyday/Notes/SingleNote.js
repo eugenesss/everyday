@@ -14,7 +14,7 @@ const SingleNote = ({ note, onClickEdit, onClickDelete, action }) => {
     >
       <div className="post-content d-flex">
         <div className="post-img mr-10">
-          <Avatar fullName={note.createdBy.fullName} size={40} />
+          <Avatar name={note.createdBy.name} size={40} />
         </div>
         <div className="post-info">
           <h4 className="mb-5">{note.title}</h4>

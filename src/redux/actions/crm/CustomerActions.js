@@ -9,7 +9,12 @@ import {
   GET_OPEN_CUSTOMER,
   GET_SINGLE_CUSTOMER,
   GET_SINGLE_CUSTOMER_SUCCESS,
-  CLEAR_SINGLE_CUSTOMER
+  CLEAR_SINGLE_CUSTOMER,
+  HANDLE_CHANGE_CUSTOMER,
+  SUBMIT_CUSTOMER,
+  CLEAR_CUSTOMER_FORM,
+  SUBMIT_CUSTOMER_SUCCESS,
+  SUBMIT_CUSTOMER_ERROR
 } from "Types";
 
 /**
@@ -82,4 +87,26 @@ export const getSingleCustomerSuccess = custData => ({
 });
 export const clearSingleCustomer = () => ({
   type: CLEAR_SINGLE_CUSTOMER
+});
+
+/**
+ * New Customer
+ */
+export const handleChangeCustomer = (field, value) => ({
+  type: HANDLE_CHANGE_CUSTOMER,
+  payload: { value, field }
+});
+export const submitCustomer = () => ({
+  type: SUBMIT_CUSTOMER
+});
+export const clearCustomerForm = () => ({
+  type: CLEAR_CUSTOMER_FORM
+});
+export const submitCustomerSuccess = lead => ({
+  type: SUBMIT_CUSTOMER_SUCCESS,
+  payload: lead
+});
+export const submitCustomerError = error => ({
+  type: SUBMIT_CUSTOMER_ERROR,
+  payload: error
 });

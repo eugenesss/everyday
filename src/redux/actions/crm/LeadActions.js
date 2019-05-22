@@ -126,7 +126,7 @@ export const getLeadSummaryFailure = error => ({
 /**
  * New Lead
  */
-export const handleChangeNewLead = (field, value) => ({
+export const handleChangeLead = (field, value) => ({
   type: HANDLE_CHANGE_NEW_LEAD,
   payload: { value, field }
 });

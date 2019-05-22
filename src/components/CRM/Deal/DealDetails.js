@@ -12,7 +12,7 @@ const DealDetails = ({ deal }) => {
       <TabsHeader title="Deal Details" />
       <DetailsTable>
         <tr>
-          <SingleDetail title="Owner" value={deal.owner.fullName} />
+          <SingleDetail title="Owner" value={deal.owner.name} />
           <SingleDetail
             title="Amount"
             value={
@@ -46,7 +46,7 @@ const DealDetails = ({ deal }) => {
         <tr>
           <SingleDetail
             title="Customer"
-            value={deal.customer && deal.customer.fullName}
+            value={deal.customer && deal.customer.name}
           />
         </tr>
         <tr>
@@ -54,7 +54,7 @@ const DealDetails = ({ deal }) => {
             title="Modified By"
             value={
               <NameTimeStamp
-                name={deal.modifiedBy.fullName}
+                name={deal.modifiedBy.name}
                 timeStamp="08-05-2019 09:30 "
               />
             }
@@ -63,7 +63,7 @@ const DealDetails = ({ deal }) => {
             title="Created By"
             value={
               <NameTimeStamp
-                name={deal.createdBy.fullName}
+                name={deal.createdBy.name}
                 timeStamp="08-05-2019 09:30 "
               />
             }

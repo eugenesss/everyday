@@ -35,7 +35,7 @@ const RelatedDeals = ({ deals }) => {
                     <TableCell>{deal.stage.chance}</TableCell>
                     <TableCell>{deal.closingDate}</TableCell>
                     <TableCell>{deal.type && deal.type.name}</TableCell>
-                    <TableCell>{deal.owner.fullName}</TableCell>
+                    <TableCell>{deal.owner.name}</TableCell>
                   </TableRow>
                 );
               })

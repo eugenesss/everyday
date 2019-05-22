@@ -56,9 +56,9 @@ class acct_view_quotation extends Component {
                 accountID={quotation.quoteID}
                 status={quotation.status.name}
                 account={quotation.account && quotation.account.name}
-                customer={quotation.customer && quotation.customer.fullName}
+                customer={quotation.customer && quotation.customer.name}
                 sentDate={quotation.sentOn}
-                owner={quotation.owner.fullName}
+                owner={quotation.owner.name}
               />
             </RctCollapsibleCard>
           </div>

@@ -59,11 +59,11 @@ class crm_view_lead extends Component {
             <PageTitleBar title="View Lead" createLink="/crm/new/lead" />
             <RctCollapsibleCard fullBlock>
               <LeadCard
-                fullName={lead.fullName}
+                name={lead.name}
                 companyName={lead.companyName}
                 status={lead.status.name}
                 statusColor={lead.status.color}
-                ownerName={lead.owner.fullName}
+                ownerName={lead.owner.name}
               />
             </RctCollapsibleCard>
             <TabsWrapper>

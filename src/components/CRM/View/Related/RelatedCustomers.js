@@ -29,7 +29,7 @@ const RelatedCustomers = ({ customers }) => {
                   <TableRow key={key} hover>
                     <TableCell>
                       <Link to={`/app/crm/customers/${customer.id}`}>
-                        {customer.fullName}
+                        {customer.name}
                       </Link>
                     </TableCell>
                     <TableCell>{customer.email}</TableCell>

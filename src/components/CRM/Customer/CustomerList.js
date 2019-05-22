@@ -15,7 +15,7 @@ const CustomerList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Name",
-      name: "fullName",
+      name: "name",
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
@@ -44,7 +44,7 @@ const CustomerList = ({ tableData, loading, title, action }) => {
       name: "owner",
       options: {
         customBodyRender: value => {
-          return value.fullName;
+          return value.name;
         }
       }
     },

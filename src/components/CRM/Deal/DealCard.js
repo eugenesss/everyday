@@ -1,8 +1,5 @@
 import React from "react";
 import NumberFormat from "react-number-format";
-/* import DealStageBadge from "Components/CRM/Deal/DealStageBadge";
-import DealTypeBadge from "Components/CRM/Deal/DealTypeBadge";
-import LeadSourceBadge from "Components/CRM/Leads/LeadSourceBadge"; */
 
 const DealCard = ({ name, stage, chance, type, ownerName, amount }) => {
   return (

@@ -66,7 +66,7 @@ class crm_view_deal extends Component {
                 stage={deal.stage.name}
                 chance={deal.stage.chance}
                 type={deal.type.name}
-                ownerName={deal.owner.fullName}
+                ownerName={deal.owner.name}
                 amount={deal.amount}
               />
             </RctCollapsibleCard>

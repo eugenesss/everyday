@@ -56,9 +56,9 @@ class acct_view_invoice extends Component {
                 accountID={invoice.invoiceID}
                 status={invoice.status.name}
                 account={invoice.account && invoice.account.name}
-                customer={invoice.customer && invoice.customer.fullName}
+                customer={invoice.customer && invoice.customer.name}
                 sentDate={invoice.sentOn}
-                owner={invoice.owner.fullName}
+                owner={invoice.owner.name}
               />
             </RctCollapsibleCard>
           </div>

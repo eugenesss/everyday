@@ -37,7 +37,7 @@ const DealHistory = ({ history }) => {
                     <TableCell>{getTheDate(his.closingDate)}</TableCell>
                     <TableCell>{his.duration}</TableCell>
                     <TableCell>{his.createdAt}</TableCell>
-                    <TableCell>{his.createdBy.fullName}</TableCell>
+                    <TableCell>{his.createdBy.name}</TableCell>
                   </TableRow>
                 );
               })}

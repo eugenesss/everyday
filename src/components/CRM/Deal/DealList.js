@@ -105,7 +105,7 @@ const DealList = ({ tableData, loading, title, action }) => {
       name: "owner",
       options: {
         customBodyRender: value => {
-          return value.fullName;
+          return value.name;
         }
       }
     },

@@ -36,7 +36,7 @@ const UpcomingEvents = ({ events }) => {
                     <TableCell>{event.dueDate}</TableCell>
                     <TableCell>{}</TableCell>
                     <TableCell>{}</TableCell>
-                    <TableCell>{event.owner.fullName}</TableCell>
+                    <TableCell>{event.owner.name}</TableCell>
                     <TableCell>{event.modifiedAt}</TableCell>
                   </TableRow>
                 );

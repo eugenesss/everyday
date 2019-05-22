@@ -18,7 +18,7 @@ const AccountCard = ({
       <div className="py-70" style={{ background: "#e46464" }} />
       <div style={{ padding: "1.25rem 6%" }}>
         <div className="d-flex user-avatar">
-          <Avatar fullName={name} size={100} customClasses="mr-20 ml-15" />
+          <Avatar name={name} size={100} customClasses="mr-20 ml-15" />
           <div className="user-info text-white pt-20">
             <h1 className="mb-0">{name}</h1>
             <span>{industry}</span>

@@ -63,7 +63,7 @@ class crm_view_account extends Component {
             <AccountCard
               name={account.name}
               industry={account.industry && account.industry.name}
-              ownerName={account.owner.fullName}
+              ownerName={account.owner.name}
               office={account.office}
               fax={account.fax}
               address={account.address}

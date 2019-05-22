@@ -10,12 +10,15 @@ import {
 import {
   CHANGE_CUSTOMER_LIST_VIEW,
   GET_ALL_CUSTOMER,
-  GET_SINGLE_CUSTOMER
+  GET_SINGLE_CUSTOMER,
+  SUBMIT_CUSTOMER
 } from "Types";
 import {
   getCustomerFailure,
   getCustomerSuccess,
-  getSingleCustomerSuccess
+  getSingleCustomerSuccess,
+  submitCustomerSuccess,
+  submitCustomerError
 } from "Actions";
 
 import api from "Api";
@@ -40,6 +43,11 @@ const getOpenCustomerRequest = async () => {
 const getCustomerRequest = async custID => {
   console.log(`fetching ${custID}`);
   const result = custID == 1 ? cust : cust2;
+  return result;
+};
+const postCustomerRequest = async cust => {
+  console.log(cust);
+  const result = {};
   return result;
 };
 
@@ -91,6 +99,17 @@ function* getCustomerFromDB({ payload }) {
     yield put(getCustomerFailure(error));
   }
 }
+function* postCustomerToDB() {
+  try {
+    const getCustState = state =>
+      state.crmState.customerState.customerForm.customer;
+    const cust = yield select(getCustState);
+    const data = yield call(postCustomerRequest, cust);
+    yield put(submitCustomerSuccess(data));
+  } catch (error) {
+    yield put(submitCustomerError(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -104,6 +123,9 @@ export function* getAllCustomerWatcher() {
 export function* getSingleCustomerWatcher() {
   yield takeEvery(GET_SINGLE_CUSTOMER, getCustomerFromDB);
 }
+export function* postCustomerWatcher() {
+  yield takeEvery(SUBMIT_CUSTOMER, postCustomerToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -112,6 +134,7 @@ export default function* rootSaga() {
   yield all([
     fork(changeViewWatcher),
     fork(getAllCustomerWatcher),
-    fork(getSingleCustomerWatcher)
+    fork(getSingleCustomerWatcher),
+    fork(postCustomerWatcher)
   ]);
 }

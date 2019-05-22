@@ -2,10 +2,13 @@ import React, { Component } from "react";
 
 // Sub components
 import { Helmet } from "react-helmet";
-import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // intl messages
 import IntlMessages from "Util/IntlMessages";
+
+// Page Components
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import CustomerForm from "Components/Form/Customer/CustomerForm";
 
 class crm_new_customer extends Component {
   state = {};
@@ -17,7 +20,14 @@ class crm_new_customer extends Component {
           <title>Everyday | New Customer</title>
           <meta name="description" content="Everyday Customers Creation" />
         </Helmet>
-        <PageTitleBar title={<IntlMessages id="sidebar.newCustomer" />} />
+        <RctCollapsibleCard heading={<IntlMessages id="sidebar.newCustomer" />}>
+          <div className="row">
+            <div className="col-md-10">
+              <CustomerForm />
+            </div>
+            <div className="col-md-1" />
+          </div>
+        </RctCollapsibleCard>
       </React.Fragment>
     );
   }

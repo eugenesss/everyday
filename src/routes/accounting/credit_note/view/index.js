@@ -60,7 +60,7 @@ class acct_view_credit_note extends Component {
                 status={creditNote.status.name}
                 account={creditNote.account && creditNote.account.name}
                 sentDate={creditNote.sentOn}
-                owner={creditNote.owner.fullName}
+                owner={creditNote.owner.name}
               />
             </RctCollapsibleCard>
           </div>

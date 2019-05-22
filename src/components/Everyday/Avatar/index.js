@@ -1,9 +1,9 @@
 import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 
-const IconAvatar = ({ fullName, size, customClasses }) => {
-  var getInitials = fullName => {
-    var names = fullName.split(" "),
+const IconAvatar = ({ name, size, customClasses }) => {
+  var getInitials = name => {
+    var names = name.split(" "),
       initials = names[0].substring(0, 1).toUpperCase();
 
     if (names.length > 1) {
@@ -26,7 +26,7 @@ const IconAvatar = ({ fullName, size, customClasses }) => {
       className={`size-${size} rounded-circle ${customClasses}`}
       style={{ fontSize: getFontSize() }}
     >
-      {getInitials(fullName)}
+      {getInitials(name)}
     </Avatar>
   );
 };

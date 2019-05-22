@@ -8,7 +8,8 @@ const address = "1 Address St";
 const address2 = "An Address Building";
 
 export const user = {
-  fullName: "Admin Test",
+  id: 1,
+  name: "Admin Test",
   role: "Admin",
   email: "admin@admin.com"
 };
@@ -52,7 +53,7 @@ export const interestLevel = [
 
 export const lead = {
   id: 1,
-  fullName: "Testing Lead",
+  name: "Testing Lead",
   status: { name: "Contacted", color: "#00d014" },
   companyName: "Company One",
   source: { name: "Google", color: "" },
@@ -81,7 +82,7 @@ export const lead = {
 
 export const lead2 = {
   id: 2,
-  fullName: "New Lead",
+  name: "New Lead",
   status: { name: "Not Contacted", color: "#d00000" },
   companyName: "Detriot City",
   source: { name: "SEO", color: "" },
@@ -110,7 +111,7 @@ export const lead2 = {
 
 export const cust = {
   id: 1,
-  fullName: "Customer One",
+  name: "Customer One",
   mobile: "1234-5678",
   office: null,
   source: { name: "SEO", color: "" },
@@ -186,7 +187,7 @@ export const account2 = {
 
 export const cust2 = {
   id: 2,
-  fullName: "Customer Two",
+  name: "Customer Two",
   mobile: "1234-5678",
   office: null,
   source: null,
