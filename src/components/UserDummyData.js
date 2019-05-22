@@ -9,50 +9,57 @@ const user1 = {
   description:
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
-  isEmailVerified: true
+  isEmailVerified: true,
+  role: ["Development Manager"]
   //role: [role[9]["id"]],
 };
 const user2 = {
   id: 2,
+  name: "Jeng Lim",
   firstName: "Jeng",
   lastName: "Lim",
-  name: "Jeng Lim",
   contact: "+65-8778-7074",
   email: "limjeng@ocdigitalnetwork.com",
   //password: "jeng123!@#",
   description:
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
-  isEmailVerified: true
-  //role: [role[10]["id"]],
+  isEmailVerified: true,
+  role: ["Development Member"]
 };
 const user3 = {
   id: 3,
+  name: "Benny Ong",
   firstName: "Benny",
   lastName: "Ong",
-  name: "Benny Ong",
   contact: "+65-9001-6292",
   email: "benny@ocdigitalnetwork.com",
   //password: "benny123!@#",
   description:
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
-  isEmailVerified: true
-  //role: [role[1]["id"]],
+  isEmailVerified: true,
+  role: ["Director"]
 };
 const user4 = {
   id: 4,
+  name: "John Chang",
   firstName: "John",
   lastName: "Chang",
-  name: "John Chang",
   contact: "+65-9010-7786",
   email: "john@ocdigitalnetwork.com",
   //password: "john123!@#",
   description:
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
-  isEmailVerified: true
-  //role: [role[1]["id"]],
+  isEmailVerified: true,
+  role: ["Director", "Sales Manager"]
 };
 
-export const users = [user1, user2, user3, user4];
+export var users = [user1, user2, user3, user4];
+
+export const addUser = newUser => {
+  newUser.id = users.length;
+  users.push(newUser);
+  return newUser;
+};

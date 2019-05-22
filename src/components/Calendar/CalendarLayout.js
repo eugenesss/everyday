@@ -15,6 +15,7 @@ import SelectSlotDialog from "Components/Calendar/SelectSlotDialog";
 import AddEventDialog from "Components/Calendar/AddEventDialog";
 
 import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -62,6 +63,15 @@ const styles = theme => ({
   },
   displayInlineTable: {
     display: "inline-table"
+  },
+  agendaToday: {
+    backgroundColor: "primary"
+  },
+  agendaTomorrow: {
+    backgroundColor: "warning"
+  },
+  agandaDayAft: {
+    backgroundColor: "success"
   }
 });
 
@@ -143,11 +153,11 @@ class CalendarLayout extends Component {
         <Row >
           <Col md={3} className={classes.displayInlineTable}>
               <h2 className={classes.textField + " mt-20"}>Events Today</h2>
-              <CalendarAgenda
-                showEvents={showEvents}
-                classes={classes}
-                defaultDate={"today"}
-              />
+                <CalendarAgenda
+                  showEvents={showEvents}
+                  classes={classes}
+                  defaultDate={"today"}
+                />              
               <h2 className={classes.textField + " mt-20"}>Events Tomorrow</h2>
               <CalendarAgenda
                 showEvents={showEvents}

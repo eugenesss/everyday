@@ -11,6 +11,7 @@ const AddUserDialog = ({handleClose, open}) => {
       handleHide={handleClose}
       size="md"
       title="Add User"
+      close={false}
     >
       <AddUserForm/>
     </DialogRoot>

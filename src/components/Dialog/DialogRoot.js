@@ -5,7 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-const DialogRoot = ({ show, handleHide, children, titleBg, title, size }) => {
+const DialogRoot = ({ show, handleHide, children, titleBg, title, size, close }) => {
   return (
     <React.Fragment>
       <Dialog
@@ -18,9 +18,11 @@ const DialogRoot = ({ show, handleHide, children, titleBg, title, size }) => {
         <DialogTitle id="max-width-dialog-title">{title}</DialogTitle>
         <DialogContent>{children}</DialogContent>
         <DialogActions>
-          <Button onClick={handleHide} color="primary" variant="contained">
-            Close
-          </Button>
+          {close ? (
+            <Button onClick={handleHide} color="primary" variant="contained">
+              Close
+            </Button>
+          ) : null}
         </DialogActions>
       </Dialog>
     </React.Fragment>

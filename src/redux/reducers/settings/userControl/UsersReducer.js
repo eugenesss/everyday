@@ -6,6 +6,17 @@ import {
   GET_ALL_USERS,
   GET_ALL_USERS_SUCCESS,
 
+  ON_CHANGE_ADD_USER,
+  ADD_USER,
+  ADD_USER_SUCCESS,
+  ADD_USER_FAILURE,
+
+  UPDATE_USER_START,
+  ON_CHANGE_UPDATE_USER,
+  UPDATE_USER,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILURE,
+
   GET_USER_PROFILE,
   GET_USER_PROFILE_SUCCESS,
   GET_USER_PROFILE_END,
@@ -27,12 +38,9 @@ const INIT_STATE = {
   isUserControl: false,
   userProfile: {},
   profileLoading: false,
-  userToAdd: {
-    firstName: "",
-    lastName: "",
-    email: "",
-    contact: "",
-    role: "",
+  userUpdate: null,
+  userAdd: {
+    role: []
   }
 };
 
@@ -57,7 +65,53 @@ export default (state = INIT_STATE, action) => {
       }
 
     /**
-     * Get User Profile
+     * ADD User
+     */
+    case ON_CHANGE_ADD_USER:
+      return {
+        ...state,
+        userAdd: {
+          ...state.userAdd,
+          [action.payload.field]: action.payload.value
+        }
+      }
+    case ADD_USER:
+      return {
+        ...state,
+        isAddUser: false,
+        usersLoading: true,
+      }
+    case ADD_USER_SUCCESS:
+      NotificationManager.success("User Added")
+      // var allUsers = Object.assign([], state.users);
+      // var users = [...allUsers, action.payload];
+      return {
+        ...state,
+        userAdd: {
+          role: []
+        },
+        //users: users,
+        usersLoading: false,
+      }
+    case ADD_USER_FAILURE:
+      NotificationManager.error("Failed to Add User")
+      return {
+        ...state,
+        usersLoading: false
+      }
+
+    /**
+     * UPDATE User
+     */
+    case UPDATE_USER_START:
+      return {
+        ...state,
+        userUpdate: action.payload
+      }
+    
+
+    /**
+     * GET User Profile
      */
     case GET_USER_PROFILE:
       return {
