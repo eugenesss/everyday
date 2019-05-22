@@ -132,8 +132,8 @@ class CustomerForm extends Component {
         <hr />
         <AddressFormInput
           handleChange={this.props.handleChangeCustomer}
-          address={customer.address}
-          address2={customer.address2}
+          address_1={customer.address_1}
+          address_2={customer.address_2}
           city={customer.city}
           state={customer.state}
           zip={customer.zip}

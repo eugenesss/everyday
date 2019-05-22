@@ -185,8 +185,8 @@ class LeadForm extends Component {
         <hr />
         <AddressFormInput
           handleChange={this.props.handleChangeLead}
-          address={lead.address}
-          address2={lead.address2}
+          address_1={lead.address_1}
+          address_2={lead.address_2}
           city={lead.city}
           state={lead.state}
           zip={lead.zip}

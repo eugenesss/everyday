@@ -70,8 +70,8 @@ class crm_view_lead extends Component {
               <div icon="zmdi-coffee text-primary" label="DETAILS">
                 <LeadDetails lead={lead} />
                 <AddressDetails
-                  address={lead.address}
-                  address2={lead.address2}
+                  address_1={lead.address_1}
+                  address_2={lead.address_2}
                   city={lead.city}
                   state={lead.state}
                   zip={lead.zip}

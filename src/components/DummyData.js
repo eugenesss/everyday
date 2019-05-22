@@ -4,8 +4,8 @@ const longText =
 const shortText =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id felis ut sapien finibus vestibulum. Ut eget faucibus ligula.";
 
-const address = "1 Address St";
-const address2 = "An Address Building";
+const address_1 = "1 Phonecall St";
+const address_2 = "An YanSang Building";
 
 export const user = {
   id: 1,
@@ -69,8 +69,8 @@ export const lead = {
   createdAt: 1330192800000,
   modifiedBy: user,
   modifiedAt: 1330192800000,
-  address: address,
-  address2: address2,
+  address_1: address_1,
+  address_2: address_2,
   city: "Singapore",
   state: "Singapore",
   zip: "654321",
@@ -98,8 +98,8 @@ export const lead2 = {
   createdAt: 1330192800000,
   modifiedBy: user,
   modifiedAt: 1330192800000,
-  address: address,
-  address2: address2,
+  address_1: address_1,
+  address_2: address_2,
   city: "Singapore",
   state: "Singapore",
   zip: "654321",
@@ -123,8 +123,8 @@ export const cust = {
   createdAt: 1330192800000,
   modifiedBy: user,
   modifiedAt: 1330192800000,
-  address: address,
-  address2: address2,
+  address_1: address_1,
+  address_2: address_2,
   city: "Singapore",
   state: "Singapore",
   zip: "654321",
@@ -148,8 +148,8 @@ export const account = {
   createdAt: 1330192800000,
   modifiedBy: user,
   modifiedAt: 1330192800000,
-  address: address,
-  address2: address2,
+  address_1: address_1,
+  address_2: address_2,
   city: "Singapore",
   state: "Singapore",
   zip: "654321",
@@ -172,8 +172,8 @@ export const account2 = {
   createdAt: 1330192800000,
   modifiedBy: user,
   modifiedAt: 1330192800000,
-  address: address,
-  address2: address2,
+  address_1: address_1,
+  address_2: address_2,
   city: "Singapore",
   state: "Singapore",
   zip: "654321",
@@ -357,21 +357,21 @@ export const quote = {
   netAmt: 9000,
   sentOn: 1330192800000,
   expireOn: 1830192800000,
-  billingAddress: {
+  billingaddress_1: {
     billTo: "Bill Man",
     unit: null,
-    address: address,
-    address2: address2,
+    address_1: address_1,
+    address_2: address_2,
     country: "Singapore",
     zip: "654321",
     email: "customer@invoice.com",
     phone: "1234-4566"
   },
-  shippingAddress: {
+  shippingaddress_1: {
     shipTo: "Ship Man",
     unit: "02-12",
-    address: address,
-    address2: address2,
+    address_1: address_1,
+    address_2: address_2,
     country: "Singapore",
     zip: "654321",
     email: "customer@invoice.com",
@@ -402,8 +402,8 @@ export const invoice = {
   billingAddress: {
     billTo: "Bill Man",
     unit: null,
-    address: address,
-    address2: address2,
+    address_1: address_1,
+    address_2: address_2,
     country: "Singapore",
     zip: "654321",
     email: "customer@invoice.com",
@@ -412,8 +412,8 @@ export const invoice = {
   shippingAddress: {
     shipTo: "Ship Man",
     unit: "02-12",
-    address: address,
-    address2: address2,
+    address_1: address_1,
+    address_2: address_2,
     country: "Singapore",
     zip: "654321",
     email: "customer@invoice.com",
