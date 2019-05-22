@@ -18,7 +18,7 @@ const ReportStaffPicker = ({ selectedStaff, allStaff, handleChange }) => {
       {allStaff &&
         allStaff.map((option, key) => (
           <MenuItem key={key} value={option.id}>
-            {option.fullName}
+            {option.name}
           </MenuItem>
         ))}
     </TextField>

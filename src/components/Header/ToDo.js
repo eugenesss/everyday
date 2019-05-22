@@ -21,10 +21,10 @@ class ToDo extends Component {
   };
 
   componentDidMount() {
-    this.getNotifications();
+    //this.getNotifications();
   }
 
-  // get notifications
+  /*   // get notifications
   getNotifications() {
     api
       .get("notifications.js")
@@ -34,7 +34,7 @@ class ToDo extends Component {
       .catch(error => {
         console.log(error);
       });
-  }
+  } */
 
   render() {
     const { notifications } = this.state;

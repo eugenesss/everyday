@@ -12,7 +12,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
 import DescriptionFormInput from "Components/Form/Components/Inputs/DescriptionFormInput";
 import CompanyPicker from "Components/Form/Components/Pickers/CompanyPicker";
-import UserSelectionField from "Components/Form/Components/Pickers/UserSelectionField";
 import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetButtons";
 
 // Actions
@@ -48,14 +47,10 @@ class LeadForm extends Component {
             <FormBlock
               required
               label="Owner"
-              customTextField={
-                <UserSelectionField
-                  value={lead.owner ? lead.owner : ""}
-                  handleChange={this.props.handleChangeLead}
-                  target="owner"
-                  userList={users}
-                />
-              }
+              value={lead.owner ? lead.owner : ""}
+              selectValues={users}
+              handleChange={this.props.handleChangeLead}
+              target="owner"
             />
           </TableRow>
           <TableRow>
