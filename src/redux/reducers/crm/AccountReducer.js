@@ -10,7 +10,12 @@ import {
   GET_OPEN_ACCOUNT,
   GET_SINGLE_ACCOUNT,
   GET_SINGLE_ACCOUNT_SUCCESS,
-  CLEAR_SINGLE_ACCOUNT
+  CLEAR_SINGLE_ACCOUNT,
+  HANDLE_CHANGE_ACCOUNT,
+  SUBMIT_ACCOUNT,
+  CLEAR_ACCOUNT_FORM,
+  SUBMIT_ACCOUNT_SUCCESS,
+  SUBMIT_ACCOUNT_ERROR
 } from "Types";
 
 const INIT_STATE = {
@@ -23,7 +28,8 @@ const INIT_STATE = {
     loading: false,
     tableData: []
   },
-  accountToView: { loading: false, account: null }
+  accountToView: { loading: false, account: null },
+  accountForm: { loading: false, account: {} }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -68,7 +74,7 @@ export default (state = INIT_STATE, action) => {
       }
 
     /**
-     * Get Quotes
+     * Get Accounts
      */
     case GET_ACCOUNT_FAILURE:
       NotificationManager.warning("Error in fetching Account Data");
@@ -112,6 +118,37 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         accountToView: INIT_STATE.accountToView
+      };
+
+    /**
+     * New Account
+     */
+    case HANDLE_CHANGE_ACCOUNT:
+      return {
+        ...state,
+        accountForm: {
+          ...state.accountForm,
+          account: {
+            ...state.accountForm.account,
+            [action.payload.field]: action.payload.value
+          }
+        }
+      };
+    case SUBMIT_ACCOUNT:
+      return {
+        ...state,
+        accountForm: { ...state.accountForm, loading: true }
+      };
+    case CLEAR_ACCOUNT_FORM:
+      return { ...state, accountForm: INIT_STATE.accountForm };
+    case SUBMIT_ACCOUNT_SUCCESS:
+      return { ...state, accountForm: INIT_STATE.accountForm };
+    case SUBMIT_ACCOUNT_ERROR:
+      NotificationManager.error("Error in POST API");
+      console.log(action.payload);
+      return {
+        ...state,
+        accountForm: { ...state.accountForm, loading: false }
       };
 
     default:

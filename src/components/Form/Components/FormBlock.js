@@ -11,7 +11,8 @@ const FormBlock = ({
   target,
   selectValues,
   customTextField,
-  required
+  required,
+  empty
 }) => {
   return (
     <React.Fragment>
@@ -24,22 +25,23 @@ const FormBlock = ({
         {required && <sup style={{ color: "red" }}>*</sup>}
       </TableCell>
       <TableCell padding="dense" style={{ borderBottom: "none", width: "35%" }}>
-        {customTextField ? (
-          customTextField
-        ) : selectValues ? (
-          <FormSelectField
-            value={value}
-            handleChange={handleChange}
-            target={target}
-            selectValues={selectValues}
-          />
-        ) : (
-          <FormTextField
-            value={value}
-            handleChange={handleChange}
-            target={target}
-          />
-        )}
+        {!empty &&
+          (customTextField ? (
+            customTextField
+          ) : selectValues ? (
+            <FormSelectField
+              value={value}
+              handleChange={handleChange}
+              target={target}
+              selectValues={selectValues}
+            />
+          ) : (
+            <FormTextField
+              value={value}
+              handleChange={handleChange}
+              target={target}
+            />
+          ))}
       </TableCell>
     </React.Fragment>
   );

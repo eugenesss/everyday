@@ -102,9 +102,9 @@ export const submitCustomer = () => ({
 export const clearCustomerForm = () => ({
   type: CLEAR_CUSTOMER_FORM
 });
-export const submitCustomerSuccess = lead => ({
+export const submitCustomerSuccess = data => ({
   type: SUBMIT_CUSTOMER_SUCCESS,
-  payload: lead
+  payload: data
 });
 export const submitCustomerError = error => ({
   type: SUBMIT_CUSTOMER_ERROR,

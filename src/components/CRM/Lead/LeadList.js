@@ -45,7 +45,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
       name: "source",
       options: {
         customBodyRender: value => {
-          return value.name;
+          return value ? value.name : "";
         }
       }
     },
@@ -59,16 +59,16 @@ const LeadList = ({ tableData, loading, title, action }) => {
       }
     },
     { label: "Mobile", name: "mobile", options: { display: false } },
-    {
+    /* {
       label: "Owner",
       name: "owner",
       options: {
         display: false,
         customBodyRender: value => {
-          return value.name;
+          return value ? value : value.name;
         }
       }
-    },
+    }, */
     {
       label: "Industry",
       name: "industry",

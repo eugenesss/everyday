@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 // Sub components
 import { Helmet } from "react-helmet";
@@ -9,11 +10,13 @@ import IntlMessages from "Util/IntlMessages";
 // Page Components
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import LeadForm from "Components/Form/Lead/LeadForm";
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 class crm_new_lead extends Component {
   state = {};
 
   render() {
+    const { loading } = this.props.leadForm;
     return (
       <React.Fragment>
         <Helmet>
@@ -21,16 +24,21 @@ class crm_new_lead extends Component {
           <meta name="description" content="Everyday Leads Creation" />
         </Helmet>
         <RctCollapsibleCard heading={<IntlMessages id="sidebar.newLead" />}>
+          {loading && <RctSectionLoader />}
           <div className="row">
             <div className="col-md-10">
               <LeadForm />
             </div>
-            <div className="col-md-1" />
           </div>
         </RctCollapsibleCard>
       </React.Fragment>
     );
   }
 }
+const mapStateToProps = ({ crmState }) => {
+  const { leadState } = crmState;
+  const { leadForm } = leadState;
+  return { leadForm };
+};
 
-export default crm_new_lead;
+export default connect(mapStateToProps)(crm_new_lead);

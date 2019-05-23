@@ -105,6 +105,7 @@ function* postCustomerToDB() {
       state.crmState.customerState.customerForm.customer;
     const cust = yield select(getCustState);
     const data = yield call(postCustomerRequest, cust);
+    yield delay(800);
     yield put(submitCustomerSuccess(data));
   } catch (error) {
     yield put(submitCustomerError(error));

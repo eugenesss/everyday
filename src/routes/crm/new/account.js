@@ -1,26 +1,45 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 // Sub components
 import { Helmet } from "react-helmet";
-import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // intl messages
 import IntlMessages from "Util/IntlMessages";
+
+// Page Components
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import AccountForm from "Components/Form/Account/AccountForm";
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 class crm_new_account extends Component {
   state = {};
 
   render() {
+    const { loading } = this.props.accountForm;
     return (
       <React.Fragment>
         <Helmet>
           <title>Everyday | New Account</title>
           <meta name="description" content="Everyday Account Creation" />
         </Helmet>
-        <PageTitleBar title={<IntlMessages id="sidebar.newAccount" />} />
+        <RctCollapsibleCard heading={<IntlMessages id="sidebar.newAccount" />}>
+          {loading && <RctSectionLoader />}
+          <div className="row">
+            <div className="col-md-10">
+              <AccountForm />
+            </div>
+            <div className="col-md-1" />
+          </div>
+        </RctCollapsibleCard>
       </React.Fragment>
     );
   }
 }
+const mapStateToProps = ({ crmState }) => {
+  const { accountState } = crmState;
+  const { accountForm } = accountState;
+  return { accountForm };
+};
 
-export default crm_new_account;
+export default connect(mapStateToProps)(crm_new_account);

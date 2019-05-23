@@ -80,7 +80,7 @@ export default (state = INIT_STATE, action) => {
       }
 
     /**
-     * Get Quotes
+     * Get Customers
      */
     case GET_CUSTOMER_FAILURE:
       NotificationManager.warning("Error in fetching Customer Data");

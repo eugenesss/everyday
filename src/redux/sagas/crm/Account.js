@@ -10,12 +10,15 @@ import {
 import {
   CHANGE_ACCOUNT_LIST_VIEW,
   GET_ALL_ACCOUNT,
-  GET_SINGLE_ACCOUNT
+  GET_SINGLE_ACCOUNT,
+  SUBMIT_ACCOUNT
 } from "Types";
 import {
   getAccountFailure,
   getAccountSuccess,
-  getSingleAccountSuccess
+  getSingleAccountSuccess,
+  submitAccountSuccess,
+  submitAccountError
 } from "Actions";
 
 import api from "Api";
@@ -40,6 +43,11 @@ const getOpenAccountRequest = async () => {
 const getAccountRequest = async acctID => {
   console.log(`fetching ${acctID}`);
   const result = account;
+  return result;
+};
+const postAccountRequest = async acct => {
+  console.log(acct);
+  const result = {};
   return result;
 };
 
@@ -91,6 +99,18 @@ function* getAccountFromDB({ payload }) {
     yield put(getAccountFailure(error));
   }
 }
+function* postAccountToDB() {
+  try {
+    const getAcctState = state =>
+      state.crmState.accountState.accountForm.account;
+    const acct = yield select(getAcctState);
+    const data = yield call(postAccountRequest, acct);
+    yield delay(800);
+    yield put(submitAccountSuccess(data));
+  } catch (error) {
+    yield put(submitAccountError(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -104,6 +124,9 @@ export function* getAllAccountWatcher() {
 export function* getSingleAccountWatcher() {
   yield takeEvery(GET_SINGLE_ACCOUNT, getAccountFromDB);
 }
+export function* postAccountWatcher() {
+  yield takeEvery(SUBMIT_ACCOUNT, postAccountToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -112,6 +135,7 @@ export default function* rootSaga() {
   yield all([
     fork(changeViewWatcher),
     fork(getAllAccountWatcher),
-    fork(getSingleAccountWatcher)
+    fork(getSingleAccountWatcher),
+    fork(postAccountWatcher)
   ]);
 }

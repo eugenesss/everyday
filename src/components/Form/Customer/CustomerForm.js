@@ -9,7 +9,6 @@ import FormTable from "Components/Form/Components/FormTable";
 // Input Components
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
 import DescriptionFormInput from "Components/Form/Components/Inputs/DescriptionFormInput";
-import UserSelectionField from "Components/Form/Components/Pickers/UserSelectionField";
 import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetButtons";
 
 // Actions
@@ -20,7 +19,7 @@ import {
 } from "Actions";
 
 import { users } from "Components/UserDummyData";
-import { accountList } from "Components/DummyData";
+import { accountList, source } from "Components/DummyData";
 
 class CustomerForm extends Component {
   componentWillUnmount() {
@@ -28,7 +27,7 @@ class CustomerForm extends Component {
   }
 
   render() {
-    const { customer, loading } = this.props.customerForm;
+    const { customer } = this.props.customerForm;
     const disabled = customer.firstName && customer.lastName && customer.owner;
     return (
       <React.Fragment>
@@ -49,14 +48,10 @@ class CustomerForm extends Component {
             <FormBlock
               required
               label="Owner"
-              customTextField={
-                <UserSelectionField
-                  value={customer.owner ? customer.owner : ""}
-                  handleChange={this.props.handleChangeCustomer}
-                  target="owner"
-                  userList={users}
-                />
-              }
+              value={customer.owner ? customer.owner : ""}
+              handleChange={this.props.handleChangeCustomer}
+              target="owner"
+              selectValues={users}
             />
           </TableRow>
           <TableRow>
@@ -91,7 +86,7 @@ class CustomerForm extends Component {
               value={customer.source}
               handleChange={this.props.handleChangeCustomer}
               target="source"
-              selectValues={[{ id: 1, name: "Google" }, { id: 2, name: "SEO" }]}
+              selectValues={source}
             />
           </TableRow>
           {/**

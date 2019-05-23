@@ -12,7 +12,12 @@ import {
   GET_WON_DEAL,
   GET_SINGLE_DEAL,
   GET_SINGLE_DEAL_SUCCESS,
-  CLEAR_SINGLE_DEAL
+  CLEAR_SINGLE_DEAL,
+  HANDLE_CHANGE_DEAL,
+  SUBMIT_DEAL,
+  CLEAR_DEAL_FORM,
+  SUBMIT_DEAL_SUCCESS,
+  SUBMIT_DEAL_ERROR
 } from "Types";
 
 const INIT_STATE = {
@@ -31,7 +36,8 @@ const INIT_STATE = {
     loading: false,
     tableData: []
   },
-  dealToView: { loading: false, deal: null }
+  dealToView: { loading: false, deal: null },
+  dealForm: { loading: false, deal: {} }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -76,7 +82,7 @@ export default (state = INIT_STATE, action) => {
       }
 
     /**
-     * Get Quotes
+     * Get Deals
      */
     case GET_DEAL_FAILURE:
       NotificationManager.warning("Error in fetching Deal Data");
@@ -122,6 +128,37 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         dealToView: INIT_STATE.dealToView
+      };
+
+    /**
+     * New Deal
+     */
+    case HANDLE_CHANGE_DEAL:
+      return {
+        ...state,
+        dealForm: {
+          ...state.dealForm,
+          deal: {
+            ...state.dealForm.deal,
+            [action.payload.field]: action.payload.value
+          }
+        }
+      };
+    case SUBMIT_DEAL:
+      return {
+        ...state,
+        dealForm: { ...state.dealForm, loading: true }
+      };
+    case CLEAR_DEAL_FORM:
+      return { ...state, dealForm: INIT_STATE.dealForm };
+    case SUBMIT_DEAL_SUCCESS:
+      return { ...state, dealForm: INIT_STATE.dealForm };
+    case SUBMIT_DEAL_ERROR:
+      NotificationManager.error("Error in POST API");
+      console.log(action.payload);
+      return {
+        ...state,
+        dealForm: { ...state.dealForm, loading: false }
       };
 
     default:

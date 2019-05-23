@@ -7,8 +7,19 @@ import {
   select,
   delay
 } from "redux-saga/effects";
-import { CHANGE_DEAL_LIST_VIEW, GET_ALL_DEAL, GET_SINGLE_DEAL } from "Types";
-import { getDealSuccess, getDealFailure, getSingleDealSuccess } from "Actions";
+import {
+  CHANGE_DEAL_LIST_VIEW,
+  GET_ALL_DEAL,
+  GET_SINGLE_DEAL,
+  SUBMIT_DEAL
+} from "Types";
+import {
+  getDealSuccess,
+  getDealFailure,
+  getSingleDealSuccess,
+  submitDealSuccess,
+  submitDealError
+} from "Actions";
 
 import api from "Api";
 
@@ -40,6 +51,11 @@ const getWonDealRequest = async () => {
 const getDealRequest = async dealID => {
   console.log(`fetching ${dealID}`);
   const result = deal;
+  return result;
+};
+const postDealRequest = async deal => {
+  console.log(deal);
+  const result = {};
   return result;
 };
 
@@ -101,6 +117,17 @@ function* getDealFromDB({ payload }) {
     yield put(getDealFailure(error));
   }
 }
+function* postDealFromDB() {
+  try {
+    const getDealState = state => state.crmState.dealState.dealForm.deal;
+    const deal = yield select(getDealState);
+    const data = yield call(postDealRequest, deal);
+    yield delay(800);
+    yield put(submitDealSuccess(data));
+  } catch (error) {
+    yield put(submitDealError(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -114,6 +141,9 @@ export function* getAllDealWatcher() {
 export function* getSingleDealWatcher() {
   yield takeEvery(GET_SINGLE_DEAL, getDealFromDB);
 }
+export function* postDealWatcher() {
+  yield takeEvery(SUBMIT_DEAL, postDealFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -122,6 +152,7 @@ export default function* rootSaga() {
   yield all([
     fork(changeViewWatcher),
     fork(getAllDealWatcher),
-    fork(getSingleDealWatcher)
+    fork(getSingleDealWatcher),
+    fork(postDealWatcher)
   ]);
 }

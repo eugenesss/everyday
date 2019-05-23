@@ -80,6 +80,11 @@ export const lead = {
   notes: [note, note, note]
 };
 
+export const leadStatus = [
+  { id: 1, name: "Contacted" },
+  { id: 2, name: "Not Contacted" }
+];
+
 export const lead2 = {
   id: 2,
   name: "New Lead",
@@ -208,6 +213,7 @@ export const cust2 = {
 };
 
 const stage1 = {
+  id: 1,
   name: "Prospecting",
   chance: 10,
   step: 1,
@@ -216,6 +222,7 @@ const stage1 = {
     "This stage refers to any initial calls, conversations or emails with a potential lead."
 };
 const stage2 = {
+  id: 2,
   name: "Qualification",
   chance: 25,
   step: 2,
@@ -223,6 +230,7 @@ const stage2 = {
   description: "This stage refers to a confirmed meeting with the lead."
 };
 const stage3 = {
+  id: 3,
   name: "Proposal",
   chance: 50,
   step: 3,
@@ -231,6 +239,7 @@ const stage3 = {
     "This stage refers to any discussion on budget, proposal or issue of quotations."
 };
 const stage4 = {
+  id: 4,
   name: "Negotiation",
   chance: 70,
   step: 4,
@@ -239,6 +248,7 @@ const stage4 = {
     "This stage refers to any form of further negotiation portraying some form of buying signal after initial proposal stage."
 };
 const stage5 = {
+  id: 5,
   name: "Buying Signal",
   chance: 90,
   step: 5,
@@ -247,6 +257,7 @@ const stage5 = {
     "This stage refers to strong buying signals from the client Eg. Verbal agreement."
 };
 const stage6 = {
+  id: 6,
   name: "Closed Won",
   chance: 100,
   step: 6,
@@ -254,6 +265,7 @@ const stage6 = {
   description: "This stage refers to a successful signed sales order."
 };
 const stage7 = {
+  id: 7,
   name: "Closed Lost",
   chance: 0,
   step: 7,
@@ -270,6 +282,22 @@ const dealHistory = {
   createdAt: 1330192800000,
   createdBy: user
 };
+
+export const dealType = [
+  { id: 1, name: "New Business" },
+  { id: 2, name: "Upsells" }
+];
+
+export const source = [
+  { id: 1, name: "Cold Call" },
+  { id: 2, name: "Referral" },
+  { id: 3, name: "Google" },
+  { id: 4, name: "SEO" }
+];
+export const industry = [
+  { id: 1, name: "Fashion" },
+  { id: 2, name: "Advertising" }
+];
 
 export const deal = {
   id: 1,
