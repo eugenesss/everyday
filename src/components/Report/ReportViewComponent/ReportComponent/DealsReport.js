@@ -4,6 +4,12 @@ import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import ReportDateRangePicker from "../ReportDateRangePicker";
+import DealReportTable from "Components/CRM/View/Deal/DealReportTable";
+
+// Charts
+import BarChart from "Components/Charts/BarChart";
+import DonutChart from "Components/Charts/DonutChart";
+import PieChart from "Components/Charts/PieChart";
 
 // Actions
 import {
@@ -13,12 +19,20 @@ import {
   getDealReport
 } from "Actions";
 
+import {
+  dealByOwner,
+  dealByType,
+  dealStage,
+  dealRecordsInStage
+} from "Components/ReportDummy";
+
 class DealsReport extends Component {
   render() {
     const { startDate, endDate, focusedInput } = this.props.dateRange;
     const { loading } = this.props.dealReportData;
     return (
       <React.Fragment>
+        {loading && <RctSectionLoader />}
         <div className="row">
           <div className="col-md-6">
             <RctCollapsibleCard heading="Set Date Range" fullBlock>
@@ -33,29 +47,38 @@ class DealsReport extends Component {
               />
             </RctCollapsibleCard>
           </div>
+        </div>
+        <div className="row">
           <div className="col-md-6">
             <RctCollapsibleCard heading={"Overall Deal by Owners"}>
-              {loading && <RctSectionLoader />}
+              <BarChart data={dealByOwner} />
             </RctCollapsibleCard>
           </div>
         </div>
         <div className="row">
           <div className="col-md-6">
             <RctCollapsibleCard heading={"Total Deals by Type"}>
-              Report
+              <DonutChart data={dealByType} />
             </RctCollapsibleCard>
           </div>
           <div className="col-md-6">
             <RctCollapsibleCard heading={"Overall Deal Stages"}>
-              Report
+              <PieChart data={dealStage} />
             </RctCollapsibleCard>
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
-            <RctCollapsibleCard heading={"Deals in Stage"}>
-              Report
-            </RctCollapsibleCard>
+            {dealRecordsInStage.map((stage, key) => {
+              return (
+                <RctCollapsibleCard
+                  key={key}
+                  heading={`${stage.stageName} count: ${stage.count}`}
+                >
+                  <DealReportTable deals={stage.deals} />
+                </RctCollapsibleCard>
+              );
+            })}
           </div>
         </div>
       </React.Fragment>

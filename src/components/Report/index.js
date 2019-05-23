@@ -20,7 +20,7 @@ const drawerWidth = 240;
 const styles = theme => ({
   root: {
     width: "100%",
-    height: `calc(100vh - 100px)`,
+    height: `calc(100vh - 150px)`,
     zIndex: -1,
     marginBottom: 20,
     overflow: "hidden"
@@ -91,7 +91,7 @@ class ReportDrawer extends Component {
               className="rct-scroll"
               autoHide
               ref="chatScroll"
-              style={{ height: "calc(100vh - 160px)" }}
+              style={{ minHeight: "calc(100vh - 200px)" }}
             >
               <div className="p-20">
                 <ReportViewComponent componentToRender={componentToRender} />
