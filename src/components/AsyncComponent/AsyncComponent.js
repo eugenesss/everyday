@@ -156,10 +156,13 @@ export const Async_setting_user_users_component = Loadable({
   loading: () => <RctPageLoader />
 });
 export const Async_setting_user_rolesPermissions_component = Loadable({
-  loader: () =>
-    import("Routes/setting/users-and-controls/roles-and-permissions"),
+  loader: () => import("Routes/setting/users-and-controls/roles-and-permissions"),
   loading: () => <RctPageLoader />
 });
+export const Async_setting_user_groups_component = Loadable({
+  loader: () => import("Routes/setting/users-and-controls/groups"),
+  loading: () => <RctPageLoader />
+})
 // Accounting
 export const Async_setting_acc_creditNote_component = Loadable({
   loader: () => import("Routes/setting/accounting/creditNote"),

@@ -2,13 +2,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Col, Row } from "reactstrap";
 
-import RolesList from "./RolesList";
-import RoleManager from "./RoleManager";
+import GroupsManager from "./GroupsManager"
+import GroupsList from "./GroupsList";
 
+import { getAllRoles, getAllGroups } from "Actions";
 
-class RolesLayout extends Component {
+class GroupsLayout extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this.props.getAllRoles()
+    this.props.getAllGroups()
   }
 
   render() {
@@ -16,10 +22,10 @@ class RolesLayout extends Component {
       <React.Fragment>
         <Row>
           <Col md={3}>
-            <RolesList/>
+            <GroupsList/>
           </Col>
           <Col md={9}>
-            <RoleManager/>
+            <GroupsManager/>
           </Col>
         </Row>
       </React.Fragment>
@@ -29,5 +35,5 @@ class RolesLayout extends Component {
 
 export default connect(
   null,
-  { }
-)(RolesLayout);
+  { getAllRoles, getAllGroups }
+)(GroupsLayout);

@@ -20,7 +20,11 @@ export * from "./accounting/CreditNoteActions";
 export * from "./system/ReportActions";
 // Calendar Actions
 export * from "./calendar/CalendarActions";
-// User Actions
-export * from "./settings/userControl/UsersActions";
-// Role Actions
+// Company Actions
+export * from "./settings/general/CompanyActions"
+
+// User Control Actions
 export * from "./settings/userControl/RolesActions";
+export * from "./settings/userControl/UsersActions";
+export * from "./settings/userControl/GroupsActions";
+

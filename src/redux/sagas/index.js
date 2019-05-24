@@ -14,15 +14,19 @@ import customerSagas from "./crm/Customer";
 import accountSagas from "./crm/Account";
 import dealSagas from "./crm/Deal";
 
-// users
-import userSagas from "./setting/users/Users"
-//roles
-import roleSagas from "./setting/roles/Roles"
+
+//settings
+import userSagas from "./settings/userControl/Users"
+import roleSagas from "./settings/userControl/Roles"
+import groupSagas from "./settings/userControl/Groups"
+import companySagas from "./settings/general/Company"
 
 export default function* rootSaga(getState) {
   yield all([
     roleSagas(),
     userSagas(),
+    groupSagas(),
+    companySagas(),
     quoteSagas(),
     invoiceSagas(),
     creditNoteSagas(),

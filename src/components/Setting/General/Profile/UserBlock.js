@@ -4,7 +4,6 @@ import { Col, Row } from "reactstrap";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 
 const UserBlock = ({ user }) => {
-  console.log(user)
   return (
     <React.Fragment> 
       <RctCollapsibleCard>

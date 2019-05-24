@@ -2,8 +2,14 @@
 export * from "./system/AppSettingTypes";
 export * from "./system/ReportTypes";
 export * from "./system/CalendarTypes";
-export * from "./system/UserTypes";
-export * from "./system/RoleTypes";
+
+// User Control Types
+export * from "./settings/userControl/UserTypes";
+export * from "./settings/userControl/RoleTypes";
+export * from "./settings/userControl/GroupTypes";
+
+// General Types
+export * from "./settings/general/CompanyTypes";
 
 // Accounting Types
 export * from "./accounting/QuotationTypes";
