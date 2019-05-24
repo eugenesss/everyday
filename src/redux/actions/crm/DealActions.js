@@ -12,6 +12,9 @@ import {
   GET_SINGLE_DEAL,
   GET_SINGLE_DEAL_SUCCESS,
   CLEAR_SINGLE_DEAL,
+  GET_DEAL_SUMMARY,
+  GET_DEAL_SUMMARY_SUCCESS,
+  GET_DEAL_SUMMARY_FAILURE,
   HANDLE_CHANGE_DEAL,
   SUBMIT_DEAL,
   CLEAR_DEAL_FORM,
@@ -103,6 +106,21 @@ export const getSingleDealSuccess = dealData => ({
 });
 export const clearSingleDeal = () => ({
   type: CLEAR_SINGLE_DEAL
+});
+
+/**
+ * Get Deal Summary
+ */
+export const getDealSummary = () => ({
+  type: GET_DEAL_SUMMARY
+});
+export const getDealSummarySuccess = data => ({
+  type: GET_DEAL_SUMMARY_SUCCESS,
+  payload: data
+});
+export const getDealSummaryFailure = error => ({
+  type: GET_DEAL_SUMMARY_FAILURE,
+  payload: error
 });
 
 /**

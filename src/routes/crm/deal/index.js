@@ -11,7 +11,6 @@ import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // List Summary
 import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // Actions
@@ -19,12 +18,14 @@ import {
   changeDealView,
   toggleDealDropDown,
   toggleDealSummary,
-  getAllDeal
+  getAllDeal,
+  getDealSummary
 } from "Actions";
 
 class crm_deal extends Component {
   componentDidMount() {
     this.props.getAllDeal();
+    this.props.getDealSummary();
   }
 
   render() {
@@ -32,11 +33,11 @@ class crm_deal extends Component {
       dropdownOpen,
       options,
       nowShowing,
-      showSummary,
       action,
       tableData,
       loading
     } = this.props.dealState.dealList;
+    const { showSummary, summary } = this.props.dealState.dealSummary;
     return (
       <React.Fragment>
         <Helmet>
@@ -58,34 +59,7 @@ class crm_deal extends Component {
           }
           createLink="/crm/new/deal"
         />
-        {showSummary && (
-          <ListSummary>
-            <ListSummaryItem
-              heading={"New Lead"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Cold Lead"}
-              number={"10"}
-              positive={false}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Hot Lead"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Open Leads"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-          </ListSummary>
-        )}
+        {showSummary && <ListSummary summary={summary} />}
         <DealList
           title={nowShowing}
           action={action}
@@ -103,5 +77,11 @@ const mapStateToProps = ({ crmState }) => {
 
 export default connect(
   mapStateToProps,
-  { changeDealView, toggleDealDropDown, toggleDealSummary, getAllDeal }
+  {
+    changeDealView,
+    toggleDealDropDown,
+    toggleDealSummary,
+    getAllDeal,
+    getDealSummary
+  }
 )(crm_deal);

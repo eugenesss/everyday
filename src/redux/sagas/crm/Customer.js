@@ -11,19 +11,22 @@ import {
   CHANGE_CUSTOMER_LIST_VIEW,
   GET_ALL_CUSTOMER,
   GET_SINGLE_CUSTOMER,
+  GET_CUSTOMER_SUMMARY,
   SUBMIT_CUSTOMER
 } from "Types";
 import {
   getCustomerFailure,
   getCustomerSuccess,
   getSingleCustomerSuccess,
+  getCustomerSummarySuccess,
+  getCustomerSummaryFailure,
   submitCustomerSuccess,
   submitCustomerError
 } from "Actions";
 
 import api from "Api";
 
-import { customerList, cust, cust2 } from "Components/DummyData";
+import { customerList, cust, cust2, custSummary } from "Components/DummyData";
 
 //=========================
 // REQUESTS
@@ -43,6 +46,10 @@ const getOpenCustomerRequest = async () => {
 const getCustomerRequest = async custID => {
   console.log(`fetching ${custID}`);
   const result = custID == 1 ? cust : cust2;
+  return result;
+};
+const getCustSummaryRequest = async () => {
+  const result = custSummary;
   return result;
 };
 const postCustomerRequest = async cust => {
@@ -111,6 +118,14 @@ function* postCustomerToDB() {
     yield put(submitCustomerError(error));
   }
 }
+function* getCustSummaryFromDB() {
+  try {
+    const data = yield call(getCustSummaryRequest);
+    yield put(getCustomerSummarySuccess(data));
+  } catch (error) {
+    yield put(getCustomerSummaryFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -127,6 +142,9 @@ export function* getSingleCustomerWatcher() {
 export function* postCustomerWatcher() {
   yield takeEvery(SUBMIT_CUSTOMER, postCustomerToDB);
 }
+export function* getCustomerSummaryWatcher() {
+  yield takeEvery(GET_CUSTOMER_SUMMARY, getCustSummaryFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -136,6 +154,7 @@ export default function* rootSaga() {
     fork(changeViewWatcher),
     fork(getAllCustomerWatcher),
     fork(getSingleCustomerWatcher),
+    fork(getCustomerSummaryWatcher),
     fork(postCustomerWatcher)
   ]);
 }

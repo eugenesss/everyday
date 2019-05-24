@@ -13,6 +13,9 @@ import {
   GET_SINGLE_DEAL,
   GET_SINGLE_DEAL_SUCCESS,
   CLEAR_SINGLE_DEAL,
+  GET_DEAL_SUMMARY,
+  GET_DEAL_SUMMARY_SUCCESS,
+  GET_DEAL_SUMMARY_FAILURE,
   HANDLE_CHANGE_DEAL,
   SUBMIT_DEAL,
   CLEAR_DEAL_FORM,
@@ -23,7 +26,6 @@ import {
 const INIT_STATE = {
   dealList: {
     dropdownOpen: false,
-    showSummary: false,
     nowShowing: "All Deals",
     options: [
       "All Deals",
@@ -35,6 +37,11 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
+  },
+  dealSummary: {
+    showSummary: false,
+    loading: false,
+    summary: []
   },
   dealToView: { loading: false, deal: null },
   dealForm: { loading: false, deal: {} }
@@ -48,14 +55,6 @@ export default (state = INIT_STATE, action) => {
         dealList: {
           ...state.dealList,
           dropdownOpen: !state.dealList.dropdownOpen
-        }
-      };
-    case TOGGLE_DEAL_SUMMARY:
-      return {
-        ...state,
-        dealList: {
-          ...state.dealList,
-          showSummary: !state.dealList.showSummary
         }
       };
     case CHANGE_DEAL_LIST_VIEW:
@@ -82,12 +81,49 @@ export default (state = INIT_STATE, action) => {
       }
 
     /**
+     * Account Summary
+     */
+    case TOGGLE_DEAL_SUMMARY:
+      return {
+        ...state,
+        dealSummary: {
+          ...state.dealSummary,
+          showSummary: !state.dealSummary.showSummary
+        }
+      };
+    case GET_DEAL_SUMMARY:
+      return {
+        ...state,
+        dealSummary: {
+          ...state.dealSummary,
+          loading: true
+        }
+      };
+    case GET_DEAL_SUMMARY_SUCCESS:
+      return {
+        ...state,
+        dealSummary: {
+          ...state.dealSummary,
+          summary: action.payload,
+          loading: false
+        }
+      };
+    case GET_DEAL_SUMMARY_FAILURE:
+      NotificationManager.warning("Error in fetching Deal Summary");
+      console.log(action.payload);
+      return { ...state, dealSummary: INIT_STATE.dealSummary };
+
+    /**
      * Get Deals
      */
     case GET_DEAL_FAILURE:
       NotificationManager.warning("Error in fetching Deal Data");
       console.log(action.payload);
-      return INIT_STATE;
+      return {
+        ...state,
+        dealToView: INIT_STATE.dealToView,
+        dealList: INIT_STATE.dealList
+      };
     case GET_ALL_DEAL:
     case GET_MY_DEAL:
     case GET_OPEN_DEAL:

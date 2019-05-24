@@ -477,17 +477,33 @@ export const creditNoteList = [creditNote, creditNote, creditNote, creditNote];
 // List Summary
 export const leadSummary = [
   {
-    summaryType: "Total Cold Leads",
+    summaryName: "Total Cold Leads",
     number: 20,
-    positive: null,
-    difference: null
+    color: "#a2dbff"
   },
   {
-    summaryType: "Total Hot Leads",
+    summaryName: "Total Hot Leads",
     number: 15,
-    positive: null,
-    difference: null
+    color: "#ff8585"
   },
-  { summaryType: "New Leads", number: 2, positive: 0, difference: 20 },
-  { summaryType: "Open Leads", number: 8, positive: 1, difference: 50 }
+  { summaryName: "New Leads", number: 2, color: "#a7ff85" },
+  { summaryName: "Open Leads", number: 8 }
+];
+export const custSummary = [
+  {
+    summaryName: "Total Customers",
+    number: 20,
+    color: "#ffd685"
+  },
+  {
+    summaryName: "Active Customers",
+    number: 15,
+    color: "#a7ff85"
+  },
+  {
+    summaryName: "Inactive Customers",
+    number: 12,
+    color: "#a2dbff"
+  },
+  { summaryName: "Open Leads", number: 8 }
 ];

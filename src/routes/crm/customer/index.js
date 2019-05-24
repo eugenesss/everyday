@@ -11,19 +11,20 @@ import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // List Summary
 import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 import {
   changeCustomerView,
   toggleCustomerDropDown,
   toggleCustomerSummary,
-  getAllCustomer
+  getAllCustomer,
+  getCustomerSummary
 } from "Actions";
 
 class crm_customer extends Component {
   componentDidMount() {
     this.props.getAllCustomer();
+    this.props.getCustomerSummary();
   }
 
   render() {
@@ -31,11 +32,12 @@ class crm_customer extends Component {
       dropdownOpen,
       options,
       nowShowing,
-      showSummary,
       action,
       tableData,
       loading
     } = this.props.customerState.customerList;
+
+    const { showSummary, summary } = this.props.customerState.customerSummary;
     return (
       <React.Fragment>
         <Helmet>
@@ -59,34 +61,7 @@ class crm_customer extends Component {
           }
           createLink="/crm/new/customer"
         />
-        {showSummary && (
-          <ListSummary>
-            <ListSummaryItem
-              heading={"New Lead"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Cold Lead"}
-              number={"10"}
-              positive={false}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Hot Lead"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Open Leads"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-          </ListSummary>
-        )}
+        {showSummary && <ListSummary summary={summary} />}
         <CustomerList
           title={nowShowing}
           action={action}
@@ -108,6 +83,7 @@ export default connect(
     changeCustomerView,
     toggleCustomerDropDown,
     toggleCustomerSummary,
-    getAllCustomer
+    getAllCustomer,
+    getCustomerSummary
   }
 )(crm_customer);

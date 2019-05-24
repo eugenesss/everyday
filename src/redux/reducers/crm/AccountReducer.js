@@ -11,6 +11,9 @@ import {
   GET_SINGLE_ACCOUNT,
   GET_SINGLE_ACCOUNT_SUCCESS,
   CLEAR_SINGLE_ACCOUNT,
+  GET_ACCOUNT_SUMMARY,
+  GET_ACCOUNT_SUMMARY_SUCCESS,
+  GET_ACCOUNT_SUMMARY_FAILURE,
   HANDLE_CHANGE_ACCOUNT,
   SUBMIT_ACCOUNT,
   CLEAR_ACCOUNT_FORM,
@@ -21,12 +24,16 @@ import {
 const INIT_STATE = {
   accountList: {
     dropdownOpen: false,
-    showSummary: false,
     nowShowing: "All Accounts",
     options: ["All Accounts", "My Accounts", "Open Accounts"],
     action: false,
     loading: false,
     tableData: []
+  },
+  accountSummary: {
+    showSummary: false,
+    loading: false,
+    summary: []
   },
   accountToView: { loading: false, account: null },
   accountForm: { loading: false, account: {} }
@@ -40,14 +47,6 @@ export default (state = INIT_STATE, action) => {
         accountList: {
           ...state.accountList,
           dropdownOpen: !state.accountList.dropdownOpen
-        }
-      };
-    case TOGGLE_ACCOUNT_SUMMARY:
-      return {
-        ...state,
-        accountList: {
-          ...state.accountList,
-          showSummary: !state.accountList.showSummary
         }
       };
     case CHANGE_ACCOUNT_LIST_VIEW:
@@ -74,12 +73,49 @@ export default (state = INIT_STATE, action) => {
       }
 
     /**
+     * Account Summary
+     */
+    case TOGGLE_ACCOUNT_SUMMARY:
+      return {
+        ...state,
+        accountSummary: {
+          ...state.accountSummary,
+          showSummary: !state.accountSummary.showSummary
+        }
+      };
+    case GET_ACCOUNT_SUMMARY:
+      return {
+        ...state,
+        accountSummary: {
+          ...state.accountSummary,
+          loading: true
+        }
+      };
+    case GET_ACCOUNT_SUMMARY_SUCCESS:
+      return {
+        ...state,
+        accountSummary: {
+          ...state.accountSummary,
+          summary: action.payload,
+          loading: false
+        }
+      };
+    case GET_ACCOUNT_SUMMARY_FAILURE:
+      NotificationManager.warning("Error in fetching Account Summary");
+      console.log(action.payload);
+      return { ...state, accountSummary: INIT_STATE.accountSummary };
+
+    /**
      * Get Accounts
      */
     case GET_ACCOUNT_FAILURE:
       NotificationManager.warning("Error in fetching Account Data");
       console.log(action.payload);
-      return INIT_STATE;
+      return {
+        ...state,
+        accountToView: INIT_STATE.accountToView,
+        accountList: INIT_STATE.accountList
+      };
     case GET_ALL_ACCOUNT:
     case GET_MY_ACCOUNT:
     case GET_OPEN_ACCOUNT:

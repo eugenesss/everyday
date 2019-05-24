@@ -13,9 +13,7 @@ import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // ListSummary
 import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 // Actions
 import {
@@ -63,25 +61,7 @@ class crm_lead extends Component {
           }
           createLink="/crm/new/lead"
         />
-        {showSummary && (
-          <div className="col-md-8">
-            <ListSummary>
-              {summary &&
-                summary.map((sum, key) => {
-                  return (
-                    <ListSummaryItem
-                      key={key}
-                      heading={sum.summaryType}
-                      number={sum.number}
-                      positive={sum.positive}
-                      percentage={sum.difference}
-                    />
-                  );
-                })}
-            </ListSummary>
-            {/* <RctSectionLoader /> */}
-          </div>
-        )}
+        {showSummary && <ListSummary summary={summary} />}
         <LeadList
           title={nowShowing}
           action={action}
