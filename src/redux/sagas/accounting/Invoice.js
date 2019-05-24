@@ -10,18 +10,21 @@ import {
 import {
   CHANGE_INVOICE_LIST_VIEW,
   GET_ALL_INVOICE,
-  GET_SINGLE_INVOICE
+  GET_SINGLE_INVOICE,
+  GET_INVOICE_SUMMARY
 } from "Types";
 import {
   getInvoiceSuccess,
   getInvoiceFailure,
-  getSingleInvoiceSuccess
+  getSingleInvoiceSuccess,
+  getInvoiceSummarySuccess,
+  getInvoiceSummaryFailure
 } from "Actions";
 
 import api from "Api";
 
 import { invoice, invoiceList } from "Components/DummyData";
-import { get } from "http";
+import { custSummary } from "../../../components/DummyData";
 
 //=========================
 // REQUESTS
@@ -45,6 +48,10 @@ const getClosedInvoiceRequest = async () => {
 const getInvoiceRequest = async invID => {
   console.log(`fetching ${invID}`);
   const result = invoice;
+  return result;
+};
+const getInvoiceSummaryRequest = async () => {
+  const result = custSummary;
   return result;
 };
 
@@ -101,6 +108,14 @@ function* getInvoiceFromDB({ payload }) {
     yield put(getInvoiceFailure(error));
   }
 }
+function* getInvoiceSummaryFromDB() {
+  try {
+    const data = yield call(getInvoiceSummaryRequest);
+    yield put(getInvoiceSummarySuccess(data));
+  } catch (error) {
+    yield put(getInvoiceSummaryFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -114,6 +129,9 @@ export function* getAllInvoiceWatcher() {
 export function* getSingleInvoiceWatcher() {
   yield takeEvery(GET_SINGLE_INVOICE, getInvoiceFromDB);
 }
+export function* getInvoiceSummaryWatcher() {
+  yield takeEvery(GET_INVOICE_SUMMARY, getInvoiceSummaryFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -122,6 +140,7 @@ export default function* rootSaga() {
   yield all([
     fork(changeViewWatcher),
     fork(getAllInvoiceWatcher),
-    fork(getSingleInvoiceWatcher)
+    fork(getSingleInvoiceWatcher),
+    fork(getInvoiceSummaryWatcher)
   ]);
 }

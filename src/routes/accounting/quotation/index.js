@@ -21,12 +21,14 @@ import {
   changeQuotationView,
   toggleQuotationDropDown,
   toggleQuotationSummary,
-  getAllQuotation
+  getAllQuotation,
+  getQuotationSummary
 } from "Actions";
 
 class acct_quotation extends Component {
   componentDidMount() {
     this.props.getAllQuotation();
+    this.props.getQuotationSummary();
   }
 
   render() {
@@ -34,11 +36,11 @@ class acct_quotation extends Component {
       dropdownOpen,
       options,
       nowShowing,
-      showSummary,
       action,
       tableData,
       loading
     } = this.props.quotationState.quotationList;
+    const { showSummary, summary } = this.props.quotationState.quotationSummary;
     return (
       <React.Fragment>
         <Helmet>
@@ -62,28 +64,7 @@ class acct_quotation extends Component {
           }
           createLink="/acct/new/quotation"
         />
-        {showSummary && (
-          <ListSummary>
-            <ListSummaryItem
-              heading={"New Quotations"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Open Quotations"}
-              number={"10"}
-              positive={false}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Closed Quotations"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-          </ListSummary>
-        )}
+        {showSummary && <ListSummary summary={summary} />}
         <QuotationList
           title={nowShowing}
           action={action}
@@ -106,6 +87,7 @@ export default connect(
     changeQuotationView,
     toggleQuotationDropDown,
     toggleQuotationSummary,
-    getAllQuotation
+    getAllQuotation,
+    getQuotationSummary
   }
 )(acct_quotation);

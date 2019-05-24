@@ -11,13 +11,15 @@ import {
   GET_CLOSED_CREDIT_NOTE,
   GET_SINGLE_CREDIT_NOTE,
   GET_SINGLE_CREDIT_NOTE_SUCCESS,
-  CLEAR_SINGLE_CREDIT_NOTE
+  CLEAR_SINGLE_CREDIT_NOTE,
+  GET_CREDIT_NOTE_SUMMARY,
+  GET_CREDIT_NOTE_SUMMARY_SUCCESS,
+  GET_CREDIT_NOTE_SUMMARY_FAILURE
 } from "Types";
 
 const INIT_STATE = {
   creditNoteList: {
     dropdownOpen: false,
-    showSummary: false,
     nowShowing: "All Credit Notes",
     options: [
       "All Credit Notes",
@@ -28,6 +30,11 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
+  },
+  creditNoteSummary: {
+    showSummary: false,
+    loading: false,
+    summary: []
   },
   creditNoteToView: { loading: false, creditNote: null }
 };
@@ -40,14 +47,6 @@ export default (state = INIT_STATE, action) => {
         creditNoteList: {
           ...state.creditNoteList,
           dropdownOpen: !state.creditNoteList.dropdownOpen
-        }
-      };
-    case TOGGLE_CREDIT_NOTE_SUMMARY:
-      return {
-        ...state,
-        creditNoteList: {
-          ...state.creditNoteList,
-          showSummary: !state.creditNoteList.showSummary
         }
       };
     case CHANGE_CREDIT_NOTE_LIST_VIEW:
@@ -72,6 +71,39 @@ export default (state = INIT_STATE, action) => {
           }
         };
       }
+
+    /**
+     * Invoice Summary
+     */
+    case TOGGLE_CREDIT_NOTE_SUMMARY:
+      return {
+        ...state,
+        creditNoteSummary: {
+          ...state.creditNoteSummary,
+          showSummary: !state.creditNoteSummary.showSummary
+        }
+      };
+    case GET_CREDIT_NOTE_SUMMARY:
+      return {
+        ...state,
+        creditNoteSummary: {
+          ...state.creditNoteSummary,
+          loading: true
+        }
+      };
+    case GET_CREDIT_NOTE_SUMMARY_SUCCESS:
+      return {
+        ...state,
+        creditNoteSummary: {
+          ...state.creditNoteSummary,
+          summary: action.payload,
+          loading: false
+        }
+      };
+    case GET_CREDIT_NOTE_SUMMARY_FAILURE:
+      NotificationManager.warning("Error in fetching Credit Note Summary");
+      console.log(action.payload);
+      return { ...state, creditNoteSummary: INIT_STATE.creditNoteSummary };
 
     /**
      * Get Quotes

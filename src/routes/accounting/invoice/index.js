@@ -10,7 +10,6 @@ import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // ListSummary
 import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // List
@@ -21,12 +20,14 @@ import {
   changeInvoiceView,
   toggleInvoiceDropDown,
   toggleInvoiceSummary,
-  getAllInvoice
+  getAllInvoice,
+  getInvoiceSummary
 } from "Actions";
 
 class acct_invoice extends Component {
   componentDidMount() {
     this.props.getAllInvoice();
+    this.props.getInvoiceSummary();
   }
 
   render() {
@@ -34,12 +35,11 @@ class acct_invoice extends Component {
       dropdownOpen,
       options,
       nowShowing,
-      showSummary,
       action,
       tableData,
       loading
     } = this.props.invoiceState.invoiceList;
-
+    const { showSummary, summary } = this.props.invoiceState.invoiceSummary;
     return (
       <React.Fragment>
         <Helmet>
@@ -61,28 +61,7 @@ class acct_invoice extends Component {
           }
           createLink="/acct/new/invoice"
         />
-        {showSummary && (
-          <ListSummary>
-            <ListSummaryItem
-              heading={"New Invoices"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Open Invoices"}
-              number={"10"}
-              positive={false}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Closed Invoices"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-          </ListSummary>
-        )}
+        {showSummary && <ListSummary summary={summary} />}
         <InvoiceList
           title={nowShowing}
           action={action}
@@ -104,6 +83,7 @@ export default connect(
     changeInvoiceView,
     toggleInvoiceDropDown,
     toggleInvoiceSummary,
-    getAllInvoice
+    getAllInvoice,
+    getInvoiceSummary
   }
 )(acct_invoice);

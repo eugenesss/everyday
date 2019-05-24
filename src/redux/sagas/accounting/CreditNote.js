@@ -10,17 +10,21 @@ import {
 import {
   CHANGE_CREDIT_NOTE_LIST_VIEW,
   GET_ALL_CREDIT_NOTE,
-  GET_SINGLE_CREDIT_NOTE
+  GET_SINGLE_CREDIT_NOTE,
+  GET_CREDIT_NOTE_SUMMARY
 } from "Types";
 import {
   getCreditNoteSuccess,
   getCreditNoteFailure,
-  getSingleCreditNoteSuccess
+  getSingleCreditNoteSuccess,
+  getCreditNoteSummarySuccess,
+  getCreditNoteSummaryFailure
 } from "Actions";
 
 import api from "Api";
 
 import { creditNote, creditNoteList } from "Components/DummyData";
+import { leadSummary } from "../../../components/DummyData";
 
 //=========================
 // REQUESTS
@@ -44,6 +48,10 @@ const getClosedCreditNoteRequest = async () => {
 const getCreditNoteRequest = async credID => {
   console.log(`fetching ${credID}`);
   const result = creditNote;
+  return result;
+};
+const getCreditNoteSummaryRequest = async () => {
+  const result = leadSummary;
   return result;
 };
 
@@ -100,6 +108,14 @@ function* getCreditNoteFromDB({ payload }) {
     yield put(getCreditNoteFailure(error));
   }
 }
+function* getCreditNoteSummaryFromDB() {
+  try {
+    const data = yield call(getCreditNoteSummaryRequest);
+    yield put(getCreditNoteSummarySuccess(data));
+  } catch (error) {
+    yield put(getCreditNoteSummaryFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -113,6 +129,9 @@ export function* getAllCreditNoteWatcher() {
 export function* getSingleCreditNoteWatcher() {
   yield takeEvery(GET_SINGLE_CREDIT_NOTE, getCreditNoteFromDB);
 }
+export function* getCredNoteSummaryWatcher() {
+  yield takeEvery(GET_CREDIT_NOTE_SUMMARY, getCreditNoteSummaryFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -121,6 +140,7 @@ export default function* rootSaga() {
   yield all([
     fork(changeViewWatcher),
     fork(getAllCreditNoteWatcher),
-    fork(getSingleCreditNoteWatcher)
+    fork(getSingleCreditNoteWatcher),
+    fork(getCredNoteSummaryWatcher)
   ]);
 }

@@ -11,13 +11,15 @@ import {
   GET_CLOSED_INVOICE,
   GET_SINGLE_INVOICE,
   GET_SINGLE_INVOICE_SUCCESS,
-  CLEAR_SINGLE_INVOICE
+  CLEAR_SINGLE_INVOICE,
+  GET_INVOICE_SUMMARY,
+  GET_INVOICE_SUMMARY_SUCCESS,
+  GET_INVOICE_SUMMARY_FAILURE
 } from "Types";
 
 const INIT_STATE = {
   invoiceList: {
     dropdownOpen: false,
-    showSummary: false,
     nowShowing: "All Invoices",
     options: [
       "All Invoices",
@@ -28,6 +30,11 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
+  },
+  invoiceSummary: {
+    showSummary: false,
+    loading: false,
+    summary: []
   },
   invoiceToView: { loading: false, invoice: null }
 };
@@ -40,14 +47,6 @@ export default (state = INIT_STATE, action) => {
         invoiceList: {
           ...state.invoiceList,
           dropdownOpen: !state.invoiceList.dropdownOpen
-        }
-      };
-    case TOGGLE_INVOICE_SUMMARY:
-      return {
-        ...state,
-        invoiceList: {
-          ...state.invoiceList,
-          showSummary: !state.invoiceList.showSummary
         }
       };
     case CHANGE_INVOICE_LIST_VIEW:
@@ -72,6 +71,39 @@ export default (state = INIT_STATE, action) => {
           }
         };
       }
+
+    /**
+     * Invoice Summary
+     */
+    case TOGGLE_INVOICE_SUMMARY:
+      return {
+        ...state,
+        invoiceSummary: {
+          ...state.invoiceSummary,
+          showSummary: !state.invoiceSummary.showSummary
+        }
+      };
+    case GET_INVOICE_SUMMARY:
+      return {
+        ...state,
+        invoiceSummary: {
+          ...state.invoiceSummary,
+          loading: true
+        }
+      };
+    case GET_INVOICE_SUMMARY_SUCCESS:
+      return {
+        ...state,
+        invoiceSummary: {
+          ...state.invoiceSummary,
+          summary: action.payload,
+          loading: false
+        }
+      };
+    case GET_INVOICE_SUMMARY_FAILURE:
+      NotificationManager.warning("Error in fetching Invoice Summary");
+      console.log(action.payload);
+      return { ...state, invoiceSummary: INIT_STATE.invoiceSummary };
 
     /**
      * Get Quotes
