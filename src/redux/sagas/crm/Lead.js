@@ -33,8 +33,6 @@ import { leadList, lead, lead2, leadSummary } from "Components/DummyData";
 //=========================
 const getAllLeadRequest = async () => {
   const result = await api.get("/leads");
-  //const result = leadList;
-  console.log(result);
   return result.data;
 };
 const getMyLeadRequest = async () => {
@@ -54,10 +52,7 @@ const getColdLeadRequest = async () => {
   return result;
 };
 const getLeadRequest = async leadID => {
-  //console.log(`fetching lead ${leadID}`);
-  //const result = leadID == 1 ? lead : lead2;
   const result = await api.get(`/leads/${leadID}`);
-  console.log(result);
   return result.data;
 };
 const getLeadSummaryRequest = async () => {
