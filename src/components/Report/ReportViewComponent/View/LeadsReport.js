@@ -5,6 +5,10 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import ReportDateRangePicker from "../ReportDateRangePicker";
 
+// Charts
+import BarChart from "Components/Charts/BarChart";
+import PieChart from "Components/Charts/PieChart";
+
 // Actions
 import {
   reportOnChangeDate,
@@ -13,12 +17,19 @@ import {
   getLeadReport
 } from "Actions";
 
+import {
+  leadSourceCreated,
+  LeadStatus,
+  leadCreatedBy
+} from "Components/ReportDummy";
+
 class LeadsReport extends Component {
   render() {
     const { startDate, endDate, focusedInput } = this.props.dateRange;
     const { loading } = this.props.leadReportData;
     return (
       <React.Fragment>
+        {loading && <RctSectionLoader />}
         <div className="row">
           <div className="col-md-6">
             <RctCollapsibleCard heading="Set Date Range" fullBlock>
@@ -36,20 +47,20 @@ class LeadsReport extends Component {
         </div>
         <div className="row">
           <div className="col-md-6">
-            <RctCollapsibleCard heading={"Leads Created by Source this year"}>
-              {loading && <RctSectionLoader />}
+            <RctCollapsibleCard heading={"Leads Created by Source"}>
+              <BarChart data={leadSourceCreated} />
             </RctCollapsibleCard>
           </div>
           <div className="col-md-6">
             <RctCollapsibleCard heading={"Overall Leads Status"}>
-              Report
+              <PieChart data={LeadStatus} />
             </RctCollapsibleCard>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-10">
             <RctCollapsibleCard heading={"Leads Created By Staff"}>
-              Report
+              <BarChart data={leadCreatedBy} />
             </RctCollapsibleCard>
           </div>
         </div>

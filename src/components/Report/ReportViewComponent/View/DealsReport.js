@@ -4,12 +4,12 @@ import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import ReportDateRangePicker from "../ReportDateRangePicker";
-import DealReportTable from "Components/CRM/View/Deal/DealReportTable";
 
 // Charts
 import BarChart from "Components/Charts/BarChart";
 import DonutChart from "Components/Charts/DonutChart";
 import PieChart from "Components/Charts/PieChart";
+import DealReportTable from "Components/Report/ReportViewComponent/ReportComponent/DealReportTable";
 
 // Actions
 import {
