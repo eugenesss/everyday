@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import UserBlock from "./UserBlock";
 import UserFeedBlock from "./UserFeedBlock"
 
-import { getAllUsers } from "Actions" //AuthUser
+import { getAllUsers, updateUserStart } from "Actions" //AuthUser
 
 const styles = () => ({
   bannerStyle: {
@@ -33,7 +33,9 @@ class ProfileLayout extends Component {
   }
 
   render() {
-    const { classes, me } = this.props
+    const { classes, me, updateUserStart } = this.props
+    if(me.id)
+      updateUserStart(me)
     return (
       <React.Fragment>
         <Row>
@@ -64,5 +66,5 @@ const mapStateToProps = ({ usersState }) => {
 
 export default connect(
   mapStateToProps,
-  { getAllUsers }
+  { getAllUsers, updateUserStart }
 )(withStyles(styles)(ProfileLayout));

@@ -104,6 +104,9 @@ class SettingsDirectory extends Component {
                 <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/users-and-controls/roles-and-permissions')} selected={location.pathname === '/app/settings/users-and-controls/roles-and-permissions'}>
                   <ListItemText inset secondary={"Roles & Permissions"} />
                 </ListItem>
+                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/users-and-controls/groups')} selected={location.pathname === '/app/settings/users-and-controls/groups'}>
+                  <ListItemText inset secondary={"Groups"} />
+                </ListItem>
               </List>
             </Collapse>
 

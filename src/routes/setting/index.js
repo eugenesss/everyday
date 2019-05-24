@@ -13,6 +13,7 @@ import {
   Async_setting_gen_companyDetails_component,
   Async_setting_user_users_component,
   Async_setting_user_rolesPermissions_component,
+  Async_setting_user_groups_component,
   Async_setting_acc_creditNote_component,
   Async_setting_acc_general_component,
   Async_setting_acc_invoice_component,
@@ -71,6 +72,11 @@ class Settings extends Component {
                 path={`${match.url}/users-and-controls/roles-and-permissions`}
                 component={ Async_setting_user_rolesPermissions_component }
               />
+              <Route
+                exact
+                path={`${match.url}/users-and-controls/groups`}
+                component= { Async_setting_user_groups_component }
+              />
               {/* ------- Accounting ------- */}
               <Route
                 exact
@@ -120,5 +126,4 @@ Settings.propTypes = {
 export default withRouter(
   connect( null )
   (withStyles(styles)(Settings))
-
 );

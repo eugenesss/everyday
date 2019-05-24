@@ -1,9 +1,9 @@
-const role1 = {
+export const role1 = {
   id: 0,
   name: "Member",
   permissions: ["User:read"]
 };
-const role2 = {
+export const role2 = {
   id: 1,
   name: "Director",
   permissions: [
@@ -17,17 +17,17 @@ const role2 = {
     "UserRole:update"
   ]
 };
-const role3 = {
+export const role3 = {
   id: 2,
   name: "Human Resource Manager",
   permissions: ["User:read"]
 };
-const role4 = {
+export const role4 = {
   id: 3,
   name: "Sales Manager",
   permissions: ["User:read"]
 };
-const role5 = {
+export const role5 = {
   id: 4,
   name: "Development Manager",
   permissions: ["User:read"]

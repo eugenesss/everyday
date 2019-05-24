@@ -60,13 +60,41 @@ class AddUserForm extends Component {
         <Row form className={"align-items-center"}>
           <Col md={6}>
             <TextField
-              value={userAdd.name || ''}
+              value={userAdd.firstName || ''}
               required
-              error={!userAdd.name}
+              error={!userAdd.firstName}
               className={classes.textField}
-              onChange={ e => onChangeAddUser('name', e.target.value)}
-              id="name"
-              label=" Name"
+              onChange={ e => onChangeAddUser('firstName', e.target.value)}
+              id="firstName"
+              label="First Name"
+              margin="normal"
+              variant="outlined"
+            />
+          </Col>
+          <Col md={6}>
+            <TextField
+              value={userAdd.lastName || ''}
+              required
+              error={!userAdd.lastName}
+              className={classes.textField}
+              onChange={ e => onChangeAddUser('lastName', e.target.value)}
+              id="lastName"
+              label="Last Name"
+              margin="normal"
+              variant="outlined"
+            />
+          </Col>
+        </Row>
+        <Row form>
+          <Col md={6}>
+            <TextField
+              value={userAdd.email || ''}
+              required
+              error={!userAdd.email || !this.validateEmail(userAdd.email)}
+              className={classes.textField}
+              onChange={ e => onChangeAddUser('email', e.target.value)}
+              id="email"
+              label="Email"
               margin="normal"
               variant="outlined"
             />
@@ -84,20 +112,6 @@ class AddUserForm extends Component {
               variant="outlined"
             />
           </Col>
-        </Row>
-        <Row form className={classes.fullWidth}>
-          <TextField
-            fullWidth
-            value={userAdd.email || ''}
-            required
-            error={!userAdd.email || !this.validateEmail(userAdd.email)}
-            className={classes.textField}
-            onChange={ e => onChangeAddUser('email', e.target.value)}
-            id="email"
-            label="Email"
-            margin="normal"
-            variant="outlined"
-          />
         </Row>
         <Row form className={classes.fullWidth}>  
           <Col md={12}>
@@ -138,7 +152,8 @@ class AddUserForm extends Component {
             className="text-white mb-10 mt-20"
             onClick={addUser}
             disabled={
-              !userAdd.name ||
+              !userAdd.firstName ||
+              !userAdd.lastName ||
               !userAdd.email ||
               !this.validateEmail(userAdd.email) ||
               !userAdd.contact ||

@@ -11,7 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import { getAllRoles, onChangeSelectedRole } from 'Actions'
+import { getAllGroups, onChangeSelectedGroup } from 'Actions'
 
 const styles = theme => ({
   root: {
@@ -32,30 +32,29 @@ const styles = theme => ({
    },
 });
 
-class RolesList extends Component {
+class GroupsList extends Component {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-    this.props.getAllRoles()
+    this.props.getAllGroups()
   }
   
   render() {
     const { 
       classes,
 
-      roles,
-      selectedRole,
+      groups,
+      selectedGroup,
 
-      getAllRoles,
-      onChangeSelectedRole,
+      onChangeSelectedGroup,
      } = this.props;
     return (
       <React.Fragment>
           <Row className={"d-flex align-items-center"}>
             <Col>
-              <h2 className={"p-10 pt-20 pb-10 m-0 text-center"}>Roles</h2>
+              <h2 className={"p-10 pt-20 pb-10 m-0 text-center"}>Groups</h2>
             </Col>
             <Col>
               <IconButton
@@ -75,21 +74,14 @@ class RolesList extends Component {
               component="nav"
               className={classes.root}
             >
-              <ListItem 
-                button
-                selected={!selectedRole}
-                onClick={() => onChangeSelectedRole("Super Admin")}
-              >
-                <ListItemText inset primary={"Super Admin"} className={classes.listItem}/>
-              </ListItem>
-              {roles.map(role => (
+              {groups.map(group => (
                 <ListItem 
-                  key={role.id}
+                  key={group.id}
                   button
-                  selected={selectedRole ? selectedRole.id == role.id : false}
-                  onClick={() => onChangeSelectedRole(role)}
+                  selected={selectedGroup ? selectedGroup.id == group.id : false}
+                  onClick={() => onChangeSelectedGroup(group)}
                 >
-                  <ListItemText primary={role.name} className={classes.listItem}/>
+                  <ListItemText primary={group.name} className={classes.listItem}/>
                 </ListItem>
               ))}
             </List>
@@ -99,16 +91,16 @@ class RolesList extends Component {
   }
 }
 
-RolesList.propTypes = {
+GroupsList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ rolesState }) => {
-  const { roles, selectedRole } = rolesState;
-  return { roles, selectedRole };
+const mapStateToProps = ({ groupsState }) => {
+  const { groups, selectedGroup } = groupsState;
+  return { groups, selectedGroup };
 };
 
 export default connect(
   mapStateToProps,
-  { getAllRoles, onChangeSelectedRole }
-)(withStyles(styles)(RolesList));
+  { getAllGroups, onChangeSelectedGroup }
+)(withStyles(styles)(GroupsList));

@@ -6,7 +6,9 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import TextField from '@material-ui/core/TextField';
-import Button from "@material-ui/core/Button";
+import Button from '@material-ui/core/Button';
+
+import { onChangeUpdateUser, updateUser } from 'Actions'
 
 const styles = theme => ({
   textField: {
@@ -28,7 +30,11 @@ class UpdateUserDetailsForm extends Component {
   render() {
     const {
       classes,
-      match,
+
+      userUpdate,
+
+      onChangeUpdateUser,
+      updateUser,
     } = this.props;
     return (
       <Form>
@@ -38,7 +44,8 @@ class UpdateUserDetailsForm extends Component {
               required
               id="firstName"
               label="First Name"
-              value={ "" }
+              value={ userUpdate.firstName }
+              onChange={e => onChangeUpdateUser("firstName", e.target.value)}
               className={classes.textField}
               margin="normal"
               variant="outlined"
@@ -49,7 +56,8 @@ class UpdateUserDetailsForm extends Component {
               required
               id="lastName"
               label="Last Name"
-              value={ "" }
+              value={ userUpdate.lastName }
+              onChange={e => onChangeUpdateUser("lastName", e.target.value)}
               className={classes.textField}
               margin="normal"
               variant="outlined"
@@ -60,9 +68,10 @@ class UpdateUserDetailsForm extends Component {
           <Col md={6}>
             <TextField
               required
-              id="emailAddress"
+              id="email"
               label="Email Address"
-              value={ "" }
+              value={ userUpdate.email }
+              onChange={e => onChangeUpdateUser("email", e.target.value)}
               className={classes.textField}
               margin="normal"
               variant="outlined"
@@ -73,7 +82,8 @@ class UpdateUserDetailsForm extends Component {
               required
               id="contact"
               label="Contact"
-              value={ "" }
+              value={ userUpdate.contact }
+              onChange={e => onChangeUpdateUser("contact", e.target.value)}
               className={classes.textField}
               margin="normal"
               variant="outlined"
@@ -86,7 +96,8 @@ class UpdateUserDetailsForm extends Component {
               id="description"
               label="Description"
               className={classes.textField}
-              value={ "" }
+              value={ userUpdate.description }
+              onChange={e => onChangeUpdateUser("description", e.target.value)}
               multiline
               rows="4"
               margin="normal"
@@ -98,7 +109,7 @@ class UpdateUserDetailsForm extends Component {
               variant="contained"
               color="primary"
               className="text-white mb-10"
-              //onClick={handleUpdate.bind(this)}
+              onClick={updateUser}
             >
               Save
             </Button>
@@ -113,7 +124,13 @@ UpdateUserDetailsForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
+const mapStateToProps = ({ usersState, rolesState }) => {
+  const { userUpdate } = usersState;
+  const { roles } = rolesState;
+  return { userUpdate, roles };
+};
 
 export default connect(
-  null, {}
+  mapStateToProps,
+  { onChangeUpdateUser, updateUser }
 )(withStyles(styles)(UpdateUserDetailsForm));

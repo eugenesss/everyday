@@ -34,10 +34,13 @@ const INIT_STATE = {
   me: {}, //AuthUser
   users: [],
   usersLoading: false,
+  
   isAddUser: false,
   isUserControl: false,
+
   userProfile: {},
   profileLoading: false,
+  
   userUpdate: null,
   userAdd: {
     role: []
@@ -87,9 +90,7 @@ export default (state = INIT_STATE, action) => {
       // var users = [...allUsers, action.payload];
       return {
         ...state,
-        userAdd: {
-          role: []
-        },
+        userAdd: INIT_STATE.userAdd,
         //users: users,
         usersLoading: false,
       }
@@ -107,6 +108,32 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         userUpdate: action.payload
+      }
+    case ON_CHANGE_UPDATE_USER:
+      return {
+        ...state,
+        userUpdate: {
+          ...state.userUpdate,
+          [action.payload.field] : action.payload.value
+        }
+      }
+    case UPDATE_USER:
+      return {
+        ...state,
+        profileLoading: true
+      }
+    case UPDATE_USER_SUCCESS:
+      NotificationManager.success("User Updated")
+      return {
+        ...state,
+        profileLoading: false,
+        userUpdate: action.payload
+      }
+    case UPDATE_USER_FAILURE:
+      NotificationManager.error("Failed to Update User")
+      return {
+        ...state,
+        profileLoading: false,
       }
     
 
@@ -127,7 +154,7 @@ export default (state = INIT_STATE, action) => {
     case GET_USER_PROFILE_END:
       return {
         ...state,
-        useProfile: {}
+        userProfile: INIT_STATE.userProfile
       }
 
     /**

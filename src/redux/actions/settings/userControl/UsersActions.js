@@ -28,7 +28,6 @@ import {
   SHOW_USER_CONTROLS,
   HIDE_USER_CONTROLS,
 } from "Types";
-import { updateLocale } from "moment";
 
 /**
  * GET All Users
