@@ -7,7 +7,7 @@ import {
   getGroupFailure,
  } from "Actions";
 import api from "Api";
-import { groups } from "Components/GroupsDummyData";
+import { groups, hierarchies } from "Components/GroupsDummyData";
 
 //=========================
 // REQUESTS
@@ -21,14 +21,24 @@ const getAllGroupsRequest = async () => {
     return err;
   }
 }
+const getAllHierarchiesRequest = async () => {
+  try {
+    //const result = await api.get("/hierarchy")
+    const result = hierarchies;
+    return result;
+  } catch (err) {
+    return err
+  }
+}
 
 //=========================
 // CALL(GENERATOR) ACTIONS
 //=========================
 function* getAllGroupsFromDB() {
   try {
-    const data =  yield call(getAllGroupsRequest)
-    yield put(getAllGroupsSuccess(data))
+    const groups =  yield call(getAllGroupsRequest)
+    const hierarchies = yield call(getAllHierarchiesRequest)
+    yield put(getAllGroupsSuccess(groups, hierarchies))
   } catch (err) {
     yield put(getGroupFailure(err))
   }

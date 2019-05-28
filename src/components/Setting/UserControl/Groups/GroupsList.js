@@ -50,7 +50,7 @@ class GroupsList extends Component {
 
       onChangeSelectedGroup,
      } = this.props;
-    return (
+     return (
       <React.Fragment>
           <Row className={"d-flex align-items-center"}>
             <Col>
