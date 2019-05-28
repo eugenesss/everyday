@@ -9,7 +9,15 @@ import {
   GET_OPEN_ACCOUNT,
   GET_SINGLE_ACCOUNT,
   GET_SINGLE_ACCOUNT_SUCCESS,
-  CLEAR_SINGLE_ACCOUNT
+  CLEAR_SINGLE_ACCOUNT,
+  GET_ACCOUNT_SUMMARY,
+  GET_ACCOUNT_SUMMARY_SUCCESS,
+  GET_ACCOUNT_SUMMARY_FAILURE,
+  HANDLE_CHANGE_ACCOUNT,
+  SUBMIT_ACCOUNT,
+  CLEAR_ACCOUNT_FORM,
+  SUBMIT_ACCOUNT_SUCCESS,
+  SUBMIT_ACCOUNT_ERROR
 } from "Types";
 
 /**
@@ -82,4 +90,41 @@ export const getSingleAccountSuccess = acctData => ({
 });
 export const clearSingleAccount = () => ({
   type: CLEAR_SINGLE_ACCOUNT
+});
+
+/**
+ * Get Account Summary
+ */
+export const getAccountSummary = () => ({
+  type: GET_ACCOUNT_SUMMARY
+});
+export const getAccountSummarySuccess = data => ({
+  type: GET_ACCOUNT_SUMMARY_SUCCESS,
+  payload: data
+});
+export const getAccountSummaryFailure = error => ({
+  type: GET_ACCOUNT_SUMMARY_FAILURE,
+  payload: error
+});
+
+/**
+ * New Account
+ */
+export const handleChangeAccount = (field, value) => ({
+  type: HANDLE_CHANGE_ACCOUNT,
+  payload: { value, field }
+});
+export const submitAccount = () => ({
+  type: SUBMIT_ACCOUNT
+});
+export const clearAccountForm = () => ({
+  type: CLEAR_ACCOUNT_FORM
+});
+export const submitAccountSuccess = data => ({
+  type: SUBMIT_ACCOUNT_SUCCESS,
+  payload: data
+});
+export const submitAccountError = error => ({
+  type: SUBMIT_ACCOUNT_ERROR,
+  payload: error
 });

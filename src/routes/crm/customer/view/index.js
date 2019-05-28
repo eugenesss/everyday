@@ -76,8 +76,8 @@ class crm_view_customer extends Component {
               <div icon="zmdi-coffee text-success" label="DETAILS">
                 <CustomerDetails customer={customer} />
                 <AddressDetails
-                  address={customer.address}
-                  address2={customer.address2}
+                  address_1={customer.address_1}
+                  address_2={customer.address_2}
                   city={customer.city}
                   state={customer.state}
                   zip={customer.zip}

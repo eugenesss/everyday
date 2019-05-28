@@ -11,13 +11,15 @@ import {
   GET_CLOSED_QUOTATION,
   GET_SINGLE_QUOTATION,
   GET_SINGLE_QUOTATION_SUCCESS,
-  CLEAR_SINGLE_QUOTATION
+  CLEAR_SINGLE_QUOTATION,
+  GET_QUOTE_SUMMARY,
+  GET_QUOTE_SUMMARY_SUCCESS,
+  GET_QUOTE_SUMMARY_FAILURE
 } from "Types";
 
 const INIT_STATE = {
   quotationList: {
     dropdownOpen: false,
-    showSummary: false,
     nowShowing: "All Quotations",
     options: [
       "All Quotations",
@@ -28,6 +30,11 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
+  },
+  quotationSummary: {
+    showSummary: false,
+    loading: false,
+    summary: []
   },
   quotationToView: { loading: false, quotation: null }
 };
@@ -40,14 +47,6 @@ export default (state = INIT_STATE, action) => {
         quotationList: {
           ...state.quotationList,
           dropdownOpen: !state.quotationList.dropdownOpen
-        }
-      };
-    case TOGGLE_QUOTATION_SUMMARY:
-      return {
-        ...state,
-        quotationList: {
-          ...state.quotationList,
-          showSummary: !state.quotationList.showSummary
         }
       };
     case CHANGE_QUOTATION_LIST_VIEW:
@@ -72,6 +71,39 @@ export default (state = INIT_STATE, action) => {
           }
         };
       }
+
+    /**
+     * Quotation Summary
+     */
+    case TOGGLE_QUOTATION_SUMMARY:
+      return {
+        ...state,
+        quotationSummary: {
+          ...state.quotationSummary,
+          showSummary: !state.quotationSummary.showSummary
+        }
+      };
+    case GET_QUOTE_SUMMARY:
+      return {
+        ...state,
+        quotationSummary: {
+          ...state.quotationSummary,
+          loading: true
+        }
+      };
+    case GET_QUOTE_SUMMARY_SUCCESS:
+      return {
+        ...state,
+        quotationSummary: {
+          ...state.quotationSummary,
+          summary: action.payload,
+          loading: false
+        }
+      };
+    case GET_QUOTE_SUMMARY_FAILURE:
+      NotificationManager.warning("Error in fetching Quotation Summary");
+      console.log(action.payload);
+      return { ...state, quotationSummary: INIT_STATE.quotationSummary };
 
     /**
      * Get Quotes

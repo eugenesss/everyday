@@ -5,6 +5,7 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 // Components
 import ReportStaffPicker from "../ReportStaffPicker";
+import ReportMonthYearPicker from "../ReportMonthYearPicker";
 
 // Actions
 import { getAllUsers, onChangeStaffSelect } from "Actions";
@@ -31,7 +32,7 @@ class IndividualReport extends Component {
           </div>
           <div className="col-md-6">
             <RctCollapsibleCard heading="2. Select Date">
-              month and year select
+              <ReportMonthYearPicker />
             </RctCollapsibleCard>
           </div>
         </div>

@@ -3,9 +3,9 @@ import ReportDefaultMessage from "./DefaultMessages/ReportDefaultMessage";
 import ReportMaintenanceMessage from "./DefaultMessages/ReportMaintenanceMessage";
 
 // Report Components
-import DealsReport from "./ReportComponent/DealsReport";
-import LeadsReport from "./ReportComponent/LeadsReport";
-import IndividualReport from "./ReportComponent/IndividualReport";
+import DealsReport from "./View/DealsReport";
+import LeadsReport from "./View/LeadsReport";
+import IndividualReport from "./View/IndividualReport";
 
 const ReportRender = ({ componentToRender }) => {
   switch (componentToRender) {

@@ -21,12 +21,14 @@ import {
   changeCreditNoteView,
   toggleCreditNoteDropDown,
   toggleCreditNoteSummary,
-  getAllCreditNote
+  getAllCreditNote,
+  getCreditNoteSummary
 } from "Actions";
 
 class acct_credit_note extends Component {
   componentDidMount() {
     this.props.getAllCreditNote();
+    this.props.getCreditNoteSummary();
   }
 
   render() {
@@ -34,12 +36,14 @@ class acct_credit_note extends Component {
       dropdownOpen,
       options,
       nowShowing,
-      showSummary,
       action,
       tableData,
       loading
     } = this.props.creditNoteState.creditNoteList;
-
+    const {
+      showSummary,
+      summary
+    } = this.props.creditNoteState.creditNoteSummary;
     return (
       <React.Fragment>
         <Helmet>
@@ -63,28 +67,7 @@ class acct_credit_note extends Component {
           }
           createLink="/acct/new/credit_note"
         />
-        {showSummary && (
-          <ListSummary>
-            <ListSummaryItem
-              heading={"New Credit Notes"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Open Credit Notes"}
-              number={"10"}
-              positive={false}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Closed Credit Notes"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-          </ListSummary>
-        )}
+        {showSummary && <ListSummary summary={summary} />}
         <CreditNoteList
           title={nowShowing}
           action={action}
@@ -106,6 +89,7 @@ export default connect(
     changeCreditNoteView,
     toggleCreditNoteDropDown,
     toggleCreditNoteSummary,
-    getAllCreditNote
+    getAllCreditNote,
+    getCreditNoteSummary
   }
 )(acct_credit_note);

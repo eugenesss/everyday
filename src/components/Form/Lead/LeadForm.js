@@ -17,7 +17,7 @@ import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetBu
 // Actions
 import { handleChangeLead, submitNewLead, clearNewLead } from "Actions";
 
-import { interestLevel } from "Components/DummyData";
+import { interestLevel, source, leadStatus } from "Components/DummyData";
 import { users } from "Components/UserDummyData";
 
 class LeadForm extends Component {
@@ -26,7 +26,7 @@ class LeadForm extends Component {
   }
 
   render() {
-    const { lead, loading } = this.props.leadForm;
+    const { lead } = this.props.leadForm;
     const disabled = lead.firstName && lead.companyName && lead.status;
     return (
       <React.Fragment>
@@ -67,10 +67,7 @@ class LeadForm extends Component {
               value={lead.status}
               handleChange={this.props.handleChangeLead}
               target="status"
-              selectValues={[
-                { id: 1, name: "Contacted" },
-                { id: 2, name: "Not Contacted" }
-              ]}
+              selectValues={leadStatus}
             />
           </TableRow>
           <TableRow>
@@ -103,7 +100,7 @@ class LeadForm extends Component {
               value={lead.source}
               handleChange={this.props.handleChangeLead}
               target="source"
-              selectValues={[{ id: 1, name: "Google" }, { id: 2, name: "SEO" }]}
+              selectValues={source}
             />
           </TableRow>
           {/**
@@ -185,8 +182,8 @@ class LeadForm extends Component {
         <hr />
         <AddressFormInput
           handleChange={this.props.handleChangeLead}
-          address={lead.address}
-          address2={lead.address2}
+          address_1={lead.address_1}
+          address_2={lead.address_2}
           city={lead.city}
           state={lead.state}
           zip={lead.zip}

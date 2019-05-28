@@ -5,20 +5,34 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import ReportDateRangePicker from "../ReportDateRangePicker";
 
+// Charts
+import BarChart from "Components/Charts/BarChart";
+import DonutChart from "Components/Charts/DonutChart";
+import PieChart from "Components/Charts/PieChart";
+import DealReportTable from "Components/Report/ReportViewComponent/ReportComponent/DealReportTable";
+
 // Actions
 import {
   reportOnChangeDate,
   reportOnFocusChange,
   reportResetDate,
-  getLeadReport
+  getDealReport
 } from "Actions";
 
-class LeadsReport extends Component {
+import {
+  dealByOwner,
+  dealByType,
+  dealStage,
+  dealRecordsInStage
+} from "Components/ReportDummy";
+
+class DealsReport extends Component {
   render() {
     const { startDate, endDate, focusedInput } = this.props.dateRange;
-    const { loading } = this.props.leadReportData;
+    const { loading } = this.props.dealReportData;
     return (
       <React.Fragment>
+        {loading && <RctSectionLoader />}
         <div className="row">
           <div className="col-md-6">
             <RctCollapsibleCard heading="Set Date Range" fullBlock>
@@ -28,7 +42,7 @@ class LeadsReport extends Component {
                 onDatesChange={this.props.reportOnChangeDate}
                 focusedInput={focusedInput}
                 onFocusChange={this.props.reportOnFocusChange}
-                handleSubmit={this.props.getLeadReport}
+                handleSubmit={this.props.getDealReport}
                 reset={this.props.reportResetDate}
               />
             </RctCollapsibleCard>
@@ -36,21 +50,35 @@ class LeadsReport extends Component {
         </div>
         <div className="row">
           <div className="col-md-6">
-            <RctCollapsibleCard heading={"Leads Created by Source this year"}>
-              {loading && <RctSectionLoader />}
+            <RctCollapsibleCard heading={"Overall Deal by Owners"}>
+              <BarChart data={dealByOwner} />
+            </RctCollapsibleCard>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
+            <RctCollapsibleCard heading={"Total Deals by Type"}>
+              <DonutChart data={dealByType} />
             </RctCollapsibleCard>
           </div>
           <div className="col-md-6">
-            <RctCollapsibleCard heading={"Overall Leads Status"}>
-              Report
+            <RctCollapsibleCard heading={"Overall Deal Stages"}>
+              <PieChart data={dealStage} />
             </RctCollapsibleCard>
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
-            <RctCollapsibleCard heading={"Leads Created By Staff"}>
-              Report
-            </RctCollapsibleCard>
+            {dealRecordsInStage.map((stage, key) => {
+              return (
+                <RctCollapsibleCard
+                  key={key}
+                  heading={`${stage.stageName} count: ${stage.count}`}
+                >
+                  <DealReportTable deals={stage.deals} />
+                </RctCollapsibleCard>
+              );
+            })}
           </div>
         </div>
       </React.Fragment>
@@ -58,8 +86,8 @@ class LeadsReport extends Component {
   }
 }
 const mapStateToProps = ({ reportState }) => {
-  const { dateRange, leadReportData } = reportState;
-  return { dateRange, leadReportData };
+  const { dateRange, dealReportData } = reportState;
+  return { dateRange, dealReportData };
 };
 
 export default connect(
@@ -68,6 +96,6 @@ export default connect(
     reportOnChangeDate,
     reportOnFocusChange,
     reportResetDate,
-    getLeadReport
+    getDealReport
   }
-)(LeadsReport);
+)(DealsReport);

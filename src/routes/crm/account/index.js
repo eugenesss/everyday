@@ -8,7 +8,6 @@ import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // List Summary
 import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 //sub components
@@ -19,12 +18,14 @@ import {
   changeAccountView,
   toggleAccountDropDown,
   toggleAccountSummary,
-  getAllAccount
+  getAllAccount,
+  getAccountSummary
 } from "Actions";
 
 class crm_account extends Component {
   componentDidMount() {
     this.props.getAllAccount();
+    this.props.getAccountSummary();
   }
 
   render() {
@@ -32,11 +33,11 @@ class crm_account extends Component {
       dropdownOpen,
       options,
       nowShowing,
-      showSummary,
       action,
       tableData,
       loading
     } = this.props.accountState.accountList;
+    const { showSummary, summary } = this.props.accountState.accountSummary;
     return (
       <React.Fragment>
         <Helmet>
@@ -58,34 +59,7 @@ class crm_account extends Component {
           }
           createLink="/crm/new/account"
         />
-        {showSummary && (
-          <ListSummary>
-            <ListSummaryItem
-              heading={"New Lead"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Cold Lead"}
-              number={"10"}
-              positive={false}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Hot Lead"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-            <ListSummaryItem
-              heading={"Open Leads"}
-              number={"10"}
-              positive={true}
-              percentage="20"
-            />
-          </ListSummary>
-        )}
+        {showSummary && <ListSummary summary={summary} />}
         <AccountList
           title={nowShowing}
           action={action}
@@ -107,6 +81,7 @@ export default connect(
     changeAccountView,
     toggleAccountDropDown,
     toggleAccountSummary,
-    getAllAccount
+    getAllAccount,
+    getAccountSummary
   }
 )(crm_account);

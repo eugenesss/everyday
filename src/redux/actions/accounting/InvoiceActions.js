@@ -10,7 +10,10 @@ import {
   GET_INVOICE_SUCCESS,
   GET_SINGLE_INVOICE,
   GET_SINGLE_INVOICE_SUCCESS,
-  CLEAR_SINGLE_INVOICE
+  CLEAR_SINGLE_INVOICE,
+  GET_INVOICE_SUMMARY,
+  GET_INVOICE_SUMMARY_SUCCESS,
+  GET_INVOICE_SUMMARY_FAILURE
 } from "Types";
 
 /**
@@ -90,4 +93,19 @@ export const getSingleInvoiceSuccess = data => ({
 });
 export const clearSingleInvoice = () => ({
   type: CLEAR_SINGLE_INVOICE
+});
+
+/**
+ * Get Invoice Summary
+ */
+export const getInvoiceSummary = () => ({
+  type: GET_INVOICE_SUMMARY
+});
+export const getInvoiceSummarySuccess = data => ({
+  type: GET_INVOICE_SUMMARY_SUCCESS,
+  payload: data
+});
+export const getInvoiceSummaryFailure = error => ({
+  type: GET_INVOICE_SUMMARY_FAILURE,
+  payload: error
 });

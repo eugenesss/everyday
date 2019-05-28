@@ -111,7 +111,7 @@ export default (state = INIT_STATE, action) => {
     case GET_LEAD_SUMMARY_FAILURE:
       NotificationManager.warning("Error in fetching Lead Summary");
       console.log(action.payload);
-      return INIT_STATE.leadSummary;
+      return { ...state, leadSummary: INIT_STATE.leadSummary };
 
     /**
      * Get Leads
@@ -119,7 +119,11 @@ export default (state = INIT_STATE, action) => {
     case GET_LEAD_FAILURE:
       NotificationManager.warning("Error in fetching Lead Data");
       console.log(action.payload);
-      return INIT_STATE;
+      return {
+        ...state,
+        leadToView: INIT_STATE.leadToView,
+        leadList: INIT_STATE.leadList
+      };
     case GET_ALL_LEAD:
     case GET_MY_LEAD:
     case GET_OPEN_LEAD:

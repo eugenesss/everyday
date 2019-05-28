@@ -32,8 +32,8 @@ import { leadList, lead, lead2, leadSummary } from "Components/DummyData";
 // REQUESTS
 //=========================
 const getAllLeadRequest = async () => {
-  const result = leadList;
-  return result;
+  const result = await api.get("/leads");
+  return result.data;
 };
 const getMyLeadRequest = async () => {
   const result = leadList;
@@ -52,9 +52,8 @@ const getColdLeadRequest = async () => {
   return result;
 };
 const getLeadRequest = async leadID => {
-  console.log(`fetching lead ${leadID}`);
-  const result = leadID == 1 ? lead : lead2;
-  return result;
+  const result = await api.get(`/leads/${leadID}`);
+  return result.data;
 };
 const getLeadSummaryRequest = async () => {
   const result = leadSummary;
@@ -137,6 +136,7 @@ function* postLeadToDB() {
     const getLeadState = state => state.crmState.leadState.leadForm.lead;
     const lead = yield select(getLeadState);
     const data = yield call(postLeadRequest, lead);
+    yield delay(800);
     yield put(newLeadSuccess(data));
   } catch (error) {
     yield put(newLeadError(error));

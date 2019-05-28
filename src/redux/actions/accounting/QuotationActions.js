@@ -10,7 +10,10 @@ import {
   GET_QUOTATION_SUCCESS,
   GET_SINGLE_QUOTATION,
   GET_SINGLE_QUOTATION_SUCCESS,
-  CLEAR_SINGLE_QUOTATION
+  CLEAR_SINGLE_QUOTATION,
+  GET_QUOTE_SUMMARY,
+  GET_QUOTE_SUMMARY_SUCCESS,
+  GET_QUOTE_SUMMARY_FAILURE
 } from "Types";
 
 /**
@@ -90,4 +93,19 @@ export const getSingleQuotationSuccess = quoteData => ({
 });
 export const clearSingleQuotation = () => ({
   type: CLEAR_SINGLE_QUOTATION
+});
+
+/**
+ * Get Quote Summary
+ */
+export const getQuotationSummary = () => ({
+  type: GET_QUOTE_SUMMARY
+});
+export const getQuotationSummarySuccess = data => ({
+  type: GET_QUOTE_SUMMARY_SUCCESS,
+  payload: data
+});
+export const getQuotationSummaryFailure = error => ({
+  type: GET_QUOTE_SUMMARY_FAILURE,
+  payload: error
 });

@@ -11,7 +11,15 @@ import {
   GET_WON_DEAL,
   GET_SINGLE_DEAL,
   GET_SINGLE_DEAL_SUCCESS,
-  CLEAR_SINGLE_DEAL
+  CLEAR_SINGLE_DEAL,
+  GET_DEAL_SUMMARY,
+  GET_DEAL_SUMMARY_SUCCESS,
+  GET_DEAL_SUMMARY_FAILURE,
+  HANDLE_CHANGE_DEAL,
+  SUBMIT_DEAL,
+  CLEAR_DEAL_FORM,
+  SUBMIT_DEAL_SUCCESS,
+  SUBMIT_DEAL_ERROR
 } from "Types";
 
 /**
@@ -98,4 +106,41 @@ export const getSingleDealSuccess = dealData => ({
 });
 export const clearSingleDeal = () => ({
   type: CLEAR_SINGLE_DEAL
+});
+
+/**
+ * Get Deal Summary
+ */
+export const getDealSummary = () => ({
+  type: GET_DEAL_SUMMARY
+});
+export const getDealSummarySuccess = data => ({
+  type: GET_DEAL_SUMMARY_SUCCESS,
+  payload: data
+});
+export const getDealSummaryFailure = error => ({
+  type: GET_DEAL_SUMMARY_FAILURE,
+  payload: error
+});
+
+/**
+ * New Deal
+ */
+export const handleChangeDeal = (field, value) => ({
+  type: HANDLE_CHANGE_DEAL,
+  payload: { value, field }
+});
+export const submitDeal = () => ({
+  type: SUBMIT_DEAL
+});
+export const clearDealForm = () => ({
+  type: CLEAR_DEAL_FORM
+});
+export const submitDealSuccess = data => ({
+  type: SUBMIT_DEAL_SUCCESS,
+  payload: data
+});
+export const submitDealError = error => ({
+  type: SUBMIT_DEAL_ERROR,
+  payload: error
 });

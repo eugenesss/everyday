@@ -4,8 +4,8 @@ const longText =
 const shortText =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id felis ut sapien finibus vestibulum. Ut eget faucibus ligula.";
 
-const address = "1 Address St";
-const address2 = "An Address Building";
+const address_1 = "1 Phonecall St";
+const address_2 = "An YanSang Building";
 
 export const user = {
   id: 1,
@@ -69,8 +69,8 @@ export const lead = {
   createdAt: 1330192800000,
   modifiedBy: user,
   modifiedAt: 1330192800000,
-  address: address,
-  address2: address2,
+  address_1: address_1,
+  address_2: address_2,
   city: "Singapore",
   state: "Singapore",
   zip: "654321",
@@ -79,6 +79,11 @@ export const lead = {
   closedEvents: [closedEvent, closedEvent],
   notes: [note, note, note]
 };
+
+export const leadStatus = [
+  { id: 1, name: "Contacted" },
+  { id: 2, name: "Not Contacted" }
+];
 
 export const lead2 = {
   id: 2,
@@ -98,8 +103,8 @@ export const lead2 = {
   createdAt: 1330192800000,
   modifiedBy: user,
   modifiedAt: 1330192800000,
-  address: address,
-  address2: address2,
+  address_1: address_1,
+  address_2: address_2,
   city: "Singapore",
   state: "Singapore",
   zip: "654321",
@@ -123,8 +128,8 @@ export const cust = {
   createdAt: 1330192800000,
   modifiedBy: user,
   modifiedAt: 1330192800000,
-  address: address,
-  address2: address2,
+  address_1: address_1,
+  address_2: address_2,
   city: "Singapore",
   state: "Singapore",
   zip: "654321",
@@ -148,8 +153,8 @@ export const account = {
   createdAt: 1330192800000,
   modifiedBy: user,
   modifiedAt: 1330192800000,
-  address: address,
-  address2: address2,
+  address_1: address_1,
+  address_2: address_2,
   city: "Singapore",
   state: "Singapore",
   zip: "654321",
@@ -172,8 +177,8 @@ export const account2 = {
   createdAt: 1330192800000,
   modifiedBy: user,
   modifiedAt: 1330192800000,
-  address: address,
-  address2: address2,
+  address_1: address_1,
+  address_2: address_2,
   city: "Singapore",
   state: "Singapore",
   zip: "654321",
@@ -208,6 +213,7 @@ export const cust2 = {
 };
 
 const stage1 = {
+  id: 1,
   name: "Prospecting",
   chance: 10,
   step: 1,
@@ -216,6 +222,7 @@ const stage1 = {
     "This stage refers to any initial calls, conversations or emails with a potential lead."
 };
 const stage2 = {
+  id: 2,
   name: "Qualification",
   chance: 25,
   step: 2,
@@ -223,6 +230,7 @@ const stage2 = {
   description: "This stage refers to a confirmed meeting with the lead."
 };
 const stage3 = {
+  id: 3,
   name: "Proposal",
   chance: 50,
   step: 3,
@@ -231,6 +239,7 @@ const stage3 = {
     "This stage refers to any discussion on budget, proposal or issue of quotations."
 };
 const stage4 = {
+  id: 4,
   name: "Negotiation",
   chance: 70,
   step: 4,
@@ -239,6 +248,7 @@ const stage4 = {
     "This stage refers to any form of further negotiation portraying some form of buying signal after initial proposal stage."
 };
 const stage5 = {
+  id: 5,
   name: "Buying Signal",
   chance: 90,
   step: 5,
@@ -247,6 +257,7 @@ const stage5 = {
     "This stage refers to strong buying signals from the client Eg. Verbal agreement."
 };
 const stage6 = {
+  id: 6,
   name: "Closed Won",
   chance: 100,
   step: 6,
@@ -254,6 +265,7 @@ const stage6 = {
   description: "This stage refers to a successful signed sales order."
 };
 const stage7 = {
+  id: 7,
   name: "Closed Lost",
   chance: 0,
   step: 7,
@@ -270,6 +282,22 @@ const dealHistory = {
   createdAt: 1330192800000,
   createdBy: user
 };
+
+export const dealType = [
+  { id: 1, name: "New Business" },
+  { id: 2, name: "Upsells" }
+];
+
+export const source = [
+  { id: 1, name: "Cold Call" },
+  { id: 2, name: "Referral" },
+  { id: 3, name: "Google" },
+  { id: 4, name: "SEO" }
+];
+export const industry = [
+  { id: 1, name: "Fashion" },
+  { id: 2, name: "Advertising" }
+];
 
 export const deal = {
   id: 1,
@@ -357,21 +385,21 @@ export const quote = {
   netAmt: 9000,
   sentOn: 1330192800000,
   expireOn: 1830192800000,
-  billingAddress: {
+  billingaddress_1: {
     billTo: "Bill Man",
     unit: null,
-    address: address,
-    address2: address2,
+    address_1: address_1,
+    address_2: address_2,
     country: "Singapore",
     zip: "654321",
     email: "customer@invoice.com",
     phone: "1234-4566"
   },
-  shippingAddress: {
+  shippingaddress_1: {
     shipTo: "Ship Man",
     unit: "02-12",
-    address: address,
-    address2: address2,
+    address_1: address_1,
+    address_2: address_2,
     country: "Singapore",
     zip: "654321",
     email: "customer@invoice.com",
@@ -402,8 +430,8 @@ export const invoice = {
   billingAddress: {
     billTo: "Bill Man",
     unit: null,
-    address: address,
-    address2: address2,
+    address_1: address_1,
+    address_2: address_2,
     country: "Singapore",
     zip: "654321",
     email: "customer@invoice.com",
@@ -412,8 +440,8 @@ export const invoice = {
   shippingAddress: {
     shipTo: "Ship Man",
     unit: "02-12",
-    address: address,
-    address2: address2,
+    address_1: address_1,
+    address_2: address_2,
     country: "Singapore",
     zip: "654321",
     email: "customer@invoice.com",
@@ -449,17 +477,33 @@ export const creditNoteList = [creditNote, creditNote, creditNote, creditNote];
 // List Summary
 export const leadSummary = [
   {
-    summaryType: "Total Cold Leads",
+    summaryName: "Total Cold Leads",
     number: 20,
-    positive: null,
-    difference: null
+    color: "#a2dbff"
   },
   {
-    summaryType: "Total Hot Leads",
+    summaryName: "Total Hot Leads",
     number: 15,
-    positive: null,
-    difference: null
+    color: "#ff8585"
   },
-  { summaryType: "New Leads", number: 2, positive: 0, difference: 20 },
-  { summaryType: "Open Leads", number: 8, positive: 1, difference: 50 }
+  { summaryName: "New Leads", number: 2, color: "#a7ff85" },
+  { summaryName: "Open Leads", number: 8 }
+];
+export const custSummary = [
+  {
+    summaryName: "Total Customers",
+    number: 20,
+    color: "#ffd685"
+  },
+  {
+    summaryName: "Active Customers",
+    number: 15,
+    color: "#a7ff85"
+  },
+  {
+    summaryName: "Inactive Customers",
+    number: 12,
+    color: "#a2dbff"
+  },
+  { summaryName: "Open Leads", number: 8 }
 ];

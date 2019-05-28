@@ -7,8 +7,8 @@ const AccountCard = ({
   ownerName,
   office,
   fax,
-  address,
-  address2,
+  address_1,
+  address_2,
   state,
   city,
   zip
@@ -37,10 +37,10 @@ const AccountCard = ({
               {fax}
             </li>
           )}
-          {address && (
+          {address_1 && (
             <li className="border-bottom py-10 fs-14 d-flex align-items-center">
               <i className="zmdi zmdi-pin-drop mr-20 fs-14" />
-              {`${address}, ${address2}`} <br />
+              {`${address_1}, ${address_2}`} <br />
               {`${state}, ${city}, ${zip}`}
             </li>
           )}

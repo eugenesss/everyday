@@ -35,8 +35,8 @@ const ViewTemplate = ({ order, id }) => {
             <h4 className="mb-15">Bill To</h4>
             <span className="name">{order.billingAddress.billTo}</span>
             <span>{order.billingAddress.unit}</span>
-            <span>{order.billingAddress.address}</span>
-            <span>{order.billingAddress.address2}</span>
+            <span>{order.billingAddress.address_1}</span>
+            <span>{order.billingAddress.address_2}</span>
             <span>{`${order.billingAddress.country}, ${
               order.billingAddress.zip
             }`}</span>
@@ -49,8 +49,8 @@ const ViewTemplate = ({ order, id }) => {
             <h4 className="mb-15">Ship To</h4>
             <span className="name">{order.shippingAddress.billTo}</span>
             <span>{order.shippingAddress.unit}</span>
-            <span>{order.shippingAddress.address}</span>
-            <span>{order.shippingAddress.address2}</span>
+            <span>{order.shippingAddress.address_1}</span>
+            <span>{order.shippingAddress.address_2}</span>
             <span>{`${order.shippingAddress.country}, ${
               order.shippingAddress.zip
             }`}</span>

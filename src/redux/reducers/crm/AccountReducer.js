@@ -10,20 +10,33 @@ import {
   GET_OPEN_ACCOUNT,
   GET_SINGLE_ACCOUNT,
   GET_SINGLE_ACCOUNT_SUCCESS,
-  CLEAR_SINGLE_ACCOUNT
+  CLEAR_SINGLE_ACCOUNT,
+  GET_ACCOUNT_SUMMARY,
+  GET_ACCOUNT_SUMMARY_SUCCESS,
+  GET_ACCOUNT_SUMMARY_FAILURE,
+  HANDLE_CHANGE_ACCOUNT,
+  SUBMIT_ACCOUNT,
+  CLEAR_ACCOUNT_FORM,
+  SUBMIT_ACCOUNT_SUCCESS,
+  SUBMIT_ACCOUNT_ERROR
 } from "Types";
 
 const INIT_STATE = {
   accountList: {
     dropdownOpen: false,
-    showSummary: false,
     nowShowing: "All Accounts",
     options: ["All Accounts", "My Accounts", "Open Accounts"],
     action: false,
     loading: false,
     tableData: []
   },
-  accountToView: { loading: false, account: null }
+  accountSummary: {
+    showSummary: false,
+    loading: false,
+    summary: []
+  },
+  accountToView: { loading: false, account: null },
+  accountForm: { loading: false, account: {} }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -34,14 +47,6 @@ export default (state = INIT_STATE, action) => {
         accountList: {
           ...state.accountList,
           dropdownOpen: !state.accountList.dropdownOpen
-        }
-      };
-    case TOGGLE_ACCOUNT_SUMMARY:
-      return {
-        ...state,
-        accountList: {
-          ...state.accountList,
-          showSummary: !state.accountList.showSummary
         }
       };
     case CHANGE_ACCOUNT_LIST_VIEW:
@@ -68,12 +73,49 @@ export default (state = INIT_STATE, action) => {
       }
 
     /**
-     * Get Quotes
+     * Account Summary
+     */
+    case TOGGLE_ACCOUNT_SUMMARY:
+      return {
+        ...state,
+        accountSummary: {
+          ...state.accountSummary,
+          showSummary: !state.accountSummary.showSummary
+        }
+      };
+    case GET_ACCOUNT_SUMMARY:
+      return {
+        ...state,
+        accountSummary: {
+          ...state.accountSummary,
+          loading: true
+        }
+      };
+    case GET_ACCOUNT_SUMMARY_SUCCESS:
+      return {
+        ...state,
+        accountSummary: {
+          ...state.accountSummary,
+          summary: action.payload,
+          loading: false
+        }
+      };
+    case GET_ACCOUNT_SUMMARY_FAILURE:
+      NotificationManager.warning("Error in fetching Account Summary");
+      console.log(action.payload);
+      return { ...state, accountSummary: INIT_STATE.accountSummary };
+
+    /**
+     * Get Accounts
      */
     case GET_ACCOUNT_FAILURE:
       NotificationManager.warning("Error in fetching Account Data");
       console.log(action.payload);
-      return INIT_STATE;
+      return {
+        ...state,
+        accountToView: INIT_STATE.accountToView,
+        accountList: INIT_STATE.accountList
+      };
     case GET_ALL_ACCOUNT:
     case GET_MY_ACCOUNT:
     case GET_OPEN_ACCOUNT:
@@ -112,6 +154,37 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         accountToView: INIT_STATE.accountToView
+      };
+
+    /**
+     * New Account
+     */
+    case HANDLE_CHANGE_ACCOUNT:
+      return {
+        ...state,
+        accountForm: {
+          ...state.accountForm,
+          account: {
+            ...state.accountForm.account,
+            [action.payload.field]: action.payload.value
+          }
+        }
+      };
+    case SUBMIT_ACCOUNT:
+      return {
+        ...state,
+        accountForm: { ...state.accountForm, loading: true }
+      };
+    case CLEAR_ACCOUNT_FORM:
+      return { ...state, accountForm: INIT_STATE.accountForm };
+    case SUBMIT_ACCOUNT_SUCCESS:
+      return { ...state, accountForm: INIT_STATE.accountForm };
+    case SUBMIT_ACCOUNT_ERROR:
+      NotificationManager.error("Error in POST API");
+      console.log(action.payload);
+      return {
+        ...state,
+        accountForm: { ...state.accountForm, loading: false }
       };
 
     default:

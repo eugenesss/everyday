@@ -8,8 +8,8 @@ import FormTextField from "Components/Form/Components/FormTextField";
 
 const AddressFormInput = ({
   handleChange,
-  address,
-  address2,
+  address_1,
+  address_2,
   city,
   state,
   zip
@@ -23,7 +23,7 @@ const AddressFormInput = ({
             padding="dense"
             align="right"
           >
-            Address
+            Address 1
           </TableCell>
           <TableCell
             colSpan={5}
@@ -31,9 +31,9 @@ const AddressFormInput = ({
             padding="dense"
           >
             <FormTextField
-              value={address}
+              value={address_1}
               handleChange={handleChange}
-              target="address"
+              target="address_1"
             />
           </TableCell>
         </TableRow>
@@ -51,9 +51,9 @@ const AddressFormInput = ({
             padding="dense"
           >
             <FormTextField
-              value={address2}
+              value={address_2}
               handleChange={handleChange}
-              target="address2"
+              target="address_2"
             />
           </TableCell>
         </TableRow>

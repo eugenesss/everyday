@@ -10,17 +10,21 @@ import {
 import {
   CHANGE_QUOTATION_LIST_VIEW,
   GET_ALL_QUOTATION,
-  GET_SINGLE_QUOTATION
+  GET_SINGLE_QUOTATION,
+  GET_QUOTE_SUMMARY
 } from "Types";
 import {
   getQuotationSuccess,
   getQuotationFailure,
-  getSingleQuotationSuccess
+  getSingleQuotationSuccess,
+  getQuotationSummarySuccess,
+  getQuotationSummaryFailure
 } from "Actions";
 
 import api from "Api";
 
 import { quote, quoteList } from "Components/DummyData";
+import { leadSummary } from "../../../components/DummyData";
 
 //=========================
 // REQUESTS
@@ -44,6 +48,10 @@ const getClosedQuoteRequest = async () => {
 const getQuoteRequest = async quoteID => {
   console.log(`fetching ${quoteID}`);
   const result = quote;
+  return result;
+};
+const getQuoteSummaryRequest = async () => {
+  const result = leadSummary;
   return result;
 };
 
@@ -96,6 +104,14 @@ function* getQuoteFromDB({ payload }) {
     yield put(getQuotationFailure(error));
   }
 }
+function* getQuoteSummaryFromDB() {
+  try {
+    const data = yield call(getQuoteSummaryRequest);
+    yield put(getQuotationSummarySuccess(data));
+  } catch (error) {
+    yield put(getQuotationSummaryFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -109,6 +125,9 @@ export function* getAllQuoteWatcher() {
 export function* getSingleQuotationWatcher() {
   yield takeEvery(GET_SINGLE_QUOTATION, getQuoteFromDB);
 }
+export function* getQuoteSummaryWatcher() {
+  yield takeEvery(GET_QUOTE_SUMMARY, getQuoteSummaryFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -117,6 +136,7 @@ export default function* rootSaga() {
   yield all([
     fork(changeViewWatcher),
     fork(getAllQuoteWatcher),
-    fork(getSingleQuotationWatcher)
+    fork(getSingleQuotationWatcher),
+    fork(getQuoteSummaryWatcher)
   ]);
 }

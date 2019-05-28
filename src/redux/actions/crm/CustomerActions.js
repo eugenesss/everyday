@@ -10,6 +10,9 @@ import {
   GET_SINGLE_CUSTOMER,
   GET_SINGLE_CUSTOMER_SUCCESS,
   CLEAR_SINGLE_CUSTOMER,
+  GET_CUSTOMER_SUMMARY,
+  GET_CUSTOMER_SUMMARY_SUCCESS,
+  GET_CUSTOMER_SUMMARY_FAILURE,
   HANDLE_CHANGE_CUSTOMER,
   SUBMIT_CUSTOMER,
   CLEAR_CUSTOMER_FORM,
@@ -90,6 +93,21 @@ export const clearSingleCustomer = () => ({
 });
 
 /**
+ * Get Customer Summary
+ */
+export const getCustomerSummary = () => ({
+  type: GET_CUSTOMER_SUMMARY
+});
+export const getCustomerSummarySuccess = data => ({
+  type: GET_CUSTOMER_SUMMARY_SUCCESS,
+  payload: data
+});
+export const getCustomerSummaryFailure = error => ({
+  type: GET_CUSTOMER_SUMMARY_FAILURE,
+  payload: error
+});
+
+/**
  * New Customer
  */
 export const handleChangeCustomer = (field, value) => ({
@@ -102,9 +120,9 @@ export const submitCustomer = () => ({
 export const clearCustomerForm = () => ({
   type: CLEAR_CUSTOMER_FORM
 });
-export const submitCustomerSuccess = lead => ({
+export const submitCustomerSuccess = data => ({
   type: SUBMIT_CUSTOMER_SUCCESS,
-  payload: lead
+  payload: data
 });
 export const submitCustomerError = error => ({
   type: SUBMIT_CUSTOMER_ERROR,

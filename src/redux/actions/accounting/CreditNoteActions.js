@@ -10,7 +10,10 @@ import {
   GET_CREDIT_NOTE_SUCCESS,
   GET_SINGLE_CREDIT_NOTE,
   GET_SINGLE_CREDIT_NOTE_SUCCESS,
-  CLEAR_SINGLE_CREDIT_NOTE
+  CLEAR_SINGLE_CREDIT_NOTE,
+  GET_CREDIT_NOTE_SUMMARY,
+  GET_CREDIT_NOTE_SUMMARY_SUCCESS,
+  GET_CREDIT_NOTE_SUMMARY_FAILURE
 } from "Types";
 
 /**
@@ -78,7 +81,7 @@ export const getClosedCreditNote = () => ({
 });
 
 /**
- * Get Single Invoice
+ * Get Single CreditNote
  */
 export const getSingleCreditNote = credID => ({
   type: GET_SINGLE_CREDIT_NOTE,
@@ -90,4 +93,19 @@ export const getSingleCreditNoteSuccess = data => ({
 });
 export const clearSingleCreditNote = () => ({
   type: CLEAR_SINGLE_CREDIT_NOTE
+});
+
+/**
+ * Get CreditNote Summary
+ */
+export const getCreditNoteSummary = () => ({
+  type: GET_CREDIT_NOTE_SUMMARY
+});
+export const getCreditNoteSummarySuccess = data => ({
+  type: GET_CREDIT_NOTE_SUMMARY_SUCCESS,
+  payload: data
+});
+export const getCreditNoteSummaryFailure = error => ({
+  type: GET_CREDIT_NOTE_SUMMARY_FAILURE,
+  payload: error
 });

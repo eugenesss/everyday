@@ -63,15 +63,15 @@ class crm_view_lead extends Component {
                 companyName={lead.companyName}
                 status={lead.status.name}
                 statusColor={lead.status.color}
-                ownerName={lead.owner.name}
+                ownerName={lead.owner && lead.owner.name}
               />
             </RctCollapsibleCard>
             <TabsWrapper>
               <div icon="zmdi-coffee text-primary" label="DETAILS">
                 <LeadDetails lead={lead} />
                 <AddressDetails
-                  address={lead.address}
-                  address2={lead.address2}
+                  address_1={lead.address_1}
+                  address_2={lead.address_2}
                   city={lead.city}
                   state={lead.state}
                   zip={lead.zip}

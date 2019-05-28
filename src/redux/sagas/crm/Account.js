@@ -10,17 +10,23 @@ import {
 import {
   CHANGE_ACCOUNT_LIST_VIEW,
   GET_ALL_ACCOUNT,
-  GET_SINGLE_ACCOUNT
+  GET_SINGLE_ACCOUNT,
+  GET_ACCOUNT_SUMMARY,
+  SUBMIT_ACCOUNT
 } from "Types";
 import {
   getAccountFailure,
   getAccountSuccess,
-  getSingleAccountSuccess
+  getSingleAccountSuccess,
+  getAccountSummarySuccess,
+  getAccountSummaryFailure,
+  submitAccountSuccess,
+  submitAccountError
 } from "Actions";
 
 import api from "Api";
 
-import { accountList, account } from "Components/DummyData";
+import { accountList, account, custSummary } from "Components/DummyData";
 
 //=========================
 // REQUESTS
@@ -40,6 +46,15 @@ const getOpenAccountRequest = async () => {
 const getAccountRequest = async acctID => {
   console.log(`fetching ${acctID}`);
   const result = account;
+  return result;
+};
+const getAcctSummaryRequest = async () => {
+  const result = custSummary;
+  return result;
+};
+const postAccountRequest = async acct => {
+  console.log(acct);
+  const result = {};
   return result;
 };
 
@@ -91,6 +106,26 @@ function* getAccountFromDB({ payload }) {
     yield put(getAccountFailure(error));
   }
 }
+function* postAccountToDB() {
+  try {
+    const getAcctState = state =>
+      state.crmState.accountState.accountForm.account;
+    const acct = yield select(getAcctState);
+    const data = yield call(postAccountRequest, acct);
+    yield delay(800);
+    yield put(submitAccountSuccess(data));
+  } catch (error) {
+    yield put(submitAccountError(error));
+  }
+}
+function* getAcctSummaryFromDB() {
+  try {
+    const data = yield call(getAcctSummaryRequest);
+    yield put(getAccountSummarySuccess(data));
+  } catch (error) {
+    yield put(getAccountSummaryFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -104,6 +139,12 @@ export function* getAllAccountWatcher() {
 export function* getSingleAccountWatcher() {
   yield takeEvery(GET_SINGLE_ACCOUNT, getAccountFromDB);
 }
+export function* postAccountWatcher() {
+  yield takeEvery(SUBMIT_ACCOUNT, postAccountToDB);
+}
+export function* getAccountSummaryWatcher() {
+  yield takeEvery(GET_ACCOUNT_SUMMARY, getAcctSummaryFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -112,6 +153,8 @@ export default function* rootSaga() {
   yield all([
     fork(changeViewWatcher),
     fork(getAllAccountWatcher),
-    fork(getSingleAccountWatcher)
+    fork(getSingleAccountWatcher),
+    fork(getAccountSummaryWatcher),
+    fork(postAccountWatcher)
   ]);
 }

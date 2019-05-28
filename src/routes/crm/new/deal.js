@@ -1,26 +1,45 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 // Sub components
 import { Helmet } from "react-helmet";
-import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // intl messages
 import IntlMessages from "Util/IntlMessages";
+
+// Page Components
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import DealForm from "Components/Form/Deal/DealForm";
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 class crm_new_deal extends Component {
   state = {};
 
   render() {
+    const { loading } = this.props.dealForm;
     return (
       <React.Fragment>
         <Helmet>
           <title>Everyday | New Deal</title>
           <meta name="description" content="Everyday Deals Creation" />
         </Helmet>
-        <PageTitleBar title={<IntlMessages id="sidebar.newDeal" />} />
+        <RctCollapsibleCard heading={<IntlMessages id="sidebar.newDeal" />}>
+          {loading && <RctSectionLoader />}
+          <div className="row">
+            <div className="col-md-10">
+              <DealForm />
+            </div>
+            <div className="col-md-1" />
+          </div>
+        </RctCollapsibleCard>
       </React.Fragment>
     );
   }
 }
+const mapStateToProps = ({ crmState }) => {
+  const { dealState } = crmState;
+  const { dealForm } = dealState;
+  return { dealForm };
+};
 
-export default crm_new_deal;
+export default connect(mapStateToProps)(crm_new_deal);

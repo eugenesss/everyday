@@ -7,12 +7,26 @@ import {
   select,
   delay
 } from "redux-saga/effects";
-import { CHANGE_DEAL_LIST_VIEW, GET_ALL_DEAL, GET_SINGLE_DEAL } from "Types";
-import { getDealSuccess, getDealFailure, getSingleDealSuccess } from "Actions";
+import {
+  CHANGE_DEAL_LIST_VIEW,
+  GET_ALL_DEAL,
+  GET_SINGLE_DEAL,
+  GET_DEAL_SUMMARY,
+  SUBMIT_DEAL
+} from "Types";
+import {
+  getDealSuccess,
+  getDealFailure,
+  getSingleDealSuccess,
+  getDealSummarySuccess,
+  getDealSummaryFailure,
+  submitDealSuccess,
+  submitDealError
+} from "Actions";
 
 import api from "Api";
 
-import { dealList, deal } from "Components/DummyData";
+import { dealList, deal, leadSummary } from "Components/DummyData";
 
 //=========================
 // REQUESTS
@@ -40,6 +54,15 @@ const getWonDealRequest = async () => {
 const getDealRequest = async dealID => {
   console.log(`fetching ${dealID}`);
   const result = deal;
+  return result;
+};
+const getDealSummaryRequest = async () => {
+  const result = leadSummary;
+  return result;
+};
+const postDealRequest = async deal => {
+  console.log(deal);
+  const result = {};
   return result;
 };
 
@@ -101,6 +124,25 @@ function* getDealFromDB({ payload }) {
     yield put(getDealFailure(error));
   }
 }
+function* getDealSummaryFromDB() {
+  try {
+    const data = yield call(getDealSummaryRequest);
+    yield put(getDealSummarySuccess(data));
+  } catch (error) {
+    yield put(getDealSummaryFailure(error));
+  }
+}
+function* postDealFromDB() {
+  try {
+    const getDealState = state => state.crmState.dealState.dealForm.deal;
+    const deal = yield select(getDealState);
+    const data = yield call(postDealRequest, deal);
+    yield delay(800);
+    yield put(submitDealSuccess(data));
+  } catch (error) {
+    yield put(submitDealError(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -114,6 +156,12 @@ export function* getAllDealWatcher() {
 export function* getSingleDealWatcher() {
   yield takeEvery(GET_SINGLE_DEAL, getDealFromDB);
 }
+export function* getDealSummaryWatcher() {
+  yield takeEvery(GET_DEAL_SUMMARY, getDealSummaryFromDB);
+}
+export function* postDealWatcher() {
+  yield takeEvery(SUBMIT_DEAL, postDealFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -122,6 +170,8 @@ export default function* rootSaga() {
   yield all([
     fork(changeViewWatcher),
     fork(getAllDealWatcher),
-    fork(getSingleDealWatcher)
+    fork(getSingleDealWatcher),
+    fork(getDealSummaryWatcher),
+    fork(postDealWatcher)
   ]);
 }

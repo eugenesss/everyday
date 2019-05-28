@@ -66,8 +66,8 @@ class crm_view_account extends Component {
               ownerName={account.owner.name}
               office={account.office}
               fax={account.fax}
-              address={account.address}
-              address2={account.address2}
+              address_1={account.address_1}
+              address_2={account.address_2}
               state={account.state}
               city={account.city}
               zip={account.zip}
@@ -79,8 +79,8 @@ class crm_view_account extends Component {
             <React.Fragment>
               <AccountDetails account={account} />
               <AddressDetails
-                address={account.address}
-                address2={account.address2}
+                address_1={account.address_1}
+                address_2={account.address_2}
                 state={account.state}
                 city={account.city}
                 zip={account.zip}
