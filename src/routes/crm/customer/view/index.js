@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+import MoreButton from "Components/PageTitleBar/MoreButton";
 
 //Page Components
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
@@ -46,6 +47,16 @@ class crm_view_customer extends Component {
     this.props.clearSingleCustomer();
   }
 
+  reload() {
+    console.log("reload");
+  }
+  edit() {
+    console.log("edit");
+  }
+  delete() {
+    console.log("delete");
+  }
+
   render() {
     const { loading, customer } = this.props.customerToView;
     return (
@@ -60,6 +71,13 @@ class crm_view_customer extends Component {
             <PageTitleBar
               title="View Customer"
               createLink="/crm/new/customer"
+              extraButtons={
+                <MoreButton>
+                  <div handleOnClick={() => this.reload()} label="Reload" />
+                  <div handleOnClick={() => this.edit()} label={"Edit"} />
+                  <div handleOnClick={() => this.delete()} label={"Delete"} />
+                </MoreButton>
+              }
             />
             <div className="row">
               <RctCollapsibleCard colClasses="col-md-6 col-lg-6" fullBlock>

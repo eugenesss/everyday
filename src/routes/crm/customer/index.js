@@ -7,6 +7,7 @@ import CustomerList from "Components/CRM/Customer/CustomerList";
 // page req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+import MoreButton from "Components/PageTitleBar/MoreButton";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // List Summary
@@ -25,6 +26,13 @@ class crm_customer extends Component {
   componentDidMount() {
     this.props.getAllCustomer();
     this.props.getCustomerSummary();
+  }
+
+  reload() {
+    console.log("reload");
+  }
+  massImportCust() {
+    console.log("massImportCust");
   }
 
   render() {
@@ -60,6 +68,15 @@ class crm_customer extends Component {
             </div>
           }
           createLink="/crm/new/customer"
+          extraButtons={
+            <MoreButton>
+              <div handleOnClick={() => this.reload()} label="Reload" />
+              <div
+                handleOnClick={() => this.massImportCust()}
+                label={"Mass Import Customers (csv)"}
+              />
+            </MoreButton>
+          }
         />
         {showSummary && <ListSummary summary={summary} />}
         <CustomerList

@@ -216,7 +216,7 @@ const stage1 = {
   id: 1,
   name: "Prospecting",
   chance: 10,
-  step: 1,
+  step: 0,
   end: false,
   description:
     "This stage refers to any initial calls, conversations or emails with a potential lead."
@@ -225,7 +225,7 @@ const stage2 = {
   id: 2,
   name: "Qualification",
   chance: 25,
-  step: 2,
+  step: 1,
   end: false,
   description: "This stage refers to a confirmed meeting with the lead."
 };
@@ -233,7 +233,7 @@ const stage3 = {
   id: 3,
   name: "Proposal",
   chance: 50,
-  step: 3,
+  step: 2,
   end: false,
   description:
     "This stage refers to any discussion on budget, proposal or issue of quotations."
@@ -242,7 +242,7 @@ const stage4 = {
   id: 4,
   name: "Negotiation",
   chance: 70,
-  step: 4,
+  step: 3,
   end: false,
   description:
     "This stage refers to any form of further negotiation portraying some form of buying signal after initial proposal stage."
@@ -251,7 +251,7 @@ const stage5 = {
   id: 5,
   name: "Buying Signal",
   chance: 90,
-  step: 5,
+  step: 4,
   end: false,
   description:
     "This stage refers to strong buying signals from the client Eg. Verbal agreement."
@@ -260,7 +260,7 @@ const stage6 = {
   id: 6,
   name: "Closed Won",
   chance: 100,
-  step: 6,
+  step: 5,
   end: true,
   description: "This stage refers to a successful signed sales order."
 };
@@ -268,7 +268,7 @@ const stage7 = {
   id: 7,
   name: "Closed Lost",
   chance: 0,
-  step: 7,
+  step: 6,
   end: true,
   description: "Client has declined the sales order."
 };

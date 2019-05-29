@@ -1,6 +1,10 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+
+// Global Req
+import { Helmet } from "react-helmet";
+import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+import MoreButton from "Components/PageTitleBar/MoreButton";
 
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
@@ -25,10 +29,6 @@ import ActivityLog from "Components/Everyday/ActivityLog";
 import NewNote from "Components/Form/Note/NewNote";
 import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
-// Global Req
-import { Helmet } from "react-helmet";
-import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-
 //Actions
 import { getSingleLead, clearSingleLead } from "Actions";
 // addNoteToLead(leadID) onNoteChange, clearNote
@@ -44,6 +44,16 @@ class crm_view_lead extends Component {
     this.props.clearSingleLead();
   }
 
+  reload() {
+    console.log("reload");
+  }
+  edit() {
+    console.log("edit");
+  }
+  delete() {
+    console.log("delete");
+  }
+
   render() {
     const { lead, loading } = this.props.leadToView;
 
@@ -56,7 +66,17 @@ class crm_view_lead extends Component {
             <Helmet>
               <title>Everyday | View Lead</title>
             </Helmet>
-            <PageTitleBar title="View Lead" createLink="/crm/new/lead" />
+            <PageTitleBar
+              title="View Lead"
+              createLink="/crm/new/lead"
+              extraButtons={
+                <MoreButton>
+                  <div handleOnClick={() => this.reload()} label="Reload" />
+                  <div handleOnClick={() => this.edit()} label={"Edit"} />
+                  <div handleOnClick={() => this.delete()} label={"Delete"} />
+                </MoreButton>
+              }
+            />
             <RctCollapsibleCard fullBlock>
               <LeadCard
                 name={lead.name}

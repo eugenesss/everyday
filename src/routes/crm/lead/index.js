@@ -7,6 +7,7 @@ import LeadList from "Components/CRM/Lead/LeadList";
 //Page Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+import MoreButton from "Components/PageTitleBar/MoreButton";
 
 // List View
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
@@ -28,6 +29,13 @@ class crm_lead extends Component {
   componentDidMount() {
     this.props.getAllLead();
     this.props.getLeadSummary();
+  }
+
+  reload() {
+    console.log("reload");
+  }
+  massImportLeads() {
+    console.log("massImportLeads");
   }
 
   render() {
@@ -60,6 +68,15 @@ class crm_lead extends Component {
             </div>
           }
           createLink="/crm/new/lead"
+          extraButtons={
+            <MoreButton>
+              <div handleOnClick={() => this.reload()} label="Reload" />
+              <div
+                handleOnClick={() => this.massImportLeads()}
+                label={"Mass Import Leads (csv)"}
+              />
+            </MoreButton>
+          }
         />
         {showSummary && <ListSummary summary={summary} />}
         <LeadList

@@ -20,7 +20,13 @@ import {
   SUBMIT_DEAL,
   CLEAR_DEAL_FORM,
   SUBMIT_DEAL_SUCCESS,
-  SUBMIT_DEAL_ERROR
+  SUBMIT_DEAL_ERROR,
+  ON_CLICK_STEP,
+  SET_CURRENT_STEP,
+  ON_CHANGE_STEP_STATE,
+  ON_SUBMIT_NEW_STAGE,
+  ON_SUBMIT_NEW_STAGE_SUCCESS,
+  ON_SUBMIT_NEW_STAGE_FAILURE
 } from "Types";
 
 const INIT_STATE = {
@@ -43,7 +49,15 @@ const INIT_STATE = {
     loading: false,
     summary: []
   },
-  dealToView: { loading: false, deal: null },
+  dealToView: {
+    loading: false,
+    deal: null,
+    dealStageStepper: {
+      activeStep: 0,
+      completed: new Set(),
+      loading: false
+    }
+  },
   dealForm: { loading: false, deal: {} }
 };
 
@@ -164,6 +178,90 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         dealToView: INIT_STATE.dealToView
+      };
+
+    /**
+     * Handle Deal Stage
+     */
+    case ON_CLICK_STEP:
+      return {
+        ...state,
+        dealToView: {
+          ...state.dealToView,
+          dealStageStepper: {
+            ...state.dealToView.dealStageStepper,
+            activeStep: action.payload
+          }
+        }
+      };
+    case SET_CURRENT_STEP:
+      const completed = new Set();
+      for (let i = 0; i <= action.payload; i++) {
+        completed.add(i);
+      }
+      return {
+        ...state,
+        dealToView: {
+          ...state.dealToView,
+          dealStageStepper: {
+            ...state.dealToView.dealStageStepper,
+            completed,
+            activeStep: action.payload
+          }
+        }
+      };
+    case ON_CHANGE_STEP_STATE:
+      const activeStep = state.dealToView.dealStageStepper.activeStep;
+      const completedSet = new Set();
+      for (let i = 0; i <= activeStep; i++) {
+        completedSet.add(i);
+      }
+      return {
+        ...state,
+        dealToView: {
+          ...state.dealToView,
+          dealStageStepper: {
+            ...state.dealToView.dealStageStepper,
+            completed: completedSet,
+            activeStep: activeStep
+          }
+        }
+      };
+    case ON_SUBMIT_NEW_STAGE:
+      return {
+        ...state,
+        dealToView: {
+          ...state.dealToView,
+          dealStageStepper: {
+            ...state.dealToView.dealStageStepper,
+            loading: true
+          }
+        }
+      };
+    case ON_SUBMIT_NEW_STAGE_SUCCESS:
+      return {
+        ...state,
+        dealToView: {
+          ...state.dealToView,
+          deal: action.payload,
+          dealStageStepper: {
+            ...state.dealToView.dealStageStepper,
+            loading: false
+          }
+        }
+      };
+    case ON_SUBMIT_NEW_STAGE_FAILURE:
+      NotificationManager.error("Error in POST API");
+      console.log(action.payload);
+      return {
+        ...state,
+        dealToView: {
+          ...state.dealToView,
+          dealStageStepper: {
+            ...state.dealToView.dealStageStepper,
+            loading: false
+          }
+        }
       };
 
     /**

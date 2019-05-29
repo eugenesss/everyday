@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 // page req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+import MoreButton from "Components/PageTitleBar/MoreButton";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // List Summary
@@ -26,6 +27,13 @@ class crm_account extends Component {
   componentDidMount() {
     this.props.getAllAccount();
     this.props.getAccountSummary();
+  }
+
+  reload() {
+    console.log("reload");
+  }
+  massImportAccount() {
+    console.log("massImportAccount");
   }
 
   render() {
@@ -58,6 +66,15 @@ class crm_account extends Component {
             </div>
           }
           createLink="/crm/new/account"
+          extraButtons={
+            <MoreButton>
+              <div handleOnClick={() => this.reload()} label="Reload" />
+              <div
+                handleOnClick={() => this.massImportAccount()}
+                label={"Mass Import Accounts (csv)"}
+              />
+            </MoreButton>
+          }
         />
         {showSummary && <ListSummary summary={summary} />}
         <AccountList

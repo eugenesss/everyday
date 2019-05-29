@@ -19,7 +19,13 @@ import {
   SUBMIT_DEAL,
   CLEAR_DEAL_FORM,
   SUBMIT_DEAL_SUCCESS,
-  SUBMIT_DEAL_ERROR
+  SUBMIT_DEAL_ERROR,
+  ON_CLICK_STEP,
+  SET_CURRENT_STEP,
+  ON_CHANGE_STEP_STATE,
+  ON_SUBMIT_NEW_STAGE,
+  ON_SUBMIT_NEW_STAGE_SUCCESS,
+  ON_SUBMIT_NEW_STAGE_FAILURE
 } from "Types";
 
 /**
@@ -142,5 +148,32 @@ export const submitDealSuccess = data => ({
 });
 export const submitDealError = error => ({
   type: SUBMIT_DEAL_ERROR,
+  payload: error
+});
+
+/**
+ * Handle Deal Stage
+ */
+export const onClickStep = step => ({
+  type: ON_CLICK_STEP,
+  payload: step
+});
+export const setCurrentStep = currentStep => ({
+  type: SET_CURRENT_STEP,
+  payload: currentStep
+});
+export const onChangeStepState = () => ({
+  type: ON_CHANGE_STEP_STATE
+});
+export const submitNewStage = (dealID, stageID) => ({
+  type: ON_SUBMIT_NEW_STAGE,
+  payload: { dealID, stageID }
+});
+export const newStageSuccess = deal => ({
+  type: ON_SUBMIT_NEW_STAGE_SUCCESS,
+  payload: deal
+});
+export const newStageFailure = error => ({
+  type: ON_SUBMIT_NEW_STAGE_FAILURE,
   payload: error
 });

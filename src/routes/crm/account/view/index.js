@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+import MoreButton from "Components/PageTitleBar/MoreButton";
 
 //Page Components
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
@@ -48,6 +49,16 @@ class crm_view_account extends Component {
     this.props.clearSingleAccount();
   }
 
+  reload() {
+    console.log("reload");
+  }
+  edit() {
+    console.log("edit");
+  }
+  delete() {
+    console.log("delete");
+  }
+
   render() {
     const { loading, account } = this.props.accountToView;
     return loading ? (
@@ -57,7 +68,17 @@ class crm_view_account extends Component {
         <Helmet>
           <title>Everyday | View Account</title>
         </Helmet>
-        <PageTitleBar title="View Account" createLink="/crm/new/account" />
+        <PageTitleBar
+          title="View Account"
+          createLink="/crm/new/account"
+          extraButtons={
+            <MoreButton>
+              <div handleOnClick={() => this.reload()} label="Reload" />
+              <div handleOnClick={() => this.edit()} label={"Edit"} />
+              <div handleOnClick={() => this.delete()} label={"Delete"} />
+            </MoreButton>
+          }
+        />
         <div className="row">
           <RctCollapsibleCard colClasses="col-md-6 col-lg-6" fullBlock>
             <AccountCard

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+import MoreButton from "Components/PageTitleBar/MoreButton";
 
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
@@ -11,7 +12,9 @@ import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import DealCard from "Components/CRM/Deal/DealCard";
-// import ViewDealStage from "Components/CRM/View/Deal/ViewDealStage";
+
+// Deal Stage Component
+import SelectDealStage from "Components/CRM/View/SelectDealStage";
 
 // Details Tab
 import DealDetails from "Components/CRM/Deal/DealDetails";
@@ -33,7 +36,6 @@ import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
 import { getSingleDeal, clearSingleDeal } from "Actions";
-// getDeal - deal details, history, events, notes
 // Edit Deal, Delete Deal, Update Stage/Amount, getDealStage,
 // addNoteToDeal(dealID), onNoteChange, clearNote
 // Add Event Dialog
@@ -48,6 +50,16 @@ class crm_view_deal extends Component {
     this.props.clearSingleDeal();
   }
 
+  reload() {
+    console.log("reload");
+  }
+  edit() {
+    console.log("edit");
+  }
+  delete() {
+    console.log("delete");
+  }
+
   render() {
     const { loading, deal } = this.props.dealToView;
     return (
@@ -59,7 +71,17 @@ class crm_view_deal extends Component {
             <Helmet>
               <title>Everyday | View Deal</title>
             </Helmet>
-            <PageTitleBar title="View Deal" createLink="/crm/new/deal" />
+            <PageTitleBar
+              title="View Deal"
+              createLink="/crm/new/deal"
+              extraButtons={
+                <MoreButton>
+                  <div handleOnClick={() => this.reload()} label="Reload" />
+                  <div handleOnClick={() => this.edit()} label={"Edit"} />
+                  <div handleOnClick={() => this.delete()} label={"Delete"} />
+                </MoreButton>
+              }
+            />
             <RctCollapsibleCard fullBlock>
               <DealCard
                 name={deal.name}
@@ -71,7 +93,7 @@ class crm_view_deal extends Component {
               />
             </RctCollapsibleCard>
             <RctCollapsibleCard heading={"Select Deal Stage"} fullBlock>
-              {/*  <ViewDealStage deal={deal} /> */}
+              <SelectDealStage deal={deal} />
             </RctCollapsibleCard>
             <TabsWrapper>
               <div icon="zmdi-coffee text-success" label="DETAILS">
