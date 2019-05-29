@@ -13,8 +13,10 @@ import {
 
 const INIT_STATE = {
   selectedGroup: null,
+  selectedHierarchies: [],
   groupsLoading: false,
   groups: [],
+  hierarchies: [],
 };
 
 export default (state = INIT_STATE, action) => {
@@ -31,8 +33,8 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         groupsLoading: false,
-        selectedGroup: action.payload[0],
-        groups: action.payload,
+        groups: action.payload.groups,
+        hierarchies: action.payload.hierarchies,
       }
 
     /**
@@ -47,9 +49,11 @@ export default (state = INIT_STATE, action) => {
      * State Changes
      */
     case CHANGE_SELECTED_GROUP:
+      const selectedHierarchies = state.hierarchies.filter(hierarchy => hierarchy.group == action.payload.id);
       return { 
         ...state,
         selectedGroup: action.payload,
+        selectedHierarchies: selectedHierarchies,
       };
       
     default:

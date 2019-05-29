@@ -21,6 +21,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
+import { getAllRoles, getAllGroups } from "Actions";
 
 const styles = theme => ({
   root: {
@@ -48,15 +49,21 @@ class GroupsManager extends Component {
   constructor(props) {
     super(props);
   }
+
+  componentDidMount() {
+    this.props.getAllRoles()
+    this.props.getAllGroups()
+  }
   
   render() {
     const { 
       classes,
 
       roles,
+      selectedHierarchies,
       selectedGroup,
      } = this.props;
-    return (
+     return (
       <React.Fragment>
         <div className={classes.root}>
           <Row>
@@ -83,7 +90,7 @@ class GroupsManager extends Component {
                 style={{height: "40px", marginTop: "-0.5rem"}}
                 multiple
                 input={<Input id="role" />}
-                value={ selectedGroup ?  selectedGroup.roles : [] }
+                value={ [] }
                 // onChange={(e) => onChangeAddUser('role', e.target.value)}
                 renderValue={selected => (
                   <div className={classes.chips}>
@@ -121,7 +128,7 @@ class GroupsManager extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                { selectedGroup &&
+                {/* { selectedGroup &&
                   selectedGroup.roles.map(role => (
                   <TableRow className={classes.row} key={role.id}>
                     <TableCell component="th" scope="row">
@@ -140,7 +147,24 @@ class GroupsManager extends Component {
                       <Radio />
                     </TableCell>
                   </TableRow>
-                ))}
+                ))} */}
+                  <TableRow className={classes.row}>
+                    <TableCell component="th" scope="row">
+                      Role
+                    </TableCell>
+                    <TableCell align="center">
+                      <Radio />
+                    </TableCell>
+                    <TableCell align="center">
+                      <Radio />
+                    </TableCell>
+                    <TableCell align="center">
+                      <Radio />
+                    </TableCell>
+                    <TableCell align="center">
+                      <Radio />
+                    </TableCell>
+                  </TableRow>
               </TableBody>
             </Table>
           </Row>
@@ -175,12 +199,12 @@ GroupsManager.propTypes = {
 };
 
 const mapStateToProps = ({ groupsState, rolesState }) => {
-  const { selectedGroup } = groupsState;
+  const { selectedGroup, selectedHierarchies } = groupsState;
   const  { roles } = rolesState;
   return { selectedGroup, roles };
 };
 
 export default connect(
   mapStateToProps,
-  { }
+  { getAllRoles, getAllGroups }
 )(withStyles(styles)(GroupsManager));
