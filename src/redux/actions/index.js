@@ -28,3 +28,6 @@ export * from "./settings/userControl/RolesActions";
 export * from "./settings/userControl/UsersActions";
 export * from "./settings/userControl/GroupsActions";
 
+//Login actions
+export * from "./login/LoginActions";
+
