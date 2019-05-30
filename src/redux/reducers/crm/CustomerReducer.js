@@ -2,7 +2,6 @@ import { NotificationManager } from "react-notifications";
 import {
   CUSTOMER_LIST_DROPDOWN,
   CHANGE_CUSTOMER_LIST_VIEW,
-  TOGGLE_CUSTOMER_SUMMARY,
   GET_CUSTOMER_FAILURE,
   GET_CUSTOMER_SUCCESS,
   GET_ALL_CUSTOMER,
@@ -11,9 +10,6 @@ import {
   GET_SINGLE_CUSTOMER,
   GET_SINGLE_CUSTOMER_SUCCESS,
   CLEAR_SINGLE_CUSTOMER,
-  GET_CUSTOMER_SUMMARY,
-  GET_CUSTOMER_SUMMARY_SUCCESS,
-  GET_CUSTOMER_SUMMARY_FAILURE,
   HANDLE_CHANGE_CUSTOMER,
   SUBMIT_CUSTOMER,
   CLEAR_CUSTOMER_FORM,
@@ -29,11 +25,6 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
-  },
-  customerSummary: {
-    showSummary: false,
-    loading: false,
-    summary: []
   },
   customerToView: {
     loading: false,
@@ -77,39 +68,6 @@ export default (state = INIT_STATE, action) => {
           }
         };
       }
-
-    /**
-     * Customer Summary
-     */
-    case TOGGLE_CUSTOMER_SUMMARY:
-      return {
-        ...state,
-        customerSummary: {
-          ...state.customerSummary,
-          showSummary: !state.customerSummary.showSummary
-        }
-      };
-    case GET_CUSTOMER_SUMMARY:
-      return {
-        ...state,
-        customerSummary: {
-          ...state.customerSummary,
-          loading: true
-        }
-      };
-    case GET_CUSTOMER_SUMMARY_SUCCESS:
-      return {
-        ...state,
-        customerSummary: {
-          ...state.customerSummary,
-          summary: action.payload,
-          loading: false
-        }
-      };
-    case GET_CUSTOMER_SUMMARY_FAILURE:
-      NotificationManager.warning("Error in fetching Customer Summary");
-      console.log(action.payload);
-      return { ...state, customerSummary: INIT_STATE.customerSummary };
 
     /**
      * Get Customers

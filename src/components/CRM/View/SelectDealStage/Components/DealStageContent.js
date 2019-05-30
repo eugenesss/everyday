@@ -3,9 +3,9 @@ import { Card, CardTitle } from "reactstrap";
 
 const DealStageContent = ({ activeStep, dealStage }) => {
   return (
-    <Card body outline color="info">
+    <Card body color="secondary" className="text-white">
       <CardTitle className="p-10">
-        <strong>Remarks</strong>
+        <strong>Key Notes</strong>
       </CardTitle>
       <div className="p-10">{dealStage[activeStep]["description"]}</div>
     </Card>

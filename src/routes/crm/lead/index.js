@@ -68,13 +68,13 @@ class crm_lead extends Component {
             </div>
           }
           createLink="/crm/new/lead"
-          extraButtons={
+          moreButton={
             <MoreButton>
-              <div handleOnClick={() => this.reload()} label="Reload" />
-              <div
-                handleOnClick={() => this.massImportLeads()}
-                label={"Mass Import Leads (csv)"}
-              />
+              {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
+              {{
+                handleOnClick: this.massImportLeads.bind(this),
+                label: "Mass Import Leads (csv)"
+              }}
             </MoreButton>
           }
         />

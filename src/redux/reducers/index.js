@@ -15,6 +15,7 @@ import LeadReducer from "./crm/LeadReducer";
 import CustomerReducer from "./crm/CustomerReducer";
 import AccountReducer from "./crm/AccountReducer";
 import DealReducer from "./crm/DealReducer";
+import CrmFieldReducer from "./crm/CrmFieldReducer";
 
 //settings
 import usersReducer from "./settings/userControl/UsersReducer";
@@ -27,7 +28,6 @@ import authUserReducer from "./system/AuthUserReducer";
 import reportReducer from "./system/ReportReducer";
 import calendarReducer from "./calendar/CalendarReducer";
 
-
 const reducers = combineReducers({
   settings,
   authUser: authUserReducer,
@@ -35,7 +35,8 @@ const reducers = combineReducers({
     leadState: LeadReducer,
     customerState: CustomerReducer,
     accountState: AccountReducer,
-    dealState: DealReducer
+    dealState: DealReducer,
+    crmField: CrmFieldReducer
   }),
   accountingState: combineReducers({
     quotationState: QuotationReducer,

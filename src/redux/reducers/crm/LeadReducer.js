@@ -20,7 +20,14 @@ import {
   SUBMIT_NEW_LEAD,
   CLEAR_NEW_LEAD,
   NEW_LEAD_SUCCESS,
-  NEW_LEAD_ERROR
+  NEW_LEAD_ERROR,
+  HANDLE_CONVERT_MODAL,
+  HANDLE_SUCCESS_CONVERT_MODAL,
+  HANDLE_CHANGE_CONVERT_LEAD,
+  CONVERT_LEAD,
+  CONVERT_LEAD_SUCCESS,
+  CONVERT_LEAD_FAILURE,
+  UNMOUNT_CONVERT_LEAD
 } from "Types";
 
 const INIT_STATE = {
@@ -44,6 +51,15 @@ const INIT_STATE = {
   leadForm: {
     loading: false,
     lead: {}
+  },
+  leadToConvert: {
+    modal: false,
+    successMsg: false,
+    loading: false,
+    dealDetails: {},
+    newDeal: null,
+    newCust: {},
+    newAcct: {}
   }
 };
 
@@ -188,6 +204,72 @@ export default (state = INIT_STATE, action) => {
       console.log(action.payload);
       return { ...state, leadForm: { ...state.leadForm, loading: false } };
 
+    /**
+     * Convert Lead
+     */
+    case HANDLE_CONVERT_MODAL:
+      return {
+        ...state,
+        leadToConvert: {
+          ...state.leadToConvert,
+          modal: !state.leadToConvert.modal
+        }
+      };
+    case HANDLE_SUCCESS_CONVERT_MODAL:
+      return {
+        ...state,
+        leadToConvert: {
+          ...state.leadToConvert,
+          successMsg: !state.leadToConvert.successMsg
+        }
+      };
+    case HANDLE_CHANGE_CONVERT_LEAD:
+      return {
+        ...state,
+        leadToConvert: {
+          ...state.leadToConvert,
+          dealDetails: {
+            ...state.leadToConvert.dealDetails,
+            [action.payload.field]: [action.payload.value]
+          }
+        }
+      };
+    case CONVERT_LEAD:
+      return {
+        ...state,
+        leadToConvert: {
+          ...state.leadToConvert,
+          loading: true
+        }
+      };
+    case CONVERT_LEAD_SUCCESS:
+      return {
+        ...state,
+        leadToConvert: {
+          ...state.leadToConvert,
+          modal: false,
+          successMsg: true,
+          loading: false,
+          newDeal: action.payload.newDeal,
+          newCust: action.payload.newCust,
+          newAcct: action.payload.newAcct
+        }
+      };
+    case CONVERT_LEAD_FAILURE:
+      NotificationManager.warning("Error in Convert POST API");
+      console.log(action.payload);
+      return {
+        ...state,
+        leadToConvert: {
+          ...state.leadToConvert,
+          loading: false
+        }
+      };
+    case UNMOUNT_CONVERT_LEAD:
+      return {
+        ...state,
+        leadToConvert: INIT_STATE.leadToConvert
+      };
     default:
       return { ...state };
   }

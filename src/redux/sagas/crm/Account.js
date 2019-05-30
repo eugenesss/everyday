@@ -11,15 +11,12 @@ import {
   CHANGE_ACCOUNT_LIST_VIEW,
   GET_ALL_ACCOUNT,
   GET_SINGLE_ACCOUNT,
-  GET_ACCOUNT_SUMMARY,
   SUBMIT_ACCOUNT
 } from "Types";
 import {
   getAccountFailure,
   getAccountSuccess,
   getSingleAccountSuccess,
-  getAccountSummarySuccess,
-  getAccountSummaryFailure,
   submitAccountSuccess,
   submitAccountError
 } from "Actions";
@@ -46,10 +43,6 @@ const getOpenAccountRequest = async () => {
 const getAccountRequest = async acctID => {
   console.log(`fetching ${acctID}`);
   const result = account;
-  return result;
-};
-const getAcctSummaryRequest = async () => {
-  const result = custSummary;
   return result;
 };
 const postAccountRequest = async acct => {
@@ -118,14 +111,6 @@ function* postAccountToDB() {
     yield put(submitAccountError(error));
   }
 }
-function* getAcctSummaryFromDB() {
-  try {
-    const data = yield call(getAcctSummaryRequest);
-    yield put(getAccountSummarySuccess(data));
-  } catch (error) {
-    yield put(getAccountSummaryFailure(error));
-  }
-}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -142,9 +127,6 @@ export function* getSingleAccountWatcher() {
 export function* postAccountWatcher() {
   yield takeEvery(SUBMIT_ACCOUNT, postAccountToDB);
 }
-export function* getAccountSummaryWatcher() {
-  yield takeEvery(GET_ACCOUNT_SUMMARY, getAcctSummaryFromDB);
-}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -154,7 +136,6 @@ export default function* rootSaga() {
     fork(changeViewWatcher),
     fork(getAllAccountWatcher),
     fork(getSingleAccountWatcher),
-    fork(getAccountSummaryWatcher),
     fork(postAccountWatcher)
   ]);
 }

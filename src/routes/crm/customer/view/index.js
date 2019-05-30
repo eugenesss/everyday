@@ -24,9 +24,10 @@ import RelatedDeals from "Components/CRM/View/Related/RelatedDeals";
 // Events Tab
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
+import NewEventsButton from "Components/CRM/View/Events/NewEventsButton";
 
 // Activity Log
-import ActivityLog from "Components/Everyday/ActivityLog";
+// import ActivityLog from "Components/Everyday/ActivityLog";
 
 // Notes Tab
 import NewNote from "Components/Form/Note/NewNote";
@@ -56,6 +57,12 @@ class crm_view_customer extends Component {
   delete() {
     console.log("delete");
   }
+  newEvent() {
+    console.log("new events");
+  }
+  setInactive(cust) {
+    console.log("inactive");
+  }
 
   render() {
     const { loading, customer } = this.props.customerToView;
@@ -71,11 +78,24 @@ class crm_view_customer extends Component {
             <PageTitleBar
               title="View Customer"
               createLink="/crm/new/customer"
-              extraButtons={
+              extraButtons={[
+                {
+                  color: "danger",
+                  label: "Set Inactive",
+                  handleOnClick: () => this.setInactive(customer)
+                }
+              ]}
+              moreButton={
                 <MoreButton>
-                  <div handleOnClick={() => this.reload()} label="Reload" />
-                  <div handleOnClick={() => this.edit()} label={"Edit"} />
-                  <div handleOnClick={() => this.delete()} label={"Delete"} />
+                  {{
+                    handleOnClick: this.reload.bind(this),
+                    label: "Reload"
+                  }}
+                  {{ handleOnClick: this.edit.bind(this), label: "Edit" }}
+                  {{
+                    handleOnClick: this.delete.bind(this),
+                    label: "Delete"
+                  }}
                 </MoreButton>
               }
             />
@@ -106,13 +126,14 @@ class crm_view_customer extends Component {
                 <RelatedDeals deals={customer.deals} />
               </div>
               <div icon="zmdi-pizza text-warning" label="EVENTS">
+                <NewEventsButton handleOnClick={this.newEvent} />
                 <UpcomingEvents events={customer.upcomingEvents} />
                 <hr />
                 <ClosedEvents events={customer.closedEvents} />
               </div>
-              <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
+              {/* <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
                 <ActivityLog />
-              </div>
+              </div> */}
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div className="col-md-4">

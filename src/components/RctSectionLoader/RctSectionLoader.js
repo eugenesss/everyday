@@ -1,13 +1,13 @@
 /**
  * Rct Section Loader
  */
-import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import React from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const RctSectionLoader = () => (
-    <div className="d-flex justify-content-center loader-overlay">
-        <CircularProgress />
-    </div>
+  <div className="d-flex justify-content-center loader-overlay">
+    <CircularProgress />
+  </div>
 );
 
 export default RctSectionLoader;

@@ -23,9 +23,10 @@ import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
 // Events Tab
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
+import NewEventsButton from "Components/CRM/View/Events/NewEventsButton";
 
 // Acitivty Tab
-import ActivityLog from "Components/Everyday/ActivityLog";
+// import ActivityLog from "Components/Everyday/ActivityLog";
 
 // History Tab
 import DealHistory from "Components/CRM/View/Deal/DealHistory";
@@ -59,6 +60,9 @@ class crm_view_deal extends Component {
   delete() {
     console.log("delete");
   }
+  newEvent() {
+    console.log("new events");
+  }
 
   render() {
     const { loading, deal } = this.props.dealToView;
@@ -74,11 +78,17 @@ class crm_view_deal extends Component {
             <PageTitleBar
               title="View Deal"
               createLink="/crm/new/deal"
-              extraButtons={
+              moreButton={
                 <MoreButton>
-                  <div handleOnClick={() => this.reload()} label="Reload" />
-                  <div handleOnClick={() => this.edit()} label={"Edit"} />
-                  <div handleOnClick={() => this.delete()} label={"Delete"} />
+                  {{
+                    handleOnClick: this.reload.bind(this),
+                    label: "Reload"
+                  }}
+                  {{ handleOnClick: this.edit.bind(this), label: "Edit" }}
+                  {{
+                    handleOnClick: this.delete.bind(this),
+                    label: "Delete"
+                  }}
                 </MoreButton>
               }
             />
@@ -92,7 +102,7 @@ class crm_view_deal extends Component {
                 amount={deal.amount}
               />
             </RctCollapsibleCard>
-            <RctCollapsibleCard heading={"Select Deal Stage"} fullBlock>
+            <RctCollapsibleCard heading={"Update Deal Stage"} fullBlock>
               <SelectDealStage deal={deal} />
             </RctCollapsibleCard>
             <TabsWrapper>
@@ -104,13 +114,14 @@ class crm_view_deal extends Component {
                 <DealHistory history={deal.history} />
               </div>
               <div icon="zmdi-pizza text-warning" label="EVENTS">
+                <NewEventsButton handleOnClick={this.newEvent} />
                 <UpcomingEvents events={deal.upcomingEvents} />
                 <hr />
                 <ClosedEvents events={deal.closedEvents} />
               </div>
-              <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
+              {/* <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
                 <ActivityLog />
-              </div>
+              </div> */}
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div className="col-md-4">

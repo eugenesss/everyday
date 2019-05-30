@@ -46,8 +46,8 @@ function SimpleMenu(props) {
       >
         {children.map((child, key) => {
           return (
-            <MenuItem key={key} onClick={child.props.handleOnClick}>
-              {child.props.label}
+            <MenuItem key={key} onClick={child.handleOnClick}>
+              {child.label}
             </MenuItem>
           );
         })}

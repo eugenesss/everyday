@@ -19,7 +19,14 @@ import {
   SUBMIT_NEW_LEAD,
   CLEAR_NEW_LEAD,
   NEW_LEAD_SUCCESS,
-  NEW_LEAD_ERROR
+  NEW_LEAD_ERROR,
+  HANDLE_CONVERT_MODAL,
+  HANDLE_SUCCESS_CONVERT_MODAL,
+  HANDLE_CHANGE_CONVERT_LEAD,
+  CONVERT_LEAD,
+  CONVERT_LEAD_SUCCESS,
+  CONVERT_LEAD_FAILURE,
+  UNMOUNT_CONVERT_LEAD
 } from "Types";
 
 /**
@@ -143,4 +150,33 @@ export const newLeadSuccess = lead => ({
 export const newLeadError = error => ({
   type: NEW_LEAD_ERROR,
   payload: error
+});
+
+/**
+ * Convert Lead
+ */
+export const handleChangeConvertLead = (field, value) => ({
+  type: HANDLE_CHANGE_CONVERT_LEAD,
+  payload: { field, value }
+});
+export const convertLead = leadID => ({
+  type: CONVERT_LEAD,
+  payload: leadID
+});
+export const convertLeadSuccess = data => ({
+  type: CONVERT_LEAD_SUCCESS,
+  payload: data
+});
+export const convertLeadFailure = error => ({
+  type: CONVERT_LEAD_FAILURE,
+  payload: error
+});
+export const unmountConvertLead = () => ({
+  type: UNMOUNT_CONVERT_LEAD
+});
+export const handleConvertModal = () => ({
+  type: HANDLE_CONVERT_MODAL
+});
+export const handleSuccessConvertModal = () => ({
+  type: HANDLE_SUCCESS_CONVERT_MODAL
 });

@@ -10,7 +10,7 @@ import { dealStage } from "Components/DummyData";
 
 //Page Req
 import DealStageContent from "./Components/DealStageContent";
-// import DealStageIndicatorForm from "./DealStageIndicatorForm";
+import UpdateDealStageForm from "Components/Form/Deal/UpdateDealStageForm";
 
 import {
   onClickStep,
@@ -20,8 +20,6 @@ import {
 } from "Actions";
 
 class SelectDealStage extends Component {
-  state = {};
-
   componentWillMount() {
     this.props.setCurrentStep(this.props.deal.stage.step);
   }
@@ -64,8 +62,12 @@ class SelectDealStage extends Component {
         />
         <div>
           <div className="row" style={{ padding: "2% 2%" }}>
-            <div className="col-md-2">
-              <div style={{ margin: "auto" }}>
+            <div className="col-md-6">
+              <div
+                className="p-20"
+                style={{ maxWidth: "60%", marginLeft: "30px" }}
+              >
+                <UpdateDealStageForm />
                 <Button
                   variant="contained"
                   color="primary"
@@ -73,11 +75,11 @@ class SelectDealStage extends Component {
                   disabled={this.isCurrentStep()}
                   onClick={this.handleComplete}
                 >
-                  Save New Stage
+                  Update Stage
                 </Button>
               </div>
             </div>
-            <div className="col-md-10">
+            <div className="col-md-6">
               <DealStageContent activeStep={activeStep} dealStage={dealStage} />
             </div>
           </div>

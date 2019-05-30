@@ -7,10 +7,6 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
-// List Summary
-import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
-
 //sub components
 import AccountList from "Components/CRM/Account/AccountList";
 
@@ -19,14 +15,12 @@ import {
   changeAccountView,
   toggleAccountDropDown,
   toggleAccountSummary,
-  getAllAccount,
-  getAccountSummary
+  getAllAccount
 } from "Actions";
 
 class crm_account extends Component {
   componentDidMount() {
     this.props.getAllAccount();
-    this.props.getAccountSummary();
   }
 
   reload() {
@@ -45,7 +39,6 @@ class crm_account extends Component {
       tableData,
       loading
     } = this.props.accountState.accountList;
-    const { showSummary, summary } = this.props.accountState.accountSummary;
     return (
       <React.Fragment>
         <Helmet>
@@ -62,21 +55,19 @@ class crm_account extends Component {
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeAccountView}
               />
-              <ShowListSummaryButton action={this.props.toggleAccountSummary} />
             </div>
           }
           createLink="/crm/new/account"
-          extraButtons={
+          moreButton={
             <MoreButton>
-              <div handleOnClick={() => this.reload()} label="Reload" />
-              <div
-                handleOnClick={() => this.massImportAccount()}
-                label={"Mass Import Accounts (csv)"}
-              />
+              {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
+              {{
+                handleOnClick: this.massImportAccount.bind(this),
+                label: "Mass Import Accounts (csv)"
+              }}
             </MoreButton>
           }
         />
-        {showSummary && <ListSummary summary={summary} />}
         <AccountList
           title={nowShowing}
           action={action}
@@ -98,7 +89,6 @@ export default connect(
     changeAccountView,
     toggleAccountDropDown,
     toggleAccountSummary,
-    getAllAccount,
-    getAccountSummary
+    getAllAccount
   }
 )(crm_account);

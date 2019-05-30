@@ -21,21 +21,30 @@ import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
 // Events Tab
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
+import NewEventsButton from "Components/CRM/View/Events/NewEventsButton";
 
 // Activity Log Tab
-import ActivityLog from "Components/Everyday/ActivityLog";
+// import ActivityLog from "Components/Everyday/ActivityLog";
 
 // Notes Tab
 import NewNote from "Components/Form/Note/NewNote";
 import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
+// Convert Lead Modal
+import ConvertLeadModal from "Components/CRM/Lead/ConvertModals/ConvertLeadModal";
+import ConvertSuccessModal from "Components/CRM/Lead/ConvertModals/ConvertSuccessModal";
+
 //Actions
-import { getSingleLead, clearSingleLead } from "Actions";
+import { getSingleLead, clearSingleLead, handleConvertModal } from "Actions";
 // addNoteToLead(leadID) onNoteChange, clearNote
 // Add events dialog
-// Delete Lead, Convert Lead, Edit Lead, Transfer Lead
+// Delete Lead, Edit Lead, Transfer Lead
 
 class crm_view_lead extends Component {
+  constructor(props) {
+    super(props);
+    this.convert = this.convert.bind(this);
+  }
   componentWillMount() {
     var id = this.props.match.params.id;
     this.props.getSingleLead(id);
@@ -53,6 +62,12 @@ class crm_view_lead extends Component {
   delete() {
     console.log("delete");
   }
+  newEvent() {
+    console.log("new events");
+  }
+  convert() {
+    this.props.handleConvertModal();
+  }
 
   render() {
     const { lead, loading } = this.props.leadToView;
@@ -69,11 +84,24 @@ class crm_view_lead extends Component {
             <PageTitleBar
               title="View Lead"
               createLink="/crm/new/lead"
-              extraButtons={
+              extraButtons={[
+                {
+                  color: "success",
+                  label: "Convert",
+                  handleOnClick: () => this.convert(lead)
+                }
+              ]}
+              moreButton={
                 <MoreButton>
-                  <div handleOnClick={() => this.reload()} label="Reload" />
-                  <div handleOnClick={() => this.edit()} label={"Edit"} />
-                  <div handleOnClick={() => this.delete()} label={"Delete"} />
+                  {{
+                    handleOnClick: this.reload.bind(this),
+                    label: "Reload"
+                  }}
+                  {{ handleOnClick: this.edit.bind(this), label: "Edit" }}
+                  {{
+                    handleOnClick: this.delete.bind(this),
+                    label: "Delete"
+                  }}
                 </MoreButton>
               }
             />
@@ -99,13 +127,14 @@ class crm_view_lead extends Component {
                 <DescriptionDetails desc={lead.description} />
               </div>
               <div icon="zmdi-pizza text-warning" label="EVENTS">
+                <NewEventsButton handleOnClick={this.newEvent} />
                 <UpcomingEvents events={lead.upcomingEvents} />
                 <hr />
                 <ClosedEvents events={lead.closedEvents} />
               </div>
-              <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
+              {/* <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
                 <ActivityLog />
-              </div>
+              </div> */}
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div className="col-md-4">
@@ -117,6 +146,8 @@ class crm_view_lead extends Component {
                 </div>
               </div>
             </TabsWrapper>
+            <ConvertLeadModal />
+            <ConvertSuccessModal />
           </React.Fragment>
         ) : (
           <PageErrorMessage
@@ -137,5 +168,5 @@ const mapStateToProps = ({ crmState }) => {
 
 export default connect(
   mapStateToProps,
-  { getSingleLead, clearSingleLead }
+  { getSingleLead, clearSingleLead, handleConvertModal }
 )(crm_view_lead);

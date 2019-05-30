@@ -28,22 +28,21 @@ NumberFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired
 };
 
-export default class AmountInput extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <TextField
-        fullWidth
-        value={this.props.value}
-        id="amount"
-        InputProps={{
-          inputComponent: NumberFormatCustom,
-          startAdornment: <InputAdornment position="start">$</InputAdornment>
-        }}
-        {...this.props}
-      />
-    );
-  }
-}
+const AmountInput = props => {
+  return (
+    <TextField
+      fullWidth
+      value={props.value}
+      label={props.label}
+      id="amount"
+      InputProps={{
+        inputComponent: NumberFormatCustom,
+        startAdornment: <InputAdornment position="start">$</InputAdornment>,
+        endAdornment: props.endAdornmentProps
+      }}
+      {...props}
+    />
+  );
+};
+
+export default AmountInput;

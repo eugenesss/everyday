@@ -226,6 +226,8 @@ const stage2 = {
   name: "Qualification",
   chance: 25,
   step: 1,
+  invoice: false,
+  quotation: false,
   end: false,
   description: "This stage refers to a confirmed meeting with the lead."
 };
@@ -234,6 +236,8 @@ const stage3 = {
   name: "Proposal",
   chance: 50,
   step: 2,
+  invoice: false,
+  quotation: true,
   end: false,
   description:
     "This stage refers to any discussion on budget, proposal or issue of quotations."
@@ -243,6 +247,8 @@ const stage4 = {
   name: "Negotiation",
   chance: 70,
   step: 3,
+  invoice: false,
+  quotation: false,
   end: false,
   description:
     "This stage refers to any form of further negotiation portraying some form of buying signal after initial proposal stage."
@@ -252,6 +258,8 @@ const stage5 = {
   name: "Buying Signal",
   chance: 90,
   step: 4,
+  invoice: false,
+  quotation: false,
   end: false,
   description:
     "This stage refers to strong buying signals from the client Eg. Verbal agreement."
@@ -261,6 +269,8 @@ const stage6 = {
   name: "Closed Won",
   chance: 100,
   step: 5,
+  invoice: true,
+  quotation: false,
   end: true,
   description: "This stage refers to a successful signed sales order."
 };
@@ -269,6 +279,8 @@ const stage7 = {
   name: "Closed Lost",
   chance: 0,
   step: 6,
+  invoice: false,
+  quotation: false,
   end: true,
   description: "Client has declined the sales order."
 };

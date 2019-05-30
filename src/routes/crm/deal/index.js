@@ -66,13 +66,13 @@ class crm_deal extends Component {
             </div>
           }
           createLink="/crm/new/deal"
-          extraButtons={
+          moreButton={
             <MoreButton>
-              <div handleOnClick={() => this.reload()} label="Reload" />
-              <div
-                handleOnClick={() => this.massImportDeals()}
-                label={"Mass Import Deals (csv)"}
-              />
+              {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
+              {{
+                handleOnClick: this.massImportDeals.bind(this),
+                label: "Mass Import Deals (csv)"
+              }}
             </MoreButton>
           }
         />
