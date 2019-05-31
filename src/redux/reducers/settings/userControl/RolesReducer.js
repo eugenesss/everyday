@@ -5,6 +5,19 @@ import { NotificationManager } from "react-notifications";
 import { 
   GET_ALL_ROLES,
   GET_ALL_ROLES_SUCCESS,
+
+  ADD_ROLE,
+  ADD_ROLE_SUCCESS,
+  ADD_ROLE_FAILURE,
+  
+  ON_CHANGE_UPDATE_ROLE,
+  UPDATE_ROLE,
+  UPDATE_ROLE_SUCCESS,
+  UPDATE_ROLE_FAILURE,
+  
+  DELETE_ROLE,
+  DELETE_ROLE_SUCCESS,
+  DELETE_ROLE_FAILURE,
   
   GET_ROLE_FAILURE,
 
@@ -36,6 +49,81 @@ export default (state = INIT_STATE, action) => {
         crudPermissions: action.payload.crud,
       }
 
+    /**
+     * Add Role
+     */
+    case ADD_ROLE:
+      return {
+        ...state,
+        rolesLoading: true
+      }
+    case ADD_ROLE_SUCCESS:
+      //var allRoles = Object.assign([], state.roles)
+      //var roles = [...allRoles, action.payload]
+      NotificationManager.success("New Role Created")
+      return {
+        ...state,
+        //roles: roles,
+        rolesLoading: false
+      }
+    case ADD_ROLE_FAILURE:
+      NotificationManager.warning("Failed to Create Role")
+      return {
+        ...state,
+        rolesLoading: false
+      }
+    
+    /**
+     * Update Role
+     */
+    case ON_CHANGE_UPDATE_ROLE:
+      return{
+        ...state,
+        selectedRole: {
+          ...state.selectedRole,
+          [action.payload.field]: action.payload.value
+        }
+      }
+    case UPDATE_ROLE:
+      return {
+        ...state,
+        rolesLoading: true
+      }
+    case UPDATE_ROLE_SUCCESS:
+      NotificationManager.success("Role Updated")
+      console.log(action.payload)
+      return {
+        ...state,
+        rolesLoading: false
+      }
+    case UPDATE_ROLE_FAILURE:
+      NotificationManager.warning("Failed to Update Role")
+      return {
+        ...state,
+        rolesLoding: false
+      }
+
+    /**
+     * Delete Role
+     */
+    case DELETE_ROLE:
+      return {
+        ...state,
+        rolesLoading: true
+      }
+    case DELETE_ROLE_SUCCESS:
+      NotificationManager.success("Role Deleted")
+      return {
+        ...state,
+        rolesLoading: false
+      }
+    case DELETE_ROLE_FAILURE:
+      NotificationManager.warning("Failed to Delete Role")
+      return {
+        ...state,
+        rolesLoading: false
+      }
+    
     /**
      * Get Role Failure
      */

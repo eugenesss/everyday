@@ -14,6 +14,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
+import { deleteRole, onChangeUpdateRole, updateRole, } from 'Actions'
 
 const styles = theme => ({
   root: {
@@ -43,7 +44,6 @@ function CustomTableRow({position, name, children, classes, counter = 0, ...prop
   for (let y = 0; y < 4 - position; y++) {
     table.push(<TableCell key={counter++}/>)
   }
-
   return (
     <TableRow className={classes.row} {...props} >
       {table}
@@ -55,6 +55,44 @@ class RoleManager extends Component {
   constructor(props) {
     super(props);
   }
+
+  checked(action) {
+    const selectedRole = this.props.selectedRole
+    if (!selectedRole)
+      return true;
+    else
+      if(selectedRole) {
+        if (selectedRole.permissions.find( permission => permission === action ))
+          return true
+        else
+          return false
+      }    
+  }
+  disabled(action){
+    const selectedRole = this.props.selectedRole
+    if (!selectedRole)
+      return true;
+    else if(selectedRole.name == "Member") {
+      if(action != "read")
+        return true
+      else
+        return false
+    }
+    else
+      return false;
+  }
+  handleChange(val) {
+    var permissions = this.props.selectedRole.permissions
+    if (permissions.find( permission => permission == val )) {
+      var index = permissions.indexOf(val)
+      if (index > -1) {
+        permissions.splice(index, 1)
+      }
+    } else {
+      permissions.push(val)
+    }
+    this.props.onChangeUpdateRole("permissions", permissions)
+  }
   
   render() {
     const { 
@@ -62,8 +100,11 @@ class RoleManager extends Component {
 
       selectedRole,
       crudPermissions,
+
+      onChangeUpdateRole,
+      updateRole,
+      deleteRole,
      } = this.props;
-     console.log(selectedRole)
     return (
       <React.Fragment>
         <div className={classes.root}>
@@ -78,7 +119,7 @@ class RoleManager extends Component {
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
               value={ selectedRole ? selectedRole.name == "Member" ? "Member (default role applied to all users)" : selectedRole.name : "Super Admin" }
-              //onChange={(e) => this.handleOnUpdate('name', e.target.value)}
+              onChange={(e) => onChangeUpdateRole('name', e.target.value)}
               margin="normal"
               variant="outlined"
             />
@@ -103,21 +144,37 @@ class RoleManager extends Component {
                     <TableCell align="center">
                       <Checkbox
                         color="primary"
+                        checked={this.checked(`${permission.action}:read`)}
+                        disabled={this.disabled("read")}
+                        value={`${permission.action}:read`}
+                        onChange={e => this.handleChange(e.target.value)}
                       />
                     </TableCell>
                     <TableCell align="center">
                       <Checkbox
                         color="primary"
+                        checked={this.checked(`${permission.action}:create`)}
+                        value={`${permission.action}:create`}
+                        disabled={this.disabled("create")}
+                        onChange={e => this.handleChange(e.target.value)}
                       />
                     </TableCell>
                     <TableCell align="center">
                       <Checkbox
                         color="primary"
+                        checked={this.checked(`${permission.action}:update`)}
+                        value={`${permission.action}:update`}
+                        disabled={this.disabled("update")}
+                        onChange={e => this.handleChange(e.target.value)}
                       />
                     </TableCell>
                     <TableCell align="center">
                       <Checkbox
                         color="primary"
+                        checked={this.checked(`${permission.action}:delete`)}
+                        value={`${permission.action}:delete`}
+                        disabled={this.disabled("delete")}
+                        onChange={e => this.handleChange(e.target.value)}
                       />
                     </TableCell>
                   </TableRow>
@@ -128,8 +185,8 @@ class RoleManager extends Component {
                   classes={classes}
                 >
                   <Checkbox
-                    // checked={this.checked(`Permissions:manage`)}
-                    // disabled={this.disabled(roleToManage.name, "Permissions:manage")}
+                    checked={this.checked("SuperAdmin:update")}
+                    disabled={this.disabled("SuperAdmin:update")}
                     // value={`Permissions:manage`}
                     // onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
@@ -141,6 +198,8 @@ class RoleManager extends Component {
                   classes={classes}
                 >
                   <Checkbox
+                    checked={this.checked("Password:reset")}
+                    disabled={this.disabled("Password:reset")}
                     color="primary"
                   /> 
                 </CustomTableRow>
@@ -150,6 +209,8 @@ class RoleManager extends Component {
                   classes={classes}
                 >
                   <Checkbox
+                    checked={this.checked("Permissions:manage")}
+                    disabled={this.disabled("Permissions:manage")}
                     color="primary"
                   /> 
                 </CustomTableRow>
@@ -159,6 +220,8 @@ class RoleManager extends Component {
                   classes={classes}
                 >
                   <Checkbox
+                    checked={this.checked("UserRole:update")}
+                    disabled={this.disabled("UserRole:update")}
                     color="primary"
                   /> 
                 </CustomTableRow>
@@ -171,6 +234,8 @@ class RoleManager extends Component {
                 variant="contained"
                 color="secondary"
                 className="text-white mb-10 mt-10"
+                onClick={() => deleteRole()}
+                disabled={selectedRole ? selectedRole.id == 0 ? true: false : true}
               >
                 Delete
               </Button>
@@ -180,6 +245,7 @@ class RoleManager extends Component {
                 variant="contained"
                 color="primary"
                 className="text-white mb-10 mt-10 float-right"
+                onClick={() => updateRole()}
               >
                 Save
               </Button>
@@ -202,5 +268,5 @@ const mapStateToProps = ({ rolesState }) => {
 
 export default connect(
   mapStateToProps,
-  { }
+  { deleteRole, onChangeUpdateRole, updateRole }
 )(withStyles(styles)(RoleManager));

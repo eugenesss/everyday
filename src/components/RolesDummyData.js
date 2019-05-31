@@ -41,3 +41,14 @@ const crud5 = { id: 4, action: "Deal" };
 
 export const crud = [crud1, crud2, crud3, crud4, crud5]
 export const roles = [ role2, role3, role4, role5, role1]
+
+export const addRole = () => {
+  var newRole = {}
+  newRole.id = roles.length;
+  newRole.name = "New Role";
+  newRole.permissions = [];
+  var member = roles.pop();
+  roles.push(newRole);
+  roles.push(member);
+  return newRole;
+};

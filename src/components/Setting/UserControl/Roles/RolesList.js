@@ -11,7 +11,9 @@ import IconButton from "@material-ui/core/IconButton";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import { getAllRoles, onChangeSelectedRole } from 'Actions'
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+
+import { getAllRoles, onChangeSelectedRole, addRole } from 'Actions'
 
 const styles = theme => ({
   root: {
@@ -47,9 +49,10 @@ class RolesList extends Component {
 
       roles,
       selectedRole,
+      rolesLoading,
 
-      getAllRoles,
       onChangeSelectedRole,
+      addRole,
      } = this.props;
     return (
       <React.Fragment>
@@ -61,6 +64,7 @@ class RolesList extends Component {
               <IconButton
                 className="text-primary mt-10 mr-2 float-right"
                 aria-label="Add Role"
+                onClick={() => addRole()}
               >
                 <i className={"zmdi zmdi-plus " + classes.icon} />
               </IconButton>
@@ -94,6 +98,7 @@ class RolesList extends Component {
               ))}
             </List>
           </Scrollbars>
+          {rolesLoading && <RctSectionLoader/>}
       </React.Fragment>
     )
   }
@@ -104,11 +109,11 @@ RolesList.propTypes = {
 };
 
 const mapStateToProps = ({ rolesState }) => {
-  const { roles, selectedRole } = rolesState;
-  return { roles, selectedRole };
+  const { roles, selectedRole, rolesLoading } = rolesState;
+  return { roles, selectedRole, rolesLoading };
 };
 
 export default connect(
   mapStateToProps,
-  { getAllRoles, onChangeSelectedRole }
+  { getAllRoles, onChangeSelectedRole, addRole }
 )(withStyles(styles)(RolesList));
