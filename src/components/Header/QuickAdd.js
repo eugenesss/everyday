@@ -33,49 +33,55 @@ const QuickLinks = ({ location }) => (
       >
         <div className="dropdown-content">
           <div className="dropdown-top d-flex justify-content-between rounded-top bg-warning">
-            <span className="text-white font-weight-bold">Quick Add</span>
+            <span className="text-white font-weight-bold">New</span>
           </div>
           <ul className="list-unstyled mb-0 dropdown-list">
             <li>
               <Link to={`/${getAppLayout(location)}/crm/new/lead`}>
                 <i className="zmdi zmdi-account-circle text-primary mr-10" />
-                <IntlMessages id="sidebar.newLead" />
+                <IntlMessages id="sidebar.lead" />
               </Link>
             </li>
             <li>
               <Link to={`/${getAppLayout(location)}/crm/new/customer`}>
                 <i className="zmdi zmdi-accounts-outline text-primary mr-10" />
-                <IntlMessages id="sidebar.newCustomer" />
+                <IntlMessages id="sidebar.customer" />
               </Link>
             </li>
             <li>
               <Link to={`/${getAppLayout(location)}/crm/new/account`}>
                 <i className="zmdi zmdi-city-alt text-primary mr-10" />
-                <IntlMessages id="sidebar.newAccount" />
+                <IntlMessages id="sidebar.account" />
               </Link>
             </li>
             <li>
               <Link to={`/${getAppLayout(location)}/crm/new/deal`}>
                 <i className="text-primary zmdi zmdi-case mr-10" />
-                <IntlMessages id="sidebar.newDeal" />
+                <IntlMessages id="sidebar.deal" />
               </Link>
             </li>
             <li>
               <Link to={`/${getAppLayout(location)}/acct/new/quotation`}>
                 <i className="zmdi zmdi-receipt text-success  mr-10" />
-                <IntlMessages id="sidebar.newQuotation" />
+                <IntlMessages id="sidebar.quotation" />
               </Link>
             </li>
             <li>
               <Link to={`/${getAppLayout(location)}/acct/new/invoice`}>
                 <i className="text-success zmdi zmdi-shopping-cart mr-10" />
-                <IntlMessages id="sidebar.newInvoice" />
+                <IntlMessages id="sidebar.invoice" />
+              </Link>
+            </li>
+            <li>
+              <Link to={`/${getAppLayout(location)}/acct/new/payment`}>
+                <i className="text-success zmdi zmdi-card mr-10" />
+                <IntlMessages id="sidebar.payment" />
               </Link>
             </li>
             <li>
               <Link to={`/${getAppLayout(location)}/acct/new/credit_note`}>
                 <i className="text-success zmdi zmdi-store mr-10" />
-                <IntlMessages id="sidebar.newCredit_note" />
+                <IntlMessages id="sidebar.credit_note" />
               </Link>
             </li>
           </ul>

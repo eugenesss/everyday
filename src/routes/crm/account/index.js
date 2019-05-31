@@ -87,7 +87,6 @@ export default connect(
   {
     changeAccountView,
     toggleAccountDropDown,
-    toggleAccountSummary,
     getAllAccount
   }
 )(crm_account);
