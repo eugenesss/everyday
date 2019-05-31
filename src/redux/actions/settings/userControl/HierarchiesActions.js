@@ -51,6 +51,25 @@ export const addHierarchyFailure = (err) => ({
 });
 
 /**
+ * Update Hierarchy
+ */
+export const onChangeUpdateHierarchy = (roleID, value) => ({
+  type: ON_CHANGE_UPDATE_HIERARCHY,
+  payload: {roleID, value}
+});
+export const updateHierarchy = () => ({
+  type: UPDATE_HIERARCHY
+});
+export const updateHierarchySuccess = (hierarchies) => ({
+  type: UPDATE_HIERARCHY_SUCCESS,
+  payload: hierarchies
+})
+export const updateHierarchyFailure = (err) => ({
+  type: UPDATE_HIERARCHY_FAILURE,
+  payload: err
+})
+
+/**
  * Delete Hierarchy
  */
 export const deleteHierarchy = (role) => ({
