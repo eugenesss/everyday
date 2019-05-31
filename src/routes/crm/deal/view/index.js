@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+import MoreButton from "Components/PageTitleBar/MoreButton";
 
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
@@ -11,7 +12,9 @@ import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import DealCard from "Components/CRM/Deal/DealCard";
-// import ViewDealStage from "Components/CRM/View/Deal/ViewDealStage";
+
+// Deal Stage Component
+import SelectDealStage from "Components/CRM/View/SelectDealStage";
 
 // Details Tab
 import DealDetails from "Components/CRM/Deal/DealDetails";
@@ -20,9 +23,10 @@ import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
 // Events Tab
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
+import NewEventsButton from "Components/CRM/View/Events/NewEventsButton";
 
 // Acitivty Tab
-import ActivityLog from "Components/Everyday/ActivityLog";
+// import ActivityLog from "Components/Everyday/ActivityLog";
 
 // History Tab
 import DealHistory from "Components/CRM/View/Deal/DealHistory";
@@ -33,7 +37,6 @@ import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
 import { getSingleDeal, clearSingleDeal } from "Actions";
-// getDeal - deal details, history, events, notes
 // Edit Deal, Delete Deal, Update Stage/Amount, getDealStage,
 // addNoteToDeal(dealID), onNoteChange, clearNote
 // Add Event Dialog
@@ -48,6 +51,19 @@ class crm_view_deal extends Component {
     this.props.clearSingleDeal();
   }
 
+  reload() {
+    console.log("reload");
+  }
+  edit() {
+    console.log("edit");
+  }
+  delete() {
+    console.log("delete");
+  }
+  newEvent() {
+    console.log("new events");
+  }
+
   render() {
     const { loading, deal } = this.props.dealToView;
     return (
@@ -59,7 +75,23 @@ class crm_view_deal extends Component {
             <Helmet>
               <title>Everyday | View Deal</title>
             </Helmet>
-            <PageTitleBar title="View Deal" createLink="/crm/new/deal" />
+            <PageTitleBar
+              title="View Deal"
+              createLink="/crm/new/deal"
+              moreButton={
+                <MoreButton>
+                  {{
+                    handleOnClick: this.reload.bind(this),
+                    label: "Reload"
+                  }}
+                  {{ handleOnClick: this.edit.bind(this), label: "Edit" }}
+                  {{
+                    handleOnClick: this.delete.bind(this),
+                    label: "Delete"
+                  }}
+                </MoreButton>
+              }
+            />
             <RctCollapsibleCard fullBlock>
               <DealCard
                 name={deal.name}
@@ -70,8 +102,8 @@ class crm_view_deal extends Component {
                 amount={deal.amount}
               />
             </RctCollapsibleCard>
-            <RctCollapsibleCard heading={"Select Deal Stage"} fullBlock>
-              {/*  <ViewDealStage deal={deal} /> */}
+            <RctCollapsibleCard heading={"Update Deal Stage"} fullBlock>
+              <SelectDealStage deal={deal} />
             </RctCollapsibleCard>
             <TabsWrapper>
               <div icon="zmdi-coffee text-success" label="DETAILS">
@@ -82,13 +114,14 @@ class crm_view_deal extends Component {
                 <DealHistory history={deal.history} />
               </div>
               <div icon="zmdi-pizza text-warning" label="EVENTS">
+                <NewEventsButton handleOnClick={this.newEvent} />
                 <UpcomingEvents events={deal.upcomingEvents} />
                 <hr />
                 <ClosedEvents events={deal.closedEvents} />
               </div>
-              <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
+              {/* <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
                 <ActivityLog />
-              </div>
+              </div> */}
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div className="col-md-4">

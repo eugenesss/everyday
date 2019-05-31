@@ -12,18 +12,26 @@ import DescriptionFormInput from "Components/Form/Components/Inputs/DescriptionF
 import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetButtons";
 
 // Actions
-import { handleChangeAccount, submitAccount, clearAccountForm } from "Actions";
+import {
+  handleChangeAccount,
+  submitAccount,
+  clearAccountForm,
+  getIndustry
+} from "Actions";
 
 import { users } from "Components/UserDummyData";
-import { industry } from "Components/DummyData";
 
 class AccountForm extends Component {
+  componentWillMount() {
+    this.props.getIndustry();
+  }
   componentWillUnmount() {
     this.props.clearAccountForm();
   }
 
   render() {
-    const { loading, account } = this.props.accountForm;
+    const { account } = this.props.accountForm;
+    const { industry } = this.props.crmField;
     const disabled = account.name && account.owner;
     return (
       <React.Fragment>
@@ -109,12 +117,12 @@ class AccountForm extends Component {
 }
 
 const mapStateToProps = ({ crmState }) => {
-  const { accountState } = crmState;
+  const { accountState, crmField } = crmState;
   const { accountForm } = accountState;
-  return { accountForm };
+  return { accountForm, crmField };
 };
 
 export default connect(
   mapStateToProps,
-  { handleChangeAccount, submitAccount, clearAccountForm }
+  { handleChangeAccount, submitAccount, clearAccountForm, getIndustry }
 )(AccountForm);

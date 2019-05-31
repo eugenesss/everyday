@@ -16,9 +16,11 @@ export * from "./settings/general/CompanyTypes";
 export * from "./accounting/QuotationTypes";
 export * from "./accounting/InvoiceTypes";
 export * from "./accounting/CreditNoteTypes";
+export * from "./accounting/PaymentTypes";
 
 // CRM Types
 export * from "./crm/LeadTypes";
 export * from "./crm/CustomerTypes";
 export * from "./crm/AccountTypes";
 export * from "./crm/DealTypes";
+export * from "./crm/CrmFieldTypes";

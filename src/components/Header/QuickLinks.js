@@ -43,7 +43,7 @@ const QuickLinks = ({ location }) => (
               </Link>
             </li>
             <li>
-              <Link to={`/${getAppLayout(location)}/crm/customers`}>
+              <Link to={`/${getAppLayout(location)}/crm/deals`}>
                 <i className="zmdi zmdi-accounts-outline text-primary mr-10" />
                 <IntlMessages id="sidebar.deals" />
               </Link>

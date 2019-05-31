@@ -15,18 +15,31 @@ import CompanyPicker from "Components/Form/Components/Pickers/CompanyPicker";
 import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetButtons";
 
 // Actions
-import { handleChangeLead, submitNewLead, clearNewLead } from "Actions";
+import {
+  handleChangeLead,
+  submitNewLead,
+  clearNewLead,
+  getLeadSource,
+  getLeadStatus,
+  getIndustry
+} from "Actions";
 
-import { interestLevel, source, leadStatus } from "Components/DummyData";
+import { interestLevel } from "Components/DummyData";
 import { users } from "Components/UserDummyData";
 
 class LeadForm extends Component {
+  componentWillMount() {
+    this.props.getLeadSource();
+    this.props.getLeadStatus();
+    this.props.getIndustry();
+  }
   componentWillUnmount() {
     this.props.clearNewLead();
   }
 
   render() {
     const { lead } = this.props.leadForm;
+    const { leadSource, leadStatus, industry } = this.props.crmField;
     const disabled = lead.firstName && lead.companyName && lead.status;
     return (
       <React.Fragment>
@@ -100,7 +113,7 @@ class LeadForm extends Component {
               value={lead.source}
               handleChange={this.props.handleChangeLead}
               target="source"
-              selectValues={source}
+              selectValues={leadSource}
             />
           </TableRow>
           {/**
@@ -112,6 +125,7 @@ class LeadForm extends Component {
               value={lead.industry}
               handleChange={this.props.handleChangeLead}
               target="industry"
+              selectValues={industry}
             />
             <FormBlock
               label="Interest Level"
@@ -198,12 +212,19 @@ class LeadForm extends Component {
   }
 }
 const mapStateToProps = ({ crmState }) => {
-  const { leadState } = crmState;
+  const { leadState, crmField } = crmState;
   const { leadForm } = leadState;
-  return { leadForm };
+  return { leadForm, crmField };
 };
 
 export default connect(
   mapStateToProps,
-  { handleChangeLead, submitNewLead, clearNewLead }
+  {
+    handleChangeLead,
+    submitNewLead,
+    clearNewLead,
+    getLeadSource,
+    getLeadStatus,
+    getIndustry
+  }
 )(LeadForm);

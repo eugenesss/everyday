@@ -69,6 +69,12 @@ export default {
       child_routes: null
     },
     {
+      menu_title: "sidebar.payment",
+      menu_icon: "zmdi zmdi-card text-success",
+      path: "/app/acct/payment",
+      child_routes: null
+    },
+    {
       menu_title: "sidebar.credit_note",
       menu_icon: "zmdi zmdi-store text-success",
       path: "/app/acct/credit_note",

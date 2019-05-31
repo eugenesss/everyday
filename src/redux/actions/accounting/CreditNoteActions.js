@@ -1,7 +1,6 @@
 import {
   CREDIT_NOTE_LIST_DROPDOWN,
   CHANGE_CREDIT_NOTE_LIST_VIEW,
-  TOGGLE_CREDIT_NOTE_SUMMARY,
   GET_CREDIT_NOTE_FAILURE,
   GET_ALL_CREDIT_NOTE,
   GET_MY_CREDIT_NOTE,
@@ -10,10 +9,7 @@ import {
   GET_CREDIT_NOTE_SUCCESS,
   GET_SINGLE_CREDIT_NOTE,
   GET_SINGLE_CREDIT_NOTE_SUCCESS,
-  CLEAR_SINGLE_CREDIT_NOTE,
-  GET_CREDIT_NOTE_SUMMARY,
-  GET_CREDIT_NOTE_SUMMARY_SUCCESS,
-  GET_CREDIT_NOTE_SUMMARY_FAILURE
+  CLEAR_SINGLE_CREDIT_NOTE
 } from "Types";
 
 /**
@@ -28,12 +24,6 @@ export const changeCreditNoteView = newValue => ({
  */
 export const toggleCreditNoteDropDown = () => ({
   type: CREDIT_NOTE_LIST_DROPDOWN
-});
-/**
- * Toggle Summary List
- */
-export const toggleCreditNoteSummary = () => ({
-  type: TOGGLE_CREDIT_NOTE_SUMMARY
 });
 
 /**
@@ -93,19 +83,4 @@ export const getSingleCreditNoteSuccess = data => ({
 });
 export const clearSingleCreditNote = () => ({
   type: CLEAR_SINGLE_CREDIT_NOTE
-});
-
-/**
- * Get CreditNote Summary
- */
-export const getCreditNoteSummary = () => ({
-  type: GET_CREDIT_NOTE_SUMMARY
-});
-export const getCreditNoteSummarySuccess = data => ({
-  type: GET_CREDIT_NOTE_SUMMARY_SUCCESS,
-  payload: data
-});
-export const getCreditNoteSummaryFailure = error => ({
-  type: GET_CREDIT_NOTE_SUMMARY_FAILURE,
-  payload: error
 });

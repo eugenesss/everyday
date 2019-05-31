@@ -2,7 +2,6 @@ import { NotificationManager } from "react-notifications";
 import {
   CREDIT_NOTE_LIST_DROPDOWN,
   CHANGE_CREDIT_NOTE_LIST_VIEW,
-  TOGGLE_CREDIT_NOTE_SUMMARY,
   GET_CREDIT_NOTE_FAILURE,
   GET_CREDIT_NOTE_SUCCESS,
   GET_ALL_CREDIT_NOTE,
@@ -11,10 +10,7 @@ import {
   GET_CLOSED_CREDIT_NOTE,
   GET_SINGLE_CREDIT_NOTE,
   GET_SINGLE_CREDIT_NOTE_SUCCESS,
-  CLEAR_SINGLE_CREDIT_NOTE,
-  GET_CREDIT_NOTE_SUMMARY,
-  GET_CREDIT_NOTE_SUMMARY_SUCCESS,
-  GET_CREDIT_NOTE_SUMMARY_FAILURE
+  CLEAR_SINGLE_CREDIT_NOTE
 } from "Types";
 
 const INIT_STATE = {
@@ -30,11 +26,6 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: []
-  },
-  creditNoteSummary: {
-    showSummary: false,
-    loading: false,
-    summary: []
   },
   creditNoteToView: { loading: false, creditNote: null }
 };
@@ -71,39 +62,6 @@ export default (state = INIT_STATE, action) => {
           }
         };
       }
-
-    /**
-     * Invoice Summary
-     */
-    case TOGGLE_CREDIT_NOTE_SUMMARY:
-      return {
-        ...state,
-        creditNoteSummary: {
-          ...state.creditNoteSummary,
-          showSummary: !state.creditNoteSummary.showSummary
-        }
-      };
-    case GET_CREDIT_NOTE_SUMMARY:
-      return {
-        ...state,
-        creditNoteSummary: {
-          ...state.creditNoteSummary,
-          loading: true
-        }
-      };
-    case GET_CREDIT_NOTE_SUMMARY_SUCCESS:
-      return {
-        ...state,
-        creditNoteSummary: {
-          ...state.creditNoteSummary,
-          summary: action.payload,
-          loading: false
-        }
-      };
-    case GET_CREDIT_NOTE_SUMMARY_FAILURE:
-      NotificationManager.warning("Error in fetching Credit Note Summary");
-      console.log(action.payload);
-      return { ...state, creditNoteSummary: INIT_STATE.creditNoteSummary };
 
     /**
      * Get Quotes

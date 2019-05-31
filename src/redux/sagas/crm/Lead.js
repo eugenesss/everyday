@@ -12,7 +12,8 @@ import {
   GET_ALL_LEAD,
   GET_SINGLE_LEAD,
   GET_LEAD_SUMMARY,
-  SUBMIT_NEW_LEAD
+  SUBMIT_NEW_LEAD,
+  CONVERT_LEAD
 } from "Types";
 import {
   getLeadSuccess,
@@ -21,7 +22,9 @@ import {
   getLeadSummarySuccess,
   getLeadSummaryFailure,
   newLeadSuccess,
-  newLeadError
+  newLeadError,
+  convertLeadSuccess,
+  convertLeadFailure
 } from "Actions";
 
 import api from "Api";
@@ -62,6 +65,15 @@ const getLeadSummaryRequest = async () => {
 const postLeadRequest = async lead => {
   console.log(lead);
   const result = {};
+  return result;
+};
+const convertLeadRequest = async data => {
+  console.log(data);
+  const result = {
+    newDeal: { name: "New Deal", amount: "10000" },
+    newCust: { name: "Customer One", jobTitle: "Snake Eat" },
+    newAcct: { name: "Account One", industry: { name: "Fashion" } }
+  };
   return result;
 };
 
@@ -136,10 +148,24 @@ function* postLeadToDB() {
     const getLeadState = state => state.crmState.leadState.leadForm.lead;
     const lead = yield select(getLeadState);
     const data = yield call(postLeadRequest, lead);
-    yield delay(800);
+    yield delay(500);
     yield put(newLeadSuccess(data));
   } catch (error) {
     yield put(newLeadError(error));
+  }
+}
+function* convertLeadToDB({ payload }) {
+  try {
+    const getDealDetail = state =>
+      state.crmState.leadState.leadToConvert.dealDetails;
+    const dealDetails = yield select(getDealDetail);
+    const leadID = payload;
+    const id = { dealDetails, leadID };
+    const data = yield call(convertLeadRequest, id);
+    yield delay(500);
+    yield put(convertLeadSuccess(data));
+  } catch (error) {
+    yield put(convertLeadFailure(error));
   }
 }
 
@@ -161,6 +187,9 @@ export function* getLeadSummaryWatcher() {
 export function* postLeadWatcher() {
   yield takeEvery(SUBMIT_NEW_LEAD, postLeadToDB);
 }
+export function* convertLeadWatcher() {
+  yield takeEvery(CONVERT_LEAD, convertLeadToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -171,6 +200,7 @@ export default function* rootSaga() {
     fork(getAllLeadWatcher),
     fork(getSingleLeadWatcher),
     fork(getLeadSummaryWatcher),
-    fork(postLeadWatcher)
+    fork(postLeadWatcher),
+    fork(convertLeadWatcher)
   ]);
 }

@@ -13,21 +13,32 @@ import AmountInput from "Components/Form/Components/Inputs/AmountInput";
 import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
 
 // Actions
-import { handleChangeDeal, submitDeal, clearDealForm } from "Actions";
+import {
+  handleChangeDeal,
+  submitDeal,
+  clearDealForm,
+  getLeadSource
+} from "Actions";
 
 import { users } from "Components/UserDummyData";
 import {
   accountList,
   customerList,
   dealStage,
-  dealType,
-  source
+  dealType
 } from "Components/DummyData";
 
 class DealForm extends Component {
-  state = {};
+  componentWillMount() {
+    this.props.getLeadSource();
+  }
+  componentWillUnmount() {
+    this.props.clearDealForm();
+  }
+
   render() {
     const { loading, deal } = this.props.dealForm;
+    const { leadSource } = this.props.crmField;
     const disabled =
       deal.name &&
       deal.owner &&
@@ -134,7 +145,7 @@ class DealForm extends Component {
               value={deal.source}
               handleChange={this.props.handleChangeDeal}
               target="source"
-              selectValues={source}
+              selectValues={leadSource}
             />
           </TableRow>
         </FormTable>
@@ -148,12 +159,12 @@ class DealForm extends Component {
   }
 }
 const mapStateToProps = ({ crmState }) => {
-  const { dealState } = crmState;
+  const { dealState, crmField } = crmState;
   const { dealForm } = dealState;
-  return { dealForm };
+  return { dealForm, crmField };
 };
 
 export default connect(
   mapStateToProps,
-  { handleChangeDeal, submitDeal, clearDealForm }
+  { handleChangeDeal, submitDeal, clearDealForm, getLeadSource }
 )(DealForm);

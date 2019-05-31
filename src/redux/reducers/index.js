@@ -9,12 +9,14 @@ import { reducer as modal } from "redux-modal";
 import QuotationReducer from "./accounting/QuotationReducer";
 import InvoiceReducer from "./accounting/InvoiceReducer";
 import CreditNoteReducer from "./accounting/CreditNoteReducer";
+import PaymentState from "./accounting/PaymentReducer";
 
 // crm
 import LeadReducer from "./crm/LeadReducer";
 import CustomerReducer from "./crm/CustomerReducer";
 import AccountReducer from "./crm/AccountReducer";
 import DealReducer from "./crm/DealReducer";
+import CrmFieldReducer from "./crm/CrmFieldReducer";
 
 //settings
 import usersReducer from "./settings/userControl/UsersReducer";
@@ -35,12 +37,14 @@ const reducers = combineReducers({
     leadState: LeadReducer,
     customerState: CustomerReducer,
     accountState: AccountReducer,
-    dealState: DealReducer
+    dealState: DealReducer,
+    crmField: CrmFieldReducer
   }),
   accountingState: combineReducers({
     quotationState: QuotationReducer,
     invoiceState: InvoiceReducer,
-    creditNoteState: CreditNoteReducer
+    creditNoteState: CreditNoteReducer,
+    paymentState: PaymentState
   }),
   reportState: reportReducer,
   calendarState: calendarReducer,

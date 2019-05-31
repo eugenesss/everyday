@@ -1,7 +1,6 @@
 import {
   ACCOUNT_LIST_DROPDOWN,
   CHANGE_ACCOUNT_LIST_VIEW,
-  TOGGLE_ACCOUNT_SUMMARY,
   GET_ACCOUNT_FAILURE,
   GET_ACCOUNT_SUCCESS,
   GET_ALL_ACCOUNT,
@@ -10,9 +9,6 @@ import {
   GET_SINGLE_ACCOUNT,
   GET_SINGLE_ACCOUNT_SUCCESS,
   CLEAR_SINGLE_ACCOUNT,
-  GET_ACCOUNT_SUMMARY,
-  GET_ACCOUNT_SUMMARY_SUCCESS,
-  GET_ACCOUNT_SUMMARY_FAILURE,
   HANDLE_CHANGE_ACCOUNT,
   SUBMIT_ACCOUNT,
   CLEAR_ACCOUNT_FORM,
@@ -32,12 +28,6 @@ export const changeAccountView = newValue => ({
  */
 export const toggleAccountDropDown = () => ({
   type: ACCOUNT_LIST_DROPDOWN
-});
-/**
- * Toggle Summary List
- */
-export const toggleAccountSummary = () => ({
-  type: TOGGLE_ACCOUNT_SUMMARY
 });
 
 /**
@@ -90,21 +80,6 @@ export const getSingleAccountSuccess = acctData => ({
 });
 export const clearSingleAccount = () => ({
   type: CLEAR_SINGLE_ACCOUNT
-});
-
-/**
- * Get Account Summary
- */
-export const getAccountSummary = () => ({
-  type: GET_ACCOUNT_SUMMARY
-});
-export const getAccountSummarySuccess = data => ({
-  type: GET_ACCOUNT_SUMMARY_SUCCESS,
-  payload: data
-});
-export const getAccountSummaryFailure = error => ({
-  type: GET_ACCOUNT_SUMMARY_FAILURE,
-  payload: error
 });
 
 /**

@@ -7,6 +7,7 @@ import DealList from "Components/CRM/Deal/DealList";
 // page req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+import MoreButton from "Components/PageTitleBar/MoreButton";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // List Summary
@@ -26,6 +27,13 @@ class crm_deal extends Component {
   componentDidMount() {
     this.props.getAllDeal();
     this.props.getDealSummary();
+  }
+
+  reload() {
+    console.log("reload");
+  }
+  massImportDeals() {
+    console.log("massImportDeals");
   }
 
   render() {
@@ -58,6 +66,15 @@ class crm_deal extends Component {
             </div>
           }
           createLink="/crm/new/deal"
+          moreButton={
+            <MoreButton>
+              {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
+              {{
+                handleOnClick: this.massImportDeals.bind(this),
+                label: "Mass Import Deals (csv)"
+              }}
+            </MoreButton>
+          }
         />
         {showSummary && <ListSummary summary={summary} />}
         <DealList

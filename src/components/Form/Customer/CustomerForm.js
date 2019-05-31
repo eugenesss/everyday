@@ -15,19 +15,24 @@ import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetBu
 import {
   handleChangeCustomer,
   submitCustomer,
-  clearCustomerForm
+  clearCustomerForm,
+  getLeadSource
 } from "Actions";
 
 import { users } from "Components/UserDummyData";
-import { accountList, source } from "Components/DummyData";
+import { accountList } from "Components/DummyData";
 
 class CustomerForm extends Component {
+  componentWillMount() {
+    this.props.getLeadSource();
+  }
   componentWillUnmount() {
     this.props.clearCustomerForm();
   }
 
   render() {
     const { customer } = this.props.customerForm;
+    const { leadSource } = this.props.crmField;
     const disabled = customer.firstName && customer.lastName && customer.owner;
     return (
       <React.Fragment>
@@ -86,7 +91,7 @@ class CustomerForm extends Component {
               value={customer.source}
               handleChange={this.props.handleChangeCustomer}
               target="source"
-              selectValues={source}
+              selectValues={leadSource}
             />
           </TableRow>
           {/**
@@ -144,12 +149,12 @@ class CustomerForm extends Component {
 }
 
 const mapStateToProps = ({ crmState }) => {
-  const { customerState } = crmState;
+  const { customerState, crmField } = crmState;
   const { customerForm } = customerState;
-  return { customerForm };
+  return { customerForm, crmField };
 };
 
 export default connect(
   mapStateToProps,
-  { handleChangeCustomer, submitCustomer, clearCustomerForm }
+  { handleChangeCustomer, submitCustomer, clearCustomerForm, getLeadSource }
 )(CustomerForm);

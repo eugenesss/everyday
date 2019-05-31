@@ -79,6 +79,57 @@ export const lead = {
   closedEvents: [closedEvent, closedEvent],
   notes: [note, note, note]
 };
+const newLead = {
+  companyName: "string",
+  mobile: "string",
+  email: "string",
+  address_1: "string",
+  address_2: "string",
+  city: "string",
+  state: "string",
+  zip: "string",
+  description: "string",
+  fullAddress: "string",
+  name: "string",
+  userId: "string",
+  id: "string",
+  statusId: "string",
+  sourceId: "string",
+  industryId: "string",
+  createdAt: "2019-05-31T02:51:37.826Z",
+  updatedAt: "2019-05-31T02:51:37.826Z",
+  createdBy: 0,
+  updatedBy: 0,
+  baseContact: {
+    contactNo: "string",
+    email: "string",
+    mobile: "string",
+    phone: "string",
+    fax: "string",
+    gender: "string",
+    birthday: "2019-05-31T02:51:37.826Z",
+    title: "string",
+    website: "string",
+    isCompany: true,
+    info: "string",
+    name: "string",
+    userId: "string",
+    id: "string",
+    _address: {
+      street: "string",
+      street2: "string",
+      city: "string",
+      zip: "string",
+      id: "string",
+      countryId: "string",
+      stateId: "string"
+    },
+    createdAt: "2019-05-31T02:51:37.826Z",
+    updatedAt: "2019-05-31T02:51:37.826Z",
+    createdBy: 0,
+    updatedBy: 0
+  }
+};
 
 export const leadStatus = [
   { id: 1, name: "Contacted" },
@@ -216,7 +267,7 @@ const stage1 = {
   id: 1,
   name: "Prospecting",
   chance: 10,
-  step: 1,
+  step: 0,
   end: false,
   description:
     "This stage refers to any initial calls, conversations or emails with a potential lead."
@@ -225,7 +276,9 @@ const stage2 = {
   id: 2,
   name: "Qualification",
   chance: 25,
-  step: 2,
+  step: 1,
+  invoice: false,
+  quotation: false,
   end: false,
   description: "This stage refers to a confirmed meeting with the lead."
 };
@@ -233,7 +286,9 @@ const stage3 = {
   id: 3,
   name: "Proposal",
   chance: 50,
-  step: 3,
+  step: 2,
+  invoice: false,
+  quotation: true,
   end: false,
   description:
     "This stage refers to any discussion on budget, proposal or issue of quotations."
@@ -242,7 +297,9 @@ const stage4 = {
   id: 4,
   name: "Negotiation",
   chance: 70,
-  step: 4,
+  step: 3,
+  invoice: false,
+  quotation: false,
   end: false,
   description:
     "This stage refers to any form of further negotiation portraying some form of buying signal after initial proposal stage."
@@ -251,7 +308,9 @@ const stage5 = {
   id: 5,
   name: "Buying Signal",
   chance: 90,
-  step: 5,
+  step: 4,
+  invoice: false,
+  quotation: false,
   end: false,
   description:
     "This stage refers to strong buying signals from the client Eg. Verbal agreement."
@@ -260,7 +319,9 @@ const stage6 = {
   id: 6,
   name: "Closed Won",
   chance: 100,
-  step: 6,
+  step: 5,
+  invoice: true,
+  quotation: false,
   end: true,
   description: "This stage refers to a successful signed sales order."
 };
@@ -268,7 +329,9 @@ const stage7 = {
   id: 7,
   name: "Closed Lost",
   chance: 0,
-  step: 7,
+  step: 6,
+  invoice: false,
+  quotation: false,
   end: true,
   description: "Client has declined the sales order."
 };

@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 
 import SingleNotification from "Components/Everyday/Notification/SingleNotification";
+import NoNotificationMessage from "Components/Everyday/Notification/NoNotificationMessage";
 
 class Notifications extends Component {
   state = {
@@ -62,12 +63,15 @@ class Notifications extends Component {
               autoHeightMin={300}
               autoHeightMax={300}
             >
-              <ul className="list-unstyled dropdown-list">
-                {notifications &&
-                  notifications.map((notification, key) => (
+              {notifications ? (
+                <ul className="list-unstyled dropdown-list">
+                  {notifications.map((notification, key) => (
                     <SingleNotification key={key} notification={notification} />
                   ))}
-              </ul>
+                </ul>
+              ) : (
+                <NoNotificationMessage />
+              )}
             </Scrollbars>
           </div>
         </DropdownMenu>

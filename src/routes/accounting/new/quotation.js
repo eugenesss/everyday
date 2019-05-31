@@ -17,11 +17,7 @@ class acct_new_quote extends Component {
           <title>Everyday | New Quotation</title>
           <meta name="description" content="Everyday Quotations Creation" />
         </Helmet>
-        <PageTitleBar
-          title={<IntlMessages id="sidebar.newQuotation" />}
-          match={this.props.match}
-          enableBreadCrumb={false}
-        />
+        <PageTitleBar title={<IntlMessages id="sidebar.newQuotation" />} />
       </React.Fragment>
     );
   }

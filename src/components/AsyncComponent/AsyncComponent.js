@@ -87,6 +87,10 @@ export const Async_acct_credit_note_component = Loadable({
   loader: () => import("Routes/accounting/credit_note"),
   loading: () => <RctPageLoader />
 });
+export const Async_acct_payment_component = Loadable({
+  loader: () => import("Routes/accounting/payment"),
+  loading: () => <RctPageLoader />
+});
 
 // accounting management view
 export const Async_view_quotation = Loadable({
@@ -101,6 +105,10 @@ export const Async_view_credit_note = Loadable({
   loader: () => import("Routes/accounting/credit_note/view"),
   loading: () => <RctPageLoader />
 });
+export const Async_view_payment = Loadable({
+  loader: () => import("Routes/accounting/payment/view"),
+  loading: () => <RctPageLoader />
+});
 
 // accounting management new
 export const Async_acct_new_quotation_component = Loadable({
@@ -113,6 +121,10 @@ export const Async_acct_new_invoice_component = Loadable({
 });
 export const Async_acct_new_credit_note_component = Loadable({
   loader: () => import("Routes/accounting/new/credit_note"),
+  loading: () => <RctPageLoader />
+});
+export const Async_acct_new_payment_component = Loadable({
+  loader: () => import("Routes/accounting/new/payment"),
   loading: () => <RctPageLoader />
 });
 
@@ -156,13 +168,14 @@ export const Async_setting_user_users_component = Loadable({
   loading: () => <RctPageLoader />
 });
 export const Async_setting_user_rolesPermissions_component = Loadable({
-  loader: () => import("Routes/setting/users-and-controls/roles-and-permissions"),
+  loader: () =>
+    import("Routes/setting/users-and-controls/roles-and-permissions"),
   loading: () => <RctPageLoader />
 });
 export const Async_setting_user_groups_component = Loadable({
   loader: () => import("Routes/setting/users-and-controls/groups"),
   loading: () => <RctPageLoader />
-})
+});
 // Accounting
 export const Async_setting_acc_creditNote_component = Loadable({
   loader: () => import("Routes/setting/accounting/creditNote"),
@@ -200,4 +213,4 @@ export const Async_chat_component = Loadable({
 export const Async_user_profile_component = Loadable({
   loader: () => import("Routes/userProfile/view"),
   loading: () => <RctPageLoader />
-})
+});

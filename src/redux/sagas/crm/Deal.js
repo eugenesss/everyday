@@ -12,7 +12,8 @@ import {
   GET_ALL_DEAL,
   GET_SINGLE_DEAL,
   GET_DEAL_SUMMARY,
-  SUBMIT_DEAL
+  SUBMIT_DEAL,
+  ON_SUBMIT_NEW_STAGE
 } from "Types";
 import {
   getDealSuccess,
@@ -21,7 +22,9 @@ import {
   getDealSummarySuccess,
   getDealSummaryFailure,
   submitDealSuccess,
-  submitDealError
+  submitDealError,
+  newStageSuccess,
+  newStageFailure
 } from "Actions";
 
 import api from "Api";
@@ -63,6 +66,12 @@ const getDealSummaryRequest = async () => {
 const postDealRequest = async deal => {
   console.log(deal);
   const result = {};
+  return result;
+};
+const postNewStageRequest = async payload => {
+  const { dealID, stageID } = payload;
+  console.log(payload);
+  const result = deal;
   return result;
 };
 
@@ -132,7 +141,7 @@ function* getDealSummaryFromDB() {
     yield put(getDealSummaryFailure(error));
   }
 }
-function* postDealFromDB() {
+function* postDealToDB() {
   try {
     const getDealState = state => state.crmState.dealState.dealForm.deal;
     const deal = yield select(getDealState);
@@ -141,6 +150,15 @@ function* postDealFromDB() {
     yield put(submitDealSuccess(data));
   } catch (error) {
     yield put(submitDealError(error));
+  }
+}
+function* postStageToDB({ payload }) {
+  try {
+    const deal = yield call(postNewStageRequest, payload);
+    yield delay(500);
+    yield put(newStageSuccess(deal));
+  } catch (error) {
+    yield put(newStageFailure(error));
   }
 }
 
@@ -160,7 +178,10 @@ export function* getDealSummaryWatcher() {
   yield takeEvery(GET_DEAL_SUMMARY, getDealSummaryFromDB);
 }
 export function* postDealWatcher() {
-  yield takeEvery(SUBMIT_DEAL, postDealFromDB);
+  yield takeEvery(SUBMIT_DEAL, postDealToDB);
+}
+export function* updateDealStageWatcher() {
+  yield takeEvery(ON_SUBMIT_NEW_STAGE, postStageToDB);
 }
 
 //=======================
@@ -172,6 +193,7 @@ export default function* rootSaga() {
     fork(getAllDealWatcher),
     fork(getSingleDealWatcher),
     fork(getDealSummaryWatcher),
-    fork(postDealWatcher)
+    fork(postDealWatcher),
+    fork(updateDealStageWatcher)
   ]);
 }

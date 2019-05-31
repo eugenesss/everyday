@@ -8,11 +8,6 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // List View
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
-// ListSummary
-import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
-import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
-
 // List
 import CreditNoteList from "Components/Accounting/CreditNote/CreditNoteList";
 
@@ -20,15 +15,12 @@ import CreditNoteList from "Components/Accounting/CreditNote/CreditNoteList";
 import {
   changeCreditNoteView,
   toggleCreditNoteDropDown,
-  toggleCreditNoteSummary,
-  getAllCreditNote,
-  getCreditNoteSummary
+  getAllCreditNote
 } from "Actions";
 
 class acct_credit_note extends Component {
   componentDidMount() {
     this.props.getAllCreditNote();
-    this.props.getCreditNoteSummary();
   }
 
   render() {
@@ -40,10 +32,6 @@ class acct_credit_note extends Component {
       tableData,
       loading
     } = this.props.creditNoteState.creditNoteList;
-    const {
-      showSummary,
-      summary
-    } = this.props.creditNoteState.creditNoteSummary;
     return (
       <React.Fragment>
         <Helmet>
@@ -60,14 +48,10 @@ class acct_credit_note extends Component {
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeCreditNoteView}
               />
-              <ShowListSummaryButton
-                action={this.props.toggleCreditNoteSummary}
-              />
             </div>
           }
           createLink="/acct/new/credit_note"
         />
-        {showSummary && <ListSummary summary={summary} />}
         <CreditNoteList
           title={nowShowing}
           action={action}
@@ -88,8 +72,6 @@ export default connect(
   {
     changeCreditNoteView,
     toggleCreditNoteDropDown,
-    toggleCreditNoteSummary,
-    getAllCreditNote,
-    getCreditNoteSummary
+    getAllCreditNote
   }
 )(acct_credit_note);

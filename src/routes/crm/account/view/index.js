@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+import MoreButton from "Components/PageTitleBar/MoreButton";
 
 //Page Components
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
@@ -20,9 +21,10 @@ import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
 // Events Tab
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
+import NewEventsButton from "Components/CRM/View/Events/NewEventsButton";
 
 // Activity Log
-import ActivityLog from "Components/Everyday/ActivityLog";
+// import ActivityLog from "Components/Everyday/ActivityLog";
 
 // Related Tab
 import RelatedDeals from "Components/CRM/View/Related/RelatedDeals";
@@ -48,6 +50,19 @@ class crm_view_account extends Component {
     this.props.clearSingleAccount();
   }
 
+  reload() {
+    console.log("reload");
+  }
+  edit() {
+    console.log("edit");
+  }
+  delete() {
+    console.log("delete");
+  }
+  newEvent() {
+    console.log("new events");
+  }
+
   render() {
     const { loading, account } = this.props.accountToView;
     return loading ? (
@@ -57,7 +72,17 @@ class crm_view_account extends Component {
         <Helmet>
           <title>Everyday | View Account</title>
         </Helmet>
-        <PageTitleBar title="View Account" createLink="/crm/new/account" />
+        <PageTitleBar
+          title="View Account"
+          createLink="/crm/new/account"
+          moreButton={
+            <MoreButton>
+              {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
+              {{ handleOnClick: this.edit.bind(this), label: "Edit" }}
+              {{ handleOnClick: this.delete.bind(this), label: "Delete" }}
+            </MoreButton>
+          }
+        />
         <div className="row">
           <RctCollapsibleCard colClasses="col-md-6 col-lg-6" fullBlock>
             <AccountCard
@@ -94,13 +119,14 @@ class crm_view_account extends Component {
             <RelatedCustomers customers={account.customers} />
           </div>
           <div icon="zmdi-pizza text-warning" label="EVENTS">
+            <NewEventsButton handleOnClick={this.newEvent} />
             <UpcomingEvents events={account.upcomingEvents} />
             <hr />
             <ClosedEvents events={account.closedEvents} />
           </div>
-          <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
+          {/* <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
             <ActivityLog />
-          </div>
+          </div> */}
           <div icon="zmdi-assignment text-danger" label="NOTES">
             <div className="row">
               <div className="col-md-4">

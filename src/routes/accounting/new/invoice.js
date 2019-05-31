@@ -17,11 +17,7 @@ class acct_new_invoice extends Component {
           <title>Everyday | New Invoice</title>
           <meta name="description" content="Everyday Invoices Creation" />
         </Helmet>
-        <PageTitleBar
-          title={<IntlMessages id="sidebar.newInvoice" />}
-          match={this.props.match}
-          enableBreadCrumb={false}
-        />
+        <PageTitleBar title={<IntlMessages id="sidebar.newInvoice" />} />
       </React.Fragment>
     );
   }
