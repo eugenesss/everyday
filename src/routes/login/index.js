@@ -15,7 +15,7 @@ import QueueAnim from "rc-queue-anim";
 import AppConfig from "Constants/AppConfig";
 
 // redux action
-/* import { signinUser } from "Actions"; */
+ import { signInUserWithEmailPassword } from "Actions";
 
 class Signin extends Component {
   state = {
@@ -28,8 +28,8 @@ class Signin extends Component {
    */
   onUserLogin = e => {
     e.preventDefault();
-    if (this.state.email !== "" && this.state.password !== "") {
-      this.props.signinUser(this.state, this.props.history);
+    if (this.state.emailAddress !== "" && this.state.password !== "") {
+      this.props.signInUserWithEmailPassword(this.state, this.props.history);
     }
   };
 
@@ -126,8 +126,17 @@ class Signin extends Component {
     );
   }
 } // map state to props
-/* const mapStateToProps = ({ authUser }) => {
+const mapStateToProps = ({ authUser }) => {
   const { user, loading } = authUser;
   return { user, loading };
-}; */
+}; 
+/*
 export default withRouter(connect(null)(Signin));
+const mapStateToProps = ({ authUser }) => {
+	const { user, loading } = authUser;
+	return { user, loading }
+}
+*/
+export default connect(mapStateToProps, {
+	signInUserWithEmailPassword
+})(Signin);

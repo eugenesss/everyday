@@ -5,6 +5,9 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
+//buttons
+import MatButton from '@material-ui/core/Button';
+
 // Components
 import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
@@ -47,7 +50,11 @@ class acct_view_quotation extends Component {
         <Helmet>
           <title>Everyday | View Quotation</title>
         </Helmet>
-        <PageTitleBar title="View Quotation" createLink="/acct/new/quotation" />
+        <PageTitleBar title={
+          <div className="d-flex">
+             <span>View Quotation</span>
+          </div>
+        } createLink="/acct/new/quotation" />
         <div className="row">
           <div className="col-md-4">
             <RctCollapsibleCard>
@@ -63,6 +70,13 @@ class acct_view_quotation extends Component {
             </RctCollapsibleCard>
           </div>
           <div className="col-md-8">
+          <div className="rct-block p-10 mb-10">             
+             <MatButton variant="raised" className="btn-primary mr-10 text-white">Convert to invoice</MatButton>
+             <MatButton variant="raised" className="btn-primary mr-10 text-white">Send by email</MatButton>
+             <MatButton variant="raised" className="btn-primary mr-10 text-white">To PDF &amp; Print</MatButton>
+             <MatButton variant="raised" className="btn-primary mr-10 text-white">Clone</MatButton>
+             <MatButton variant="raised" className="btn-primary mr-10 text-white">New version</MatButton>
+          </div>
             <TabsWrapper>
               <div icon="zmdi-shopping-basket text-success" label="QUOTATION">
                 <ViewTemplate order={quotation} id={quotation.quoteID} />

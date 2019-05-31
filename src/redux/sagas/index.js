@@ -23,6 +23,9 @@ import roleSagas from "./settings/userControl/Roles";
 import groupSagas from "./settings/userControl/Groups";
 import hierarchySagas from "./settings/userControl/Hierarchies";
 
+//login
+import loginSagas from "./login/Login";
+
 export default function* rootSaga(getState) {
   yield all([
     roleSagas(),
@@ -38,6 +41,7 @@ export default function* rootSaga(getState) {
     customerSagas(),
     accountSagas(),
     dealSagas(),
-    crmFieldSagas()
+    crmFieldSagas(),
+    loginSagas()
   ]);
 }

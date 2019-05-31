@@ -2,7 +2,7 @@ import React from "react";
 
 const ViewTemplate = ({ order, id }) => {
   return (
-    <div className="p-50">
+    <div className="p-20">
       <div className="d-flex justify-content-between mb-50">
         <div className="sender-address">
           <div className="invoice-logo mb-30">
@@ -60,7 +60,7 @@ const ViewTemplate = ({ order, id }) => {
         )}
       </div>
 
-      <div className="table-responsive mb-40">
+      <div className="table-responsive mb-20">
         <table className="table table-borderless">
           <thead>
             <tr>
@@ -68,6 +68,8 @@ const ViewTemplate = ({ order, id }) => {
               <th>Description</th>
               <th>Qty</th>
               <th>Unit Price</th>
+              <th>Discount</th>
+              <th>Tax</th>
               <th>Total</th>
             </tr>
           </thead>
@@ -79,29 +81,35 @@ const ViewTemplate = ({ order, id }) => {
                   <td>{product.name}</td>
                   <td>{product.qty}</td>
                   <td>${product.price.toFixed(2)}</td>
+                  <td>0%</td>
+                  <td>$0</td>
                   <td>${product.total.toFixed(2)}</td>
                 </tr>
               ))}
             <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
+              <td colspan="5">&nbsp;</td>
               <td className="fw-bold">Subtotal</td>
               <td>${order.netAmt}</td>
             </tr>
+            <tr>
+            <td colspan="5">&nbsp;</td>
+              <td className="fw-bold">Discount</td>
+              <td>${order.totalAmt}</td>
+            </tr>
             {order.shipping && (
               <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td colspan="5">&nbsp;</td>
                 <td className="fw-bold">Shipping</td>
                 <td>${order.shipping}</td>
               </tr>
             )}
             <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
+            <td colspan="5">&nbsp;</td>
+              <td className="fw-bold">Tax</td>
+              <td>${order.totalAmt}</td>
+            </tr>
+            <tr>
+            <td colspan="5">&nbsp;</td>
               <td className="fw-bold">Total</td>
               <td>${order.totalAmt}</td>
             </tr>
@@ -110,6 +118,7 @@ const ViewTemplate = ({ order, id }) => {
       </div>
       <div className="note-wrapper row">
         <div className="invoice-note col-sm-12 col-md-8">
+         <p> <strong>Valid For: </strong> 30 days</p>
           <h3>Terms & Conditions</h3>
           <p className="fs-12">{order.terms}</p>
         </div>

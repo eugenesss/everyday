@@ -31,3 +31,6 @@ export * from "./settings/general/CompanyActions";
 export * from "./settings/userControl/RolesActions";
 export * from "./settings/userControl/GroupsActions";
 export * from "./settings/userControl/HierarchiesActions";
+
+//Login actions
+export * from "./login/LoginActions";
