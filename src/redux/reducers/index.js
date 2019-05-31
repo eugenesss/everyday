@@ -9,6 +9,7 @@ import { reducer as modal } from "redux-modal";
 import QuotationReducer from "./accounting/QuotationReducer";
 import InvoiceReducer from "./accounting/InvoiceReducer";
 import CreditNoteReducer from "./accounting/CreditNoteReducer";
+import PaymentState from "./accounting/PaymentReducer";
 
 // crm
 import LeadReducer from "./crm/LeadReducer";
@@ -41,7 +42,8 @@ const reducers = combineReducers({
   accountingState: combineReducers({
     quotationState: QuotationReducer,
     invoiceState: InvoiceReducer,
-    creditNoteState: CreditNoteReducer
+    creditNoteState: CreditNoteReducer,
+    paymentState: PaymentState
   }),
   reportState: reportReducer,
   calendarState: calendarReducer,

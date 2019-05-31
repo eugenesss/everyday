@@ -7,20 +7,20 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // intl messages
 import IntlMessages from "Util/IntlMessages";
 
-class acct_new_invoice extends Component {
+class acct_new_payment extends Component {
   state = {};
 
   render() {
     return (
       <React.Fragment>
         <Helmet>
-          <title>Everyday | New Invoice</title>
-          <meta name="description" content="Everyday Invoices Creation" />
+          <title>Everyday | New Payment</title>
+          <meta name="description" content="Everyday Payment Creation" />
         </Helmet>
-        <PageTitleBar title={<IntlMessages id="sidebar.newInvoice" />} />
+        <PageTitleBar title={<IntlMessages id="sidebar.newPayment" />} />
       </React.Fragment>
     );
   }
 }
 
-export default acct_new_invoice;
+export default acct_new_payment;

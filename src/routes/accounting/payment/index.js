@@ -7,20 +7,18 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // List View
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
-
-// List
-import CreditNoteList from "Components/Accounting/CreditNote/CreditNoteList";
+import PaymentList from "Components/Accounting/Payment/PaymentList";
 
 // Actions
 import {
-  changeCreditNoteView,
-  toggleCreditNoteDropDown,
-  getAllCreditNote
+  changePaymentView,
+  togglePaymentDropDown,
+  getAllPayment
 } from "Actions";
 
-class acct_credit_note extends Component {
+class acct_payment extends Component {
   componentDidMount() {
-    this.props.getAllCreditNote();
+    this.props.getAllPayment();
   }
 
   render() {
@@ -31,28 +29,28 @@ class acct_credit_note extends Component {
       action,
       tableData,
       loading
-    } = this.props.creditNoteState.creditNoteList;
+    } = this.props.paymentState.paymentList;
     return (
       <React.Fragment>
         <Helmet>
-          <title>Everyday | Credit Notes</title>
-          <meta name="description" content="Everyday Invoice Management" />
+          <title>Everyday | Payment</title>
+          <meta name="description" content="Everyday Payment Management" />
         </Helmet>
         <PageTitleBar
           title={
             <div className="d-flex">
               <ListViewSelector
                 dropdownOpen={dropdownOpen}
-                toggle={this.props.toggleCreditNoteDropDown}
+                toggle={this.props.togglePaymentDropDown}
                 options={options}
                 nowShowing={nowShowing}
-                onChangeValue={this.props.changeCreditNoteView}
+                onChangeValue={this.props.changePaymentView}
               />
             </div>
           }
-          createLink="/acct/new/credit_note"
+          createLink="/acct/new/payment"
         />
-        <CreditNoteList
+        <PaymentList
           title={nowShowing}
           action={action}
           tableData={tableData}
@@ -62,16 +60,13 @@ class acct_credit_note extends Component {
     );
   }
 }
+
 const mapStateToProps = ({ accountingState }) => {
-  const { creditNoteState } = accountingState;
-  return { creditNoteState };
+  const { paymentState } = accountingState;
+  return { paymentState };
 };
 
 export default connect(
   mapStateToProps,
-  {
-    changeCreditNoteView,
-    toggleCreditNoteDropDown,
-    getAllCreditNote
-  }
-)(acct_credit_note);
+  { changePaymentView, togglePaymentDropDown, getAllPayment }
+)(acct_payment);

@@ -14,7 +14,6 @@ import AccountList from "Components/CRM/Account/AccountList";
 import {
   changeAccountView,
   toggleAccountDropDown,
-  toggleAccountSummary,
   getAllAccount
 } from "Actions";
 

@@ -27,6 +27,9 @@ module.exports = {
   "sidebar.newInvoice": "New Invoice",
   "sidebar.credit_note": "Credit Note",
   "sidebar.newCredit_note": "New Credit Note",
+  "sidebar.payment": "Payment",
+  "sidebar.payments": "Payments",
+  "sidebar.newPayment": "New Payment",
 
   "sidebar.reports": "Reports",
   "sidebar.reminders": "Reminders",

@@ -17,11 +17,7 @@ class acct_new_credit_note extends Component {
           <title>Everyday | New Credit Note</title>
           <meta name="description" content="Everyday Credit Note Creation" />
         </Helmet>
-        <PageTitleBar
-          title={<IntlMessages id="sidebar.newCredit_note" />}
-          match={this.props.match}
-          enableBreadCrumb={false}
-        />
+        <PageTitleBar title={<IntlMessages id="sidebar.newCredit_note" />} />
       </React.Fragment>
     );
   }

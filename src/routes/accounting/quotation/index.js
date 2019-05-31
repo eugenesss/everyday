@@ -10,7 +10,6 @@ import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // ListSummary
 import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-import ListSummaryItem from "Components/Everyday/ListSummary/ListSummaryItem";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // List

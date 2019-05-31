@@ -7,6 +7,7 @@ import { all } from "redux-saga/effects";
 import quoteSagas from "./accounting/Quotation";
 import invoiceSagas from "./accounting/Invoice";
 import creditNoteSagas from "./accounting/CreditNote";
+import paymentSagas from "./accounting/Payment";
 
 //  crm
 import leadSagas from "./crm/Lead";
@@ -30,6 +31,7 @@ export default function* rootSaga(getState) {
     quoteSagas(),
     invoiceSagas(),
     creditNoteSagas(),
+    paymentSagas(),
     leadSagas(),
     customerSagas(),
     accountSagas(),

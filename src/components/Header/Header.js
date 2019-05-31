@@ -7,7 +7,6 @@ import IconButton from "@material-ui/core/IconButton";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Link } from "react-router-dom";
-import screenfull from "screenfull";
 import Tooltip from "@material-ui/core/Tooltip";
 import { withRouter } from "react-router-dom";
 
@@ -19,33 +18,22 @@ import UserBlock from "./UserBlock";
 // import ToDo from "./ToDo";
 import MiniCalendar from "./MiniCalendar";
 
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   icon: {
     height: 24,
-    width: 24,
+    width: 24
   },
   calendar: {
     width: "auto"
   }
 });
 
-
 class Header extends Component {
-  state = {
-    customizer: false,
-    isMobileSearchFormVisible: false
-  };
-
-  // toggle screen full
-  toggleScreenFull() {
-    screenfull.toggle();
-  }
-
   render() {
-    const { classes } = this.props
+    const { classes } = this.props;
     return (
       <AppBar position="static" className="rct-header">
         <Toolbar className="d-flex justify-content-between w-100 pl-0">
@@ -77,8 +65,8 @@ class Header extends Component {
                 </IconButton>
               </Tooltip>
             </li> */}
-            <Notifications classes={classes}/>
-            <MiniCalendar classes={classes}/>
+            <Notifications classes={classes} />
+            <MiniCalendar classes={classes} />
             <li className="list-inline-item">
               <Tooltip title="Settings" placement="bottom">
                 <IconButton
@@ -90,18 +78,7 @@ class Header extends Component {
                 </IconButton>
               </Tooltip>
             </li>
-            <UserBlock classes={classes}/>
-            <li className="list-inline-item">
-              <Tooltip title="Full Screen" placement="bottom">
-                <IconButton
-                  className="text-white"
-                  aria-label="fullScreen"
-                  onClick={() => this.toggleScreenFull()}
-                >
-                  <i className={"zmdi zmdi-crop-free " + classes.icon}/>
-                </IconButton>
-              </Tooltip>
-            </li>
+            <UserBlock classes={classes} />
           </ul>
         </Toolbar>
       </AppBar>
@@ -110,7 +87,7 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 // map state to props
