@@ -10,10 +10,13 @@ const ViewTemplate = ({ order, id }) => {
               src={require("Assets/img/appLogo_orig_dark.png")}
               alt="session-logo"
               className="img-fluid"
-              width="140"
+              width="160"
             />
           </div>
-          <div className="address">
+          
+        </div>
+        <div className="companyAddress text-right">
+        <div className="address">
             <span>1 Infinite Loop</span>
             <span>95014 Cuperino, CA</span>
             <span>United States</span>
@@ -23,41 +26,36 @@ const ViewTemplate = ({ order, id }) => {
             <span>Fax: 800-692-7753</span>
           </div>
         </div>
-        <div className="invoice-address text-right">
-          <span>{id}</span>
-          <span>Created Date: {order.sentOn}</span>
-          <span>Expiry Date: {order.expireOn}</span>
-        </div>
+        
       </div>
       <div className="d-flex justify-content-between mb-30 add-full-card">
-        {order.billingAddress && (
+     
           <div className="add-card">
-            <h4 className="mb-15">Bill To</h4>
-            <span className="name">{order.billingAddress.billTo}</span>
-            <span>{order.billingAddress.unit}</span>
-            <span>{order.billingAddress.address_1}</span>
-            <span>{order.billingAddress.address_2}</span>
-            <span>{`${order.billingAddress.country}, ${
-              order.billingAddress.zip
-            }`}</span>
-            <span>Phone: {order.billingAddress.phone}</span>
-            <span>Email: {order.billingAddress.email}</span>
+            <h4 className="mb-15">Attn To</h4>
+            <span className="name">Name</span>
+            <span>#12-01</span>
+            <span>123 sdgsg</span>
+            <span>dsga sdgsag sdg </span>
+            <span>Singapore 123155</span>
+            <span>Phone: 1235 525 </span>
+            <span>Email: 1425 23532</span>
           </div>
-        )}
-        {order.shippingAddress && (
+       
           <div className="add-card">
             <h4 className="mb-15">Ship To</h4>
-            <span className="name">{order.shippingAddress.billTo}</span>
-            <span>{order.shippingAddress.unit}</span>
-            <span>{order.shippingAddress.address_1}</span>
-            <span>{order.shippingAddress.address_2}</span>
-            <span>{`${order.shippingAddress.country}, ${
-              order.shippingAddress.zip
-            }`}</span>
-            <span>Phone: {order.shippingAddress.phone}</span>
-            <span>Email: {order.shippingAddress.email}</span>
+            <span className="name">Name</span>
+            <span>#12-01</span>
+            <span>123 sdgsg</span>
+            <span>dsga sdgsag sdg </span>
+            <span>Singapore 123155</span>
+            <span>Phone: 1235 525 </span>
+            <span>Email: 1425 23532</span>
           </div>
-        )}
+
+          <div className="invoice-address text-right">
+            <h3>{id}</h3>
+            <span>Date: {order.sentOn}</span>
+          </div>
       </div>
 
       <div className="table-responsive mb-20">
