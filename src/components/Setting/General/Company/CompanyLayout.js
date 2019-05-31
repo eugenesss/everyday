@@ -3,9 +3,9 @@ import { Col, Row } from "reactstrap";
 import { connect } from "react-redux";
 
 import CompanyBlock from "./CompanyBlock";
-import CompanyDetailsBlock from "./CompanyDetailsBlock"
+import CompanyDetailsBlock from "./CompanyDetailsBlock";
 
-import { getCompany } from "Actions"
+import { getCompany } from "Actions";
 
 class CompanyLayout extends Component {
   constructor(props) {
@@ -13,19 +13,19 @@ class CompanyLayout extends Component {
   }
 
   componentDidMount() {
-    this.props.getCompany()
+    this.props.getCompany();
   }
 
-  render () {
-    const { company } = this.props
+  render() {
+    const { company } = this.props;
     return (
       <React.Fragment>
         <Row>
           <Col lg={4}>
-            <CompanyBlock company={company}/>
+            <CompanyBlock company={company} />
           </Col>
           <Col lg={8}>
-            <CompanyDetailsBlock company={company}/>
+            <CompanyDetailsBlock company={company} />
           </Col>
         </Row>
       </React.Fragment>

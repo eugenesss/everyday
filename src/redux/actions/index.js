@@ -22,8 +22,6 @@ export * from "./accounting/PaymentActions";
 export * from "./system/ReportActions";
 // Calendar Actions
 export * from "./calendar/CalendarActions";
-// Company Actions
-export * from "./settings/general/CompanyActions";
 
 // Settings Actions
 export * from "./settings/userControl/UsersActions";
