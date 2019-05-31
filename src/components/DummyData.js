@@ -79,6 +79,57 @@ export const lead = {
   closedEvents: [closedEvent, closedEvent],
   notes: [note, note, note]
 };
+const newLead = {
+  companyName: "string",
+  mobile: "string",
+  email: "string",
+  address_1: "string",
+  address_2: "string",
+  city: "string",
+  state: "string",
+  zip: "string",
+  description: "string",
+  fullAddress: "string",
+  name: "string",
+  userId: "string",
+  id: "string",
+  statusId: "string",
+  sourceId: "string",
+  industryId: "string",
+  createdAt: "2019-05-31T02:51:37.826Z",
+  updatedAt: "2019-05-31T02:51:37.826Z",
+  createdBy: 0,
+  updatedBy: 0,
+  baseContact: {
+    contactNo: "string",
+    email: "string",
+    mobile: "string",
+    phone: "string",
+    fax: "string",
+    gender: "string",
+    birthday: "2019-05-31T02:51:37.826Z",
+    title: "string",
+    website: "string",
+    isCompany: true,
+    info: "string",
+    name: "string",
+    userId: "string",
+    id: "string",
+    _address: {
+      street: "string",
+      street2: "string",
+      city: "string",
+      zip: "string",
+      id: "string",
+      countryId: "string",
+      stateId: "string"
+    },
+    createdAt: "2019-05-31T02:51:37.826Z",
+    updatedAt: "2019-05-31T02:51:37.826Z",
+    createdBy: 0,
+    updatedBy: 0
+  }
+};
 
 export const leadStatus = [
   { id: 1, name: "Contacted" },
