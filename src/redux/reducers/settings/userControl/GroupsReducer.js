@@ -5,6 +5,19 @@ import { NotificationManager } from "react-notifications";
 import { 
   GET_ALL_GROUPS,
   GET_ALL_GROUPS_SUCCESS,
+
+  ADD_GROUP,
+  ADD_GROUP_SUCCESS,
+  ADD_GROUP_FAILURE,
+
+  ON_CHANGE_UPDATE_GROUP,
+  UPDATE_GROUP,
+  UPDATE_GROUP_SUCCESS,
+  UPDATE_GROUP_FAILURE,
+
+  DELETE_GROUP,
+  DELETE_GROUP_SUCCESS,
+  DELETE_GROUP_FAILURE,
   
   GET_GROUP_FAILURE,
 
@@ -13,10 +26,8 @@ import {
 
 const INIT_STATE = {
   selectedGroup: null,
-  selectedHierarchies: [],
   groupsLoading: false,
   groups: [],
-  hierarchies: [],
 };
 
 export default (state = INIT_STATE, action) => {
@@ -33,10 +44,80 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         groupsLoading: false,
-        groups: action.payload.groups,
-        hierarchies: action.payload.hierarchies,
+        groups: action.payload,
       }
 
+    /**
+     * Add Group
+     */
+    case ADD_GROUP:
+      return {
+        ...state,
+        groupsLoading: true
+      }
+    case ADD_GROUP_SUCCESS:
+      NotificationManager.success("Group Added")
+      return {
+        ...state,
+        groupsLoading: false,
+      }
+    case ADD_GROUP_FAILURE:
+      NotificationManager.warning("Error in creating New Group")
+      return {
+        ...state,
+        groupsLoading: false
+      }
+
+    /**
+     * Update Group
+     */
+    case ON_CHANGE_UPDATE_GROUP:
+      return {
+        ...state,
+        selectedGroup: {
+          ...state.userUpdate,
+          [action.payload.field] : action.payload.value
+        }
+      }
+    case UPDATE_GROUP:
+      return {
+        ...state,
+        groupsLoading: true
+      }
+    case UPDATE_GROUP_SUCCESS:
+      NotificationManager.success("Group Name Updated")
+      return {
+        ...state,
+        groupsLoading: false
+      }
+    case UPDATE_GROUP_FAILURE:
+      NotificationManager.warning("Error in updating Group Name")
+      return {
+        ...state,
+        groupsLoading: false
+      }
+
+    /**
+     * Delete Group
+     */
+    case DELETE_GROUP:
+      return {
+        ...state,
+        groupsLoading: true
+      }
+    case DELETE_GROUP_SUCCESS:
+      NotificationManager.success("Group Deleted")
+      return {
+        ...state,
+        groupsLoading: false
+      }
+    case DELETE_GROUP_FAILURE:
+      NotificationManager.warning("Error Deleting Group")
+      return {
+        ...state,
+        groupsLoading: false
+      }
+    
     /**
      * Get Group Failure
      */
@@ -49,11 +130,9 @@ export default (state = INIT_STATE, action) => {
      * State Changes
      */
     case CHANGE_SELECTED_GROUP:
-      const selectedHierarchies = state.hierarchies.filter(hierarchy => hierarchy.group == action.payload.id);
       return { 
         ...state,
         selectedGroup: action.payload,
-        selectedHierarchies: selectedHierarchies,
       };
       
     default:

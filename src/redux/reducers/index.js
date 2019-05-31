@@ -18,15 +18,15 @@ import DealReducer from "./crm/DealReducer";
 
 //settings
 import usersReducer from "./settings/userControl/UsersReducer";
-import rolesReducer from "./settings/userControl/RolesReducer";
 import companyReducer from "./settings/general/CompanyReducer";
 import groupsReducer from "./settings/userControl/GroupsReducer";
+import rolesReducer from "./settings/userControl/RolesReducer";
+import hierarchiesReducer from "./settings/userControl/HierarchiesReducer";
 
 // system
 import authUserReducer from "./system/AuthUserReducer";
 import reportReducer from "./system/ReportReducer";
 import calendarReducer from "./calendar/CalendarReducer";
-
 
 const reducers = combineReducers({
   settings,
@@ -47,8 +47,10 @@ const reducers = combineReducers({
   usersState: usersReducer,
   rolesState: rolesReducer,
   groupsState: groupsReducer,
+  hierarchiesState: hierarchiesReducer,
   companyState: companyReducer,
   modal
 });
+
 
 export default reducers;

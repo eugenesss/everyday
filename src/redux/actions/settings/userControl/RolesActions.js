@@ -8,6 +8,7 @@ import {
   GET_ROLE_FAILURE,
 
   CHANGE_SELECTED_ROLE,
+  CHANGE_SELECTED_GROUP_ROLES,
 } from "Types";
 
 /**
@@ -37,3 +38,7 @@ export const onChangeSelectedRole = (newValue) => ({
   type: CHANGE_SELECTED_ROLE,
   payload: newValue
 });
+export const onChangeSelectedGroupRoles = (selectedHierarchies) => ({
+  type: CHANGE_SELECTED_GROUP_ROLES,
+  payload: selectedHierarchies
+})

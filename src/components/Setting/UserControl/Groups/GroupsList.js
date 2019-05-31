@@ -8,10 +8,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from "@material-ui/core/IconButton";
 
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import { getAllGroups, onChangeSelectedGroup } from 'Actions'
+import { getAllGroups, onChangeSelectedGroup, onChangeSelectedGroupHierarchies, addGroup } from 'Actions'
 
 const styles = theme => ({
   root: {
@@ -40,16 +42,23 @@ class GroupsList extends Component {
   componentDidMount() {
     this.props.getAllGroups()
   }
+
+  onChange(group) {
+    this.props.onChangeSelectedGroup(group);
+    this.props.onChangeSelectedGroupHierarchies(group);
+  }
   
   render() {
     const { 
       classes,
 
       groups,
+      groupsLoading,
       selectedGroup,
 
-      onChangeSelectedGroup,
+      addGroup,
      } = this.props;
+
      return (
       <React.Fragment>
           <Row className={"d-flex align-items-center"}>
@@ -59,7 +68,8 @@ class GroupsList extends Component {
             <Col>
               <IconButton
                 className="text-primary mt-10 mr-2 float-right"
-                aria-label="Add Role"
+                aria-label="Add Group"
+                onClick={() => addGroup()}
               >
                 <i className={"zmdi zmdi-plus " + classes.icon} />
               </IconButton>
@@ -79,13 +89,14 @@ class GroupsList extends Component {
                   key={group.id}
                   button
                   selected={selectedGroup ? selectedGroup.id == group.id : false}
-                  onClick={() => onChangeSelectedGroup(group)}
+                  onClick={() => this.onChange(group)}
                 >
                   <ListItemText primary={group.name} className={classes.listItem}/>
                 </ListItem>
               ))}
             </List>
           </Scrollbars>
+          {groupsLoading && <RctSectionLoader/>}
       </React.Fragment>
     )
   }
@@ -96,11 +107,11 @@ GroupsList.propTypes = {
 };
 
 const mapStateToProps = ({ groupsState }) => {
-  const { groups, selectedGroup } = groupsState;
-  return { groups, selectedGroup };
+  const { groups, selectedGroup, groupsLoading } = groupsState;
+  return { groups, selectedGroup, groupsLoading };
 };
 
 export default connect(
   mapStateToProps,
-  { getAllGroups, onChangeSelectedGroup }
+  { getAllGroups, onChangeSelectedGroup, onChangeSelectedGroupHierarchies, addGroup }
 )(withStyles(styles)(GroupsList));

@@ -1,5 +1,5 @@
 /**
- * Users Reducers
+ * Roles Reducers
  */
 import { NotificationManager } from "react-notifications";
 import { 

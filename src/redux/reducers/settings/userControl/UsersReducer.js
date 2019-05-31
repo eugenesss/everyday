@@ -85,14 +85,14 @@ export default (state = INIT_STATE, action) => {
         usersLoading: true,
       }
     case ADD_USER_SUCCESS:
-      NotificationManager.success("User Added")
       // var allUsers = Object.assign([], state.users);
       // var users = [...allUsers, action.payload];
+      NotificationManager.success("User Added")
       return {
         ...state,
         userAdd: INIT_STATE.userAdd,
-        //users: users,
         usersLoading: false,
+        // user: users
       }
     case ADD_USER_FAILURE:
       NotificationManager.error("Failed to Add User")

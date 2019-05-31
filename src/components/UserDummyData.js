@@ -11,7 +11,6 @@ const user1 = {
   isSuperAdmin: true,
   isEmailVerified: true,
   role: ["Development Manager"]
-  //role: [role[9]["id"]],
 };
 const user2 = {
   id: 2,
@@ -60,6 +59,7 @@ export var users = [user1, user2, user3, user4];
 
 export const addUser = newUser => {
   newUser.id = users.length + 1;
+  newUser.name = newUser.firstName + " " + newUser.lastName;
   users.push(newUser);
   return newUser;
 };

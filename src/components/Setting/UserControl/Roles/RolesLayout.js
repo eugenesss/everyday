@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Col, Row } from "reactstrap";
 
 import RolesList from "./RolesList";
-import RoleManager from "./RoleManager";
+import RolesManager from "./RolesManager";
 
 
 class RolesLayout extends Component {
@@ -19,7 +19,7 @@ class RolesLayout extends Component {
             <RolesList/>
           </Col>
           <Col md={9}>
-            <RoleManager/>
+            <RolesManager/>
           </Col>
         </Row>
       </React.Fragment>

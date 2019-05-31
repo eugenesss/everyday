@@ -7,6 +7,7 @@ export * from "./system/CalendarTypes";
 export * from "./settings/userControl/UserTypes";
 export * from "./settings/userControl/RoleTypes";
 export * from "./settings/userControl/GroupTypes";
+export * from "./settings/userControl/HierarchyTypes";
 
 // General Types
 export * from "./settings/general/CompanyTypes";

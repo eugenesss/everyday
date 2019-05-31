@@ -63,6 +63,7 @@ class RoleManager extends Component {
       selectedRole,
       crudPermissions,
      } = this.props;
+     console.log(selectedRole)
     return (
       <React.Fragment>
         <div className={classes.root}>
