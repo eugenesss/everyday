@@ -19,11 +19,12 @@ const AccountingDetails = ({
   return (
     <div className="user-profile-widget">
       <div className="py-70" style={{ background: bgColor }} />
-      <div style={{ padding: "0.75rem 6%" }}>
+      <div style={{ padding: "0.4rem 6%" }}>
         <div className="d-flex user-avatar">
-          <div className="user-info text-white pt-20">
-            <h1 className="mb-0">{accountID}</h1>
-            <span>{status}</span>
+          <div className="user-info text-white pt-10">
+            <h1 className="mb-0">{accountID} - V2</h1>
+            <span>{status}</span><br />
+            <span>2019-01-01</span>
           </div>
         </div>
         <ul className="list-unstyled my-25" style={{ paddingLeft: "10%" }}>
@@ -31,7 +32,7 @@ const AccountingDetails = ({
             <li className="py-10 d-flex align-items-center">
               <i className="zmdi zmdi-email mr-20 fs-12" />
               <a href="mail-to:phoebe@gmail.com" className="fs-14 text-dark">
-                {account}
+                Account: {account}
               </a>
             </li>
           )}
@@ -39,20 +40,32 @@ const AccountingDetails = ({
             <li className="py-10 d-flex align-items-center">
               <i className="zmdi zmdi-email mr-20 fs-12" />
               <a href="mail-to:phoebe@gmail.com" className="fs-14 text-dark">
-                {customer}
+                Attn To: {customer}
               </a>
             </li>
-          )}
+          )}          
           <li className="py-10 d-flex align-items-center">
             <i className="zmdi zmdi-email mr-20 fs-12" />
             <a href="mail-to:phoebe@gmail.com" className="fs-14 text-dark">
-              {sentDate}
+              Owner
             </a>
           </li>
           <li className="py-10 d-flex align-items-center">
             <i className="zmdi zmdi-email mr-20 fs-12" />
             <a href="mail-to:phoebe@gmail.com" className="fs-14 text-dark">
-              {owner}
+              USD 1.23
+            </a>
+          </li>
+          <li className="py-10 d-flex align-items-center">
+            <i className="zmdi zmdi-email mr-20 fs-12" />
+            <a href="mail-to:phoebe@gmail.com" className="fs-14 text-dark">
+              $20.50
+            </a>
+          </li>
+          <li className="py-10 d-flex align-items-center">
+            <i className="zmdi zmdi-email mr-20 fs-12" />
+            <a href="mail-to:phoebe@gmail.com" className="fs-14 text-dark">
+              2019-01-01
             </a>
           </li>
         </ul>
