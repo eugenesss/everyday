@@ -1,16 +1,21 @@
 import React from "react";
 
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
-import GeneralAccountingSettingsForm from "Components/Form/Setting/Accounting/General/GeneralAccountingSettingsForm"
+import GeneralAccountingSettingsForm from "Components/Form/Setting/Accounting/General/GeneralAccountingSettingsForm";
 
-const CreditNoteLayout = () => {
+import AccessControl from "Components/AccessControl";
+import NoAccessComponent from "Components/AccessControl/NoAccessComponent";
+
+const AccountingGeneralLayout = () => {
   return (
     <React.Fragment>
-      <RctCollapsibleCard heading={"General Accounting Settings"}>
-        <GeneralAccountingSettingsForm/>
-      </RctCollapsibleCard>
+      <AccessControl action={["AccGeneralSet:update"]} noAccessComponent={<NoAccessComponent/>}>
+        <RctCollapsibleCard heading={"General Accounting Settings"}>
+          <GeneralAccountingSettingsForm/>
+        </RctCollapsibleCard>
+      </AccessControl>
     </React.Fragment>
   );
 }
 
-export default CreditNoteLayout;
+export default AccountingGeneralLayout;

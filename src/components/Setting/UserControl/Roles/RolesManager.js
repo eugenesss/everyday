@@ -18,7 +18,7 @@ import { deleteRole, onChangeUpdateRole, updateRole, } from 'Actions'
 
 const styles = theme => ({
   root: {
-    display: "block",
+    display: "block !important",
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -240,6 +240,97 @@ class RoleManager extends Component {
                     checked={this.checked("UserRole:update")}
                     disabled={this.disabled("UserRole:update")}
                     value={`UserRole:update`}
+                    onChange={(e) => this.handleChange(e.target.value)}
+                    color="primary"
+                  /> 
+                </CustomTableRow>
+                <CustomTableRow
+                  position={3}
+                  name={<div>Update Company Details</div>}
+                  classes={classes}
+                >
+                  <Checkbox
+                    checked={this.checked("CompanyDetails:update")}
+                    disabled={this.disabled("CompanyDetails:update")}
+                    value={`CompanyDetails:update`}
+                    onChange={(e) => this.handleChange(e.target.value)}
+                    color="primary"
+                  /> 
+                </CustomTableRow>
+                <CustomTableRow
+                  position={3}
+                  name={<span><div>Update Accounting General</div><i style={{fontSize: "11px"}}>Settings</i></span>}
+                  classes={classes}
+                >
+                  <Checkbox
+                    checked={this.checked("AccGeneralSet:update")}
+                    disabled={this.disabled("AccGeneralSet:update")}
+                    value={`AccGeneralSet:update`}
+                    onChange={(e) => this.handleChange(e.target.value)}
+                    color="primary"
+                  /> 
+                </CustomTableRow>
+                <CustomTableRow
+                  position={3}
+                  name={<span><div>Update Accounting Quotation</div><i style={{fontSize: "11px"}}>Settings</i></span>}
+                  classes={classes}
+                >
+                  <Checkbox
+                    checked={this.checked("AccQuotationSet:update")}
+                    disabled={this.disabled("AccQuotationSet:update")}
+                    value={`AccQuotationSet:update`}
+                    onChange={(e) => this.handleChange(e.target.value)}
+                    color="primary"
+                  /> 
+                </CustomTableRow>
+                <CustomTableRow
+                  position={3}
+                  name={<span><div>Update Accounting Invoice</div><i style={{fontSize: "11px"}}>Settings</i></span>}
+                  classes={classes}
+                >
+                  <Checkbox
+                    checked={this.checked("AccInvoiceSet:update")}
+                    disabled={this.disabled("AccInvoiceSet:update")}
+                    value={`AccInvoiceSet:update`}
+                    onChange={(e) => this.handleChange(e.target.value)}
+                    color="primary"
+                  /> 
+                </CustomTableRow>
+                <CustomTableRow
+                  position={3}
+                  name={<span><div>Update Accounting Credit Note</div><i style={{fontSize: "11px"}}>Settings</i></span>}
+                  classes={classes}
+                >
+                  <Checkbox
+                    checked={this.checked("AccCreditNoteSet:update")}
+                    disabled={this.disabled("AccCreditNoteSet:update")}
+                    value={`AccCreditNoteSet:update`}
+                    onChange={(e) => this.handleChange(e.target.value)}
+                    color="primary"
+                  /> 
+                </CustomTableRow>
+                <CustomTableRow
+                  position={3}
+                  name={<span><div>Update Lead</div><i style={{fontSize: "11px"}}>Reminder Settings</i></span>}
+                  classes={classes}
+                >
+                  <Checkbox
+                    checked={this.checked("RemLeadSet:update")}
+                    disabled={this.disabled("RemLeadSet:update")}
+                    value={`RemLeadSet:update`}
+                    onChange={(e) => this.handleChange(e.target.value)}
+                    color="primary"
+                  /> 
+                </CustomTableRow>
+                <CustomTableRow
+                  position={3}
+                  name={<span><div>Update Quotation</div><i style={{fontSize: "11px"}}>Reminder Settings</i></span>}
+                  classes={classes}
+                >
+                  <Checkbox
+                    checked={this.checked("RemQuotationSet:update")}
+                    disabled={this.disabled("RemQuotationSet:update")}
+                    value={`RemQuotationSet:update`}
                     onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
                   /> 

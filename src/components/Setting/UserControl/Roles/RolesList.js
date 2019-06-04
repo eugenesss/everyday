@@ -32,6 +32,9 @@ const styles = theme => ({
     height: 24,
     width: 24,
    },
+  block: {
+    display: "block !important"
+  },
 });
 
 class RolesList extends Component {
@@ -56,6 +59,7 @@ class RolesList extends Component {
      } = this.props;
     return (
       <React.Fragment>
+        <div className={classes.block}>
           <Row className={"d-flex align-items-center"}>
             <Col>
               <h2 className={"p-10 pt-20 pb-10 m-0 text-center"}>Roles</h2>
@@ -99,6 +103,7 @@ class RolesList extends Component {
             </List>
           </Scrollbars>
           {rolesLoading && <RctSectionLoader/>}
+        </div>
       </React.Fragment>
     )
   }

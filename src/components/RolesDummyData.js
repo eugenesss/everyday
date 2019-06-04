@@ -15,7 +15,14 @@ export const role2 = {
     "SuperAdmin:update",
     "Permissions:manage",
     "Groups:manage",
-    "UserRole:update"
+    "UserRole:update",
+    "CompanyDetails:update",
+    "AccGeneralSet:update",
+    "AccQuotationSet:update",
+    "AccInvoiceSet:update",
+    "AccCreditNoteSet:update",
+    "RemLeadSet:update",
+    "RemQuotationSet:update",
   ]
 };
 export const role3 = {

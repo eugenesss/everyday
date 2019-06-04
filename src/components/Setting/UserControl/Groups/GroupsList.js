@@ -32,6 +32,9 @@ const styles = theme => ({
     height: 24,
     width: 24,
    },
+  block: {
+    display: "block !important"
+  }
 });
 
 class GroupsList extends Component {
@@ -61,6 +64,7 @@ class GroupsList extends Component {
 
      return (
       <React.Fragment>
+        <div className={classes.block}>
           <Row className={"d-flex align-items-center"}>
             <Col>
               <h2 className={"p-10 pt-20 pb-10 m-0 text-center"}>Groups</h2>
@@ -97,6 +101,7 @@ class GroupsList extends Component {
             </List>
           </Scrollbars>
           {groupsLoading && <RctSectionLoader/>}
+        </div>
       </React.Fragment>
     )
   }

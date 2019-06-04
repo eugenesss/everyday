@@ -37,6 +37,15 @@ class AccessControl extends Component {
       Permissions:manage
       Groups:manage
       UserRole:update
+      CompanyDetails:update
+
+    Settings
+      AccGeneralSet:update
+      AccQuotationSet:update
+      AccInvoiceSet:update
+      AccCreditNoteSet:update
+      RemLeadSet:update
+      RemQuotationSet:update
   */
 
   render() {
