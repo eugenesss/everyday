@@ -1,6 +1,6 @@
 import { role1, role2, role3, role4, role5 } from "./RolesDummyData";
 
-const user1 = {
+ export const user1 = {
   id: 1,
   firstName: "Eugene",
   lastName: "Sim",
@@ -14,7 +14,7 @@ const user1 = {
   isEmailVerified: true,
   role: [role3]
 };
-const user2 = {
+export const user2 = {
   id: 2,
   name: "Jeng Lim",
   firstName: "Jeng",
@@ -28,7 +28,7 @@ const user2 = {
   isEmailVerified: true,
   role: [role5]
 };
-const user3 = {
+export const user3 = {
   id: 3,
   name: "Benny Ong",
   firstName: "Benny",
@@ -42,7 +42,7 @@ const user3 = {
   isEmailVerified: true,
   role: [role3]
 };
-const user4 = {
+export const user4 = {
   id: 4,
   name: "John Chang",
   firstName: "John",

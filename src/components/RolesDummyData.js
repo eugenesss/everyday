@@ -14,6 +14,7 @@ export const role2 = {
     "Password:reset",
     "SuperAdmin:update",
     "Permissions:manage",
+    "Groups:manage",
     "UserRole:update"
   ]
 };

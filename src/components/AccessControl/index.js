@@ -35,6 +35,7 @@ class AccessControl extends Component {
       Password:reset
       SuperAdmin:update
       Permissions:manage
+      Groups:manage
       UserRole:update
   */
 

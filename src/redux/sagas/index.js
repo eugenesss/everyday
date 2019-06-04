@@ -23,11 +23,15 @@ import roleSagas from "./settings/userControl/Roles";
 import groupSagas from "./settings/userControl/Groups";
 import hierarchySagas from "./settings/userControl/Hierarchies";
 
+//calendar
+import calendarSagas from "./calendar/Calendar"
+
 //login
 import loginSagas from "./login/Login";
 
 export default function* rootSaga(getState) {
   yield all([
+    calendarSagas(),
     roleSagas(),
     groupSagas(),
     hierarchySagas(),

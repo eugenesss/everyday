@@ -15,7 +15,7 @@ import Login from "Routes/login";
 import NotFound from "./error_pages/Err404";
 
 //Get Roles Actions
-import { getAllRoles } from "Actions"
+import { getAllRoles, getAllUsers } from "Actions"
 
 /**
  * Initial Path To Check Whether User Is Logged In Or Not
@@ -28,7 +28,9 @@ class App extends Component {
 
   componentWillMount() {
     if(this.props.roles.length == 0 || !this.props.roles)
-      this.props.getAllRoles
+      this.props.getAllRoles()
+    if(!this.props.me.id)
+      this.props.getAllUsers()
   }
 
   render() {
@@ -52,13 +54,14 @@ class App extends Component {
 }
 
 // map state to props
-const mapStateToProps = ({ authUser, rolesState }) => {
+const mapStateToProps = ({ authUser, rolesState, usersState }) => {
   const { user } = authUser;
   const { roles } = rolesState;
-  return { user, roles };
+  const { me } = usersState;
+  return { user, roles, me };
 };
 
 export default connect(
   mapStateToProps,
-  { getAllRoles }
+  { getAllRoles, getAllUsers }
 )(App);

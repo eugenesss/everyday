@@ -220,6 +220,19 @@ class RoleManager extends Component {
                 </CustomTableRow>
                 <CustomTableRow
                   position={3}
+                  name={<div style={{color: "red"}}>Manage Groups*</div>}
+                  classes={classes}
+                >
+                  <Checkbox
+                    checked={this.checked("Groups:manage")}
+                    disabled={this.disabled("Groups:manage")}
+                    value={`Groups:manage`}
+                    onChange={(e) => this.handleChange(e.target.value)}
+                    color="primary"
+                  /> 
+                </CustomTableRow>
+                <CustomTableRow
+                  position={3}
                   name={<span><div style={{color: "red"}}>Update User Roles*</div> <i style={{fontSize: "11px"}}>(ability to assign or update roles of a user)</i></span>}
                   classes={classes}
                 >

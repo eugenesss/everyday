@@ -3,10 +3,17 @@
  */
 import { NotificationManager } from "react-notifications";
 import { convertMonth } from "Helpers/helpers";
-import moment from "moment";
 import {
   GET_ALL_EVENTS,
-  GET_MY_EVENTS,
+  GET_ALL_EVENTS_SUCCESS,
+
+  ON_CHANGE_ADD_EVENT,
+  ADD_EVENT,
+  ADD_EVENT_SUCCESS,
+  ADD_EVENT_FAILURE,
+
+  GET_EVENT_FAILURE,
+
   CHANGE_DAY_VIEW,
   CHANGE_EVENT_VIEW,
   CHANGE_CALENDAR_VIEW,
@@ -19,81 +26,81 @@ import {
 } from "Types";
 
 const INIT_STATE = {
-  eventToCreate: {
-    constants: {
-      sDate: "",
-      eDate: ""
-    },
-    startDate: "",
-    endDate: "",
-    startTime: "",
-    endTime: "",
-    title: "",
-    desc: ""
-  },
-  isCreateEvent: false,
+  eventAdd: null,
+  isAddEvent: false,
   slotSelected: null,
   isSlotSelected: false,
   dayView: new Date(),
   viewIndex: 0,
   eventView: "My Calendar",
   eventViewOptions: ["My Calendar", "Company Calendar"],
-  myEvents: [
-    {
-      title: "My Event All Day 1",
-      start: new Date(2019, 4, 10, 6, 45, 0),
-      end: new Date(2019, 4, 10, 8, 0, 0)
-    },
-    {
-      title: "My Event 2",
-      start: new Date(2019, 4, 13, 5, 30, 0),
-      end: new Date(2019, 4, 20, 9, 45, 0)
-    },
-    {
-      title: "My Event 3",
-      start: new Date(2019, 4, 26, 7, 0, 0),
-      end: new Date(2019, 4, 26, 9, 0, 0),
-      desc: "Big conference for important people"
-    }
-  ],
-  companyEvents: [
-    {
-      title: "My Event All Day 1",
-      start: new Date(2019, 4, 10, 6, 45, 0),
-      end: new Date(2019, 4, 10, 8, 0, 0)
-    },
-    {
-      title: "Company Event All Day 1",
-      start: new Date(2019, 4, 6, 9, 0, 0),
-      end: new Date(2019, 4, 6, 10, 0, 0)
-    },
-    {
-      title: "My Event 2",
-      start: new Date(2019, 4, 13, 5, 30, 0),
-      end: new Date(2019, 4, 20, 9, 45, 0)
-    },
-    {
-      title: "Company Event 2",
-      start: new Date(2019, 4, 7),
-      end: new Date(2019, 4, 7)
-    },
-    {
-      title: "Company Event 3",
-      start: new Date(2019, 4, 14),
-      end: new Date(2019, 4, 15)
-    },
-    {
-      title: "My Event 3",
-      start: new Date(2019, 4, 26, 7, 0, 0),
-      end: new Date(2019, 4, 26, 9, 0, 0),
-      desc: "Big conference for important people"
-    }
-  ],
-  showEvents: []
+  myEvents: [],
+  allEvents: [],
+  showEvents: [],
+  eventsLoading: false,
 };
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
+
+    /**
+     * Get All Events
+     */
+    case GET_ALL_EVENTS:
+      return {
+        ...state,
+        eventsLoading: true
+      }
+    case GET_ALL_EVENTS_SUCCESS:
+      return {
+        ...state,
+        allEvents: action.payload.events,
+        myEvents: action.payload.myEvents,
+        showEvents: action.payload.myEvents,
+        eventsLoading: false
+      }
+    case GET_EVENT_FAILURE:
+      NotificationManager.warning("Failed to get events from database.")
+      return {
+        ...state,
+        eventsLoading: false
+      }
+
+    /**
+     * Add Event
+     */
+    case ON_CHANGE_ADD_EVENT:
+      return {
+        ...state,
+        eventAdd: {
+          ...state.eventAdd,
+          [action.payload.field]: action.payload.value
+        }
+      }
+    case ADD_EVENT:
+      return {
+        ...state,
+        eventsLoading: true,
+      }
+    case ADD_EVENT_SUCCESS:
+      NotificationManager.success("Event Added")
+      return {
+        ...state,
+        eventsLoading: false,
+        isAddEvent: false
+      }
+    case ADD_EVENT_FAILURE:
+      NotificationManager.warning("Failed to Add Event")
+      return {
+        ...state,
+        eventsLoading: false,
+        isAddEvent: false
+      }
+
+
+    /**
+     * State Changes
+     */
     case CHANGE_DAY_VIEW:
       return {
         ...state,
@@ -107,7 +114,7 @@ export default (state = INIT_STATE, action) => {
           var showEvents = state.myEvents;
           break;
         case "Company Calendar":
-          var showEvents = state.companyEvents;
+          var showEvents = state.allEvents;
           break;
       }
       return {
@@ -155,9 +162,9 @@ export default (state = INIT_STATE, action) => {
       var endTime = eDate.getHours() + " : " + eDate.getMinutes();
       return {
         ...state,
-        isCreateEvent: true,
+        isAddEvent: true,
         isSlotSelected: false,
-        eventToCreate: {
+        eventAdd: {
           constants: {
             sDate: sDate,
             eDate: eDate
@@ -172,7 +179,7 @@ export default (state = INIT_STATE, action) => {
     case HIDE_CREATE_EVENT:
       return {
         ...state,
-        isCreateEvent: false
+        isAddEvent: false
       };
 
     default:
