@@ -10,9 +10,13 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import AccessControl from "Components/AccessControl";
+
+import { accessControlHelper } from "Helpers/accessControlHelper"
+import NoAccessComponent from "Components/AccessControl/NoAccessComponent"
 
 import AddUserDialog from "./AddUserDialog";
-import UserControlDialog from "./UserControlDialog"
+import UserControlDialog from "./UserControlDialog";
 import { getAllUsers, showAddUser, hideAddUser, showUserControls, hideUserControls } from "Actions";
 
 const styles = () => ({
@@ -27,7 +31,7 @@ class UsersList extends Component {
     super(props);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.getAllUsers()
   }
 
@@ -39,7 +43,7 @@ class UsersList extends Component {
       user.name,
       user.email,
       user.contact,
-      user.role,
+      user.role.map( role => {return role.name}).join(", "),
       user
     );
     return data;
@@ -50,6 +54,12 @@ class UsersList extends Component {
   }
   onClickDelete = (user) => {
     console.log(user)
+  }
+  showActions () {
+    if(accessControlHelper(["User:delete", "SuperAdmin:update", "Password:reset"]))
+      return 'true'
+    else
+      return 'false'
   }
 
   render() {
@@ -66,6 +76,11 @@ class UsersList extends Component {
       showUserControls,
       hideUserControls,
      } = this.props;
+
+
+    //var showActions = 'false'
+    //showActions = this.showActions()
+
     const data = users && users.map(user => this.convertData(user));
     const columns = [
       {
@@ -98,29 +113,36 @@ class UsersList extends Component {
         name: "Actions",
         options: {
           filter: false,
+          display: this.showActions(),
           customBodyRender: value => {
             return (
               <React.Fragment>
-                <Tooltip id="tooltip-icon" title="Delete">
-                  <IconButton
-                    className="text-danger mr-2"
-                    aria-label="Delete User"
-                    onClick={() => {
-                      this.onClickDelete(value);
-                    }}
-                  >
-                    <i className={"zmdi zmdi-delete " + classes.icon} />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip id="tooltip-icon" title="More">
-                  <IconButton
-                    className="text-primary mr-2"
-                    aria-label="More Options"
-                    onClick={() => { showUserControls() }}
-                  >
-                    <i className={"zmdi zmdi-edit " + classes.icon} />
-                  </IconButton>
-                </Tooltip>
+                <AccessControl action={["User:delete"]}>
+                  <Tooltip id="tooltip-icon" title="Delete">
+                    <IconButton
+                      className="text-danger mr-2"
+                      aria-label="Delete User"
+                      onClick={() => {
+                        this.onClickDelete(value);
+                      }}
+                    >
+                      <i className={"zmdi zmdi-delete " + classes.icon} />
+                    </IconButton>
+                  </Tooltip>
+                </AccessControl>
+                <AccessControl action={["SuperAdmin:update", "Password:reset"]}>
+                  <Tooltip id="tooltip-icon" title="More">
+                    <IconButton
+                      className="text-primary mr-2"
+                      aria-label="More Options"
+                      onClick={() => {
+                        showUserControls();
+                      }}
+                    >
+                      <i className={"zmdi zmdi-edit " + classes.icon} />
+                    </IconButton>
+                  </Tooltip>
+                </AccessControl>
               </React.Fragment>
             );
           }
@@ -151,35 +173,39 @@ class UsersList extends Component {
                 <i className={"zmdi zmdi-refresh " + classes.icon} />
               </IconButton>
             </Tooltip>
-            <Tooltip id="tooltip-icon" title="Add User">
-            <IconButton
-              className="text-secondary mr-2"
-              aria-label="Add User"
-              onClick={() => { showAddUser() }}
-            >
-              <i className={"zmdi zmdi-account-add " + classes.icon} />
-            </IconButton>
-          </Tooltip>
+            <AccessControl action={["User:create"]}>
+              <Tooltip id="tooltip-icon" title="Add User">
+                <IconButton
+                  className="text-secondary mr-2"
+                  aria-label="Add User"
+                  onClick={() => { showAddUser() }}
+                >
+                  <i className={"zmdi zmdi-account-add " + classes.icon} />
+                </IconButton>
+              </Tooltip>
+            </AccessControl>
         </React.Fragment>
         );
       }
     };
     return (
       <RctCollapsibleCard fullBlock>
-        <MUIDataTable
-          title={"Users"}
-          columns={columns}
-          data={data}
-          options={options}
-        />
-        <AddUserDialog
-          open={isAddUser}
-          handleClose={hideAddUser}
-        />
-        <UserControlDialog
-          open={isUserControl}
-          handleClose={hideUserControls}
-        />
+        <AccessControl action={["User:read"]} noAccessComponent={<NoAccessComponent/>}>
+          <MUIDataTable
+            title={"Users"}
+            columns={columns}
+            data={data}
+            options={options}
+          />
+          <AddUserDialog
+            open={isAddUser}
+            handleClose={hideAddUser}
+          />
+          <UserControlDialog
+            open={isUserControl}
+            handleClose={hideUserControls}
+          />
+        </AccessControl>
         {usersLoading && <RctSectionLoader />}
       </RctCollapsibleCard>
     );

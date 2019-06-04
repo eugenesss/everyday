@@ -187,8 +187,8 @@ class RoleManager extends Component {
                   <Checkbox
                     checked={this.checked("SuperAdmin:update")}
                     disabled={this.disabled("SuperAdmin:update")}
-                    // value={`Permissions:manage`}
-                    // onChange={(e) => this.handleChange(e.target.value)}
+                    value={`SuperAdmin:update`}
+                    onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
                   /> 
                 </CustomTableRow>
@@ -200,6 +200,8 @@ class RoleManager extends Component {
                   <Checkbox
                     checked={this.checked("Password:reset")}
                     disabled={this.disabled("Password:reset")}
+                    value={`Password:reset`}
+                    onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
                   /> 
                 </CustomTableRow>
@@ -211,6 +213,8 @@ class RoleManager extends Component {
                   <Checkbox
                     checked={this.checked("Permissions:manage")}
                     disabled={this.disabled("Permissions:manage")}
+                    value={`Permissions:manage`}
+                    onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
                   /> 
                 </CustomTableRow>
@@ -222,6 +226,8 @@ class RoleManager extends Component {
                   <Checkbox
                     checked={this.checked("UserRole:update")}
                     disabled={this.disabled("UserRole:update")}
+                    value={`UserRole:update`}
+                    onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
                   /> 
                 </CustomTableRow>

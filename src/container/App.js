@@ -14,6 +14,9 @@ import HorizontalLayout from "./HorizontalLayout";
 import Login from "Routes/login";
 import NotFound from "./error_pages/Err404";
 
+//Get Roles Actions
+import { getAllRoles } from "Actions"
+
 /**
  * Initial Path To Check Whether User Is Logged In Or Not
  */
@@ -22,6 +25,12 @@ const InitialPath = ({ component: Component, ...rest }) => (
 );
 
 class App extends Component {
+
+  componentWillMount() {
+    if(this.props.roles.length == 0 || !this.props.roles)
+      this.props.getAllRoles
+  }
+
   render() {
     const { location, match, user } = this.props;
     if (location.pathname === "/") {
@@ -43,9 +52,13 @@ class App extends Component {
 }
 
 // map state to props
-const mapStateToProps = ({ authUser }) => {
+const mapStateToProps = ({ authUser, rolesState }) => {
   const { user } = authUser;
-  return { user };
+  const { roles } = rolesState;
+  return { user, roles };
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(
+  mapStateToProps,
+  { getAllRoles }
+)(App);

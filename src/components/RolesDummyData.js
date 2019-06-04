@@ -30,7 +30,7 @@ export const role4 = {
 export const role5 = {
   id: 4,
   name: "Development Manager",
-  permissions: ["User:read"]
+  permissions: []
 };
 
 const crud1 = { id: 0, action: "User" };
