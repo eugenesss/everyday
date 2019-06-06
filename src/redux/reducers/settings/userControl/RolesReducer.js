@@ -28,6 +28,7 @@ const INIT_STATE = {
   selectedRole: null,
   rolesLoading: false,
   crudPermissions: [],
+  operations: [],
   roles: [],
 };
 
@@ -47,6 +48,7 @@ export default (state = INIT_STATE, action) => {
         rolesLoading: false,
         roles: action.payload.roles,
         crudPermissions: action.payload.crud,
+        operations: action.payload.operations
       }
 
     /**
@@ -91,7 +93,6 @@ export default (state = INIT_STATE, action) => {
       }
     case UPDATE_ROLE_SUCCESS:
       NotificationManager.success("Role Updated")
-      console.log(action.payload)
       return {
         ...state,
         rolesLoading: false

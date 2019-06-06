@@ -19,7 +19,6 @@ const CompanyDetailsBlock = ({company}) => {
             <SettingsTab/>
           </AccessControl>
         </div>
-        
       </TabsWrapper>
     </React.Fragment>
   );

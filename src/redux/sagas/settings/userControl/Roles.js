@@ -17,6 +17,7 @@ import {
  } from "Actions";
 import api from "Api";
 import { roles, crud, addRole } from "Components/RolesDummyData";
+import { operations } from "Components/PermissionsDummyData";
 
 //=========================
 // REQUESTS
@@ -37,6 +38,14 @@ const getAllCRUDRequest = async () => {
     return result;
   } catch (err) {
     return err;
+  }
+}
+const getAllOperationsRequest = async () => {
+  try {
+    const result = operations
+    return result
+  } catch (err) {
+    return err
   }
 }
 const addRoleRequest = async () => {
@@ -71,7 +80,8 @@ function* getAllRolesFromDB() {
   try {
     const roles =  yield call(getAllRolesRequest)
     const crud = yield call(getAllCRUDRequest)
-    yield put(getAllRolesSuccess(roles, crud))
+    const operations = yield call(getAllOperationsRequest)
+    yield put(getAllRolesSuccess(roles, crud, operations))
   } catch (err) {
     yield put(getRoleFailure(err))
   }

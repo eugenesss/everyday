@@ -14,7 +14,7 @@ import {
   getUserProfileSuccess,
   getUserFailure,
  } from "Actions";
-//import api from "Api";
+import api from "Api";
 import { users, addUser } from "Components/UserDummyData";
 
 //=========================
@@ -22,7 +22,9 @@ import { users, addUser } from "Components/UserDummyData";
 //=========================
 const getAllUsersRequest = async () => {
   try {
-    //const result = await api.get("/user");
+    // let accessKey = localStorage.getItem('accessKey')
+    // const resultAPI = await api.get(`/users?access_token=${accessKey}`);
+    // console.log(resultAPI)
     const result = users;
     return result;
   } catch (err) {

@@ -100,11 +100,13 @@ class RoleManager extends Component {
 
       selectedRole,
       crudPermissions,
+      operations,
 
       onChangeUpdateRole,
       updateRole,
       deleteRole,
      } = this.props;
+     console.log(operations)
     return (
       <React.Fragment>
         <div className={classes.root}>
@@ -186,7 +188,7 @@ class RoleManager extends Component {
                 >
                   <Checkbox
                     checked={this.checked("SuperAdmin:update")}
-                    disabled={this.disabled("SuperAdmin:update")}
+                    disabled={this.disabled("update")}
                     value={`SuperAdmin:update`}
                     onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
@@ -199,7 +201,7 @@ class RoleManager extends Component {
                 >
                   <Checkbox
                     checked={this.checked("Password:reset")}
-                    disabled={this.disabled("Password:reset")}
+                    disabled={this.disabled("reset")}
                     value={`Password:reset`}
                     onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
@@ -212,7 +214,7 @@ class RoleManager extends Component {
                 >
                   <Checkbox
                     checked={this.checked("Permissions:manage")}
-                    disabled={this.disabled("Permissions:manage")}
+                    disabled={this.disabled("manage")}
                     value={`Permissions:manage`}
                     onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
@@ -225,7 +227,7 @@ class RoleManager extends Component {
                 >
                   <Checkbox
                     checked={this.checked("Groups:manage")}
-                    disabled={this.disabled("Groups:manage")}
+                    disabled={this.disabled("manage")}
                     value={`Groups:manage`}
                     onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
@@ -238,7 +240,7 @@ class RoleManager extends Component {
                 >
                   <Checkbox
                     checked={this.checked("UserRole:update")}
-                    disabled={this.disabled("UserRole:update")}
+                    disabled={this.disabled("update")}
                     value={`UserRole:update`}
                     onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
@@ -246,12 +248,12 @@ class RoleManager extends Component {
                 </CustomTableRow>
                 <CustomTableRow
                   position={3}
-                  name={<div>Update Company Details</div>}
+                  name={<span><div>Update Company Details</div><i style={{fontSize: "11px"}}>Settings</i></span>}
                   classes={classes}
                 >
                   <Checkbox
                     checked={this.checked("CompanyDetails:update")}
-                    disabled={this.disabled("CompanyDetails:update")}
+                    disabled={this.disabled("update")}
                     value={`CompanyDetails:update`}
                     onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
@@ -264,7 +266,7 @@ class RoleManager extends Component {
                 >
                   <Checkbox
                     checked={this.checked("AccGeneralSet:update")}
-                    disabled={this.disabled("AccGeneralSet:update")}
+                    disabled={this.disabled("update")}
                     value={`AccGeneralSet:update`}
                     onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
@@ -277,7 +279,7 @@ class RoleManager extends Component {
                 >
                   <Checkbox
                     checked={this.checked("AccQuotationSet:update")}
-                    disabled={this.disabled("AccQuotationSet:update")}
+                    disabled={this.disabled("update")}
                     value={`AccQuotationSet:update`}
                     onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
@@ -290,7 +292,7 @@ class RoleManager extends Component {
                 >
                   <Checkbox
                     checked={this.checked("AccInvoiceSet:update")}
-                    disabled={this.disabled("AccInvoiceSet:update")}
+                    disabled={this.disabled("update")}
                     value={`AccInvoiceSet:update`}
                     onChange={(e) => this.handleChange(e.target.value)}
                     color="primary"
@@ -372,8 +374,8 @@ RoleManager.propTypes = {
 };
 
 const mapStateToProps = ({ rolesState }) => {
-  const { selectedRole, crudPermissions } = rolesState;
-  return { selectedRole, crudPermissions };
+  const { selectedRole, crudPermissions, operations } = rolesState;
+  return { selectedRole, crudPermissions, operations };
 };
 
 export default connect(

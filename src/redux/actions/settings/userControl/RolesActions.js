@@ -30,9 +30,9 @@ import {
 export const getAllRoles = () => ({
   type: GET_ALL_ROLES
 });
-export const getAllRolesSuccess = (roles, crud) => ({
+export const getAllRolesSuccess = (roles, crud, operations) => ({
   type: GET_ALL_ROLES_SUCCESS,
-  payload: {roles, crud}
+  payload: {roles, crud, operations}
 });
 
 /**
