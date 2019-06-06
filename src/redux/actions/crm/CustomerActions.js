@@ -85,9 +85,9 @@ export const clearSingleCustomer = () => ({
 /**
  * New Customer
  */
-export const handleChangeCustomer = (field, value) => ({
+export const handleChangeCustomer = (field, value, type) => ({
   type: HANDLE_CHANGE_CUSTOMER,
-  payload: { value, field }
+  payload: { value, field, type }
 });
 export const submitCustomer = () => ({
   type: SUBMIT_CUSTOMER

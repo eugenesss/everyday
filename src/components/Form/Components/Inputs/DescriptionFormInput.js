@@ -28,7 +28,9 @@ const DescriptionFormInput = ({ handleChange, description }) => {
               fullWidth
               rows="6"
               defaultValue={description}
-              onChange={e => handleChange("description", e.target.value)}
+              onChange={e =>
+                handleChange("info", e.target.value, "baseContact")
+              }
               margin="dense"
               variant="outlined"
             />

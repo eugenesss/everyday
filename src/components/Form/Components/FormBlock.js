@@ -9,6 +9,7 @@ const FormBlock = ({
   value,
   handleChange,
   target,
+  targetType,
   selectValues,
   customTextField,
   required,
@@ -33,6 +34,7 @@ const FormBlock = ({
               value={value}
               handleChange={handleChange}
               target={target}
+              targetType={targetType}
               selectValues={selectValues}
             />
           ) : (
@@ -40,6 +42,7 @@ const FormBlock = ({
               value={value}
               handleChange={handleChange}
               target={target}
+              targetType={targetType}
             />
           ))}
       </TableCell>

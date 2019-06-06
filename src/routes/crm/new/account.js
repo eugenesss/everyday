@@ -26,10 +26,9 @@ class crm_new_account extends Component {
         <RctCollapsibleCard heading={<IntlMessages id="sidebar.newAccount" />}>
           {loading && <RctSectionLoader />}
           <div className="row">
-            <div className="col-md-10">
+            <div className="col-md-11">
               <AccountForm />
             </div>
-            <div className="col-md-1" />
           </div>
         </RctCollapsibleCard>
       </React.Fragment>

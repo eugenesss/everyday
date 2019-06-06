@@ -133,9 +133,9 @@ export const getLeadSummaryFailure = error => ({
 /**
  * New Lead
  */
-export const handleChangeLead = (field, value) => ({
+export const handleChangeLead = (field, value, type) => ({
   type: HANDLE_CHANGE_NEW_LEAD,
-  payload: { value, field }
+  payload: { type, value, field }
 });
 export const submitNewLead = () => ({
   type: SUBMIT_NEW_LEAD

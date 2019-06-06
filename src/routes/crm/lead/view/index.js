@@ -109,8 +109,8 @@ class crm_view_lead extends Component {
               <LeadCard
                 name={lead.name}
                 companyName={lead.companyName}
-                status={lead.status.name}
-                statusColor={lead.status.color}
+                status={lead.status && lead.status.name}
+                statusColor={lead.status && lead.status.color}
                 ownerName={lead.owner && lead.owner.name}
               />
             </RctCollapsibleCard>

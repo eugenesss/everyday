@@ -3,13 +3,19 @@ import {
   GET_CRM_FIELDS_FAILURE,
   GET_LEAD_SOURCE_SUCCESS,
   GET_LEAD_STATUS_SUCCESS,
-  GET_INDUSTRY_SUCCESS
+  GET_INDUSTRY_SUCCESS,
+  GET_LEAD_INTEREST_SUCCESS,
+  GET_DEAL_TYPE_SUCCESS,
+  GET_DEAL_STAGE_SUCCESS
 } from "Types";
 
 const INIT_STATE = {
   leadSource: [],
   leadStatus: [],
-  industry: []
+  industry: [],
+  leadInterest: [],
+  dealType: [],
+  dealStage: []
 };
 
 export default (state = INIT_STATE, action) => {
@@ -34,6 +40,21 @@ export default (state = INIT_STATE, action) => {
      */
     case GET_INDUSTRY_SUCCESS:
       return { ...state, industry: action.payload };
+    /**
+     * Lead Interest
+     */
+    case GET_LEAD_INTEREST_SUCCESS:
+      return { ...state, leadInterest: action.payload };
+    /**
+     * Deal Type
+     */
+    case GET_DEAL_TYPE_SUCCESS:
+      return { ...state, dealType: action.payload };
+    /**
+     * Deal Stage
+     */
+    case GET_DEAL_STAGE_SUCCESS:
+      return { ...state, dealStage: action.payload };
 
     default:
       return { ...state };
