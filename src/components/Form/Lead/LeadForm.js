@@ -21,10 +21,10 @@ import {
   clearNewLead,
   getLeadSource,
   getLeadStatus,
-  getIndustry
+  getIndustry,
+  getLeadInterest
 } from "Actions";
 
-import { interestLevel } from "Components/DummyData";
 import { users } from "Components/UserDummyData";
 
 class LeadForm extends Component {
@@ -32,6 +32,7 @@ class LeadForm extends Component {
     this.props.getLeadSource();
     this.props.getLeadStatus();
     this.props.getIndustry();
+    this.props.getLeadInterest();
   }
   componentWillUnmount() {
     this.props.clearNewLead();
@@ -39,8 +40,14 @@ class LeadForm extends Component {
 
   render() {
     const { lead } = this.props.leadForm;
-    const { leadSource, leadStatus, industry } = this.props.crmField;
-    const disabled = lead.firstName && lead.companyName && lead.status;
+    const {
+      leadSource,
+      leadStatus,
+      industry,
+      leadInterest
+    } = this.props.crmField;
+    const disabled =
+      lead.baseContact.firstName && lead.companyName && lead.statusId;
     return (
       <React.Fragment>
         <FormSubmitResetButtons
@@ -52,34 +59,36 @@ class LeadForm extends Component {
           <TableRow>
             <FormBlock
               label="First Name"
-              value={lead.firstName}
+              value={lead.baseContact.firstName}
               handleChange={this.props.handleChangeLead}
               target="firstName"
+              targetType="baseContact"
               required
             />
             <FormBlock
               required
               label="Owner"
-              value={lead.owner ? lead.owner : ""}
+              value={lead.userId ? lead.userId : ""}
               selectValues={users}
               handleChange={this.props.handleChangeLead}
-              target="owner"
+              target="userId"
             />
           </TableRow>
           <TableRow>
             <FormBlock
               required
               label="Last Name"
-              value={lead.lastName}
+              value={lead.baseContact.lastName}
               handleChange={this.props.handleChangeLead}
               target="lastName"
+              targetType="baseContact"
             />
             <FormBlock
               required
               label="Status"
-              value={lead.status}
+              value={lead.statusId}
               handleChange={this.props.handleChangeLead}
-              target="status"
+              target="statusId"
               selectValues={leadStatus}
             />
           </TableRow>
@@ -96,7 +105,6 @@ class LeadForm extends Component {
               }
             />
           </TableRow>
-
           <TableRow />
           {/**
            * Job Title + Source
@@ -104,15 +112,16 @@ class LeadForm extends Component {
           <TableRow>
             <FormBlock
               label="Job Title"
-              value={lead.jobTitle}
+              value={lead.baseContact.title}
               handleChange={this.props.handleChangeLead}
-              target="jobTitle"
+              target="title"
+              targetType="baseContact"
             />
             <FormBlock
               label="Source"
-              value={lead.source}
+              value={lead.sourceId}
               handleChange={this.props.handleChangeLead}
-              target="source"
+              target="sourceId"
               selectValues={leadSource}
             />
           </TableRow>
@@ -122,9 +131,9 @@ class LeadForm extends Component {
           <TableRow>
             <FormBlock
               label="Industry"
-              value={lead.industry}
+              value={lead.industryId}
               handleChange={this.props.handleChangeLead}
-              target="industry"
+              target="industryId"
               selectValues={industry}
             />
             <FormBlock
@@ -139,9 +148,9 @@ class LeadForm extends Component {
                   }
                   margin="dense"
                 >
-                  {interestLevel &&
-                    interestLevel.map((select, key) => (
-                      <MenuItem key={select.id} value={select.level}>
+                  {leadInterest &&
+                    leadInterest.map((select, key) => (
+                      <MenuItem key={key} value={select.level}>
                         {select.name}
                       </MenuItem>
                     ))}
@@ -155,15 +164,17 @@ class LeadForm extends Component {
           <TableRow>
             <FormBlock
               label="Email"
-              value={lead.email}
+              value={lead.baseContact.email}
               handleChange={this.props.handleChangeLead}
               target="email"
+              targetType="baseContact"
             />
             <FormBlock
               label="Mobile"
-              value={lead.mobile}
+              value={lead.baseContact.mobile}
               handleChange={this.props.handleChangeLead}
               target="mobile"
+              targetType="baseContact"
             />
           </TableRow>
           {/**
@@ -172,40 +183,43 @@ class LeadForm extends Component {
           <TableRow>
             <FormBlock
               label="Office"
-              value={lead.office}
+              value={lead.baseContact.office}
               handleChange={this.props.handleChangeLead}
               target="office"
+              targetType="baseContact"
             />
             <FormBlock
               label="Fax"
-              value={lead.fax}
+              value={lead.baseContact.fax}
               handleChange={this.props.handleChangeLead}
               target="fax"
+              targetType="baseContact"
             />
           </TableRow>
 
           <TableRow>
             <FormBlock
               label="Fax"
-              value={lead.fax}
+              value={lead.baseContact.fax}
               handleChange={this.props.handleChangeLead}
               target="fax"
+              targetType="baseContact"
             />
           </TableRow>
         </FormTable>
         <hr />
         <AddressFormInput
           handleChange={this.props.handleChangeLead}
-          address_1={lead.address_1}
-          address_2={lead.address_2}
-          city={lead.city}
-          state={lead.state}
-          zip={lead.zip}
+          address_1={lead.baseContact._address.address_1}
+          address_2={lead.baseContact._address.address_2}
+          city={lead.baseContact._address.city}
+          state={lead.baseContact._address.state}
+          zip={lead.baseContact._address.zip}
         />
         <hr />
         <DescriptionFormInput
           handleChange={this.props.handleChangeLead}
-          description={lead.description}
+          description={lead.baseContact.info}
         />
       </React.Fragment>
     );
@@ -225,6 +239,7 @@ export default connect(
     clearNewLead,
     getLeadSource,
     getLeadStatus,
-    getIndustry
+    getIndustry,
+    getLeadInterest
   }
 )(LeadForm);

@@ -74,15 +74,17 @@ class AccountForm extends Component {
           <TableRow>
             <FormBlock
               label="Office"
-              value={account.office}
+              value={account.baseContact.office}
               handleChange={this.props.handleChangeAccount}
               target="office"
+              targetType="baseContact"
             />
             <FormBlock
               label="Mobile"
-              value={account.mobile}
+              value={account.baseContact.mobile}
               handleChange={this.props.handleChangeAccount}
               target="mobile"
+              targetType="baseContact"
             />
           </TableRow>
           {/**
@@ -91,25 +93,26 @@ class AccountForm extends Component {
           <TableRow>
             <FormBlock
               label="Fax"
-              value={account.fax}
+              value={account.baseContact.fax}
               handleChange={this.props.handleChangeAccount}
               target="fax"
+              targetType="baseContact"
             />
           </TableRow>
         </FormTable>
         <hr />
         <AddressFormInput
           handleChange={this.props.handleChangeAccount}
-          address_1={account.address_1}
-          address_2={account.address_2}
-          city={account.city}
-          state={account.state}
-          zip={account.zip}
+          address_1={account.baseContact._address.address_1}
+          address_2={account.baseContact._address.address_2}
+          city={account.baseContact._address.city}
+          state={account.baseContact._address.state}
+          zip={account.baseContact._address.zip}
         />
         <hr />
         <DescriptionFormInput
           handleChange={this.props.handleChangeAccount}
-          description={account.description}
+          description={account.baseContact.info}
         />
       </React.Fragment>
     );

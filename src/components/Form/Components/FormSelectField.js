@@ -6,6 +6,7 @@ const FormSelectField = ({
   label,
   value,
   target,
+  targetType,
   handleChange,
   selectValues
 }) => {
@@ -15,7 +16,7 @@ const FormSelectField = ({
       fullWidth
       label={label}
       value={value ? value : ""}
-      onChange={e => handleChange(target, e.target.value)}
+      onChange={e => handleChange(target, e.target.value, targetType)}
       margin="dense"
       // variant="outlined"
     >

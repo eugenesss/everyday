@@ -26,8 +26,14 @@ const INIT_STATE = {
     loading: false,
     tableData: []
   },
-  accountToView: { loading: false, account: null },
-  accountForm: { loading: false, account: {} }
+  accountToView: {
+    loading: false,
+    account: null
+  },
+  accountForm: {
+    loading: false,
+    account: { baseContact: { _address: {} } }
+  }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -118,16 +124,49 @@ export default (state = INIT_STATE, action) => {
      * New Account
      */
     case HANDLE_CHANGE_ACCOUNT:
-      return {
-        ...state,
-        accountForm: {
-          ...state.accountForm,
-          account: {
-            ...state.accountForm.account,
-            [action.payload.field]: action.payload.value
+      if (action.payload.type == "baseContact") {
+        return {
+          ...state,
+          accountForm: {
+            ...state.accountForm,
+            account: {
+              ...state.accountForm.account,
+              baseContact: {
+                ...state.accountForm.account.baseContact,
+                [action.payload.field]: action.payload.value
+              }
+            }
           }
-        }
-      };
+        };
+      } else if (action.payload.type == "address") {
+        return {
+          ...state,
+          accountForm: {
+            ...state.accountForm,
+            account: {
+              ...state.accountForm.account,
+              baseContact: {
+                ...state.accountForm.account.baseContact,
+                _address: {
+                  ...state.accountForm.account.baseContact._address,
+                  [action.payload.field]: action.payload.value
+                }
+              }
+            }
+          }
+        };
+      } else {
+        return {
+          ...state,
+          accountForm: {
+            ...state.accountForm,
+            account: {
+              ...state.accountForm.account,
+              [action.payload.field]: action.payload.value
+            }
+          }
+        };
+      }
     case SUBMIT_ACCOUNT:
       return {
         ...state,

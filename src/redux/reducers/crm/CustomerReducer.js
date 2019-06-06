@@ -32,7 +32,7 @@ const INIT_STATE = {
   },
   customerForm: {
     loading: false,
-    customer: {}
+    customer: { baseContact: { _address: {} } }
   }
 };
 
@@ -124,16 +124,49 @@ export default (state = INIT_STATE, action) => {
      * New Customer
      */
     case HANDLE_CHANGE_CUSTOMER:
-      return {
-        ...state,
-        customerForm: {
-          ...state.customerForm,
-          customer: {
-            ...state.customerForm.customer,
-            [action.payload.field]: action.payload.value
+      if (action.payload.type == "baseContact") {
+        return {
+          ...state,
+          customerForm: {
+            ...state.customerForm,
+            customer: {
+              ...state.customerForm.customer,
+              baseContact: {
+                ...state.customerForm.customer.baseContact,
+                [action.payload.field]: action.payload.value
+              }
+            }
           }
-        }
-      };
+        };
+      } else if (action.payload.type == "address") {
+        return {
+          ...state,
+          customerForm: {
+            ...state.customerForm,
+            customer: {
+              ...state.customerForm.customer,
+              baseContact: {
+                ...state.customerForm.customer.baseContact,
+                _address: {
+                  ...state.customerForm.customer.baseContact._address,
+                  [action.payload.field]: action.payload.value
+                }
+              }
+            }
+          }
+        };
+      } else {
+        return {
+          ...state,
+          customerForm: {
+            ...state.customerForm,
+            customer: {
+              ...state.customerForm.customer,
+              [action.payload.field]: action.payload.value
+            }
+          }
+        };
+      }
     case SUBMIT_CUSTOMER:
       return {
         ...state,
