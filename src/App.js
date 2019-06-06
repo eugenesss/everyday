@@ -19,10 +19,10 @@ import "react-dates/lib/css/_datepicker.css";
 // app component
 import App from "./container/App";
 
-import { configureStore } from "./redux/store";
+import { store } from "./redux/store";
 
 const MainApp = () => (
-  <Provider store={configureStore()}>
+  <Provider store={store}>
     <MuiPickersUtilsProvider utils={MomentUtils} moment={moment}>
       <Router>
         <Switch>

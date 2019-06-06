@@ -2,6 +2,7 @@ import { all, call, fork, put, takeEvery, select, delay } from "redux-saga/effec
 import { 
   GET_ALL_HIERARCHIES,
   ADD_HIERARCHY,
+  UPDATE_HIERARCHY,
   DELETE_HIERARCHY,
 } from "Types";
 import { 
@@ -9,11 +10,13 @@ import {
   getHierarchyFailure,
   addHierarchySuccess,
   addHierarchyFailure,
+  updateHierarchySuccess,
+  updateHierarchyFailure,
   deleteHierarchySuccess,
   deleteHierarchyFailure,
  } from "Actions";
 import api from "Api";
-import { hierarchies, deleteHierarchy, addHierarchy } from "Components/HierarchyDummyData";
+import { hierarchies, deleteHierarchy, addHierarchy, updateHierarchy } from "Components/HierarchyDummyData";
 
 //=========================
 // REQUESTS
@@ -30,6 +33,14 @@ const getAllHierarchiesRequest = async () => {
 const addHierarchyRequest = async (hierarchy) => {
   try {
     const result = addHierarchy(hierarchy)
+    return result
+  } catch (err) {
+    return err
+  }
+}
+const updateHierarchyRequest = async (hierarchies) => {
+  try {
+    const result = updateHierarchy(hierarchies)
     return result
   } catch (err) {
     return err
@@ -68,7 +79,6 @@ function* addHierarchyToDB(payload) {
 
     var role = roles.find(role => {return role.id == payload.payload})
     var group = groups.find(group => {return group.id == groupID})
-    console.log(payload)
     var hierarchy = {
       group: group,
       role: role,
@@ -81,6 +91,16 @@ function* addHierarchyToDB(payload) {
     yield put(addHierarchyFailure(err))
   }
 };
+function* updateHierarchyToDB(){
+  try {
+    const getSelectedHierarchies = state => state.hierarchiesState.selectedHierarchies
+    const selectedHierarchies = yield select(getSelectedHierarchies)
+    const data = yield call(updateHierarchyRequest, selectedHierarchies)
+    yield put(updateHierarchySuccess(data))
+  } catch (err) {
+    yield put(updateHierarchyFailure(err))
+  }
+}
 function* deleteHierarchyFromDB(payload) {
   try {
     const getGroupID = state => state.groupsState.selectedGroup.id;
@@ -101,6 +121,9 @@ export function* getAllHierarchiesWatcher() {
 export function* addHierarchyWatcher() {
   yield takeEvery(ADD_HIERARCHY, addHierarchyToDB)
 };
+export function* updateHierarchyWatcher() {
+  yield takeEvery(UPDATE_HIERARCHY, updateHierarchyToDB)
+};
 export function* deleteHierarchyWatcher() {
   yield takeEvery(DELETE_HIERARCHY, deleteHierarchyFromDB)
 };
@@ -112,6 +135,7 @@ export default function* rootSaga() {
   yield all([,
     fork(getAllHierarchiesWatcher),
     fork(addHierarchyWatcher),
+    fork(updateHierarchyWatcher),
     fork(deleteHierarchyWatcher),
   ]);
 }

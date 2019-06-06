@@ -1,4 +1,6 @@
-const user1 = {
+import { role1, role2, role3, role4, role5 } from "./RolesDummyData";
+
+ export const user1 = {
   id: 1,
   firstName: "Eugene",
   lastName: "Sim",
@@ -10,9 +12,9 @@ const user1 = {
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
   isEmailVerified: true,
-  role: ["Development Manager"]
+  role: [role3]
 };
-const user2 = {
+export const user2 = {
   id: 2,
   name: "Jeng Lim",
   firstName: "Jeng",
@@ -24,9 +26,9 @@ const user2 = {
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
   isEmailVerified: true,
-  role: ["Development Member"]
+  role: [role5]
 };
-const user3 = {
+export const user3 = {
   id: 3,
   name: "Benny Ong",
   firstName: "Benny",
@@ -38,9 +40,9 @@ const user3 = {
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
   isEmailVerified: true,
-  role: ["Director"]
+  role: [role3]
 };
-const user4 = {
+export const user4 = {
   id: 4,
   name: "John Chang",
   firstName: "John",
@@ -52,7 +54,7 @@ const user4 = {
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
   isSuperAdmin: true,
   isEmailVerified: true,
-  role: ["Director", "Sales Manager"]
+  role: [role4, role5]
 };
 
 export var users = [user1, user2, user3, user4];

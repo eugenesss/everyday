@@ -97,3 +97,14 @@ export const deleteHierarchy = (roleID, groupID) => {
   }
   return (hierarchy)
 }
+
+export const updateHierarchy = (selectedHierarchies) => {
+  var indexes = []
+  for (let i = 0; i < selectedHierarchies.length; i++) {
+    indexes.push(hierarchies.findIndex(hierarchy => hierarchy.role.id == selectedHierarchies[i].role.id && hierarchy.group.id == selectedHierarchies[i].group.id))
+  }
+  // for (let i = 0; i < indexes.length; i++) {
+  //   hierarchies.splice(indexes[i], 1)
+  // }
+  return hierarchies
+}

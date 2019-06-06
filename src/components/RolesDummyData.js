@@ -14,7 +14,15 @@ export const role2 = {
     "Password:reset",
     "SuperAdmin:update",
     "Permissions:manage",
-    "UserRole:update"
+    "Groups:manage",
+    "UserRole:update",
+    "CompanyDetails:update",
+    "AccGeneralSet:update",
+    "AccQuotationSet:update",
+    "AccInvoiceSet:update",
+    "AccCreditNoteSet:update",
+    "RemLeadSet:update",
+    "RemQuotationSet:update",
   ]
 };
 export const role3 = {
@@ -30,7 +38,7 @@ export const role4 = {
 export const role5 = {
   id: 4,
   name: "Development Manager",
-  permissions: ["User:read"]
+  permissions: []
 };
 
 const crud1 = { id: 0, action: "User" };
@@ -41,3 +49,14 @@ const crud5 = { id: 4, action: "Deal" };
 
 export const crud = [crud1, crud2, crud3, crud4, crud5]
 export const roles = [ role2, role3, role4, role5, role1]
+
+export const addRole = () => {
+  var newRole = {}
+  newRole.id = roles.length;
+  newRole.name = "New Role";
+  newRole.permissions = [];
+  var member = roles.pop();
+  roles.push(newRole);
+  roles.push(member);
+  return newRole;
+};

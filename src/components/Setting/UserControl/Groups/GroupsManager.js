@@ -24,6 +24,8 @@ import {
   
   getAllHierarchies,
   addHierarchy,
+  onChangeUpdateHierarchy,
+  updateHierarchy,
   deleteHierarchy,
 
   onChangeUpdateGroup,
@@ -68,6 +70,7 @@ class GroupsManager extends Component {
 
   handleUpdate(){
     this.props.updateGroup()
+    this.props.updateHierarchy()
   }
   
   render() {
@@ -81,6 +84,7 @@ class GroupsManager extends Component {
       selectedHierarchies,
 
       addHierarchy,
+      onChangeUpdateHierarchy,
       deleteHierarchy,
       onChangeUpdateGroup,
       deleteGroup,
@@ -134,24 +138,24 @@ class GroupsManager extends Component {
                     </TableCell>
                     <TableCell align="center">
                       <Radio
-                        checked={hierarchy.tier === 1}
-                        //onChange={handleChange}
+                        checked={hierarchy.tier == 1}
+                        onChange={e => onChangeUpdateHierarchy(hierarchy.role.id, e.target.value)}
                         value={1}
                         color="primary"
                       />
                     </TableCell>
                     <TableCell align="center">
                       <Radio
-                        checked={hierarchy.tier === 2}
-                        //onChange={handleChange}
+                        checked={hierarchy.tier == 2}
+                        onChange={e => onChangeUpdateHierarchy(hierarchy.role.id, e.target.value)}
                         value={2}
                         color="primary"
                       />
                     </TableCell>
                     <TableCell align="center">
                       <Radio
-                        checked={hierarchy.tier === 3}
-                        //onChange={handleChange}
+                        checked={hierarchy.tier == 3}
+                        onChange={e => onChangeUpdateHierarchy(hierarchy.role.id, e.target.value)}
                         value={3}
                         color="primary"
                       />
@@ -252,5 +256,5 @@ const mapStateToProps = ({ rolesState, groupsState, hierarchiesState }) => {
 
 export default connect(
   mapStateToProps,
-  { getAllRoles, getAllGroups, getAllHierarchies, addHierarchy, deleteHierarchy, onChangeUpdateGroup, updateGroup, deleteGroup }
+  { getAllRoles, getAllGroups, getAllHierarchies, addHierarchy, onChangeUpdateHierarchy, updateHierarchy, deleteHierarchy, onChangeUpdateGroup, updateGroup, deleteGroup }
 )(withStyles(styles)(GroupsManager));

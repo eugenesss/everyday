@@ -1,7 +1,9 @@
 // System Types
 export * from "./system/AppSettingTypes";
 export * from "./system/ReportTypes";
-export * from "./system/CalendarTypes";
+
+//Calendar Types
+export * from "./calendar/CalendarTypes";
 
 // User Control Types
 export * from "./settings/userControl/UserTypes";

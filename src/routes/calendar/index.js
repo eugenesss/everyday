@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 
 import CalendarLayout from "Components/Calendar/CalendarLayout";
 
-const Calendar = ({}) => {
+const Calendar = () => {
   return (
     <div className={"saas-dashboard"}>
       <Helmet>
