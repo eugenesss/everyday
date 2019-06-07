@@ -24,7 +24,7 @@ export const user2 = {
   //password: "jeng123!@#",
   description:
     "Lorem ipsum dolor sit amet, omnis quando neglegentur cum an. Pro postulant concludaturque te, omnis conceptam nec et.",
-  isSuperAdmin: true,
+  isSuperAdmin: false,
   isEmailVerified: true,
   role: [role5]
 };

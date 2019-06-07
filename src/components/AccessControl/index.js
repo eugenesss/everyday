@@ -18,12 +18,24 @@ class AccessControl extends Component {
   }
 
   render() {
-    const { children, action, roles, user, me, match, noAccessComponent } = this.props;
+    const { children, action, roles, operations, user, me, match, noAccessComponent } = this.props;
+    
+    var actions = []
+    for (let i = 0; i < action.length; i++) {
+      if(action[i] == "me")
+        actions.push(action[i])
+      else if (action[i] == "global")
+        actions.push(action[i])
+      else {
+        actions.push(operations.find(op => { return `${op.name}:${op.operation}` == action[i]}))
+      }
+    }
+
     if(!me.id || roles.length == 0) {
       return null
     } else {
-      for (let i = 0; i < action.length; i++) {
-        var act = action[i];
+      for (let i = 0; i < actions.length; i++) {
+        var act = actions[i];
         if (act == "me") {
           if (me.id == match.params.id)
             return children
@@ -41,7 +53,7 @@ class AccessControl extends Component {
                     return children
               }
             } else {
-              var member = roles.find( role => role.name === "Member" );
+              var member = roles.find( role => role.name == "Member" );
               if(member)
                 if (member.permissions.includes(act))
                   return children
@@ -59,9 +71,9 @@ class AccessControl extends Component {
 
 const mapStateToProps = ({ authUser, rolesState, usersState }) => {
   const { me } = usersState
-  const { roles } = rolesState;
+  const { roles, operations } = rolesState;
   const { user } = authUser;
-  return { roles, user, me };
+  return { roles, user, me, operations };
 };
 
 export default connect(

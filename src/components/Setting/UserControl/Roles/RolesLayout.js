@@ -17,7 +17,7 @@ class RolesLayout extends Component {
   render() {
     return (
       <React.Fragment>
-        <AccessControl action={["Permissions:manage"]} noAccessComponent={<NoAccessComponent/>}>
+        <AccessControl action={["RolePermission:manage"]} noAccessComponent={<NoAccessComponent/>}>
           <Row>
             <Col md={3}>
               <RolesList/>

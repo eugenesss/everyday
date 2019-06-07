@@ -31,7 +31,8 @@ export const role4 = {
 export const role5 = {
   id: 4,
   name: "Development Manager",
-  permissions: []
+  // permissions: [operation1, operation4],
+  permissions: [operation1]
 };
 
 export const roles = [ role2, role3, role4, role5, role1]
