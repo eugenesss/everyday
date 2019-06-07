@@ -2,6 +2,7 @@ import { store } from "Redux/store"
 
 export const accessControlHelper = (action, match) => {
   var state = store.getState()
+  //console.log(state)
   var me = state.usersState.me //AuthUser
   var roles = state.rolesState.roles
   if(!me.id || roles.length == 0) {

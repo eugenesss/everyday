@@ -77,10 +77,6 @@ class UsersList extends Component {
       hideUserControls,
      } = this.props;
 
-
-    //var showActions = 'false'
-    //showActions = this.showActions()
-
     const data = users && users.map(user => this.convertData(user));
     const columns = [
       {

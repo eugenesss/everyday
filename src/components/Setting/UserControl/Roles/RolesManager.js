@@ -10,6 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from "@material-ui/core/Checkbox";
+import Switch from "@material-ui/core/Switch"
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -33,23 +34,6 @@ const styles = theme => ({
     },
   },
 });
-
-function CustomTableRow({position, name, children, classes, counter = 0, ...props}) {
-  let table = []
-  table.push(<TableCell component="th" scope="row" key={counter++}>{name}</TableCell>)
-  for (let i = 0; i < position - 1; i++) {
-    table.push(<TableCell key={counter++}/>)
-  }
-  table.push(<TableCell align="center" key={counter++}>{children}</TableCell>)
-  for (let y = 0; y < 4 - position; y++) {
-    table.push(<TableCell key={counter++}/>)
-  }
-  return (
-    <TableRow className={classes.row} {...props} >
-      {table}
-    </TableRow>
-  )
-}
 
 class RoleManager extends Component {
   constructor(props) {
@@ -83,30 +67,32 @@ class RoleManager extends Component {
   }
   handleChange(val) {
     var permissions = this.props.selectedRole.permissions
-    if (permissions.find( permission => permission == val )) {
-      var index = permissions.indexOf(val)
+    var operations = this.props.operations
+    var sOperation = operations.find(op => {return op.id == val})
+    if (permissions.find( permission => permission == sOperation )) {
+      var index = permissions.indexOf(sOperation)
       if (index > -1) {
         permissions.splice(index, 1)
       }
     } else {
-      permissions.push(val)
+      permissions.push(sOperation)
     }
     this.props.onChangeUpdateRole("permissions", permissions)
   }
+  
   
   render() {
     const { 
       classes,
 
       selectedRole,
-      crudPermissions,
-      operations,
+      crudOperations,
+      miscOperations,
 
       onChangeUpdateRole,
       updateRole,
       deleteRole,
      } = this.props;
-     console.log(operations)
     return (
       <React.Fragment>
         <div className={classes.root}>
@@ -130,7 +116,7 @@ class RoleManager extends Component {
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
-                  <TableCell>Action</TableCell>
+                  <TableCell>CRUD Actions</TableCell>
                   <TableCell align="center">Read</TableCell>
                   <TableCell align="center">Create</TableCell>
                   <TableCell align="center">Update</TableCell>
@@ -138,208 +124,57 @@ class RoleManager extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {crudPermissions.map(permission => (
-                  <TableRow className={classes.row} key={permission.action}>
+              {crudOperations.map(model => (
+                <TableRow className={classes.row} key={model[0].name}>
+                  <TableCell component="th" scope="row">
+                    {model[0].name}
+                  </TableCell>
+                  {model.map(op => (
+                    <TableCell align="center" key={op.operation}>
+                      <Checkbox
+                        color="primary"
+                        checked={this.checked(op)}
+                        disabled={this.disabled(op.operation)}
+                        value={`${op.id}`}
+                        onChange={e => this.handleChange(e.target.value)}
+                      />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+              
+              </TableBody>
+            </Table>
+          </Row>
+          <Row>
+            <Table className={"mt-50 " + classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Miscellaneous Actions</TableCell>
+                  <TableCell align="center">Privilege</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {miscOperations.map(op => (
+                  <TableRow className={classes.row} key={op.id}>
                     <TableCell component="th" scope="row">
-                      {permission.action}
+                      {op.desc}
                     </TableCell>
                     <TableCell align="center">
-                      <Checkbox
+                      <Switch
                         color="primary"
-                        checked={this.checked(`${permission.action}:read`)}
-                        disabled={this.disabled("read")}
-                        value={`${permission.action}:read`}
-                        onChange={e => this.handleChange(e.target.value)}
-                      />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Checkbox
-                        color="primary"
-                        checked={this.checked(`${permission.action}:create`)}
-                        value={`${permission.action}:create`}
-                        disabled={this.disabled("create")}
-                        onChange={e => this.handleChange(e.target.value)}
-                      />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Checkbox
-                        color="primary"
-                        checked={this.checked(`${permission.action}:update`)}
-                        value={`${permission.action}:update`}
-                        disabled={this.disabled("update")}
-                        onChange={e => this.handleChange(e.target.value)}
-                      />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Checkbox
-                        color="primary"
-                        checked={this.checked(`${permission.action}:delete`)}
-                        value={`${permission.action}:delete`}
-                        disabled={this.disabled("delete")}
+                        checked={this.checked(op)}
+                        disabled={this.disabled(op.operation)}
+                        value={`${op.id}`}
                         onChange={e => this.handleChange(e.target.value)}
                       />
                     </TableCell>
                   </TableRow>
                 ))}
-                <CustomTableRow
-                  position={3}
-                  name={<div style={{color: "red"}}>Give Super Admin Privileges*</div>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    checked={this.checked("SuperAdmin:update")}
-                    disabled={this.disabled("update")}
-                    value={`SuperAdmin:update`}
-                    onChange={(e) => this.handleChange(e.target.value)}
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<div style={{color: "red"}}>Reset User Passwords*</div>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    checked={this.checked("Password:reset")}
-                    disabled={this.disabled("reset")}
-                    value={`Password:reset`}
-                    onChange={(e) => this.handleChange(e.target.value)}
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<div style={{color: "red"}}>Manage Roles and Permissions*</div>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    checked={this.checked("Permissions:manage")}
-                    disabled={this.disabled("manage")}
-                    value={`Permissions:manage`}
-                    onChange={(e) => this.handleChange(e.target.value)}
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<div style={{color: "red"}}>Manage Groups*</div>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    checked={this.checked("Groups:manage")}
-                    disabled={this.disabled("manage")}
-                    value={`Groups:manage`}
-                    onChange={(e) => this.handleChange(e.target.value)}
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<span><div style={{color: "red"}}>Update User Roles*</div> <i style={{fontSize: "11px"}}>(ability to assign or update roles of a user)</i></span>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    checked={this.checked("UserRole:update")}
-                    disabled={this.disabled("update")}
-                    value={`UserRole:update`}
-                    onChange={(e) => this.handleChange(e.target.value)}
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<span><div>Update Company Details</div><i style={{fontSize: "11px"}}>Settings</i></span>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    checked={this.checked("CompanyDetails:update")}
-                    disabled={this.disabled("update")}
-                    value={`CompanyDetails:update`}
-                    onChange={(e) => this.handleChange(e.target.value)}
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<span><div>Update Accounting General</div><i style={{fontSize: "11px"}}>Settings</i></span>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    checked={this.checked("AccGeneralSet:update")}
-                    disabled={this.disabled("update")}
-                    value={`AccGeneralSet:update`}
-                    onChange={(e) => this.handleChange(e.target.value)}
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<span><div>Update Accounting Quotation</div><i style={{fontSize: "11px"}}>Settings</i></span>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    checked={this.checked("AccQuotationSet:update")}
-                    disabled={this.disabled("update")}
-                    value={`AccQuotationSet:update`}
-                    onChange={(e) => this.handleChange(e.target.value)}
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<span><div>Update Accounting Invoice</div><i style={{fontSize: "11px"}}>Settings</i></span>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    checked={this.checked("AccInvoiceSet:update")}
-                    disabled={this.disabled("update")}
-                    value={`AccInvoiceSet:update`}
-                    onChange={(e) => this.handleChange(e.target.value)}
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<span><div>Update Accounting Credit Note</div><i style={{fontSize: "11px"}}>Settings</i></span>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    checked={this.checked("AccCreditNoteSet:update")}
-                    disabled={this.disabled("AccCreditNoteSet:update")}
-                    value={`AccCreditNoteSet:update`}
-                    onChange={(e) => this.handleChange(e.target.value)}
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<span><div>Update Lead</div><i style={{fontSize: "11px"}}>Reminder Settings</i></span>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    checked={this.checked("RemLeadSet:update")}
-                    disabled={this.disabled("RemLeadSet:update")}
-                    value={`RemLeadSet:update`}
-                    onChange={(e) => this.handleChange(e.target.value)}
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<span><div>Update Quotation</div><i style={{fontSize: "11px"}}>Reminder Settings</i></span>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    checked={this.checked("RemQuotationSet:update")}
-                    disabled={this.disabled("RemQuotationSet:update")}
-                    value={`RemQuotationSet:update`}
-                    onChange={(e) => this.handleChange(e.target.value)}
-                    color="primary"
-                  /> 
-                </CustomTableRow>
               </TableBody>
             </Table>
           </Row>
+
           <Row>
             <Col>
               <Button
@@ -374,8 +209,8 @@ RoleManager.propTypes = {
 };
 
 const mapStateToProps = ({ rolesState }) => {
-  const { selectedRole, crudPermissions, operations } = rolesState;
-  return { selectedRole, crudPermissions, operations };
+  const { selectedRole, crudOperations, miscOperations, operations } = rolesState;
+  return { selectedRole, crudOperations, miscOperations, operations };
 };
 
 export default connect(

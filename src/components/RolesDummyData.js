@@ -1,39 +1,32 @@
+import {
+  operation1, operation2, operation3, operation4, operation5, operation9, operation13, operation17,
+  operation21, operation22, operation23, operation24, operation25, operation26, operation27, operation28, operation29, operation30, operation31, operation32
+} from "./OperationsDummyData"
+
 export const role1 = {
   id: 0,
   name: "Member",
-  permissions: ["User:read"]
+  permissions: [
+    operation1, operation5, operation9, operation13, operation17
+  ]
 };
 export const role2 = {
   id: 1,
   name: "Director",
   permissions: [
-    "User:read",
-    "User:create",
-    "User:update",
-    "User:delete",
-    "Password:reset",
-    "SuperAdmin:update",
-    "Permissions:manage",
-    "Groups:manage",
-    "UserRole:update",
-    "CompanyDetails:update",
-    "AccGeneralSet:update",
-    "AccQuotationSet:update",
-    "AccInvoiceSet:update",
-    "AccCreditNoteSet:update",
-    "RemLeadSet:update",
-    "RemQuotationSet:update",
+    operation1, operation2, operation3, operation4, operation5, operation9, operation13, operation17,
+    operation21, operation22, operation23, operation24, operation25, operation26, operation27, operation28, operation29, operation30, operation31, operation32
   ]
 };
 export const role3 = {
   id: 2,
   name: "Human Resource Manager",
-  permissions: ["User:read"]
+  permissions: []
 };
 export const role4 = {
   id: 3,
   name: "Sales Manager",
-  permissions: ["User:read"]
+  permissions: []
 };
 export const role5 = {
   id: 4,
@@ -41,13 +34,6 @@ export const role5 = {
   permissions: []
 };
 
-const crud1 = { id: 0, action: "User" };
-const crud2 = { id: 1, action: "Lead" };
-const crud3 = { id: 2, action: "Customer" };
-const crud4 = { id: 3, action: "Account" };
-const crud5 = { id: 4, action: "Deal" };
-
-export const crud = [crud1, crud2, crud3, crud4, crud5]
 export const roles = [ role2, role3, role4, role5, role1]
 
 export const addRole = () => {

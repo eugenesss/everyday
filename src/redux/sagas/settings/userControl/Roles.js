@@ -15,26 +15,16 @@ import {
   deleteRoleSuccess,
   deleteRoleFailure,
  } from "Actions";
-import api from "Api";
-import { roles, crud, addRole } from "Components/RolesDummyData";
-import { operations } from "Components/PermissionsDummyData";
+// import api from "Api";
+import { roles, addRole } from "Components/RolesDummyData";
+import { operations } from "Components/OperationsDummyData";
 
 //=========================
 // REQUESTS
 //=========================
 const getAllRolesRequest = async () => {
   try {
-    //const result = await api.get("/role");
     const result = roles;
-    return result;
-  } catch (err) {
-    return err;
-  }
-}
-const getAllCRUDRequest = async () => {
-  try {
-    //const result = await api.get("/crud");
-    const result = crud;
     return result;
   } catch (err) {
     return err;
@@ -48,6 +38,7 @@ const getAllOperationsRequest = async () => {
     return err
   }
 }
+
 const addRoleRequest = async () => {
   try {
     const result = addRole()
@@ -79,9 +70,8 @@ const deleteRoleRequest = async (role) => {
 function* getAllRolesFromDB() {
   try {
     const roles =  yield call(getAllRolesRequest)
-    const crud = yield call(getAllCRUDRequest)
     const operations = yield call(getAllOperationsRequest)
-    yield put(getAllRolesSuccess(roles, crud, operations))
+    yield put(getAllRolesSuccess(roles, operations))
   } catch (err) {
     yield put(getRoleFailure(err))
   }

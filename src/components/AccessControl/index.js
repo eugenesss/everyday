@@ -17,37 +17,6 @@ class AccessControl extends Component {
     }
   }
 
-  //======================
-  // PERMISSIONS
-  //======================
-  /*
-    me // logged in user matches given match.params.id
-    global // all users can access child component
-
-    CRUD
-      User:create User:read User:update User:delete
-      Lead:create Lead:read Lead:update Lead:delete
-      Customer:create Customer:read Customer:update Customer:delete
-      Account:create Account:read Account:update Account:delete
-      Deal:create Deal:read Deal:update Deal:delete
-    
-    Others
-      Password:reset
-      SuperAdmin:update
-      Permissions:manage
-      Groups:manage
-      UserRole:update
-      CompanyDetails:update
-
-    Settings
-      AccGeneralSet:update
-      AccQuotationSet:update
-      AccInvoiceSet:update
-      AccCreditNoteSet:update
-      RemLeadSet:update
-      RemQuotationSet:update
-  */
-
   render() {
     const { children, action, roles, user, me, match, noAccessComponent } = this.props;
     if(!me.id || roles.length == 0) {
