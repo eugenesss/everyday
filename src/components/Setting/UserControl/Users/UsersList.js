@@ -13,7 +13,6 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import AccessControl from "Components/AccessControl";
 
 import { accessControlHelper } from "Helpers/accessControlHelper"
-import NoAccessComponent from "Components/AccessControl/NoAccessComponent"
 
 import AddUserDialog from "./AddUserDialog";
 import UserControlDialog from "./UserControlDialog";
@@ -43,7 +42,7 @@ class UsersList extends Component {
       user.name,
       user.email,
       user.contact,
-      user.role.map( role => {return role.name}).join(", "),
+      user.access.map( access => {return access.role.name + " (" + access.group.name + ")"}).join(", "),
       user
     );
     return data;
@@ -132,7 +131,7 @@ class UsersList extends Component {
                       className="text-primary mr-2"
                       aria-label="More Options"
                       onClick={() => {
-                        showUserControls();
+                        showUserControls(value);
                       }}
                     >
                       <i className={"zmdi zmdi-edit " + classes.icon} />
@@ -186,22 +185,20 @@ class UsersList extends Component {
     };
     return (
       <RctCollapsibleCard fullBlock>
-        <AccessControl action={["User:read"]} noAccessComponent={<NoAccessComponent/>}>
-          <MUIDataTable
-            title={"Users"}
-            columns={columns}
-            data={data}
-            options={options}
-          />
-          <AddUserDialog
-            open={isAddUser}
-            handleClose={hideAddUser}
-          />
-          <UserControlDialog
-            open={isUserControl}
-            handleClose={hideUserControls}
-          />
-        </AccessControl>
+        <MUIDataTable
+          title={"Users"}
+          columns={columns}
+          data={data}
+          options={options}
+        />
+        <AddUserDialog
+          open={isAddUser}
+          handleClose={hideAddUser}
+        />
+        <UserControlDialog
+          open={isUserControl}
+          handleClose={hideUserControls}
+        />
         {usersLoading && <RctSectionLoader />}
       </RctCollapsibleCard>
     );

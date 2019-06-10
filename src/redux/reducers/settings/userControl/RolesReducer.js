@@ -31,8 +31,6 @@ const INIT_STATE = {
   crudOperations: [],
   miscOperations: [],
   roles: [],
-
-  crudPermissions: [],
 };
 
 function groupBy(list, keyGetter) {

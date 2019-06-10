@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 
 import { getAllRoles, getAllUsers } from "Actions";
 
-
-
 class AccessControl extends Component {
   constructor(props) {
     super(props);
@@ -45,9 +43,9 @@ class AccessControl extends Component {
           if (me.isSuperAdmin) {
             return children
           } else {
-            if(me.role.length > 0) {
-              for (let n = 0; n < me.role.length; n++) {
-                var rol = roles.find( role => role.id === me.role[n].id );
+            if(me.access.length > 0) {
+              for (let n = 0; n < me.access.length; n++) {
+                var rol = roles.find( role => role.id === me.access[n].role.id );
                 if(rol)
                   if (rol.permissions.includes(act))
                     return children

@@ -1,5 +1,5 @@
-import { roles, role1, role2, role3, role4, role5 } from "./RolesDummyData"
-import { groups, group0, group1, group2, group3, group4, group5} from "./GroupsDummyData"
+import { role1, role2, role3, role4, role5 } from "./RolesDummyData"
+import { group0, group1, group2, group3, group4, group5} from "./GroupsDummyData"
 
 const hierarchy1 = {
   group: group1,
@@ -61,22 +61,22 @@ const hierarchy12 = {
   role: role1,
   tier: 1
 };
-const hierarchy13 = {
+export const hierarchy13 = {
   group: group0,
   role: role2,
   tier: 1
 };
-const hierarchy14 = {
+export const hierarchy14 = {
   group: group0,
   role: role3,
   tier: 1
 };
-const hierarchy15 = {
+export const hierarchy15 = {
   group: group0,
   role: role4,
   tier: 1
 };
-const hierarchy16 = {
+export const hierarchy16 = {
   group: group0,
   role: role5,
   tier: 1
@@ -103,8 +103,5 @@ export const updateHierarchy = (selectedHierarchies) => {
   for (let i = 0; i < selectedHierarchies.length; i++) {
     indexes.push(hierarchies.findIndex(hierarchy => hierarchy.role.id == selectedHierarchies[i].role.id && hierarchy.group.id == selectedHierarchies[i].group.id))
   }
-  // for (let i = 0; i < indexes.length; i++) {
-  //   hierarchies.splice(indexes[i], 1)
-  // }
   return hierarchies
 }

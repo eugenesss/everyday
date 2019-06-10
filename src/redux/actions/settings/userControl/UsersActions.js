@@ -119,8 +119,9 @@ export const hideAddUser = () => ({
   type: HIDE_ADD_USER
 });
 
-export const showUserControls = () => ({
-  type: SHOW_USER_CONTROLS
+export const showUserControls = user => ({
+  type: SHOW_USER_CONTROLS,
+  payload: user
 })
 
 export const hideUserControls = () => ({

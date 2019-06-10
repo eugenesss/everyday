@@ -24,7 +24,6 @@ class TabsWrapper extends Component {
   render() {
     const { children } = this.props;
     const { activeIndex } = this.state;
-    console.log(children)
     return (
       <RctCollapsibleCard
         heading={

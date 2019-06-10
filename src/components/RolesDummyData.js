@@ -4,14 +4,14 @@ import {
 } from "./OperationsDummyData"
 
 export const role1 = {
-  id: 0,
+  id: 1,
   name: "Member",
   permissions: [
     operation1, operation5, operation9, operation13, operation17
   ]
 };
 export const role2 = {
-  id: 1,
+  id: 2,
   name: "Director",
   permissions: [
     operation1, operation2, operation3, operation4, operation5, operation9, operation13, operation17,
@@ -19,20 +19,20 @@ export const role2 = {
   ]
 };
 export const role3 = {
-  id: 2,
+  id: 3,
   name: "Human Resource Manager",
   permissions: []
 };
 export const role4 = {
-  id: 3,
+  id: 4,
   name: "Sales Manager",
   permissions: []
 };
 export const role5 = {
-  id: 4,
+  id: 5,
   name: "Development Manager",
-  // permissions: [operation1, operation4],
-  permissions: [operation1]
+  permissions: [operation1, operation4],
+  // permissions: [operation1]
 };
 
 export const roles = [ role2, role3, role4, role5, role1]

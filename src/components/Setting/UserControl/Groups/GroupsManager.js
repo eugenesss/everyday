@@ -147,6 +147,7 @@ class GroupsManager extends Component {
                     <TableCell align="center">
                       <Radio
                         checked={hierarchy.tier == 2}
+                        disabled={hierarchy.role.name == "Member"}
                         onChange={e => onChangeUpdateHierarchy(hierarchy.role.id, e.target.value)}
                         value={2}
                         color="primary"
@@ -155,6 +156,7 @@ class GroupsManager extends Component {
                     <TableCell align="center">
                       <Radio
                         checked={hierarchy.tier == 3}
+                        disabled={hierarchy.role.name == "Member"}
                         onChange={e => onChangeUpdateHierarchy(hierarchy.role.id, e.target.value)}
                         value={3}
                         color="primary"

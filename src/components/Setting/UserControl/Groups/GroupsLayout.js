@@ -12,7 +12,7 @@ import GroupsList from "./GroupsList";
 const GroupsLayout = () => {
   return (
     <React.Fragment>
-      <AccessControl action={["Groups:manage"]} noAccessComponent={<NoAccessComponent/>}>
+      <AccessControl action={["Group:manage"]} noAccessComponent={<NoAccessComponent/>}>
         <Row>
           <Col md={3}>
             <GroupsList/>

@@ -37,6 +37,7 @@ const INIT_STATE = {
   
   isAddUser: false,
   isUserControl: false,
+  userControl: {},
 
   userProfile: {},
   profileLoading: false,
@@ -185,6 +186,7 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         isUserControl: true,
+        userControl: action.payload
       }
     
     case HIDE_USER_CONTROLS:

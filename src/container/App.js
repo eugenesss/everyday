@@ -15,7 +15,7 @@ import Login from "Routes/login";
 import NotFound from "./error_pages/Err404";
 
 //Get Roles Actions
-import { getAllRoles, getAllUsers } from "Actions"
+import { getAllRoles, getAllUsers, getAllHierarchies } from "Actions"
 
 /**
  * Initial Path To Check Whether User Is Logged In Or Not
@@ -27,8 +27,10 @@ const InitialPath = ({ component: Component, ...rest }) => (
 class App extends Component {
 
   componentWillMount() {
-    if(this.props.roles.length == 0 || !this.props.roles)
+    if(this.props.roles.length == 0)
       this.props.getAllRoles()
+    if(this.props.hierarchies.length == 0)
+      this.props.getAllHierarchies()
     if(!this.props.me.id)
       this.props.getAllUsers()
   }
@@ -54,14 +56,15 @@ class App extends Component {
 }
 
 // map state to props
-const mapStateToProps = ({ authUser, rolesState, usersState }) => {
+const mapStateToProps = ({ authUser, rolesState, usersState, hierarchiesState }) => {
   const { user } = authUser;
   const { roles } = rolesState;
   const { me } = usersState;
-  return { user, roles, me };
+  const { hierarchies } = hierarchiesState;
+  return { user, roles, me, hierarchies };
 };
 
 export default connect(
   mapStateToProps,
-  { getAllRoles, getAllUsers }
+  { getAllRoles, getAllUsers, getAllHierarchies }
 )(App);
