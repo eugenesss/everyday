@@ -49,7 +49,7 @@ class acct_view_invoice extends Component {
         </Helmet>
         <PageTitleBar title="View Invoice" createLink="/acct/new/invoice" />
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-3">
             <RctCollapsibleCard>
               <AccountingDetails
                 type="invoice"
@@ -62,7 +62,7 @@ class acct_view_invoice extends Component {
               />
             </RctCollapsibleCard>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-9">
             <TabsWrapper>
               <div icon="zmdi-shopping-basket text-success" label="INVOICE">
                 <ViewTemplate order={invoice} id={invoice.invoiceID} />

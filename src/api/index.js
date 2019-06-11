@@ -1,6 +1,17 @@
 import axios from "axios";
 
-export default axios.create({
+const api = axios.create({
   baseURL: "http://localhost:3001/api",
   timeout: 6000
 });
+
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem("accessKey");
+  const tokenInAxios = api.defaults.headers.common.Authorization;
+  if (token && !tokenInAxios) {
+    api.defaults.headers.common.Authorization = token;
+  }
+  return config;
+});
+
+export default api;
