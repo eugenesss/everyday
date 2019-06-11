@@ -40,7 +40,7 @@ const Footer = () => (
         </Button>
       </li>
     </ul>
-    <h5 className="mb-0 bg-everyday">{AppConfig.copyRightText}</h5>
+    <h5 className="mb-0">{AppConfig.copyRightText}</h5>
   </div>
 );
 

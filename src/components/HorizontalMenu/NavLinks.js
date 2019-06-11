@@ -3,25 +3,25 @@ export default {
   crm: [
     {
       menu_title: "sidebar.leads",
-      menu_icon: "zmdi zmdi-account-circle text-primary",
+      menu_icon: "zmdi zmdi-account-circle text-everyday-sec",
       path: "/app/crm/leads",
       child_routes: null
     },
     {
       menu_title: "sidebar.customers",
-      menu_icon: "zmdi zmdi-accounts-outline text-primary",
+      menu_icon: "zmdi zmdi-accounts-outline text-everyday-sec",
       path: "/app/crm/customers",
       child_routes: null
     },
     {
       menu_title: "sidebar.accounts",
-      menu_icon: "zmdi zmdi-city-alt text-primary",
+      menu_icon: "zmdi zmdi-city-alt text-everyday-sec",
       path: "/app/crm/accounts",
       child_routes: null
     },
     {
       menu_title: "sidebar.deals",
-      menu_icon: "zmdi zmdi-case text-primary",
+      menu_icon: "zmdi zmdi-case text-everyday-sec",
       path: "/app/crm/deals",
       child_routes: null
     }

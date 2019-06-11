@@ -80,6 +80,7 @@ export const lead = {
   notes: [note, note, note]
 };
 const newLead = {
+  id: 1,
   companyName: "string",
   description: "string",
   //fullAddress: "string",
@@ -374,7 +375,7 @@ export const dealStage = [
   stage6,
   stage7
 ];
-export const leadList = [lead, lead2, lead2, lead, lead, lead];
+export const leadList = [newLead, newLead, newLead, newLead];
 export const customerList = [cust, cust2, cust, cust2];
 export const accountList = [account, account2, account];
 

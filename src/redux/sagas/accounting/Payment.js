@@ -12,10 +12,9 @@ import {
 
 import api from "Api";
 
-//import { Payment, PaymentList } from "Components/DummyData";
+import { creditNote } from "Components/DummyData";
 
 const PaymentList = [];
-const Payment = {};
 
 //=========================
 // REQUESTS
@@ -38,7 +37,7 @@ const getClosedPaymentRequest = async () => {
 };
 const getPaymentRequest = async paymentID => {
   console.log(`fetching ${paymentID}`);
-  const result = Payment;
+  const result = creditNote;
   return result;
 };
 

@@ -49,7 +49,13 @@ class UserBlock extends Component {
                       user={user}
                       size={80}
                     /> */}
-                    <img src={require('Assets/avatars/user-37.jpg')} alt="user profile" className="rounded-circle bordered" width="120" height="120" />
+                    <img
+                      src={require("Assets/avatars/user-37.jpg")}
+                      alt="user profile"
+                      className="rounded-circle bordered"
+                      width="120"
+                      height="120"
+                    />
                   </div>
                   <div className="user-list-content">
                     <div className="text-center">

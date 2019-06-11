@@ -13,8 +13,6 @@ import AccountForm from "Components/Form/Account/AccountForm";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 class crm_new_account extends Component {
-  state = {};
-
   render() {
     const { loading } = this.props.accountForm;
     return (

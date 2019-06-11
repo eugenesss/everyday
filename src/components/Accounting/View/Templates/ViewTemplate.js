@@ -87,29 +87,29 @@ const ViewTemplate = ({ order, id }) => {
                 </tr>
               ))}
             <tr>
-              <td colspan="5">&nbsp;</td>
+              <td colSpan="5">&nbsp;</td>
               <td className="fw-bold">Subtotal</td>
               <td>${order.netAmt}</td>
             </tr>
             <tr>
-            <td colspan="5">&nbsp;</td>
+              <td colSpan="5">&nbsp;</td>
               <td className="fw-bold">Discount</td>
               <td>${order.totalAmt}</td>
             </tr>
             {order.shipping && (
               <tr>
-                <td colspan="5">&nbsp;</td>
+                <td colSpan="5">&nbsp;</td>
                 <td className="fw-bold">Shipping</td>
                 <td>${order.shipping}</td>
               </tr>
             )}
             <tr>
-            <td colspan="5">&nbsp;</td>
+              <td colSpan="5">&nbsp;</td>
               <td className="fw-bold">Tax</td>
               <td>${order.totalAmt}</td>
             </tr>
             <tr>
-            <td colspan="5">&nbsp;</td>
+              <td colSpan="5">&nbsp;</td>
               <td className="fw-bold">Total</td>
               <td>${order.totalAmt}</td>
             </tr>
@@ -118,7 +118,10 @@ const ViewTemplate = ({ order, id }) => {
       </div>
       <div className="note-wrapper row">
         <div className="invoice-note col-sm-12 col-md-8">
-         <p> <strong>Valid For: </strong> 30 days</p>
+          <p>
+            {" "}
+            <strong>Valid For: </strong> 30 days
+          </p>
           <h3>Terms & Conditions</h3>
           <p className="fs-12">{order.terms}</p>
         </div>

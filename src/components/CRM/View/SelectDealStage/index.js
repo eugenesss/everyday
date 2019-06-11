@@ -71,7 +71,7 @@ class SelectDealStage extends Component {
                 <Button
                   variant="contained"
                   color="primary"
-                  className="text-white mb-10"
+                  className="text-white mb-10 mr-20"
                   disabled={this.isCurrentStep()}
                   onClick={this.handleComplete}
                 >

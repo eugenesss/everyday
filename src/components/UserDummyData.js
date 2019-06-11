@@ -1,6 +1,6 @@
 import { role1, role2, role3, role4, role5 } from "./RolesDummyData";
 
- export const user1 = {
+export const user1 = {
   id: 1,
   firstName: "Eugene",
   lastName: "Sim",

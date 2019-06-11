@@ -12,10 +12,11 @@ import RctThemeProvider from "./RctThemeProvider";
 //Horizontal Layout
 import HorizontalLayout from "./HorizontalLayout";
 import Login from "Routes/login";
+import Register from "Routes/register";
 import NotFound from "./error_pages/Err404";
 
 //Get Roles Actions
-import { getAllRoles, getAllUsers } from "Actions"
+import { getAllRoles, getAllUsers } from "Actions";
 
 /**
  * Initial Path To Check Whether User Is Logged In Or Not
@@ -25,12 +26,10 @@ const InitialPath = ({ component: Component, ...rest }) => (
 );
 
 class App extends Component {
-
   componentWillMount() {
-    if(this.props.roles.length == 0 || !this.props.roles)
-      this.props.getAllRoles()
-    if(!this.props.me.id)
-      this.props.getAllUsers()
+    if (this.props.roles.length == 0 || !this.props.roles)
+      this.props.getAllRoles();
+    if (!this.props.me.id) this.props.getAllUsers();
   }
 
   render() {
@@ -47,6 +46,7 @@ class App extends Component {
           component={HorizontalLayout}
         />
         <Route path={`/login`} exact component={Login} />
+        <Route path={`/register`} exact component={Register} />
         <Route path={"/404"} exact component={NotFound} />
       </RctThemeProvider>
     );

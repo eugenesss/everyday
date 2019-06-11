@@ -24,10 +24,11 @@ import groupSagas from "./settings/userControl/Groups";
 import hierarchySagas from "./settings/userControl/Hierarchies";
 
 //calendar
-import calendarSagas from "./calendar/Calendar"
+import calendarSagas from "./calendar/Calendar";
 
 //login
-import loginSagas from "./login/Login";
+import loginSagas from "./auth/Login";
+import registerSagas from "./auth/Register";
 
 export default function* rootSaga(getState) {
   yield all([
@@ -46,6 +47,7 @@ export default function* rootSaga(getState) {
     accountSagas(),
     dealSagas(),
     crmFieldSagas(),
-    loginSagas()
+    loginSagas(),
+    registerSagas()
   ]);
 }
