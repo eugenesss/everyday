@@ -16,43 +16,25 @@ import { users, addUser } from "Components/UserDummyData";
 // REQUESTS
 //=========================
 const getAllUsersRequest = async () => {
-  try {
-    const result = await api.get("/users");
-    console.log(result);
-    //const result = users;
-    return result.data;
-  } catch (err) {
-    return err;
-  }
+  const result = await api.get("/users");
+  console.log(result);
+  //const result = users;
+  return result.data;
 };
 const addUserRequest = async newUser => {
-  try {
-    //const result = await api.post("/user", newUser);
-    const result = addUser(newUser);
-    return result;
-  } catch (err) {
-    return err;
-  }
+  const result = addUser(newUser);
+  return result;
 };
 const updateUserRequest = async user => {
-  try {
-    //const result = await api.patch(`/user/${userID}`, user)
-    const result = user;
-    return result;
-  } catch (err) {
-    return err;
-  }
+  const result = user;
+  return result;
 };
 const getUserProfileRequest = async userID => {
-  try {
-    //const result = await api.get(`/user/${userID}`, userID);
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].id == userID) var result = users[i];
-    }
-    return result;
-  } catch (err) {
-    return err;
+  //const result = await api.get(`/user/${userID}`, userID);
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].id == userID) var result = users[i];
   }
+  return result;
 };
 
 //=========================

@@ -2,7 +2,6 @@
  * App.js Layout Start Here
  */
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 import { NotificationContainer } from "react-notifications";
 
@@ -14,9 +13,6 @@ import HorizontalLayout from "./HorizontalLayout";
 import Login from "Routes/login";
 import Register from "Routes/register";
 import NotFound from "./error_pages/Err404";
-
-//Get Roles Actions
-import { getAllRoles, getAllUsers, getAllHierarchies } from "Actions";
 
 /**
  * Initial Path To Check Whether User Is Logged In Or Not
@@ -48,20 +44,9 @@ class App extends Component {
 }
 
 // map state to props
-const mapStateToProps = ({
-  authUser,
-  rolesState,
-  usersState,
-  hierarchiesState
-}) => {
+const mapStateToProps = ({ authUser }) => {
   const { user } = authUser;
-  const { roles } = rolesState;
-  const { me } = usersState;
-  const { hierarchies } = hierarchiesState;
-  return { user, roles, me, hierarchies };
+  return { user };
 };
 
-export default connect(
-  mapStateToProps,
-  { getAllRoles, getAllUsers, getAllHierarchies }
-)(App);
+export default App;

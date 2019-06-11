@@ -7,9 +7,9 @@ const UserFeedBlock = () => {
   return (
     <React.Fragment>
       <TabsWrapper>
-        <div icon="zmdi-comment text-success" label="Activity">
+        {/* <div icon="zmdi-comment text-success" label="Activity">
           <div>Activity</div>
-        </div>
+        </div> */}
         <div icon="zmdi-settings text-warning" label="Settings">
           <SettingsTab/>
         </div>

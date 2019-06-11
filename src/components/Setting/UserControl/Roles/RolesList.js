@@ -59,7 +59,6 @@ class RolesList extends Component {
       onChangeSelectedRole,
       addRole,
      } = this.props;
-     console.log(accessRoles)
     return (
       <React.Fragment>
         <div className={classes.block}>
