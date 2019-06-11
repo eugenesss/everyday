@@ -17,8 +17,6 @@ import { users, addUser } from "Components/UserDummyData";
 //=========================
 const getAllUsersRequest = async () => {
   const result = await api.get("/users");
-  console.log(result);
-  //const result = users;
   return result.data;
 };
 const addUserRequest = async newUser => {
