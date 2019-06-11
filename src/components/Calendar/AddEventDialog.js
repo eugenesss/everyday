@@ -7,7 +7,7 @@ import AddEventForm from "Components/Form/Setting/AddEventForm"
 import { convertMonth, convertDay } from "Helpers/helpers";
 
 
-const AddEventDialog = ({ classes, handleClose, eventToCreate, open, dispatch, ...other }) => {
+const AddEventDialog = ({ classes, handleClose, eventAdd, open, dispatch, ...other }) => {
   return (
     <DialogRoot
       show={open}
@@ -19,10 +19,10 @@ const AddEventDialog = ({ classes, handleClose, eventToCreate, open, dispatch, .
           <Col>
             <div className="float-right">
               {open ? (
-                convertDay(eventToCreate.constants.sDate.getDay()) + " - " +
-                eventToCreate.constants.sDate.getDate() + " / " + 
-                convertMonth(eventToCreate.constants.sDate.getMonth()) + " / " +
-                eventToCreate.constants.sDate.getFullYear()
+                convertDay(eventAdd.constants.sDate.getDay()) + " - " +
+                eventAdd.constants.sDate.getDate() + " / " + 
+                convertMonth(eventAdd.constants.sDate.getMonth()) + " / " +
+                eventAdd.constants.sDate.getFullYear()
               ) : "" }
             </div>
           </Col> 

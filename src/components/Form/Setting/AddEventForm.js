@@ -11,6 +11,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
+import { addEvent, onChangeAddEvent } from "Actions"
+
 const styles = theme => ({
   dialogPaper: {
     overflow: "visible"
@@ -33,124 +35,137 @@ class UpdatePasswordForm extends Component {
     const {
       classes,
       
-      eventToCreate
+      eventAdd,
+
+      addEvent,
+      onChangeAddEvent,
     } = this.props;
     return (
       <Form>
-            <Row form className={"align-items-center"}>
-              <Col md={5}>
-                <TextField
-                  value={eventToCreate.startDate}
-                  required
-                  error={!eventToCreate.startDate}
-                  className={classes.textField}
-                  id="Start Date"
-                  label="Start Date"
-                  margin="normal"
-                  variant="outlined"
-                />
-              </Col>
-              <Col md={1}>
-                <UncontrolledDropdown nav className="list-inline-item notification-dropdown">
-                  <DropdownToggle nav className="p-0">
-                    <Tooltip title="Calendar" placement="bottom">
-                      <Button variant="contained" color="primary">Date</Button>
-                    </Tooltip>
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <div className="dropdown-content" style={{width: "auto !important"}}>
-                      <ReactCalendar 
-                        className={classes.calendar}
-                        // value={this.state.selectedDate}
-                        // onClickDay={(e) => {this.handleOnClickDay(e)}}
-                      />
-                    </div>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </Col>
-              <Col md={5}>
-                <TextField
-                  value={eventToCreate.endDate}
-                  required
-                  error={!eventToCreate.endDate}
-                  className={classes.textField}
-                  id="End Date"
-                  label="End Date"
-                  margin="normal"
-                  variant="outlined"
-                />
-              </Col>
-              <Col md={1}>
-                <UncontrolledDropdown nav className="list-inline-item notification-dropdown">
-                  <DropdownToggle nav className="p-0">
-                    <Tooltip title="Calendar" placement="bottom">
-                      <Button variant="contained" color="primary">Date</Button>
-                    </Tooltip>
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <div className="dropdown-content" style={{width: "auto !important"}}>
-                      <ReactCalendar 
-                        className={classes.calendar}
-                        // value={this.state.selectedDate}
-                        // onClickDay={(e) => {this.handleOnClickDay(e)}}
-                      />
-                    </div>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </Col>
-            </Row>
-            <Row form>
-              <Col md={6}>
-                <TextField
-                  value={eventToCreate.startTime}
-                  required
-                  className={classes.textField}
-                  id="Start Time"
-                  label="Start Time"
-                  margin="normal"
-                  variant="outlined"
-                />
-              </Col>
-              <Col md={6}>
-                <TextField
-                  value={eventToCreate.startTime}
-                  required
-                  className={classes.textField}
-                  id="End Time"
-                  label="End Time"
-                  margin="normal"
-                  variant="outlined"
-                />
-              </Col>
-            </Row>
-            <Row form>
-              <TextField
-                value={""}
-                required
-                fullWidth
-                className={classes.textField}
-                id="Title"
-                label="Title"
-                margin="normal"
-                variant="outlined"
-              />
-            </Row>
-            <Row form>
-              <TextField
-                value={""}
-                required
-                fullWidth
-                multiline
-                rows="5"
-                rowsMax="8"
-                className={classes.textField}
-                id="Description"
-                label="Description"
-                margin="normal"
-                variant="outlined"
-              />
-            </Row>
-          </Form>
+        <Row form className={"align-items-center"}>
+          <Col md={5}>
+            <TextField
+              value={eventAdd.startDate}
+              required
+              error={!eventAdd.startDate}
+              className={classes.textField}
+              id="Start Date"
+              label="Start Date"
+              margin="normal"
+              variant="outlined"
+            />
+          </Col>
+          <Col md={1}>
+            <UncontrolledDropdown nav className="list-inline-item notification-dropdown">
+              <DropdownToggle nav className="p-0">
+                <Tooltip title="Calendar" placement="bottom">
+                  <Button variant="contained" color="primary">Date</Button>
+                </Tooltip>
+              </DropdownToggle>
+              <DropdownMenu>
+                <div className="dropdown-content" style={{width: "auto !important"}}>
+                  <ReactCalendar 
+                    className={classes.calendar}
+                  />
+                </div>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Col>
+          <Col md={5}>
+            <TextField
+              value={eventAdd.endDate}
+              required
+              error={!eventAdd.endDate}
+              className={classes.textField}
+              id="End Date"
+              label="End Date"
+              margin="normal"
+              variant="outlined"
+            />
+          </Col>
+          <Col md={1}>
+            <UncontrolledDropdown nav className="list-inline-item notification-dropdown">
+              <DropdownToggle nav className="p-0">
+                <Tooltip title="Calendar" placement="bottom">
+                  <Button variant="contained" color="primary">Date</Button>
+                </Tooltip>
+              </DropdownToggle>
+              <DropdownMenu>
+                <div className="dropdown-content" style={{width: "auto !important"}}>
+                  <ReactCalendar 
+                    className={classes.calendar}
+                  />
+                </div>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Col>
+        </Row>
+        <Row form>
+          <Col md={6}>
+            <TextField
+              value={eventAdd.startTime || ''}
+              required
+              className={classes.textField}
+              onChange={ e => onChangeAddEvent('startTime ', e.target.value)}
+              id="startTime"
+              label="Start Time"
+              margin="normal"
+              variant="outlined"
+            />
+          </Col>
+          <Col md={6}>
+            <TextField
+              value={eventAdd.endTime || ''}
+              required
+              className={classes.textField}
+              onChange={ e => onChangeAddEvent('endTime', e.target.value)}
+              id="endTime"
+              label="End Time"
+              margin="normal"
+              variant="outlined"
+            />
+          </Col>
+        </Row>
+        <Row form>
+          <TextField
+            value={eventAdd.title || ''}
+            required
+            fullWidth
+            className={classes.textField}
+            onChange={ e => onChangeAddEvent('title', e.target.value)}
+            id="title"
+            label="Title"
+            margin="normal"
+            variant="outlined"
+          />
+        </Row>
+        <Row form>
+          <TextField
+            value={eventAdd.description}
+            required
+            fullWidth
+            multiline
+            rows="5"
+            rowsMax="8"
+            className={classes.textField}
+            onChange={ e => onChangeAddEvent('description', e.target.value)}
+            id="description"
+            label="Description"
+            margin="normal"
+            variant="outlined"
+          />
+        </Row>
+        <Row className={"justify-content-end " + classes.textField}>
+          <Button
+            variant="contained"
+            color="primary"
+            className="text-white mb-10 mt-20"
+            onClick={addEvent}
+          >
+            Add
+          </Button>
+        </Row> 
+      </Form>
     );
   }
 }
@@ -160,10 +175,11 @@ UpdatePasswordForm.propTypes = {
 };
 
 const mapStateToProps = ({ calendarState }) => {
-  const { eventToCreate } = calendarState;
-  return { eventToCreate };
+  const { eventAdd } = calendarState;
+  return { eventAdd };
 };
 
 export default connect(
-  mapStateToProps, {}
+  mapStateToProps,
+  { addEvent, onChangeAddEvent }
 )(withStyles(styles)(UpdatePasswordForm));

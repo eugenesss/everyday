@@ -1,46 +1,130 @@
-import { all, call, fork, put, takeEvery, select, delay } from "redux-saga/effects";
-import { 
+import {
+  all,
+  call,
+  fork,
+  put,
+  takeEvery,
+  select,
+  delay
+} from "redux-saga/effects";
+import {
   GET_ALL_ROLES,
+  CHANGE_SELECTED_ROLE,
+  ADD_ROLE,
+  UPDATE_ROLE,
+  DELETE_ROLE
 } from "Types";
-import { 
+import {
   getAllRolesSuccess,
   getRoleFailure,
- } from "Actions";
+  addRoleSuccess,
+  addRoleFailure,
+  updateRoleSuccess,
+  updateRoleFailure,
+  deleteRoleSuccess,
+  deleteRoleFailure
+} from "Actions";
+// import api from "Api";
+import { roles, addRole } from "Components/RolesDummyData";
+import { operations } from "Components/OperationsDummyData";
 import api from "Api";
-import { roles, crud } from "Components/RolesDummyData";
 
 //=========================
 // REQUESTS
 //=========================
+const getAllAccessRightsRequest = async () => {
+  const result = await api.get(`/accessrights`);
+  return result.data;
+};
+const getAllAccessRolesRequest = async () => {
+  const result = await api.get(`/accessroles`);
+  return result.data;
+};
+const getAllAccessRolesAccessRightsRequest = async () => {
+  const result = await api.get(`accessroles/getAllRoleRights`);
+  return result.data.data;
+};
 const getAllRolesRequest = async () => {
+  const result = roles;
+  return result;
+};
+const getAllOperationsRequest = async () => {
   try {
-    //const result = await api.get("/role");
-    const result = roles;
+    const result = operations;
     return result;
   } catch (err) {
     return err;
   }
-}
-const getAllCRUDRequest = async () => {
+};
+
+const addRoleRequest = async () => {
   try {
-    //const result = await api.get("/crud");
-    const result = crud;
+    const result = addRole();
     return result;
   } catch (err) {
     return err;
   }
-}
+};
+const updateRoleRequest = async role => {
+  try {
+    const result = role;
+    return result;
+  } catch (err) {
+    return err;
+  }
+};
+const deleteRoleRequest = async role => {
+  try {
+    const result = role;
+    return result;
+  } catch (err) {
+    return err;
+  }
+};
 
 //=========================
 // CALL(GENERATOR) ACTIONS
 //=========================
 function* getAllRolesFromDB() {
   try {
-    const roles =  yield call(getAllRolesRequest)
-    const crud = yield call(getAllCRUDRequest)
-    yield put(getAllRolesSuccess(roles, crud))
+    const roles = yield call(getAllRolesRequest);
+    const operations = yield call(getAllOperationsRequest);
+    const accessRights = yield call(getAllAccessRightsRequest);
+    const accessRoles = yield call(getAllAccessRolesRequest);
+    const roleRights = yield call(getAllAccessRolesAccessRightsRequest);
+    console.log(roleRights);
+
+    yield put(getAllRolesSuccess(roles, operations, accessRights, accessRoles));
   } catch (err) {
-    yield put(getRoleFailure(err))
+    yield put(getRoleFailure(err));
+  }
+}
+function* addRoleToDB() {
+  try {
+    const data = yield call(addRoleRequest);
+    yield put(addRoleSuccess(data));
+  } catch (err) {
+    yield put(addRoleFailure(err));
+  }
+}
+function* updateRoleToDB() {
+  try {
+    const getRole = state => state.rolesState.selectedRole;
+    const role = yield select(getRole);
+    const data = yield call(updateRoleRequest, role);
+    yield put(updateRoleSuccess(data));
+  } catch (err) {
+    yield put(updateRoleFailure(err));
+  }
+}
+function* deleteRoleFromDB() {
+  try {
+    const getRole = state => state.rolesState.selectedRole;
+    const role = yield select(getRole);
+    const data = yield call(deleteRoleRequest, role);
+    yield put(deleteRoleSuccess(data));
+  } catch (err) {
+    yield put(deleteRoleFailure(err));
   }
 }
 
@@ -48,14 +132,27 @@ function* getAllRolesFromDB() {
 // WATCHER FUNCTIONS
 //=======================
 export function* getAllRolesWatcher() {
-  yield takeEvery(GET_ALL_ROLES, getAllRolesFromDB)
+  yield takeEvery(GET_ALL_ROLES, getAllRolesFromDB);
+}
+export function* addRoleWatcher() {
+  yield takeEvery(ADD_ROLE, addRoleToDB);
+}
+export function* updateRoleWatcher() {
+  yield takeEvery(UPDATE_ROLE, updateRoleToDB);
+}
+export function* deleteRoleWatcher() {
+  yield takeEvery(DELETE_ROLE, deleteRoleFromDB);
 }
 
 //=======================
 // FORK SAGAS TO STORE
 //=======================
 export default function* rootSaga() {
-  yield all([,
-    fork(getAllRolesWatcher)
+  yield all([
+    ,
+    fork(getAllRolesWatcher),
+    fork(addRoleWatcher),
+    fork(updateRoleWatcher),
+    fork(deleteRoleWatcher)
   ]);
 }

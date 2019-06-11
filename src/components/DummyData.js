@@ -80,54 +80,34 @@ export const lead = {
   notes: [note, note, note]
 };
 const newLead = {
+  id: 1,
   companyName: "string",
-  mobile: "string",
-  email: "string",
-  address_1: "string",
-  address_2: "string",
-  city: "string",
-  state: "string",
-  zip: "string",
   description: "string",
-  fullAddress: "string",
-  name: "string",
-  userId: "string",
-  id: "string",
+  //fullAddress: "string",
+  interest: "number",
+  //name: "string",
   statusId: "string",
   sourceId: "string",
   industryId: "string",
-  createdAt: "2019-05-31T02:51:37.826Z",
-  updatedAt: "2019-05-31T02:51:37.826Z",
-  createdBy: 0,
-  updatedBy: 0,
+  userId: "string",
   baseContact: {
-    contactNo: "string",
     email: "string",
     mobile: "string",
     phone: "string",
     fax: "string",
     gender: "string",
-    birthday: "2019-05-31T02:51:37.826Z",
+    birthday: "2019-05-31T07:17:17.652Z",
     title: "string",
     website: "string",
     isCompany: true,
     info: "string",
     name: "string",
-    userId: "string",
-    id: "string",
     _address: {
       street: "string",
       street2: "string",
       city: "string",
-      zip: "string",
-      id: "string",
-      countryId: "string",
-      stateId: "string"
-    },
-    createdAt: "2019-05-31T02:51:37.826Z",
-    updatedAt: "2019-05-31T02:51:37.826Z",
-    createdBy: 0,
-    updatedBy: 0
+      zip: "string"
+    }
   }
 };
 
@@ -395,7 +375,7 @@ export const dealStage = [
   stage6,
   stage7
 ];
-export const leadList = [lead, lead2, lead2, lead, lead, lead];
+export const leadList = [newLead, newLead, newLead, newLead];
 export const customerList = [cust, cust2, cust, cust2];
 export const accountList = [account, account2, account];
 

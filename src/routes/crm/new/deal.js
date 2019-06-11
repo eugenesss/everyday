@@ -26,10 +26,9 @@ class crm_new_deal extends Component {
         <RctCollapsibleCard heading={<IntlMessages id="sidebar.newDeal" />}>
           {loading && <RctSectionLoader />}
           <div className="row">
-            <div className="col-md-10">
+            <div className="col-md-11">
               <DealForm />
             </div>
-            <div className="col-md-1" />
           </div>
         </RctCollapsibleCard>
       </React.Fragment>

@@ -26,7 +26,7 @@ class crm_new_lead extends Component {
         <RctCollapsibleCard heading={<IntlMessages id="sidebar.newLead" />}>
           {loading && <RctSectionLoader />}
           <div className="row">
-            <div className="col-md-10">
+            <div className="col-md-11">
               <LeadForm />
             </div>
           </div>

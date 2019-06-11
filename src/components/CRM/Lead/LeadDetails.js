@@ -16,32 +16,38 @@ const LeadDetails = ({ lead }) => {
           <SingleDetail title="Company" value={lead.companyName} />
         </tr>
         <tr>
-          <SingleDetail title="Status" value={lead.status.name} />
-          <SingleDetail title="Email" value={lead.email} />
+          <SingleDetail
+            title="Status"
+            value={lead.status && lead.status.name}
+          />
+          <SingleDetail
+            title="Interest Level"
+            value={<LeadInterestLevel interest={lead.interest} />}
+          />
         </tr>
         <tr>
           <SingleDetail
             title="Source"
             value={lead.source && lead.source.name}
           />
-          <SingleDetail title="Job Title" value={lead.jobTitle} />
-        </tr>
-        <tr>
-          <SingleDetail title="Mobile" value={lead.mobile} />
-        </tr>
-        <tr>
-          <SingleDetail title="Office" value={lead.office} />
-          <SingleDetail title="Fax" value={lead.fax} />
-        </tr>
-        <tr>
           <SingleDetail
             title="Industry"
             value={lead.industry && lead.industry.name}
           />
-          <SingleDetail
-            title="Interest Level"
-            value={<LeadInterestLevel interest={lead.interest} />}
-          />
+        </tr>
+        <tr>
+          <SingleDetail title="Mobile" value={lead.baseContact.mobile} />
+          <SingleDetail title="Email" value={lead.baseContact.email} />
+        </tr>
+        <tr>
+          <SingleDetail title="Office" value={lead.baseContact.phone} />
+          <SingleDetail title="Fax" value={lead.baseContact.fax} />
+        </tr>
+        <tr>
+          <SingleDetail title="Job Title" value={lead.baseContact.title} />
+        </tr>
+        <tr>
+          <SingleDetail title="Website" value={lead.baseContact.website} />
         </tr>
         <tr>
           <SingleDetail

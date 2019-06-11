@@ -29,5 +29,11 @@ export function configureStore(initialState) {
         });
     }
 
+    store.subscribe(() => {
+      store.getState()
+    })
+
     return store;
 }
+
+export const store = configureStore()

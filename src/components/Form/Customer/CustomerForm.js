@@ -33,7 +33,10 @@ class CustomerForm extends Component {
   render() {
     const { customer } = this.props.customerForm;
     const { leadSource } = this.props.crmField;
-    const disabled = customer.firstName && customer.lastName && customer.owner;
+    const disabled =
+      customer.baseContact.firstName &&
+      customer.baseContact.lastName &&
+      customer.userId;
     return (
       <React.Fragment>
         <FormSubmitResetButtons
@@ -45,26 +48,28 @@ class CustomerForm extends Component {
           <TableRow>
             <FormBlock
               label="First Name"
-              value={customer.firstName}
+              value={customer.baseContact.firstName}
               handleChange={this.props.handleChangeCustomer}
               target="firstName"
+              targetType="baseContact"
               required
             />
             <FormBlock
               required
               label="Owner"
-              value={customer.owner ? customer.owner : ""}
+              value={customer.userId ? customer.userId : ""}
               handleChange={this.props.handleChangeCustomer}
-              target="owner"
+              target="userId"
               selectValues={users}
             />
           </TableRow>
           <TableRow>
             <FormBlock
               label="Last Name"
-              value={customer.lastName}
+              value={customer.baseContact.lastName}
               handleChange={this.props.handleChangeCustomer}
               target="lastName"
+              targetType="baseContact"
               required
             />
             <FormBlock
@@ -82,15 +87,16 @@ class CustomerForm extends Component {
           <TableRow>
             <FormBlock
               label="Job Title"
-              value={customer.jobTitle}
+              value={customer.baseContact.title}
               handleChange={this.props.handleChangeCustomer}
-              target="jobTitle"
+              target="title"
+              targetType="baseContact"
             />
             <FormBlock
               label="Source"
               value={customer.source}
               handleChange={this.props.handleChangeCustomer}
-              target="source"
+              target="sourceId"
               selectValues={leadSource}
             />
           </TableRow>
@@ -100,15 +106,17 @@ class CustomerForm extends Component {
           <TableRow>
             <FormBlock
               label="Email"
-              value={customer.email}
+              value={customer.baseContact.email}
               handleChange={this.props.handleChangeCustomer}
               target="email"
+              targetType="baseContact"
             />
             <FormBlock
               label="Mobile"
-              value={customer.mobile}
+              value={customer.baseContact.mobile}
               handleChange={this.props.handleChangeCustomer}
               target="mobile"
+              targetType="baseContact"
             />
           </TableRow>
           {/**
@@ -117,31 +125,33 @@ class CustomerForm extends Component {
           <TableRow>
             <FormBlock
               label="Office"
-              value={customer.office}
+              value={customer.baseContact.office}
               handleChange={this.props.handleChangeCustomer}
               target="office"
+              targetType="baseContact"
             />
             <FormBlock
               label="Fax"
-              value={customer.fax}
+              value={customer.baseContact.fax}
               handleChange={this.props.handleChangeCustomer}
               target="fax"
+              targetType="baseContact"
             />
           </TableRow>
         </FormTable>
         <hr />
         <AddressFormInput
           handleChange={this.props.handleChangeCustomer}
-          address_1={customer.address_1}
-          address_2={customer.address_2}
-          city={customer.city}
-          state={customer.state}
-          zip={customer.zip}
+          address_1={customer.baseContact._address.address_1}
+          address_2={customer.baseContact._address.address_2}
+          city={customer.baseContact._address.city}
+          state={customer.baseContact._address.state}
+          zip={customer.baseContact._address.zip}
         />
         <hr />
         <DescriptionFormInput
           handleChange={this.props.handleChangeCustomer}
-          description={customer.description}
+          description={customer.baseContact.description}
         />
       </React.Fragment>
     );

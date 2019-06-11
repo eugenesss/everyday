@@ -7,7 +7,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
 
 //buttons
-import MatButton from '@material-ui/core/Button';
+import MatButton from "@material-ui/core/Button";
 
 // Components
 import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
@@ -20,7 +20,7 @@ import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
 // Activity Log Tab
-import ActivityLog from "Components/Everyday/ActivityLog";
+// import ActivityLog from "Components/Everyday/ActivityLog";
 
 // Notes Tab
 import NewNote from "Components/Form/Note/NewNote";
@@ -51,34 +51,37 @@ class acct_view_quotation extends Component {
         <Helmet>
           <title>Everyday | View Quotation</title>
         </Helmet>
-        <PageTitleBar title="View Quotation" extraButtons={[
-          {
-            color: "primary",
-            label: "Convert to invoice"
-          },
-          {
-            color: "primary",
-            label: "Send by email"
-          },
-          {
-            color: "primary",
-            label: "To PDF & Print"
+        <PageTitleBar
+          title="View Quotation"
+          extraButtons={[
+            {
+              color: "primary",
+              label: "Convert to invoice"
+            },
+            {
+              color: "primary",
+              label: "Send by email"
+            },
+            {
+              color: "primary",
+              label: "To PDF & Print"
+            }
+          ]}
+          createLink="/acct/new/quotation"
+          moreButton={
+            <MoreButton>
+              {{
+                label: "Edit"
+              }}
+              {{ label: "Delete" }}
+              {{
+                label: "Clone"
+              }}
+              {{
+                label: "New Version"
+              }}
+            </MoreButton>
           }
-        ]} createLink="/acct/new/quotation" 
-        moreButton={
-          <MoreButton>
-            {{
-              label: "Edit"
-            }}
-            {{ label: "Delete" }}
-            {{
-              label: "Clone"
-            }}
-            {{
-              label: "New Version"
-            }}
-          </MoreButton>
-        }
         />
         <div className="row">
           <div className="col-md-3">
@@ -95,13 +98,45 @@ class acct_view_quotation extends Component {
             </RctCollapsibleCard>
           </div>
           <div className="col-md-9">
+            <div className="rct-block p-10 mb-10">
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+              >
+                Convert to invoice
+              </MatButton>
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+              >
+                Send by email
+              </MatButton>
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+              >
+                To PDF &amp; Print
+              </MatButton>
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+              >
+                Clone
+              </MatButton>
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+              >
+                New version
+              </MatButton>
+            </div>
             <TabsWrapper>
               <div icon="zmdi-shopping-basket text-success" label="QUOTATION">
                 <ViewTemplate order={quotation} id={quotation.quoteID} />
               </div>
-              <div icon="zmdi-pizza text-warning" label="ACTIVITY LOG">
+              {/*  <div icon="zmdi-pizza text-warning" label="ACTIVITY LOG">
                 <ActivityLog />
-              </div>
+              </div> */}
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div className="col-md-5">

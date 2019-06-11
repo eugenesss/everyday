@@ -16,22 +16,12 @@ import { company1 } from "Components/CompanyDummyData";
 // REQUESTS
 //=========================
 const getCompanyRequest = async () => {
-  try {
-    //const result = await api.get("/company");
-    const result = company1;
-    return result;
-  } catch (err) {
-    return err;
-  }
+  const result = company1;
+  return result;
 }
 const updateCompanyRequest = async (company) => {
-  try {
-    //const result = await api.patch(`/company/${companyID}`, company)
-    const result = company1;
-    return result
-  } catch (err) {
-    return err;
-  }
+  const result = company1;
+  return result
 }
 
 //=========================

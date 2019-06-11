@@ -15,7 +15,6 @@ import SelectSlotDialog from "Components/Calendar/SelectSlotDialog";
 import AddEventDialog from "Components/Calendar/AddEventDialog";
 
 import MenuItem from '@material-ui/core/MenuItem';
-import Paper from '@material-ui/core/Paper';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -24,6 +23,8 @@ import Typography from '@material-ui/core/Typography';
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+
+import { getAllEvents } from "Actions";
 
 import { 
   onChangeEventView,
@@ -81,7 +82,7 @@ class CalendarLayout extends Component {
   }
 
   componentDidMount() {
-    this.props.onChangeEventView("My Calendar")
+    this.props.getAllEvents()
   }
 
   render() {
@@ -95,8 +96,8 @@ class CalendarLayout extends Component {
       dayView,
       isSlotSelected,
       slotSelected,
-      isCreateEvent,
-      eventToCreate,
+      isAddEvent,
+      eventAdd,
       
       onChangeEventView,
       onChangeCalendarView,
@@ -252,9 +253,9 @@ class CalendarLayout extends Component {
           showCreateEvent={showCreateEvent}
         />
         <AddEventDialog
-          open={isCreateEvent}
+          open={isAddEvent}
           handleClose={hideCreateEvent}
-          eventToCreate={eventToCreate}
+          eventAdd={eventAdd}
         />
       </React.Fragment>
     );
@@ -267,11 +268,11 @@ CalendarLayout.propTypes = {
 
 // map state to props
 const mapStateToProps = ({ calendarState }) => {
-  const { eventView, eventViewOptions, showEvents, viewIndex, dayView, isSlotSelected, slotSelected, isCreateEvent, eventToCreate } = calendarState;
-  return { eventView, eventViewOptions,  showEvents, viewIndex, dayView, isSlotSelected, slotSelected, isCreateEvent, eventToCreate };
+  const { eventView, eventViewOptions, showEvents, viewIndex, dayView, isSlotSelected, slotSelected, isAddEvent, eventAdd } = calendarState;
+  return { eventView, eventViewOptions,  showEvents, viewIndex, dayView, isSlotSelected, slotSelected, isAddEvent, eventAdd };
 };
 
 export default connect(
   mapStateToProps,
-  { onChangeEventView, onChangeCalendarView, onChangeDayView, showSelectedSlot, hideSelectedSlot, showCreateEvent, hideCreateEvent,}
+  { onChangeEventView, onChangeCalendarView, onChangeDayView, showSelectedSlot, hideSelectedSlot, showCreateEvent, hideCreateEvent, getAllEvents }
 )(withStyles(styles)(CalendarLayout));

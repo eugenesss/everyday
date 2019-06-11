@@ -22,13 +22,15 @@ import {
   toggleLeadDropDown,
   toggleLeadSummary,
   getAllLead,
-  getLeadSummary
+  getLeadSummary,
+  getAllUsers
 } from "Actions";
 
 class crm_lead extends Component {
   componentDidMount() {
     this.props.getAllLead();
     this.props.getLeadSummary();
+    this.props.getAllUsers();
   }
 
   reload() {
@@ -103,6 +105,7 @@ export default connect(
     toggleLeadDropDown,
     toggleLeadSummary,
     getAllLead,
-    getLeadSummary
+    getLeadSummary,
+    getAllUsers
   }
 )(crm_lead);

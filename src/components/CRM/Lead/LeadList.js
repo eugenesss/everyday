@@ -30,7 +30,15 @@ const LeadList = ({ tableData, loading, title, action }) => {
       }
     },
     { label: "Company", name: "companyName" },
-    { label: "Email", name: "email" },
+    {
+      label: "Email",
+      name: "baseContact",
+      options: {
+        customBodyRender: value => {
+          return value.email ? value.email : "";
+        }
+      }
+    },
     {
       label: "Status",
       name: "status",
@@ -58,8 +66,17 @@ const LeadList = ({ tableData, loading, title, action }) => {
         }
       }
     },
-    { label: "Mobile", name: "mobile", options: { display: false } },
     {
+      label: "Mobile",
+      name: "baseContact",
+      options: {
+        display: false,
+        customBodyRender: value => {
+          return value.mobile ? value.mobile : "";
+        }
+      }
+    },
+    /*  {
       label: "Owner",
       name: "owner",
       options: {
@@ -68,7 +85,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
           return value ? value.name : "";
         }
       }
-    },
+    }, */
     {
       label: "Industry",
       name: "industry",

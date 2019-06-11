@@ -11,7 +11,9 @@ import IconButton from "@material-ui/core/IconButton";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import { getAllRoles, onChangeSelectedRole } from 'Actions'
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+
+import { getAllRoles, onChangeSelectedRole, addRole } from 'Actions'
 
 const styles = theme => ({
   root: {
@@ -30,6 +32,9 @@ const styles = theme => ({
     height: 24,
     width: 24,
    },
+  block: {
+    display: "block !important"
+  },
 });
 
 class RolesList extends Component {
@@ -47,12 +52,16 @@ class RolesList extends Component {
 
       roles,
       selectedRole,
+      rolesLoading,
 
-      getAllRoles,
+      accessRoles,
+
       onChangeSelectedRole,
+      addRole,
      } = this.props;
     return (
       <React.Fragment>
+        <div className={classes.block}>
           <Row className={"d-flex align-items-center"}>
             <Col>
               <h2 className={"p-10 pt-20 pb-10 m-0 text-center"}>Roles</h2>
@@ -61,6 +70,7 @@ class RolesList extends Component {
               <IconButton
                 className="text-primary mt-10 mr-2 float-right"
                 aria-label="Add Role"
+                onClick={() => addRole()}
               >
                 <i className={"zmdi zmdi-plus " + classes.icon} />
               </IconButton>
@@ -92,8 +102,20 @@ class RolesList extends Component {
                   <ListItemText primary={role.name} className={classes.listItem}/>
                 </ListItem>
               ))}
+              {accessRoles.map(accessRole => (
+                <ListItem 
+                  key={accessRole.id}
+                  button
+                  selected={selectedRole ? selectedRole.id == accessRole.id : false}
+                  onClick={() => onChangeSelectedRole(accessRole)}
+                >
+                  <ListItemText primary={accessRole.name} className={classes.listItem}/>
+                </ListItem>
+              ))}
             </List>
           </Scrollbars>
+          {rolesLoading && <RctSectionLoader/>}
+        </div>
       </React.Fragment>
     )
   }
@@ -104,11 +126,11 @@ RolesList.propTypes = {
 };
 
 const mapStateToProps = ({ rolesState }) => {
-  const { roles, selectedRole } = rolesState;
-  return { roles, selectedRole };
+  const { roles, selectedRole, rolesLoading, accessRoles } = rolesState;
+  return { roles, selectedRole, rolesLoading, accessRoles };
 };
 
 export default connect(
   mapStateToProps,
-  { getAllRoles, onChangeSelectedRole }
+  { getAllRoles, onChangeSelectedRole, addRole }
 )(withStyles(styles)(RolesList));

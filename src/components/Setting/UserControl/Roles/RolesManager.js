@@ -10,14 +10,24 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from "@material-ui/core/Checkbox";
+import Switch from "@material-ui/core/Switch"
+
+import { makeStyles } from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
+import { deleteRole, onChangeUpdateRole, updateRole, onChangeSelectedAccessRightsCategory} from 'Actions'
 
 const styles = theme => ({
   root: {
-    display: "block",
+    display: "block !important",
+    width: "100%"
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -31,39 +41,87 @@ const styles = theme => ({
       backgroundColor: theme.palette.background.default,
     },
   },
+  heading: {
+    //fontSize: theme.typography.pxToRem(15),
+    flexBasis: '33.33%',
+    flexShrink: 0,
+  },
+  secondaryHeading: {
+    //fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
+  },
 });
-
-function CustomTableRow({position, name, children, classes, counter = 0, ...props}) {
-  let table = []
-  table.push(<TableCell component="th" scope="row" key={counter++}>{name}</TableCell>)
-  for (let i = 0; i < position - 1; i++) {
-    table.push(<TableCell key={counter++}/>)
-  }
-  table.push(<TableCell align="center" key={counter++}>{children}</TableCell>)
-  for (let y = 0; y < 4 - position; y++) {
-    table.push(<TableCell key={counter++}/>)
-  }
-
-  return (
-    <TableRow className={classes.row} {...props} >
-      {table}
-    </TableRow>
-  )
-}
 
 class RoleManager extends Component {
   constructor(props) {
     super(props);
   }
+
+  checked(action) {
+    const selectedRole = this.props.selectedRole
+    if (!selectedRole)
+      return true;
+    else
+      if(selectedRole && selectedRole.permissions) {
+        if (selectedRole.permissions.find( permission => permission === action ))
+          return true
+        else
+          return false
+      }    
+  }
+  disabled(action){
+    const selectedRole = this.props.selectedRole
+    if (!selectedRole)
+      return true;
+    else if(selectedRole.name == "Member") {
+      if(action != "read")
+        return true
+      else
+        return false
+    }
+    else
+      return false;
+  }
+  handleChange(val) {
+    // let accessRights = this.props.accessRights
+    // let roleAccessRights = this.props.selectedRole.permissions
+    // let selectedRight = accessRights.find(right => {return right.id = val})
+    // if (roleAccessRights.find(right => right == selectedRight))
+
+
+
+    var permissions = this.props.selectedRole.permissions
+    var operations = this.props.operations
+    var sOperation = operations.find(op => {return op.id == val})
+    if (permissions.find( permission => permission == sOperation )) {
+      var index = permissions.indexOf(sOperation)
+      if (index > -1) {
+        permissions.splice(index, 1)
+      }
+    } else {
+      permissions.push(sOperation)
+    }
+    this.props.onChangeUpdateRole("permissions", permissions)
+  }
+  
   
   render() {
     const { 
       classes,
 
       selectedRole,
-      crudPermissions,
+      crudOperations,
+      miscOperations,
+
+
+      accessRights,
+      selectedAccessRightsCategory,
+
+      onChangeUpdateRole,
+      updateRole,
+      deleteRole,
+      onChangeSelectedAccessRightsCategory,
      } = this.props;
-     console.log(selectedRole)
     return (
       <React.Fragment>
         <div className={classes.root}>
@@ -78,16 +136,20 @@ class RoleManager extends Component {
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
               value={ selectedRole ? selectedRole.name == "Member" ? "Member (default role applied to all users)" : selectedRole.name : "Super Admin" }
-              //onChange={(e) => this.handleOnUpdate('name', e.target.value)}
+              onChange={(e) => onChangeUpdateRole('name', e.target.value)}
               margin="normal"
               variant="outlined"
             />
           </Row>
-          <Row>
+
+
+
+
+          {/* <Row>
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
-                  <TableCell>Action</TableCell>
+                  <TableCell>CRUD Actions</TableCell>
                   <TableCell align="center">Read</TableCell>
                   <TableCell align="center">Create</TableCell>
                   <TableCell align="center">Update</TableCell>
@@ -95,96 +157,167 @@ class RoleManager extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {crudPermissions.map(permission => (
-                  <TableRow className={classes.row} key={permission.action}>
-                    <TableCell component="th" scope="row">
-                      {permission.action}
-                    </TableCell>
-                    <TableCell align="center">
+              {crudOperations.map(model => (
+                <TableRow className={classes.row} key={model[0].name}>
+                  <TableCell component="th" scope="row">
+                    {model[0].name}
+                  </TableCell>
+                  {model.map(op => (
+                    <TableCell align="center" key={op.operation}>
                       <Checkbox
                         color="primary"
+                        checked={this.checked(op)}
+                        disabled={this.disabled(op.operation)}
+                        value={`${op.id}`}
+                        onChange={e => this.handleChange(e.target.value)}
                       />
                     </TableCell>
-                    <TableCell align="center">
-                      <Checkbox
-                        color="primary"
-                      />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Checkbox
-                        color="primary"
-                      />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Checkbox
-                        color="primary"
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-                <CustomTableRow
-                  position={3}
-                  name={<div style={{color: "red"}}>Give Super Admin Privileges*</div>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    // checked={this.checked(`Permissions:manage`)}
-                    // disabled={this.disabled(roleToManage.name, "Permissions:manage")}
-                    // value={`Permissions:manage`}
-                    // onChange={(e) => this.handleChange(e.target.value)}
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<div style={{color: "red"}}>Reset User Passwords*</div>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<div style={{color: "red"}}>Manage Roles and Permissions*</div>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    color="primary"
-                  /> 
-                </CustomTableRow>
-                <CustomTableRow
-                  position={3}
-                  name={<span><div style={{color: "red"}}>Update User Roles*</div> <i style={{fontSize: "11px"}}>(ability to assign or update roles of a user)</i></span>}
-                  classes={classes}
-                >
-                  <Checkbox
-                    color="primary"
-                  /> 
-                </CustomTableRow>
+                  ))}
+                </TableRow>
+              ))}
+              
               </TableBody>
             </Table>
           </Row>
           <Row>
-            <Col>
-              <Button
-                variant="contained"
-                color="secondary"
-                className="text-white mb-10 mt-10"
-              >
-                Delete
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                variant="contained"
-                color="primary"
-                className="text-white mb-10 mt-10 float-right"
-              >
-                Save
-              </Button>
-            </Col>
-          </Row>
+            <Table className={"mt-50 " + classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Miscellaneous Actions</TableCell>
+                  <TableCell align="center">Privilege</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {miscOperations.map(op => (
+                  <TableRow className={classes.row} key={op.id}>
+                    <TableCell component="th" scope="row">
+                      {op.desc}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Switch
+                        color="primary"
+                        checked={this.checked(op)}
+                        disabled={this.disabled(op.operation)}
+                        value={`${op.id}`}
+                        onChange={e => this.handleChange(e.target.value)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Row> */}
+          
+
+
+
+          <Row>
+            <Col className={classes.root}>
+              {accessRights.map(category => {
+                return (
+                  <ExpansionPanel key={category[0][0].name} expanded={selectedAccessRightsCategory == category[0][0].name} onChange={() => {onChangeSelectedAccessRightsCategory(category[0][0].name)}}>
+                    <ExpansionPanelSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1bh-content"
+                      id="panel1bh-header"
+                    >
+                      <Typography className={classes.heading + " mt-10 mb-10"}>{category[0][0].name}</Typography>
+                      {/* <Typography className={classes.secondaryHeading}>{category[0][0].description}</Typography> */}
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                      <Table>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Actions</TableCell>
+                            <TableCell align="center">Create</TableCell>
+                            <TableCell align="center">Read</TableCell>
+                            <TableCell align="center">Update</TableCell>
+                            <TableCell align="center">Delete</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {category.map(model => {
+                            if(
+                              model[0].method == "create" &&
+                              model[1].method == "read" &&
+                              model[2].method == "update" &&
+                              model[3].method == "delete" &&
+                              model.length == 4
+                            ) {
+                              return (
+                                <TableRow className={classes.row} key={model[0].name}>
+                                  <TableCell component="th" scope="row">
+                                    <div className={classes.heading}>{model[0].name}</div>
+                                    <div className={classes.secondaryHeading}>{model[0].description}</div>
+                                  </TableCell>
+                                  {model.map(method => {
+                                    return (
+                                      <TableCell align="center" key={method.method}>
+                                        <Checkbox
+                                          color="primary"
+                                          checked={this.checked(method.method) || method.editable == false}
+                                          disabled={this.disabled(method.method) || !method.editable}
+                                          //value={`${op.id}`}
+                                          //onChange={e => this.handleChange(e.target.value)}
+                                        />
+                                      </TableCell>
+                                  )})}
+                                </TableRow>
+                              )
+                            } else {
+                              return (
+                                <TableRow className={classes.row} key={model[0].name}>
+                                  <TableCell component="th" scope="row">
+                                    {model[0].name}
+                                  </TableCell><TableCell/><TableCell/>
+                                  {model.map(method => {
+                                    return (
+                                      <TableCell align="center" key={method.method}>
+                                        <Switch
+                                          color="primary"
+                                          checked={this.checked(method.method) || method.editable == false}
+                                          disabled={this.disabled(method.method) || !method.editable}
+                                          //value={`${op.id}`}
+                                          //onChange={e => this.handleChange(e.target.value)}
+                                        />
+                                      </TableCell>
+                                  )})}
+                                  <TableCell/>
+                                </TableRow>
+                              )
+                            }
+                          })}
+                        </TableBody>
+                      </Table>
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                )
+              })}
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className="text-white mb-10 mt-10"
+                  onClick={() => deleteRole()}
+                  disabled={selectedRole ? selectedRole.id == 0 ? true: false : true}
+                >
+                  Delete
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="text-white mb-10 mt-10 float-right"
+                  onClick={() => updateRole()}
+                >
+                  Save
+                </Button>
+              </Col>
+            </Row>
         </div>
       </React.Fragment>
     )
@@ -196,11 +329,11 @@ RoleManager.propTypes = {
 };
 
 const mapStateToProps = ({ rolesState }) => {
-  const { selectedRole, crudPermissions } = rolesState;
-  return { selectedRole, crudPermissions };
+  const { selectedRole, crudOperations, miscOperations, operations, accessRights, selectedAccessRightsCategory } = rolesState;
+  return { selectedRole, crudOperations, miscOperations, operations, accessRights, selectedAccessRightsCategory };
 };
 
 export default connect(
   mapStateToProps,
-  { }
+  { deleteRole, onChangeUpdateRole, updateRole, onChangeSelectedAccessRightsCategory }
 )(withStyles(styles)(RoleManager));

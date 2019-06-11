@@ -73,6 +73,35 @@ export default (state = INIT_STATE, action) => {
       }
 
     /**
+     * Update Hierarchy
+     */
+    case ON_CHANGE_UPDATE_HIERARCHY:
+      var selectedHierarchies = Object.assign([], state.selectedHierarchies);
+      for (var i in selectedHierarchies) {
+        if (selectedHierarchies[i].role.id == action.payload.roleID) {
+          selectedHierarchies[i].tier = Number(action.payload.value)
+        }
+      }
+      return{
+        ...state,
+        selectedHierarchies: selectedHierarchies
+      }
+    case UPDATE_HIERARCHY:
+      return {
+        ...state
+      }
+    case UPDATE_HIERARCHY_SUCCESS:
+      NotificationManager.success("Group Settings Updated")
+      return {
+        ...state
+      }
+    case UPDATE_HIERARCHY_FAILURE:
+      NotificationManager.warning("Failed to Update Group Settings")
+      return {
+        ...state
+      }
+
+    /**
      * Delete Hierarchy
      */
     case DELETE_HIERARCHY:
@@ -108,7 +137,7 @@ export default (state = INIT_STATE, action) => {
      * State Changes
      */
     case CHANGE_SELECTED_GROUP_HIERARCHIES:
-        var selectedHierarchies = state.hierarchies.filter(hierarchy => hierarchy.group.id == action.payload.id);
+      var selectedHierarchies = state.hierarchies.filter(hierarchy => hierarchy.group.id == action.payload.id);
       return { 
         ...state,
         selectedHierarchies: selectedHierarchies,

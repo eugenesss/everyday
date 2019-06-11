@@ -17,28 +17,27 @@ import {
   handleChangeDeal,
   submitDeal,
   clearDealForm,
-  getLeadSource
+  getLeadSource,
+  getDealType,
+  getDealStage
 } from "Actions";
 
 import { users } from "Components/UserDummyData";
-import {
-  accountList,
-  customerList,
-  dealStage,
-  dealType
-} from "Components/DummyData";
+import { accountList, customerList } from "Components/DummyData";
 
 class DealForm extends Component {
   componentWillMount() {
     this.props.getLeadSource();
+    this.props.getDealStage();
+    this.props.getDealType();
   }
   componentWillUnmount() {
     this.props.clearDealForm();
   }
 
   render() {
-    const { loading, deal } = this.props.dealForm;
-    const { leadSource } = this.props.crmField;
+    const { deal } = this.props.dealForm;
+    const { leadSource, dealStage, dealType } = this.props.crmField;
     const disabled =
       deal.name &&
       deal.owner &&
@@ -166,5 +165,12 @@ const mapStateToProps = ({ crmState }) => {
 
 export default connect(
   mapStateToProps,
-  { handleChangeDeal, submitDeal, clearDealForm, getLeadSource }
+  {
+    handleChangeDeal,
+    submitDeal,
+    clearDealForm,
+    getLeadSource,
+    getDealType,
+    getDealStage
+  }
 )(DealForm);

@@ -50,7 +50,7 @@ const INIT_STATE = {
   },
   leadForm: {
     loading: false,
-    lead: {}
+    lead: { baseContact: { _address: {} } }
   },
   leadToConvert: {
     modal: false,
@@ -183,16 +183,49 @@ export default (state = INIT_STATE, action) => {
      * New Lead
      */
     case HANDLE_CHANGE_NEW_LEAD:
-      return {
-        ...state,
-        leadForm: {
-          ...state.leadForm,
-          lead: {
-            ...state.leadForm.lead,
-            [action.payload.field]: action.payload.value
+      if (action.payload.type == "baseContact") {
+        return {
+          ...state,
+          leadForm: {
+            ...state.leadForm,
+            lead: {
+              ...state.leadForm.lead,
+              baseContact: {
+                ...state.leadForm.lead.baseContact,
+                [action.payload.field]: action.payload.value
+              }
+            }
           }
-        }
-      };
+        };
+      } else if (action.payload.type == "address") {
+        return {
+          ...state,
+          leadForm: {
+            ...state.leadForm,
+            lead: {
+              ...state.leadForm.lead,
+              baseContact: {
+                ...state.leadForm.lead.baseContact,
+                _address: {
+                  ...state.leadForm.lead.baseContact._address,
+                  [action.payload.field]: action.payload.value
+                }
+              }
+            }
+          }
+        };
+      } else {
+        return {
+          ...state,
+          leadForm: {
+            ...state.leadForm,
+            lead: {
+              ...state.leadForm.lead,
+              [action.payload.field]: action.payload.value
+            }
+          }
+        };
+      }
     case SUBMIT_NEW_LEAD:
       return { ...state, leadForm: { ...state.leadForm, loading: true } };
     case CLEAR_NEW_LEAD:

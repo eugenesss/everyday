@@ -19,7 +19,7 @@ class HorizontalMenu extends Component {
               className="nav-link no-arrow"
               activeClassName="active"
             >
-              <i className="zmdi zmdi-home text-danger" />
+              <i className="zmdi zmdi-home text-everyday" />
               Homebase
             </NavLink>
           </li>
@@ -29,7 +29,7 @@ class HorizontalMenu extends Component {
               className="nav-link no-arrow"
               activeClassName="active"
             >
-              <i className="zmdi zmdi-calendar text-warning" />
+              <i className="zmdi zmdi-calendar text-danger" />
               Calendar
             </NavLink>
           </li>
@@ -55,7 +55,7 @@ class HorizontalMenu extends Component {
     </li> */}
           <li className="nav-item">
             <a href="javascript:void(0);" className="nav-link">
-              <i className="zmdi zmdi-group-work text-primary" />
+              <i className="zmdi zmdi-group-work text-everyday-sec" />
               <span className="menu-title">CRM</span>
             </a>
             <ul className="list-unstyled sub-menu">

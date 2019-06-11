@@ -26,37 +26,20 @@ import { groups, addGroup } from "Components/GroupsDummyData";
 // REQUESTS
 //=========================
 const getAllGroupsRequest = async () => {
-  try {
-    //const result = await api.get("/group");
-    const result = groups;
-    return result;
-  } catch (err) {
-    return err;
-  }
+  const result = groups;
+  return result;
 }
 const addGroupRequest = async () => {
-  try {
-    const result = addGroup()
-    return result
-  } catch (err) {
-    return err;
-  }
+  const result = addGroup()
+  return result
 }
 const updateGroupRequest = async (group) => {
-  try {
-    const result = group
-    return result
-  } catch (err) {
-    return err
-  }
+  const result = group
+  return result
 }
 const deleteGroupRequest = async (group) => {
-  try {
-    const result = group
-    return result
-  } catch (err) {
-    return err
-  }
+  const result = group
+  return result
 }
 
 //=========================

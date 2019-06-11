@@ -1,64 +1,39 @@
-import { all, call, fork, put, takeEvery, select, delay } from "redux-saga/effects";
-import { 
-  GET_ALL_USERS,
-  ADD_USER,
-  UPDATE_USER,
-  GET_USER_PROFILE,
-} from "Types";
-import { 
+import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
+import { GET_ALL_USERS, ADD_USER, UPDATE_USER, GET_USER_PROFILE } from "Types";
+import {
   getAllUsersSuccess,
   addUserSuccess,
   addUserFailure,
   updateUserSuccess,
   updateUserFailure,
   getUserProfileSuccess,
-  getUserFailure,
- } from "Actions";
-//import api from "Api";
+  getUserFailure
+} from "Actions";
+import api from "Api";
 import { users, addUser } from "Components/UserDummyData";
 
 //=========================
 // REQUESTS
 //=========================
 const getAllUsersRequest = async () => {
-  try {
-    //const result = await api.get("/user");
-    const result = users;
-    return result;
-  } catch (err) {
-    return err;
+  const result = await api.get("/users");
+  return result.data;
+};
+const addUserRequest = async newUser => {
+  const result = addUser(newUser);
+  return result;
+};
+const updateUserRequest = async user => {
+  const result = user;
+  return result;
+};
+const getUserProfileRequest = async userID => {
+  //const result = await api.get(`/user/${userID}`, userID);
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].id == userID) var result = users[i];
   }
-}
-const addUserRequest = async (newUser) => {
-  try {
-    //const result = await api.post("/user", newUser);
-    const result = addUser(newUser)
-    return result;
-  } catch (err) {
-    return err;
-  }
-}
-const updateUserRequest = async (user) => {
-  try {
-    //const result = await api.patch(`/user/${userID}`, user)
-    const result = user;
-    return result
-  } catch (err) {
-    return err;
-  }
-}
-const getUserProfileRequest = async (userID) => {
-  try {
-    //const result = await api.get(`/user/${userID}`, userID);
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].id == userID)
-        var result = users[i]
-    }
-    return result;
-  } catch (err) {
-    return err;
-  }
-}
+  return result;
+};
 
 //=========================
 // CALL(GENERATOR) ACTIONS
@@ -73,22 +48,22 @@ function* getAllUsersFromDB() {
 }
 function* addUserToDB() {
   const getNewUser = state => state.usersState.userAdd;
-  const newUser = yield select(getNewUser)
+  const newUser = yield select(getNewUser);
   try {
     const data = yield call(addUserRequest, newUser);
     yield put(addUserSuccess(data));
-  } catch (err)  {
+  } catch (err) {
     yield put(addUserFailure(err));
   }
 }
 function* updateUserToDB() {
   const getUser = state => state.usersState.userUpdate;
-  const user = yield select(getUser)
+  const user = yield select(getUser);
   try {
     const data = yield call(updateUserRequest, user);
-    yield put(updateUserSuccess(data))
+    yield put(updateUserSuccess(data));
   } catch (err) {
-    yield put(updateUserFailure(err))
+    yield put(updateUserFailure(err));
   }
 }
 function* getUserProfileFromDB({ payload }) {
@@ -96,7 +71,7 @@ function* getUserProfileFromDB({ payload }) {
     const data = yield call(getUserProfileRequest, payload);
     yield put(getUserProfileSuccess(data));
   } catch (err) {
-    yield put(getUserFailure(err))
+    yield put(getUserFailure(err));
   }
 }
 
@@ -107,10 +82,10 @@ export function* getAllUsersWatcher() {
   yield takeEvery(GET_ALL_USERS, getAllUsersFromDB);
 }
 export function* addUserWatcher() {
-  yield takeEvery(ADD_USER, addUserToDB)
+  yield takeEvery(ADD_USER, addUserToDB);
 }
 export function* updateUserWatcher() {
-  yield takeEvery(UPDATE_USER, updateUserToDB)
+  yield takeEvery(UPDATE_USER, updateUserToDB);
 }
 export function* getUserProfileWatcher() {
   yield takeEvery(GET_USER_PROFILE, getUserProfileFromDB);
@@ -120,10 +95,11 @@ export function* getUserProfileWatcher() {
 // FORK SAGAS TO STORE
 //=======================
 export default function* rootSaga() {
-  yield all([,
+  yield all([
+    ,
     fork(getAllUsersWatcher),
     fork(addUserWatcher),
     fork(updateUserWatcher),
-    fork(getUserProfileWatcher),
+    fork(getUserProfileWatcher)
   ]);
 }

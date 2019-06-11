@@ -34,6 +34,7 @@ const AddressFormInput = ({
               value={address_1}
               handleChange={handleChange}
               target="address_1"
+              targetType="address"
             />
           </TableCell>
         </TableRow>
@@ -54,6 +55,7 @@ const AddressFormInput = ({
               value={address_2}
               handleChange={handleChange}
               target="address_2"
+              targetType="address"
             />
           </TableCell>
         </TableRow>
@@ -70,6 +72,7 @@ const AddressFormInput = ({
               value={city}
               handleChange={handleChange}
               target="city"
+              targetType="address"
             />
           </TableCell>
           <TableCell
@@ -84,6 +87,7 @@ const AddressFormInput = ({
               value={state}
               handleChange={handleChange}
               target="state"
+              targetType="address"
             />
           </TableCell>
           <TableCell
@@ -98,6 +102,7 @@ const AddressFormInput = ({
               value={zip}
               handleChange={handleChange}
               target="zip"
+              targetType="address"
             />
           </TableCell>
         </TableRow>

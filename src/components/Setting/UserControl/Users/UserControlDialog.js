@@ -9,7 +9,7 @@ const UserControlDialog = ({handleClose, open}) => {
     <DialogRoot
       show={open}
       handleHide={handleClose}
-      size="xs"
+      //size="md"
       title="User Control Settings"
     >
       <UserControlForm/>

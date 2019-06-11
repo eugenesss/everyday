@@ -75,7 +75,7 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         selectedGroup: {
-          ...state.userUpdate,
+          ...state.selectedGroup,
           [action.payload.field] : action.payload.value
         }
       }
@@ -85,7 +85,7 @@ export default (state = INIT_STATE, action) => {
         groupsLoading: true
       }
     case UPDATE_GROUP_SUCCESS:
-      NotificationManager.success("Group Name Updated")
+      //NotificationManager.success("Group Name Updated")
       return {
         ...state,
         groupsLoading: false

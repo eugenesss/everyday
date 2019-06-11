@@ -31,4 +31,5 @@ export * from "./settings/userControl/GroupsActions";
 export * from "./settings/userControl/HierarchiesActions";
 
 //Login actions
-export * from "./login/LoginActions";
+export * from "./auth/LoginActions";
+export * from "./auth/RegisterActions";

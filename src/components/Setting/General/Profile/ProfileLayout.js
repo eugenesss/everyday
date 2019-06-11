@@ -4,6 +4,8 @@ import { Col, Row } from "reactstrap";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+
 import UserBlock from "./UserBlock";
 import UserFeedBlock from "./UserFeedBlock"
 
@@ -14,12 +16,8 @@ const styles = () => ({
     overflow: "hidden",
     objectFit: "cover"
   },
-  userBlock: {
-    marginTop: -50
-  },
   userFeedBlock: {
     display: "block",
-    marginTop: 20
   }
 });
 
@@ -28,27 +26,28 @@ class ProfileLayout extends Component {
     super(props);
   }
 
-  componentDidMount() { 
+  componentWillMount() { 
     this.props.getAllUsers() //AuthUser
+
   }
 
   render() {
-    const { classes, me, updateUserStart } = this.props
-    if(me.id)
-      updateUserStart(me)
+    const { classes, userView, usersLoading } = this.props
+    this.props.updateUserStart(userView)
     return (
       <React.Fragment>
-        <Row>
+        {/* <Row>
           <img src={require('Assets/img/profile-bg.jpg')} alt="profile banner" width="1920" height="300" className={classes.bannerStyle}/>
-        </Row>
+        </Row> */}
         <Row>
-          <Col lg={4} className={classes.userBlock}>
-            <UserBlock user={me}/>
+          <Col lg={4}>
+            <UserBlock user={userView}/>
           </Col>
           <Col lg={8} className={classes.userFeedBlock}>
             <UserFeedBlock/>
           </Col>
         </Row>
+        {usersLoading && <RctSectionLoader/>}
       </React.Fragment>
     );
   }
@@ -60,8 +59,8 @@ ProfileLayout.propTypes = {
 };
 
 const mapStateToProps = ({ usersState }) => {
-  const { me } = usersState;
-  return { me };
+  const { me, usersLoading } = usersState;
+  return { me, usersLoading };
 };
 
 export default connect(

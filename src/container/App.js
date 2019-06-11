@@ -2,7 +2,6 @@
  * App.js Layout Start Here
  */
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 import { NotificationContainer } from "react-notifications";
 
@@ -12,6 +11,7 @@ import RctThemeProvider from "./RctThemeProvider";
 //Horizontal Layout
 import HorizontalLayout from "./HorizontalLayout";
 import Login from "Routes/login";
+import Register from "Routes/register";
 import NotFound from "./error_pages/Err404";
 
 /**
@@ -36,6 +36,7 @@ class App extends Component {
           component={HorizontalLayout}
         />
         <Route path={`/login`} exact component={Login} />
+        <Route path={`/register`} exact component={Register} />
         <Route path={"/404"} exact component={NotFound} />
       </RctThemeProvider>
     );
@@ -48,4 +49,4 @@ const mapStateToProps = ({ authUser }) => {
   return { user };
 };
 
-export default connect(mapStateToProps)(App);
+export default App;
