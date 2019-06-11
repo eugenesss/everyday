@@ -12,10 +12,11 @@ import RctThemeProvider from "./RctThemeProvider";
 //Horizontal Layout
 import HorizontalLayout from "./HorizontalLayout";
 import Login from "Routes/login";
+import Register from "Routes/register";
 import NotFound from "./error_pages/Err404";
 
 //Get Roles Actions
-import { getAllRoles, getAllUsers, getAllHierarchies } from "Actions"
+import { getAllRoles, getAllUsers, getAllHierarchies } from "Actions";
 
 /**
  * Initial Path To Check Whether User Is Logged In Or Not
@@ -25,16 +26,6 @@ const InitialPath = ({ component: Component, ...rest }) => (
 );
 
 class App extends Component {
-
-  componentWillMount() {
-    if(this.props.roles.length == 0)
-      this.props.getAllRoles()
-    if(this.props.hierarchies.length == 0)
-      this.props.getAllHierarchies()
-    if(!this.props.me.id)
-      this.props.getAllUsers()
-  }
-
   render() {
     const { location, match, user } = this.props;
     if (location.pathname === "/") {
@@ -49,6 +40,7 @@ class App extends Component {
           component={HorizontalLayout}
         />
         <Route path={`/login`} exact component={Login} />
+        <Route path={`/register`} exact component={Register} />
         <Route path={"/404"} exact component={NotFound} />
       </RctThemeProvider>
     );
@@ -56,7 +48,12 @@ class App extends Component {
 }
 
 // map state to props
-const mapStateToProps = ({ authUser, rolesState, usersState, hierarchiesState }) => {
+const mapStateToProps = ({
+  authUser,
+  rolesState,
+  usersState,
+  hierarchiesState
+}) => {
   const { user } = authUser;
   const { roles } = rolesState;
   const { me } = usersState;

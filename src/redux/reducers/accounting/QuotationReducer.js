@@ -14,7 +14,18 @@ import {
   CLEAR_SINGLE_QUOTATION,
   GET_QUOTE_SUMMARY,
   GET_QUOTE_SUMMARY_SUCCESS,
-  GET_QUOTE_SUMMARY_FAILURE
+  GET_QUOTE_SUMMARY_FAILURE,
+  HANDLE_CHANGE_QUOTATION,
+  SUBMIT_QUOTATION,
+  CLEAR_QUOTATION_FORM,
+  SUBMIT_QUOTATION_SUCCESS,
+  SUBMIT_QUOTATION_FAILURE,
+  ADD_NEW_PRODUCT_QUOTATION,
+  REMOVE_PRODUCT_QUOTATION,
+  HANDLE_PRODUCT_QUOTATION,
+  HANDLE_RELATED_TO_QUOTATION,
+  HANDLE_ATTN_TO_QUOTATION,
+  HANDLE_DISCOUNT_TAX_QUOTATION
 } from "Types";
 
 const INIT_STATE = {
@@ -36,10 +47,56 @@ const INIT_STATE = {
     loading: false,
     summary: []
   },
-  quotationToView: { loading: false, quotation: null }
+  quotationToView: {
+    loading: false,
+    quotation: null
+  },
+  quotationForm: {
+    loading: false,
+    quotation: {
+      date: "",
+      state: "",
+      sent_date: "",
+      tnc: "",
+      currency: "",
+      currency_rate: "",
+      version: "",
+      subtotal: 0,
+      tax_amount: 0,
+      discount_total: 0,
+      total: 0
+    },
+    products: [
+      {
+        name: "",
+        description: "",
+        quantity: "",
+        price: "",
+        discount: "",
+        tax_amount: "",
+        amount: 0
+      }
+    ]
+  }
 };
 
 export default (state = INIT_STATE, action) => {
+  function getSubTotal(array, key) {
+    return array.reduce((a, b) => a + (b[key] || 0), 0);
+  }
+  function getSingleProductTotal(product) {
+    var subtotal = product.price * product.quantity;
+    var tax = (product.tax_amount / 100) * subtotal;
+    var discount = (product.discount / 100) * subtotal;
+    var total = subtotal + tax - discount;
+    return total;
+  }
+  function getTotal(subTotal, invoice) {
+    var tax = (invoice.tax_amount / 100) * subTotal;
+    var discount = (invoice.discount_total / 100) * subTotal;
+    var total = subTotal + tax - discount;
+    return total;
+  }
   switch (action.type) {
     case QUOTATION_LIST_DROPDOWN:
       return {
@@ -151,6 +208,118 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         quotationToView: INIT_STATE.quotationToView
+      };
+
+    /**
+     * New Quote
+     */
+    case SUBMIT_QUOTATION:
+      return {
+        ...state,
+        quotationForm: {
+          ...state.quotationForm,
+          loading: true
+        }
+      };
+    case CLEAR_QUOTATION_FORM:
+      return {
+        ...state,
+        quotationForm: INIT_STATE.quotationForm
+      };
+
+    /**
+     * Quotation Product
+     */
+    case ADD_NEW_PRODUCT_QUOTATION:
+      return {
+        ...state,
+        quotationForm: {
+          ...state.quotationForm,
+          products: [
+            ...state.quotationForm.products,
+            {
+              name: "",
+              description: "",
+              quantity: "",
+              price: "",
+              discount: "",
+              tax_amount: "",
+              amount: 0
+            }
+          ]
+        }
+      };
+    case REMOVE_PRODUCT_QUOTATION:
+      var arr = Object.assign([], state.quotationForm.products);
+      var removeArr = [
+        ...arr.slice(0, action.payload),
+        ...arr.slice(action.payload + 1)
+      ];
+      //   var arrAmount = removeArr[action.payload].amount;
+      return {
+        ...state,
+        quotationForm: {
+          ...state.quotationForm,
+          products: removeArr
+        }
+      };
+
+    /**
+     * Handle Change
+     */
+    case HANDLE_CHANGE_QUOTATION:
+      return {
+        ...state,
+        quotationForm: {
+          ...state.quotationForm,
+          quotation: {
+            ...state.quotationForm.quotation,
+            [action.payload.field]: action.payload.value
+          }
+        }
+      };
+    case HANDLE_RELATED_TO_QUOTATION:
+    //return
+    case HANDLE_ATTN_TO_QUOTATION:
+      var attnTo = action.payload.value;
+      return {
+        ...state,
+        quotationForm: {
+          ...state.quotationForm,
+          quotation: {
+            ...state.quotationForm.quotation,
+            attn_to: attnTo.id,
+            address1: attnTo.address1,
+            address2: attnTo.address2,
+            city: attnTo.city,
+            state: attnTo.state,
+            zip: attnTo.zip,
+            email: attnTo.email,
+            phone: attnTo.mobile
+          }
+        }
+      };
+    case HANDLE_PRODUCT_QUOTATION:
+      var changeArr = state.quotationForm.products;
+      changeArr[action.payload.key] = {
+        ...changeArr[action.payload.key],
+        [action.payload.field]: action.payload.value
+      };
+      changeArr[action.payload.key].amount = getSingleProductTotal(
+        changeArr[action.payload.key]
+      );
+      var productTotal = getSubTotal(changeArr, "amount");
+      return {
+        ...state,
+        quotationForm: {
+          ...state.quotationForm,
+          products: changeArr,
+          quotation: {
+            ...state.quotationForm.quotation,
+            subtotal: productTotal,
+            total: getTotal(productTotal, state.quotationForm.quotation)
+          }
+        }
       };
 
     default:

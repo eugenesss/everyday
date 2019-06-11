@@ -16,7 +16,7 @@ import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
 // Activity Log Tab
-import ActivityLog from "Components/Everyday/ActivityLog";
+// import ActivityLog from "Components/Everyday/ActivityLog";
 
 // Notes Tab
 import NewNote from "Components/Form/Note/NewNote";
@@ -49,7 +49,7 @@ class acct_view_invoice extends Component {
         </Helmet>
         <PageTitleBar title="View Invoice" createLink="/acct/new/invoice" />
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-3">
             <RctCollapsibleCard>
               <AccountingDetails
                 type="invoice"
@@ -62,14 +62,14 @@ class acct_view_invoice extends Component {
               />
             </RctCollapsibleCard>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-9">
             <TabsWrapper>
               <div icon="zmdi-shopping-basket text-success" label="INVOICE">
                 <ViewTemplate order={invoice} id={invoice.invoiceID} />
               </div>
-              <div icon="zmdi-pizza text-warning" label="ACTIVITY LOG">
+              {/* <div icon="zmdi-pizza text-warning" label="ACTIVITY LOG">
                 <ActivityLog />
-              </div>
+              </div> */}
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div className="col-md-5">

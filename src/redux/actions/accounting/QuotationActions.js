@@ -13,7 +13,16 @@ import {
   CLEAR_SINGLE_QUOTATION,
   GET_QUOTE_SUMMARY,
   GET_QUOTE_SUMMARY_SUCCESS,
-  GET_QUOTE_SUMMARY_FAILURE
+  GET_QUOTE_SUMMARY_FAILURE,
+  HANDLE_CHANGE_QUOTATION,
+  SUBMIT_QUOTATION,
+  CLEAR_QUOTATION_FORM,
+  ADD_NEW_PRODUCT_QUOTATION,
+  REMOVE_PRODUCT_QUOTATION,
+  HANDLE_PRODUCT_QUOTATION,
+  HANDLE_RELATED_TO_QUOTATION,
+  HANDLE_ATTN_TO_QUOTATION,
+  HANDLE_DISCOUNT_TAX_QUOTATION
 } from "Types";
 
 /**
@@ -108,4 +117,49 @@ export const getQuotationSummarySuccess = data => ({
 export const getQuotationSummaryFailure = error => ({
   type: GET_QUOTE_SUMMARY_FAILURE,
   payload: error
+});
+
+/**
+ * New Quote
+ */
+export const submitNewQuote = () => ({
+  type: SUBMIT_QUOTATION
+});
+export const clearQuoteForm = () => ({
+  type: CLEAR_QUOTATION_FORM
+});
+
+/**
+ * Quote Product List
+ */
+export const addNewProdQuote = () => ({
+  type: ADD_NEW_PRODUCT_QUOTATION
+});
+export const removeProdQuote = key => ({
+  type: REMOVE_PRODUCT_QUOTATION,
+  payload: key
+});
+
+/**
+ * Handle Change
+ */
+export const handleProdQuote = (key, field, value) => ({
+  type: HANDLE_PRODUCT_QUOTATION,
+  payload: { key, field, value }
+});
+export const handleChangeQuote = (field, value) => ({
+  type: HANDLE_CHANGE_QUOTATION,
+  payload: { field, value }
+});
+export const handleRelatedQuotation = value => ({
+  type: HANDLE_RELATED_TO_QUOTATION,
+  payload: value
+});
+export const handleAttnToQuote = value => ({
+  type: HANDLE_ATTN_TO_QUOTATION,
+  payload: value
+});
+export const handleDisTaxQuote = (field, value) => ({
+  type: HANDLE_DISCOUNT_TAX_QUOTATION,
+  payload: { field, value }
 });

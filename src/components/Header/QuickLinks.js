@@ -7,6 +7,7 @@ import { Scrollbars } from "react-custom-scrollbars";
 import { Link } from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
 import { withRouter } from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton";
 
 // helpers
 import { getAppLayout } from "Helpers/helpers";
@@ -19,9 +20,11 @@ const QuickLinks = ({ location }) => (
     nav
     className="list-inline-item quciklink-dropdown tour-step-1"
   >
-    <DropdownToggle nav className="header-icon p-0">
+    <DropdownToggle nav className="p-0">
       <Tooltip title="Quick Links" placement="bottom">
-        <i className="zmdi zmdi-apps text-white" />
+        <IconButton aria-label="bell">
+          <i className="zmdi zmdi-apps text-white" />
+        </IconButton>
       </Tooltip>
     </DropdownToggle>
     <DropdownMenu>

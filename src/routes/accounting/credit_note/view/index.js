@@ -19,7 +19,7 @@ import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices";
 
 // Activity Log Tab
-import ActivityLog from "Components/Everyday/ActivityLog";
+// import ActivityLog from "Components/Everyday/ActivityLog";
 
 // Notes Tab
 import NewNote from "Components/Form/Note/NewNote";
@@ -78,9 +78,9 @@ class acct_view_credit_note extends Component {
               >
                 <CreditedInvoices />
               </div>
-              <div icon="zmdi-pizza text-info" label="ACTIVITY LOG">
+              {/* <div icon="zmdi-pizza text-info" label="ACTIVITY LOG">
                 <ActivityLog />
-              </div>
+              </div> */}
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div className="col-md-5">

@@ -28,4 +28,5 @@ export * from "./crm/DealTypes";
 export * from "./crm/CrmFieldTypes";
 
 // Login
-export * from "./login/LoginTypes";
+export * from "./auth/LoginTypes";
+export * from "./auth/RegisterTypes";

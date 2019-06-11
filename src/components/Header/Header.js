@@ -36,22 +36,25 @@ class Header extends Component {
     const { classes } = this.props;
     return (
       <AppBar position="static" className="rct-header">
-        <Toolbar className="d-flex justify-content-between w-100 pl-0">
+        <Toolbar className="d-flex justify-content-between w-100">
           <div className="d-flex align-items-center">
-            <div className="site-logo">
-              <Link to="/" className="logo-mini">
-                <img
-                  src={require("Assets/img/appLogo_yellow.png")}
-                  className="mr-15"
-                  alt="site logo"
-                  width="120"
-                />
-              </Link>
-            </div>
-            <ul className="list-inline mb-0 navbar-left">
+            <ul
+              className="list-inline mb-0 navbar-left"
+              //  style={{ marginLeft: "24px" }}
+            >
               <QuickAdd />
               <QuickLinks />
             </ul>
+          </div>
+          <div className="site-logo" style={{ marginLeft: "68px" }}>
+            <Link to="/" className="logo-mini">
+              <img
+                src={require("Assets/img/appLogo_yellow.png")}
+                //className="mr-15"
+                alt="site logo"
+                width="120"
+              />
+            </Link>
           </div>
           <ul className="navbar-right list-inline mb-0">
             {/* <li className="list-inline-item">

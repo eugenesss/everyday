@@ -15,7 +15,7 @@ import QueueAnim from "rc-queue-anim";
 import AppConfig from "Constants/AppConfig";
 
 // redux action
- import { signInUserWithEmailPassword } from "Actions";
+import { signInUserWithEmailPassword } from "Actions";
 
 class Signin extends Component {
   state = {
@@ -40,35 +40,34 @@ class Signin extends Component {
       <QueueAnim type="bottom" duration={2000}>
         <div className="rct-session-wrapper">
           {loading && <LinearProgress />}
-
           <div className="session-inner-wrapper" style={{ marginTop: "5%" }}>
             <div className="container">
               <div className="row row-eq-height">
                 <div className="col-sm-3 col-md-3 col-lg-2" />
                 <div className="col-sm-6 col-md-6 col-lg-8">
+                  <div className="session-head mb-30 text-center">
+                    <h1 className="mb-20">
+                      <Link to="/">
+                        <img
+                          src={AppConfig.appLogo}
+                          alt="session-logo"
+                          className="img-fluid"
+                          width="180"
+                          // height="35"
+                        />
+                      </Link>
+                    </h1>
+                    <h2 className="font-weight-bold text-white">
+                      Sign in to {AppConfig.brandName}
+                    </h2>
+                    <p className="mb-0 text-white">
+                      Most powerful CRM in SG, some say Batam
+                    </p>
+                  </div>
                   <div
                     className="session-body text-center"
                     style={{ padding: "5% 10%" }}
                   >
-                    <div className="session-head mb-30">
-                      <h1 className="mb-20">
-                        <Link to="/">
-                          <img
-                            src={AppConfig.appLogo}
-                            alt="session-logo"
-                            className="img-fluid"
-                            width="180"
-                            // height="35"
-                          />
-                        </Link>
-                      </h1>
-                      <h2 className="font-weight-bold">
-                        Sign in to {AppConfig.brandName}
-                      </h2>
-                      <p className="mb-0 text-white">
-                        Most powerful CRM in SG, some say Batam
-                      </p>
-                    </div>
                     <Form onSubmit={this.onUserLogin}>
                       <FormGroup className="has-wrapper">
                         <Input
@@ -129,7 +128,7 @@ class Signin extends Component {
 const mapStateToProps = ({ authUser }) => {
   const { user, loading } = authUser;
   return { user, loading };
-}; 
+};
 /*
 export default withRouter(connect(null)(Signin));
 const mapStateToProps = ({ authUser }) => {
@@ -137,6 +136,9 @@ const mapStateToProps = ({ authUser }) => {
 	return { user, loading }
 }
 */
-export default connect(mapStateToProps, {
-	signInUserWithEmailPassword
-})(Signin);
+export default connect(
+  mapStateToProps,
+  {
+    signInUserWithEmailPassword
+  }
+)(Signin);
