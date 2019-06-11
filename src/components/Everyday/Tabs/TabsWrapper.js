@@ -34,13 +34,18 @@ class TabsWrapper extends Component {
             textColor="inherit"
             indicatorColor="primary"
           >
-            {children.map((child, key) => (
+            {children.length ? children.map((child, key) => (
               <Tab
                 key={key}
                 icon={<i className={`zmdi-hc-2x zmdi ${child.props.icon}`} />}
                 label={child.props.label}
               />
-            ))}
+            )) : (
+              <Tab
+                icon={<i className={`zmdi-hc-2x zmdi ${children.props.icon}`} />}
+                label={children.props.label}
+              />
+            )}
           </Tabs>
         }
       >
@@ -49,11 +54,15 @@ class TabsWrapper extends Component {
           index={this.state.activeIndex}
           onChangeIndex={index => this.handleChangeIndex(index)}
         >
-          {children.map((child, key) => (
+          {children.length ? children.map((child, key) => (
             <TabContainer key={key}>
               <div className="px-40 py-10">{child}</div>
             </TabContainer>
-          ))}
+          )) : (
+            <TabContainer>
+              <div className="px-40 py-10">{children}</div>
+            </TabContainer>
+          )}
         </SwipeableViews>
       </RctCollapsibleCard>
     );

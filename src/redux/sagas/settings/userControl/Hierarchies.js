@@ -22,37 +22,20 @@ import { hierarchies, deleteHierarchy, addHierarchy, updateHierarchy } from "Com
 // REQUESTS
 //=========================
 const getAllHierarchiesRequest = async () => {
-  try {
-    //const result = await api.get("/hierarchies");
-    const result = hierarchies;
-    return result;
-  } catch (err) {
-    return err;
-  }
+  const result = hierarchies;
+  return result;
 }
 const addHierarchyRequest = async (hierarchy) => {
-  try {
-    const result = addHierarchy(hierarchy)
-    return result
-  } catch (err) {
-    return err
-  }
+  const result = addHierarchy(hierarchy)
+  return result
 }
 const updateHierarchyRequest = async (hierarchies) => {
-  try {
-    const result = updateHierarchy(hierarchies)
-    return result
-  } catch (err) {
-    return err
-  }
+  const result = updateHierarchy(hierarchies)
+  return result
 }
 const deleteHierarchyRequest = async (roleID, groupID) => {
-  try {
-    const result = deleteHierarchy(roleID, groupID)
-    return result
-  } catch (err) {
-    return err
-  }
+  const result = deleteHierarchy(roleID, groupID)
+  return result
 }
 
 //=========================

@@ -44,7 +44,7 @@ class UpdateUserDetailsForm extends Component {
               required
               id="firstName"
               label="First Name"
-              value={ userUpdate.firstName }
+              value={ userUpdate ? userUpdate.firstName : "" }
               onChange={e => onChangeUpdateUser("firstName", e.target.value)}
               className={classes.textField}
               margin="normal"
@@ -56,7 +56,7 @@ class UpdateUserDetailsForm extends Component {
               required
               id="lastName"
               label="Last Name"
-              value={ userUpdate.lastName }
+              value={ userUpdate ? userUpdate.lastName : "" }
               onChange={e => onChangeUpdateUser("lastName", e.target.value)}
               className={classes.textField}
               margin="normal"
@@ -70,7 +70,7 @@ class UpdateUserDetailsForm extends Component {
               required
               id="email"
               label="Email Address"
-              value={ userUpdate.email }
+              value={ userUpdate ? userUpdate.email : "" }
               onChange={e => onChangeUpdateUser("email", e.target.value)}
               className={classes.textField}
               margin="normal"
@@ -82,7 +82,7 @@ class UpdateUserDetailsForm extends Component {
               required
               id="contact"
               label="Contact"
-              value={ userUpdate.contact }
+              value={ userUpdate ? userUpdate.contact : "" }
               onChange={e => onChangeUpdateUser("contact", e.target.value)}
               className={classes.textField}
               margin="normal"
@@ -96,7 +96,7 @@ class UpdateUserDetailsForm extends Component {
               id="description"
               label="Description"
               className={classes.textField}
-              value={ userUpdate.description }
+              value={ userUpdate ? userUpdate.description : "" }
               onChange={e => onChangeUpdateUser("description", e.target.value)}
               multiline
               rows="4"

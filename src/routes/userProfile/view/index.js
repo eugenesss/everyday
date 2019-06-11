@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { getUserProfile } from "Actions";
 
-import UserProfileLayout from "Components/UserProfile/UserProfileLayout"
+import ProfileLayout from "Components/Setting/General/Profile/ProfileLayout"
 
 class UserProfileView extends Component {
   constructor(props){
@@ -15,15 +15,21 @@ class UserProfileView extends Component {
   }
 
   render() {
+    const { userProfile } = this.props
     return (
       <React.Fragment>
-        <UserProfileLayout/>
+        <ProfileLayout userView={userProfile}/>
       </React.Fragment>
     );
   }
 }
 
+const mapStateToProps = ({ usersState }) => {
+  const { userProfile } = usersState;
+  return { userProfile };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { getUserProfile }
 )(UserProfileView);

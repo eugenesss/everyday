@@ -1,6 +1,7 @@
 import { all, call, fork, put, takeEvery, select, delay } from "redux-saga/effects";
 import { 
   GET_ALL_ROLES,
+  CHANGE_SELECTED_ROLE,
   ADD_ROLE,
   UPDATE_ROLE,
   DELETE_ROLE,
@@ -26,30 +27,23 @@ import api from "Api";
 // REQUESTS
 //=========================
 const getAllAccessRightsRequest = async () => {
-  try {
-    let accessKey = localStorage.getItem('accessKey');
-    const result = await api.get(`/accessrights?access_token=${accessKey}`);
-    return result.data;
-  } catch (err) {
-    return err;
-  }
+  let accessKey = localStorage.getItem('accessKey');
+  const result = await api.get(`/accessrights?access_token=${accessKey}`);
+  return result.data;
 }
 const getAllAccessRolesRequest = async () => {
-  try {
-    let accessKey = localStorage.getItem('accessKey');
-    const result = await api.get(`/accessroles?access_token=${accessKey}`);
-    return result.data;
-  } catch (err) {
-    return err;
-  }
+  let accessKey = localStorage.getItem('accessKey');
+  const result = await api.get(`/accessroles?access_token=${accessKey}`);
+  return result.data;
+}
+const getAllAccessRolesAccessRightsRequest = async () => {
+  let accessKey = localStorage.getItem('accessKey');
+  const result = await api.get(`accessroles/getAllRoleRights?access_token=${accessKey}`)
+  return result.data.data
 }
 const getAllRolesRequest = async () => {
-  try {
-    const result = roles;
-    return result;
-  } catch (err) {
-    return err;
-  }
+  const result = roles;
+  return result;
 }
 const getAllOperationsRequest = async () => {
   try {
@@ -94,6 +88,9 @@ function* getAllRolesFromDB() {
     const operations = yield call(getAllOperationsRequest)
     const accessRights = yield call(getAllAccessRightsRequest)
     const accessRoles = yield call(getAllAccessRolesRequest)
+    const roleRights = yield call(getAllAccessRolesAccessRightsRequest)
+    console.log(roleRights)
+
     yield put(getAllRolesSuccess(roles, operations, accessRights, accessRoles))
   } catch (err) {
     yield put(getRoleFailure(err))
