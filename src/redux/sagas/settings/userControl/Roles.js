@@ -18,10 +18,31 @@ import {
 // import api from "Api";
 import { roles, addRole } from "Components/RolesDummyData";
 import { operations } from "Components/OperationsDummyData";
+import api from "Api";
+
+
 
 //=========================
 // REQUESTS
 //=========================
+const getAllAccessRightsRequest = async () => {
+  try {
+    let accessKey = localStorage.getItem('accessKey');
+    const result = await api.get(`/accessrights?access_token=${accessKey}`);
+    return result.data;
+  } catch (err) {
+    return err;
+  }
+}
+const getAllAccessRolesRequest = async () => {
+  try {
+    let accessKey = localStorage.getItem('accessKey');
+    const result = await api.get(`/accessroles?access_token=${accessKey}`);
+    return result.data;
+  } catch (err) {
+    return err;
+  }
+}
 const getAllRolesRequest = async () => {
   try {
     const result = roles;
@@ -71,7 +92,9 @@ function* getAllRolesFromDB() {
   try {
     const roles =  yield call(getAllRolesRequest)
     const operations = yield call(getAllOperationsRequest)
-    yield put(getAllRolesSuccess(roles, operations))
+    const accessRights = yield call(getAllAccessRightsRequest)
+    const accessRoles = yield call(getAllAccessRolesRequest)
+    yield put(getAllRolesSuccess(roles, operations, accessRights, accessRoles))
   } catch (err) {
     yield put(getRoleFailure(err))
   }

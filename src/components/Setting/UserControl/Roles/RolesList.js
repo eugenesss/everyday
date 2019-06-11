@@ -54,9 +54,12 @@ class RolesList extends Component {
       selectedRole,
       rolesLoading,
 
+      accessRoles,
+
       onChangeSelectedRole,
       addRole,
      } = this.props;
+     console.log(accessRoles)
     return (
       <React.Fragment>
         <div className={classes.block}>
@@ -100,6 +103,16 @@ class RolesList extends Component {
                   <ListItemText primary={role.name} className={classes.listItem}/>
                 </ListItem>
               ))}
+              {accessRoles.map(accessRole => (
+                <ListItem 
+                  key={accessRole.id}
+                  button
+                  selected={selectedRole ? selectedRole.id == accessRole.id : false}
+                  onClick={() => onChangeSelectedRole(accessRole)}
+                >
+                  <ListItemText primary={accessRole.name} className={classes.listItem}/>
+                </ListItem>
+              ))}
             </List>
           </Scrollbars>
           {rolesLoading && <RctSectionLoader/>}
@@ -114,8 +127,8 @@ RolesList.propTypes = {
 };
 
 const mapStateToProps = ({ rolesState }) => {
-  const { roles, selectedRole, rolesLoading } = rolesState;
-  return { roles, selectedRole, rolesLoading };
+  const { roles, selectedRole, rolesLoading, accessRoles } = rolesState;
+  return { roles, selectedRole, rolesLoading, accessRoles };
 };
 
 export default connect(

@@ -22,8 +22,9 @@ import {
   GET_ROLE_FAILURE,
 
   CHANGE_SELECTED_ROLE,
+  CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY
  } from "Types";
-
+ 
 const INIT_STATE = {
   selectedRole: null,
   rolesLoading: false,
@@ -31,6 +32,10 @@ const INIT_STATE = {
   crudOperations: [],
   miscOperations: [],
   roles: [],
+
+  selectedAccessRightsCategory: null,
+  accessRights: [],
+  accessRoles: [],
 };
 
 function groupBy(list, keyGetter) {
@@ -58,6 +63,17 @@ export default (state = INIT_STATE, action) => {
         rolesLoading: true
       };
     case GET_ALL_ROLES_SUCCESS:
+      let accessRights = action.payload.accessRights
+      let accessRightsCategory = [...groupBy(accessRights, (right) => right.categoryName).values()]
+      let accessRightsModel = []
+      for (let i = 0; i < accessRightsCategory.length; i++) {
+        accessRightsModel.push([...groupBy(accessRightsCategory[i], (right) => right.model).values()])
+      }
+      let accessRoles = action.payload.accessRoles
+
+      
+
+
       let operations = action.payload.operations
       let operationsMap = groupBy(action.payload.operations, (operation) => operation.name)
       let operationsGroup = [...operationsMap.values()]
@@ -87,7 +103,11 @@ export default (state = INIT_STATE, action) => {
         roles: action.payload.roles,
         operations: operations,
         crudOperations: crudOperations,
-        miscOperations: miscOperations
+        miscOperations: miscOperations,
+
+
+        accessRights: accessRightsModel,
+        accessRoles: accessRoles,
       }
 
     /**
@@ -183,6 +203,14 @@ export default (state = INIT_STATE, action) => {
         ...state,
         selectedRole: selectedRole,
       };
+    case CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY:
+      let selectedAccessRightsCategory = action.payload
+      if(action.payload == state.selectedAccessRightsCategory)
+        selectedAccessRightsCategory = null
+      return {
+        ...state,
+        selectedAccessRightsCategory: selectedAccessRightsCategory
+      }
       
     default:
       return { ...state };

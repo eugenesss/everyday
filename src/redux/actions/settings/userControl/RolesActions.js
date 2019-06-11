@@ -21,7 +21,7 @@ import {
   GET_ROLE_FAILURE,
 
   CHANGE_SELECTED_ROLE,
-  CHANGE_SELECTED_GROUP_ROLES,
+  CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY,
 } from "Types";
 
 /**
@@ -30,9 +30,9 @@ import {
 export const getAllRoles = () => ({
   type: GET_ALL_ROLES
 });
-export const getAllRolesSuccess = (roles, operations) => ({
+export const getAllRolesSuccess = (roles, operations, accessRights, accessRoles) => ({
   type: GET_ALL_ROLES_SUCCESS,
-  payload: {roles, operations}
+  payload: {roles, operations, accessRights, accessRoles}
 });
 
 /**
@@ -100,7 +100,7 @@ export const onChangeSelectedRole = (newValue) => ({
   type: CHANGE_SELECTED_ROLE,
   payload: newValue
 });
-export const onChangeSelectedGroupRoles = (selectedHierarchies) => ({
-  type: CHANGE_SELECTED_GROUP_ROLES,
-  payload: selectedHierarchies
+export const onChangeSelectedAccessRightsCategory = (newValue) => ({
+  type: CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY,
+  payload: newValue
 })
