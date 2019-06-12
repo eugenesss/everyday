@@ -12,12 +12,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Checkbox from "@material-ui/core/Checkbox";
 import Switch from "@material-ui/core/Switch"
 
-import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -57,23 +56,24 @@ class RoleManager extends Component {
     super(props);
   }
 
-  checked(action) {
-    const selectedRole = this.props.selectedRole
-    if (!selectedRole)
+  checked(rightId) {
+    const selectedRoleRights = this.props.selectedRole.selectedRoleRights
+    if (this.props.selectedRole.name == "Super Admin")
       return true;
     else
-      if(selectedRole && selectedRole.permissions) {
-        if (selectedRole.permissions.find( permission => permission === action ))
+      if(selectedRoleRights) {
+        if (selectedRoleRights.find( right => right.id === rightId ))
           return true
         else
           return false
-      }    
+      }
+    return false    
   }
   disabled(action){
     const selectedRole = this.props.selectedRole
-    if (!selectedRole)
+    if (selectedRole.name == "Super Admin")
       return true;
-    else if(selectedRole.name == "Member") {
+    if(selectedRole.name == "Basic Account") {
       if(action != "read")
         return true
       else
@@ -82,26 +82,31 @@ class RoleManager extends Component {
     else
       return false;
   }
-  handleChange(val) {
-    // let accessRights = this.props.accessRights
-    // let roleAccessRights = this.props.selectedRole.permissions
-    // let selectedRight = accessRights.find(right => {return right.id = val})
-    // if (roleAccessRights.find(right => right == selectedRight))
-
-
-
-    var permissions = this.props.selectedRole.permissions
-    var operations = this.props.operations
-    var sOperation = operations.find(op => {return op.id == val})
-    if (permissions.find( permission => permission == sOperation )) {
-      var index = permissions.indexOf(sOperation)
-      if (index > -1) {
-        permissions.splice(index, 1)
-      }
+  handleChange(selectedRight) {
+    var selectedRoleRights = this.props.selectedRole.selectedRoleRights.slice()
+    if (selectedRoleRights.find(right => right.id == selectedRight.id)) {
+      let i = selectedRoleRights.map(function(e) { return e.id; }).indexOf(selectedRight.id);
+      if(i > -1)
+        selectedRoleRights.splice(i, 1)
     } else {
-      permissions.push(sOperation)
+      selectedRoleRights.push(selectedRight)
     }
-    this.props.onChangeUpdateRole("permissions", permissions)
+    this.props.onChangeUpdateRole("selectedRoleRights", selectedRoleRights)
+
+
+
+    // var permissions = this.props.selectedRole.permissions
+    // var operations = this.props.operations
+    // var sOperation = operations.find(op => {return op.id == val})
+    // if (permissions.find( permission => permission == sOperation )) {
+    //   var index = permissions.indexOf(sOperation)
+    //   if (index > -1) {
+    //     permissions.splice(index, 1)
+    //   }
+    // } else {
+    //   permissions.push(sOperation)
+    // }
+    // this.props.onChangeUpdateRole("permissions", permissions)
   }
   
   
@@ -109,11 +114,10 @@ class RoleManager extends Component {
     const { 
       classes,
 
-      selectedRole,
       crudOperations,
       miscOperations,
 
-
+      selectedRole,
       accessRights,
       selectedAccessRightsCategory,
 
@@ -129,22 +133,19 @@ class RoleManager extends Component {
             <TextField
               fullWidth
               required
-              error={ selectedRole ? !selectedRole.name : false}
-              disabled={!selectedRole || selectedRole.name == "Member"}
+              error={ selectedRole ? selectedRole.name ? !selectedRole.name : !selectedRole : false}
+              disabled={!selectedRole || selectedRole.name == "Basic Account" || selectedRole.name == "Super Admin"}
               id="name"
               label="Role Name"
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
-              value={ selectedRole ? selectedRole.name == "Member" ? "Member (default role applied to all users)" : selectedRole.name : "Super Admin" }
+              value={ selectedRole.name ? selectedRole.name : "" }
               onChange={(e) => onChangeUpdateRole('name', e.target.value)}
               margin="normal"
               variant="outlined"
             />
           </Row>
-
-
-
-
+          
           {/* <Row>
             <Table className={classes.table}>
               <TableHead>
@@ -255,10 +256,10 @@ class RoleManager extends Component {
                                       <TableCell align="center" key={method.method}>
                                         <Checkbox
                                           color="primary"
-                                          checked={this.checked(method.method) || method.editable == false}
+                                          checked={this.checked(method.id) || method.editable == false}
                                           disabled={this.disabled(method.method) || !method.editable}
-                                          //value={`${op.id}`}
-                                          //onChange={e => this.handleChange(e.target.value)}
+                                          value={`${method.id}`}
+                                          onChange={() => this.handleChange(method)}
                                         />
                                       </TableCell>
                                   )})}
@@ -275,10 +276,10 @@ class RoleManager extends Component {
                                       <TableCell align="center" key={method.method}>
                                         <Switch
                                           color="primary"
-                                          checked={this.checked(method.method) || method.editable == false}
+                                          checked={this.checked(method.id) || method.editable == false}
                                           disabled={this.disabled(method.method) || !method.editable}
-                                          //value={`${op.id}`}
-                                          //onChange={e => this.handleChange(e.target.value)}
+                                          value={`${method.id}`}
+                                          onChange={() => this.handleChange(method)}
                                         />
                                       </TableCell>
                                   )})}
@@ -302,7 +303,7 @@ class RoleManager extends Component {
                   color="secondary"
                   className="text-white mb-10 mt-10"
                   onClick={() => deleteRole()}
-                  disabled={selectedRole ? selectedRole.id == 0 ? true: false : true}
+                  disabled={selectedRole ? selectedRole.name == "Basic Account" ? true : false : true}
                 >
                   Delete
                 </Button>

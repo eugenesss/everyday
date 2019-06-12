@@ -87,12 +87,12 @@ class RolesList extends Component {
             >
               <ListItem 
                 button
-                selected={!selectedRole}
+                selected={selectedRole.name == "Super Admin"}
                 onClick={() => onChangeSelectedRole("Super Admin")}
               >
                 <ListItemText inset primary={"Super Admin"} className={classes.listItem}/>
               </ListItem>
-              {roles.map(role => (
+              {/* {roles.map(role => (
                 <ListItem 
                   key={role.id}
                   button
@@ -101,7 +101,7 @@ class RolesList extends Component {
                 >
                   <ListItemText primary={role.name} className={classes.listItem}/>
                 </ListItem>
-              ))}
+              ))} */}
               {accessRoles.map(accessRole => (
                 <ListItem 
                   key={accessRole.id}

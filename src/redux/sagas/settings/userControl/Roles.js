@@ -92,8 +92,7 @@ function* getAllRolesFromDB() {
     const accessRights = yield call(getAllAccessRightsRequest);
     const accessRoles = yield call(getAllAccessRolesRequest);
     const roleRights = yield call(getAllAccessRolesAccessRightsRequest);
-
-    yield put(getAllRolesSuccess(roles, operations, accessRights, accessRoles));
+    yield put(getAllRolesSuccess(roles, operations, accessRights, accessRoles, roleRights));
   } catch (err) {
     yield put(getRoleFailure(err));
   }

@@ -26,16 +26,20 @@ import {
  } from "Types";
  
 const INIT_STATE = {
-  selectedRole: null,
-  rolesLoading: false,
   operations: [],
   crudOperations: [],
   miscOperations: [],
   roles: [],
 
+  selectedRole: {
+    name: "Super Admin",
+    selectedRoleRights: []
+  },
+  rolesLoading: false,
   selectedAccessRightsCategory: null,
   accessRights: [],
   accessRoles: [],
+  roleRights: [],
 };
 
 function groupBy(list, keyGetter) {
@@ -69,9 +73,7 @@ export default (state = INIT_STATE, action) => {
       for (let i = 0; i < accessRightsCategory.length; i++) {
         accessRightsModel.push([...groupBy(accessRightsCategory[i], (right) => right.model).values()])
       }
-      let accessRoles = action.payload.accessRoles
-
-      
+      let accessRoles = action.payload.accessRoles    
 
 
       let operations = action.payload.operations
@@ -108,6 +110,7 @@ export default (state = INIT_STATE, action) => {
 
         accessRights: accessRightsModel,
         accessRoles: accessRoles,
+        roleRights: action.payload.roleRights,
       }
 
     /**
@@ -196,9 +199,20 @@ export default (state = INIT_STATE, action) => {
      * State Changes
      */
     case CHANGE_SELECTED_ROLE:
-      var selectedRole = action.payload
+      var selectedRole = {
+        name: "",
+        selectedRoleRights: []
+      }
       if(action.payload == "Super Admin")
-        selectedRole = null
+        selectedRole.name = action.payload
+      else {
+        selectedRole = action.payload
+        var selectedRights = state.roleRights.find(right => {
+          return right.roleId == action.payload.id
+        }).rights
+        selectedRole.selectedRoleRights = selectedRights
+      }
+        
       return { 
         ...state,
         selectedRole: selectedRole,
