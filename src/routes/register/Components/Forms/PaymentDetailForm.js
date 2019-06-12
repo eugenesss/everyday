@@ -1,8 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
 import MaskedInput from "react-text-mask";
 import { Form, FormGroup, Label, Col, Input } from "reactstrap";
-import { handleRegForm } from "Actions";
+
+// import { connect } from "react-redux";
+// import { handleRegForm } from "Actions";
 
 function CreditCardMask(props) {
   return (
@@ -156,13 +157,15 @@ const PaymentDetailForm = props => {
     </Form>
   );
 };
-const mapStateToProps = ({ authUser }) => {
-  const { register } = authUser;
-  const { paymentInfo } = register.form;
-  return { paymentInfo };
-};
+// const mapStateToProps = ({ authUser }) => {
+//   const { register } = authUser;
+//   const { paymentInfo } = register.form;
+//   return { paymentInfo };
+// };
 
-export default connect(
-  mapStateToProps,
-  { handleRegForm }
-)(PaymentDetailForm);
+// export default connect(
+//   mapStateToProps,
+//   { handleRegForm }
+// )(PaymentDetailForm);
+
+export default PaymentDetailForm

@@ -23,10 +23,13 @@ const InitialPath = ({ component: Component, ...rest }) => (
 
 class App extends Component {
   render() {
+
     const { location, match, user } = this.props;
+
     if (location.pathname === "/") {
       return <Redirect to={"/app/homebase"} />;
     }
+
     return (
       <RctThemeProvider>
         <NotificationContainer />
@@ -35,6 +38,7 @@ class App extends Component {
           authUser={user}
           component={HorizontalLayout}
         />
+
         <Route path={`/login`} exact component={Login} />
         <Route path={`/register`} exact component={Register} />
         <Route path={"/404"} exact component={NotFound} />

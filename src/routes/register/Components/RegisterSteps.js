@@ -15,35 +15,73 @@ import PaymentDetailForm from "./Forms/PaymentDetailForm";
 import { Link } from "react-router-dom";
 
 // Actions
-import { registerUser } from "Actions";
+import { registerUser, handleRegForm } from "Actions";
 
-function getSteps() {
-  return ["Enter Your Details", "Select a Plan", "Payment Details"];
-}
 
-function getStepForm(step) {
-  switch (step) {
-    case 0:
-      return <RegisterForm />;
-    case 1:
-      return <SelectPlanForm />;
-    case 2:
-      return <PaymentDetailForm />;
-    default:
-      return "Unknown step";
-  }
-}
+import {EmailValidator, PasswordValidator, StepperZeroValidator} from "./Validation/UserRegisterForm-Validation"
+
+function getSteps() { return ["Enter Your Details", "Select a Plan", "Payment Details"]}
+
+
+
+// function getStepForm(step) {
+//   switch (step) {
+//     case 0:
+//       return <RegisterForm />;
+//     case 1:
+//       return <SelectPlanForm />;
+//     case 2:
+//       return <PaymentDetailForm />;
+//     default:
+//       return "Unknown step";
+//   }
+// }
+
+
+
 
 class RegisterSteps extends React.Component {
+
+  // Set up state for validation
   state = {
-    activeStep: 0
+    activeStep: 0,
+    emailState: '',
+    passwordState: '',
+    planState: ''
   };
 
+
+
   handleNext = () => {
-    this.setState({
-      activeStep: this.state.activeStep + 1
-    });
+
+    let state = {...this.state}
+    
+    switch (state.activeStep) {
+
+      case 0:
+          StepperZeroValidator(this.props, state.emailState, state.passwordState) ? 
+          this.setState({activeStep: this.state.activeStep + 1}) : (
+            window.alert('Please make sure your forms are completed')
+          )
+        break
+      
+      case 1:
+          state.planState !== ""? this.setState({ activeStep: this.state.activeStep + 1}) : (
+            window.alert('Please tick the one of the plans')
+          )
+        break
+
+      case 2:
+          this.setState({
+            activeStep: this.state.activeStep + 1
+          });
+        break
+
+      default:break
+    }
+    
   };
+
 
   handleBack = () => {
     this.setState({
@@ -51,16 +89,70 @@ class RegisterSteps extends React.Component {
     });
   };
 
+  
   handleReset = () => {
     this.setState({
       activeStep: 0
     });
   };
 
+
+
+  /**
+   * Validation of Email | Password before submitting
+   */
+  validateEmail= (e) =>{ this.setState({ emailState:  EmailValidator(e)})}
+  validatePassword = (password, repassword) => { this.setState({ passwordState:  PasswordValidator(password, repassword)})} 
+
+  /**
+   * Validation of Plan before submitting
+   */
+  validatePlate = (e) => {this.setState({planState: e})}
+
+
+
   render() {
     const steps = getSteps();
     const { activeStep } = this.state;
     const { loading, success } = this.props;
+
+
+    let StepperPage = null
+    switch (this.state.activeStep) {
+      case 0:
+     
+        // Implement Email | Password Validation
+        StepperPage = (
+          <RegisterForm
+            validateEmail = {(e) => this.validateEmail(e)}
+            emailState={this.state.emailState}
+            validatePassword = {(password, repassword) => this.validatePassword(password, repassword)}
+            passwordState={this.state.passwordState}
+            {...this.props}
+          />
+        )
+          break
+      case 1:
+        StepperPage = (
+          <SelectPlanForm
+           validatePlate={(e) => this.validatePlate(e)}
+            {...this.props}
+          />
+        )
+          break
+      case 2:
+        StepperPage = (
+          <PaymentDetailForm 
+            {...this.props}
+          />
+        )
+          break
+      default:
+          "Unknown step";
+        break 
+    }
+
+
     return (
       <div>
         {!success ? (
@@ -70,7 +162,12 @@ class RegisterSteps extends React.Component {
                 <Step key={label}>
                   <StepLabel>{label}</StepLabel>
                   <StepContent>
-                    <div className="px-20 py-40">{getStepForm(index)}</div>
+                    
+                    
+                    {/* <div className="px-20 py-40">{getStepForm(index)}</div> */}
+                  
+                    <div className="px-20 py-40">{StepperPage}</div>
+                    
                     <div>
                       {activeStep === steps.length - 1 && (
                         <React.Fragment>
@@ -101,6 +198,7 @@ class RegisterSteps extends React.Component {
                           label="Finish"
                         />
                       ) : (
+
                         <Button
                           variant="contained"
                           color="primary"
@@ -109,6 +207,7 @@ class RegisterSteps extends React.Component {
                         >
                           Next
                         </Button>
+
                       )}
                     </div>
                   </StepContent>
@@ -130,10 +229,32 @@ class RegisterSteps extends React.Component {
 const mapStateToProps = ({ authUser }) => {
   const { register } = authUser;
   const { loading, success } = register;
-  return { loading, success };
+  // return { loading, success };
+
+  const { userInfo, companyInfo, email, password, repassword, priceplan, paymentInfo} = register.form;
+
+  return { 
+    /*
+    * Validating Sign up Process
+    */
+    loading, success,
+    /*
+    * User Register Form
+    */
+    userInfo, companyInfo, email, password, repassword,
+    /*
+    * Select Plan Form
+    */
+    priceplan,
+    /*
+    * Payment Detail Form
+    */
+    paymentInfo
+  };
 };
 
 export default connect(
   mapStateToProps,
-  { registerUser }
+  { registerUser, handleRegForm}
 )(RegisterSteps);
+

@@ -1,9 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
 import PricingBlock from "Components/Widgets/PricingBlock";
 import Radio from "@material-ui/core/Radio";
 
-import { handleRegForm } from "Actions";
+// import { connect } from "react-redux";
+// import { handleRegForm } from "Actions";
 
 const SelectPlanForm = props => {
   const { priceplan, handleRegForm } = props;
@@ -25,7 +25,11 @@ const SelectPlanForm = props => {
           radioButton={
             <Radio
               checked={priceplan == "free"}
-              onChange={() => handleRegForm("priceplan", "free")}
+              onChange={() => {
+                handleRegForm("priceplan", "free")
+                props.validatePlate('free')
+              }
+            }
               value="d"
               color="primary"
               name="radio-button-demo"
@@ -48,7 +52,10 @@ const SelectPlanForm = props => {
           radioButton={
             <Radio
               checked={priceplan == "pro"}
-              onChange={() => handleRegForm("priceplan", "pro")}
+              onChange={() => {
+                handleRegForm("priceplan", "pro")
+                props.validatePlate('pro')
+              }}
               value="d"
               color="secondary"
               name="radio-button-demo"
@@ -60,13 +67,15 @@ const SelectPlanForm = props => {
     </div>
   );
 };
-const mapStateToProps = ({ authUser }) => {
-  const { register } = authUser;
-  const { priceplan } = register.form;
-  return { priceplan };
-};
+// const mapStateToProps = ({ authUser }) => {
+//   const { register } = authUser;
+//   const { priceplan } = register.form;
+//   return { priceplan };
+// };
 
-export default connect(
-  mapStateToProps,
-  { handleRegForm }
-)(SelectPlanForm);
+// export default connect(
+//   mapStateToProps,
+//   { handleRegForm }
+// )(SelectPlanForm);
+
+export default SelectPlanForm
