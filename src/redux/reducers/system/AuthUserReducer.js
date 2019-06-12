@@ -53,9 +53,12 @@ export default (state = INIT_STATE, action) => {
     case LOGIN_USER:
       return { ...state, loading: true };
     case LOGIN_USER_SUCCESS:
-      console.log(action.payload)
       NotificationManager.success("User Logged In");
-      return { ...state, loading: false, user: action.payload };
+      return { 
+        ...state,
+        loading: false,
+        user: action.payload.user
+      };
     case LOGIN_USER_FAILURE:
       NotificationManager.error(action.payload);
       return { ...state, loading: false };
