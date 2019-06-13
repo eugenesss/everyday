@@ -10,10 +10,16 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import RolesList from "./RolesList";
 import RolesManager from "./RolesManager";
 
+import { getAllRoles } from "Actions"
+
 
 class RolesLayout extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount() {
+    this.props.getAllRoles()
   }
 
   render() {
@@ -43,5 +49,5 @@ const mapStateToProps = ({ rolesState }) => {
 
 export default connect(
   mapStateToProps,
-  { }
+  { getAllRoles }
 )(RolesLayout);

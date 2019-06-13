@@ -14,25 +14,11 @@ const signInUserWithEmailPasswordRequest = async (email, password) => {
   return result.data;
 };
 
-const getAccessSettingsRequest = async (userId) => {
-  const result = await api.get(`/accesssettings/getUserAccessSetting?userId=${userId}`,)
-  return result.data.data
-}
-
-const getGroupRolesRequest = async (groupRoleId) => {
-  const result = await api.get(`/accessgrouproles/${groupRoleId}`)
+const getUserAccessRightsRequest = async (userId) => {
+  const result = await api.get(`/accesssettings/${userId}/user/accessRights`)
   return result.data
 }
 
-const getRolesRequest = async (roleId) => {
-  const result = await api.get(`/accessroles/${roleId}`)
-  return result.data
-}
-
-const getAccessRightsRequest = async (roleId) => {
-  const result = await api.get(`/accessroles/${roleId}/accessRights`)
-  return result.data
-}
 
 function* signInUserWithEmailPassword({ payload }) {
   const { emailAddress, password } = payload.user;
@@ -48,31 +34,7 @@ function* signInUserWithEmailPassword({ payload }) {
       localStorage.setItem("accessKey", signInUser.id);
 
       //Get User Access Rights
-      const userAccessSettings = yield call(getAccessSettingsRequest, signInUser.userId)
-      var userGroupRoles = []
-      var userRoles = []
-      var userRights = []
-      if(userAccessSettings) {
-        for (let i = 0; i < userAccessSettings.length; i++) {
-          var groupRole = yield call(getGroupRolesRequest, userAccessSettings[i].grouproleId)
-          userGroupRoles.push(groupRole)
-        }
-        if(userGroupRoles.length) {
-          for (let i = 0; i < userGroupRoles.length; i++) {
-            var role = yield call(getRolesRequest, userGroupRoles[i].accessRoleId)
-            userRoles.push(role)            
-          }
-          if(userRoles.length) {
-            for (let i = 0; i < userRoles.length; i++) {
-              var rights = yield call(getAccessRightsRequest, userRoles[i].id)
-              userRights = userRights.filter((el) => {
-                return rights.indexOf(el) < 0
-              })
-              userRights.concat(rights)
-            }
-          }
-        }
-      }
+      const userRights = yield call(getUserAccessRightsRequest, signInUser.userId)
       yield put(signinUserSuccess(signInUser, userRights));
       history.push("/");
     } else {

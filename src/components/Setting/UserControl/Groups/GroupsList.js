@@ -8,14 +8,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from "@material-ui/core/IconButton";
 
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import { getAllGroups, onChangeSelectedGroup, onChangeSelectedGroupHierarchies, addGroup } from 'Actions'
+import { onChangeSelectedGroup, addGroup } from 'Actions'
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     width: "100%",
     padding: 10,
@@ -42,26 +41,19 @@ class GroupsList extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    this.props.getAllGroups()
-  }
-
   onChange(group) {
     this.props.onChangeSelectedGroup(group);
-    this.props.onChangeSelectedGroupHierarchies(group);
   }
   
   render() {
     const { 
       classes,
 
-      groups,
-      groupsLoading,
+      accessGroups,
       selectedGroup,
 
       addGroup,
      } = this.props;
-
      return (
       <React.Fragment>
         <div className={classes.block}>
@@ -88,7 +80,7 @@ class GroupsList extends Component {
               component="nav"
               className={classes.root}
             >
-              {groups.map(group => (
+              {accessGroups.map(group => (
                 <ListItem 
                   key={group.id}
                   button
@@ -100,7 +92,6 @@ class GroupsList extends Component {
               ))}
             </List>
           </Scrollbars>
-          {groupsLoading && <RctSectionLoader/>}
         </div>
       </React.Fragment>
     )
@@ -112,11 +103,11 @@ GroupsList.propTypes = {
 };
 
 const mapStateToProps = ({ groupsState }) => {
-  const { groups, selectedGroup, groupsLoading } = groupsState;
-  return { groups, selectedGroup, groupsLoading };
+  const { accessGroups, selectedGroup } = groupsState;
+  return { accessGroups, selectedGroup };
 };
 
 export default connect(
   mapStateToProps,
-  { getAllGroups, onChangeSelectedGroup, onChangeSelectedGroupHierarchies, addGroup }
+  { onChangeSelectedGroup, addGroup }
 )(withStyles(styles)(GroupsList));

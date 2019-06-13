@@ -11,7 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import { getAllRoles, onChangeSelectedRole, addRole } from 'Actions'
+import { onChangeSelectedRole, addRole } from 'Actions'
 
 const styles = () => ({
   root: {
@@ -38,10 +38,6 @@ const styles = () => ({
 class RolesList extends Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    this.props.getAllRoles()
   }
   
   render() {
@@ -116,5 +112,5 @@ const mapStateToProps = ({ rolesState }) => {
 
 export default connect(
   mapStateToProps,
-  { getAllRoles, onChangeSelectedRole, addRole }
+  { onChangeSelectedRole, addRole }
 )(withStyles(styles)(RolesList));

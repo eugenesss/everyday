@@ -39,26 +39,27 @@ const INIT_STATE = {
   selectedRoleRights: [],
 };
 
-function groupBy(list, keyGetter) {
-  const map = new Map();
-  list.forEach((item) => {
-    const key = keyGetter(item);
-    const collection = map.get(key);
-    if (!collection) {
-        map.set(key, [item]);
-    } else {
-        collection.push(item);
-    }
-  });
-  return map;
-}
+
 
 export default (state = INIT_STATE, action) => {
   function updateAccessRoleState(role) {
     var roles = Object.assign([], state.accessRoles).map(rol =>
       rol.id == role.id ? (rol = role) : rol
     );
-    return { roles };
+    return roles;
+  }
+  function groupBy(list, keyGetter) {
+    const map = new Map();
+    list.forEach((item) => {
+      const key = keyGetter(item);
+      const collection = map.get(key);
+      if (!collection) {
+          map.set(key, [item]);
+      } else {
+          collection.push(item);
+      }
+    });
+    return map;
   }
 
   switch (action.type) {
@@ -136,7 +137,7 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         rolesLoading: false,
-        accessRoles: accessRoles.roles
+        accessRoles: accessRoles
       }
     case UPDATE_ROLE_FAILURE:
       NotificationManager.warning("Failed to Update Role")
@@ -178,10 +179,7 @@ export default (state = INIT_STATE, action) => {
      * State Changes
      */
     case CHANGE_SELECTED_ROLE:
-      var selectedRole = {
-        name: "",
-        id: ""
-      }
+      var selectedRole = {}
       if(action.payload == "Super Admin")
         selectedRole.name = action.payload
       else {

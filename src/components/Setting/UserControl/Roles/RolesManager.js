@@ -131,13 +131,13 @@ class RoleManager extends Component {
             <Col className={classes.root}>
               {accessRights.map(category => {
                 return (
-                  <ExpansionPanel key={category[0][0].name} expanded={selectedAccessRightsCategory == category[0][0].name} onChange={() => {onChangeSelectedAccessRightsCategory(category[0][0].name)}}>
+                  <ExpansionPanel key={category[0][0].categoryName} expanded={selectedAccessRightsCategory == category[0][0].name} onChange={() => {onChangeSelectedAccessRightsCategory(category[0][0].name)}}>
                     <ExpansionPanelSummary
                       expandIcon={<ExpandMoreIcon />}
                       aria-controls="panel1bh-content"
                       id="panel1bh-header"
                     >
-                      <Typography className={classes.heading + " mt-10 mb-10"}>{category[0][0].name}</Typography>
+                      <Typography className={classes.heading + " mt-10 mb-10"}>{category[0][0].categoryName}</Typography>
                       {/* <Typography className={classes.secondaryHeading}>{category[0][0].description}</Typography> */}
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>

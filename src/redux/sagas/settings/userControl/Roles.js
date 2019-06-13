@@ -30,7 +30,7 @@ const getAllAccessRolesRequest = async () => {
   return result.data;
 };
 const getAllAccessRolesAccessRightsRequest = async () => {
-  const result = await api.get(`/accessroles/getAllRoleRights`);
+  const result = await api.get(`/accessroles/accessRights`);
   return result.data.data;
 };
 
@@ -47,8 +47,8 @@ const updateRoleNameRequest = async (roleName, roleId) => {
   });
   return result.data;
 };
-const updateRoleRightRequest = async (rights, roleId) => {
-  const result = await api.patch(`accessRoles/${roleId}/accessRights`, rights)
+const updateRoleRightRequest = async (roleId, rights) => {
+  const result = await api.patch(`accessRoles/${roleId}/accessRights`, {data: rights})
   return result.data
 }
 
@@ -89,7 +89,7 @@ function* updateRoleToDB() {
     const getRole = state => state.rolesState.selectedRole;
     const role = yield select(getRole);
     const data = yield call(updateRoleNameRequest, role.name, role.id);
-    // const dataTest = yield call(updateRoleRightRequest, role.id, rights)
+    const dataTest = yield call(updateRoleRightRequest, role.id, rights) //NOT WORKING***
     yield put(updateRoleSuccess(data));
   } catch (err) {
     yield put(updateRoleFailure(err));

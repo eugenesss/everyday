@@ -27,10 +27,18 @@ import {
 const INIT_STATE = {
   selectedGroup: null,
   groupsLoading: false,
-  groups: [],
+  accessGroups: [],
+  accessGroupRoles: [],
+  selectedGroupRoles: []
 };
 
 export default (state = INIT_STATE, action) => {
+  function updateAccessGroupState(group) {
+    var groups = Object.assign([], state.accessGroups).map(g =>
+      g.id == group.id ? (g = group) : g
+    );
+    return groups;
+  }
   switch (action.type) {
     /**
      * Get All Groups
@@ -44,7 +52,8 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         groupsLoading: false,
-        groups: action.payload,
+        accessGroups: action.payload.groups,
+        accessGroupRoles: action.payload.groupRoles
       }
 
     /**
@@ -56,10 +65,13 @@ export default (state = INIT_STATE, action) => {
         groupsLoading: true
       }
     case ADD_GROUP_SUCCESS:
+      var allGroups = Object.assign([], state.accessGroups)
+      var accessGroups = [...allGroups, action.payload]
       NotificationManager.success("Group Added")
       return {
         ...state,
         groupsLoading: false,
+        accessGroups: accessGroups
       }
     case ADD_GROUP_FAILURE:
       NotificationManager.warning("Error in creating New Group")
@@ -85,10 +97,12 @@ export default (state = INIT_STATE, action) => {
         groupsLoading: true
       }
     case UPDATE_GROUP_SUCCESS:
-      //NotificationManager.success("Group Name Updated")
+      var accessGroups = updateAccessGroupState(action.payload)
+      NotificationManager.success("Group Updated")
       return {
         ...state,
-        groupsLoading: false
+        groupsLoading: false,
+        accessGroups: accessGroups
       }
     case UPDATE_GROUP_FAILURE:
       NotificationManager.warning("Error in updating Group Name")
@@ -130,9 +144,13 @@ export default (state = INIT_STATE, action) => {
      * State Changes
      */
     case CHANGE_SELECTED_GROUP:
+      var selectedGroupRoles = Object.assign([], state.accessGroupRoles).filter(groupRole => 
+        groupRole.accessGroupId == action.payload.id
+      );
       return { 
         ...state,
         selectedGroup: action.payload,
+        selectedGroupRoles: selectedGroupRoles
       };
       
     default:

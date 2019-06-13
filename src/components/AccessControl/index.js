@@ -8,20 +8,9 @@ class AccessControl extends Component {
 
   render() {
     const { children, action, user, access, match, noAccessComponent } = this.props;
-    var actions = []
-    for (let i = 0; i < action.length; i++) {
-      if(action[i] == "me")
-        actions.push(action[i])
-      else if (action[i] == "global")
-        actions.push(action[i])
-      else {
-        actions.push(access.find(acc => { return `${acc.model}:${acc.method}` == action[i]}))
-      }
-    }
-
     if(user) {
-      for (let i = 0; i < actions.length; i++) {
-        var act = actions[i];
+      for (let i = 0; i < action.length; i++) {
+        var act = action[i];
         if (act == "me") {
           if (user.id == match.params.id)
             return children
@@ -31,7 +20,7 @@ class AccessControl extends Component {
           if (user.isSuperAdmin) {
             return children
           } else {
-            if (access.includes(act))
+            if (access.find(acc => { return `${acc.model}:${acc.method}` == action[i]}))
               return children
           } 
         }

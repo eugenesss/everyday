@@ -29,9 +29,9 @@ import {
 export const getAllGroups = () => ({
   type: GET_ALL_GROUPS
 });
-export const getAllGroupsSuccess = (groups) => ({
+export const getAllGroupsSuccess = (groups, groupRoles) => ({
   type: GET_ALL_GROUPS_SUCCESS,
-  payload: groups
+  payload: {groups, groupRoles}
 });
 
 /**
