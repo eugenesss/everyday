@@ -13,6 +13,9 @@ import RctHorizontalLayout from "Components/RctHorizontalLayout";
 // router service
 import routerService from "../services/_routerService";
 
+
+
+
 class RctHorizontalApp extends Component {
   componentWillMount() {
     if (this.props.roles.length == 0) this.props.getAllRoles();
