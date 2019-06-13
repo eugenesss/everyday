@@ -2,7 +2,7 @@
  * App.js Layout Start Here
  */
 import React, { Component } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { NotificationContainer } from "react-notifications";
 
 // rct theme provider
@@ -13,6 +13,9 @@ import HorizontalLayout from "./HorizontalLayout";
 import Login from "Routes/login";
 import Register from "Routes/register";
 import NotFound from "./error_pages/Err404";
+
+
+import Auth from '../Auth/Auth'
 
 /**
  * Initial Path To Check Whether User Is Logged In Or Not
@@ -26,9 +29,22 @@ class App extends Component {
 
     const { location, match, user } = this.props;
 
+    
+    // check if user is authenticated, if not redirect to login
+
+    // switch (new Auth().isAuthenticated()) {
+    //   case false:
+    //       if (location.pathname === "/") { return <Redirect to={"/login"} /> }
+    //   case true:
+    //       if (location.pathname === "/") { return <Redirect to={"/app/homebase"} /> }
+    //   default:break
+    // }
+
+  
     if (location.pathname === "/") {
       return <Redirect to={"/app/homebase"} />;
     }
+
 
     return (
       <RctThemeProvider>
@@ -39,9 +55,16 @@ class App extends Component {
           component={HorizontalLayout}
         />
 
-        <Route path={`/login`} exact component={Login} />
-        <Route path={`/register`} exact component={Register} />
-        <Route path={"/404"} exact component={NotFound} />
+
+        {/* Added switch to match URL Link */}
+        <Switch>
+          <Route path={`/login`} exact component={Login} />
+          <Route path={`/register`} exact component={Register} />
+
+          {/* <Route path={"/404"} exact component={NotFound} /> */}
+          <Route component={NotFound} />
+        </Switch>
+
       </RctThemeProvider>
     );
   }
