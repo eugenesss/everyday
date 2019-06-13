@@ -10,6 +10,7 @@ import {
   ADD_ROLE_FAILURE,
   
   ON_CHANGE_UPDATE_ROLE,
+  ON_CHANGE_UPDATE_ROLE_RIGHTS,
   UPDATE_ROLE,
   UPDATE_ROLE_SUCCESS,
   UPDATE_ROLE_FAILURE,
@@ -30,9 +31,9 @@ import {
 export const getAllRoles = () => ({
   type: GET_ALL_ROLES
 });
-export const getAllRolesSuccess = (roles, operations, accessRights, accessRoles) => ({
+export const getAllRolesSuccess = (accessRights, accessRoles, roleRights) => ({
   type: GET_ALL_ROLES_SUCCESS,
-  payload: {roles, operations, accessRights, accessRoles}
+  payload: {accessRights, accessRoles, roleRights}
 });
 
 /**
@@ -56,6 +57,10 @@ export const addRoleFailure = (err) => ({
 export const onChangeUpdateRole = (field, value) => ({
   type: ON_CHANGE_UPDATE_ROLE,
   payload: {field, value}
+});
+export const onChangeUpdateRoleRights = (value) => ({
+  type: ON_CHANGE_UPDATE_ROLE_RIGHTS,
+  payload: value
 });
 export const updateRole = () => ({
   type: UPDATE_ROLE,

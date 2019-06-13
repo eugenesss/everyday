@@ -13,24 +13,15 @@ import Radio from '@material-ui/core/Radio';
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
-
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import { 
-  getAllRoles,
-  getAllGroups,
-  
-  getAllHierarchies,
-  addHierarchy,
-  onChangeUpdateHierarchy,
-  updateHierarchy,
-  deleteHierarchy,
-
   onChangeUpdateGroup,
   updateGroup,
-  deleteGroup } from "Actions";
+  deleteGroup 
+} from "Actions";
+import { access } from "fs";
 
 const styles = theme => ({
   root: {
@@ -61,42 +52,22 @@ class GroupsManager extends Component {
   constructor(props) {
     super(props);
   }
-
-  componentDidMount() {
-    this.props.getAllRoles()
-    this.props.getAllGroups()
-    this.props.getAllHierarchies()
-  }
-
-  handleUpdate(){
-    this.props.updateGroup()
-    this.props.updateHierarchy()
-  }
   
   render() {
     const { 
       classes,
 
-      roles,
+      accessRoles,
       selectedGroup,
-      groupsLoading,
-      hierarchiesLoading,
-      selectedHierarchies,
+      selectedGroupRoles,
 
-      addHierarchy,
-      onChangeUpdateHierarchy,
-      deleteHierarchy,
+      updateGroup,
       onChangeUpdateGroup,
       deleteGroup,
      } = this.props;
-
-     var selectedRoles =  selectedHierarchies.map((hierarchy) => {
-       return hierarchy.role
-     })
-     var unselectedRoles = roles.filter((role) => {
-       return !selectedRoles.includes(role)
-     })
-
+     var roles = Object.assign([], accessRoles)
+     var selectedRoles = roles.filter(role => selectedGroupRoles.find(groupRole => {groupRole.accessRoleId == role.id}))
+     var unselectedRoles = roles.filter(role => !selectedGroupRoles.find(groupRole => {groupRole.accessRoleId == role.id}))
      return (
       <React.Fragment>
         <div className={classes.root}>
@@ -117,7 +88,6 @@ class GroupsManager extends Component {
                 variant="outlined"
               />
             </Col>
-            
           </Row>
           <Row>
             <Table className={classes.table}>
@@ -130,34 +100,29 @@ class GroupsManager extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                { selectedHierarchies &&
-                  selectedHierarchies.map(hierarchy => (
-                  <TableRow className={classes.row} key={hierarchy.role.id + hierarchy.group.id}>
+                { selectedGroupRoles &&
+                  selectedGroupRoles.map(role => (
+                  <TableRow className={classes.row} key={role.accessRoleId}>
                     <TableCell component="th" scope="row">
-                      {hierarchy.role.name}
+                      {role.accessRoleId}}
                     </TableCell>
                     <TableCell align="center">
                       <Radio
-                        checked={hierarchy.tier == 1}
-                        onChange={e => onChangeUpdateHierarchy(hierarchy.role.id, e.target.value)}
+                        //checked={}
                         value={1}
                         color="primary"
                       />
                     </TableCell>
                     <TableCell align="center">
                       <Radio
-                        checked={hierarchy.tier == 2}
-                        disabled={hierarchy.role.name == "Member"}
-                        onChange={e => onChangeUpdateHierarchy(hierarchy.role.id, e.target.value)}
+                        //checked={}
                         value={2}
                         color="primary"
                       />
                     </TableCell>
                     <TableCell align="center">
                       <Radio
-                        checked={hierarchy.tier == 3}
-                        disabled={hierarchy.role.name == "Member"}
-                        onChange={e => onChangeUpdateHierarchy(hierarchy.role.id, e.target.value)}
+                        //checked={}
                         value={3}
                         color="primary"
                       />
@@ -174,12 +139,12 @@ class GroupsManager extends Component {
                 fullWidth
                 required
                 error={ selectedGroup ? !selectedGroup.name : false}
-                disabled={!selectedGroup || selectedGroup.name == "Global"}
+                disabled={!selectedGroup || selectedRoles.length == 0}
                 id="name"
                 label="Remove Role from Group"
                 className={classes.textField}
                 value={[]}
-                onChange={(e) => deleteHierarchy(e.target.value)}
+                onChange={(e) => console.log(e.target.value)}
                 margin="normal"
               > 
                 {selectedRoles.map((role) => {
@@ -197,12 +162,12 @@ class GroupsManager extends Component {
                   fullWidth
                   required
                   error={ selectedGroup ? !selectedGroup.name : false}
-                  disabled={!selectedGroup || selectedGroup.name == "Global"}
+                  disabled={!selectedGroup || unselectedRoles.length == 0}
                   id="name"
                   label="Add Role to Group"
                   className={classes.textField}
                   value={[]}
-                  onChange={(e) => addHierarchy(e.target.value)}
+                  onChange={(e) => console.log(e.target.value)}
                   margin="normal"
                 > 
                   {unselectedRoles.map((role) => {
@@ -232,14 +197,13 @@ class GroupsManager extends Component {
                 variant="contained"
                 color="primary"
                 className="text-white mb-10 mt-10 float-right"
-                onClick={()=> this.handleUpdate()}
+                onClick={()=> updateGroup()}
               >
                 Save
               </Button>
             </Col>
           </Row>
         </div>
-        {groupsLoading && hierarchiesLoading && <RctSectionLoader/>}
       </React.Fragment>
     )
   }
@@ -249,14 +213,13 @@ GroupsManager.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ rolesState, groupsState, hierarchiesState }) => {
-  const { roles } = rolesState
-  const { selectedHierarchies, hierarchiesLoading } = hierarchiesState;
-  const { selectedGroup, groupsLoading } = groupsState
-  return { selectedGroup, groupsLoading, roles, selectedHierarchies, hierarchiesLoading };
+const mapStateToProps = ({ groupsState, rolesState}) => {
+  const { accessRoles } = rolesState
+  const { selectedGroup, selectedGroupRoles } = groupsState
+  return { accessRoles, selectedGroup, selectedGroupRoles };
 };
 
 export default connect(
   mapStateToProps,
-  { getAllRoles, getAllGroups, getAllHierarchies, addHierarchy, onChangeUpdateHierarchy, updateHierarchy, deleteHierarchy, onChangeUpdateGroup, updateGroup, deleteGroup }
+  { onChangeUpdateGroup, updateGroup, deleteGroup }
 )(withStyles(styles)(GroupsManager));

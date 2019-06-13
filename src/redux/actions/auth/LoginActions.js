@@ -12,9 +12,9 @@ export const signInUserWithEmailPassword = (user, history) => ({
   payload: { user, history }
 });
 
-export const signinUserSuccess = user => ({
+export const signinUserSuccess = (user, accessRights) => ({
   type: LOGIN_USER_SUCCESS,
-  payload: user
+  payload: {user, accessRights}
 });
 
 export const signinUserFailure = error => ({

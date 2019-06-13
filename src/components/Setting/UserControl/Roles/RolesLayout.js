@@ -5,8 +5,12 @@ import { Col, Row } from "reactstrap";
 import AccessControl from "Components/AccessControl";
 import NoAccessComponent from "Components/AccessControl/NoAccessComponent";
 
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+
 import RolesList from "./RolesList";
 import RolesManager from "./RolesManager";
+
+import { getAllRoles } from "Actions"
 
 
 class RolesLayout extends Component {
@@ -14,10 +18,15 @@ class RolesLayout extends Component {
     super(props);
   }
 
+  componentWillMount() {
+    this.props.getAllRoles()
+  }
+
   render() {
+    const {rolesLoading} = this.props
     return (
       <React.Fragment>
-        <AccessControl action={["RolePermission:manage"]} noAccessComponent={<NoAccessComponent/>}>
+        {/* <AccessControl action={["RolePermission:manage"]} noAccessComponent={<NoAccessComponent/>}> */}
           <Row>
             <Col md={3}>
               <RolesList/>
@@ -26,13 +35,19 @@ class RolesLayout extends Component {
               <RolesManager/>
             </Col>
           </Row>
-        </AccessControl>
+        {/* </AccessControl> */}
+        {rolesLoading && <RctSectionLoader/>}
       </React.Fragment>
     );
   }
 }
 
+const mapStateToProps = ({ rolesState }) => {
+  const { rolesLoading } = rolesState;
+  return { rolesLoading };
+};
+
 export default connect(
-  null,
-  { }
+  mapStateToProps,
+  { getAllRoles }
 )(RolesLayout);

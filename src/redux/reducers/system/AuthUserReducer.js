@@ -20,6 +20,7 @@ import {
  */
 const INIT_STATE = {
   user: localStorage.getItem("user_id"),
+  access: [],
   loading: false,
   register: {
     form: {
@@ -54,7 +55,12 @@ export default (state = INIT_STATE, action) => {
       return { ...state, loading: true };
     case LOGIN_USER_SUCCESS:
       NotificationManager.success("User Logged In");
-      return { ...state, loading: false, user: action.payload };
+      return { 
+        ...state,
+        loading: false,
+        user: action.payload.user,
+        access: action.payload.accessRights
+      };
     case LOGIN_USER_FAILURE:
       NotificationManager.error(action.payload);
       return { ...state, loading: false };
