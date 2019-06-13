@@ -11,6 +11,7 @@ import {
   ADD_ROLE_FAILURE,
   
   ON_CHANGE_UPDATE_ROLE,
+  ON_CHANGE_UPDATE_ROLE_RIGHTS,
   UPDATE_ROLE,
   UPDATE_ROLE_SUCCESS,
   UPDATE_ROLE_FAILURE,
@@ -26,20 +27,16 @@ import {
  } from "Types";
  
 const INIT_STATE = {
-  operations: [],
-  crudOperations: [],
-  miscOperations: [],
-  roles: [],
-
   selectedRole: {
     name: "Super Admin",
-    selectedRoleRights: []
+    id: ""
   },
   rolesLoading: false,
   selectedAccessRightsCategory: null,
   accessRights: [],
   accessRoles: [],
   roleRights: [],
+  selectedRoleRights: [],
 };
 
 function groupBy(list, keyGetter) {
@@ -57,6 +54,13 @@ function groupBy(list, keyGetter) {
 }
 
 export default (state = INIT_STATE, action) => {
+  function updateAccessRoleState(role) {
+    var roles = Object.assign([], state.accessRoles).map(rol =>
+      rol.id == role.id ? (rol = role) : rol
+    );
+    return { roles };
+  }
+
   switch (action.type) {
     /**
      * Get All Roles
@@ -73,43 +77,11 @@ export default (state = INIT_STATE, action) => {
       for (let i = 0; i < accessRightsCategory.length; i++) {
         accessRightsModel.push([...groupBy(accessRightsCategory[i], (right) => right.model).values()])
       }
-      let accessRoles = action.payload.accessRoles    
-
-
-      let operations = action.payload.operations
-      let operationsMap = groupBy(action.payload.operations, (operation) => operation.name)
-      let operationsGroup = [...operationsMap.values()]
-
-      let crudOperations = operationsGroup.filter((op) => {
-        return ( 
-          op.length &&
-          op.length == 4 &&
-          op[0].operation == "read" &&
-          op[1].operation == "create" &&
-          op[2].operation == "update" &&
-          op[3].operation == "delete"
-        )
-      })
-
-      let miscOperationsGroup = operationsGroup.filter( (op) => {
-        return !crudOperations.includes( op );
-      });
-      let miscOperations = []
-      for (let i = 0; i < miscOperationsGroup.length; i++) {
-        miscOperations.push(miscOperationsGroup[i].pop())
-      }
-
       return {
         ...state,
         rolesLoading: false,
-        roles: action.payload.roles,
-        operations: operations,
-        crudOperations: crudOperations,
-        miscOperations: miscOperations,
-
-
         accessRights: accessRightsModel,
-        accessRoles: accessRoles,
+        accessRoles: action.payload.accessRoles,
         roleRights: action.payload.roleRights,
       }
 
@@ -122,12 +94,12 @@ export default (state = INIT_STATE, action) => {
         rolesLoading: true
       }
     case ADD_ROLE_SUCCESS:
-      //var allRoles = Object.assign([], state.roles)
-      //var roles = [...allRoles, action.payload]
+      var allRoles = Object.assign([], state.accessRoles)
+      var accessRoles = [...allRoles, action.payload]
       NotificationManager.success("New Role Created")
       return {
         ...state,
-        //roles: roles,
+        accessRoles: accessRoles,
         rolesLoading: false
       }
     case ADD_ROLE_FAILURE:
@@ -141,12 +113,17 @@ export default (state = INIT_STATE, action) => {
      * Update Role
      */
     case ON_CHANGE_UPDATE_ROLE:
-      return{
+      return {
         ...state,
         selectedRole: {
           ...state.selectedRole,
           [action.payload.field]: action.payload.value
         }
+      }
+    case ON_CHANGE_UPDATE_ROLE_RIGHTS:
+      return {
+        ...state,
+        selectedRoleRights: action.payload
       }
     case UPDATE_ROLE:
       return {
@@ -154,10 +131,12 @@ export default (state = INIT_STATE, action) => {
         rolesLoading: true
       }
     case UPDATE_ROLE_SUCCESS:
+      var accessRoles = updateAccessRoleState(action.payload)
       NotificationManager.success("Role Updated")
       return {
         ...state,
-        rolesLoading: false
+        rolesLoading: false,
+        accessRoles: accessRoles.roles
       }
     case UPDATE_ROLE_FAILURE:
       NotificationManager.warning("Failed to Update Role")
@@ -201,7 +180,7 @@ export default (state = INIT_STATE, action) => {
     case CHANGE_SELECTED_ROLE:
       var selectedRole = {
         name: "",
-        selectedRoleRights: []
+        id: ""
       }
       if(action.payload == "Super Admin")
         selectedRole.name = action.payload
@@ -210,12 +189,12 @@ export default (state = INIT_STATE, action) => {
         var selectedRights = state.roleRights.find(right => {
           return right.roleId == action.payload.id
         }).rights
-        selectedRole.selectedRoleRights = selectedRights
+        selectedRole.id = action.payload.id
       }
-        
       return { 
         ...state,
         selectedRole: selectedRole,
+        selectedRoleRights: selectedRights
       };
     case CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY:
       let selectedAccessRightsCategory = action.payload

@@ -2,10 +2,8 @@ import { store } from "Redux/store"
 
 export const accessControlHelper = (action, match) => {
   var state = store.getState()
-
-  var me = state.usersState.me //AuthUser
-  var roles = state.rolesState.roles
-  var operations = state.rolesState.operations
+  var user = state.authUser.user
+  var access = state.authUser.access
 
   var actions = []
   for (let i = 0; i < action.length; i++) {
@@ -14,41 +12,29 @@ export const accessControlHelper = (action, match) => {
     else if (action[i] == "global")
       actions.push(action[i])
     else {
-      actions.push(operations.find(op => { return `${op.name}:${op.operation}` == action[i]}))
+      actions.push(access.find(acc => { return `${acc.model}:${acc.method}` == action[i]}))
     }
   }
 
-  if(!me.id || roles.length == 0) {
-    return false
-  } else {
+  if(user) {
     for (let i = 0; i < actions.length; i++) {
       var act = actions[i];
       if (act == "me") {
-        if (me.id == match.params.id)
+        if (user.id == match.params.id)
           return true
       } else if (act == "global"){
         return true
       } else {
-        if (me.isSuperAdmin) {
+        if (user.isSuperAdmin) {
           return true
         } else {
-          if(me.access.length > 0) {
-            for (let n = 0; n < me.access.length; n++) {
-              var rol = roles.find( role => role.id === me.access[n].role.id );
-              if(rol)
-                if (rol.permissions.includes(act))
-                  return true
-            }
-          } else {
-            var member = roles.find( role => role.name === "Member" );
-            if(member)
-              if (member.permissions.includes(act))
-                return true
-          }
+          if (access.includes(act))
+            return true
         }
       }
     }
   }
+  
   return false
 }
 

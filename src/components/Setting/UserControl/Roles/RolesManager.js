@@ -21,7 +21,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import { deleteRole, onChangeUpdateRole, updateRole, onChangeSelectedAccessRightsCategory} from 'Actions'
+import { deleteRole, onChangeUpdateRole, onChangeUpdateRoleRights, updateRole, onChangeSelectedAccessRightsCategory} from 'Actions'
 
 const styles = theme => ({
   root: {
@@ -57,7 +57,7 @@ class RoleManager extends Component {
   }
 
   checked(rightId) {
-    const selectedRoleRights = this.props.selectedRole.selectedRoleRights
+    const selectedRoleRights = this.props.selectedRoleRights
     if (this.props.selectedRole.name == "Super Admin")
       return true;
     else
@@ -73,7 +73,7 @@ class RoleManager extends Component {
     const selectedRole = this.props.selectedRole
     if (selectedRole.name == "Super Admin")
       return true;
-    if(selectedRole.name == "Basic Account") {
+    if(selectedRole.name == "") {
       if(action != "read")
         return true
       else
@@ -83,7 +83,7 @@ class RoleManager extends Component {
       return false;
   }
   handleChange(selectedRight) {
-    var selectedRoleRights = this.props.selectedRole.selectedRoleRights.slice()
+    var selectedRoleRights = this.props.selectedRoleRights.slice()
     if (selectedRoleRights.find(right => right.id == selectedRight.id)) {
       let i = selectedRoleRights.map(function(e) { return e.id; }).indexOf(selectedRight.id);
       if(i > -1)
@@ -91,31 +91,13 @@ class RoleManager extends Component {
     } else {
       selectedRoleRights.push(selectedRight)
     }
-    this.props.onChangeUpdateRole("selectedRoleRights", selectedRoleRights)
-
-
-
-    // var permissions = this.props.selectedRole.permissions
-    // var operations = this.props.operations
-    // var sOperation = operations.find(op => {return op.id == val})
-    // if (permissions.find( permission => permission == sOperation )) {
-    //   var index = permissions.indexOf(sOperation)
-    //   if (index > -1) {
-    //     permissions.splice(index, 1)
-    //   }
-    // } else {
-    //   permissions.push(sOperation)
-    // }
-    // this.props.onChangeUpdateRole("permissions", permissions)
+    this.props.onChangeUpdateRoleRights(selectedRoleRights)
   }
   
   
   render() {
     const { 
       classes,
-
-      crudOperations,
-      miscOperations,
 
       selectedRole,
       accessRights,
@@ -134,7 +116,7 @@ class RoleManager extends Component {
               fullWidth
               required
               error={ selectedRole ? selectedRole.name ? !selectedRole.name : !selectedRole : false}
-              disabled={!selectedRole || selectedRole.name == "Basic Account" || selectedRole.name == "Super Admin"}
+              disabled={!selectedRole || selectedRole.name == "Super Admin"}
               id="name"
               label="Role Name"
               className={classes.textField}
@@ -145,73 +127,6 @@ class RoleManager extends Component {
               variant="outlined"
             />
           </Row>
-          
-          {/* <Row>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>CRUD Actions</TableCell>
-                  <TableCell align="center">Read</TableCell>
-                  <TableCell align="center">Create</TableCell>
-                  <TableCell align="center">Update</TableCell>
-                  <TableCell align="center">Delete</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-              {crudOperations.map(model => (
-                <TableRow className={classes.row} key={model[0].name}>
-                  <TableCell component="th" scope="row">
-                    {model[0].name}
-                  </TableCell>
-                  {model.map(op => (
-                    <TableCell align="center" key={op.operation}>
-                      <Checkbox
-                        color="primary"
-                        checked={this.checked(op)}
-                        disabled={this.disabled(op.operation)}
-                        value={`${op.id}`}
-                        onChange={e => this.handleChange(e.target.value)}
-                      />
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-              
-              </TableBody>
-            </Table>
-          </Row>
-          <Row>
-            <Table className={"mt-50 " + classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Miscellaneous Actions</TableCell>
-                  <TableCell align="center">Privilege</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {miscOperations.map(op => (
-                  <TableRow className={classes.row} key={op.id}>
-                    <TableCell component="th" scope="row">
-                      {op.desc}
-                    </TableCell>
-                    <TableCell align="center">
-                      <Switch
-                        color="primary"
-                        checked={this.checked(op)}
-                        disabled={this.disabled(op.operation)}
-                        value={`${op.id}`}
-                        onChange={e => this.handleChange(e.target.value)}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Row> */}
-          
-
-
-
           <Row>
             <Col className={classes.root}>
               {accessRights.map(category => {
@@ -303,7 +218,7 @@ class RoleManager extends Component {
                   color="secondary"
                   className="text-white mb-10 mt-10"
                   onClick={() => deleteRole()}
-                  disabled={selectedRole ? selectedRole.name == "Basic Account" ? true : false : true}
+                  disabled={selectedRole.name == "Super Admin"}
                 >
                   Delete
                 </Button>
@@ -314,6 +229,7 @@ class RoleManager extends Component {
                   color="primary"
                   className="text-white mb-10 mt-10 float-right"
                   onClick={() => updateRole()}
+                  disabled={selectedRole.name == "Super Admin"}
                 >
                   Save
                 </Button>
@@ -330,11 +246,11 @@ RoleManager.propTypes = {
 };
 
 const mapStateToProps = ({ rolesState }) => {
-  const { selectedRole, crudOperations, miscOperations, operations, accessRights, selectedAccessRightsCategory } = rolesState;
-  return { selectedRole, crudOperations, miscOperations, operations, accessRights, selectedAccessRightsCategory };
+  const { selectedRole, accessRights, selectedAccessRightsCategory, selectedRoleRights } = rolesState;
+  return { selectedRole, accessRights, selectedAccessRightsCategory, selectedRoleRights };
 };
 
 export default connect(
   mapStateToProps,
-  { deleteRole, onChangeUpdateRole, updateRole, onChangeSelectedAccessRightsCategory }
+  { deleteRole, onChangeUpdateRole, onChangeUpdateRoleRights, updateRole, onChangeSelectedAccessRightsCategory }
 )(withStyles(styles)(RoleManager));
