@@ -103,7 +103,7 @@ class crm_view_customer extends Component {
               <RctCollapsibleCard colClasses="col-md-6 col-lg-6" fullBlock>
                 <CustomerCard
                   name={customer.name}
-                  ownerName={customer.owner && customer.owner.name}
+                  ownerName={customer.userInfo && customer.userInfo.name}
                   jobTitle={customer.jobTitle}
                   mobile={customer.mobile}
                   email={customer.email}

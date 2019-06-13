@@ -104,15 +104,15 @@ const DealList = ({ tableData, loading, title, action }) => {
         }
       }
     },
-    /*  {
-      label: "Deal Owner",
-      name: "owner",
+    {
+      label: "Owner",
+      name: "userInfo",
       options: {
         customBodyRender: value => {
-          return value.name;
+          return value ? value.name : "";
         }
       }
-    }, */
+    },
     {
       label: "Source",
       name: "source",

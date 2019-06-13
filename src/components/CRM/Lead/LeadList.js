@@ -76,16 +76,16 @@ const LeadList = ({ tableData, loading, title, action }) => {
         }
       }
     },
-    /*  {
+    {
       label: "Owner",
-      name: "owner",
+      name: "userInfo",
       options: {
         display: false,
         customBodyRender: value => {
           return value ? value.name : "";
         }
       }
-    }, */
+    },
     {
       label: "Industry",
       name: "industry",

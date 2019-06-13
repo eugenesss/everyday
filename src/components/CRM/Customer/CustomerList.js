@@ -55,15 +55,15 @@ const CustomerList = ({ tableData, loading, title, action }) => {
         }
       }
     },
-    /*   {
+    {
       label: "Owner",
-      name: "owner",
+      name: "userInfo",
       options: {
         customBodyRender: value => {
-          return value.name;
+          return value ? value.name : "";
         }
       }
-    }, */
+    },
     {
       label: "Office",
       name: "baseContact",

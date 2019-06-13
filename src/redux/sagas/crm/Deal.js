@@ -127,7 +127,7 @@ function* getAllDealFromDB() {
 function* getDealFromDB({ payload }) {
   try {
     const data = yield call(getDealRequest, payload);
-    yield delay(900);
+    yield delay(500);
     yield put(getSingleDealSuccess(data));
   } catch (error) {
     yield put(getDealFailure(error));
