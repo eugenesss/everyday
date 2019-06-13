@@ -11,7 +11,10 @@ const CustomerDetails = ({ customer }) => {
       <TabsHeader title="Customer Details" />
       <DetailsTable>
         <tr>
-          <SingleDetail title="Owner" value={customer.owner.name} />
+          <SingleDetail
+            title="Owner"
+            value={customer.owner && customer.owner.name}
+          />
           <SingleDetail
             title="Account"
             value={
@@ -28,22 +31,25 @@ const CustomerDetails = ({ customer }) => {
             title="Source"
             value={customer.source && customer.source.name}
           />
-          <SingleDetail title="Email" value={customer.email} />
+          <SingleDetail title="Email" value={customer.baseContact.email} />
         </tr>
         <tr>
-          <SingleDetail title="Mobile" value={customer.mobile} />
-          <SingleDetail title="Job Title" value={customer.jobTitle} />
+          <SingleDetail title="Mobile" value={customer.baseContact.mobile} />
+          <SingleDetail
+            title="Job Title"
+            value={customer.baseContact.jobTitle}
+          />
         </tr>
         <tr>
-          <SingleDetail title="Office" value={customer.office} />
-          <SingleDetail title="Fax" value={customer.fax} />
+          <SingleDetail title="Office" value={customer.baseContact.office} />
+          <SingleDetail title="Fax" value={customer.baseContact.fax} />
         </tr>
         <tr>
           <SingleDetail
             title="Modified By"
             value={
               <NameTimeStamp
-                name={customer.modifiedBy.name}
+                name={customer.modifiedBy && customer.modifiedBy.name}
                 timeStamp="08-05-2019 09:30 "
               />
             }
@@ -52,7 +58,7 @@ const CustomerDetails = ({ customer }) => {
             title="Created By"
             value={
               <NameTimeStamp
-                name={customer.createdBy.name}
+                name={customer.createdBy && customer.createdBy.name}
                 timeStamp="08-05-2019 09:30 "
               />
             }

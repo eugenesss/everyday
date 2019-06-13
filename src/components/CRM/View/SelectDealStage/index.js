@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import DealStageStepper from "./Components/DealStageStepper";
 
-import { dealStage } from "Components/DummyData";
+// import { dealStage } from "Components/DummyData";
 
 //Page Req
 import DealStageContent from "./Components/DealStageContent";
@@ -16,11 +16,13 @@ import {
   onClickStep,
   setCurrentStep,
   onChangeStepState,
-  submitNewStage
+  submitNewStage,
+  getDealStage
 } from "Actions";
 
 class SelectDealStage extends Component {
   componentWillMount() {
+    this.props.getDealStage();
     this.props.setCurrentStep(this.props.deal.stage.step);
   }
 
@@ -33,7 +35,7 @@ class SelectDealStage extends Component {
   }
 
   getStageID = step => {
-    const stage = dealStage.find(stage => {
+    const stage = this.props.dealStage.find(stage => {
       if (stage.step == step) return stage;
     });
     return stage.id;
@@ -51,6 +53,7 @@ class SelectDealStage extends Component {
 
   render() {
     const { activeStep, loading } = this.props.dealStageStepper;
+    const { dealStage } = this.props;
     return (
       <div>
         {loading && <RctSectionLoader />}
@@ -90,12 +93,19 @@ class SelectDealStage extends Component {
 }
 
 const mapStateToProps = ({ crmState }) => {
-  const { dealState } = crmState;
+  const { dealState, crmField } = crmState;
   const { dealStageStepper } = dealState.dealToView;
-  return { dealStageStepper };
+  const { dealStage } = crmField;
+  return { dealStageStepper, dealStage };
 };
 
 export default connect(
   mapStateToProps,
-  { onClickStep, setCurrentStep, onChangeStepState, submitNewStage }
+  {
+    onClickStep,
+    setCurrentStep,
+    onChangeStepState,
+    submitNewStage,
+    getDealStage
+  }
 )(SelectDealStage);

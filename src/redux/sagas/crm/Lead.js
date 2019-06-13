@@ -39,20 +39,20 @@ const getAllLeadRequest = async () => {
   return result.data;
 };
 const getMyLeadRequest = async () => {
-  const result = leadList;
-  return result;
+  const result = await api.get("/leads");
+  return result.data;
 };
 const getOpenLeadRequest = async () => {
-  const result = leadList;
-  return result;
+  const result = await api.get("/leads");
+  return result.data;
 };
 const getHotLeadRequest = async () => {
-  const result = leadList;
-  return result;
+  const result = await api.get("/leads");
+  return result.data;
 };
 const getColdLeadRequest = async () => {
-  const result = leadList;
-  return result;
+  const result = await api.get("/leads");
+  return result.data;
 };
 const getLeadRequest = async leadID => {
   const result = await api.get(`/leads/${leadID}`);
@@ -63,9 +63,8 @@ const getLeadSummaryRequest = async () => {
   return result;
 };
 const postLeadRequest = async lead => {
-  console.log(lead);
-  const result = {};
-  return result;
+  const result = await api.post("/leads", lead);
+  return result.data;
 };
 const convertLeadRequest = async data => {
   console.log(data);

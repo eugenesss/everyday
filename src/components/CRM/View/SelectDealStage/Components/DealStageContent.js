@@ -7,7 +7,9 @@ const DealStageContent = ({ activeStep, dealStage }) => {
       <CardTitle className="p-10">
         <strong>Key Notes</strong>
       </CardTitle>
-      <div className="p-10">{dealStage[activeStep]["description"]}</div>
+      <div className="p-10">
+        {dealStage[activeStep] && dealStage[activeStep].description}
+      </div>
     </Card>
   );
 };

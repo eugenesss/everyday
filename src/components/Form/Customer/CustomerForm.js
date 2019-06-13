@@ -16,15 +16,16 @@ import {
   handleChangeCustomer,
   submitCustomer,
   clearCustomerForm,
-  getLeadSource
+  getLeadSource,
+  getAllUsers,
+  getAllAccount
 } from "Actions";
-
-import { users } from "Components/UserDummyData";
-import { accountList } from "Components/DummyData";
 
 class CustomerForm extends Component {
   componentWillMount() {
     this.props.getLeadSource();
+    this.props.getAllUsers();
+    this.props.getAllAccount();
   }
   componentWillUnmount() {
     this.props.clearCustomerForm();
@@ -33,6 +34,7 @@ class CustomerForm extends Component {
   render() {
     const { customer } = this.props.customerForm;
     const { leadSource } = this.props.crmField;
+    const { users, allAccounts } = this.props;
     const disabled =
       customer.baseContact.firstName &&
       customer.baseContact.lastName &&
@@ -74,10 +76,10 @@ class CustomerForm extends Component {
             />
             <FormBlock
               label="Account"
-              value={customer.account}
+              value={customer.accountId}
               handleChange={this.props.handleChangeCustomer}
-              target="account"
-              selectValues={accountList}
+              target="accountId"
+              selectValues={allAccounts}
             />
           </TableRow>
           <TableRow />
@@ -94,7 +96,7 @@ class CustomerForm extends Component {
             />
             <FormBlock
               label="Source"
-              value={customer.source}
+              value={customer.sourceId}
               handleChange={this.props.handleChangeCustomer}
               target="sourceId"
               selectValues={leadSource}
@@ -158,13 +160,23 @@ class CustomerForm extends Component {
   }
 }
 
-const mapStateToProps = ({ crmState }) => {
-  const { customerState, crmField } = crmState;
+const mapStateToProps = ({ crmState, usersState }) => {
+  const { customerState, crmField, accountState } = crmState;
+  const { accountList } = accountState;
+  const allAccounts = accountList.tableData;
+  const { users } = usersState;
   const { customerForm } = customerState;
-  return { customerForm, crmField };
+  return { customerForm, crmField, users, allAccounts };
 };
 
 export default connect(
   mapStateToProps,
-  { handleChangeCustomer, submitCustomer, clearCustomerForm, getLeadSource }
+  {
+    handleChangeCustomer,
+    submitCustomer,
+    clearCustomerForm,
+    getLeadSource,
+    getAllUsers,
+    getAllAccount
+  }
 )(CustomerForm);

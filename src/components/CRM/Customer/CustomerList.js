@@ -37,9 +37,25 @@ const CustomerList = ({ tableData, loading, title, action }) => {
         }
       }
     },
-    { label: "Email", name: "email" },
-    { label: "Mobile", name: "mobile" },
     {
+      label: "Email",
+      name: "baseContact",
+      options: {
+        customBodyRender: value => {
+          return value.email ? value.email : "";
+        }
+      }
+    },
+    {
+      label: "Mobile",
+      name: "baseContact",
+      options: {
+        customBodyRender: value => {
+          return value.mobile ? value.mobile : "";
+        }
+      }
+    },
+    /*   {
       label: "Owner",
       name: "owner",
       options: {
@@ -47,9 +63,27 @@ const CustomerList = ({ tableData, loading, title, action }) => {
           return value.name;
         }
       }
+    }, */
+    {
+      label: "Office",
+      name: "baseContact",
+      options: {
+        display: false,
+        customBodyRender: value => {
+          return value.phone ? value.phone : "";
+        }
+      }
     },
-    { label: "Office", name: "office", options: { display: false } },
-    { label: "Fax", name: "fax", options: { display: false } }
+    {
+      label: "Fax",
+      name: "baseContact",
+      options: {
+        display: false,
+        customBodyRender: value => {
+          return value.fax ? value.fax : "";
+        }
+      }
+    }
   ];
   if (action == true) {
     columns.push({

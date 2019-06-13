@@ -35,7 +35,7 @@ const AccountList = ({ tableData, loading, title, action }) => {
     },
     { label: "Website", name: "website" },
     { label: "Office", name: "office" },
-    {
+    /*  {
       label: "Owner",
       name: "owner",
       options: {
@@ -43,7 +43,7 @@ const AccountList = ({ tableData, loading, title, action }) => {
           return value.name;
         }
       }
-    },
+    }, */
     { label: "Fax", name: "fax", options: { display: false } }
   ];
 

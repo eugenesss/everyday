@@ -42,8 +42,8 @@ class UpdateDealStageForm extends Component {
               onMouseEnter={this.handleMouseOver}
               onMouseLeave={this.handleMouseOut}
               // onChange={e => handleChangeConvertLead("amount", e.target.value) }
-              endAdornmentProps={
-                this.state.mouseOver ? (
+              inputProps={{
+                endAdornment: this.state.mouseOver ? (
                   <InputAdornment position="end">
                     <IconButton onClick={this.clickEdit}>
                       <Edit />
@@ -52,7 +52,7 @@ class UpdateDealStageForm extends Component {
                 ) : (
                   ""
                 )
-              }
+              }}
             />
           </FormControl>
         </div>

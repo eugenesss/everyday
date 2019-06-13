@@ -19,17 +19,20 @@ import {
   clearDealForm,
   getLeadSource,
   getDealType,
-  getDealStage
+  getDealStage,
+  getAllUsers,
+  getAllAccount,
+  getAllCustomer
 } from "Actions";
-
-import { users } from "Components/UserDummyData";
-import { accountList, customerList } from "Components/DummyData";
 
 class DealForm extends Component {
   componentWillMount() {
     this.props.getLeadSource();
     this.props.getDealStage();
     this.props.getDealType();
+    this.props.getAllUsers();
+    this.props.getAllAccount();
+    this.props.getAllCustomer();
   }
   componentWillUnmount() {
     this.props.clearDealForm();
@@ -37,14 +40,15 @@ class DealForm extends Component {
 
   render() {
     const { deal } = this.props.dealForm;
+    const { users, allAccounts, allCustomers } = this.props;
     const { leadSource, dealStage, dealType } = this.props.crmField;
     const disabled =
       deal.name &&
       deal.owner &&
       deal.amount &&
-      deal.stage &&
+      deal.stageId &&
       deal.closingDate &&
-      deal.account;
+      deal.accountId;
     return (
       <React.Fragment>
         <FormSubmitResetButtons
@@ -86,9 +90,9 @@ class DealForm extends Component {
             <FormBlock
               required
               label="Stage"
-              value={deal.stage}
+              value={deal.stageId}
               handleChange={this.props.handleChangeDeal}
-              target="stage"
+              target="stageId"
               selectValues={dealStage}
             />
           </TableRow>
@@ -111,19 +115,19 @@ class DealForm extends Component {
             <FormBlock
               required
               label="Account"
-              value={deal.account}
+              value={deal.accountId}
               handleChange={this.props.handleChangeDeal}
-              target="account"
-              selectValues={accountList}
+              target="accountId"
+              selectValues={allAccounts}
             />
           </TableRow>
           <TableRow>
             <FormBlock
               label="Customer"
-              value={deal.customer}
+              value={deal.customerId}
               handleChange={this.props.handleChangeDeal}
-              target="customer"
-              selectValues={customerList}
+              target="customerId"
+              selectValues={allCustomers}
             />
           </TableRow>
           {/**
@@ -132,18 +136,18 @@ class DealForm extends Component {
           <TableRow>
             <FormBlock
               label="Type"
-              value={deal.type}
+              value={deal.typeId}
               handleChange={this.props.handleChangeDeal}
-              target="type"
+              target="typeId"
               selectValues={dealType}
             />
           </TableRow>
           <TableRow>
             <FormBlock
               label="Source"
-              value={deal.source}
+              value={deal.sourceId}
               handleChange={this.props.handleChangeDeal}
-              target="source"
+              target="sourceId"
               selectValues={leadSource}
             />
           </TableRow>
@@ -157,10 +161,13 @@ class DealForm extends Component {
     );
   }
 }
-const mapStateToProps = ({ crmState }) => {
-  const { dealState, crmField } = crmState;
+const mapStateToProps = ({ crmState, usersState }) => {
+  const { dealState, crmField, customerState, accountState } = crmState;
+  const { users } = usersState;
+  const allCustomers = customerState.customerList.tableData;
+  const allAccounts = accountState.accountList.tableData;
   const { dealForm } = dealState;
-  return { dealForm, crmField };
+  return { dealForm, crmField, users, allAccounts, allCustomers };
 };
 
 export default connect(
@@ -171,6 +178,9 @@ export default connect(
     clearDealForm,
     getLeadSource,
     getDealType,
-    getDealStage
+    getDealStage,
+    getAllUsers,
+    getAllAccount,
+    getAllCustomer
   }
 )(DealForm);

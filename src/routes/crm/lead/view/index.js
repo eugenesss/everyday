@@ -71,7 +71,6 @@ class crm_view_lead extends Component {
 
   render() {
     const { lead, loading } = this.props.leadToView;
-
     return (
       <React.Fragment>
         {loading ? (
@@ -118,11 +117,11 @@ class crm_view_lead extends Component {
               <div icon="zmdi-coffee text-primary" label="DETAILS">
                 <LeadDetails lead={lead} />
                 <AddressDetails
-                  address_1={lead.address_1}
-                  address_2={lead.address_2}
-                  city={lead.city}
-                  state={lead.state}
-                  zip={lead.zip}
+                  address_1={lead.baseContact._address.address_1}
+                  address_2={lead.baseContact._address.address_2}
+                  city={lead.baseContact._address.city}
+                  state={lead.baseContact._address.state}
+                  zip={lead.baseContact._address.zip}
                 />
                 <DescriptionDetails desc={lead.description} />
               </div>

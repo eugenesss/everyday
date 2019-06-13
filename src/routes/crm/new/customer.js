@@ -13,8 +13,6 @@ import CustomerForm from "Components/Form/Customer/CustomerForm";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 class crm_new_customer extends Component {
-  state = {};
-
   render() {
     const { loading } = this.props.customerForm;
     return (

@@ -10,25 +10,28 @@ const AccountDetails = ({ account }) => {
       <TabsHeader title="Account Details" />
       <DetailsTable>
         <tr>
-          <SingleDetail title="Owner" value={account.owner.name} />
+          <SingleDetail
+            title="Owner"
+            value={account.owner && account.owner.name}
+          />
           <SingleDetail
             title="Industry"
             value={account.industry && account.industry.name}
           />
         </tr>
         <tr>
-          <SingleDetail title="Office" value={account.office} />
-          <SingleDetail title="Website" value={account.website} />
+          <SingleDetail title="Office" value={account.baseContact.office} />
+          <SingleDetail title="Website" value={account.baseContact.website} />
         </tr>
         <tr>
-          <SingleDetail title="Fax" value={account.fax} />
+          <SingleDetail title="Fax" value={account.baseContact.fax} />
         </tr>
         <tr>
           <SingleDetail
             title="Modified By"
             value={
               <NameTimeStamp
-                name={account.modifiedBy.name}
+                name={account.updatedBy && account.updatedBy.name}
                 timeStamp="08-05-2019 09:30 "
               />
             }
@@ -37,7 +40,7 @@ const AccountDetails = ({ account }) => {
             title="Created By"
             value={
               <NameTimeStamp
-                name={account.createdBy.name}
+                name={account.createdBy && account.createdBy.name}
                 timeStamp="08-05-2019 09:30 "
               />
             }
