@@ -23,7 +23,8 @@ import {
   GET_ROLE_FAILURE,
 
   CHANGE_SELECTED_ROLE,
-  CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY
+  CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY,
+  CHANGE_SELECTED_GROUP_ROLE,
  } from "Types";
  
 const INIT_STATE = {
@@ -32,13 +33,14 @@ const INIT_STATE = {
     id: ""
   },
   rolesLoading: false,
-  selectedAccessRightsCategory: null,
-  accessRights: [],
-  accessRoles: [],
-  roleRights: [],
-  selectedRoleRights: [],
+  selectedAccessRightsCategory: null,  // State to control expansion panel in Roles & Permissions Settings
+  accessRights: [], // All Rights
+  accessRoles: [],  // All Roles
+  roleRights: [],  // Rights belonging to corresponding roles
+  selectedRoleRights: [], // Access rights belonging to selected role
+  selectedRoleGroups: [],  // Roles belonging to selected group (GroupsManager.js)
+  unselectedRoleGroups: [],  // Roles not belonging to selected group (GroupsManager.js)
 };
-
 
 
 export default (state = INIT_STATE, action) => {
@@ -48,7 +50,7 @@ export default (state = INIT_STATE, action) => {
     );
     return roles;
   }
-  function groupBy(list, keyGetter) {
+  function groupBy(list, keyGetter) {  // to group array into nested objects base on selected attributes
     const map = new Map();
     list.forEach((item) => {
       const key = keyGetter(item);
@@ -113,7 +115,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Update Role
      */
-    case ON_CHANGE_UPDATE_ROLE:
+    case ON_CHANGE_UPDATE_ROLE: // On change selected role attributes; name etc.
       return {
         ...state,
         selectedRole: {
@@ -121,7 +123,7 @@ export default (state = INIT_STATE, action) => {
           [action.payload.field]: action.payload.value
         }
       }
-    case ON_CHANGE_UPDATE_ROLE_RIGHTS:
+    case ON_CHANGE_UPDATE_ROLE_RIGHTS:  // On change checkboxes in Roles & Permissions Settings
       return {
         ...state,
         selectedRoleRights: action.payload
@@ -178,7 +180,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * State Changes
      */
-    case CHANGE_SELECTED_ROLE:
+    case CHANGE_SELECTED_ROLE:  // Change selected role in Role List (RolesList.js)
       var selectedRole = {}
       if(action.payload == "Super Admin")
         selectedRole.name = action.payload
@@ -194,13 +196,23 @@ export default (state = INIT_STATE, action) => {
         selectedRole: selectedRole,
         selectedRoleRights: selectedRights
       };
-    case CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY:
+    case CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY:  // Change selected category to control expansion panel in Role Manager (RolesManager.js)
       let selectedAccessRightsCategory = action.payload
       if(action.payload == state.selectedAccessRightsCategory)
         selectedAccessRightsCategory = null
       return {
         ...state,
         selectedAccessRightsCategory: selectedAccessRightsCategory
+      }
+    case CHANGE_SELECTED_GROUP_ROLE:  // Change list of roles assigned and not assign to group in Groups List (GroupsList.js)
+      let selectedGroupRoles = action.payload
+      var allRoles = Object.assign([], state.accessRoles)
+      var selectedRoles = allRoles.filter(role => selectedGroupRoles.find(groupRole => {groupRole.accessRoleId == role.id}))
+      var unselectedRoles = allRoles.filter(role => !selectedGroupRoles.find(groupRole => {groupRole.accessRoleId == role.id}))
+      return {
+        ...state,
+        selectedRoleGroups: selectedRoles,
+        unselectedRoleGroups: unselectedRoles
       }
       
     default:

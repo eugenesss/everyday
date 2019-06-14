@@ -21,7 +21,6 @@ import {
   updateGroup,
   deleteGroup 
 } from "Actions";
-import { access } from "fs";
 
 const styles = theme => ({
   root: {
@@ -57,17 +56,15 @@ class GroupsManager extends Component {
     const { 
       classes,
 
-      accessRoles,
       selectedGroup,
       selectedGroupRoles,
+      selectedRoleGroups,
+      unselectedRoleGroups,
 
       updateGroup,
       onChangeUpdateGroup,
       deleteGroup,
      } = this.props;
-     var roles = Object.assign([], accessRoles)
-     var selectedRoles = roles.filter(role => selectedGroupRoles.find(groupRole => {groupRole.accessRoleId == role.id}))
-     var unselectedRoles = roles.filter(role => !selectedGroupRoles.find(groupRole => {groupRole.accessRoleId == role.id}))
      return (
       <React.Fragment>
         <div className={classes.root}>
@@ -108,21 +105,21 @@ class GroupsManager extends Component {
                     </TableCell>
                     <TableCell align="center">
                       <Radio
-                        //checked={}
+                        checked={role.tier == 1}
                         value={1}
                         color="primary"
                       />
                     </TableCell>
                     <TableCell align="center">
                       <Radio
-                        //checked={}
+                        checked={role.tier == 2}
                         value={2}
                         color="primary"
                       />
                     </TableCell>
                     <TableCell align="center">
                       <Radio
-                        //checked={}
+                        checked={role.tier == 3}
                         value={3}
                         color="primary"
                       />
@@ -139,7 +136,7 @@ class GroupsManager extends Component {
                 fullWidth
                 required
                 error={ selectedGroup ? !selectedGroup.name : false}
-                disabled={!selectedGroup || selectedRoles.length == 0}
+                disabled={!selectedGroup || selectedRoleGroups.length == 0}
                 id="name"
                 label="Remove Role from Group"
                 className={classes.textField}
@@ -147,7 +144,7 @@ class GroupsManager extends Component {
                 onChange={(e) => console.log(e.target.value)}
                 margin="normal"
               > 
-                {selectedRoles.map((role) => {
+                {selectedRoleGroups.map((role) => {
                     return (
                       <MenuItem key={role.id} value={role.id}>
                         <ListItemText primary={role.name} />
@@ -162,7 +159,7 @@ class GroupsManager extends Component {
                   fullWidth
                   required
                   error={ selectedGroup ? !selectedGroup.name : false}
-                  disabled={!selectedGroup || unselectedRoles.length == 0}
+                  disabled={!selectedGroup || unselectedRoleGroups.length == 0}
                   id="name"
                   label="Add Role to Group"
                   className={classes.textField}
@@ -170,7 +167,7 @@ class GroupsManager extends Component {
                   onChange={(e) => console.log(e.target.value)}
                   margin="normal"
                 > 
-                  {unselectedRoles.map((role) => {
+                  {unselectedRoleGroups.map((role) => {
                       return (
                         <MenuItem key={role.id} value={role.id}>
                           <ListItemText primary={role.name} />
@@ -214,9 +211,9 @@ GroupsManager.propTypes = {
 };
 
 const mapStateToProps = ({ groupsState, rolesState}) => {
-  const { accessRoles } = rolesState
+  const { selectedRoleGroups, unselectedRoleGroups } = rolesState
   const { selectedGroup, selectedGroupRoles } = groupsState
-  return { accessRoles, selectedGroup, selectedGroupRoles };
+  return { selectedRoleGroups, unselectedRoleGroups, selectedGroup, selectedGroupRoles };
 };
 
 export default connect(
