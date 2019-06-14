@@ -23,9 +23,6 @@ import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 import NewEventsButton from "Components/CRM/View/Events/NewEventsButton";
 
-// Activity Log Tab
-// import ActivityLog from "Components/Everyday/ActivityLog";
-
 // Notes Tab
 import NewNote from "Components/Form/Note/NewNote";
 import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
@@ -71,7 +68,6 @@ class crm_view_lead extends Component {
 
   render() {
     const { lead, loading } = this.props.leadToView;
-
     return (
       <React.Fragment>
         {loading ? (
@@ -111,18 +107,18 @@ class crm_view_lead extends Component {
                 companyName={lead.companyName}
                 status={lead.status && lead.status.name}
                 statusColor={lead.status && lead.status.color}
-                ownerName={lead.owner && lead.owner.name}
+                ownerName={lead.userInfo && lead.userInfo.name}
               />
             </RctCollapsibleCard>
             <TabsWrapper>
               <div icon="zmdi-coffee text-primary" label="DETAILS">
                 <LeadDetails lead={lead} />
                 <AddressDetails
-                  address_1={lead.address_1}
-                  address_2={lead.address_2}
-                  city={lead.city}
-                  state={lead.state}
-                  zip={lead.zip}
+                  address_1={lead.baseContact._address.address_1}
+                  address_2={lead.baseContact._address.address_2}
+                  city={lead.baseContact._address.city}
+                  state={lead.baseContact._address.state}
+                  zip={lead.baseContact._address.zip}
                 />
                 <DescriptionDetails desc={lead.description} />
               </div>
@@ -132,9 +128,6 @@ class crm_view_lead extends Component {
                 <hr />
                 <ClosedEvents events={lead.closedEvents} />
               </div>
-              {/* <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
-                <ActivityLog />
-              </div> */}
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div className="col-md-4">

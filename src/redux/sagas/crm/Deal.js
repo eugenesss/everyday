@@ -35,44 +35,44 @@ import { dealList, deal, leadSummary } from "Components/DummyData";
 // REQUESTS
 //=========================
 const getAllDealRequest = async () => {
-  const result = dealList;
-  return result;
+  const result = await api.get("/deals");
+  return result.data;
 };
 const getMyDealRequest = async () => {
-  const result = dealList;
-  return result;
+  const result = await api.get("/deals");
+  return result.data;
 };
 const getOpenDealRequest = async () => {
-  const result = dealList;
-  return result;
+  const result = await api.get("/deals");
+  return result.data;
 };
 const getClosedDealRequest = async () => {
-  const result = dealList;
-  return result;
+  const result = await api.get("/deals");
+  return result.data;
 };
 const getWonDealRequest = async () => {
-  const result = dealList;
-  return result;
+  const result = await api.get("/deals");
+  return result.data;
 };
 const getDealRequest = async dealID => {
-  console.log(`fetching ${dealID}`);
-  const result = deal;
-  return result;
+  const result = await api.get(`/deals/${dealID}`);
+  return result.data;
 };
 const getDealSummaryRequest = async () => {
   const result = leadSummary;
   return result;
 };
 const postDealRequest = async deal => {
-  console.log(deal);
-  const result = {};
-  return result;
+  const result = await api.post("/deals", deal);
+  return result.data;
 };
 const postNewStageRequest = async payload => {
   const { dealID, stageID } = payload;
-  console.log(payload);
-  const result = deal;
-  return result;
+  const result = await api.post(`/deals/updateStage`, {
+    dealID: dealID,
+    stageID: stageID
+  });
+  return result.data.data;
 };
 
 //=========================

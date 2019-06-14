@@ -22,10 +22,9 @@ import {
   getLeadSource,
   getLeadStatus,
   getIndustry,
-  getLeadInterest
+  getLeadInterest,
+  getAllUsers
 } from "Actions";
-
-import { users } from "Components/UserDummyData";
 
 class LeadForm extends Component {
   componentWillMount() {
@@ -33,6 +32,7 @@ class LeadForm extends Component {
     this.props.getLeadStatus();
     this.props.getIndustry();
     this.props.getLeadInterest();
+    this.props.getAllUsers();
   }
   componentWillUnmount() {
     this.props.clearNewLead();
@@ -46,6 +46,7 @@ class LeadForm extends Component {
       industry,
       leadInterest
     } = this.props.crmField;
+    const { users } = this.props;
     const disabled =
       lead.baseContact.firstName && lead.companyName && lead.statusId;
     return (
@@ -225,10 +226,11 @@ class LeadForm extends Component {
     );
   }
 }
-const mapStateToProps = ({ crmState }) => {
+const mapStateToProps = ({ crmState, usersState }) => {
   const { leadState, crmField } = crmState;
+  const { users } = usersState;
   const { leadForm } = leadState;
-  return { leadForm, crmField };
+  return { leadForm, crmField, users };
 };
 
 export default connect(
@@ -240,6 +242,7 @@ export default connect(
     getLeadSource,
     getLeadStatus,
     getIndustry,
-    getLeadInterest
+    getLeadInterest,
+    getAllUsers
   }
 )(LeadForm);

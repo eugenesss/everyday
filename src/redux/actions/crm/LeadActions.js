@@ -26,7 +26,9 @@ import {
   CONVERT_LEAD,
   CONVERT_LEAD_SUCCESS,
   CONVERT_LEAD_FAILURE,
-  UNMOUNT_CONVERT_LEAD
+  UNMOUNT_CONVERT_LEAD,
+  START_LEAD_EDIT,
+  SUBMIT_EDIT_LEAD
 } from "Types";
 
 /**
@@ -179,4 +181,15 @@ export const handleConvertModal = () => ({
 });
 export const handleSuccessConvertModal = () => ({
   type: HANDLE_SUCCESS_CONVERT_MODAL
+});
+
+/**
+ * Edit
+ */
+export const startLeadEdit = lead => ({
+  type: START_LEAD_EDIT,
+  payload: lead
+});
+export const submitEditLead = () => ({
+  type: SUBMIT_EDIT_LEAD
 });

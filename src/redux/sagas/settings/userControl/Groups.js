@@ -20,22 +20,29 @@ import {
   getGroupFailure,
  } from "Actions";
 import api from "Api";
-import { groups, addGroup } from "Components/GroupsDummyData";
 
 //=========================
 // REQUESTS
 //=========================
 const getAllGroupsRequest = async () => {
-  const result = groups;
-  return result;
+  const result = await api.get(`/accessgroups`)
+  return result.data
+}
+const getAllGroupRolesRequest = async () => {
+  const result = await api.get(`/accessgrouproles`)
+  return result.data
 }
 const addGroupRequest = async () => {
-  const result = addGroup()
-  return result
+  const result = await api.post(`/accessgroups`, {
+    "name": "New Group"
+  });
+  return result.data;
 }
-const updateGroupRequest = async (group) => {
-  const result = group
-  return result
+const updateGroupNameRequest = async (groupName, groupId) => {
+  const result = await api.patch(`/accessgroups/${groupId}`, {
+    "name": groupName
+  })
+  return result.data
 }
 const deleteGroupRequest = async (group) => {
   const result = group
@@ -47,8 +54,9 @@ const deleteGroupRequest = async (group) => {
 //=========================
 function* getAllGroupsFromDB() {
   try {
-    const data =  yield call(getAllGroupsRequest)
-    yield put(getAllGroupsSuccess(data))
+    const groups =  yield call(getAllGroupsRequest)
+    const groupRoles = yield call(getAllGroupRolesRequest)
+    yield put(getAllGroupsSuccess(groups, groupRoles))
   } catch (err) {
     yield put(getGroupFailure(err))
   }
@@ -65,7 +73,7 @@ function* updateGroupToDB() {
   const getGroup = state => state.groupsState.selectedGroup;
   const group = yield select(getGroup)
   try {
-    const data = yield call(updateGroupRequest, group);
+    const data = yield call(updateGroupNameRequest, group.name, group.id);
     yield put(updateGroupSuccess(data));
   } catch (err)  {
     yield put(updateGroupFailure(err));

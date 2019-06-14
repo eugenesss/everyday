@@ -23,32 +23,28 @@ import {
 
 import api from "Api";
 
-import { customerList, cust, cust2 } from "Components/DummyData";
-
 //=========================
 // REQUESTS
 //=========================
 const getAllCustomerRequest = async () => {
-  const result = customerList;
-  return result;
+  const result = await api.get("/customers");
+  return result.data;
 };
 const getMyCustomerRequest = async () => {
-  const result = customerList;
-  return result;
+  const result = await api.get("/customers");
+  return result.data;
 };
 const getOpenCustomerRequest = async () => {
-  const result = customerList;
-  return result;
+  const result = await api.get("/customers");
+  return result.data;
 };
 const getCustomerRequest = async custID => {
-  console.log(`fetching ${custID}`);
-  const result = custID == 1 ? cust : cust2;
-  return result;
+  const result = await api.get(`/customers/${custID}`);
+  return result.data;
 };
 const postCustomerRequest = async cust => {
-  console.log(cust);
-  const result = {};
-  return result;
+  const result = await api.post("/customers", cust);
+  return result.data;
 };
 
 //=========================

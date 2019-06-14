@@ -7,11 +7,7 @@ const AccountCard = ({
   ownerName,
   office,
   fax,
-  address_1,
-  address_2,
-  state,
-  city,
-  zip
+  fullAddress
 }) => {
   return (
     <div className="user-profile-widget">
@@ -37,11 +33,10 @@ const AccountCard = ({
               {fax}
             </li>
           )}
-          {address_1 && (
+          {fullAddress && (
             <li className="border-bottom py-10 fs-14 d-flex align-items-center">
               <i className="zmdi zmdi-pin-drop mr-20 fs-14" />
-              {`${address_1}, ${address_2}`} <br />
-              {`${state}, ${city}, ${zip}`}
+              {fullAddress}
             </li>
           )}
           {ownerName && (

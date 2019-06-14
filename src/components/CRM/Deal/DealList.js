@@ -54,7 +54,7 @@ const DealList = ({ tableData, loading, title, action }) => {
       name: "stage",
       options: {
         customBodyRender: value => {
-          return value.name;
+          return value ? value.name : "";
         }
       }
     },
@@ -65,7 +65,7 @@ const DealList = ({ tableData, loading, title, action }) => {
         filter: false,
         display: false,
         customBodyRender: value => {
-          return value.chance;
+          return value ? value.chance : "";
         }
       }
     },
@@ -83,7 +83,11 @@ const DealList = ({ tableData, loading, title, action }) => {
       name: "account",
       options: {
         customBodyRender: value => {
-          return <NavLink to={`accounts/${value.id}`}>{value.name}</NavLink>;
+          return value ? (
+            <NavLink to={`accounts/${value.id}`}>{value.name}</NavLink>
+          ) : (
+            ""
+          );
         }
       }
     },
@@ -101,11 +105,11 @@ const DealList = ({ tableData, loading, title, action }) => {
       }
     },
     {
-      label: "Deal Owner",
-      name: "owner",
+      label: "Owner",
+      name: "userInfo",
       options: {
         customBodyRender: value => {
-          return value.name;
+          return value ? value.name : "";
         }
       }
     },
@@ -115,7 +119,7 @@ const DealList = ({ tableData, loading, title, action }) => {
       options: {
         display: false,
         customBodyRender: value => {
-          return value.name;
+          return value ? value.name : "";
         }
       }
     },
@@ -125,7 +129,7 @@ const DealList = ({ tableData, loading, title, action }) => {
       options: {
         display: false,
         customBodyRender: value => {
-          return value.name;
+          return value ? value.name : "";
         }
       }
     }

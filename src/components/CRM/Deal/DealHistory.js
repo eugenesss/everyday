@@ -36,8 +36,8 @@ const DealHistory = ({ history }) => {
                     <TableCell>{his.chance}</TableCell>
                     <TableCell>{getTheDate(his.closingDate)}</TableCell>
                     <TableCell>{his.duration}</TableCell>
-                    <TableCell>{his.createdAt}</TableCell>
-                    <TableCell>{his.createdBy.name}</TableCell>
+                    <TableCell>{getTheDate(his.createdAt)}</TableCell>
+                    <TableCell>{his.createdBy && his.createdBy.name}</TableCell>
                   </TableRow>
                 );
               })}

@@ -85,9 +85,9 @@ export const clearSingleAccount = () => ({
 /**
  * New Account
  */
-export const handleChangeAccount = (field, value) => ({
+export const handleChangeAccount = (field, value, type) => ({
   type: HANDLE_CHANGE_ACCOUNT,
-  payload: { value, field }
+  payload: { value, field, type }
 });
 export const submitAccount = () => ({
   type: SUBMIT_ACCOUNT

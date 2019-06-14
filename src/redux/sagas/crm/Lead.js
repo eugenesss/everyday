@@ -13,7 +13,8 @@ import {
   GET_SINGLE_LEAD,
   GET_LEAD_SUMMARY,
   SUBMIT_NEW_LEAD,
-  CONVERT_LEAD
+  CONVERT_LEAD,
+  SUBMIT_EDIT_LEAD
 } from "Types";
 import {
   getLeadSuccess,
@@ -39,20 +40,20 @@ const getAllLeadRequest = async () => {
   return result.data;
 };
 const getMyLeadRequest = async () => {
-  const result = leadList;
-  return result;
+  const result = await api.get("/leads");
+  return result.data;
 };
 const getOpenLeadRequest = async () => {
-  const result = leadList;
-  return result;
+  const result = await api.get("/leads");
+  return result.data;
 };
 const getHotLeadRequest = async () => {
-  const result = leadList;
-  return result;
+  const result = await api.get("/leads");
+  return result.data;
 };
 const getColdLeadRequest = async () => {
-  const result = leadList;
-  return result;
+  const result = await api.get("/leads");
+  return result.data;
 };
 const getLeadRequest = async leadID => {
   const result = await api.get(`/leads/${leadID}`);
@@ -63,9 +64,8 @@ const getLeadSummaryRequest = async () => {
   return result;
 };
 const postLeadRequest = async lead => {
-  console.log(lead);
-  const result = {};
-  return result;
+  const result = await api.post("/leads", lead);
+  return result.data;
 };
 const convertLeadRequest = async data => {
   console.log(data);
@@ -75,6 +75,11 @@ const convertLeadRequest = async data => {
     newAcct: { name: "Account One", industry: { name: "Fashion" } }
   };
   return result;
+};
+const editLeadRequest = async lead => {
+  const result = await api.patch(`/leads/${lead.id}`, lead);
+  console.log(result);
+  return result.data;
 };
 
 //=========================
@@ -168,6 +173,17 @@ function* convertLeadToDB({ payload }) {
     yield put(convertLeadFailure(error));
   }
 }
+function* editLeadToDB() {
+  try {
+    const getLeadState = state => state.crmState.leadState.leadForm.lead;
+    const lead = yield select(getLeadState);
+    const data = yield call(editLeadRequest, lead);
+    yield delay(500);
+    yield put(newLeadSuccess(data));
+  } catch (error) {
+    yield put(newLeadError(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -190,6 +206,9 @@ export function* postLeadWatcher() {
 export function* convertLeadWatcher() {
   yield takeEvery(CONVERT_LEAD, convertLeadToDB);
 }
+export function* editLeadWatcher() {
+  yield takeEvery(SUBMIT_EDIT_LEAD, editLeadToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -201,6 +220,7 @@ export default function* rootSaga() {
     fork(getSingleLeadWatcher),
     fork(getLeadSummaryWatcher),
     fork(postLeadWatcher),
-    fork(convertLeadWatcher)
+    fork(convertLeadWatcher),
+    fork(editLeadWatcher)
   ]);
 }

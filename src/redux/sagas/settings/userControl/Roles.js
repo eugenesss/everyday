@@ -1,15 +1,6 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-  select,
-  delay
-} from "redux-saga/effects";
+import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
 import {
   GET_ALL_ROLES,
-  CHANGE_SELECTED_ROLE,
   ADD_ROLE,
   UPDATE_ROLE,
   DELETE_ROLE
@@ -25,8 +16,6 @@ import {
   deleteRoleFailure
 } from "Actions";
 // import api from "Api";
-import { roles, addRole } from "Components/RolesDummyData";
-import { operations } from "Components/OperationsDummyData";
 import api from "Api";
 
 //=========================
@@ -41,38 +30,28 @@ const getAllAccessRolesRequest = async () => {
   return result.data;
 };
 const getAllAccessRolesAccessRightsRequest = async () => {
-  const result = await api.get(`accessroles/getAllRoleRights`);
+  const result = await api.get(`/accessroles/accessRights`);
   return result.data.data;
-};
-const getAllRolesRequest = async () => {
-  const result = roles;
-  return result;
-};
-const getAllOperationsRequest = async () => {
-  try {
-    const result = operations;
-    return result;
-  } catch (err) {
-    return err;
-  }
 };
 
 const addRoleRequest = async () => {
-  try {
-    const result = addRole();
-    return result;
-  } catch (err) {
-    return err;
-  }
+  const result = await api.post(`/accessroles`, {
+    "name": "New Role"
+  });
+  return result.data;
 };
-const updateRoleRequest = async role => {
-  try {
-    const result = role;
-    return result;
-  } catch (err) {
-    return err;
-  }
+
+const updateRoleNameRequest = async (roleName, roleId) => {
+  const result = await api.patch(`accessRoles/${roleId}`, {
+    "name": roleName
+  });
+  return result.data;
 };
+const updateRoleRightRequest = async (roleId, rights) => {
+  const result = await api.patch(`accessRoles/${roleId}/accessRights`, {data: rights})
+  return result.data
+}
+
 const deleteRoleRequest = async role => {
   try {
     const result = role;
@@ -87,14 +66,10 @@ const deleteRoleRequest = async role => {
 //=========================
 function* getAllRolesFromDB() {
   try {
-    const roles = yield call(getAllRolesRequest);
-    const operations = yield call(getAllOperationsRequest);
     const accessRights = yield call(getAllAccessRightsRequest);
     const accessRoles = yield call(getAllAccessRolesRequest);
     const roleRights = yield call(getAllAccessRolesAccessRightsRequest);
-    console.log(roleRights);
-
-    yield put(getAllRolesSuccess(roles, operations, accessRights, accessRoles));
+    yield put(getAllRolesSuccess(accessRights, accessRoles, roleRights));
   } catch (err) {
     yield put(getRoleFailure(err));
   }
@@ -109,9 +84,12 @@ function* addRoleToDB() {
 }
 function* updateRoleToDB() {
   try {
+    const getRights = state => state.rolesState.selectedRoleRights
+    const rights = yield select(getRights)
     const getRole = state => state.rolesState.selectedRole;
     const role = yield select(getRole);
-    const data = yield call(updateRoleRequest, role);
+    const data = yield call(updateRoleNameRequest, role.name, role.id);
+    const dataTest = yield call(updateRoleRightRequest, role.id, rights) //NOT WORKING***
     yield put(updateRoleSuccess(data));
   } catch (err) {
     yield put(updateRoleFailure(err));
@@ -149,7 +127,6 @@ export function* deleteRoleWatcher() {
 //=======================
 export default function* rootSaga() {
   yield all([
-    ,
     fork(getAllRolesWatcher),
     fork(addRoleWatcher),
     fork(updateRoleWatcher),

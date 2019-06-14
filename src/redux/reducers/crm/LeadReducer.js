@@ -27,7 +27,9 @@ import {
   CONVERT_LEAD,
   CONVERT_LEAD_SUCCESS,
   CONVERT_LEAD_FAILURE,
-  UNMOUNT_CONVERT_LEAD
+  UNMOUNT_CONVERT_LEAD,
+  START_LEAD_EDIT,
+  SUBMIT_EDIT_LEAD
 } from "Types";
 
 const INIT_STATE = {
@@ -303,6 +305,21 @@ export default (state = INIT_STATE, action) => {
         ...state,
         leadToConvert: INIT_STATE.leadToConvert
       };
+
+    /**
+     * Edit
+     */
+    case START_LEAD_EDIT:
+      return {
+        ...state,
+        leadForm: { ...state.leadForm, lead: action.payload }
+      };
+    case SUBMIT_EDIT_LEAD:
+      return {
+        ...state,
+        leadForm: { ...state.leadForm, loading: true }
+      };
+
     default:
       return { ...state };
   }

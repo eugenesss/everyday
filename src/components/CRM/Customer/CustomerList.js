@@ -37,19 +37,53 @@ const CustomerList = ({ tableData, loading, title, action }) => {
         }
       }
     },
-    { label: "Email", name: "email" },
-    { label: "Mobile", name: "mobile" },
     {
-      label: "Owner",
-      name: "owner",
+      label: "Email",
+      name: "baseContact",
       options: {
         customBodyRender: value => {
-          return value.name;
+          return value.email ? value.email : "";
         }
       }
     },
-    { label: "Office", name: "office", options: { display: false } },
-    { label: "Fax", name: "fax", options: { display: false } }
+    {
+      label: "Mobile",
+      name: "baseContact",
+      options: {
+        customBodyRender: value => {
+          return value.mobile ? value.mobile : "";
+        }
+      }
+    },
+    {
+      label: "Owner",
+      name: "userInfo",
+      options: {
+        customBodyRender: value => {
+          return value ? value.name : "";
+        }
+      }
+    },
+    {
+      label: "Office",
+      name: "baseContact",
+      options: {
+        display: false,
+        customBodyRender: value => {
+          return value.phone ? value.phone : "";
+        }
+      }
+    },
+    {
+      label: "Fax",
+      name: "baseContact",
+      options: {
+        display: false,
+        customBodyRender: value => {
+          return value.fax ? value.fax : "";
+        }
+      }
+    }
   ];
   if (action == true) {
     columns.push({
