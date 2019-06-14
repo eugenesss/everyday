@@ -152,7 +152,7 @@ class RegisterSteps extends React.Component {
         break 
     }
 
-
+    // change success to normal for development
     return (
       <div>
         {!success ? (
@@ -217,9 +217,13 @@ class RegisterSteps extends React.Component {
           </Stepper>
         ) : (
           <Paper square elevation={0} className="pl-40">
-            <p>
-              Registration Complete - Login <Link to="/login">here</Link>
-            </p>
+
+            <div style={{display:'flex', flex: 1, justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
+              <h1>A verification link has been sent to your email account</h1>
+              <p>Please click on the link that has just been sent to your email account to verify your email and continue the registeration process.</p>
+              {/* <p>Registration Complete - Login <Link to="/login">here</Link></p> */}
+            </div>
+       
           </Paper>
         )}
       </div>

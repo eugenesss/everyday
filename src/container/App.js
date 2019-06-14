@@ -4,6 +4,7 @@
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { NotificationContainer } from "react-notifications";
+import { connect } from "react-redux";
 
 // rct theme provider
 import RctThemeProvider from "./RctThemeProvider";
@@ -29,21 +30,21 @@ class App extends Component {
 
     const { location, match, user } = this.props;
 
-    
+
     // check if user is authenticated, if not redirect to login
 
-    // switch (new Auth().isAuthenticated()) {
-    //   case false:
-    //       if (location.pathname === "/") { return <Redirect to={"/login"} /> }
-    //   case true:
-    //       if (location.pathname === "/") { return <Redirect to={"/app/homebase"} /> }
-    //   default:break
-    // }
+    switch (new Auth().isAuthenticated()) {
+      case false:
+          if (location.pathname === "/") { return <Redirect to={"/login"} /> }
+      case true:
+          if (location.pathname === "/") { return <Redirect to={"/app/homebase"} /> }
+      default:break
+    }
 
   
-    if (location.pathname === "/") {
-      return <Redirect to={"/app/homebase"} />;
-    }
+    // if (location.pathname === "/") {
+    //   return <Redirect to={"/app/homebase"} />;
+    // }
 
 
     return (
@@ -54,7 +55,6 @@ class App extends Component {
           authUser={user}
           component={HorizontalLayout}
         />
-
 
         {/* Added switch to match URL Link */}
         <Switch>
@@ -76,4 +76,10 @@ const mapStateToProps = ({ authUser }) => {
   return { user };
 };
 
-export default App;
+// export default App;
+
+export default connect(
+  mapStateToProps,
+)(App);
+
+

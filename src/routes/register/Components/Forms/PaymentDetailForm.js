@@ -74,6 +74,7 @@ const PaymentDetailForm = props => {
   const { handleRegForm, paymentInfo } = props;
   return (
     <Form>
+
       <FormGroup row className="has-wrapper">
         <Label for="payment_name" className="fs-13 text-right" sm={2}>
           Name on Card
@@ -154,6 +155,7 @@ const PaymentDetailForm = props => {
           />
         </Col>
       </FormGroup>
+    
     </Form>
   );
 };
