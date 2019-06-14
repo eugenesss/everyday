@@ -88,14 +88,10 @@ class crm_view_account extends Component {
             <AccountCard
               name={account.name}
               industry={account.industry && account.industry.name}
-              ownerName={account.owner.name}
-              office={account.office}
-              fax={account.fax}
-              address_1={account.address_1}
-              address_2={account.address_2}
-              state={account.state}
-              city={account.city}
-              zip={account.zip}
+              ownerName={account.userInfo && account.userInfo.name}
+              office={account.baseContact.office}
+              fax={account.baseContact.fax}
+              fullAddress={account.fullAddress}
             />
           </RctCollapsibleCard>
         </div>
@@ -104,11 +100,11 @@ class crm_view_account extends Component {
             <React.Fragment>
               <AccountDetails account={account} />
               <AddressDetails
-                address_1={account.address_1}
-                address_2={account.address_2}
-                state={account.state}
-                city={account.city}
-                zip={account.zip}
+                address_1={account.baseContact._address.address_1}
+                address_2={account.baseContact._address.address_2}
+                state={account.baseContact._address.state}
+                city={account.baseContact._address.city}
+                zip={account.baseContact._address.zip}
               />
               <DescriptionDetails desc={account.description} />
             </React.Fragment>

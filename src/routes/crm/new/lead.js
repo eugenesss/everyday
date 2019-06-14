@@ -13,8 +13,6 @@ import LeadForm from "Components/Form/Lead/LeadForm";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 class crm_new_lead extends Component {
-  state = {};
-
   render() {
     const { loading } = this.props.leadForm;
     return (

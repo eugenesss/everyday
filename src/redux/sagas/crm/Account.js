@@ -23,32 +23,28 @@ import {
 
 import api from "Api";
 
-import { accountList, account, custSummary } from "Components/DummyData";
-
 //=========================
 // REQUESTS
 //=========================
 const getAllAccountRequest = async () => {
-  const result = accountList;
-  return result;
+  const result = await api.get("/accounts");
+  return result.data;
 };
 const getMyAccountRequest = async () => {
-  const result = accountList;
-  return result;
+  const result = await api.get("/accounts");
+  return result.data;
 };
 const getOpenAccountRequest = async () => {
-  const result = accountList;
-  return result;
+  const result = await api.get("/accounts");
+  return result.data;
 };
 const getAccountRequest = async acctID => {
-  console.log(`fetching ${acctID}`);
-  const result = account;
-  return result;
+  const result = await api.get(`/accounts/${acctID}`);
+  return result.data;
 };
 const postAccountRequest = async acct => {
-  console.log(acct);
-  const result = {};
-  return result;
+  const result = await api.post("/accounts", acct);
+  return result.data;
 };
 
 //=========================

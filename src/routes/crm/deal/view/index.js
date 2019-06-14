@@ -29,7 +29,7 @@ import NewEventsButton from "Components/CRM/View/Events/NewEventsButton";
 // import ActivityLog from "Components/Everyday/ActivityLog";
 
 // History Tab
-import DealHistory from "Components/CRM/View/Deal/DealHistory";
+import DealHistory from "Components/CRM/Deal/DealHistory";
 
 // Notes Tab
 import NewNote from "Components/Form/Note/NewNote";
@@ -97,8 +97,8 @@ class crm_view_deal extends Component {
                 name={deal.name}
                 stage={deal.stage.name}
                 chance={deal.stage.chance}
-                type={deal.type.name}
-                ownerName={deal.owner.name}
+                type={deal.type && deal.type.name}
+                ownerName={deal.userInfo && deal.userInfo.name}
                 amount={deal.amount}
               />
             </RctCollapsibleCard>

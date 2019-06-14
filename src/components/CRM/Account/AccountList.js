@@ -37,10 +37,10 @@ const AccountList = ({ tableData, loading, title, action }) => {
     { label: "Office", name: "office" },
     {
       label: "Owner",
-      name: "owner",
+      name: "userInfo",
       options: {
         customBodyRender: value => {
-          return value.name;
+          return value ? value.name : "";
         }
       }
     },

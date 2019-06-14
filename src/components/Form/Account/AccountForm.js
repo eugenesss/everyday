@@ -16,14 +16,14 @@ import {
   handleChangeAccount,
   submitAccount,
   clearAccountForm,
-  getIndustry
+  getIndustry,
+  getAllUsers
 } from "Actions";
-
-import { users } from "Components/UserDummyData";
 
 class AccountForm extends Component {
   componentWillMount() {
     this.props.getIndustry();
+    this.props.getAllUsers();
   }
   componentWillUnmount() {
     this.props.clearAccountForm();
@@ -32,7 +32,8 @@ class AccountForm extends Component {
   render() {
     const { account } = this.props.accountForm;
     const { industry } = this.props.crmField;
-    const disabled = account.name && account.owner;
+    const { users } = this.props;
+    const disabled = account.baseContact.name && account.owner;
     return (
       <React.Fragment>
         <FormSubmitResetButtons
@@ -44,9 +45,10 @@ class AccountForm extends Component {
           <TableRow>
             <FormBlock
               label="Name"
-              value={account.name}
+              value={account.baseContact.name}
               handleChange={this.props.handleChangeAccount}
               target="name"
+              targetType="baseContact"
               required
             />
             <FormBlock
@@ -61,9 +63,9 @@ class AccountForm extends Component {
           <TableRow>
             <FormBlock
               label="Industry"
-              value={account.industry}
+              value={account.industryId}
               handleChange={this.props.handleChangeAccount}
-              target="industry"
+              target="industryId"
               selectValues={industry}
             />
           </TableRow>
@@ -119,13 +121,20 @@ class AccountForm extends Component {
   }
 }
 
-const mapStateToProps = ({ crmState }) => {
+const mapStateToProps = ({ crmState, usersState }) => {
   const { accountState, crmField } = crmState;
+  const { users } = usersState;
   const { accountForm } = accountState;
-  return { accountForm, crmField };
+  return { accountForm, crmField, users };
 };
 
 export default connect(
   mapStateToProps,
-  { handleChangeAccount, submitAccount, clearAccountForm, getIndustry }
+  {
+    handleChangeAccount,
+    submitAccount,
+    clearAccountForm,
+    getIndustry,
+    getAllUsers
+  }
 )(AccountForm);

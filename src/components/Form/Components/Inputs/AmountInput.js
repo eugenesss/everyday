@@ -38,7 +38,8 @@ const AmountInput = props => {
       InputProps={{
         inputComponent: NumberFormatCustom,
         startAdornment: <InputAdornment position="start">$</InputAdornment>,
-        endAdornment: props.endAdornmentProps
+        //endAdornment: props.endAdornmentProps
+        ...props.inputProps
       }}
       {...props}
     />

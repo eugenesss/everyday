@@ -3,44 +3,40 @@ import { connect } from "react-redux";
 import { Col, Row } from "reactstrap";
 
 import Button from "@material-ui/core/Button";
-import TextField from '@material-ui/core/TextField';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Radio from '@material-ui/core/Radio';
+import TextField from "@material-ui/core/TextField";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Radio from "@material-ui/core/Radio";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
-import { 
-  onChangeUpdateGroup,
-  updateGroup,
-  deleteGroup 
-} from "Actions";
+import { onChangeUpdateGroup, updateGroup, deleteGroup } from "Actions";
 
 const styles = theme => ({
   root: {
-    display: "block",
+    display: "block"
   },
   textField: {
     marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing.unit
   },
   table: {
-    minHeight: 0,
+    minHeight: 0
   },
   row: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.background.default,
-    },
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.background.default
+    }
   },
   chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap"
   },
   chip: {
     margin: 2
@@ -51,9 +47,9 @@ class GroupsManager extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
-    const { 
+    const {
       classes,
 
       selectedGroup,
@@ -73,14 +69,20 @@ class GroupsManager extends Component {
               <TextField
                 fullWidth
                 required
-                error={ selectedGroup ? !selectedGroup.name : false}
+                error={selectedGroup ? !selectedGroup.name : false}
                 disabled={!selectedGroup || selectedGroup.name == "Global"}
                 id="name"
                 label="Group Name"
                 className={classes.textField}
                 InputLabelProps={{ shrink: true }}
-                value={ selectedGroup ? selectedGroup.name == "Global" ? "Global (default group applied to all roles)" : selectedGroup.name : "" }
-                onChange={(e) => onChangeUpdateGroup('name', e.target.value)}
+                value={
+                  selectedGroup
+                    ? selectedGroup.name == "Global"
+                      ? "Global (default group applied to all roles)"
+                      : selectedGroup.name
+                    : ""
+                }
+                onChange={e => onChangeUpdateGroup("name", e.target.value)}
                 margin="normal"
                 variant="outlined"
               />
@@ -97,7 +99,7 @@ class GroupsManager extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                { selectedGroupRoles &&
+                {selectedGroupRoles &&
                   selectedGroupRoles.map(role => (
                   <TableRow className={classes.row} key={role.accessRoleId}>
                     <TableCell component="th" scope="row">
@@ -141,7 +143,7 @@ class GroupsManager extends Component {
                 label="Remove Role from Group"
                 className={classes.textField}
                 value={[]}
-                onChange={(e) => console.log(e.target.value)}
+                onChange={e => console.log(e.target.value)}
                 margin="normal"
               > 
                 {selectedRoleGroups.map((role) => {
@@ -184,7 +186,7 @@ class GroupsManager extends Component {
                 color="secondary"
                 className="text-white mb-10 mt-10"
                 disabled={selectedGroup ? selectedGroup.id == 0 : true}
-                onClick={()=> deleteGroup()}
+                onClick={() => deleteGroup()}
               >
                 Delete
               </Button>
@@ -194,7 +196,7 @@ class GroupsManager extends Component {
                 variant="contained"
                 color="primary"
                 className="text-white mb-10 mt-10 float-right"
-                onClick={()=> updateGroup()}
+                onClick={() => updateGroup()}
               >
                 Save
               </Button>
@@ -202,12 +204,12 @@ class GroupsManager extends Component {
           </Row>
         </div>
       </React.Fragment>
-    )
+    );
   }
 }
 
 GroupsManager.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 const mapStateToProps = ({ groupsState, rolesState}) => {

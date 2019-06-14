@@ -103,7 +103,7 @@ class crm_view_customer extends Component {
               <RctCollapsibleCard colClasses="col-md-6 col-lg-6" fullBlock>
                 <CustomerCard
                   name={customer.name}
-                  ownerName={customer.owner.name}
+                  ownerName={customer.userInfo && customer.userInfo.name}
                   jobTitle={customer.jobTitle}
                   mobile={customer.mobile}
                   email={customer.email}
@@ -114,11 +114,11 @@ class crm_view_customer extends Component {
               <div icon="zmdi-coffee text-success" label="DETAILS">
                 <CustomerDetails customer={customer} />
                 <AddressDetails
-                  address_1={customer.address_1}
-                  address_2={customer.address_2}
-                  city={customer.city}
-                  state={customer.state}
-                  zip={customer.zip}
+                  address_1={customer.baseContact._address.address_1}
+                  address_2={customer.baseContact._address.address_2}
+                  city={customer.baseContact._address.city}
+                  state={customer.baseContact._address.state}
+                  zip={customer.baseContact._address.zip}
                 />
                 <DescriptionDetails desc={customer.description} />
               </div>

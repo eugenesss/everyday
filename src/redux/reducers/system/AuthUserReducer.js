@@ -81,7 +81,7 @@ export default (state = INIT_STATE, action) => {
     case SIGNUP_USER:
       return { ...state, register: { ...state.register, loading: true } };
     case SIGNUP_USER_SUCCESS:
-      NotificationManager.success(action.payload.msg);
+      NotificationManager.success("Accout Created");
       return {
         ...state,
         register: { ...state.register, loading: false, success: true }
