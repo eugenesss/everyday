@@ -68,6 +68,12 @@ export const Async_crm_new_deal_component = Loadable({
   loading: () => <RctPageLoader />
 });
 
+// crm_edit
+export const Async_crm_edit_lead = Loadable({
+  loader: () => import("Routes/crm/lead/edit"),
+  loading: () => <RctPageLoader />
+});
+
 // project management
 export const Async_proj_component = Loadable({
   loader: () => import("Routes/project"),

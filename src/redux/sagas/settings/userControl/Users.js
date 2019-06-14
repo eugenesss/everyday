@@ -16,6 +16,7 @@ import api from "Api";
 //=========================
 const getAllUsersRequest = async () => {
   const result = await api.get("/users");
+  console.log(result);
   return result.data;
 };
 const addUserRequest = async newUser => {
