@@ -12,7 +12,11 @@ import {
   SIGNUP_USER,
   SIGNUP_USER_SUCCESS,
   SIGNUP_USER_FAILURE,
-  HANDLE_REGISTER_FORM
+  HANDLE_REGISTER_FORM,
+
+
+
+  HANDLE_REGISTER_ERROR
 } from "Types";
 
 /**
@@ -47,6 +51,7 @@ const INIT_STATE = {
 };
 
 export default (state = INIT_STATE, action) => {
+
   switch (action.type) {
     /**
      * Login User
@@ -88,7 +93,6 @@ export default (state = INIT_STATE, action) => {
       };
     case SIGNUP_USER_FAILURE:
       NotificationManager.error(action.payload);
-      console.log(action.payload);
       return {
         ...state,
         register: { ...state.register, loading: false }
@@ -151,6 +155,11 @@ export default (state = INIT_STATE, action) => {
             }
           }
         };
+    
+    case HANDLE_REGISTER_ERROR:
+        NotificationManager.error(action.payload);
+        return { ...state, loading: false };
+
     default:
       return { ...state };
   }
