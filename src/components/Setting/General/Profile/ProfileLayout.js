@@ -28,12 +28,14 @@ class ProfileLayout extends Component {
 
   componentWillMount() { 
     this.props.getAllUsers() //AuthUser
+  }
 
+  componentDidMount() {
+    this.props.updateUserStart(this.props.userView)
   }
 
   render() {
     const { classes, userView, usersLoading } = this.props
-    this.props.updateUserStart(userView)
     return (
       <React.Fragment>
         {/* <Row>
