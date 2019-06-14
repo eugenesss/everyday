@@ -7,7 +7,9 @@ const api = axios.create({
 
 api.interceptors.request.use(config => {
   const token = localStorage.getItem("accessKey");
-  config.url += `?access_token=${token}`;
+  if (token) {
+    config.url += `?access_token=${token}`;
+  }
   return config;
 });
 

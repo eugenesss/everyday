@@ -1,6 +1,5 @@
 import { NotificationManager } from "react-notifications";
 import {
-  CUSTOMER_LIST_DROPDOWN,
   CHANGE_CUSTOMER_LIST_VIEW,
   GET_CUSTOMER_FAILURE,
   GET_CUSTOMER_SUCCESS,
@@ -14,12 +13,13 @@ import {
   SUBMIT_CUSTOMER,
   CLEAR_CUSTOMER_FORM,
   SUBMIT_CUSTOMER_SUCCESS,
-  SUBMIT_CUSTOMER_ERROR
+  SUBMIT_CUSTOMER_ERROR,
+  START_CUSTOMER_EDIT,
+  SUBMIT_EDIT_CUSTOMER
 } from "Types";
 
 const INIT_STATE = {
   customerList: {
-    dropdownOpen: false,
     nowShowing: "All Customers",
     options: ["All Customers", "My Customers", "Open Customers"],
     action: false,
@@ -38,14 +38,6 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    case CUSTOMER_LIST_DROPDOWN:
-      return {
-        ...state,
-        customerList: {
-          ...state.customerList,
-          dropdownOpen: !state.customerList.dropdownOpen
-        }
-      };
     case CHANGE_CUSTOMER_LIST_VIEW:
       if (action.payload == "My Customers") {
         return {
@@ -182,6 +174,20 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         customerForm: { ...state.customerForm, loading: false }
+      };
+
+    /**
+     * Edit
+     */
+    case START_CUSTOMER_EDIT:
+      return {
+        ...state,
+        customerForm: { ...state.customerForm, customer: action.payload }
+      };
+    case SUBMIT_EDIT_CUSTOMER:
+      return {
+        ...state,
+        customerForm: { ...state.customerForm, loading: true }
       };
 
     default:

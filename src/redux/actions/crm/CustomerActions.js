@@ -1,5 +1,4 @@
 import {
-  CUSTOMER_LIST_DROPDOWN,
   CHANGE_CUSTOMER_LIST_VIEW,
   GET_CUSTOMER_FAILURE,
   GET_CUSTOMER_SUCCESS,
@@ -13,7 +12,9 @@ import {
   SUBMIT_CUSTOMER,
   CLEAR_CUSTOMER_FORM,
   SUBMIT_CUSTOMER_SUCCESS,
-  SUBMIT_CUSTOMER_ERROR
+  SUBMIT_CUSTOMER_ERROR,
+  START_CUSTOMER_EDIT,
+  SUBMIT_EDIT_CUSTOMER
 } from "Types";
 
 /**
@@ -22,12 +23,6 @@ import {
 export const changeCustomerView = newValue => ({
   type: CHANGE_CUSTOMER_LIST_VIEW,
   payload: newValue
-});
-/**
- * Toggle DropDown
- */
-export const toggleCustomerDropDown = () => ({
-  type: CUSTOMER_LIST_DROPDOWN
 });
 
 /**
@@ -102,4 +97,15 @@ export const submitCustomerSuccess = data => ({
 export const submitCustomerError = error => ({
   type: SUBMIT_CUSTOMER_ERROR,
   payload: error
+});
+
+/**
+ * Edit
+ */
+export const startCustomerEdit = cust => ({
+  type: START_CUSTOMER_EDIT,
+  payload: cust
+});
+export const submitEditCustomer = () => ({
+  type: SUBMIT_EDIT_CUSTOMER
 });

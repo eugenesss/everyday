@@ -10,11 +10,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
-import {
-  changeCustomerView,
-  toggleCustomerDropDown,
-  getAllCustomer
-} from "Actions";
+import { changeCustomerView, getAllCustomer } from "Actions";
 
 class crm_customer extends Component {
   componentDidMount() {
@@ -30,7 +26,6 @@ class crm_customer extends Component {
 
   render() {
     const {
-      dropdownOpen,
       options,
       nowShowing,
       action,
@@ -48,8 +43,6 @@ class crm_customer extends Component {
           title={
             <div className="d-flex">
               <ListViewSelector
-                dropdownOpen={dropdownOpen}
-                toggle={this.props.toggleCustomerDropDown}
                 options={options}
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeCustomerView}
@@ -86,7 +79,6 @@ export default connect(
   mapStateToProps,
   {
     changeCustomerView,
-    toggleCustomerDropDown,
     getAllCustomer
   }
 )(crm_customer);

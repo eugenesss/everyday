@@ -15,7 +15,6 @@ import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
 // Actions
 import {
   handleChangeDeal,
-  submitDeal,
   clearDealForm,
   getLeadSource,
   getDealType,
@@ -38,23 +37,29 @@ class DealForm extends Component {
     this.props.clearDealForm();
   }
 
+  checkDisabled(name, owner, amount, stageId, closingDate, accountId) {
+    const disabled =
+      name && owner && amount && stageId && closingDate && accountId;
+    return disabled;
+  }
+
   render() {
     const { deal } = this.props.dealForm;
-    const { users, allAccounts, allCustomers } = this.props;
+    const { users, allAccounts, allCustomers, isEdit } = this.props;
     const { leadSource, dealStage, dealType } = this.props.crmField;
-    const disabled =
-      deal.name &&
-      deal.owner &&
-      deal.amount &&
-      deal.stageId &&
-      deal.closingDate &&
-      deal.accountId;
     return (
       <React.Fragment>
         <FormSubmitResetButtons
           onReset={this.props.clearDealForm}
-          onSubmit={this.props.submitDeal}
-          disabled={disabled}
+          onSubmit={this.props.handleSubmit}
+          disabled={this.checkDisabled(
+            deal.name,
+            deal.owner,
+            deal.amount,
+            deal.stageId,
+            deal.closingDate,
+            deal.accountId
+          )}
         />
         <FormTable>
           <TableRow>
@@ -87,14 +92,16 @@ class DealForm extends Component {
                 />
               }
             />
-            <FormBlock
-              required
-              label="Stage"
-              value={deal.stageId}
-              handleChange={this.props.handleChangeDeal}
-              target="stageId"
-              selectValues={dealStage}
-            />
+            {!isEdit && (
+              <FormBlock
+                required
+                label="Stage"
+                value={deal.stageId}
+                handleChange={this.props.handleChangeDeal}
+                target="stageId"
+                selectValues={dealStage}
+              />
+            )}
           </TableRow>
           <TableRow>
             <FormBlock
@@ -174,7 +181,6 @@ export default connect(
   mapStateToProps,
   {
     handleChangeDeal,
-    submitDeal,
     clearDealForm,
     getLeadSource,
     getDealType,

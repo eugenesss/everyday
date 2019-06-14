@@ -1,8 +1,6 @@
 import { NotificationManager } from "react-notifications";
 import {
-  LEAD_LIST_DROPDOWN,
   CHANGE_LEAD_LIST_VIEW,
-  TOGGLE_LEAD_SUMMARY,
   GET_LEAD_FAILURE,
   GET_ALL_LEAD,
   GET_MY_LEAD,
@@ -34,7 +32,6 @@ import {
 
 const INIT_STATE = {
   leadList: {
-    dropdownOpen: false,
     nowShowing: "All Leads",
     options: ["All Leads", "My Leads", "Open Leads", "Hot Leads", "Cold Leads"],
     action: false,
@@ -43,7 +40,6 @@ const INIT_STATE = {
   },
   leadSummary: {
     summary: [],
-    showSummary: false,
     loading: false
   },
   leadToView: {
@@ -67,14 +63,6 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    case LEAD_LIST_DROPDOWN:
-      return {
-        ...state,
-        leadList: {
-          ...state.leadList,
-          dropdownOpen: !state.leadList.dropdownOpen
-        }
-      };
     case CHANGE_LEAD_LIST_VIEW:
       if (action.payload == "My Leads") {
         return {
@@ -101,14 +89,6 @@ export default (state = INIT_STATE, action) => {
     /**
      * Lead Summary
      */
-    case TOGGLE_LEAD_SUMMARY:
-      return {
-        ...state,
-        leadSummary: {
-          ...state.leadSummary,
-          showSummary: !state.leadSummary.showSummary
-        }
-      };
     case GET_LEAD_SUMMARY:
       return {
         ...state,

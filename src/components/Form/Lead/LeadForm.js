@@ -55,7 +55,7 @@ class LeadForm extends Component {
       <React.Fragment>
         <FormSubmitResetButtons
           onReset={this.props.clearNewLead}
-          onSubmit={this.props.handleSubmitForm}
+          onSubmit={this.props.handleSubmit}
           disabled={this.checkDisabled(
             lead.baseContact.firstName,
             lead.companyName,

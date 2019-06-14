@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import { withRouter } from "react-router-dom";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
@@ -34,7 +34,11 @@ import NewNote from "Components/Form/Note/NewNote";
 import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
-import { getSingleCustomer, clearSingleCustomer } from "Actions";
+import {
+  getSingleCustomer,
+  clearSingleCustomer,
+  startCustomerEdit
+} from "Actions";
 // addNoteToCustomer(custID), onNoteChange, clearNote
 // Add events dialog
 // Delete Customer, Edit Customer, Transfer Customer
@@ -51,8 +55,9 @@ class crm_view_customer extends Component {
   reload() {
     console.log("reload");
   }
-  edit() {
-    console.log("edit");
+  edit(cust) {
+    this.props.startCustomerEdit(cust);
+    this.props.history.push("/app/crm/customers/edit");
   }
   delete() {
     console.log("delete");
@@ -91,7 +96,7 @@ class crm_view_customer extends Component {
                     handleOnClick: this.reload.bind(this),
                     label: "Reload"
                   }}
-                  {{ handleOnClick: this.edit.bind(this), label: "Edit" }}
+                  {{ handleOnClick: () => this.edit(customer), label: "Edit" }}
                   {{
                     handleOnClick: this.delete.bind(this),
                     label: "Delete"
@@ -163,7 +168,9 @@ const mapStateToProps = ({ crmState }) => {
   return { customerToView };
 };
 
-export default connect(
-  mapStateToProps,
-  { getSingleCustomer, clearSingleCustomer }
-)(crm_view_customer);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { getSingleCustomer, clearSingleCustomer, startCustomerEdit }
+  )(crm_view_customer)
+);

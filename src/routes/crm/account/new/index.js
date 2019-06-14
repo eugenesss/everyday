@@ -9,25 +9,26 @@ import IntlMessages from "Util/IntlMessages";
 
 // Page Components
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
-import LeadForm from "Components/Form/Lead/LeadForm";
+import AccountForm from "Components/Form/Account/AccountForm";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 // Actions
-import { submitEditLead } from "Actions";
+import { submitAccount } from "Actions";
 
-class crm_edit_lead extends Component {
+class crm_new_account extends Component {
   render() {
-    const { loading } = this.props.leadForm;
+    const { loading } = this.props.accountForm;
     return (
       <React.Fragment>
         <Helmet>
-          <title>Everyday | Edit Lead</title>
+          <title>Everyday | New Account</title>
+          <meta name="description" content="Everyday Account Creation" />
         </Helmet>
-        <RctCollapsibleCard heading={<IntlMessages id="sidebar.editLead" />}>
+        <RctCollapsibleCard heading={<IntlMessages id="sidebar.newAccount" />}>
           {loading && <RctSectionLoader />}
           <div className="row">
             <div className="col-md-11">
-              <LeadForm handleSubmit={this.props.submitEditLead} />
+              <AccountForm handleSubmit={this.props.submitAccount} />
             </div>
           </div>
         </RctCollapsibleCard>
@@ -36,12 +37,12 @@ class crm_edit_lead extends Component {
   }
 }
 const mapStateToProps = ({ crmState }) => {
-  const { leadState } = crmState;
-  const { leadForm } = leadState;
-  return { leadForm };
+  const { accountState } = crmState;
+  const { accountForm } = accountState;
+  return { accountForm };
 };
 
 export default connect(
   mapStateToProps,
-  { submitEditLead }
-)(crm_edit_lead);
+  { submitAccount }
+)(crm_new_account);

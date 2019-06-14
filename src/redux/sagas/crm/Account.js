@@ -11,7 +11,8 @@ import {
   CHANGE_ACCOUNT_LIST_VIEW,
   GET_ALL_ACCOUNT,
   GET_SINGLE_ACCOUNT,
-  SUBMIT_ACCOUNT
+  SUBMIT_ACCOUNT,
+  SUBMIT_EDIT_ACCOUNT
 } from "Types";
 import {
   getAccountFailure,
@@ -44,6 +45,10 @@ const getAccountRequest = async acctID => {
 };
 const postAccountRequest = async acct => {
   const result = await api.post("/accounts", acct);
+  return result.data;
+};
+const patchAccountRequest = async acct => {
+  const result = await api.patch(`/accounts/${acct.id}`, acct);
   return result.data;
 };
 
@@ -101,7 +106,19 @@ function* postAccountToDB() {
       state.crmState.accountState.accountForm.account;
     const acct = yield select(getAcctState);
     const data = yield call(postAccountRequest, acct);
-    yield delay(800);
+    yield delay(500);
+    yield put(submitAccountSuccess(data));
+  } catch (error) {
+    yield put(submitAccountError(error));
+  }
+}
+function* patchAccountToDB() {
+  try {
+    const getAcctState = state =>
+      state.crmState.accountState.accountForm.account;
+    const acct = yield select(getAcctState);
+    const data = yield call(patchAccountRequest, acct);
+    yield delay(500);
     yield put(submitAccountSuccess(data));
   } catch (error) {
     yield put(submitAccountError(error));
@@ -123,6 +140,9 @@ export function* getSingleAccountWatcher() {
 export function* postAccountWatcher() {
   yield takeEvery(SUBMIT_ACCOUNT, postAccountToDB);
 }
+export function* patchAccountWatcher() {
+  yield takeEvery(SUBMIT_EDIT_ACCOUNT, patchAccountToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -132,6 +152,7 @@ export default function* rootSaga() {
     fork(changeViewWatcher),
     fork(getAllAccountWatcher),
     fork(getSingleAccountWatcher),
-    fork(postAccountWatcher)
+    fork(postAccountWatcher),
+    fork(patchAccountWatcher)
   ]);
 }

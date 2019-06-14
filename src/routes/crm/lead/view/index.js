@@ -1,38 +1,38 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import { withRouter } from "react-router-dom";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
-
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import LeadCard from "Components/CRM/Lead/LeadCard";
-
 // Details Tab
 import LeadDetails from "Components/CRM/Lead/LeadDetails";
 import AddressDetails from "Components/CRM/View/Details/AddressDetails";
 import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
-
 // Events Tab
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 import NewEventsButton from "Components/CRM/View/Events/NewEventsButton";
-
 // Notes Tab
 import NewNote from "Components/Form/Note/NewNote";
 import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
-
 // Convert Lead Modal
 import ConvertLeadModal from "Components/CRM/Lead/ConvertModals/ConvertLeadModal";
 import ConvertSuccessModal from "Components/CRM/Lead/ConvertModals/ConvertSuccessModal";
 
 //Actions
-import { getSingleLead, clearSingleLead, handleConvertModal } from "Actions";
+import {
+  getSingleLead,
+  clearSingleLead,
+  handleConvertModal,
+  startLeadEdit
+} from "Actions";
 // addNoteToLead(leadID) onNoteChange, clearNote
 // Add events dialog
 // Delete Lead, Edit Lead, Transfer Lead
@@ -41,6 +41,7 @@ class crm_view_lead extends Component {
   constructor(props) {
     super(props);
     this.convert = this.convert.bind(this);
+    this.edit = this.edit.bind(this);
   }
   componentWillMount() {
     var id = this.props.match.params.id;
@@ -53,8 +54,9 @@ class crm_view_lead extends Component {
   reload() {
     console.log("reload");
   }
-  edit() {
-    console.log("edit");
+  edit(lead) {
+    this.props.startLeadEdit(lead);
+    this.props.history.push("/app/crm/leads/edit");
   }
   delete() {
     console.log("delete");
@@ -93,7 +95,7 @@ class crm_view_lead extends Component {
                     handleOnClick: this.reload.bind(this),
                     label: "Reload"
                   }}
-                  {{ handleOnClick: this.edit.bind(this), label: "Edit" }}
+                  {{ handleOnClick: () => this.edit(lead), label: "Edit" }}
                   {{
                     handleOnClick: this.delete.bind(this),
                     label: "Delete"
@@ -159,7 +161,9 @@ const mapStateToProps = ({ crmState }) => {
   return { leadToView };
 };
 
-export default connect(
-  mapStateToProps,
-  { getSingleLead, clearSingleLead, handleConvertModal }
-)(crm_view_lead);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { getSingleLead, clearSingleLead, handleConvertModal, startLeadEdit }
+  )(crm_view_lead)
+);

@@ -13,7 +13,8 @@ import {
   GET_SINGLE_DEAL,
   GET_DEAL_SUMMARY,
   SUBMIT_DEAL,
-  ON_SUBMIT_NEW_STAGE
+  ON_SUBMIT_NEW_STAGE,
+  SUBMIT_EDIT_DEAL
 } from "Types";
 import {
   getDealSuccess,
@@ -73,6 +74,10 @@ const postNewStageRequest = async payload => {
     stageID: stageID
   });
   return result.data.data;
+};
+const patchDealRequest = async deal => {
+  const result = await api.patch(`/deals/${deal.id}`, deal);
+  return result.data;
 };
 
 //=========================
@@ -146,7 +151,7 @@ function* postDealToDB() {
     const getDealState = state => state.crmState.dealState.dealForm.deal;
     const deal = yield select(getDealState);
     const data = yield call(postDealRequest, deal);
-    yield delay(800);
+    yield delay(500);
     yield put(submitDealSuccess(data));
   } catch (error) {
     yield put(submitDealError(error));
@@ -159,6 +164,17 @@ function* postStageToDB({ payload }) {
     yield put(newStageSuccess(deal));
   } catch (error) {
     yield put(newStageFailure(error));
+  }
+}
+function* patchDealToDB() {
+  try {
+    const getDealState = state => state.crmState.dealState.dealForm.deal;
+    const deal = yield select(getDealState);
+    const data = yield call(patchDealRequest, deal);
+    yield delay(500);
+    yield put(submitDealSuccess(data));
+  } catch (error) {
+    yield put(submitDealError(error));
   }
 }
 
@@ -183,6 +199,9 @@ export function* postDealWatcher() {
 export function* updateDealStageWatcher() {
   yield takeEvery(ON_SUBMIT_NEW_STAGE, postStageToDB);
 }
+export function* patchDealWatcher() {
+  yield takeEvery(SUBMIT_EDIT_DEAL, patchDealToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -194,6 +213,7 @@ export default function* rootSaga() {
     fork(getSingleDealWatcher),
     fork(getDealSummaryWatcher),
     fork(postDealWatcher),
-    fork(updateDealStageWatcher)
+    fork(updateDealStageWatcher),
+    fork(patchDealWatcher)
   ]);
 }

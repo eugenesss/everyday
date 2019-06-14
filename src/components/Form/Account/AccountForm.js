@@ -14,7 +14,6 @@ import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetBu
 // Actions
 import {
   handleChangeAccount,
-  submitAccount,
   clearAccountForm,
   getIndustry,
   getAllUsers
@@ -29,17 +28,21 @@ class AccountForm extends Component {
     this.props.clearAccountForm();
   }
 
+  checkDisabled(name, owner) {
+    const disabled = name && owner;
+    return disabled;
+  }
+
   render() {
     const { account } = this.props.accountForm;
     const { industry } = this.props.crmField;
     const { users } = this.props;
-    const disabled = account.baseContact.name && account.owner;
     return (
       <React.Fragment>
         <FormSubmitResetButtons
           onReset={this.props.clearAccountForm}
-          onSubmit={this.props.submitAccount}
-          disabled={disabled}
+          onSubmit={this.props.handleSubmit}
+          disabled={this.checkDisabled(account.baseContact.name, account.owner)}
         />
         <FormTable>
           <TableRow>
@@ -132,7 +135,6 @@ export default connect(
   mapStateToProps,
   {
     handleChangeAccount,
-    submitAccount,
     clearAccountForm,
     getIndustry,
     getAllUsers

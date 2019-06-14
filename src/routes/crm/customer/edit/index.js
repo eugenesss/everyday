@@ -12,20 +12,24 @@ import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard
 import CustomerForm from "Components/Form/Customer/CustomerForm";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
-class crm_new_customer extends Component {
+// Actions
+import { submitEditCustomer } from "Actions";
+
+class crm_edit_customer extends Component {
   render() {
     const { loading } = this.props.customerForm;
     return (
       <React.Fragment>
         <Helmet>
-          <title>Everyday | New Customer</title>
-          <meta name="description" content="Everyday Customers Creation" />
+          <title>Everyday | Edit Customer</title>
         </Helmet>
-        <RctCollapsibleCard heading={<IntlMessages id="sidebar.newCustomer" />}>
+        <RctCollapsibleCard
+          heading={<IntlMessages id="sidebar.editCustomer" />}
+        >
           {loading && <RctSectionLoader />}
           <div className="row">
             <div className="col-md-11">
-              <CustomerForm />
+              <CustomerForm handleSubmit={this.props.submitEditCustomer} />
             </div>
           </div>
         </RctCollapsibleCard>
@@ -39,4 +43,7 @@ const mapStateToProps = ({ crmState }) => {
   return { customerForm };
 };
 
-export default connect(mapStateToProps)(crm_new_customer);
+export default connect(
+  mapStateToProps,
+  { submitEditCustomer }
+)(crm_edit_customer);

@@ -52,25 +52,37 @@ export const Async_crm_single_deal = Loadable({
 
 // crm_new
 export const Async_crm_new_lead_component = Loadable({
-  loader: () => import("Routes/crm/new/lead"),
+  loader: () => import("Routes/crm/lead/new"),
   loading: () => <RctPageLoader />
 });
 export const Async_crm_new_customer_component = Loadable({
-  loader: () => import("Routes/crm/new/customer"),
+  loader: () => import("Routes/crm/customer/new"),
   loading: () => <RctPageLoader />
 });
 export const Async_crm_new_account_component = Loadable({
-  loader: () => import("Routes/crm/new/account"),
+  loader: () => import("Routes/crm/account/new"),
   loading: () => <RctPageLoader />
 });
 export const Async_crm_new_deal_component = Loadable({
-  loader: () => import("Routes/crm/new/deal"),
+  loader: () => import("Routes/crm/deal/new"),
   loading: () => <RctPageLoader />
 });
 
 // crm_edit
 export const Async_crm_edit_lead = Loadable({
   loader: () => import("Routes/crm/lead/edit"),
+  loading: () => <RctPageLoader />
+});
+export const Async_crm_edit_customer = Loadable({
+  loader: () => import("Routes/crm/customer/edit"),
+  loading: () => <RctPageLoader />
+});
+export const Async_crm_edit_account = Loadable({
+  loader: () => import("Routes/crm/account/edit"),
+  loading: () => <RctPageLoader />
+});
+export const Async_crm_edit_deal = Loadable({
+  loader: () => import("Routes/crm/deal/edit"),
   loading: () => <RctPageLoader />
 });
 
