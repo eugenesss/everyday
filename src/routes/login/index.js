@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, } from "react-router-dom";
 import { Form, FormGroup, Input } from "reactstrap";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import QueueAnim from "rc-queue-anim";
@@ -18,6 +18,11 @@ import AppConfig from "Constants/AppConfig";
 import { signInUserWithEmailPassword } from "Actions";
 
 class Signin extends Component {
+
+  constuctor() {
+    this.routeChange = this.routeChange.bind(this);
+  }
+
   state = {
     emailAddress: "",
     password: ""
@@ -32,6 +37,12 @@ class Signin extends Component {
       this.props.signInUserWithEmailPassword(this.state, this.props.history);
     }
   };
+
+  routeChange() {
+    let path = `/register`;
+    this.props.history.push(path);
+  }
+
 
   render() {
     const { email, password } = this.state;
@@ -112,6 +123,19 @@ class Signin extends Component {
                         >
                           Sign In
                         </Button>
+
+                        <Button
+                          color="primary"
+                          className="btn-block text-white w-100"
+                          variant="contained"
+                          size="large"
+                          type="submit"
+                          // disabled={!email && !password}
+                          onClick={()=> this.routeChange()}
+                        >
+                          Create An Account Here
+                        </Button>
+
                       </FormGroup>
                     </Form>
                   </div>
@@ -136,9 +160,9 @@ const mapStateToProps = ({ authUser }) => {
 	return { user, loading }
 }
 */
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   {
     signInUserWithEmailPassword
   }
-)(Signin);
+)(Signin));

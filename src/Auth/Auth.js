@@ -1,6 +1,8 @@
 import auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth0-variables';
-import { configureStore } from '../store';
+// import { configureStore } from '../store';
+import { configureStore } from '../redux/store';
+
 
 export default class Auth {
   auth0 = new auth0.WebAuth({
@@ -28,6 +30,7 @@ export default class Auth {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
         localStorage.setItem("user_id", "user-id");
+        console.log(configureStore)
         let store = configureStore();
         store.dispatch({ type: 'LOGIN_USER_SUCCESS', payload: authResult })
         window.location.replace('/')
