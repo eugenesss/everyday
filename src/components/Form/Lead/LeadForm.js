@@ -26,8 +26,6 @@ import {
   getAllUsers
 } from "Actions";
 
-//import { users } from "Components/UserDummyData";
-
 class LeadForm extends Component {
   componentWillMount() {
     this.props.getLeadSource();

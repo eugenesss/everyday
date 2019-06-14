@@ -33,6 +33,10 @@ export default class crmSwitcher extends Component {
             path={`${match.url}/leads/:id`}
             component={Async_crm_single_lead}
           />
+          <Route
+            path={`${match.url}/leads/:id/edit`}
+            component={Async_crm_single_lead}
+          />
 
           {/* ------- /Customers ------- */}
           <Route
