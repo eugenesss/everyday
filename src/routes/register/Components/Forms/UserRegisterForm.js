@@ -8,13 +8,24 @@ import {
   FormFeedback,
   FormText
 } from "reactstrap";
-import { connect } from "react-redux";
-import { handleRegForm } from "Actions";
+// import { connect } from "react-redux";
+// import { handleRegForm } from "Actions";
+
+
 
 const RegisterForm = props => {
+
   const { userInfo, companyInfo, email, password, repassword } = props;
   const { firstName, lastName } = userInfo;
   const { name } = companyInfo;
+
+  // console.log(firstName)
+  // Parent Function to Handle Email Validation
+  const {emailState, validateEmail, passwordState, validatePassword} = props;
+
+  // Email Validation 
+  // const emailValidator = (new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(email))
+
   return (
     <React.Fragment>
       <Form>
@@ -49,9 +60,9 @@ const RegisterForm = props => {
               className="has-input input-md"
               placeholder="Your Last Name"
               bsSize="sm"
-              onChange={e =>
+              onChange={e =>{
                 props.handleRegForm("lastName", e.target.value, "userInfo")
-              }
+              }}
             />
             <span className="has-icon" style={{ top: "8px" }}>
               <i className="ti-user" />
@@ -72,12 +83,23 @@ const RegisterForm = props => {
               className="has-input input-md"
               placeholder="Email Address"
               bsSize="sm"
-              onChange={e => props.handleRegForm("email", e.target.value)}
+              onChange={e => {
+                props.handleRegForm("email", e.target.value)
+              }}
+              onBlur={() => validateEmail(email)}
+              valid={ emailState === 'has-success' }
+              invalid={ emailState === 'has-danger' }
             />
             <span className="has-icon" style={{ top: "8px" }}>
               <i className="ti-email" />
             </span>
+  
+            <FormFeedback >Oh noes! You need to input a valid email addresss!</FormFeedback>
+            <FormFeedback valid>Sweet! Great email you have there!</FormFeedback>
+    
           </Col>
+         
+
           <Label for="lastName" className="fs-13 text-right" sm={2}>
             Company Name
           </Label>
@@ -113,7 +135,10 @@ const RegisterForm = props => {
               className="has-input input-md"
               placeholder="Password"
               bsSize="sm"
-              onChange={e => props.handleRegForm("password", e.target.value)}
+              onChange={e => {
+                props.handleRegForm("password", e.target.value)
+                validatePassword(e.target.value, repassword)
+              }}
             />
             <span className="has-icon" style={{ top: "8px" }}>
               <i className="ti-lock" />
@@ -134,16 +159,17 @@ const RegisterForm = props => {
                 className="has-input input-md"
                 placeholder="Re-enter Password"
                 bsSize="sm"
-                onChange={e =>
+                onChange={e => {
                   props.handleRegForm("repassword", e.target.value)
-                }
-                valid={password === repassword}
-                invalid={password != repassword}
+                  validatePassword(password, e.target.value)
+                }}
+                valid={ passwordState === 'has-success' }
+                invalid={ passwordState === 'has-danger' }
               />
               <span className="has-icon" style={{ top: "8px" }}>
                 <i className="ti-lock" />
               </span>
-              <FormFeedback>Oh noes! The password needs to match</FormFeedback>
+              <FormFeedback >Oh noes! The password needs to match</FormFeedback>
               <FormFeedback valid>Sweet! The password match!</FormFeedback>
             </Col>
           </FormGroup>
@@ -152,13 +178,17 @@ const RegisterForm = props => {
     </React.Fragment>
   );
 };
-const mapStateToProps = ({ authUser }) => {
-  const { register } = authUser;
-  const { userInfo, companyInfo, email, password, repassword } = register.form;
-  return { userInfo, companyInfo, email, password, repassword };
-};
 
-export default connect(
-  mapStateToProps,
-  { handleRegForm }
-)(RegisterForm);
+
+// const mapStateToProps = ({ authUser }) => {
+//   const { register } = authUser;
+//   const { userInfo, companyInfo, email, password, repassword } = register.form;
+//   return { userInfo, companyInfo, email, password, repassword };
+// };
+
+// export default connect(
+//   mapStateToProps,
+//   { handleRegForm }
+// )(RegisterForm);
+
+export default RegisterForm

@@ -23,9 +23,6 @@ import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 import NewEventsButton from "Components/CRM/View/Events/NewEventsButton";
 
-// Activity Log Tab
-// import ActivityLog from "Components/Everyday/ActivityLog";
-
 // Notes Tab
 import NewNote from "Components/Form/Note/NewNote";
 import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
@@ -131,9 +128,6 @@ class crm_view_lead extends Component {
                 <hr />
                 <ClosedEvents events={lead.closedEvents} />
               </div>
-              {/* <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
-                <ActivityLog />
-              </div> */}
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div className="col-md-4">
