@@ -31,7 +31,6 @@ function* signInUserWithEmailPassword({ payload }) {
     if (signInUser.id) {
       localStorage.setItem("user_id", signInUser.userId);
       localStorage.setItem("accessKey", signInUser.id);
-
       const userRights = yield call(
         getUserAccessRightsRequest,
         signInUser.userId

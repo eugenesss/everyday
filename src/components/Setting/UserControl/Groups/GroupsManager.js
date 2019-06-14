@@ -52,6 +52,7 @@ class GroupsManager extends Component {
     const {
       classes,
 
+      accessRoles,
       selectedGroup,
       selectedGroupRoles,
       selectedRoleGroups,
@@ -100,34 +101,36 @@ class GroupsManager extends Component {
               </TableHead>
               <TableBody>
                 {selectedGroupRoles &&
-                  selectedGroupRoles.map(role => (
-                  <TableRow className={classes.row} key={role.accessRoleId}>
-                    <TableCell component="th" scope="row">
-                      {role.accessRoleId}}
-                    </TableCell>
-                    <TableCell align="center">
-                      <Radio
-                        checked={role.tier == 1}
-                        value={1}
-                        color="primary"
-                      />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Radio
-                        checked={role.tier == 2}
-                        value={2}
-                        color="primary"
-                      />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Radio
-                        checked={role.tier == 3}
-                        value={3}
-                        color="primary"
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
+                  selectedGroupRoles.map(r => {
+                  var role = accessRoles.find(rol => rol.id == r.accessRoleId)
+                  return (
+                    <TableRow className={classes.row} key={role.id}>
+                      <TableCell component="th" scope="row">
+                        {role.name}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Radio
+                          checked={r.tier == 1}
+                          value={1}
+                          color="primary"
+                        />
+                      </TableCell>
+                      <TableCell align="center">
+                        <Radio
+                          checked={r.tier == 2}
+                          value={2}
+                          color="primary"
+                        />
+                      </TableCell>
+                      <TableCell align="center">
+                        <Radio
+                          checked={r.tier == 3}
+                          value={3}
+                          color="primary"
+                        />
+                      </TableCell>
+                    </TableRow>
+                )})}
               </TableBody>
             </Table>
           </Row>
@@ -213,9 +216,9 @@ GroupsManager.propTypes = {
 };
 
 const mapStateToProps = ({ groupsState, rolesState}) => {
-  const { selectedRoleGroups, unselectedRoleGroups } = rolesState
+  const { selectedRoleGroups, unselectedRoleGroups, accessRoles } = rolesState
   const { selectedGroup, selectedGroupRoles } = groupsState
-  return { selectedRoleGroups, unselectedRoleGroups, selectedGroup, selectedGroupRoles };
+  return { selectedRoleGroups, unselectedRoleGroups, accessRoles, selectedGroup, selectedGroupRoles };
 };
 
 export default connect(
