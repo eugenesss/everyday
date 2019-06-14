@@ -30,10 +30,6 @@ class UsersList extends Component {
     super(props);
   }
 
-  componentWillMount() {
-    this.props.getAllUsers()
-  }
-
   //Convert API to DataTable Array
   convertData(user) {
     var data = [];
@@ -42,7 +38,7 @@ class UsersList extends Component {
       user.name,
       user.email,
       user.contact,
-      user.access.map( access => {return access.role.name + " (" + access.group.name + ")"}).join(", "),
+      //user.access.map( access => {return access.role.name + " (" + access.group.name + ")"}).join(", "),
       user
     );
     return data;
@@ -94,25 +90,26 @@ class UsersList extends Component {
       },
       { name: "Email" },
       { name: "Contact" },
-      {
-        name: "Role",
-        options: {
-          customBodyRender: (value) => {
-            return (
-              <div>{value}</div>
-            );
-          }
-        }
-      },
+      // {
+      //   name: "Role",
+      //   options: {
+      //     customBodyRender: (value) => {
+      //       return (
+      //         <div>{value}</div>
+      //       );
+      //     }
+      //   }
+      // },
       {
         name: "Actions",
         options: {
           filter: false,
-          display: this.showActions(),
+          // display: this.showActions(),
+          display: true,
           customBodyRender: value => {
             return (
               <React.Fragment>
-                <AccessControl action={["User:delete"]}>
+                {/* <AccessControl action={["User:delete"]}> */}
                   <Tooltip id="tooltip-icon" title="Delete">
                     <IconButton
                       className="text-danger mr-2"
@@ -124,8 +121,8 @@ class UsersList extends Component {
                       <i className={"zmdi zmdi-delete " + classes.icon} />
                     </IconButton>
                   </Tooltip>
-                </AccessControl>
-                <AccessControl action={["SuperAdmin:update", "Password:reset"]}>
+                {/* </AccessControl> */}
+                {/* <AccessControl action={["SuperAdmin:update", "Password:reset"]}> */}
                   <Tooltip id="tooltip-icon" title="More">
                     <IconButton
                       className="text-primary mr-2"
@@ -137,7 +134,7 @@ class UsersList extends Component {
                       <i className={"zmdi zmdi-edit " + classes.icon} />
                     </IconButton>
                   </Tooltip>
-                </AccessControl>
+                {/* </AccessControl> */}
               </React.Fragment>
             );
           }

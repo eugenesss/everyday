@@ -15,7 +15,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import { addUser, onChangeAddUser, getAllRoles } from 'Actions';
+import { addUser, onChangeAddUser } from 'Actions';
 
 const styles = theme => ({
   textField: {
@@ -39,10 +39,6 @@ class AddUserForm extends Component {
   validateEmail = (email) => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
-  }
-
-  componentDidMount() {
-    this.props.getAllRoles()
   }
 
   render() {
@@ -180,5 +176,5 @@ const mapStateToProps = ({ usersState, rolesState }) => {
 
 export default connect(
   mapStateToProps,
- { addUser, onChangeAddUser, getAllRoles }
+ { addUser, onChangeAddUser }
 )(withStyles(styles)(AddUserForm));
