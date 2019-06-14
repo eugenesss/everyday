@@ -10,7 +10,7 @@ class UserProfileView extends Component {
     super(props);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.getUserProfile(this.props.match.params.id)
   }
 

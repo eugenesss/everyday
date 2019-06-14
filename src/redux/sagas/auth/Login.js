@@ -31,9 +31,7 @@ function* signInUserWithEmailPassword({ payload }) {
     );
     if (signInUser.id) {
       localStorage.setItem("user_id", signInUser.userId);
-      localStorage.setItem("accessKey", signInUser.id);
-
-      //Get User Access Rights
+      localStorage.setItem("accessKey", signInUser.id)
       const userRights = yield call(getUserAccessRightsRequest, signInUser.userId)
       yield put(signinUserSuccess(signInUser, userRights));
       history.push("/");

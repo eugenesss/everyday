@@ -28,10 +28,7 @@ import {
  } from "Types";
  
 const INIT_STATE = {
-  selectedRole: {
-    name: "Super Admin",
-    id: ""
-  },
+  selectedRole: {},
   rolesLoading: false,
   selectedAccessRightsCategory: null,  // State to control expansion panel in Roles & Permissions Settings
   accessRights: [], // All Rights
@@ -181,16 +178,12 @@ export default (state = INIT_STATE, action) => {
      * State Changes
      */
     case CHANGE_SELECTED_ROLE:  // Change selected role in Role List (RolesList.js)
-      var selectedRole = {}
-      if(action.payload == "Super Admin")
-        selectedRole.name = action.payload
-      else {
-        selectedRole = action.payload
-        var selectedRights = state.roleRights.find(right => {
-          return right.roleId == action.payload.id
-        }).rights
-        selectedRole.id = action.payload.id
-      }
+      let selectedRole = action.payload
+      let selectedRights = state.roleRights.find(right => {
+        return right.roleId == action.payload.id
+      }).rights
+      selectedRole.id = action.payload.id
+
       return { 
         ...state,
         selectedRole: selectedRole,
