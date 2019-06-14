@@ -27,7 +27,7 @@ const updateUserRequest = async user => {
   return result;
 };
 const getUserProfileRequest = async userID => {
-  const result = await api.get(`/user/${userID}`, userID);
+  const result = await api.get(`/users/${userID}`, userID);
   return result.data;
 };
 
