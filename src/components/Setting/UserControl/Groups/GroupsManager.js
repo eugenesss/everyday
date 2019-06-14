@@ -104,9 +104,9 @@ class GroupsManager extends Component {
                   selectedGroupRoles.map(r => {
                   var role = accessRoles.find(rol => rol.id == r.accessRoleId)
                   return (
-                    <TableRow className={classes.row} key={role.id}>
+                    <TableRow className={classes.row} key={r.id}>
                       <TableCell component="th" scope="row">
-                        {role.name}
+                        {role ? role.name : null}
                       </TableCell>
                       <TableCell align="center">
                         <Radio

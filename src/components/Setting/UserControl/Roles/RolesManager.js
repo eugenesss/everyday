@@ -73,7 +73,7 @@ class RoleManager extends Component {
     const selectedRole = this.props.selectedRole
     if (selectedRole.name == "Super Admin")
       return true;
-    if(selectedRole.name == "") {
+    if(selectedRole.removable == false) {
       if(action != "read")
         return true
       else
@@ -116,7 +116,7 @@ class RoleManager extends Component {
               fullWidth
               required
               error={ selectedRole ? selectedRole.name ? !selectedRole.name : !selectedRole : false}
-              disabled={!selectedRole || selectedRole.name == "Super Admin"}
+              disabled={!selectedRole || selectedRole.removable == false}
               id="name"
               label="Role Name"
               className={classes.textField}
@@ -218,7 +218,7 @@ class RoleManager extends Component {
                   color="secondary"
                   className="text-white mb-10 mt-10"
                   onClick={() => deleteRole()}
-                  disabled={selectedRole.name == "Super Admin"}
+                  disabled={selectedRole.editable == false || selectedRole.removable == false}
                 >
                   Delete
                 </Button>
@@ -229,7 +229,6 @@ class RoleManager extends Component {
                   color="primary"
                   className="text-white mb-10 mt-10 float-right"
                   onClick={() => updateRole()}
-                  disabled={selectedRole.name == "Super Admin"}
                 >
                   Save
                 </Button>

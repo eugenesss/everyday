@@ -48,7 +48,6 @@ class UserControlForm extends Component {
       accessGroups,
       classes
     } = this.props;
-    console.log(accessGroupRoles)
     return (
       <Form>
         <Row form className="align-items-center">
@@ -72,7 +71,6 @@ class UserControlForm extends Component {
               // )}
             >
               {accessGroupRoles.map((groupRole) => {
-                console.log(groupRole)
                 const role = accessRoles.find(role => role.id == groupRole.accessRoleId)
                 const group = accessGroups.find(group => group.id == groupRole.accessGroupId)
                 return (
