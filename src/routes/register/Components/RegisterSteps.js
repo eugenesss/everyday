@@ -15,10 +15,10 @@ import PaymentDetailForm from "./Forms/PaymentDetailForm";
 import { Link } from "react-router-dom";
 
 // Actions
-import { registerUser, handleRegForm } from "Actions";
+import { registerUser, handleRegForm, handleRegErrorForm} from "Actions";
 
 
-import {EmailValidator, PasswordValidator, StepperZeroValidator} from "./Validation/UserRegisterForm-Validation"
+import {EmailValidator, PasswordValidator, StepperZeroValidator, CheckCreditCard} from "./Validation/Validation"
 
 function getSteps() { return ["Enter Your Details", "Select a Plan", "Payment Details"]}
 
@@ -47,7 +47,13 @@ class RegisterSteps extends React.Component {
     activeStep: 0,
     emailState: '',
     passwordState: '',
-    planState: ''
+    planState: '',
+    creditState: {
+      payment_name: '',
+      payment_no: '',
+      payment_expiry: '',
+      payment_code : ''
+    }
   };
 
 
@@ -59,23 +65,27 @@ class RegisterSteps extends React.Component {
     switch (state.activeStep) {
 
       case 0:
-          StepperZeroValidator(this.props, state.emailState, state.passwordState) ? 
-          this.setState({activeStep: this.state.activeStep + 1}) : (
-            window.alert('Please make sure your forms are completed')
-          )
+          const [result, info] = StepperZeroValidator(this.props, state.emailState, state.passwordState) 
+        
+          if (result) {
+            this.setState({activeStep: state.activeStep + 1})
+          } else {
+            this.props.handleRegErrorForm(info)
+          }
+
         break
       
       case 1:
-          state.planState !== ""? this.setState({ activeStep: this.state.activeStep + 1}) : (
-            window.alert('Please tick the one of the plans')
+          state.planState !== "" ? this.setState({ activeStep: this.state.activeStep + 1}) : (
+            this.props.handleRegErrorForm('Please tick the one of the plans')
           )
         break
 
-      case 2:
-          this.setState({
-            activeStep: this.state.activeStep + 1
-          });
-        break
+      // case 2:
+      //     this.setState({
+      //       activeStep: this.state.activeStep + 1
+      //     });
+      //   break
 
       default:break
     }
@@ -109,6 +119,22 @@ class RegisterSteps extends React.Component {
    */
   validatePlate = (e) => {this.setState({planState: e})}
 
+  /**
+   * Validation of Credit Cards
+   */
+  validateCard = () => {
+
+    const [result, info] = CheckCreditCard(this.props.paymentInfo)
+    if (result) {
+      this.props.registerUser()
+    } else {
+      // window.alert(info)
+      this.props.handleRegErrorForm(info)
+    }
+  } 
+
+
+
 
 
   render() {
@@ -135,7 +161,7 @@ class RegisterSteps extends React.Component {
       case 1:
         StepperPage = (
           <SelectPlanForm
-           validatePlate={(e) => this.validatePlate(e)}
+            validatePlate={(e) => this.validatePlate(e)}
             {...this.props}
           />
         )
@@ -152,7 +178,7 @@ class RegisterSteps extends React.Component {
         break 
     }
 
-
+    // change success to normal for development
     return (
       <div>
         {!success ? (
@@ -192,7 +218,7 @@ class RegisterSteps extends React.Component {
                       </Button>
                       {activeStep === steps.length - 1 ? (
                         <LoadingButton
-                          onClickFunc={this.props.registerUser}
+                          onClickFunc={() => this.validateCard()}
                           loading={loading}
                           color="success"
                           label="Finish"
@@ -217,9 +243,13 @@ class RegisterSteps extends React.Component {
           </Stepper>
         ) : (
           <Paper square elevation={0} className="pl-40">
-            <p>
-              Registration Complete - Login <Link to="/login">here</Link>
-            </p>
+
+            <div style={{display:'flex', flex: 1, justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
+              <h1>A verification link has been sent to your email account</h1>
+              <p>Please click on the link that has just been sent to your email account to verify your email and continue the registeration process.</p>
+              {/* <p>Registration Complete - Login <Link to="/login">here</Link></p> */}
+            </div>
+       
           </Paper>
         )}
       </div>
@@ -255,6 +285,6 @@ const mapStateToProps = ({ authUser }) => {
 
 export default connect(
   mapStateToProps,
-  { registerUser, handleRegForm}
+  { registerUser, handleRegForm, handleRegErrorForm}
 )(RegisterSteps);
 

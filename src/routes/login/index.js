@@ -38,9 +38,22 @@ class Signin extends Component {
     }
   };
 
-  routeChange() {
-    let path = `/register`;
-    this.props.history.push(path);
+  routeChange(element) {
+   
+    let path = ""
+
+    switch (element) {
+      case "register":
+        path = `/register`;
+        this.props.history.push(path);
+        break
+
+      case "forget":
+        path = `/forgetpassword`;
+        this.props.history.push(path);
+        break
+      default:break
+    }
   }
 
 
@@ -112,6 +125,7 @@ class Signin extends Component {
                           <i className="ti-lock" />
                         </span>
                       </FormGroup>
+
                       <FormGroup className="mb-15">
                         <Button
                           color="primary"
@@ -131,9 +145,21 @@ class Signin extends Component {
                           size="large"
                           type="submit"
                           // disabled={!email && !password}
-                          onClick={()=> this.routeChange()}
+                          onClick={()=> this.routeChange('register')}
                         >
                           Create An Account Here
+                        </Button>
+
+                        <Button
+                          color="secondary"
+                          className="btn-block text-white w-100"
+                          variant="contained"
+                          size="large"
+                          type="submit"
+                          // disabled={!email && !password}
+                          onClick={()=> this.routeChange('forget')}
+                        >
+                          Forgot Password
                         </Button>
 
                       </FormGroup>

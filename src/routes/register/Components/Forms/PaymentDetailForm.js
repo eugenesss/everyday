@@ -43,6 +43,7 @@ function CreditCardMask(props) {
     />
   );
 }
+
 function CVCmask(props) {
   return (
     <MaskedInput
@@ -72,8 +73,10 @@ function CCexpiryMask(props) {
 
 const PaymentDetailForm = props => {
   const { handleRegForm, paymentInfo } = props;
+
   return (
     <Form>
+
       <FormGroup row className="has-wrapper">
         <Label for="payment_name" className="fs-13 text-right" sm={2}>
           Name on Card
@@ -85,9 +88,9 @@ const PaymentDetailForm = props => {
             id="payment_name"
             className="has-input input-md"
             bsSize="sm"
-            onChange={e =>
+            onChange={e => {
               handleRegForm("payment_name", e.target.value, "paymentInfo")
-            }
+            }}
           />
           <span className="has-icon" style={{ top: "6px" }}>
             <i className="ti-user" />
@@ -107,9 +110,9 @@ const PaymentDetailForm = props => {
             className="has-input input-md"
             bsSize="sm"
             tag={CreditCardMask}
-            onChange={e =>
+            onChange={e => {
               handleRegForm("payment_no", e.target.value, "paymentInfo")
-            }
+            }}
           />
           <span className="has-icon" style={{ top: "6px" }}>
             <i className="ti-credit-card" />
@@ -129,9 +132,9 @@ const PaymentDetailForm = props => {
             className="has-input input-md"
             bsSize="sm"
             tag={CCexpiryMask}
-            onChange={e =>
+            onChange={e => {
               handleRegForm("payment_expiry", e.target.value, "paymentInfo")
-            }
+            }}
           />
           <span className="has-icon" style={{ top: "6px" }}>
             <i className="ti-calendar" />
@@ -148,12 +151,13 @@ const PaymentDetailForm = props => {
             className="input-md"
             bsSize="sm"
             tag={CVCmask}
-            onChange={e =>
+            onChange={e => {
               handleRegForm("payment_code", e.target.value, "paymentInfo")
-            }
+            }}
           />
         </Col>
       </FormGroup>
+    
     </Form>
   );
 };
