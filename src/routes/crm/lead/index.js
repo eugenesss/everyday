@@ -17,18 +17,20 @@ import ListSummary from "Components/Everyday/ListSummary/ListSummary";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // Actions
-import {
-  changeLeadView,
-  toggleLeadDropDown,
-  toggleLeadSummary,
-  getAllLead,
-  getLeadSummary
-} from "Actions";
+import { changeLeadView, getAllLead, getLeadSummary } from "Actions";
 
 class crm_lead extends Component {
+  state = {
+    showSummary: false
+  };
+
   componentDidMount() {
     this.props.getAllLead();
     this.props.getLeadSummary();
+  }
+
+  toggleSummary() {
+    this.setState({ showSummary: !this.state.showSummary });
   }
 
   reload() {
@@ -40,14 +42,13 @@ class crm_lead extends Component {
 
   render() {
     const {
-      dropdownOpen,
       options,
       nowShowing,
       action,
       tableData,
       loading
     } = this.props.leadList;
-    const { showSummary, summary } = this.props.leadSummary;
+    const { summary } = this.props.leadSummary;
     return (
       <React.Fragment>
         <Helmet>
@@ -58,13 +59,11 @@ class crm_lead extends Component {
           title={
             <div className="d-flex">
               <ListViewSelector
-                dropdownOpen={dropdownOpen}
-                toggle={this.props.toggleLeadDropDown}
                 options={options}
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeLeadView}
               />
-              <ShowListSummaryButton action={this.props.toggleLeadSummary} />
+              <ShowListSummaryButton action={() => this.toggleSummary()} />
             </div>
           }
           createLink="/crm/new/lead"
@@ -78,7 +77,7 @@ class crm_lead extends Component {
             </MoreButton>
           }
         />
-        {showSummary && <ListSummary summary={summary} />}
+        {this.state.showSummary && <ListSummary summary={summary} />}
         <LeadList
           title={nowShowing}
           action={action}
@@ -100,8 +99,6 @@ export default connect(
   mapStateToProps,
   {
     changeLeadView,
-    toggleLeadDropDown,
-    toggleLeadSummary,
     getAllLead,
     getLeadSummary
   }

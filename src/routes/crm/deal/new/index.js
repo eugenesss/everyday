@@ -9,23 +9,28 @@ import IntlMessages from "Util/IntlMessages";
 
 // Page Components
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
-import CustomerForm from "Components/Form/Customer/CustomerForm";
+import DealForm from "Components/Form/Deal/DealForm";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
-class crm_new_customer extends Component {
+// Actions
+import { submitDeal } from "Actions";
+
+class crm_new_deal extends Component {
+  state = {};
+
   render() {
-    const { loading } = this.props.customerForm;
+    const { loading } = this.props.dealForm;
     return (
       <React.Fragment>
         <Helmet>
-          <title>Everyday | New Customer</title>
-          <meta name="description" content="Everyday Customers Creation" />
+          <title>Everyday | New Deal</title>
+          <meta name="description" content="Everyday Deals Creation" />
         </Helmet>
-        <RctCollapsibleCard heading={<IntlMessages id="sidebar.newCustomer" />}>
+        <RctCollapsibleCard heading={<IntlMessages id="sidebar.newDeal" />}>
           {loading && <RctSectionLoader />}
           <div className="row">
             <div className="col-md-11">
-              <CustomerForm />
+              <DealForm handleSubmit={this.props.submitDeal} />
             </div>
           </div>
         </RctCollapsibleCard>
@@ -34,9 +39,12 @@ class crm_new_customer extends Component {
   }
 }
 const mapStateToProps = ({ crmState }) => {
-  const { customerState } = crmState;
-  const { customerForm } = customerState;
-  return { customerForm };
+  const { dealState } = crmState;
+  const { dealForm } = dealState;
+  return { dealForm };
 };
 
-export default connect(mapStateToProps)(crm_new_customer);
+export default connect(
+  mapStateToProps,
+  { submitDeal }
+)(crm_new_deal);

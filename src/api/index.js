@@ -7,9 +7,8 @@ const api = axios.create({
 
 api.interceptors.request.use(config => {
   const token = localStorage.getItem("accessKey");
-  const tokenInAxios = api.defaults.headers.common.Authorization;
-  if (token && !tokenInAxios) {
-    api.defaults.headers.common.Authorization = token;
+  if (token) {
+    config.url += `?access_token=${token}`;
   }
   return config;
 });

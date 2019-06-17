@@ -13,21 +13,22 @@ import LeadForm from "Components/Form/Lead/LeadForm";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 // Actions
-import { submitEditLead } from "Actions";
+import { submitNewLead } from "Actions";
 
-class crm_edit_lead extends Component {
+class crm_new_lead extends Component {
   render() {
     const { loading } = this.props.leadForm;
     return (
       <React.Fragment>
         <Helmet>
-          <title>Everyday | Edit Lead</title>
+          <title>Everyday | New Lead</title>
+          <meta name="description" content="Everyday Leads Creation" />
         </Helmet>
-        <RctCollapsibleCard heading={<IntlMessages id="sidebar.editLead" />}>
+        <RctCollapsibleCard heading={<IntlMessages id="sidebar.newLead" />}>
           {loading && <RctSectionLoader />}
           <div className="row">
             <div className="col-md-11">
-              <LeadForm handleSubmit={this.props.submitEditLead} />
+              <LeadForm handleSubmitForm={this.props.submitNewLead} />
             </div>
           </div>
         </RctCollapsibleCard>
@@ -43,5 +44,5 @@ const mapStateToProps = ({ crmState }) => {
 
 export default connect(
   mapStateToProps,
-  { submitEditLead }
-)(crm_edit_lead);
+  { submitNewLead }
+)(crm_new_lead);

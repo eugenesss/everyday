@@ -27,9 +27,9 @@ import {
 const INIT_STATE = {
   selectedGroup: null,
   groupsLoading: false,
-  accessGroups: [],
-  accessGroupRoles: [],
-  selectedGroupRoles: []
+  accessGroups: [], // All Groups
+  accessGroupRoles: [], // All Group Roles
+  selectedGroupRoles: []  // Selected Group Roles corresponding to selected group
 };
 
 export default (state = INIT_STATE, action) => {

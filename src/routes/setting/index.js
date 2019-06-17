@@ -23,16 +23,24 @@ import {
 } from "Components/AsyncComponent/AsyncComponent";
 import SettingsDirectory from "Components/Setting/SettingsDirectory"
 
+import { getAllUsers, getAllRoles, getAllGroups } from "Actions"
+
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+const styles = () => ({
   displayBlock: {
     display: "block"
   },
 });
 
 class Settings extends Component {
+  componentWillMount() {
+    this.props.getAllUsers();
+    this.props.getAllRoles();
+    this.props.getAllGroups();
+  }
+
   render() {
     const { match, classes } = this.props;
     if (location.pathname === "/app/settings") {
@@ -124,6 +132,6 @@ Settings.propTypes = {
 };
 
 export default withRouter(
-  connect( null )
+  connect( null, { getAllUsers, getAllRoles, getAllGroups } )
   (withStyles(styles)(Settings))
 );

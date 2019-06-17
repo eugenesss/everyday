@@ -23,6 +23,7 @@ import {
 
   CHANGE_SELECTED_ROLE,  
   CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY,
+  CHANGE_SELECTED_GROUP_ROLE,
 } from "Types";
 
 /**
@@ -108,4 +109,8 @@ export const onChangeSelectedRole = (newValue) => ({
 export const onChangeSelectedAccessRightsCategory = (newValue) => ({
   type: CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY,
   payload: newValue
+})
+export const onChangeSelectedGroupRole = (groupRoles) => ({
+  type: CHANGE_SELECTED_GROUP_ROLE,
+  payload: groupRoles
 })

@@ -1,5 +1,4 @@
 import {
-  ACCOUNT_LIST_DROPDOWN,
   CHANGE_ACCOUNT_LIST_VIEW,
   GET_ACCOUNT_FAILURE,
   GET_ACCOUNT_SUCCESS,
@@ -13,7 +12,9 @@ import {
   SUBMIT_ACCOUNT,
   CLEAR_ACCOUNT_FORM,
   SUBMIT_ACCOUNT_SUCCESS,
-  SUBMIT_ACCOUNT_ERROR
+  SUBMIT_ACCOUNT_ERROR,
+  START_ACCOUNT_EDIT,
+  SUBMIT_EDIT_ACCOUNT
 } from "Types";
 
 /**
@@ -22,12 +23,6 @@ import {
 export const changeAccountView = newValue => ({
   type: CHANGE_ACCOUNT_LIST_VIEW,
   payload: newValue
-});
-/**
- * Toggle DropDown
- */
-export const toggleAccountDropDown = () => ({
-  type: ACCOUNT_LIST_DROPDOWN
 });
 
 /**
@@ -102,4 +97,15 @@ export const submitAccountSuccess = data => ({
 export const submitAccountError = error => ({
   type: SUBMIT_ACCOUNT_ERROR,
   payload: error
+});
+
+/**
+ * Edit
+ */
+export const startAccountEdit = Account => ({
+  type: START_ACCOUNT_EDIT,
+  payload: Account
+});
+export const submitEditAccount = () => ({
+  type: SUBMIT_EDIT_ACCOUNT
 });

@@ -76,13 +76,6 @@ class RolesList extends Component {
               component="nav"
               className={classes.root}
             >
-              <ListItem 
-                button
-                selected={selectedRole.name == "Super Admin"}
-                onClick={() => onChangeSelectedRole("Super Admin")}
-              >
-                <ListItemText inset primary={"Super Admin"} className={classes.listItem}/>
-              </ListItem>
               {accessRoles.map(accessRole => (
                 <ListItem 
                   key={accessRole.id}

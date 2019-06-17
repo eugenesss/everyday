@@ -15,18 +15,20 @@ import ListSummary from "Components/Everyday/ListSummary/ListSummary";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // Actions
-import {
-  changeDealView,
-  toggleDealDropDown,
-  toggleDealSummary,
-  getAllDeal,
-  getDealSummary
-} from "Actions";
+import { changeDealView, getAllDeal, getDealSummary } from "Actions";
 
 class crm_deal extends Component {
+  state = {
+    showSummary: false
+  };
+
   componentDidMount() {
     this.props.getAllDeal();
     this.props.getDealSummary();
+  }
+
+  toggleSummary() {
+    this.setState({ showSummary: !this.state.showSummary });
   }
 
   reload() {
@@ -38,14 +40,13 @@ class crm_deal extends Component {
 
   render() {
     const {
-      dropdownOpen,
       options,
       nowShowing,
       action,
       tableData,
       loading
     } = this.props.dealState.dealList;
-    const { showSummary, summary } = this.props.dealState.dealSummary;
+    const { summary } = this.props.dealState.dealSummary;
     return (
       <React.Fragment>
         <Helmet>
@@ -56,13 +57,11 @@ class crm_deal extends Component {
           title={
             <div className="d-flex">
               <ListViewSelector
-                dropdownOpen={dropdownOpen}
-                toggle={this.props.toggleDealDropDown}
                 options={options}
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeDealView}
               />
-              <ShowListSummaryButton action={this.props.toggleDealSummary} />
+              <ShowListSummaryButton action={() => this.toggleSummary()} />
             </div>
           }
           createLink="/crm/new/deal"
@@ -76,7 +75,7 @@ class crm_deal extends Component {
             </MoreButton>
           }
         />
-        {showSummary && <ListSummary summary={summary} />}
+        {this.state.showSummary && <ListSummary summary={summary} />}
         <DealList
           title={nowShowing}
           action={action}
@@ -96,8 +95,6 @@ export default connect(
   mapStateToProps,
   {
     changeDealView,
-    toggleDealDropDown,
-    toggleDealSummary,
     getAllDeal,
     getDealSummary
   }

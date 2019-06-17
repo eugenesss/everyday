@@ -11,7 +11,8 @@ import {
   CHANGE_CUSTOMER_LIST_VIEW,
   GET_ALL_CUSTOMER,
   GET_SINGLE_CUSTOMER,
-  SUBMIT_CUSTOMER
+  SUBMIT_CUSTOMER,
+  SUBMIT_EDIT_CUSTOMER
 } from "Types";
 import {
   getCustomerFailure,
@@ -44,6 +45,10 @@ const getCustomerRequest = async custID => {
 };
 const postCustomerRequest = async cust => {
   const result = await api.post("/customers", cust);
+  return result.data;
+};
+const editCustomerRequest = async cust => {
+  const result = await api.patch(`/customers/${cust.id}`, cust);
   return result.data;
 };
 
@@ -101,7 +106,19 @@ function* postCustomerToDB() {
       state.crmState.customerState.customerForm.customer;
     const cust = yield select(getCustState);
     const data = yield call(postCustomerRequest, cust);
-    yield delay(800);
+    yield delay(500);
+    yield put(submitCustomerSuccess(data));
+  } catch (error) {
+    yield put(submitCustomerError(error));
+  }
+}
+function* editCustomerToDB() {
+  try {
+    const getCustState = state =>
+      state.crmState.customerState.customerForm.customer;
+    const cust = yield select(getCustState);
+    const data = yield call(editCustomerRequest, cust);
+    yield delay(500);
     yield put(submitCustomerSuccess(data));
   } catch (error) {
     yield put(submitCustomerError(error));
@@ -123,6 +140,9 @@ export function* getSingleCustomerWatcher() {
 export function* postCustomerWatcher() {
   yield takeEvery(SUBMIT_CUSTOMER, postCustomerToDB);
 }
+export function* editCustomerWatcher() {
+  yield takeEvery(SUBMIT_EDIT_CUSTOMER, editCustomerToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -132,6 +152,7 @@ export default function* rootSaga() {
     fork(changeViewWatcher),
     fork(getAllCustomerWatcher),
     fork(getSingleCustomerWatcher),
-    fork(postCustomerWatcher)
+    fork(postCustomerWatcher),
+    fork(editCustomerWatcher)
   ]);
 }

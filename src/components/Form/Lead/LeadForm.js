@@ -17,7 +17,6 @@ import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetBu
 // Actions
 import {
   handleChangeLead,
-  submitNewLead,
   clearNewLead,
   getLeadSource,
   getLeadStatus,
@@ -38,6 +37,11 @@ class LeadForm extends Component {
     this.props.clearNewLead();
   }
 
+  checkDisabled(firstName, companyName, statusId) {
+    const disabled = firstName && companyName && statusId;
+    return disabled;
+  }
+
   render() {
     const { lead } = this.props.leadForm;
     const {
@@ -47,14 +51,16 @@ class LeadForm extends Component {
       leadInterest
     } = this.props.crmField;
     const { users } = this.props;
-    const disabled =
-      lead.baseContact.firstName && lead.companyName && lead.statusId;
     return (
       <React.Fragment>
         <FormSubmitResetButtons
           onReset={this.props.clearNewLead}
-          onSubmit={this.props.submitNewLead}
-          disabled={disabled}
+          onSubmit={this.props.handleSubmit}
+          disabled={this.checkDisabled(
+            lead.baseContact.firstName,
+            lead.companyName,
+            lead.statusId
+          )}
         />
         <FormTable>
           <TableRow>
@@ -237,7 +243,6 @@ export default connect(
   mapStateToProps,
   {
     handleChangeLead,
-    submitNewLead,
     clearNewLead,
     getLeadSource,
     getLeadStatus,

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import ProfileLayout from "Components/Setting/General/Profile/ProfileLayout";
 
-import { getAllUsers } from "Actions"
+import { getUserProfile } from "Actions"
 
 class MyProfile extends Component {
   constructor(props) {
@@ -11,26 +11,26 @@ class MyProfile extends Component {
   }
 
   componentWillMount() {
-    if(!this.props.me)
-      this.props.getAllUsers()
+    this.props.getUserProfile(this.props.user)
   }
 
   render() {
-    const { me } = this.props
+    const { userProfile } = this.props
     return (
       <React.Fragment>
-        <ProfileLayout userView={me}/>
+        <ProfileLayout userView={userProfile}/>
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = ({ usersState }) => {
-  const { me } = usersState;
-  return { me };
+const mapStateToProps = ({ authUser, usersState }) => {
+  const { user } = authUser;
+  const { userProfile } = usersState;
+  return { user };
 };
 
 export default connect(
   mapStateToProps,
-  {getAllUsers}
+  { getUserProfile }
 )(MyProfile);

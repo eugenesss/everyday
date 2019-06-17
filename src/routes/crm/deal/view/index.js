@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 // Global Req
 import { Helmet } from "react-helmet";
@@ -36,7 +37,7 @@ import NewNote from "Components/Form/Note/NewNote";
 import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
-import { getSingleDeal, clearSingleDeal } from "Actions";
+import { getSingleDeal, clearSingleDeal, startDealEdit } from "Actions";
 // Edit Deal, Delete Deal, Update Stage/Amount, getDealStage,
 // addNoteToDeal(dealID), onNoteChange, clearNote
 // Add Event Dialog
@@ -54,8 +55,9 @@ class crm_view_deal extends Component {
   reload() {
     console.log("reload");
   }
-  edit() {
-    console.log("edit");
+  edit(deal) {
+    this.props.startDealEdit(deal);
+    this.props.history.push("/app/crm/deals/edit");
   }
   delete() {
     console.log("delete");
@@ -84,7 +86,7 @@ class crm_view_deal extends Component {
                     handleOnClick: this.reload.bind(this),
                     label: "Reload"
                   }}
-                  {{ handleOnClick: this.edit.bind(this), label: "Edit" }}
+                  {{ handleOnClick: () => this.edit(deal), label: "Edit" }}
                   {{
                     handleOnClick: this.delete.bind(this),
                     label: "Delete"
@@ -152,7 +154,9 @@ const mapStateToProps = ({ crmState }) => {
   return { dealToView };
 };
 
-export default connect(
-  mapStateToProps,
-  { getSingleDeal, clearSingleDeal }
-)(crm_view_deal);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { getSingleDeal, clearSingleDeal, startDealEdit }
+  )(crm_view_deal)
+);

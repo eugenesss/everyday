@@ -14,11 +14,10 @@ const signInUserWithEmailPasswordRequest = async (email, password) => {
   return result.data;
 };
 
-const getUserAccessRightsRequest = async (userId) => {
-  const result = await api.get(`/accesssettings/${userId}/user/accessRights`)
-  return result.data
-}
-
+const getUserAccessRightsRequest = async userId => {
+  const result = await api.get(`/accesssettings/${userId}/user/accessRights`);
+  return result.data;
+};
 
 function* signInUserWithEmailPassword({ payload }) {
   const { emailAddress, password } = payload.user;
@@ -32,11 +31,13 @@ function* signInUserWithEmailPassword({ payload }) {
     if (signInUser.id) {
       localStorage.setItem("user_id", signInUser.userId);
       localStorage.setItem("accessKey", signInUser.id);
-
-      //Get User Access Rights
-      const userRights = yield call(getUserAccessRightsRequest, signInUser.userId)
+      const userRights = yield call(
+        getUserAccessRightsRequest,
+        signInUser.userId
+      );
       yield put(signinUserSuccess(signInUser, userRights));
       history.push("/");
+      //Get User Access Rights
     } else {
       yield put(signinUserFailure("Invalid email address or password."));
     }

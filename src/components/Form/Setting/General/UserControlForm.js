@@ -43,7 +43,9 @@ class UserControlForm extends Component {
   render() {
     const {
       userControl,
-      hierarchies,
+      accessGroupRoles,
+      accessRoles,
+      accessGroups,
       classes
     } = this.props;
     return (
@@ -54,25 +56,30 @@ class UserControlForm extends Component {
             <Select
               fullWidth
               className={classes.select + " " + classes.textField}
-              error={userControl.access.length == 0}
+              // error={}
               multiple
-              value={ userControl ? userControl.access : [] }
+              value={ [""] }
               onChange={(e) => console.log(e.target.value)}
-              renderValue={selected => (
-                <div className={classes.chips}>
-                  {selected.map((value) => {
-                    return (
-                      <Chip key={value} label={value.role.name + " (" + value.group.name + ")"} className={classes.chip} />
-                    )
-                  })}
-                </div>
-              )}
+              // renderValue={selected => (
+              //   <div className={classes.chips}>
+              //     {selected.map((value) => {
+              //       return (
+              //         <Chip key={value} label={value.role.name + " (" + value.group.name + ")"} className={classes.chip} />
+              //       )
+              //     })}
+              //   </div>
+              // )}
             >
-              {hierarchies.map((hierarchy) => {
+              {accessGroupRoles.map((groupRole) => {
+                const role = accessRoles.find(role => role.id == groupRole.accessRoleId)
+                const group = accessGroups.find(group => group.id == groupRole.accessGroupId)
                 return (
-                  <MenuItem key={hierarchy.group.id + " - " + hierarchy.role.id} value={hierarchy} disabled={hierarchy.role.name == "Member"}>
-                    <Checkbox color="primary" checked={ userControl.access.indexOf(hierarchy.id) > -1 || hierarchy.role.name == "Member" } />
-                    <ListItemText primary={hierarchy.role.name + " (" + hierarchy.group.name + ")"} />
+                  <MenuItem key={groupRole.id} value={groupRole}>
+                    <Checkbox 
+                      color="primary" 
+                      //checked={ userControl.access.indexOf(groupRole.id) > -1} 
+                    />
+                    <ListItemText primary={(role ? role.name : "") + " (" + (group ? group.name : "") + ")"} />
                   </MenuItem>
                 )
               })}
@@ -136,10 +143,11 @@ UserControlForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({usersState, hierarchiesState}) => {
+const mapStateToProps = ({usersState, groupsState, rolesState}) => {
   const { userControl } = usersState;
-  const { hierarchies } = hierarchiesState;
-  return { userControl, hierarchies };
+  const { accessRoles } = rolesState;
+  const { accessGroups, accessGroupRoles} = groupsState;
+  return { userControl, accessRoles, accessGroups, accessGroupRoles };
 }
 
 export default connect(

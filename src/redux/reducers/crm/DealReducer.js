@@ -1,8 +1,6 @@
 import { NotificationManager } from "react-notifications";
 import {
-  DEAL_LIST_DROPDOWN,
   CHANGE_DEAL_LIST_VIEW,
-  TOGGLE_DEAL_SUMMARY,
   GET_DEAL_FAILURE,
   GET_DEAL_SUCCESS,
   GET_ALL_DEAL,
@@ -26,12 +24,13 @@ import {
   ON_CHANGE_STEP_STATE,
   ON_SUBMIT_NEW_STAGE,
   ON_SUBMIT_NEW_STAGE_SUCCESS,
-  ON_SUBMIT_NEW_STAGE_FAILURE
+  ON_SUBMIT_NEW_STAGE_FAILURE,
+  START_DEAL_EDIT,
+  SUBMIT_EDIT_DEAL
 } from "Types";
 
 const INIT_STATE = {
   dealList: {
-    dropdownOpen: false,
     nowShowing: "All Deals",
     options: [
       "All Deals",
@@ -45,7 +44,6 @@ const INIT_STATE = {
     tableData: []
   },
   dealSummary: {
-    showSummary: false,
     loading: false,
     summary: []
   },
@@ -63,14 +61,6 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    case DEAL_LIST_DROPDOWN:
-      return {
-        ...state,
-        dealList: {
-          ...state.dealList,
-          dropdownOpen: !state.dealList.dropdownOpen
-        }
-      };
     case CHANGE_DEAL_LIST_VIEW:
       if (action.payload == "My Deals") {
         return {
@@ -95,16 +85,8 @@ export default (state = INIT_STATE, action) => {
       }
 
     /**
-     * Account Summary
+     * Deal Summary
      */
-    case TOGGLE_DEAL_SUMMARY:
-      return {
-        ...state,
-        dealSummary: {
-          ...state.dealSummary,
-          showSummary: !state.dealSummary.showSummary
-        }
-      };
     case GET_DEAL_SUMMARY:
       return {
         ...state,
@@ -293,6 +275,20 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         dealForm: { ...state.dealForm, loading: false }
+      };
+
+    /**
+     * Edit
+     */
+    case START_DEAL_EDIT:
+      return {
+        ...state,
+        dealForm: { ...state.dealForm, deal: action.payload }
+      };
+    case SUBMIT_EDIT_DEAL:
+      return {
+        ...state,
+        dealForm: { ...state.dealForm, loading: true }
       };
 
     default:

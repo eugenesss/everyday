@@ -1,6 +1,5 @@
 import { NotificationManager } from "react-notifications";
 import {
-  ACCOUNT_LIST_DROPDOWN,
   CHANGE_ACCOUNT_LIST_VIEW,
   GET_ACCOUNT_FAILURE,
   GET_ACCOUNT_SUCCESS,
@@ -14,12 +13,13 @@ import {
   SUBMIT_ACCOUNT,
   CLEAR_ACCOUNT_FORM,
   SUBMIT_ACCOUNT_SUCCESS,
-  SUBMIT_ACCOUNT_ERROR
+  SUBMIT_ACCOUNT_ERROR,
+  START_ACCOUNT_EDIT,
+  SUBMIT_EDIT_ACCOUNT
 } from "Types";
 
 const INIT_STATE = {
   accountList: {
-    dropdownOpen: false,
     nowShowing: "All Accounts",
     options: ["All Accounts", "My Accounts", "Open Accounts"],
     action: false,
@@ -38,14 +38,6 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    case ACCOUNT_LIST_DROPDOWN:
-      return {
-        ...state,
-        accountList: {
-          ...state.accountList,
-          dropdownOpen: !state.accountList.dropdownOpen
-        }
-      };
     case CHANGE_ACCOUNT_LIST_VIEW:
       if (action.payload == "My Accounts") {
         return {
@@ -182,6 +174,20 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         accountForm: { ...state.accountForm, loading: false }
+      };
+
+    /**
+     * Edit
+     */
+    case START_ACCOUNT_EDIT:
+      return {
+        ...state,
+        accountForm: { ...state.accountForm, account: action.payload }
+      };
+    case SUBMIT_EDIT_ACCOUNT:
+      return {
+        ...state,
+        accountForm: { ...state.accountForm, loading: true }
       };
 
     default:

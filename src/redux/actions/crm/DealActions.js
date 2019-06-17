@@ -1,7 +1,5 @@
 import {
-  DEAL_LIST_DROPDOWN,
   CHANGE_DEAL_LIST_VIEW,
-  TOGGLE_DEAL_SUMMARY,
   GET_DEAL_FAILURE,
   GET_DEAL_SUCCESS,
   GET_ALL_DEAL,
@@ -25,7 +23,9 @@ import {
   ON_CHANGE_STEP_STATE,
   ON_SUBMIT_NEW_STAGE,
   ON_SUBMIT_NEW_STAGE_SUCCESS,
-  ON_SUBMIT_NEW_STAGE_FAILURE
+  ON_SUBMIT_NEW_STAGE_FAILURE,
+  START_DEAL_EDIT,
+  SUBMIT_EDIT_DEAL
 } from "Types";
 
 /**
@@ -34,18 +34,6 @@ import {
 export const changeDealView = newValue => ({
   type: CHANGE_DEAL_LIST_VIEW,
   payload: newValue
-});
-/**
- * Toggle DropDown
- */
-export const toggleDealDropDown = () => ({
-  type: DEAL_LIST_DROPDOWN
-});
-/**
- * Toggle Summary List
- */
-export const toggleDealSummary = () => ({
-  type: TOGGLE_DEAL_SUMMARY
 });
 
 /**
@@ -176,4 +164,15 @@ export const newStageSuccess = deal => ({
 export const newStageFailure = error => ({
   type: ON_SUBMIT_NEW_STAGE_FAILURE,
   payload: error
+});
+
+/**
+ * Edit
+ */
+export const startDealEdit = Deal => ({
+  type: START_DEAL_EDIT,
+  payload: Deal
+});
+export const submitEditDeal = () => ({
+  type: SUBMIT_EDIT_DEAL
 });

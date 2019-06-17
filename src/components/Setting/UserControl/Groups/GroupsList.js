@@ -12,7 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import { onChangeSelectedGroup, addGroup } from 'Actions'
+import { onChangeSelectedGroup, addGroup, onChangeSelectedGroupRole } from 'Actions'
 
 const styles = () => ({
   root: {
@@ -43,6 +43,7 @@ class GroupsList extends Component {
 
   onChange(group) {
     this.props.onChangeSelectedGroup(group);
+    this.props.onChangeSelectedGroupRole(this.props.selectedGroupRoles)
   }
   
   render() {
@@ -103,11 +104,11 @@ GroupsList.propTypes = {
 };
 
 const mapStateToProps = ({ groupsState }) => {
-  const { accessGroups, selectedGroup } = groupsState;
-  return { accessGroups, selectedGroup };
+  const { accessGroups, selectedGroup, selectedGroupRoles } = groupsState;
+  return { accessGroups, selectedGroup, selectedGroupRoles };
 };
 
 export default connect(
   mapStateToProps,
-  { onChangeSelectedGroup, addGroup }
+  { onChangeSelectedGroup, addGroup, onChangeSelectedGroupRole }
 )(withStyles(styles)(GroupsList));

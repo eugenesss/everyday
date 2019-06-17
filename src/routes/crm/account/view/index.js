@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 // Global Req
 import { Helmet } from "react-helmet";
@@ -23,9 +24,6 @@ import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 import NewEventsButton from "Components/CRM/View/Events/NewEventsButton";
 
-// Activity Log
-// import ActivityLog from "Components/Everyday/ActivityLog";
-
 // Related Tab
 import RelatedDeals from "Components/CRM/View/Related/RelatedDeals";
 import RelatedCustomers from "Components/CRM/View/Related/RelatedCustomers";
@@ -35,7 +33,11 @@ import NewNote from "Components/Form/Note/NewNote";
 import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
-import { getSingleAccount, clearSingleAccount } from "Actions";
+import {
+  getSingleAccount,
+  clearSingleAccount,
+  startAccountEdit
+} from "Actions";
 // addNoteToAccount(acctID), onNoteChange, clearNote
 // Add events dialog
 // Delete Account, Edit Account, Transfer Account
@@ -53,8 +55,9 @@ class crm_view_account extends Component {
   reload() {
     console.log("reload");
   }
-  edit() {
-    console.log("edit");
+  edit(acct) {
+    this.props.startAccountEdit(acct);
+    this.props.history.push("/app/crm/accounts/edit");
   }
   delete() {
     console.log("delete");
@@ -78,7 +81,7 @@ class crm_view_account extends Component {
           moreButton={
             <MoreButton>
               {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
-              {{ handleOnClick: this.edit.bind(this), label: "Edit" }}
+              {{ handleOnClick: () => this.edit(account), label: "Edit" }}
               {{ handleOnClick: this.delete.bind(this), label: "Delete" }}
             </MoreButton>
           }
@@ -120,9 +123,6 @@ class crm_view_account extends Component {
             <hr />
             <ClosedEvents events={account.closedEvents} />
           </div>
-          {/* <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
-            <ActivityLog />
-          </div> */}
           <div icon="zmdi-assignment text-danger" label="NOTES">
             <div className="row">
               <div className="col-md-4">
@@ -149,7 +149,9 @@ const mapStateToProps = ({ crmState }) => {
   return { accountToView };
 };
 
-export default connect(
-  mapStateToProps,
-  { getSingleAccount, clearSingleAccount }
-)(crm_view_account);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { getSingleAccount, clearSingleAccount, startAccountEdit }
+  )(crm_view_account)
+);

@@ -10,19 +10,16 @@ import {
   getUserFailure
 } from "Actions";
 import api from "Api";
-import { users, addUser } from "Components/UserDummyData";
 
 //=========================
 // REQUESTS
 //=========================
 const getAllUsersRequest = async () => {
-  // const result = await api.get("/users");
-  // return result.data;
-  const result = users;
-  return result;
+  const result = await api.get("/users");
+  return result.data;
 };
 const addUserRequest = async newUser => {
-  const result = addUser(newUser);
+  const result = newUser;
   return result;
 };
 const updateUserRequest = async user => {
@@ -30,11 +27,8 @@ const updateUserRequest = async user => {
   return result;
 };
 const getUserProfileRequest = async userID => {
-  //const result = await api.get(`/user/${userID}`, userID);
-  for (let i = 0; i < users.length; i++) {
-    if (users[i].id == userID) var result = users[i];
-  }
-  return result;
+  const result = await api.get(`/users/${userID}`, userID);
+  return result.data;
 };
 
 //=========================

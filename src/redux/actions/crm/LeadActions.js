@@ -1,7 +1,5 @@
 import {
-  LEAD_LIST_DROPDOWN,
   CHANGE_LEAD_LIST_VIEW,
-  TOGGLE_LEAD_SUMMARY,
   GET_LEAD_FAILURE,
   GET_LEAD_SUCCESS,
   GET_ALL_LEAD,
@@ -37,18 +35,6 @@ import {
 export const changeLeadView = newValue => ({
   type: CHANGE_LEAD_LIST_VIEW,
   payload: newValue
-});
-/**
- * Toggle DropDown
- */
-export const toggleLeadDropDown = () => ({
-  type: LEAD_LIST_DROPDOWN
-});
-/**
- * Toggle Summary List
- */
-export const toggleLeadSummary = () => ({
-  type: TOGGLE_LEAD_SUMMARY
 });
 
 /**
