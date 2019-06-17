@@ -13,6 +13,9 @@ import RctThemeProvider from "./RctThemeProvider";
 import HorizontalLayout from "./HorizontalLayout";
 import Login from "Routes/login";
 import Register from "Routes/register";
+import ForgetPassword from '../routes/forgetpassword/forgetpassword'
+import Verified from '../routes/verified/verified'
+
 import NotFound from "./error_pages/Err404";
 
 
@@ -60,6 +63,11 @@ class App extends Component {
         <Switch>
           <Route path={`/login`} exact component={Login} />
           <Route path={`/register`} exact component={Register} />
+          <Route path={`/forgetpassword`} exact component={ForgetPassword} />
+          <Route path={`/verified`} exact component={Verified} />
+
+
+
 
           {/* <Route path={"/404"} exact component={NotFound} /> */}
           <Route component={NotFound} />

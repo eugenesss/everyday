@@ -15,7 +15,9 @@ import { registerUserSuccess, registerUserFailure } from "Actions";
 import api from "Api";
 
 const registerUserRequest = async form => {
+
   const result = await api.post("/basecompanies/signup", form);
+
   return result.data;
 };
 
