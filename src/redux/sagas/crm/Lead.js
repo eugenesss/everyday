@@ -68,13 +68,12 @@ const postLeadRequest = async lead => {
   return result.data;
 };
 const convertLeadRequest = async data => {
-  console.log(data);
-  const result = {
-    newDeal: { name: "New Deal", amount: "10000" },
-    newCust: { name: "Customer One", jobTitle: "Snake Eat" },
-    newAcct: { name: "Account One", industry: { name: "Fashion" } }
-  };
-  return result;
+  //console.log(data);
+  const result = await api.post(`/leads/convert/${data.leadID}`, {
+    dealDetails: data.dealDetails
+  });
+  console.log(result);
+  return result.data;
 };
 const editLeadRequest = async lead => {
   const result = await api.patch(`/leads/${lead.id}`, lead);

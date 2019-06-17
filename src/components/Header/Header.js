@@ -39,7 +39,7 @@ class Header extends Component {
         <Toolbar className="d-flex justify-content-between w-100">
           <div className="d-flex align-items-center">
             <ul
-              className="list-inline mb-0 navbar-left"
+              className="list-inline mb-0 ml-0 navbar-left"
               //  style={{ marginLeft: "24px" }}
             >
               <QuickAdd />

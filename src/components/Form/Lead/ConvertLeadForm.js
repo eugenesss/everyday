@@ -9,14 +9,20 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
-import { unmountConvertLead, handleChangeConvertLead } from "Actions";
-
-import { dealStage } from "Components/DummyData";
+import {
+  unmountConvertLead,
+  handleChangeConvertLead,
+  getDealStage
+} from "Actions";
 
 class ConvertLeadForm extends Component {
-  state = {};
+  componentWillMount() {
+    this.props.getDealStage();
+  }
+
   render() {
     const { dealDetails } = this.props.leadToConvert;
+    const { dealStage } = this.props;
     return (
       <div>
         <div className="form-group">
@@ -68,9 +74,9 @@ class ConvertLeadForm extends Component {
               Stage
             </InputLabel>
             <Select
-              value={dealDetails.stage ? dealDetails.stage : ""}
+              value={dealDetails.stageId ? dealDetails.stageId : ""}
               onChange={e =>
-                this.props.handleChangeConvertLead("stage", e.target.value)
+                this.props.handleChangeConvertLead("stageId", e.target.value)
               }
             >
               {dealStage.map((stage, key) => {
@@ -88,12 +94,13 @@ class ConvertLeadForm extends Component {
   }
 }
 const mapStateToProps = ({ crmState }) => {
-  const { leadState } = crmState;
+  const { leadState, crmField } = crmState;
   const { leadToConvert } = leadState;
-  return { leadToConvert };
+  const { dealStage } = crmField;
+  return { leadToConvert, dealStage };
 };
 
 export default connect(
   mapStateToProps,
-  { unmountConvertLead, handleChangeConvertLead }
+  { unmountConvertLead, handleChangeConvertLead, getDealStage }
 )(ConvertLeadForm);

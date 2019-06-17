@@ -245,7 +245,7 @@ export default (state = INIT_STATE, action) => {
           ...state.leadToConvert,
           dealDetails: {
             ...state.leadToConvert.dealDetails,
-            [action.payload.field]: [action.payload.value]
+            [action.payload.field]: action.payload.value
           }
         }
       };

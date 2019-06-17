@@ -51,8 +51,8 @@ class crm_view_lead extends Component {
     this.props.clearSingleLead();
   }
 
-  reload() {
-    console.log("reload");
+  transfer() {
+    console.log("transger");
   }
   edit(lead) {
     this.props.startLeadEdit(lead);
@@ -91,11 +91,11 @@ class crm_view_lead extends Component {
               ]}
               moreButton={
                 <MoreButton>
-                  {{
-                    handleOnClick: this.reload.bind(this),
-                    label: "Reload"
-                  }}
                   {{ handleOnClick: () => this.edit(lead), label: "Edit" }}
+                  {{
+                    handleOnClick: this.transfer.bind(this),
+                    label: "Transfer Lead"
+                  }}
                   {{
                     handleOnClick: this.delete.bind(this),
                     label: "Delete"

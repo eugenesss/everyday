@@ -28,7 +28,7 @@ class crm_new_lead extends Component {
           {loading && <RctSectionLoader />}
           <div className="row">
             <div className="col-md-11">
-              <LeadForm handleSubmitForm={this.props.submitNewLead} />
+              <LeadForm handleSubmit={this.props.submitNewLead} />
             </div>
           </div>
         </RctCollapsibleCard>

@@ -100,7 +100,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
     { label: "Office", name: "office", options: { display: false } },
     { label: "Fax", name: "fax", options: { display: false } }
   ];
-  if (action == true) {
+  /* if (action == true) {
     columns.push({
       name: "Actions",
       options: {
@@ -136,7 +136,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
         }
       }
     });
-  }
+  } */
 
   return (
     <RctCollapsibleCard fullBlock>
