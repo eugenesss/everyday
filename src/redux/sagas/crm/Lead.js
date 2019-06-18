@@ -30,7 +30,7 @@ import {
 
 import api from "Api";
 
-import { leadList, lead, lead2, leadSummary } from "Components/DummyData";
+import { leadSummary } from "Components/DummyData";
 
 //=========================
 // REQUESTS
@@ -68,7 +68,6 @@ const postLeadRequest = async lead => {
   return result.data;
 };
 const convertLeadRequest = async data => {
-  //console.log(data);
   const result = await api.post(`/leads/convert/${data.leadID}`, {
     dealDetails: data.dealDetails
   });
@@ -77,7 +76,6 @@ const convertLeadRequest = async data => {
 };
 const editLeadRequest = async lead => {
   const result = await api.patch(`/leads/${lead.id}`, lead);
-  console.log(result);
   return result.data;
 };
 

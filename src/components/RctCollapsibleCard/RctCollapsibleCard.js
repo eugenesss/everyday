@@ -1,7 +1,7 @@
 /**
  * Rct Collapsible Card
  */
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Collapse, Badge } from "reactstrap";
 import classnames from "classnames";
 
@@ -36,6 +36,7 @@ class RctCollapsibleCard extends Component {
     const {
       children,
       addButton,
+      editable,
       collapsible,
       closeable,
       reloadable,
@@ -73,9 +74,14 @@ class RctCollapsibleCard extends Component {
                   </Badge>
                 )}
               </h4>
-              {(collapsible || reloadable || closeable) && (
+              {(collapsible || reloadable || closeable || editable) && (
                 <div className="contextual-link">
                   {addButton && addButton}
+                  {editable && (
+                    <a href="javascript:void(0)" onClick={editable}>
+                      <i className="ti-pencil" />
+                    </a>
+                  )}
                   {collapsible && (
                     <a
                       href="javascript:void(0)"

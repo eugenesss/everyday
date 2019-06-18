@@ -9,6 +9,7 @@ export * from "./crm/CustomerActions";
 export * from "./crm/AccountActions";
 export * from "./crm/DealActions";
 export * from "./crm/CrmFieldActions";
+export * from "./crm/SalesTeamActions";
 
 // Accounting Actions
 export * from "./accounting/QuotationActions";

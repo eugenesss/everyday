@@ -31,6 +31,10 @@ export const Async_crm_deal_component = Loadable({
   loader: () => import("Routes/crm/deal"),
   loading: () => <RctPageLoader />
 });
+export const Async_crm_team_component = Loadable({
+  loader: () => import("Routes/crm/team"),
+  loading: () => <RctPageLoader />
+});
 
 // crm_view
 export const Async_crm_single_lead = Loadable({

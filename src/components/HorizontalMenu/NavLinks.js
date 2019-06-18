@@ -24,6 +24,12 @@ export default {
       menu_icon: "zmdi zmdi-case text-everyday-sec",
       path: "/app/crm/deals",
       child_routes: null
+    },
+    {
+      menu_title: "sidebar.teams",
+      menu_icon: "zmdi zmdi-accounts-alt text-everyday-sec",
+      path: "/app/crm/team",
+      child_routes: null
     }
   ],
   project: [

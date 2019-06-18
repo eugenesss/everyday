@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 
-const IconAvatar = ({ name, size, customClasses }) => {
+const IconAvatar = ({ name, size, customClasses, props }) => {
   var getInitials = name => {
     var names = name.split(" "),
       initials = names[0].substring(0, 1).toUpperCase();
@@ -20,7 +20,6 @@ const IconAvatar = ({ name, size, customClasses }) => {
     else if (size == "120") return "28px";
     else return "12px";
   };
-
   return (
     <Avatar
       className={`size-${size} rounded-circle ${customClasses}`}
