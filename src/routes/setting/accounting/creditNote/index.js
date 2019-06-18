@@ -1,15 +1,24 @@
-import React, { Component } from "react";
-import CreditNoteLayout from "Components/Setting/Accounting/CreditNote/CreditNoteLayout"
+import React from "react";
 
-class CreditNote extends Component {
-  state = {};
-  render() {
-    return (
-      <React.Fragment>
-        <CreditNoteLayout/>
-      </React.Fragment>
-    );
-  }
-}
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import CreditNoteSettingsForm from "Components/Form/Setting/Accounting/CreditNote/CreditNoteSettingsForm";
 
-export default CreditNote;
+import AccessControl from "Components/AccessControl";
+import NoAccessComponent from "Components/AccessControl/NoAccessComponent";
+
+const setting_acct_credit_note = () => {
+  return (
+    <React.Fragment>
+      <AccessControl
+        action={["AccCreditNoteSet:update"]}
+        noAccessComponent={<NoAccessComponent />}
+      >
+        <RctCollapsibleCard heading={"Credit Note Settings"}>
+          <CreditNoteSettingsForm />
+        </RctCollapsibleCard>
+      </AccessControl>
+    </React.Fragment>
+  );
+};
+
+export default setting_acct_credit_note;

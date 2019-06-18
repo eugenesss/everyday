@@ -3,16 +3,12 @@
  */
 import React, { Component } from "react";
 import { Route, withRouter, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
 
 // horizontal layout
 import RctHorizontalLayout from "Components/RctHorizontalLayout";
 
 // router service
 import routerService from "../services/_routerService";
-
-
-
 
 class RctHorizontalApp extends Component {
   render() {

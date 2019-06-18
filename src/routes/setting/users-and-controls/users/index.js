@@ -1,22 +1,17 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React from "react";
 
-import UsersLayout from "Components/Setting/UserControl/Users/UsersLayout"
+import AccessControl from "Components/AccessControl";
+import NoAccessComponent from "Components/AccessControl/NoAccessComponent";
+import UsersList from "Components/Setting/UserControl/Users/UsersList";
 
-class Users extends Component {
-  constructor(props) {
-    super(props);
-  }
+const UsersLayout = () => {
+  return (
+    <React.Fragment>
+      {/* <AccessControl action={["User:read"]} noAccessComponent={<NoAccessComponent/>}> */}
+      <UsersList />
+      {/* </AccessControl> */}
+    </React.Fragment>
+  );
+};
 
-  render() {
-    return (
-      <React.Fragment>
-        <UsersLayout/>
-      </React.Fragment>
-    );
-  }
-}
-
-export default connect(
-  null
-)(Users);
+export default UsersLayout;

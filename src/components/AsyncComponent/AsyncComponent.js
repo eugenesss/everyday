@@ -198,6 +198,11 @@ export const Async_setting_user_groups_component = Loadable({
   loader: () => import("Routes/setting/users-and-controls/groups"),
   loading: () => <RctPageLoader />
 });
+// CRM
+export const Async_setting_crm_team_component = Loadable({
+  loader: () => import("Routes/setting/crm/team"),
+  loading: () => <RctPageLoader />
+});
 // Accounting
 export const Async_setting_acc_creditNote_component = Loadable({
   loader: () => import("Routes/setting/accounting/creditNote"),

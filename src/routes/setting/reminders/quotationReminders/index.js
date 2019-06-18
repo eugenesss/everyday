@@ -1,16 +1,24 @@
-import React, { Component } from "react";
-import QuotationRemindersLayout from "Components/Setting/Reminders/Quotation/QuotationRemindersLayout"
+import React from "react";
 
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import QuotationReminderSettingsForm from "Components/Form/Setting/Reminders/Quotation/QuotationReminderSettingsForm";
 
-class Quotation extends Component {
-  state = {};
-  render() {
-    return (
-      <React.Fragment>
-        <QuotationRemindersLayout/>
-      </React.Fragment>
-    );
-  }
-}
+import AccessControl from "Components/AccessControl";
+import NoAccessComponent from "Components/AccessControl/NoAccessComponent";
 
-export default Quotation;
+const setting_rem_quotation = () => {
+  return (
+    <React.Fragment>
+      <AccessControl
+        action={["RemQuotationSet:update"]}
+        noAccessComponent={<NoAccessComponent />}
+      >
+        <RctCollapsibleCard heading={"Quotation Reminders Settings"}>
+          <QuotationReminderSettingsForm />
+        </RctCollapsibleCard>
+      </AccessControl>
+    </React.Fragment>
+  );
+};
+
+export default setting_rem_quotation;

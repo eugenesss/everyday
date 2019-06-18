@@ -1,30 +1,29 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Scrollbars } from 'react-custom-scrollbars'
+import { Scrollbars } from "react-custom-scrollbars";
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import Paper from '@material-ui/core/Paper';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Collapse from "@material-ui/core/Collapse";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import Paper from "@material-ui/core/Paper";
 
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 
 const styles = theme => ({
   root: {
     width: "100%",
-    padding: 10,
+    padding: 10
   },
   nested: {
-    paddingLeft: '0 !important',
+    paddingLeft: "0 !important"
   },
   listItem: {
-    paddingLeft: '0 !important',
-    paddingRight: 0,
+    paddingLeft: "0 !important",
+    paddingRight: 0
   },
   paper: {
     marginBottom: 24
@@ -35,112 +34,247 @@ class SettingsDirectory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        openGen: true,
-        openUser: true,
-        openAcc: true,
-        openRem: true,
-    }
+      general: true,
+      user: true,
+      crm: true,
+      accounting: true,
+      reminder: true
+    };
+    this.handleClick = this.handleClick.bind(this);
   }
-  
-  handleClick = (item) => {
-    switch (item) {
-      case "gen":
-        this.setState(state => ({ openGen: !state.openGen }));
-        break;
-      case "user":
-        this.setState(state => ({ openUser: !state.openUser }));
-        break;
-      case "acc":
-        this.setState(state => ({ openAcc: !state.openAcc }));
-        break;
-      case "rem":
-        this.setState(state => ({ openRem: !state.openRem }));
-        break;
-    }
+
+  handleClick = item => {
+    this.setState({ [item]: !this.state[item] });
   };
 
   handleClickItem(path) {
-    this.props.history.push(path)
+    this.props.history.push(path);
   }
 
   render() {
     const { classes, location } = this.props;
     return (
       <Paper className={classes.paper}>
-        <Scrollbars
-            className="rct-scroll"
-            autoHeight
-            autoHeightMin={'100vh'}
-            // autoHeightMax={'calc(100vh - 100px)'}
-        >
-          <List
-            component="nav"
-            className={classes.root}
-          >
-            <ListItem button onClick={() => this.handleClick("gen")}>
-              <ListItemText inset primary={"General"} className={classes.listItem}/>
-              {this.state.openGen ? <ExpandLess /> : <ExpandMore />}
+        <Scrollbars className="rct-scroll" autoHeight autoHeightMin={"100vh"}>
+          <List component="nav" className={classes.root}>
+            <ListItem button onClick={() => this.handleClick("general")}>
+              <ListItemText
+                inset
+                primary={"General"}
+                className={classes.listItem}
+              />
+              {this.state.general ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse in={this.state.openGen} timeout="auto" unmountOnExit>
+            <Collapse in={this.state.general} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/general/my-profile')} selected={location.pathname === '/app/settings/general/my-profile'}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  onClick={() =>
+                    this.handleClickItem("/app/settings/general/my-profile")
+                  }
+                  selected={
+                    location.pathname === "/app/settings/general/my-profile"
+                  }
+                >
                   <ListItemText inset secondary={"My Profile"} />
                 </ListItem>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/general/company-details')} selected={location.pathname === '/app/settings/general/company-details'}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  onClick={() =>
+                    this.handleClickItem(
+                      "/app/settings/general/company-details"
+                    )
+                  }
+                  selected={
+                    location.pathname ===
+                    "/app/settings/general/company-details"
+                  }
+                >
                   <ListItemText inset secondary={"Company Details"} />
                 </ListItem>
               </List>
             </Collapse>
 
             <ListItem button onClick={() => this.handleClick("user")}>
-              <ListItemText inset primary={"User & Controls"} className={classes.listItem}/>
-              {this.state.openUser ? <ExpandLess /> : <ExpandMore />}
+              <ListItemText
+                inset
+                primary={"User & Controls"}
+                className={classes.listItem}
+              />
+              {this.state.user ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse in={this.state.openUser} timeout="auto" unmountOnExit>
+            <Collapse in={this.state.user} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/users-and-controls/users')} selected={location.pathname === '/app/settings/users-and-controls/users'}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  onClick={() =>
+                    this.handleClickItem(
+                      "/app/settings/users-and-controls/users"
+                    )
+                  }
+                  selected={
+                    location.pathname ===
+                    "/app/settings/users-and-controls/users"
+                  }
+                >
                   <ListItemText inset secondary={"Users"} />
                 </ListItem>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/users-and-controls/roles-and-permissions')} selected={location.pathname === '/app/settings/users-and-controls/roles-and-permissions'}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  onClick={() =>
+                    this.handleClickItem(
+                      "/app/settings/users-and-controls/roles-and-permissions"
+                    )
+                  }
+                  selected={
+                    location.pathname ===
+                    "/app/settings/users-and-controls/roles-and-permissions"
+                  }
+                >
                   <ListItemText inset secondary={"Roles & Permissions"} />
                 </ListItem>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/users-and-controls/groups')} selected={location.pathname === '/app/settings/users-and-controls/groups'}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  onClick={() =>
+                    this.handleClickItem(
+                      "/app/settings/users-and-controls/groups"
+                    )
+                  }
+                  selected={
+                    location.pathname ===
+                    "/app/settings/users-and-controls/groups"
+                  }
+                >
                   <ListItemText inset secondary={"Groups"} />
                 </ListItem>
               </List>
             </Collapse>
 
-            <ListItem button onClick={() => this.handleClick("acc")}>
-              <ListItemText inset primary={"Accounting"} className={classes.listItem}/>
-              {this.state.openAcc ? <ExpandLess /> : <ExpandMore />}
+            <ListItem button onClick={() => this.handleClick("crm")}>
+              <ListItemText
+                inset
+                primary={"CRM"}
+                className={classes.listItem}
+              />
+              {this.state.crm ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse in={this.state.openAcc} timeout="auto" unmountOnExit>
+            <Collapse in={this.state.crm} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/accounting/general')} selected={location.pathname === '/app/settings/accounting/general'}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  onClick={() => this.handleClickItem("/app/settings/crm/team")}
+                  selected={location.pathname === "/app/settings/crm/team"}
+                >
+                  <ListItemText inset secondary={"Team"} />
+                </ListItem>
+              </List>
+            </Collapse>
+
+            <ListItem button onClick={() => this.handleClick("accounting")}>
+              <ListItemText
+                inset
+                primary={"Accounting"}
+                className={classes.listItem}
+              />
+              {this.state.accounting ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={this.state.accounting} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  onClick={() =>
+                    this.handleClickItem("/app/settings/accounting/general")
+                  }
+                  selected={
+                    location.pathname === "/app/settings/accounting/general"
+                  }
+                >
                   <ListItemText inset secondary={"General"} />
                 </ListItem>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/accounting/quotation')} selected={location.pathname === '/app/settings/accounting/quotation'}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  onClick={() =>
+                    this.handleClickItem("/app/settings/accounting/quotation")
+                  }
+                  selected={
+                    location.pathname === "/app/settings/accounting/quotation"
+                  }
+                >
                   <ListItemText inset secondary={"Quotation"} />
                 </ListItem>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/accounting/invoice')} selected={location.pathname === '/app/settings/accounting/invoice'}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  onClick={() =>
+                    this.handleClickItem("/app/settings/accounting/invoice")
+                  }
+                  selected={
+                    location.pathname === "/app/settings/accounting/invoice"
+                  }
+                >
                   <ListItemText inset secondary={"Invoice"} />
                 </ListItem>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/accounting/credit-note')} selected={location.pathname === '/app/settings/accounting/credit-note'}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  onClick={() =>
+                    this.handleClickItem("/app/settings/accounting/credit-note")
+                  }
+                  selected={
+                    location.pathname === "/app/settings/accounting/credit-note"
+                  }
+                >
                   <ListItemText inset secondary={"Credit Note"} />
                 </ListItem>
               </List>
             </Collapse>
 
-            <ListItem button onClick={() => this.handleClick("rem")}>
-              <ListItemText inset primary={"Reminders"} className={classes.listItem}/>
-              {this.state.openRem ? <ExpandLess /> : <ExpandMore />}
+            <ListItem button onClick={() => this.handleClick("reminder")}>
+              <ListItemText
+                inset
+                primary={"Reminders"}
+                className={classes.listItem}
+              />
+              {this.state.reminder ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse in={this.state.openRem} timeout="auto" unmountOnExit>
+            <Collapse in={this.state.reminder} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/reminders/lead-reminders')} selected={location.pathname === '/app/settings/reminders/lead-reminders'}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  onClick={() =>
+                    this.handleClickItem(
+                      "/app/settings/reminders/lead-reminders"
+                    )
+                  }
+                  selected={
+                    location.pathname ===
+                    "/app/settings/reminders/lead-reminders"
+                  }
+                >
                   <ListItemText inset secondary={"Lead Reminders"} />
                 </ListItem>
-                <ListItem button className={classes.nested} onClick={() => this.handleClickItem('/app/settings/reminders/quotation-reminders')} selected={location.pathname === '/app/settings/reminders/quotation-reminders'}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  onClick={() =>
+                    this.handleClickItem(
+                      "/app/settings/reminders/quotation-reminders"
+                    )
+                  }
+                  selected={
+                    location.pathname ===
+                    "/app/settings/reminders/quotation-reminders"
+                  }
+                >
                   <ListItemText inset secondary={"Quotation Reminders"} />
                 </ListItem>
               </List>
@@ -148,17 +282,12 @@ class SettingsDirectory extends Component {
           </List>
         </Scrollbars>
       </Paper>
-    )
+    );
   }
 }
 
 SettingsDirectory.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-export default withRouter(
-  connect( null ) (
-    withStyles(styles)
-    (SettingsDirectory)
-  )
-);
+export default withRouter(connect(null)(withStyles(styles)(SettingsDirectory)));

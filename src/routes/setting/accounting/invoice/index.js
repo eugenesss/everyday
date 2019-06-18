@@ -1,15 +1,24 @@
-import React, { Component } from "react";
-import InvoiceLayout from "Components/Setting/Accounting/Invoice/InvoiceLayout"
+import React from "react";
 
-class Invoice extends Component {
-  state = {};
-  render() {
-    return (
-      <React.Fragment>
-        <InvoiceLayout/>
-      </React.Fragment>
-    );
-  }
-}
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import InvoiceSettingsForm from "Components/Form/Setting/Accounting/Invoice/InvoiceSettingsForm";
 
-export default Invoice;
+import AccessControl from "Components/AccessControl";
+import NoAccessComponent from "Components/AccessControl/NoAccessComponent";
+
+const setting_acct_invoice = () => {
+  return (
+    <React.Fragment>
+      <AccessControl
+        action={["AccInvoiceSet:update"]}
+        noAccessComponent={<NoAccessComponent />}
+      >
+        <RctCollapsibleCard heading={"Invoice Settings"}>
+          <InvoiceSettingsForm />
+        </RctCollapsibleCard>
+      </AccessControl>
+    </React.Fragment>
+  );
+};
+
+export default setting_acct_invoice;

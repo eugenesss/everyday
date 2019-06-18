@@ -1,15 +1,24 @@
-import React, { Component } from "react";
-import LeadRemindersLayout from "Components/Setting/Reminders/Lead/LeadRemindersLayout"
+import React from "react";
 
-class LeadReminders extends Component {
-  state = {};
-  render() {
-    return (
-      <React.Fragment>
-        <LeadRemindersLayout/>
-      </React.Fragment>
-    );
-  }
-}
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import LeadReminderSettingsForm from "Components/Form/Setting/Reminders/Lead/LeadReminderSettingsForm";
 
-export default LeadReminders;
+import AccessControl from "Components/AccessControl";
+import NoAccessComponent from "Components/AccessControl/NoAccessComponent";
+
+const setting_rem_lead = () => {
+  return (
+    <React.Fragment>
+      <AccessControl
+        action={["RemLeadSet:update"]}
+        noAccessComponent={<NoAccessComponent />}
+      >
+        <RctCollapsibleCard heading={"Lead Reminders Settings"}>
+          <LeadReminderSettingsForm />
+        </RctCollapsibleCard>
+      </AccessControl>
+    </React.Fragment>
+  );
+};
+
+export default setting_rem_lead;

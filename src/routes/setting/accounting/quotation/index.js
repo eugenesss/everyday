@@ -1,15 +1,24 @@
-import React, { Component } from "react";
-import QuotationLayout from "Components/Setting/Accounting/Quotation/QuotationLayout"
+import React from "react";
 
-class Quotation extends Component {
-  state = {};
-  render() {
-    return (
-      <React.Fragment>
-        <QuotationLayout/>
-      </React.Fragment>
-    );
-  }
-}
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import QuotationSettingsForm from "Components/Form/Setting/Accounting/Quotation/QuotationSettingsForm";
 
-export default Quotation;
+import AccessControl from "Components/AccessControl";
+import NoAccessComponent from "Components/AccessControl/NoAccessComponent";
+
+const setting_acct_quotation = () => {
+  return (
+    <React.Fragment>
+      <AccessControl
+        action={["AccQuotationSet:update"]}
+        noAccessComponent={<NoAccessComponent />}
+      >
+        <RctCollapsibleCard heading={"Quotation Settings"}>
+          <QuotationSettingsForm />
+        </RctCollapsibleCard>
+      </AccessControl>
+    </React.Fragment>
+  );
+};
+
+export default setting_acct_quotation;
