@@ -24,7 +24,6 @@ export const handleRegForm = (field, value, type) => ({
   payload: { field, value, type }
 });
 
-
 export const handleRegErrorForm = (value) => ({
   type: HANDLE_REGISTER_ERROR,
   payload: value

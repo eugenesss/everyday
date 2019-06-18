@@ -22,8 +22,12 @@ export const signinUserFailure = error => ({
   payload: error
 });
 
+export const logoutUser = () => ({
+  type: LOGOUT_USER,
+});
+
 export const logoutUserSuccess = () => ({
-  type: LOGOUT_USER_SUCCESS
+  type: LOGOUT_USER_SUCCESS,
 });
 
 export const logoutUserFailure = () => ({
