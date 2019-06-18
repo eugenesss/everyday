@@ -10,14 +10,12 @@ import {
 
 import { SIGNUP_USER } from "Types";
 
-import { registerUserSuccess, registerUserFailure } from "Actions";
+import { registerUserSuccess, registerUserFailure} from "Actions";
 
 import api from "Api";
 
 const registerUserRequest = async form => {
-
   const result = await api.post("/basecompanies/signup", form);
-
   return result.data;
 };
 

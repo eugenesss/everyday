@@ -59,7 +59,8 @@ export default (state = INIT_STATE, action) => {
     case LOGIN_USER:
       return { ...state, loading: true };
     case LOGIN_USER_SUCCESS:
-      NotificationManager.success("User Logged In");
+      console.log('User logged in')
+        NotificationManager.success("User Logged In");
       return { 
         ...state,
         loading: false,
@@ -76,8 +77,11 @@ export default (state = INIT_STATE, action) => {
     case LOGOUT_USER:
       return { ...state };
     case LOGOUT_USER_SUCCESS:
+        NotificationManager.success("Successfully logout");
       return { ...state, user: null };
+
     case LOGOUT_USER_FAILURE:
+        NotificationManager.error('Unable to logout"');
       return { ...state };
 
     /**

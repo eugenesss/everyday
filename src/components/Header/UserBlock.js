@@ -12,7 +12,9 @@ import Tooltip from "@material-ui/core/Tooltip";
 // import UserAvatar from "Components/User/UserAvatar";
 import { RctCard } from "Components/RctCard";
 
-// import { logoutUser } from "Actions";
+import { logoutUser } from "Actions";
+
+import Auth from '../../Auth/Auth'
 
 class UserBlock extends Component {
   state = {
@@ -21,9 +23,6 @@ class UserBlock extends Component {
 
   componentWillUnmount() {
     clearTimeout(this.timer);
-  }
-  logoutUser() {
-    this.props.logoutUser();
   }
 
   render() {
@@ -82,8 +81,10 @@ class UserBlock extends Component {
                               color="primary"
                               className="btn bg-danger text-white"
                               disabled={buttonLoading}
-                              onClick={() => this.logoutUser()}
-                            >
+                              onClick={() => {
+                                const token = new Auth().retrieveAccessToken()
+                                this.props.logoutUser(token);
+                              }}>
                               Logout
                               {buttonLoading && (
                                 <CircularProgress
@@ -115,7 +116,10 @@ const mapStateToProps = ({ settings, authUser }) => {
 
 export default withRouter(
   connect(
-    null,
-    {}
+    mapStateToProps,
+    {logoutUser}
   )(UserBlock)
 );
+
+
+

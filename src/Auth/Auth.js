@@ -44,18 +44,25 @@ export default class Auth {
 
   setSession(authResult) {
     // Set the time that the access token will expire at
-    let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.idToken);
+    let expiresAt = JSON.stringify((authResult.ttl * 1000) + new Date().getTime());
+    localStorage.setItem('access_token', authResult.id);
+    localStorage.setItem('id_token', authResult.userId);
     localStorage.setItem('expires_at', expiresAt);
+  }
+
+  retrieveAccessToken() {
+    const token = localStorage.getItem('access_token');
+    return token
   }
 
   logout() {
     // Clear access token and ID token from local storage
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('accessKey');
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-    window.location.replace('/signin');
+    window.location.replace('/');
   }
 
   isAuthenticated() {
