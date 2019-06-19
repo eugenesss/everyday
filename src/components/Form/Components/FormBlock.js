@@ -17,15 +17,11 @@ const FormBlock = ({
 }) => {
   return (
     <React.Fragment>
-      <TableCell
-        style={{ borderBottom: "none", width: "15%" }}
-        padding="dense"
-        align="right"
-      >
+      <TableCell style={{ borderBottom: "none", width: "15%" }} align="right">
         {label}
         {required && <sup style={{ color: "red" }}>*</sup>}
       </TableCell>
-      <TableCell padding="dense" style={{ borderBottom: "none", width: "35%" }}>
+      <TableCell style={{ borderBottom: "none", width: "35%" }}>
         {!empty &&
           (customTextField ? (
             customTextField

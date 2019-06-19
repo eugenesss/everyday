@@ -13,16 +13,11 @@ const DescriptionFormInput = ({ handleChange, description }) => {
         <TableRow>
           <TableCell
             style={{ borderBottom: "none", width: "15%" }}
-            padding="dense"
             align="right"
           >
             Description
           </TableCell>
-          <TableCell
-            colSpan={5}
-            style={{ borderBottom: "none" }}
-            padding="dense"
-          >
+          <TableCell colSpan={5} style={{ borderBottom: "none" }}>
             <TextField
               multiline
               fullWidth

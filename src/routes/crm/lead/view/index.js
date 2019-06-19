@@ -119,14 +119,14 @@ class crm_view_lead extends Component {
                 <VerticalTab
                   activeIndex={activeIndex}
                   handleChange={this.changeTabView}
+                  selectedcolor="crm"
                 >
                   {{
-                    icon: "zmdi-coffee text-primary",
-                    label: "Details",
-                    color: { backgroundColor: "tomato" }
+                    icon: "zmdi-coffee text-danger",
+                    label: "Details"
                   }}
-                  {{ icon: "zmdi-coffee text-primary", label: "Details" }}
-                  {{ icon: "zmdi-coffee text-primary", label: "Details" }}
+                  {{ icon: "zmdi-coffee text-success", label: "Details" }}
+                  {{ icon: "zmdi-coffee text-warning", label: "Details" }}
                 </VerticalTab>
               </div>
               <div className="col-md-9">

@@ -4,7 +4,7 @@ import TableBody from "@material-ui/core/TableBody";
 
 const FormTable = ({ children }) => {
   return (
-    <Table>
+    <Table size="small">
       <TableBody>{children}</TableBody>
     </Table>
   );

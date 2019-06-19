@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Col, Row } from "reactstrap";
 
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import BigCalendar from 'react-big-calendar';
-import ReactCalendar from 'react-calendar'
-import SwipeableViews from 'react-swipeable-views';
-import moment from 'moment';
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import BigCalendar from "react-big-calendar";
+import ReactCalendar from "react-calendar";
+import SwipeableViews from "react-swipeable-views";
+import moment from "moment";
 
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import CustomToolbar from "Components/Calendar/CustomToolbar";
@@ -14,29 +14,29 @@ import CalendarAgenda from "Components/Calendar/CalendarAgenda";
 import SelectSlotDialog from "Components/Calendar/SelectSlotDialog";
 import AddEventDialog from "Components/Calendar/AddEventDialog";
 
-import MenuItem from '@material-ui/core/MenuItem';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import MenuItem from "@material-ui/core/MenuItem";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
 import { getAllEvents } from "Actions";
 
-import { 
+import {
   onChangeEventView,
   onChangeCalendarView,
   onChangeDayView,
   showSelectedSlot,
   hideSelectedSlot,
   showCreateEvent,
-  hideCreateEvent,
+  hideCreateEvent
 } from "Actions";
 
-function TabContainer({ children, classes}) {
+function TabContainer({ children, classes }) {
   return (
     <Typography component="div" className={classes.tabs}>
       {children}
@@ -44,23 +44,23 @@ function TabContainer({ children, classes}) {
   );
 }
 
-BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment))
+BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
 const styles = theme => ({
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
     width: "auto"
   },
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 500,
+    width: 500
   },
   tabs: {
-    marginLeft: 8,
+    marginLeft: 8
   },
   displayBlock: {
-    display: "block",
+    display: "block"
   },
   displayInlineTable: {
     display: "inline-table"
@@ -82,12 +82,13 @@ class CalendarLayout extends Component {
   }
 
   componentDidMount() {
-    this.props.getAllEvents()
+    this.props.getAllEvents();
   }
 
   render() {
-    const { 
-      match, classes,
+    const {
+      match,
+      classes,
 
       eventView,
       eventViewOptions,
@@ -98,14 +99,14 @@ class CalendarLayout extends Component {
       slotSelected,
       isAddEvent,
       eventAdd,
-      
+
       onChangeEventView,
       onChangeCalendarView,
       onChangeDayView,
       showSelectedSlot,
       hideSelectedSlot,
       showCreateEvent,
-      hideCreateEvent,
+      hideCreateEvent
     } = this.props;
     return (
       <React.Fragment>
@@ -122,8 +123,8 @@ class CalendarLayout extends Component {
               onChange={e => onChangeEventView(e.target.value)}
               SelectProps={{
                 MenuProps: {
-                  className: classes.menu,
-                },
+                  className: classes.menu
+                }
               }}
               margin="normal"
               variant="outlined"
@@ -144,37 +145,39 @@ class CalendarLayout extends Component {
                 textColor="primary"
                 variant="fullWidth"
               >
-                <Tab label="Month"/>
-                <Tab label="Week"/>
-                <Tab label="Day"/>
+                <Tab label="Month" />
+                <Tab label="Week" />
+                <Tab label="Day" />
               </Tabs>
             </AppBar>
           </Col>
         </Row>
-        <Row >
+        <Row>
           <Col md={3} className={classes.displayInlineTable}>
-              <h2 className={classes.textField + " mt-20"}>Events Today</h2>
-                <CalendarAgenda
-                  showEvents={showEvents}
-                  classes={classes}
-                  defaultDate={"today"}
-                />              
-              <h2 className={classes.textField + " mt-20"}>Events Tomorrow</h2>
-              <CalendarAgenda
-                showEvents={showEvents}
-                classes={classes}
-                defaultDate={"tomorrow"}
-              />
-              <h2 className={classes.textField + " mt-20"}>Events Day After Tomorrow</h2>
-              <CalendarAgenda
-                showEvents={showEvents}
-                classes={classes}
-                defaultDate={"dayAftTom"}
-              />
+            <h2 className={classes.textField + " mt-20"}>Events Today</h2>
+            <CalendarAgenda
+              showEvents={showEvents}
+              classes={classes}
+              defaultDate={"today"}
+            />
+            <h2 className={classes.textField + " mt-20"}>Events Tomorrow</h2>
+            <CalendarAgenda
+              showEvents={showEvents}
+              classes={classes}
+              defaultDate={"tomorrow"}
+            />
+            <h2 className={classes.textField + " mt-20"}>
+              Events Day After Tomorrow
+            </h2>
+            <CalendarAgenda
+              showEvents={showEvents}
+              classes={classes}
+              defaultDate={"dayAftTom"}
+            />
           </Col>
           <Col md={9}>
             <SwipeableViews
-              axis={'x'}
+              axis={"x"}
               index={viewIndex}
               onChangeIndex={onChangeCalendarView}
             >
@@ -186,7 +189,7 @@ class CalendarLayout extends Component {
                     views={["month"]}
                     step={60}
                     showMultiDayTimes
-                    defaultDate={new Date}
+                    defaultDate={new Date()}
                     onSelectSlot={showSelectedSlot}
                     components={{
                       toolbar: CustomToolbar
@@ -203,7 +206,7 @@ class CalendarLayout extends Component {
                     views={["week"]}
                     step={60}
                     showMultiDayTimes
-                    defaultDate={new Date}
+                    defaultDate={new Date()}
                     onSelectSlot={showSelectedSlot}
                     components={{
                       toolbar: CustomToolbar
@@ -213,12 +216,14 @@ class CalendarLayout extends Component {
               </TabContainer>
               <TabContainer classes={classes}>
                 <Row>
-                  <Col md={3}> 
+                  <Col md={3}>
                     <RctCollapsibleCard customClasses={"center"}>
                       <Row className="justify-content-center">
                         <ReactCalendar
                           value={dayView}
-                          onClickDay={(e) => { onChangeDayView(e) }}
+                          onClickDay={e => {
+                            onChangeDayView(e);
+                          }}
                         />
                       </Row>
                     </RctCollapsibleCard>
@@ -228,7 +233,9 @@ class CalendarLayout extends Component {
                       <BigCalendar
                         selectable
                         date={dayView}
-                        onNavigate={(date) => { onChangeDayView(date) }}
+                        onNavigate={date => {
+                          onChangeDayView(date);
+                        }}
                         events={showEvents}
                         defaultView={"day"}
                         views={["day"]}
@@ -263,16 +270,45 @@ class CalendarLayout extends Component {
 }
 
 CalendarLayout.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 // map state to props
 const mapStateToProps = ({ calendarState }) => {
-  const { eventView, eventViewOptions, showEvents, viewIndex, dayView, isSlotSelected, slotSelected, isAddEvent, eventAdd } = calendarState;
-  return { eventView, eventViewOptions,  showEvents, viewIndex, dayView, isSlotSelected, slotSelected, isAddEvent, eventAdd };
+  const {
+    eventView,
+    eventViewOptions,
+    showEvents,
+    viewIndex,
+    dayView,
+    isSlotSelected,
+    slotSelected,
+    isAddEvent,
+    eventAdd
+  } = calendarState;
+  return {
+    eventView,
+    eventViewOptions,
+    showEvents,
+    viewIndex,
+    dayView,
+    isSlotSelected,
+    slotSelected,
+    isAddEvent,
+    eventAdd
+  };
 };
 
 export default connect(
   mapStateToProps,
-  { onChangeEventView, onChangeCalendarView, onChangeDayView, showSelectedSlot, hideSelectedSlot, showCreateEvent, hideCreateEvent, getAllEvents }
+  {
+    onChangeEventView,
+    onChangeCalendarView,
+    onChangeDayView,
+    showSelectedSlot,
+    hideSelectedSlot,
+    showCreateEvent,
+    hideCreateEvent,
+    getAllEvents
+  }
 )(withStyles(styles)(CalendarLayout));

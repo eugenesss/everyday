@@ -23,8 +23,8 @@ const styles = theme => ({
     display: "block"
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   table: {
     minHeight: 0
@@ -60,9 +60,9 @@ class GroupsManager extends Component {
 
       updateGroup,
       onChangeUpdateGroup,
-      deleteGroup,
-     } = this.props;
-     return (
+      deleteGroup
+    } = this.props;
+    return (
       <React.Fragment>
         <div className={classes.root}>
           <Row>
@@ -102,35 +102,38 @@ class GroupsManager extends Component {
               <TableBody>
                 {selectedGroupRoles &&
                   selectedGroupRoles.map(r => {
-                  var role = accessRoles.find(rol => rol.id == r.accessRoleId)
-                  return (
-                    <TableRow className={classes.row} key={r.id}>
-                      <TableCell component="th" scope="row">
-                        {role ? role.name : null}
-                      </TableCell>
-                      <TableCell align="center">
-                        <Radio
-                          checked={r.tier == 1}
-                          value={1}
-                          color="primary"
-                        />
-                      </TableCell>
-                      <TableCell align="center">
-                        <Radio
-                          checked={r.tier == 2}
-                          value={2}
-                          color="primary"
-                        />
-                      </TableCell>
-                      <TableCell align="center">
-                        <Radio
-                          checked={r.tier == 3}
-                          value={3}
-                          color="primary"
-                        />
-                      </TableCell>
-                    </TableRow>
-                )})}
+                    var role = accessRoles.find(
+                      rol => rol.id == r.accessRoleId
+                    );
+                    return (
+                      <TableRow className={classes.row} key={r.id}>
+                        <TableCell component="th" scope="row">
+                          {role ? role.name : null}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Radio
+                            checked={r.tier == 1}
+                            value={1}
+                            color="primary"
+                          />
+                        </TableCell>
+                        <TableCell align="center">
+                          <Radio
+                            checked={r.tier == 2}
+                            value={2}
+                            color="primary"
+                          />
+                        </TableCell>
+                        <TableCell align="center">
+                          <Radio
+                            checked={r.tier == 3}
+                            value={3}
+                            color="primary"
+                          />
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
               </TableBody>
             </Table>
           </Row>
@@ -140,7 +143,7 @@ class GroupsManager extends Component {
                 select
                 fullWidth
                 required
-                error={ selectedGroup ? !selectedGroup.name : false}
+                error={selectedGroup ? !selectedGroup.name : false}
                 disabled={!selectedGroup || selectedRoleGroups.length == 0}
                 id="name"
                 label="Remove Role from Group"
@@ -148,38 +151,38 @@ class GroupsManager extends Component {
                 value={[]}
                 onChange={e => console.log(e.target.value)}
                 margin="normal"
-              > 
-                {selectedRoleGroups.map((role) => {
-                    return (
-                      <MenuItem key={role.id} value={role.id}>
-                        <ListItemText primary={role.name} />
-                      </MenuItem>
-                    )
+              >
+                {selectedRoleGroups.map(role => {
+                  return (
+                    <MenuItem key={role.id} value={role.id}>
+                      <ListItemText primary={role.name} />
+                    </MenuItem>
+                  );
                 })}
               </TextField>
             </Col>
             <Col md={6}>
               <TextField
-                  select
-                  fullWidth
-                  required
-                  error={ selectedGroup ? !selectedGroup.name : false}
-                  disabled={!selectedGroup || unselectedRoleGroups.length == 0}
-                  id="name"
-                  label="Add Role to Group"
-                  className={classes.textField}
-                  value={[]}
-                  onChange={(e) => console.log(e.target.value)}
-                  margin="normal"
-                > 
-                  {unselectedRoleGroups.map((role) => {
-                      return (
-                        <MenuItem key={role.id} value={role.id}>
-                          <ListItemText primary={role.name} />
-                        </MenuItem>
-                      )
-                  })}
-                </TextField>
+                select
+                fullWidth
+                required
+                error={selectedGroup ? !selectedGroup.name : false}
+                disabled={!selectedGroup || unselectedRoleGroups.length == 0}
+                id="name"
+                label="Add Role to Group"
+                className={classes.textField}
+                value={[]}
+                onChange={e => console.log(e.target.value)}
+                margin="normal"
+              >
+                {unselectedRoleGroups.map(role => {
+                  return (
+                    <MenuItem key={role.id} value={role.id}>
+                      <ListItemText primary={role.name} />
+                    </MenuItem>
+                  );
+                })}
+              </TextField>
             </Col>
           </Row>
           <Row>
@@ -215,10 +218,16 @@ GroupsManager.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ groupsState, rolesState}) => {
-  const { selectedRoleGroups, unselectedRoleGroups, accessRoles } = rolesState
-  const { selectedGroup, selectedGroupRoles } = groupsState
-  return { selectedRoleGroups, unselectedRoleGroups, accessRoles, selectedGroup, selectedGroupRoles };
+const mapStateToProps = ({ groupsState, rolesState }) => {
+  const { selectedRoleGroups, unselectedRoleGroups, accessRoles } = rolesState;
+  const { selectedGroup, selectedGroupRoles } = groupsState;
+  return {
+    selectedRoleGroups,
+    unselectedRoleGroups,
+    accessRoles,
+    selectedGroup,
+    selectedGroupRoles
+  };
 };
 
 export default connect(

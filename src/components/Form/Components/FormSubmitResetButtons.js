@@ -10,7 +10,7 @@ const FormSubmitResetButtons = ({ onReset, onSubmit, disabled }) => {
           <MatButton
             variant="contained"
             color="default"
-            className="text-secondary mr-20"
+            className="text-dark mr-20"
             onClick={() => onReset()}
           >
             Reset

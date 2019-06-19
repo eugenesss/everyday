@@ -3,6 +3,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { withStyles } from "@material-ui/core/styles";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import AppConfig from "Constants/AppConfig";
 
 const VerticalTabs = withStyles(theme => ({
   flexContainer: {
@@ -16,17 +17,17 @@ const VerticalTabs = withStyles(theme => ({
 const styledBy = (property, mapping) => props => mapping[props[property]];
 const MyTab = withStyles({
   root: {
-    padding: "2.7rem 1rem",
-    minHeight: "100px"
+    minHeight: "150px"
   },
   labelIcon: {
     fontSize: "14px"
   },
   selected: {
-    backgroundColor: styledBy("color", {
-      default: "tomato",
-      blue: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)"
-    })
+    backgroundColor: styledBy("selectedcolor", {
+      crm: AppConfig.themeColors.primary,
+      accounting: AppConfig.themeColors.accounting
+    }),
+    color: "white"
   }
 })(({ classes, ...other }) => <Tab classes={classes} {...other} />);
 
@@ -44,7 +45,7 @@ const VerticalTab = props => {
               key={key}
               icon={<i className={`zmdi-hc-3x zmdi ${child.icon}`} />}
               label={child.label}
-              color="default"
+              selectedcolor={props.selectedcolor}
             />
           );
         })}
