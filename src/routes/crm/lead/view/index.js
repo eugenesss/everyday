@@ -26,6 +26,10 @@ import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 import ConvertLeadModal from "Components/CRM/Lead/ConvertModals/ConvertLeadModal";
 import ConvertSuccessModal from "Components/CRM/Lead/ConvertModals/ConvertSuccessModal";
 
+// Vertical Tabs
+import VerticalTab from "Components/Everyday/VerticalTabs//VerticalTab";
+import VerticalContainer from "Components/Everyday/VerticalTabs//VerticalContainer";
+
 //Actions
 import {
   getSingleLead,
@@ -40,16 +44,20 @@ import {
 class crm_view_lead extends Component {
   constructor(props) {
     super(props);
+    this.state = { activeIndex: 0 };
     this.convert = this.convert.bind(this);
     this.edit = this.edit.bind(this);
   }
   componentWillMount() {
     var id = this.props.match.params.id;
-    this.props.getSingleLead(id);
+    //this.props.getSingleLead(id);
   }
   componentWillUnmount() {
     this.props.clearSingleLead();
   }
+
+  // Change view tab state
+  changeTabView = (_, activeIndex) => this.setState({ activeIndex });
 
   transfer() {
     console.log("transger");
@@ -70,16 +78,17 @@ class crm_view_lead extends Component {
 
   render() {
     const { lead, loading } = this.props.leadToView;
+    const { activeIndex } = this.state;
     return (
       <React.Fragment>
         {loading ? (
           <RctPageLoader />
-        ) : lead ? (
+        ) : !lead ? (
           <React.Fragment>
             <Helmet>
               <title>Everyday | View Lead</title>
             </Helmet>
-            <PageTitleBar
+            {/*  <PageTitleBar
               title="View Lead"
               createLink="/crm/new/lead"
               extraButtons={[
@@ -102,8 +111,37 @@ class crm_view_lead extends Component {
                   }}
                 </MoreButton>
               }
-            />
-            <RctCollapsibleCard fullBlock>
+            /> */}
+            <div className="row">
+              <div className="col-md-3">
+                <RctCollapsibleCard>header</RctCollapsibleCard>
+
+                <VerticalTab
+                  activeIndex={activeIndex}
+                  handleChange={this.changeTabView}
+                >
+                  {{
+                    icon: "zmdi-coffee text-primary",
+                    label: "Details",
+                    color: { backgroundColor: "tomato" }
+                  }}
+                  {{ icon: "zmdi-coffee text-primary", label: "Details" }}
+                  {{ icon: "zmdi-coffee text-primary", label: "Details" }}
+                </VerticalTab>
+              </div>
+              <div className="col-md-9">
+                <VerticalContainer
+                  activeIndex={activeIndex}
+                  handleChange={this.changeTabView}
+                >
+                  <div>heh</div>
+                  <div>heh</div>
+                  <div>heh</div>
+                </VerticalContainer>
+              </div>
+            </div>
+
+            {/* <RctCollapsibleCard fullBlock>
               <LeadCard
                 name={lead.name}
                 companyName={lead.companyName}
@@ -133,16 +171,16 @@ class crm_view_lead extends Component {
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div className="col-md-4">
-                    <NewNote /* onAddNote="function" */ />
+                    <NewNote />
                   </div>
                   <div className="col-md-8">
                     <DisplayAllNotes notes={lead.notes} />
                   </div>
                 </div>
               </div>
-            </TabsWrapper>
-            <ConvertLeadModal />
-            <ConvertSuccessModal />
+            </TabsWrapper> */}
+            {/* <ConvertLeadModal />
+            <ConvertSuccessModal /> */}
           </React.Fragment>
         ) : (
           <PageErrorMessage
