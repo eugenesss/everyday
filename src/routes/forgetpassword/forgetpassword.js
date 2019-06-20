@@ -10,6 +10,9 @@ import { Link, withRouter, } from "react-router-dom";
 import { Form, FormGroup, Input, FormFeedback} from "reactstrap";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import QueueAnim from "rc-queue-anim";
+import Fab from '@material-ui/core/Fab';
+import Icon from '@material-ui/core/Icon';
+
 
 // app config
 import AppConfig from "Constants/AppConfig";
@@ -79,6 +82,7 @@ class forgetpassword extends Component {
                           value={emailAddress}
                           name="emailAddress"
                           id="emailAddress"
+                          style={emailAddress? EmailStyle : emptyField}
                           className="has-input input-lg"
                           placeholder="Enter Email Address"
                           onChange={event => {
@@ -88,27 +92,27 @@ class forgetpassword extends Component {
                           valid={ this.state.emailValidated === 'has-success' }
                           invalid={ this.state.emailValidated === 'has-danger' }
                         />
-                        <span className="has-icon">
+                        {/* <span className="has-icon">
                           <i className="ti-email" />
-                        </span>
-
+                        </span> */}
                         <FormFeedback >Oh noes! You need to input a valid email addresss!</FormFeedback>
                         <FormFeedback valid>We will look for your delicious email!</FormFeedback>
                       </FormGroup>
+                  
+                      <Fab
+                        className="text-white"
+                        size="large"
+                        style={{backgroundColor : AppConfig.themeColors.primary, marginBottom: '1.5rem', marginTop: '3rem'}}
+                        onClick={()=> this.resetPassword()}
+                      >
+                        <Icon>trending_flat</Icon>
+                      </Fab>
+                      
+                      <div onClick={() => this.routeChange('register')} style={{display:'flex', flexDirection:'column', justifyContent:"center", alignItems:'center'}}>
+                        <div style={{color: 'rgba(0,0,0,0.5)', fontWeight: 300, fontSize: 14}}>Let us know your email address</div>
+                        <div style={{color: 'rgba(0,0,0,0.5)', fontWeight: 300, fontSize: 14}}>We will send a verification email to you</div>
+                      </div>
                     
-                      {/* <FormGroup className="mb-15"> */}
-                        <Button
-                          color="primary"
-                          className="btn-block text-white w-100"
-                          variant="contained"
-                          size="large"
-                          type="submit"
-                          onClick={()=> this.resetPassword()}
-                        >
-                          Forget Password
-                        </Button>
-                      {/* </FormGroup> */}
-
                   </div>
                 </div>
                 <div className="col-sm-3 col-md-3 col-lg-2" />
@@ -131,3 +135,16 @@ export default withRouter(connect(
     userResetPassword, handleRegErrorForm
   }
 )(forgetpassword));
+
+
+const emptyField = {
+  borderBottom: '0.3px solid rgba(0,0,0,0.5)', borderRadius: 0, padding: 0,
+  boxShadow: 'none', borderTop: 'none', borderLeft: 'none', borderRight: 'none',
+  fontWeight: '300', fontSize: '16px', color : '#ebedf2',
+}
+
+const EmailStyle = {
+  borderBottom: '0.3px solid rgba(0,0,0,0.5)', borderRadius: 0, padding: 0,
+  boxShadow: 'none', borderTop: 'none', borderLeft: 'none', borderRight: 'none',
+  fontWeight: '500', fontSize: '18px', color : 'black',
+}
