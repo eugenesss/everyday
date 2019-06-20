@@ -1,39 +1,36 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Col, Row, Form  } from "reactstrap";
+import { Col, Row, Form } from "reactstrap";
 
 import Button from "@material-ui/core/Button";
-import TextField from '@material-ui/core/TextField';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
+import TextField from "@material-ui/core/TextField";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormLabel from "@material-ui/core/FormLabel";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 
-
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   fullWidth: {
     margin: 0
-  },
+  }
 });
 
 class QuotationSettingsForm extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
-    const {
-      classes
-    } = this.props;
+    const { classes } = this.props;
     return (
       <Form>
         <Row form>
@@ -42,7 +39,7 @@ class QuotationSettingsForm extends Component {
               id="quotationNumberPrefix"
               label="Quotation Number Prefix"
               className={classes.textField}
-              value={ "QUO-" }
+              value={"QUO-"}
               //onChange={(e) => handleChange('oldPassword', e.target.value)}
               margin="normal"
               variant="outlined"
@@ -53,7 +50,7 @@ class QuotationSettingsForm extends Component {
               id="nextQuotationNumber"
               label="Next Quotation Number"
               className={classes.textField}
-              value={ "10" }
+              value={"10"}
               //onChange={(e) => handleChange('newPassword', e.target.value)}
               margin="normal"
               variant="outlined"
@@ -64,7 +61,7 @@ class QuotationSettingsForm extends Component {
               id="quotationDueAfter"
               label="Quotation Due After (Days)"
               className={classes.textField}
-              value={ "30" }
+              value={"30"}
               //onChange={(e) => handleChange('newPassword', e.target.value)}
               margin="normal"
               variant="outlined"
@@ -74,11 +71,7 @@ class QuotationSettingsForm extends Component {
         <Row form>
           <Col className={classes.textField + " mt-10"}>
             <FormLabel component="legend">Quotation Number Format</FormLabel>
-            <RadioGroup
-              aria-label="position"
-              name="position"
-              row
-            >
+            <RadioGroup aria-label="position" name="position" row>
               <FormControlLabel
                 value="top"
                 control={<Radio color="primary" />}
@@ -190,7 +183,7 @@ class QuotationSettingsForm extends Component {
               id="pipelineLimit"
               label="Pipeline Limit per Status"
               className={classes.textField}
-              value={ "50" }
+              value={"50"}
               //onChange={(e) => handleChange('oldPassword', e.target.value)}
               margin="normal"
               variant="outlined"
@@ -202,23 +195,27 @@ class QuotationSettingsForm extends Component {
               label="Pipeline Sort"
               select
               className={classes.textField}
-              value={ "1" }
+              value={"1"}
               //onChange={(e) => handleChange('newPassword', e.target.value)}
               margin="normal"
               variant="outlined"
             >
-              <MenuItem key={"1"} value={"1"}>Date Created</MenuItem>
-              <MenuItem key={"2"} value={"2"}>Quotation Date</MenuItem>
-              <MenuItem key={"3"} value={"3"}>Pipeline Order</MenuItem>
-              <MenuItem key={"4"} value={"4"}>Expiry Date</MenuItem>
+              <MenuItem key={"1"} value={"1"}>
+                Date Created
+              </MenuItem>
+              <MenuItem key={"2"} value={"2"}>
+                Quotation Date
+              </MenuItem>
+              <MenuItem key={"3"} value={"3"}>
+                Pipeline Order
+              </MenuItem>
+              <MenuItem key={"4"} value={"4"}>
+                Expiry Date
+              </MenuItem>
             </TextField>
           </Col>
           <Col md={4}>
-            <RadioGroup
-              aria-label="position"
-              name="position"
-              row
-            >
+            <RadioGroup aria-label="position" name="position" row>
               <FormControlLabel
                 value="top"
                 control={<Radio color="primary" />}
@@ -240,7 +237,7 @@ class QuotationSettingsForm extends Component {
             id="predefinedClientNote"
             label="Predefined Client Note"
             className={classes.textField}
-            value={ "" }
+            value={""}
             multiline
             rows="4"
             margin="normal"
@@ -253,14 +250,19 @@ class QuotationSettingsForm extends Component {
             id="predefinedTermsAndConditions"
             label="Predefined Terms and Conditions"
             className={classes.textField}
-            value={ "Subject to Sales" }
+            value={"Subject to Sales"}
             multiline
             rows="4"
             margin="normal"
             variant="outlined"
           />
         </Row>
-        <Row form className={"justify-content-end align-items-center " + classes.textField}>
+        <Row
+          form
+          className={
+            "justify-content-end align-items-center " + classes.textField
+          }
+        >
           <span>
             <Button
               variant="contained"
@@ -282,5 +284,6 @@ QuotationSettingsForm.propTypes = {
 };
 
 export default connect(
-  null, {}
+  null,
+  {}
 )(withStyles(styles)(QuotationSettingsForm));

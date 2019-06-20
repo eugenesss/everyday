@@ -1,34 +1,32 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Col, Row, Form  } from "reactstrap";
+import { Col, Row, Form } from "reactstrap";
 
 import Button from "@material-ui/core/Button";
-import TextField from '@material-ui/core/TextField';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import TextField from "@material-ui/core/TextField";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   fullWidth: {
     margin: 0
-  },
+  }
 });
 
 class CreditNoteSettingsForm extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
-    const {
-      classes
-    } = this.props;
+    const { classes } = this.props;
     return (
       <Form>
         <Row form>
@@ -37,7 +35,7 @@ class CreditNoteSettingsForm extends Component {
               id="creditNoteNumberPrefix"
               label="Credit Note Number Prefix"
               className={classes.textField}
-              value={ "CN-" }
+              value={"CN-"}
               //onChange={(e) => handleChange('oldPassword', e.target.value)}
               margin="normal"
               variant="outlined"
@@ -48,7 +46,7 @@ class CreditNoteSettingsForm extends Component {
               id="nextCreditNoteNumber"
               label="Next Credit Note Number"
               className={classes.textField}
-              value={ "2" }
+              value={"2"}
               //onChange={(e) => handleChange('newPassword', e.target.value)}
               margin="normal"
               variant="outlined"
@@ -78,7 +76,7 @@ class CreditNoteSettingsForm extends Component {
             id="predefinedClientNote"
             label="Predefined Client Note"
             className={classes.textField}
-            value={ "" }
+            value={""}
             multiline
             rows="4"
             margin="normal"
@@ -91,14 +89,19 @@ class CreditNoteSettingsForm extends Component {
             id="predefinedTermsAndConditions"
             label="Predefined Terms and Conditions"
             className={classes.textField}
-            value={ "Subject to Sales" }
+            value={"Subject to Sales"}
             multiline
             rows="4"
             margin="normal"
             variant="outlined"
           />
         </Row>
-        <Row form className={"justify-content-end align-items-center " + classes.textField}>
+        <Row
+          form
+          className={
+            "justify-content-end align-items-center " + classes.textField
+          }
+        >
           <span>
             <Button
               variant="contained"
@@ -120,5 +123,6 @@ CreditNoteSettingsForm.propTypes = {
 };
 
 export default connect(
-  null, {}
+  null,
+  {}
 )(withStyles(styles)(CreditNoteSettingsForm));

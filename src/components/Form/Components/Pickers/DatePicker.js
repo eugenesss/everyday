@@ -1,6 +1,6 @@
 // Date Picker
 import React from "react";
-import { DatePicker } from "material-ui-pickers";
+import { DatePicker } from "@material-ui/pickers";
 
 const DatePickerInput = props => {
   return (

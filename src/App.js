@@ -4,11 +4,11 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsProvider";
 
 //date moment - material ui
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import moment from "moment";
-import MomentUtils from "material-ui-pickers/utils/moment-utils";
+import MomentUtils from "@date-io/moment";
 // css
 import "./lib/reactifyCss";
 

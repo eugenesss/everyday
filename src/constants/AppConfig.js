@@ -23,19 +23,20 @@ const AppConfig = {
   copyRightText: "Everyday © All Rights Reserved.", // Copy Right Text
   // light theme colors
   themeColors: {
-    primary: "#5D92F4",
-    secondary: "#677080",
-    success: "#00D014",
-    danger: "#FF3739",
-    warning: "#FFB70F",
-    info: "#00D0BD",
-    dark: "#464D69",
+    primary: "#1482AF",
+    secondary: "#FAC257",
+    success: "#61CE61",
+    danger: "#D15D5D",
+    warning: "#E5AA4A",
+    info: "#125B96",
+    dark: "#677180",
     default: "#FAFAFA",
     greyLighten: "#A5A7B2",
     grey: "#677080",
     white: "#FFFFFF",
     purple: "#896BD6",
-    yellow: "#D46B08"
+    yellow: "#D46B08",
+    accounting: "E46464"
   },
   // dark theme colors
   darkThemeColors: {

@@ -1,25 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Col, Row, Form  } from "reactstrap";
+import { Col, Row, Form } from "reactstrap";
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu } from "reactstrap";
-import ReactCalendar from 'react-calendar'
+import ReactCalendar from "react-calendar";
 
 import Button from "@material-ui/core/Button";
-import TextField from '@material-ui/core/TextField';
+import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
 
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
-import { addEvent, onChangeAddEvent } from "Actions"
+import { addEvent, onChangeAddEvent } from "Actions";
 
 const styles = theme => ({
   dialogPaper: {
     overflow: "visible"
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   calendar: {
     width: "auto"
@@ -30,15 +30,15 @@ class UpdatePasswordForm extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
     const {
       classes,
-      
+
       eventAdd,
 
       addEvent,
-      onChangeAddEvent,
+      onChangeAddEvent
     } = this.props;
     return (
       <Form>
@@ -56,17 +56,23 @@ class UpdatePasswordForm extends Component {
             />
           </Col>
           <Col md={1}>
-            <UncontrolledDropdown nav className="list-inline-item notification-dropdown">
+            <UncontrolledDropdown
+              nav
+              className="list-inline-item notification-dropdown"
+            >
               <DropdownToggle nav className="p-0">
                 <Tooltip title="Calendar" placement="bottom">
-                  <Button variant="contained" color="primary">Date</Button>
+                  <Button variant="contained" color="primary">
+                    Date
+                  </Button>
                 </Tooltip>
               </DropdownToggle>
               <DropdownMenu>
-                <div className="dropdown-content" style={{width: "auto !important"}}>
-                  <ReactCalendar 
-                    className={classes.calendar}
-                  />
+                <div
+                  className="dropdown-content"
+                  style={{ width: "auto !important" }}
+                >
+                  <ReactCalendar className={classes.calendar} />
                 </div>
               </DropdownMenu>
             </UncontrolledDropdown>
@@ -84,17 +90,23 @@ class UpdatePasswordForm extends Component {
             />
           </Col>
           <Col md={1}>
-            <UncontrolledDropdown nav className="list-inline-item notification-dropdown">
+            <UncontrolledDropdown
+              nav
+              className="list-inline-item notification-dropdown"
+            >
               <DropdownToggle nav className="p-0">
                 <Tooltip title="Calendar" placement="bottom">
-                  <Button variant="contained" color="primary">Date</Button>
+                  <Button variant="contained" color="primary">
+                    Date
+                  </Button>
                 </Tooltip>
               </DropdownToggle>
               <DropdownMenu>
-                <div className="dropdown-content" style={{width: "auto !important"}}>
-                  <ReactCalendar 
-                    className={classes.calendar}
-                  />
+                <div
+                  className="dropdown-content"
+                  style={{ width: "auto !important" }}
+                >
+                  <ReactCalendar className={classes.calendar} />
                 </div>
               </DropdownMenu>
             </UncontrolledDropdown>
@@ -103,10 +115,10 @@ class UpdatePasswordForm extends Component {
         <Row form>
           <Col md={6}>
             <TextField
-              value={eventAdd.startTime || ''}
+              value={eventAdd.startTime || ""}
               required
               className={classes.textField}
-              onChange={ e => onChangeAddEvent('startTime ', e.target.value)}
+              onChange={e => onChangeAddEvent("startTime ", e.target.value)}
               id="startTime"
               label="Start Time"
               margin="normal"
@@ -115,10 +127,10 @@ class UpdatePasswordForm extends Component {
           </Col>
           <Col md={6}>
             <TextField
-              value={eventAdd.endTime || ''}
+              value={eventAdd.endTime || ""}
               required
               className={classes.textField}
-              onChange={ e => onChangeAddEvent('endTime', e.target.value)}
+              onChange={e => onChangeAddEvent("endTime", e.target.value)}
               id="endTime"
               label="End Time"
               margin="normal"
@@ -128,11 +140,11 @@ class UpdatePasswordForm extends Component {
         </Row>
         <Row form>
           <TextField
-            value={eventAdd.title || ''}
+            value={eventAdd.title || ""}
             required
             fullWidth
             className={classes.textField}
-            onChange={ e => onChangeAddEvent('title', e.target.value)}
+            onChange={e => onChangeAddEvent("title", e.target.value)}
             id="title"
             label="Title"
             margin="normal"
@@ -148,7 +160,7 @@ class UpdatePasswordForm extends Component {
             rows="5"
             rowsMax="8"
             className={classes.textField}
-            onChange={ e => onChangeAddEvent('description', e.target.value)}
+            onChange={e => onChangeAddEvent("description", e.target.value)}
             id="description"
             label="Description"
             margin="normal"
@@ -164,7 +176,7 @@ class UpdatePasswordForm extends Component {
           >
             Add
           </Button>
-        </Row> 
+        </Row>
       </Form>
     );
   }

@@ -20,16 +20,11 @@ const AddressFormInput = ({
         <TableRow>
           <TableCell
             style={{ borderBottom: "none", width: "15%" }}
-            padding="dense"
             align="right"
           >
             Address 1
           </TableCell>
-          <TableCell
-            colSpan={5}
-            style={{ borderBottom: "none" }}
-            padding="dense"
-          >
+          <TableCell colSpan={5} style={{ borderBottom: "none" }}>
             <FormTextField
               value={address_1}
               handleChange={handleChange}
@@ -41,16 +36,11 @@ const AddressFormInput = ({
         <TableRow>
           <TableCell
             style={{ borderBottom: "none", width: "15%" }}
-            padding="dense"
             align="right"
           >
             Address 2
           </TableCell>
-          <TableCell
-            colSpan={5}
-            style={{ borderBottom: "none" }}
-            padding="dense"
-          >
+          <TableCell colSpan={5} style={{ borderBottom: "none" }}>
             <FormTextField
               value={address_2}
               handleChange={handleChange}
@@ -60,14 +50,10 @@ const AddressFormInput = ({
           </TableCell>
         </TableRow>
         <TableRow>
-          <TableCell
-            style={{ borderBottom: "none" }}
-            padding="dense"
-            align="right"
-          >
+          <TableCell style={{ borderBottom: "none" }} align="right">
             City
           </TableCell>
-          <TableCell style={{ borderBottom: "none" }} padding="dense">
+          <TableCell style={{ borderBottom: "none" }}>
             <FormTextField
               value={city}
               handleChange={handleChange}
@@ -75,14 +61,10 @@ const AddressFormInput = ({
               targetType="address"
             />
           </TableCell>
-          <TableCell
-            style={{ borderBottom: "none" }}
-            padding="dense"
-            align="right"
-          >
+          <TableCell style={{ borderBottom: "none" }} align="right">
             State
           </TableCell>
-          <TableCell style={{ borderBottom: "none" }} padding="dense">
+          <TableCell style={{ borderBottom: "none" }}>
             <FormTextField
               value={state}
               handleChange={handleChange}
@@ -90,14 +72,10 @@ const AddressFormInput = ({
               targetType="address"
             />
           </TableCell>
-          <TableCell
-            style={{ borderBottom: "none" }}
-            padding="dense"
-            align="right"
-          >
+          <TableCell style={{ borderBottom: "none" }} align="right">
             Zip
           </TableCell>
-          <TableCell style={{ borderBottom: "none" }} padding="dense">
+          <TableCell style={{ borderBottom: "none" }}>
             <FormTextField
               value={zip}
               handleChange={handleChange}

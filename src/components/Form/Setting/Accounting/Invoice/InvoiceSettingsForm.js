@@ -1,37 +1,35 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Col, Row, Form  } from "reactstrap";
+import { Col, Row, Form } from "reactstrap";
 
 import Button from "@material-ui/core/Button";
-import TextField from '@material-ui/core/TextField';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
+import TextField from "@material-ui/core/TextField";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormLabel from "@material-ui/core/FormLabel";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
 
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   fullWidth: {
     margin: 0
-  },
+  }
 });
 
 class InvoiceSettingsForm extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
-    const {
-      classes
-    } = this.props;
+    const { classes } = this.props;
     return (
       <Form>
         <Row form>
@@ -40,7 +38,7 @@ class InvoiceSettingsForm extends Component {
               id="invoiceNumberPrefix"
               label="Invoice Number Prefix"
               className={classes.textField}
-              value={ "INV-" }
+              value={"INV-"}
               //onChange={(e) => handleChange('oldPassword', e.target.value)}
               margin="normal"
               variant="outlined"
@@ -51,7 +49,7 @@ class InvoiceSettingsForm extends Component {
               id="nextInvoiceNumber"
               label="Next Invoice Number"
               className={classes.textField}
-              value={ "9" }
+              value={"9"}
               //onChange={(e) => handleChange('newPassword', e.target.value)}
               margin="normal"
               variant="outlined"
@@ -62,7 +60,7 @@ class InvoiceSettingsForm extends Component {
               id="invoiceDueAfter"
               label="Invoice Due After (Days)"
               className={classes.textField}
-              value={ "30" }
+              value={"30"}
               //onChange={(e) => handleChange('newPassword', e.target.value)}
               margin="normal"
               variant="outlined"
@@ -72,11 +70,7 @@ class InvoiceSettingsForm extends Component {
         <Row form>
           <Col className={classes.textField + " mt-10"}>
             <FormLabel component="legend">Invoice Number Format</FormLabel>
-            <RadioGroup
-              aria-label="position"
-              name="position"
-              row
-            >
+            <RadioGroup aria-label="position" name="position" row>
               <FormControlLabel
                 value="top"
                 control={<Radio color="primary" />}
@@ -200,7 +194,7 @@ class InvoiceSettingsForm extends Component {
             id="predefinedClientNote"
             label="Predefined Client Note"
             className={classes.textField}
-            value={ "" }
+            value={""}
             multiline
             rows="4"
             margin="normal"
@@ -213,14 +207,19 @@ class InvoiceSettingsForm extends Component {
             id="predefinedTermsAndConditions"
             label="Predefined Terms and Conditions"
             className={classes.textField}
-            value={ "Subject to Sales" }
+            value={"Subject to Sales"}
             multiline
             rows="4"
             margin="normal"
             variant="outlined"
           />
         </Row>
-        <Row form className={"justify-content-end align-items-center " + classes.textField}>
+        <Row
+          form
+          className={
+            "justify-content-end align-items-center " + classes.textField
+          }
+        >
           <span>
             <Button
               variant="contained"
@@ -242,5 +241,6 @@ InvoiceSettingsForm.propTypes = {
 };
 
 export default connect(
-  null, {}
+  null,
+  {}
 )(withStyles(styles)(InvoiceSettingsForm));

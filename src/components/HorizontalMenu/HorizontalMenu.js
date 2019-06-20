@@ -19,7 +19,7 @@ class HorizontalMenu extends Component {
               className="nav-link no-arrow"
               activeClassName="active"
             >
-              <i className="zmdi zmdi-home text-everyday" />
+              <i className="zmdi zmdi-home text-success" />
               Homebase
             </NavLink>
           </li>
@@ -29,7 +29,7 @@ class HorizontalMenu extends Component {
               className="nav-link no-arrow"
               activeClassName="active"
             >
-              <i className="zmdi zmdi-calendar text-danger" />
+              <i className="zmdi zmdi-calendar text-warning" />
               Calendar
             </NavLink>
           </li>
@@ -55,7 +55,7 @@ class HorizontalMenu extends Component {
     </li> */}
           <li className="nav-item">
             <a href="javascript:void(0);" className="nav-link">
-              <i className="zmdi zmdi-group-work text-everyday-sec" />
+              <i className="zmdi zmdi-group-work text-primary" />
               <span className="menu-title">CRM</span>
             </a>
             <ul className="list-unstyled sub-menu">
@@ -66,7 +66,7 @@ class HorizontalMenu extends Component {
           </li>
           <li className="nav-item">
             <a href="javascript:void(0);" className="nav-link">
-              <i className="zmdi zmdi-money text-success" />
+              <i className="zmdi zmdi-money text-everyday" />
               <span className="menu-title">Accounting</span>
             </a>
             <ul className="list-unstyled sub-menu">
