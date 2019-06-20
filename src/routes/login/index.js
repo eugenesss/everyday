@@ -15,19 +15,19 @@ import QueueAnim from "rc-queue-anim";
 import AppConfig from "Constants/AppConfig";
 
 // redux action
-import { signInUserWithEmailPassword } from "Actions";
+import { signInUserWithEmailPassword, userResentEmail} from "Actions";
 
 class Signin extends Component {
 
   constuctor() {
-    this.routeChange = this.routeChange.bind(this);
+    this.routeChange = this.routeChange.bind(this);  
   }
 
   state = {
     emailAddress: "",
     password: ""
-  };
-
+  };  
+ 
   /**
    * On User Login
    */
@@ -38,10 +38,9 @@ class Signin extends Component {
     }
   };
 
-  routeChange(element) {
-   
-    let path = ""
 
+  routeChange(element) {
+    let path = ""
     switch (element) {
       case "register":
         path = `/register`;
@@ -57,9 +56,16 @@ class Signin extends Component {
   }
 
 
+  resentVerificationEmail = () => {
+    this.setState({emailAddress: "",password: ""})
+    this.props.userResentEmail(this.props.user)
+  }
+
   render() {
-    const { email, password } = this.state;
-    const { loading } = this.props;
+    const { emailAddress, password } = this.state;
+    const { loading, error } = this.props;
+
+  
     return (
       <QueueAnim type="bottom" duration={2000}>
         <div className="rct-session-wrapper">
@@ -96,7 +102,7 @@ class Signin extends Component {
                       <FormGroup className="has-wrapper">
                         <Input
                           type="email"
-                          value={email}
+                          value={emailAddress}
                           name="emailAddress"
                           id="emailAddress"
                           className="has-input input-lg"
@@ -109,60 +115,81 @@ class Signin extends Component {
                           <i className="ti-email" />
                         </span>
                       </FormGroup>
-                      <FormGroup className="has-wrapper">
-                        <Input
-                          value={password}
-                          type="Password"
-                          name="password"
-                          id="password"
-                          className="has-input input-lg"
-                          placeholder="Password"
-                          onChange={event =>
-                            this.setState({ password: event.target.value })
-                          }
-                        />
-                        <span className="has-icon">
-                          <i className="ti-lock" />
-                        </span>
-                      </FormGroup>
+                      
+                      {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && 
+                        <FormGroup className="has-wrapper">
+                          <Input
+                            value={password}
+                            type="Password"
+                            name="password"
+                            id="password"
+                            className="has-input input-lg"
+                            placeholder="Password"
+                            onChange={event =>
+                              this.setState({ password: event.target.value })
+                            }
+                          />
+                          <span className="has-icon">
+                            <i className="ti-lock" />
+                          </span>
+                        </FormGroup>
+                      }
 
-                      <FormGroup className="mb-15">
-                        <Button
-                          color="primary"
-                          className="btn-block text-white w-100"
-                          variant="contained"
-                          size="large"
-                          disabled={!email && !password}
-                          type="submit"
-                        >
-                          Sign In
-                        </Button>
+                      {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && 
+                        <FormGroup className="mb-15">
+                          <Button
+                            color="primary"
+                            className="btn-block text-white w-100"
+                            variant="contained"
+                            size="large"
+                            disabled={!emailAddress && !password}
+                            type="submit"
+                          >
+                            Sign In
+                          </Button>
 
-                        <Button
-                          color="primary"
-                          className="btn-block text-white w-100"
-                          variant="contained"
-                          size="large"
-                          type="submit"
-                          // disabled={!email && !password}
-                          onClick={()=> this.routeChange('register')}
-                        >
-                          Create An Account Here
-                        </Button>
+                          <Button
+                            color="primary"
+                            className="btn-block text-white w-100"
+                            variant="contained"
+                            size="large"
+                            type="submit"
+                            // disabled={!email && !password}
+                            onClick={()=> this.routeChange('register')}
+                          >
+                            Create An Account Here
+                          </Button>
 
-                        <Button
-                          color="secondary"
-                          className="btn-block text-white w-100"
-                          variant="contained"
-                          size="large"
-                          type="submit"
-                          // disabled={!email && !password}
-                          onClick={()=> this.routeChange('forget')}
-                        >
-                          Forgot Password
-                        </Button>
+                          <Button
+                            color="secondary"
+                            className="btn-block text-white w-100"
+                            variant="contained"
+                            size="large"
+                            type="submit"
+                            // disabled={!email && !password}
+                            onClick={()=> this.routeChange('forget')}
+                          >
+                            Forgot Password
+                          </Button>
+                        </FormGroup>
+                      }
 
-                      </FormGroup>
+                      {error == "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && 
+                        <FormGroup className="mb-15">
+                          
+                          <Button
+                            color="primary"
+                            className="btn-block text-white w-100"
+                            variant="contained"
+                            size="large"
+                            onClick={()=> this.resentVerificationEmail()}
+                          >
+                            Resend verification email
+                          </Button>
+
+                        </FormGroup>
+                      }
+
                     </Form>
                   </div>
                 </div>
@@ -176,8 +203,8 @@ class Signin extends Component {
   }
 } // map state to props
 const mapStateToProps = ({ authUser }) => {
-  const { user, loading } = authUser;
-  return { user, loading };
+  const { user, loading, error } = authUser;
+  return { user, loading , error};
 };
 /*
 export default withRouter(connect(null)(Signin));
@@ -189,6 +216,7 @@ const mapStateToProps = ({ authUser }) => {
 export default withRouter(connect(
   mapStateToProps,
   {
-    signInUserWithEmailPassword
+    signInUserWithEmailPassword,
+    userResentEmail
   }
 )(Signin));

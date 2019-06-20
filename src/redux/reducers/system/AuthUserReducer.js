@@ -13,10 +13,16 @@ import {
   SIGNUP_USER_SUCCESS,
   SIGNUP_USER_FAILURE,
   HANDLE_REGISTER_FORM,
+  HANDLE_REGISTER_ERROR,
 
+  LOGIN_USER_RESENT_EMAIL,
+  LOGIN_USER_RESENT_EMAIL_SUCCESS,
+  LOGIN_USER_RESENT_EMAIL_FAILURE,
 
+  LOGIN_USER_RESET_PASSWORD,
+  LOGIN_USER_RESET_PASSWORD_SUCCESS,
+  LOGIN_USER_RESET_PASSWORD_FAILURE,
 
-  HANDLE_REGISTER_ERROR
 } from "Types";
 
 /**
@@ -47,7 +53,8 @@ const INIT_STATE = {
     },
     loading: false,
     success: false
-  }
+  },
+  error:''
 };
 
 export default (state = INIT_STATE, action) => {
@@ -59,7 +66,6 @@ export default (state = INIT_STATE, action) => {
     case LOGIN_USER:
       return { ...state, loading: true };
     case LOGIN_USER_SUCCESS:
-      console.log('User logged in')
         NotificationManager.success("User Logged In");
       return { 
         ...state,
@@ -68,8 +74,43 @@ export default (state = INIT_STATE, action) => {
         access: action.payload.accessRights
       };
     case LOGIN_USER_FAILURE:
+      if(action.payload.message == "login failed") {
+        NotificationManager.error(action.payload.message);
+        return { ...state, loading: false, error: action.payload.code, user: "userId" };
+      } else {
+        NotificationManager.error(action.payload.message);
+        return { ...state, loading: false, error: action.payload.code, user: action.payload.details.user };
+      }
+    
+    /**
+     * Resent Verificaiton Email
+    */
+    case LOGIN_USER_RESENT_EMAIL:
+      return { ...state, loading: false};
+
+    case LOGIN_USER_RESENT_EMAIL_SUCCESS:
+      NotificationManager.success('A verification email has been sent, please check in your inbox');
+      return { ...state, loading: false, error: ""};
+
+    case LOGIN_USER_RESENT_EMAIL_FAILURE:
+      NotificationManager.error('Unable to send verification email, please contact your admin');
+      return { ...state, loading: false, error: ""};
+
+
+    /**
+     * Resent Verificaiton Password
+    */
+    case LOGIN_USER_RESET_PASSWORD:
+      return { ...state, loading: false};
+
+    case LOGIN_USER_RESET_PASSWORD_SUCCESS:
+      NotificationManager.success('A reset password email has been sent, please check in your inbox');
+      return { ...state, loading: false, error: ""};
+
+    case LOGIN_USER_RESET_PASSWORD_FAILURE:
+     
       NotificationManager.error(action.payload);
-      return { ...state, loading: false };
+      return { ...state, loading: false, error: ""};
 
     /**
      * Log out User

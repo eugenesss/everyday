@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Link, withRouter, } from "react-router-dom";
-import { Form, FormGroup, Input } from "reactstrap";
+import { Form, FormGroup, Input, FormFeedback} from "reactstrap";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import QueueAnim from "rc-queue-anim";
 
@@ -15,7 +15,8 @@ import QueueAnim from "rc-queue-anim";
 import AppConfig from "Constants/AppConfig";
 
 // redux action
-import { signInUserWithEmailPassword } from "Actions";
+import { userResetPassword, handleRegErrorForm } from "Actions";
+import {EmailValidator} from '../register/Components/Validation/Validation'
 
 class forgetpassword extends Component {
 
@@ -24,22 +25,21 @@ class forgetpassword extends Component {
 
   state = {
     emailAddress: "",
+    emailValidated: ""
   };
 
-  /**
-   * On User Login
-   */
-  onUserLogin = e => {
-    e.preventDefault();
-    if (this.state.emailAddress !== "") {
-      this.props.signInUserWithEmailPassword(this.state, this.props.history);
+  resetPassword = () => {
+    if (this.state.emailValidated == "has-success") {
+      this.props.userResetPassword(this.state.emailAddress)
     }
-  };
 
-
+    if (this.state.emailAddress.length == 0) {
+      this.props.handleRegErrorForm('The email field is not filled up.')
+    }
+  }
 
   render() {
-    const { email } = this.state;
+    const { emailAddress } = this.state;
     const { loading } = this.props;
     return (
       <QueueAnim type="bottom" duration={2000}>
@@ -73,22 +73,27 @@ class forgetpassword extends Component {
                     className="session-body text-center"
                     style={{ padding: "5% 10%" }}
                   >
-                    <Form onSubmit={this.onUserLogin}>
                       <FormGroup className="has-wrapper">
                         <Input
                           type="email"
-                          value={email}
+                          value={emailAddress}
                           name="emailAddress"
                           id="emailAddress"
                           className="has-input input-lg"
                           placeholder="Enter Email Address"
-                          onChange={event =>
+                          onChange={event => {
                             this.setState({ emailAddress: event.target.value })
-                          }
+                            this.setState({emailValidated: EmailValidator(event.target.value)})
+                          }}
+                          valid={ this.state.emailValidated === 'has-success' }
+                          invalid={ this.state.emailValidated === 'has-danger' }
                         />
                         <span className="has-icon">
                           <i className="ti-email" />
                         </span>
+
+                        <FormFeedback >Oh noes! You need to input a valid email addresss!</FormFeedback>
+                        <FormFeedback valid>We will look for your delicious email!</FormFeedback>
                       </FormGroup>
                     
                       {/* <FormGroup className="mb-15"> */}
@@ -98,13 +103,12 @@ class forgetpassword extends Component {
                           variant="contained"
                           size="large"
                           type="submit"
+                          onClick={()=> this.resetPassword()}
                         >
                           Forget Password
                         </Button>
                       {/* </FormGroup> */}
 
-
-                    </Form>
                   </div>
                 </div>
                 <div className="col-sm-3 col-md-3 col-lg-2" />
@@ -120,16 +124,10 @@ const mapStateToProps = ({ authUser }) => {
   const { user, loading } = authUser;
   return { user, loading };
 };
-/*
-export default withRouter(connect(null)(Signin));
-const mapStateToProps = ({ authUser }) => {
-	const { user, loading } = authUser;
-	return { user, loading }
-}
-*/
+
 export default withRouter(connect(
   mapStateToProps,
   {
-    signInUserWithEmailPassword
+    userResetPassword, handleRegErrorForm
   }
 )(forgetpassword));
