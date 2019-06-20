@@ -1,5 +1,5 @@
 import React from "react";
-import moment from "moment";
+import { getDateTime } from "Helpers/helpers";
 
 const NameTimeStamp = ({ name, timeStamp }) => {
   return (
@@ -9,7 +9,7 @@ const NameTimeStamp = ({ name, timeStamp }) => {
       </span>
       <br />
       <span style={{ fontSize: "10px", fontWeight: 300 }}>
-        {moment(timeStamp, "dd mm yyyy hh:mm").format("MMMM Do YYYY, h:mma")}
+        {getDateTime(timeStamp)}
       </span>
     </React.Fragment>
   );

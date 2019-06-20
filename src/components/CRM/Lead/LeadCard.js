@@ -1,32 +1,49 @@
 import React from "react";
-import Avatar from "Components/Everyday/Avatar";
+import {
+  ViewCardLayout,
+  ViewCardTitle,
+  ViewCardDetails
+} from "Components/CRM/View/Layout/ViewCard";
+import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
+import LeadInterestLevel from "Components/CRM/Lead/LeadInterestLevel";
 
-const LeadCard = ({ name, companyName, status, statusColor, ownerName }) => {
+const LeadCard = ({
+  name,
+  companyName,
+  status,
+  statusColor,
+  ownerName,
+  mobile,
+  office,
+  email,
+  interest
+}) => {
   return (
-    <div className="lazy-up">
-      <div className="card b-0" style={{ minHeight: "150px" }}>
-        <div className="media" style={{ padding: "1.5% 4%" }}>
-          <div className="media-left mr-50 mt-10">
-            <Avatar name={name} size={100} />
-          </div>
-          <div className="media-body d-flex justify-content-between mlr-10">
-            <div className="mt-15">
-              <h1 className="mb-5">{name}</h1>
-              <p className="mb-0 d-block">
-                <span className="mr-1">{companyName}</span>
-              </p>
-              <span className="d-block fs-12">Owner - {ownerName}</span>
-              <p className="mb-5">
-                <span className="fs-12" style={{ color: statusColor }}>
-                  {status}
-                </span>
-              </p>
-            </div>
-          </div>
+    <ViewCardLayout statusColor={statusColor}>
+      <ViewCardTitle
+        name={name}
+        subHeading={[
+          companyName,
+          <StatusBadge name={status} color={statusColor} />
+        ]}
+      />
+      <div className="row px-20 pt-20 pb-10">
+        <div className="col-sm-3 text-right">
+          <p className="fs-12">
+            <i>Interest</i>
+          </p>
         </div>
-        <div className="w-100 py-10" style={{ background: statusColor }} />
+        <div className="col-sm-8 text-left">
+          <LeadInterestLevel interest={interest} />
+        </div>
       </div>
-    </div>
+      <ViewCardDetails>
+        {{ title: "Owner", icon: "zmdi-account", detail: ownerName }}
+        {{ title: "Email", icon: "zmdi-email", detail: email }}
+        {{ title: "Mobile", icon: "zmdi-smartphone", detail: mobile }}
+        {{ title: "Office", icon: "zmdi-phone", detail: office }}
+      </ViewCardDetails>
+    </ViewCardLayout>
   );
 };
 

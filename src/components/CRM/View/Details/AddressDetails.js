@@ -1,26 +1,38 @@
 import React from "react";
-import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
-import SingleDetail from "Components/CRM/View/Details/SingleDetail";
-import DetailsTable from "Components/CRM/View/Details/DetailsTable";
+import {
+  DetailsLayout,
+  SingleDetail,
+  SingleDetailVariation
+} from "Components/CRM/View/Layout/Details";
 
-const AddressDetails = ({ address_1, address_2, city, state, zip }) => {
+const AddressDetails = ({ addressDetails }) => {
   return (
-    <div className="pb-10">
-      <TabsHeader title="Address Details" />
-      <DetailsTable>
-        <tr>
-          <SingleDetail title="Address" value={address_1} colSpan={5} />
-        </tr>
-        <tr>
-          <SingleDetail title="Address 2" value={address_2} colSpan={5} />
-        </tr>
-        <tr>
-          <SingleDetail title="City" value={city} />
-          <SingleDetail title="State" value={state} />
-          <SingleDetail title="Zip" value={zip} />
-        </tr>
-      </DetailsTable>
-    </div>
+    <DetailsLayout title="Address Details" bgColorClass="bg-secondary">
+      <SingleDetail title="Address" value={addressDetails.address_1} fullCol />
+      <SingleDetail
+        title="Address 2"
+        value={addressDetails.address_2}
+        fullCol
+      />
+      <SingleDetailVariation
+        title="City"
+        value={addressDetails.city}
+        colClassTitle="col"
+        colClassValue="col"
+      />
+      <SingleDetailVariation
+        title="State"
+        value={addressDetails.state}
+        colClassTitle="col"
+        colClassValue="col"
+      />
+      <SingleDetailVariation
+        title="Zip"
+        value={addressDetails.zip}
+        colClassTitle="col"
+        colClassValue="col"
+      />
+    </DetailsLayout>
   );
 };
 

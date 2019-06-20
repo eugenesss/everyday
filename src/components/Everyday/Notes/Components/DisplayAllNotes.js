@@ -2,6 +2,7 @@ import React from "react";
 import List from "@material-ui/core/List";
 import { Scrollbars } from "react-custom-scrollbars";
 import SingleNote from "./SingleNote";
+import NoNoteDisplay from "./NoNoteDisplay";
 
 const DisplayAllNotes = ({ notes, onClickEdit, onClickDelete, action }) => {
   return (
@@ -9,12 +10,11 @@ const DisplayAllNotes = ({ notes, onClickEdit, onClickDelete, action }) => {
       <Scrollbars
         className="rct-scroll"
         autoHeight
-        autoHeightMin={100}
-        autoHeightMax={600}
-        autoHide
+        autoHeightMin={400}
+        autoHeightMax={500}
       >
         <List className="p-0">
-          {notes &&
+          {notes ? (
             notes.map((note, key) => {
               return (
                 <SingleNote
@@ -22,7 +22,10 @@ const DisplayAllNotes = ({ notes, onClickEdit, onClickDelete, action }) => {
                   note={note} /* note onClickEdit onClickDelete action */
                 />
               );
-            })}
+            })
+          ) : (
+            <NoNoteDisplay />
+          )}
         </List>
       </Scrollbars>
     </div>

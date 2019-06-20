@@ -44,6 +44,8 @@ const note = {
   createdBy: user
 };
 
+export const noteList = [note, note, note];
+
 export const interestLevel = [
   { id: 1, name: "Rare", level: 20 },
   { id: 2, name: "Medium Rare", level: 40 },
