@@ -50,6 +50,7 @@ function* signInUserWithEmailPassword({ payload }) {
       history.push("/");
       //Get User Access Rights
     } else {
+
       yield put(signinUserFailure(error.response.data.error.message));
     }
     
