@@ -1,8 +1,14 @@
 import { all, call, fork, put, takeEvery } from "redux-saga/effects";
 
-import { LOGIN_USER } from "Types";
+import { LOGIN_USER, LOGOUT_USER, LOGIN_USER_RESENT_EMAIL, LOGIN_USER_RESET_PASSWORD, USER_RIGHTS } from "Types";
 
-import { signinUserSuccess, signinUserFailure } from "Actions";
+import {
+  signinUserSuccess, signinUserFailure,
+  logoutUserSuccess, logoutUserFailure,
+  userResentEmailSuccess, userResentEmailFailure,
+  userResetPasswordFailure, userResetPasswordSuccess,
+  userRightsSuccess, userRightsFailure
+} from "Actions";
 
 import api from "Api";
 
@@ -14,14 +20,16 @@ const signInUserWithEmailPasswordRequest = async (email, password) => {
   return result.data;
 };
 
-const getUserAccessRightsRequest = async userId => {
-  const result = await api.get(`/accesssettings/${userId}/user/accessRights`);
-  return result.data;
+const getUserAccessRightsRequest = async () => {
+  const result = await api.get(`/accesssettings/user/accessRights`);
+  return result.data.data;
 };
 
 function* signInUserWithEmailPassword({ payload }) {
   const { emailAddress, password } = payload.user;
   const { history } = payload;
+
+
   try {
     const signInUser = yield call(
       signInUserWithEmailPasswordRequest,
@@ -32,8 +40,7 @@ function* signInUserWithEmailPassword({ payload }) {
       localStorage.setItem("user_id", signInUser.userId);
       localStorage.setItem("accessKey", signInUser.id);
       const userRights = yield call(
-        getUserAccessRightsRequest,
-        signInUser.userId
+        getUserAccessRightsRequest
       );
       yield put(signinUserSuccess(signInUser, userRights));
       history.push("/");
@@ -41,6 +48,72 @@ function* signInUserWithEmailPassword({ payload }) {
     } else {
       yield put(signinUserFailure("Invalid email address or password."));
     }
+
+
+
+  } catch (error) {
+    yield put(signinUserFailure(error.response.data.error));
+  }
+}
+
+function* getUserRights() {
+  try {
+
+    const userRights = yield call(getUserAccessRightsRequest);
+    yield put(userRightsSuccess(userRights));
+  }
+  catch (error) {
+    yield put(userRightsFailure(error.response.data.error));
+  }
+}
+
+
+const logoutUserWithAccessToken = async () => {
+  const result = await api.post(`/users/logout`);
+  return result.data;
+};
+
+function* logoutUser({ }) {
+  try {
+    yield call(logoutUserWithAccessToken);
+    yield put(logoutUserSuccess());
+    new Auth().logout()
+  } catch (error) {
+    yield put(logoutUserFailure());
+  }
+}
+
+
+const userResentVerificationEmail = async (userId) => {
+  const result = await api.post(`/users/verify`, { id: userId });
+  return result.data;
+};
+
+function* UserResentEmail({ payload }) {
+  try {
+    yield call(userResentVerificationEmail, payload.user);
+    yield put(userResentEmailSuccess());
+  } catch (error) {
+    yield put(userResentEmailFailure());
+  }
+}
+
+
+
+const userResentPasswordEmail = async (email) => {
+  const result = await api.post(`/users/reset`, { email: email });
+
+  if (result.data) {
+    return result.data
+  } else {
+    return result
+  }
+};
+
+function* UserResentPassword({ payload }) {
+  try {
+    yield call(userResentPasswordEmail, payload.email);
+    yield put(userResetPasswordSuccess());
   } catch (error) {
     //console.log(error);
     yield put(signinUserFailure("Invalid email address or password."));
@@ -51,6 +124,22 @@ export function* signinUser() {
   yield takeEvery(LOGIN_USER, signInUserWithEmailPassword);
 }
 
+export function* signoutUser() {
+  yield takeEvery(LOGOUT_USER, logoutUser);
+}
+
+export function* usersentEmail() {
+  yield takeEvery(LOGIN_USER_RESENT_EMAIL, UserResentEmail);
+}
+
+export function* usersentPassword() {
+  yield takeEvery(LOGIN_USER_RESET_PASSWORD, UserResentPassword);
+}
+
+export function* getAccessRights() {
+  yield takeEvery(USER_RIGHTS, getUserRights);
+}
+
 export default function* rootSaga() {
-  yield all([fork(signinUser)]);
+  yield all([fork(signinUser), fork(signoutUser), fork(usersentEmail), fork(usersentPassword), fork(getAccessRights)]);
 }

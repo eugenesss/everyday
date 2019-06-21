@@ -3,19 +3,16 @@ import { connect } from "react-redux";
 
 import UsersLayout from "Components/Setting/UserControl/Users/UsersLayout"
 
-class Users extends Component {
-  constructor(props) {
-    super(props);
-  }
+const UsersLayout = () => {
+  return (
+    <React.Fragment>
+      <AccessControl action={["AccessSetting:viewall"]} noAccessComponent={<NoAccessComponent />}>
+        <UsersList />
+      </AccessControl>
+    </React.Fragment>
+  );
+};
 
-  render() {
-    return (
-      <React.Fragment>
-        <UsersLayout/>
-      </React.Fragment>
-    );
-  }
-}
 
 export default connect(
   null
