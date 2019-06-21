@@ -1,36 +1,30 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
-
 //Page Components
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
-// import AccountCard from "Components/CRM/Account/AccountCard";
-
+// Account Card
+import AccountCard from "Components/CRM/Account/AccountCard";
+// Vertical Tabs
+import VerticalTab from "Components/Everyday/VerticalTabs//VerticalTab";
+import VerticalContainer from "Components/Everyday/VerticalTabs//VerticalContainer";
 // // Details Tab
-// import AccountDetails from "Components/CRM/Account/AccountDetails";
-// import AddressDetails from "Components/CRM/View/Details/AddressDetails";
-// import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
-
-// Events Tab
-import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
-import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
-import NewEventsButton from "Components/CRM/View/Events/NewEventsButton";
-
+import AccountDetails from "Components/CRM/Account/AccountDetails";
+import AddressDetails from "Components/CRM/View/Details/AddressDetails";
+import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
 // Related Tab
 import RelatedDeals from "Components/CRM/View/Related/RelatedDeals";
 import RelatedCustomers from "Components/CRM/View/Related/RelatedCustomers";
-
+// Events Tab
+import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
+import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 // Notes Tab
-// import NewNote from "Components/Form/Note/NewNote";
-// import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
+import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 
 // Actions
 import {
@@ -40,17 +34,24 @@ import {
 } from "Actions";
 // addNoteToAccount(acctID), onNoteChange, clearNote
 // Add events dialog
-// Delete Account, Edit Account, Transfer Account
+// Delete Account, Transfer Account
 
 class crm_view_account extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { activeIndex: 0 };
+    this.edit = this.edit.bind(this);
+    this.handleNewDeal = this.handleNewDeal.bind(this);
+  }
   componentWillMount() {
     var id = this.props.match.params.id;
     this.props.getSingleAccount(id);
   }
-
   componentWillUnmount() {
     this.props.clearSingleAccount();
   }
+  // Change view tab state
+  changeTabView = (_, activeIndex) => this.setState({ activeIndex });
 
   reload() {
     console.log("reload");
@@ -65,9 +66,13 @@ class crm_view_account extends Component {
   newEvent() {
     console.log("new events");
   }
+  handleNewDeal() {
+    this.props.history.push("/app/crm/new/deal");
+  }
 
   render() {
     const { loading, account } = this.props.accountToView;
+    const { activeIndex } = this.state;
     return loading ? (
       <RctPageLoader />
     ) : account ? (
@@ -86,54 +91,70 @@ class crm_view_account extends Component {
             </MoreButton>
           }
         />
-        {/* <div className="row">
-          <RctCollapsibleCard colClasses="col-md-6 col-lg-6" fullBlock>
-            <AccountCard
-              name={account.name}
-              industry={account.industry && account.industry.name}
-              ownerName={account.userInfo && account.userInfo.name}
-              office={account.baseContact.office}
-              fax={account.baseContact.fax}
-              fullAddress={account.fullAddress}
-            />
-          </RctCollapsibleCard>
-        </div>
-        <TabsWrapper>
-          <div icon="zmdi-coffee text-success" label="DETAILS">
-            <React.Fragment>
-              <AccountDetails account={account} />
-              <AddressDetails
-                address_1={account.baseContact._address.address_1}
-                address_2={account.baseContact._address.address_2}
-                state={account.baseContact._address.state}
-                city={account.baseContact._address.city}
-                zip={account.baseContact._address.zip}
+        <div className="row">
+          <div className="col-md-3">
+            <div>
+              <AccountCard
+                name={account.name}
+                ownerName={account.userInfo && account.userInfo.name}
+                office={account.baseContact.office}
+                isActive={account.isActive}
+                industry={account.industry}
+                fullAddress={account.fullAddress}
+                website={account.baseContact.website}
               />
-              <DescriptionDetails desc={account.description} />
-            </React.Fragment>
-          </div>
-          <div icon="zmdi-drink text-secondary" label="RELATED">
-            <RelatedDeals deals={account.deals} />
-            <hr />
-            <RelatedCustomers customers={account.customers} />
-          </div>
-          <div icon="zmdi-pizza text-warning" label="EVENTS">
-            <NewEventsButton handleOnClick={this.newEvent} />
-            <UpcomingEvents events={account.upcomingEvents} />
-            <hr />
-            <ClosedEvents events={account.closedEvents} />
-          </div>
-          <div icon="zmdi-assignment text-danger" label="NOTES">
-            <div className="row">
-              <div className="col-md-4">
-                <NewNote />
-              </div>
-              <div className="col-md-8">
-                <DisplayAllNotes notes={account.notes} />
-              </div>
+              <VerticalTab
+                activeIndex={activeIndex}
+                handleChange={this.changeTabView}
+                selectedcolor="crm"
+              >
+                {{
+                  icon: "zmdi-info-outline",
+                  label: "DETAILS"
+                }}
+                {{
+                  icon: "zmdi-link",
+                  label: "RELATED"
+                }}
+                {{
+                  icon: "zmdi-calendar",
+                  label: "EVENTS"
+                }}
+                {{
+                  icon: "zmdi-comment-text",
+                  label: "NOTES"
+                }}
+              </VerticalTab>
             </div>
           </div>
-        </TabsWrapper> */}
+          <div className="col-md-9">
+            <VerticalContainer
+              activeIndex={activeIndex}
+              handleChange={this.changeTabView}
+              fullBlock
+            >
+              <div>
+                <AccountDetails account={account} />
+                <AddressDetails addressDetails={account.baseContact._address} />
+                <DescriptionDetails desc={account.description} />
+              </div>
+              <div>
+                <RelatedDeals
+                  deals={account.deals}
+                  handleNewDeal={this.handleNewDeal}
+                />
+                <RelatedCustomers customers={account.customers} />
+              </div>
+              <div>
+                <UpcomingEvents events={account.upcomingEvents} />
+                <ClosedEvents events={account.closedEvents} />
+              </div>
+              <div>
+                <NotesLayout allNotes={account.notes} handleAddNote />
+              </div>
+            </VerticalContainer>
+          </div>
+        </div>
       </React.Fragment>
     ) : (
       <PageErrorMessage

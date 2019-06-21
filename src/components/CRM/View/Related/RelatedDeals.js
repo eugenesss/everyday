@@ -1,6 +1,7 @@
 import React from "react";
 import ViewSectionLayout from "Components/CRM/View/Layout/ViewSectionLayout";
 import RelatedTable from "./RelatedTable";
+import AddNewButton from "Components/Everyday/AddNewButton";
 
 const columns = [
   { label: "Name", name: "name" },
@@ -12,10 +13,11 @@ const columns = [
   { label: "Owner", name: "account" }
 ];
 
-const RelatedDeals = ({ deals }) => {
+const RelatedDeals = ({ deals, handleNewDeal }) => {
   return (
     <ViewSectionLayout title="Related Deals" bgColorClass="bg-info">
       <RelatedTable columns={columns} tableData={deals} />
+      <AddNewButton handleOnClick={handleNewDeal} label="+ New Deal" />
     </ViewSectionLayout>
   );
 };

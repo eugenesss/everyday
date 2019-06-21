@@ -27,7 +27,7 @@ const LeadCard = ({
           <StatusBadge name={status} color={statusColor} />
         ]}
       />
-      <div className="row px-20 pt-20 pb-10">
+      <div className="row px-20">
         <div className="col-sm-3 text-right">
           <p className="fs-12">
             <i>Interest</i>

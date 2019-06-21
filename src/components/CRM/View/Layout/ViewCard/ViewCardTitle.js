@@ -3,7 +3,7 @@ import Avatar from "Components/Everyday/Avatar";
 
 const ViewCardTitle = ({ name, subHeading }) => {
   return (
-    <div className="text-center">
+    <div className="text-center pb-10">
       <Avatar name={name} size={80} customClasses="d-inline-block mb-10" />
       <h1 className="mb-5">{name}</h1>
       {subHeading.length > 1 ? (

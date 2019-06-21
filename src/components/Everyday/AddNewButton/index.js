@@ -1,12 +1,12 @@
 import React from "react";
 import MatButton from "@material-ui/core/Button";
 
-const NewEventsButton = ({ handleOnClick }) => {
+const AddNewButton = ({ handleOnClick, label }) => {
   return (
     <MatButton onClick={handleOnClick} className="text-primary mb-10">
-      + New Event
+      {label}
     </MatButton>
   );
 };
 
-export default NewEventsButton;
+export default AddNewButton;

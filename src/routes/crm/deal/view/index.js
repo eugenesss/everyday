@@ -24,7 +24,6 @@ import SelectDealStage from "Components/CRM/View/SelectDealStage";
 // Events Tab
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
-import NewEventsButton from "Components/CRM/View/Events/NewEventsButton";
 
 // History Tab
 import DealHistory from "Components/CRM/Deal/DealHistory";

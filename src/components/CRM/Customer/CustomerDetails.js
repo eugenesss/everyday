@@ -33,7 +33,7 @@ const CustomerDetails = ({ customer }) => {
       <SingleDetail title="Fax" value={customer.baseContact.fax} />
       <SingleDetail title="Job Title" value={customer.baseContact.title} />
       <SingleDetail
-        title="Modified At"
+        title="Modified By"
         value={
           <NameTimeStamp
             name={customer.updaterInfo && customer.updaterInfo.name}
@@ -42,7 +42,7 @@ const CustomerDetails = ({ customer }) => {
         }
       />
       <SingleDetail
-        title="Created At"
+        title="Created By"
         value={
           <NameTimeStamp
             name={customer.creatorInfo && customer.creatorInfo.name}

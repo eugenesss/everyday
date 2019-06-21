@@ -26,7 +26,7 @@ const LeadDetails = ({ lead }) => {
       <SingleDetail title="Website" value={lead.baseContact.website} />
       <SingleDetail title="" value={""} />
       <SingleDetail
-        title="Modified At"
+        title="Modified By"
         value={
           <NameTimeStamp
             name={lead.updaterInfo && lead.updaterInfo.name}
@@ -35,7 +35,7 @@ const LeadDetails = ({ lead }) => {
         }
       />
       <SingleDetail
-        title="Created At"
+        title="Created By"
         value={
           <NameTimeStamp
             name={lead.creatorInfo && lead.creatorInfo.name}
