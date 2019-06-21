@@ -7,9 +7,12 @@ import UsersList from "Components/Setting/UserControl/Users/UsersList";
 const UsersLayout = () => {
   return (
     <React.Fragment>
-      {/* <AccessControl action={["User:read"]} noAccessComponent={<NoAccessComponent/>}> */}
-      <UsersList />
-      {/* </AccessControl> */}
+      <AccessControl
+        action={["AccessSetting:viewall"]}
+        noAccessComponent={<NoAccessComponent />}
+      >
+        <UsersList />
+      </AccessControl>
     </React.Fragment>
   );
 };

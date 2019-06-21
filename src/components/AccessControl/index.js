@@ -8,25 +8,28 @@ class AccessControl extends Component {
 
   render() {
     const { children, action, user, access, match, noAccessComponent } = this.props;
-    if(user) {
+    if (user) {
+
       for (let i = 0; i < action.length; i++) {
         var act = action[i];
         if (act == "me") {
           if (user.id == match.params.id)
             return children
-        } else if (act == "global"){
+        } else if (act == "global") {
           return children
         } else {
           if (user.isSuperAdmin) {
             return children
           } else {
-            if (access.find(acc => { return `${acc.model}:${acc.method}` == action[i]}))
+            if (access.find(acc => { return `${acc.model}:${acc.method}` == action[i] })) {
               return children
-          } 
+            }
+
+          }
         }
       }
     }
-    if(noAccessComponent)
+    if (noAccessComponent)
       return noAccessComponent
     else
       return null
