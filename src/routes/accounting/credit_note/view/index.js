@@ -22,8 +22,8 @@ import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices"
 // import ActivityLog from "Components/Everyday/ActivityLog";
 
 // Notes Tab
-import NewNote from "Components/Form/Note/NewNote";
-import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
+// import NewNote from "Components/Form/Note/NewNote";
+// import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
 import { getSingleCreditNote, clearSingleCreditNote } from "Actions";

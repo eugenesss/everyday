@@ -12,12 +12,12 @@ import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
-import AccountCard from "Components/CRM/Account/AccountCard";
+// import AccountCard from "Components/CRM/Account/AccountCard";
 
-// Details Tab
-import AccountDetails from "Components/CRM/Account/AccountDetails";
-import AddressDetails from "Components/CRM/View/Details/AddressDetails";
-import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
+// // Details Tab
+// import AccountDetails from "Components/CRM/Account/AccountDetails";
+// import AddressDetails from "Components/CRM/View/Details/AddressDetails";
+// import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
 
 // Events Tab
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
@@ -29,8 +29,8 @@ import RelatedDeals from "Components/CRM/View/Related/RelatedDeals";
 import RelatedCustomers from "Components/CRM/View/Related/RelatedCustomers";
 
 // Notes Tab
-import NewNote from "Components/Form/Note/NewNote";
-import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
+// import NewNote from "Components/Form/Note/NewNote";
+// import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
 import {
@@ -86,7 +86,7 @@ class crm_view_account extends Component {
             </MoreButton>
           }
         />
-        <div className="row">
+        {/* <div className="row">
           <RctCollapsibleCard colClasses="col-md-6 col-lg-6" fullBlock>
             <AccountCard
               name={account.name}
@@ -126,14 +126,14 @@ class crm_view_account extends Component {
           <div icon="zmdi-assignment text-danger" label="NOTES">
             <div className="row">
               <div className="col-md-4">
-                <NewNote /* onAddNote="function" */ />
+                <NewNote />
               </div>
               <div className="col-md-8">
                 <DisplayAllNotes notes={account.notes} />
               </div>
             </div>
           </div>
-        </TabsWrapper>
+        </TabsWrapper> */}
       </React.Fragment>
     ) : (
       <PageErrorMessage

@@ -5,22 +5,34 @@ import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard
 
 function TabContainer(props) {
   return (
-    <Typography component="div" style={{ padding: 24 }}>
+    <Typography
+      component="div"
+      style={{ padding: props.fullBlock ? "" : "24" }}
+    >
       {props.children}
     </Typography>
   );
 }
 
-const VerticalContainer = props => {
+const VerticalContainer = ({
+  activeIndex,
+  handleChange,
+  children,
+  fullBlock
+}) => {
   return (
-    <RctCollapsibleCard fullBlock>
+    <RctCollapsibleCard fullBlock={fullBlock}>
       <SwipeableViews
         axis={"x"}
-        index={props.activeIndex}
-        onChangeIndex={index => props.handleChange(index)}
+        index={activeIndex}
+        onChangeIndex={index => handleChange(index)}
       >
-        {props.children.map((child, key) => {
-          return <TabContainer key={key}>{child}</TabContainer>;
+        {children.map((child, key) => {
+          return (
+            <TabContainer fullBlock={fullBlock} key={key}>
+              {child}
+            </TabContainer>
+          );
         })}
       </SwipeableViews>
     </RctCollapsibleCard>

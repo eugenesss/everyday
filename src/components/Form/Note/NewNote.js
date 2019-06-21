@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
-import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
 import Button from "@material-ui/core/Button";
 
 class NewNote extends Component {
@@ -29,47 +28,45 @@ class NewNote extends Component {
 
   render() {
     return (
-      <div>
-        <TabsHeader title="New Note" />
-        <form className="pr-40" noValidate autoComplete="off">
-          <TextField
-            id="noteTitle"
-            label="Title"
-            className="w-40"
-            value={this.state.title}
-            onChange={this.handleChange("title")}
-            margin="dense"
-            variant="outlined"
-          />
-          <TextField
-            id="noteContent"
-            label="Content"
-            multiline
-            rows="3"
-            value={this.state.content}
-            onChange={this.handleChange("content")}
-            className="w-100"
-            margin="dense"
-            variant="outlined"
-          />
-          <div className="mt-30">
-            <Button
-              onClick={() => this.clearNoteForm()}
-              className="mr-15"
-              variant="contained"
-            >
-              Clear
-            </Button>
-            <Button
-              color="primary"
-              disabled={this.isDisabled(this.state.content)}
-              variant="contained"
-            >
-              Add
-            </Button>
-          </div>
-        </form>
-      </div>
+      <form noValidate autoComplete="off">
+        <TextField
+          fullWidth
+          id="noteTitle"
+          label="Title"
+          value={this.state.title}
+          onChange={this.handleChange("title")}
+          margin="dense"
+          variant="outlined"
+        />
+        <TextField
+          id="noteContent"
+          label="Content"
+          multiline
+          rows="9"
+          value={this.state.content}
+          onChange={this.handleChange("content")}
+          fullWidth
+          margin="dense"
+          variant="outlined"
+        />
+        <div className="mt-30">
+          <Button
+            onClick={() => this.clearNoteForm()}
+            className="mr-15 text-white"
+            variant="contained"
+            color="secondary"
+          >
+            Clear
+          </Button>
+          <Button
+            color="primary"
+            disabled={this.isDisabled(this.state.content)}
+            variant="contained"
+          >
+            Add
+          </Button>
+        </div>
+      </form>
     );
   }
 }

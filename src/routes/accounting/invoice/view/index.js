@@ -19,8 +19,8 @@ import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 // import ActivityLog from "Components/Everyday/ActivityLog";
 
 // Notes Tab
-import NewNote from "Components/Form/Note/NewNote";
-import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
+// import NewNote from "Components/Form/Note/NewNote";
+// import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
 import { getSingleInvoice, clearSingleInvoice } from "Actions";

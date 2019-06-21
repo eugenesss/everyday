@@ -7,9 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 
-function Transition(props) {
-  return <Slide direction="up" {...props} />;
-}
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const FullScreenDialog = ({ children, show, handleHide, title }) => {
   return (
@@ -29,7 +29,7 @@ const FullScreenDialog = ({ children, show, handleHide, title }) => {
           </Typography>
         </Toolbar>
       </AppBar>
-      {children}
+      <div>{children}</div>
     </Dialog>
   );
 };

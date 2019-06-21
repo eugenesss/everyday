@@ -10,7 +10,7 @@ const SingleNote = ({ note, onClickEdit, onClickDelete, action }) => {
   return (
     <ListItem
       button
-      className="post-item align-items-center justify-content-between py-15"
+      className="post-item align-items-center justify-content-between py-25 px-30"
     >
       <div className="post-content d-flex">
         <div className="post-img mr-10">

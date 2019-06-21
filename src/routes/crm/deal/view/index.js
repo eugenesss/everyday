@@ -12,29 +12,26 @@ import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
-import DealCard from "Components/CRM/Deal/DealCard";
+// import DealCard from "Components/CRM/Deal/DealCard";
 
 // Deal Stage Component
 import SelectDealStage from "Components/CRM/View/SelectDealStage";
 
 // Details Tab
-import DealDetails from "Components/CRM/Deal/DealDetails";
-import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
+// import DealDetails from "Components/CRM/Deal/DealDetails";
+// import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
 
 // Events Tab
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 import NewEventsButton from "Components/CRM/View/Events/NewEventsButton";
 
-// Acitivty Tab
-// import ActivityLog from "Components/Everyday/ActivityLog";
-
 // History Tab
 import DealHistory from "Components/CRM/Deal/DealHistory";
 
 // Notes Tab
-import NewNote from "Components/Form/Note/NewNote";
-import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
+// import NewNote from "Components/Form/Note/NewNote";
+// import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
 import { getSingleDeal, clearSingleDeal, startDealEdit } from "Actions";
@@ -94,7 +91,7 @@ class crm_view_deal extends Component {
                 </MoreButton>
               }
             />
-            <RctCollapsibleCard fullBlock>
+            {/* <RctCollapsibleCard fullBlock>
               <DealCard
                 name={deal.name}
                 stage={deal.stage.name}
@@ -121,20 +118,17 @@ class crm_view_deal extends Component {
                 <hr />
                 <ClosedEvents events={deal.closedEvents} />
               </div>
-              {/* <div icon="zmdi-local-florist text-info" label="ACTIVITY LOG">
-                <ActivityLog />
-              </div> */}
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div className="col-md-4">
-                    <NewNote /* onAddNote="function" */ />
+                    <NewNote  />
                   </div>
                   <div className="col-md-8">
                     <DisplayAllNotes notes={deal.notes} />
                   </div>
                 </div>
               </div>
-            </TabsWrapper>
+            </TabsWrapper> */}
           </React.Fragment>
         ) : (
           <PageErrorMessage

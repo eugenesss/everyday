@@ -1,79 +1,50 @@
 import React from "react";
-import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
-import SingleDetail from "Components/CRM/View/Details/SingleDetail";
-import DetailsTable from "Components/CRM/View/Details/DetailsTable";
-import NameTimeStamp from "Components/Everyday/NameTimeStamp";
 
-import LeadInterestLevel from "./LeadInterestLevel";
+import {
+  DetailsLayout,
+  SingleDetail
+} from "Components/CRM/View/Layout/Details";
+import NameTimeStamp from "Components/Everyday/NameTimeStamp";
 
 const LeadDetails = ({ lead }) => {
   return (
-    <div className="pb-10">
-      <TabsHeader title="Lead Details" />
-      <DetailsTable>
-        <tr>
-          <SingleDetail
-            title="Owner"
-            value={lead.userInfo && lead.userInfo.name}
+    <DetailsLayout title="Lead Details" bgColorClass="bg-danger">
+      <SingleDetail title="Owner" value={lead.userInfo && lead.userInfo.name} />
+      <SingleDetail title="Company" value={lead.companyName} />
+      <SingleDetail title="Status" value={lead.status && lead.status.name} />
+      <SingleDetail title="Interest Level" value={lead.interest} />
+      <SingleDetail title="Source" value={lead.source && lead.source.name} />
+      <SingleDetail
+        title="Industry"
+        value={lead.industry && lead.industry.name}
+      />
+      <SingleDetail title="Mobile" value={lead.baseContact.mobile} />
+      <SingleDetail title="Email" value={lead.baseContact.email} />
+      <SingleDetail title="Office" value={lead.baseContact.phone} />
+      <SingleDetail title="Fax" value={lead.baseContact.fax} />
+      <SingleDetail title="Job Title" value={lead.baseContact.title} />
+      <SingleDetail title="" value={""} />
+      <SingleDetail title="Website" value={lead.baseContact.website} />
+      <SingleDetail title="" value={""} />
+      <SingleDetail
+        title="Modified At"
+        value={
+          <NameTimeStamp
+            name={lead.updaterInfo && lead.updaterInfo.name}
+            timeStamp={lead.updatedAt}
           />
-          <SingleDetail title="Company" value={lead.companyName} />
-        </tr>
-        <tr>
-          <SingleDetail
-            title="Status"
-            value={lead.status && lead.status.name}
+        }
+      />
+      <SingleDetail
+        title="Created At"
+        value={
+          <NameTimeStamp
+            name={lead.creatorInfo && lead.creatorInfo.name}
+            timeStamp={lead.createdAt}
           />
-          <SingleDetail
-            title="Interest Level"
-            value={<LeadInterestLevel interest={lead.interest} />}
-          />
-        </tr>
-        <tr>
-          <SingleDetail
-            title="Source"
-            value={lead.source && lead.source.name}
-          />
-          <SingleDetail
-            title="Industry"
-            value={lead.industry && lead.industry.name}
-          />
-        </tr>
-        <tr>
-          <SingleDetail title="Mobile" value={lead.baseContact.mobile} />
-          <SingleDetail title="Email" value={lead.baseContact.email} />
-        </tr>
-        <tr>
-          <SingleDetail title="Office" value={lead.baseContact.phone} />
-          <SingleDetail title="Fax" value={lead.baseContact.fax} />
-        </tr>
-        <tr>
-          <SingleDetail title="Job Title" value={lead.baseContact.title} />
-        </tr>
-        <tr>
-          <SingleDetail title="Website" value={lead.baseContact.website} />
-        </tr>
-        <tr>
-          <SingleDetail
-            title="Modified By"
-            value={
-              <NameTimeStamp
-                name={lead.updaterInfo && lead.updaterInfo.name}
-                timeStamp="08-05-2019 09:30 "
-              />
-            }
-          />
-          <SingleDetail
-            title="Created By"
-            value={
-              <NameTimeStamp
-                name={lead.creatorInfo && lead.creatorInfo.name}
-                timeStamp="08-05-2019 09:30 "
-              />
-            }
-          />
-        </tr>
-      </DetailsTable>
-    </div>
+        }
+      />
+    </DetailsLayout>
   );
 };
 

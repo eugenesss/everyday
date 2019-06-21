@@ -51,13 +51,14 @@ export function getTheDate(date, format) {
   let formatDate = format ? format : "DD MMM YYYY";
   return moment(date).format(formatDate);
 }
-
 /**
- * Convert Date To Timestamp
+ * Get Date
+ *
+ * Takes in js dates
  */
-export function convertDateToTimeStamp(date, format) {
-  let formatDate = format ? format : "YYYY-MM-DD";
-  return moment(date, formatDate).unix();
+export function getDateTime(date, format) {
+  let formatDate = format ? format : "llll";
+  return moment(date).format(formatDate);
 }
 
 /**
