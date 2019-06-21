@@ -1,13 +1,14 @@
 import React from "react";
-import { EventsLayout, EventsTable } from "Components/CRM/View/Layout/Events";
+import ViewSectionLayout from "Components/CRM/View/Layout/ViewSectionLayout";
+import EventsTable from "./EventsTable";
 import NewEventsButton from "./NewEventsButton";
 
 const UpcomingEvents = ({ events, handleNewEvent }) => {
   return (
-    <EventsLayout title="Upcoming Events" bgColorClass="bg-primary">
+    <ViewSectionLayout title="Upcoming Events" bgColorClass="bg-primary">
       <EventsTable tableData={events} action />
       <NewEventsButton handleOnClick={handleNewEvent} />
-    </EventsLayout>
+    </ViewSectionLayout>
   );
 };
 

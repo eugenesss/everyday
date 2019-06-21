@@ -56,7 +56,7 @@ class RctCollapsibleCard extends Component {
       >
         <div
           className={classnames(
-            `rct-block ${customClasses ? customClasses : ""}`,
+            `rct-block rounded-0 ${customClasses ? customClasses : ""}`,
             { "d-none": close }
           )}
         >

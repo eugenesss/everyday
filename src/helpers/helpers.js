@@ -52,12 +52,21 @@ export function getTheDate(date, format) {
   return moment(date).format(formatDate);
 }
 /**
- * Get Date
+ * Get DateTime
  *
  * Takes in js dates
  */
 export function getDateTime(date, format) {
   let formatDate = format ? format : "llll";
+  return moment(date).format(formatDate);
+}
+/**
+ * Get Time
+ *
+ * Takes in js dates
+ */
+export function getTheTime(date, format) {
+  let formatDate = format ? format : "LT";
   return moment(date).format(formatDate);
 }
 
@@ -151,6 +160,7 @@ export const listOptions = {
   download: false,
   print: false,
   selectableRows: true,
+  elevation: 0,
   rowsPerPage: 10,
   rowsPerPageOptions: [10, 30, 60, 100],
   textLabels: { body: { noMatch: "No data to display" } }

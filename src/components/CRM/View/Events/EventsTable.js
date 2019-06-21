@@ -3,7 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import MUIDataTable from "mui-datatables";
 
-const EventsTable = ({ tableData, title, action }) => {
+const EventsTable = ({ tableData, action }) => {
   const columns = [
     {
       name: "id",
@@ -11,38 +11,14 @@ const EventsTable = ({ tableData, title, action }) => {
         display: "excluded"
       }
     },
-    {
-      label: "Subject",
-      name: "name"
-    },
-    {
-      label: "Activity Type",
-      name: "amount"
-    },
-    {
-      label: "Status",
-      name: "stage"
-    },
-    {
-      label: "Due Date",
-      name: "stage"
-    },
-    {
-      label: "From",
-      name: "closingDate"
-    },
-    {
-      label: "To",
-      name: "account"
-    },
-    {
-      label: "Activity Owner",
-      name: "account"
-    },
-    {
-      label: "Last Modified On",
-      name: "account"
-    }
+    { label: "Subject", name: "name" },
+    { label: "Activity Type", name: "amount" },
+    { label: "Status", name: "stage" },
+    { label: "Due Date", name: "stage" },
+    { label: "From", name: "closingDate" },
+    { label: "To", name: "account" },
+    { label: "Activity Owner", name: "account" },
+    { label: "Last Modified On", name: "account" }
   ];
 
   const options = {
@@ -58,7 +34,7 @@ const EventsTable = ({ tableData, title, action }) => {
     selectableRows: true,
     rowsPerPage: 10,
     rowsPerPageOptions: [10, 30, 60, 100],
-    textLabels: { body: { noMatch: "No data to display" } }
+    textLabels: { body: { noMatch: "No Events" } }
   };
 
   if (action == true) {
@@ -83,14 +59,7 @@ const EventsTable = ({ tableData, title, action }) => {
     });
   }
 
-  return (
-    <MUIDataTable
-      //title={title}
-      columns={columns}
-      data={tableData}
-      options={options}
-    />
-  );
+  return <MUIDataTable columns={columns} data={tableData} options={options} />;
 };
 
-export { EventsTable };
+export default EventsTable;

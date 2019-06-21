@@ -17,7 +17,7 @@ const VerticalTabs = withStyles(theme => ({
 const styledBy = (property, mapping) => props => mapping[props[property]];
 const MyTab = withStyles({
   root: {
-    minHeight: "150px"
+    minHeight: "100px"
   },
   labelIcon: {
     fontSize: "14px"

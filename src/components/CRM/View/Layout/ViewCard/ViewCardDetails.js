@@ -6,8 +6,11 @@ const ViewCardDetails = ({ children }) => {
     <div className="m-10">
       {children.map((child, key) => {
         return (
-          <div key={key} className="row px-3 pb-10 justify-content-md-center">
-            <div className="col-lg-1 align-self-center text-center ">
+          <div
+            key={key}
+            className="row ml-10 px-3 pb-10 justify-content-md-center"
+          >
+            <div className="col-lg-2 align-self-center text-center ">
               <Tooltip title={child.title} placement="top">
                 <i className={`zmdi ${child.icon} mb-2`} />
               </Tooltip>

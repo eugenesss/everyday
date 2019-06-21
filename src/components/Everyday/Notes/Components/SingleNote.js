@@ -4,7 +4,7 @@ import { Fab } from "@material-ui/core";
 import Avatar from "Components/Everyday/Avatar";
 
 //Helper
-import { getTheDate, convertDateToTimeStamp } from "Helpers/helpers";
+import { getTheDate, getTheTime } from "Helpers/helpers";
 
 const SingleNote = ({ note, onClickEdit, onClickDelete, action }) => {
   return (
@@ -22,11 +22,11 @@ const SingleNote = ({ note, onClickEdit, onClickDelete, action }) => {
           <div className="meta-info fs-12 text-muted mb-5">
             <span className="mr-15 d-inline-block">
               <i className="zmdi zmdi-calendar mr-5" />
-              {getTheDate(note.createdAt, "M DD YYYY")}
+              {getTheDate(note.createdAt)}
             </span>
             <span className="mr-15 d-inline-block">
               <i className="zmdi zmdi-time mr-5" />
-              4.40pm
+              {getTheTime(note.createdAt)}
             </span>
           </div>
         </div>

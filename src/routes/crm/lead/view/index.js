@@ -7,9 +7,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
-
 // Card
 import LeadCard from "Components/CRM/Lead/LeadCard";
 // Vertical Tabs
@@ -37,7 +35,7 @@ import {
 } from "Actions";
 // addNoteToLead(leadID) onNoteChange, clearNote
 // Add events dialog
-// Delete Lead, Edit Lead, Transfer Lead
+// Delete Lead, Transfer Lead
 
 class crm_view_lead extends Component {
   constructor(props) {
@@ -112,7 +110,7 @@ class crm_view_lead extends Component {
             />
             <div className="row">
               <div className="col-md-3">
-                <RctCollapsibleCard fullBlock>
+                <div>
                   <LeadCard
                     name={lead.name}
                     companyName={lead.companyName}
@@ -124,26 +122,25 @@ class crm_view_lead extends Component {
                     email={lead.baseContact.email}
                     interest={lead.interest}
                   />
-                </RctCollapsibleCard>
-
-                <VerticalTab
-                  activeIndex={activeIndex}
-                  handleChange={this.changeTabView}
-                  selectedcolor="crm"
-                >
-                  {{
-                    icon: "zmdi-info-outline text-warning",
-                    label: "DETAILS"
-                  }}
-                  {{
-                    icon: "zmdi-calendar text-success",
-                    label: "EVENTS"
-                  }}
-                  {{
-                    icon: "zmdi-comment-text text-info",
-                    label: "NOTES"
-                  }}
-                </VerticalTab>
+                  <VerticalTab
+                    activeIndex={activeIndex}
+                    handleChange={this.changeTabView}
+                    selectedcolor="crm"
+                  >
+                    {{
+                      icon: "zmdi-info-outline",
+                      label: "DETAILS"
+                    }}
+                    {{
+                      icon: "zmdi-calendar",
+                      label: "EVENTS"
+                    }}
+                    {{
+                      icon: "zmdi-comment-text",
+                      label: "NOTES"
+                    }}
+                  </VerticalTab>
+                </div>
               </div>
               <div className="col-md-9">
                 <VerticalContainer

@@ -25,11 +25,7 @@ const LeadInterestLevel = ({ interest }) => {
     }
     return color;
   }
-  return (
-    <Progress value={interest} color={getBarColor(interest)}>
-      {interest}
-    </Progress>
-  );
+  return <Progress value={interest} color={getBarColor(interest)} />;
 };
 
 export default LeadInterestLevel;

@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   DetailsLayout,
   SingleDetail
@@ -12,7 +11,7 @@ const LeadDetails = ({ lead }) => {
       <SingleDetail title="Owner" value={lead.userInfo && lead.userInfo.name} />
       <SingleDetail title="Company" value={lead.companyName} />
       <SingleDetail title="Status" value={lead.status && lead.status.name} />
-      <SingleDetail title="Interest Level" value={lead.interest} />
+      <SingleDetail title="Interest" value={lead.interest} />
       <SingleDetail title="Source" value={lead.source && lead.source.name} />
       <SingleDetail
         title="Industry"
@@ -22,7 +21,7 @@ const LeadDetails = ({ lead }) => {
       <SingleDetail title="Email" value={lead.baseContact.email} />
       <SingleDetail title="Office" value={lead.baseContact.phone} />
       <SingleDetail title="Fax" value={lead.baseContact.fax} />
-      <SingleDetail title="Job Title" value={lead.baseContact.title} />
+      <SingleDetail title="Title" value={lead.baseContact.title} />
       <SingleDetail title="" value={""} />
       <SingleDetail title="Website" value={lead.baseContact.website} />
       <SingleDetail title="" value={""} />

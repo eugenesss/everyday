@@ -40,7 +40,7 @@ const closedEvent = {
 const note = {
   title: "Note One",
   content: shortText,
-  createdAt: 1330192800000,
+  createdAt: "2019-06-20T08:26:49.888Z",
   createdBy: user
 };
 
