@@ -71,7 +71,6 @@ const convertLeadRequest = async data => {
   const result = await api.post(`/leads/convert/${data.leadID}`, {
     dealDetails: data.dealDetails
   });
-  console.log(result);
   return result.data;
 };
 const editLeadRequest = async lead => {

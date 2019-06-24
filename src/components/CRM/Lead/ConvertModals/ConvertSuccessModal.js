@@ -8,6 +8,7 @@ import DialogRoot from "Components/Dialog/DialogRoot";
 // Components
 import ConvertedBlock from "./Components/ConvertedBlock";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import NumberFormat from "react-number-format";
 
 // Actions
 import { handleSuccessConvertModal } from "Actions";
@@ -32,9 +33,9 @@ class ConvertSuccessModal extends Component {
           <div className="col">
             <RctCollapsibleCard fullBlock>
               <ConvertedBlock
-                bgColor="warning"
+                bgColor="success"
                 name={newCust.name}
-                smallText={newCust.jobTitle}
+                smallText={newCust.baseContact && newCust.baseContact.title}
                 heading="New Customer"
               />
             </RctCollapsibleCard>
@@ -55,7 +56,14 @@ class ConvertSuccessModal extends Component {
                 <ConvertedBlock
                   bgColor="info"
                   name={newDeal.name}
-                  smallText={newDeal.amount}
+                  smallText={
+                    <NumberFormat
+                      value={newDeal.amount}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                    />
+                  }
                   heading="New Deal"
                 />
               </RctCollapsibleCard>

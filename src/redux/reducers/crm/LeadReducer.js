@@ -213,7 +213,7 @@ export default (state = INIT_STATE, action) => {
     case CLEAR_NEW_LEAD:
       return { ...state, leadForm: INIT_STATE.leadForm };
     case NEW_LEAD_SUCCESS:
-      NotificationManager.success("Lead Created");
+      NotificationManager.success("Success!");
       return { ...state, leadForm: INIT_STATE.leadForm };
     case NEW_LEAD_ERROR:
       NotificationManager.error("Error in POST API");

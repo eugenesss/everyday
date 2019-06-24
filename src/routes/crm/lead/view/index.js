@@ -160,7 +160,7 @@ class crm_view_lead extends Component {
                       events={lead.upcomingEvents}
                       handleNewEvent={this.newEvent}
                     />
-                    <ClosedEvents events={lead.closedEvents} />
+                    <ClosedEvents events={lead.pastEvents} />
                   </div>
                   <div>
                     <NotesLayout allNotes={lead.notes} handleAddNote />
