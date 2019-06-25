@@ -9,28 +9,25 @@ import MoreButton from "Components/PageTitleBar/MoreButton";
 
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
-// import DealCard from "Components/CRM/Deal/DealCard";
-
+import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+// Deal Card
+import DealCard from "Components/CRM/Deal/DealCard";
+// Vertical Tabs
+import VerticalTab from "Components/Everyday/VerticalTabs//VerticalTab";
+import VerticalContainer from "Components/Everyday/VerticalTabs//VerticalContainer";
 // Deal Stage Component
-import SelectDealStage from "Components/CRM/View/SelectDealStage";
-
+import SelectDealStage from "Components/CRM/Deal/SelectDealStage";
 // Details Tab
-// import DealDetails from "Components/CRM/Deal/DealDetails";
-// import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
-
+import DealDetails from "Components/CRM/Deal/DealDetails";
+import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
+// History Tab
+import DealHistory from "Components/CRM/Deal/DealHistory";
 // Events Tab
 import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
-
-// History Tab
-import DealHistory from "Components/CRM/Deal/DealHistory";
-
 // Notes Tab
-// import NewNote from "Components/Form/Note/NewNote";
-// import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
+import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 
 // Actions
 import { getSingleDeal, clearSingleDeal, startDealEdit } from "Actions";
@@ -39,14 +36,19 @@ import { getSingleDeal, clearSingleDeal, startDealEdit } from "Actions";
 // Add Event Dialog
 
 class crm_view_deal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { activeIndex: 0 };
+  }
   componentWillMount() {
     var id = this.props.match.params.id;
     this.props.getSingleDeal(id);
   }
-
   componentWillUnmount() {
     this.props.clearSingleDeal();
   }
+  // Change view tab state
+  changeTabView = (_, activeIndex) => this.setState({ activeIndex });
 
   reload() {
     console.log("reload");
@@ -64,6 +66,7 @@ class crm_view_deal extends Component {
 
   render() {
     const { loading, deal } = this.props.dealToView;
+    const { activeIndex } = this.state;
     return (
       <React.Fragment>
         {loading ? (
@@ -90,15 +93,72 @@ class crm_view_deal extends Component {
                 </MoreButton>
               }
             />
-            {/* <RctCollapsibleCard fullBlock>
-              <DealCard
-                name={deal.name}
-                stage={deal.stage.name}
-                chance={deal.stage.chance}
-                type={deal.type && deal.type.name}
-                ownerName={deal.userInfo && deal.userInfo.name}
-                amount={deal.amount}
-              />
+            <RctCollapsibleCard fullBlock>
+              <div className="row no-gutters">
+                <div className="col-md-3 align-self-center">
+                  <DealCard
+                    name={deal.name}
+                    stage={deal.stage}
+                    type={deal.type && deal.type.name}
+                    ownerName={deal.userInfo && deal.userInfo.name}
+                    amount={deal.amount}
+                  />
+                </div>
+                <div className="col-md-9 border-left">
+                  <SelectDealStage deal={deal} />
+                </div>
+              </div>
+            </RctCollapsibleCard>
+            <div className="row">
+              <div className="col-3">
+                <VerticalTab
+                  activeIndex={activeIndex}
+                  handleChange={this.changeTabView}
+                  selectedcolor="crm"
+                >
+                  {{
+                    icon: "zmdi-info-outline",
+                    label: "DETAILS"
+                  }}
+                  {{
+                    icon: "zmdi-book",
+                    label: "HISTORY"
+                  }}
+                  {{
+                    icon: "zmdi-calendar",
+                    label: "EVENTS"
+                  }}
+                  {{
+                    icon: "zmdi-comment-text",
+                    label: "NOTES"
+                  }}
+                </VerticalTab>
+              </div>
+              <div className="col-9">
+                <VerticalContainer
+                  activeIndex={activeIndex}
+                  handleChange={this.changeTabView}
+                  fullBlock
+                >
+                  <div>
+                    <DealDetails deal={deal} />
+                    <DescriptionDetails desc={deal.info} />
+                  </div>
+                  <div>
+                    <DealHistory history={deal.history} />
+                  </div>
+                  <div>
+                    <UpcomingEvents events={deal.upcomingEvents} />
+                    <ClosedEvents events={deal.closedEvents} />
+                  </div>
+                  <div>
+                    <NotesLayout allNotes={deal.notes} handleAddNote />
+                  </div>
+                </VerticalContainer>
+              </div>
+            </div>
+
+            {/* 
             </RctCollapsibleCard>
             <RctCollapsibleCard heading={"Update Deal Stage"} fullBlock>
               <SelectDealStage deal={deal} />

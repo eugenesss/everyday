@@ -8,7 +8,21 @@ import {
 const DescriptionDetails = ({ desc }) => {
   return (
     <DetailsLayout title="Description" bgColorClass="bg-primary">
-      <SingleDetail title="Description" value={desc} fullCol />
+      <SingleDetail
+        title="Description"
+        value={
+          desc &&
+          desc.split("\n").map((item, key) => {
+            return (
+              <span key={key}>
+                {item}
+                <br />
+              </span>
+            );
+          })
+        }
+        fullCol
+      />
     </DetailsLayout>
   );
 };

@@ -136,7 +136,7 @@ class crm_view_account extends Component {
               <div>
                 <AccountDetails account={account} />
                 <AddressDetails addressDetails={account.baseContact._address} />
-                <DescriptionDetails desc={account.description} />
+                <DescriptionDetails desc={account.baseContact.info} />
               </div>
               <div>
                 <RelatedDeals

@@ -59,6 +59,7 @@ class RctCollapsibleCard extends Component {
             `rct-block rounded-0 ${customClasses ? customClasses : ""}`,
             { "d-none": close }
           )}
+          style={{ boxShadow: "none" }}
         >
           {heading && (
             <div

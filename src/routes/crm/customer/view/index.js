@@ -150,7 +150,7 @@ class crm_view_customer extends Component {
                     <AddressDetails
                       addressDetails={customer.baseContact._address}
                     />
-                    <DescriptionDetails desc={customer.description} />
+                    <DescriptionDetails desc={customer.baseContact.info} />
                   </div>
                   <div>
                     <RelatedDeals deals={customer.deals} />

@@ -5,7 +5,15 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-const DialogRoot = ({ show, handleHide, children, title, size, close }) => {
+const DialogRoot = ({
+  show,
+  handleHide,
+  children,
+  title,
+  size,
+  close,
+  dialogAction
+}) => {
   return (
     <React.Fragment>
       <Dialog
@@ -15,7 +23,9 @@ const DialogRoot = ({ show, handleHide, children, title, size, close }) => {
         onClose={handleHide}
         aria-labelledby="max-width-dialog-title"
       >
-        <DialogTitle id="max-width-dialog-title">{title}</DialogTitle>
+        {title && (
+          <DialogTitle id="max-width-dialog-title">{title}</DialogTitle>
+        )}
         <DialogContent>{children}</DialogContent>
         <DialogActions>
           {close ? (
@@ -23,6 +33,7 @@ const DialogRoot = ({ show, handleHide, children, title, size, close }) => {
               Close
             </Button>
           ) : null}
+          {dialogAction && dialogAction}
         </DialogActions>
       </Dialog>
     </React.Fragment>

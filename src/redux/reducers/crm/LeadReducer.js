@@ -27,7 +27,10 @@ import {
   CONVERT_LEAD_FAILURE,
   UNMOUNT_CONVERT_LEAD,
   START_LEAD_EDIT,
-  SUBMIT_EDIT_LEAD
+  SUBMIT_EDIT_LEAD,
+  DELETE_LEAD,
+  DELETE_LEAD_SUCCESS,
+  DELETE_LEAD_FAILURE
 } from "Types";
 
 const INIT_STATE = {
@@ -299,6 +302,39 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         leadForm: { ...state.leadForm, loading: true }
+      };
+
+    /**
+     * Delete
+     */
+    case DELETE_LEAD:
+      return {
+        ...state,
+        leadToView: { ...state.leadToView, loading: true },
+        leadList: { ...state.leadList, loading: true }
+      };
+    case DELETE_LEAD_SUCCESS:
+      NotificationManager.success("Lead Deleted!");
+      // remove from state
+      var afterDeleteData = Object.assign([], state.leadList.tableData).filter(
+        lead => lead.id != action.payload
+      );
+      return {
+        ...state,
+        leadToView: { ...state.leadToView, loading: false },
+        leadList: {
+          ...state.leadList,
+          loading: false,
+          tableData: afterDeleteData
+        }
+      };
+    case DELETE_LEAD_FAILURE:
+      NotificationManager.error("Error in Deleting Lead");
+      console.log(action.payload);
+      return {
+        ...state,
+        leadToView: { ...state.leadToView, loading: false },
+        leadList: { ...state.leadList, loading: false }
       };
 
     default:

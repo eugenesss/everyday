@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
@@ -31,7 +32,8 @@ import {
   getSingleLead,
   clearSingleLead,
   handleConvertModal,
-  startLeadEdit
+  startLeadEdit,
+  deleteLead
 } from "Actions";
 // addNoteToLead(leadID) onNoteChange, clearNote
 // Add events dialog
@@ -58,16 +60,32 @@ class crm_view_lead extends Component {
   transfer() {
     console.log("transger");
   }
+  // edit
   edit(lead) {
     this.props.startLeadEdit(lead);
     this.props.history.push("/app/crm/leads/edit");
   }
-  delete() {
-    console.log("delete");
+
+  // Delete record
+  handleDelete(leadId) {
+    this.props.deleteLead(leadId);
+    setTimeout(() => {
+      this.props.history.push(`/app/crm/leads`);
+    }, 500);
   }
+  delete(lead) {
+    this.props.show("delete_dialog", {
+      name: lead.name,
+      action: () => this.handleDelete(lead.id)
+    });
+  }
+
+  // events
   newEvent() {
     console.log("new events");
   }
+
+  // convert lead
   convert() {
     this.props.handleConvertModal();
   }
@@ -102,7 +120,7 @@ class crm_view_lead extends Component {
                     label: "Transfer Lead"
                   }}
                   {{
-                    handleOnClick: this.delete.bind(this),
+                    handleOnClick: () => this.delete(lead),
                     label: "Delete"
                   }}
                 </MoreButton>
@@ -153,7 +171,7 @@ class crm_view_lead extends Component {
                     <AddressDetails
                       addressDetails={lead.baseContact._address}
                     />
-                    <DescriptionDetails desc={lead.description} />
+                    <DescriptionDetails desc={lead.baseContact.info} />
                   </div>
                   <div>
                     <UpcomingEvents
@@ -191,6 +209,13 @@ const mapStateToProps = ({ crmState }) => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { getSingleLead, clearSingleLead, handleConvertModal, startLeadEdit }
+    {
+      getSingleLead,
+      clearSingleLead,
+      handleConvertModal,
+      startLeadEdit,
+      show,
+      deleteLead
+    }
   )(crm_view_lead)
 );

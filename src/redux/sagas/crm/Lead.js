@@ -14,7 +14,8 @@ import {
   GET_LEAD_SUMMARY,
   SUBMIT_NEW_LEAD,
   CONVERT_LEAD,
-  SUBMIT_EDIT_LEAD
+  SUBMIT_EDIT_LEAD,
+  DELETE_LEAD
 } from "Types";
 import {
   getLeadSuccess,
@@ -25,7 +26,9 @@ import {
   newLeadSuccess,
   newLeadError,
   convertLeadSuccess,
-  convertLeadFailure
+  convertLeadFailure,
+  deleteLeadSuccess,
+  deleteLeadFailure
 } from "Actions";
 
 import api from "Api";
@@ -75,6 +78,10 @@ const convertLeadRequest = async data => {
 };
 const editLeadRequest = async lead => {
   const result = await api.patch(`/leads/${lead.id}`, lead);
+  return result.data;
+};
+const deleteLeadRequest = async id => {
+  const result = await api.delete(`/leads/${id}`);
   return result.data;
 };
 
@@ -180,6 +187,15 @@ function* editLeadToDB() {
     yield put(newLeadError(error));
   }
 }
+function* deleteLeadFromDB({ payload }) {
+  try {
+    const deleteResult = yield call(deleteLeadRequest, payload);
+    yield delay(500);
+    yield put(deleteLeadSuccess(payload));
+  } catch (error) {
+    yield put(deleteLeadFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -205,6 +221,9 @@ export function* convertLeadWatcher() {
 export function* editLeadWatcher() {
   yield takeEvery(SUBMIT_EDIT_LEAD, editLeadToDB);
 }
+export function* deleteLeadWatcher() {
+  yield takeEvery(DELETE_LEAD, deleteLeadFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -217,6 +236,7 @@ export default function* rootSaga() {
     fork(getLeadSummaryWatcher),
     fork(postLeadWatcher),
     fork(convertLeadWatcher),
-    fork(editLeadWatcher)
+    fork(editLeadWatcher),
+    fork(deleteLeadWatcher)
   ]);
 }

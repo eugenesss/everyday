@@ -4,11 +4,16 @@ const SingleDetail = ({ title, value, fullCol }) => {
   return (
     <React.Fragment>
       <div className="col-lg-2 text-right pb-1">
-        <p>
+        <p className="align-self-center">
           <strong>{title}</strong>
         </p>
       </div>
-      <div className={`text-left pb-1 ` + (fullCol ? "col-10" : "col-lg-4")}>
+      <div
+        className={
+          `text-left pb-1 align-self-center ` +
+          (fullCol ? "col-10" : "col-lg-4")
+        }
+      >
         <p>{value}</p>
       </div>
     </React.Fragment>
@@ -25,12 +30,12 @@ const SingleDetailVariation = ({
 }) => {
   return (
     <React.Fragment>
-      <div className={`text-right pb-1 ${colClassTitle}`}>
+      <div className={`text-right pb-1 align-self-center ${colClassTitle}`}>
         <p>
           <strong>{title}</strong>
         </p>
       </div>
-      <div className={`text-left pb-1 ${colClassValue}`}>
+      <div className={`text-left pb-1 align-self-center ${colClassValue}`}>
         <p>{value}</p>
       </div>
     </React.Fragment>
