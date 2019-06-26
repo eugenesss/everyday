@@ -71,15 +71,15 @@ class GroupsManager extends Component {
                 fullWidth
                 required
                 error={selectedGroup ? !selectedGroup.name : false}
-                disabled={!selectedGroup || selectedGroup.name == "Global"}
+                disabled={!selectedGroup || selectedGroup.name == "Company"}
                 id="name"
                 label="Group Name"
                 className={classes.textField}
                 InputLabelProps={{ shrink: true }}
                 value={
                   selectedGroup
-                    ? selectedGroup.name == "Global"
-                      ? "Global (default group applied to all roles)"
+                    ? selectedGroup.name == "Company"
+                      ? "Company (default group applied to all users)"
                       : selectedGroup.name
                     : ""
                 }

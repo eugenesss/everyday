@@ -30,7 +30,7 @@ const styles = () => ({
   icon: {
     height: 24,
     width: 24,
-   },
+  },
   block: {
     display: "block !important"
   }
@@ -45,17 +45,15 @@ class GroupsList extends Component {
     this.props.onChangeSelectedGroup(group);
     this.props.onChangeSelectedGroupRole(this.props.selectedGroupRoles)
   }
-  
+
   render() {
-    const { 
+    const {
       classes,
-
-      accessGroups,
       selectedGroup,
-
+      accessGroups,
       addGroup,
-     } = this.props;
-     return (
+    } = this.props;
+    return (
       <React.Fragment>
         <div className={classes.block}>
           <Row className={"d-flex align-items-center"}>
@@ -73,22 +71,22 @@ class GroupsList extends Component {
             </Col>
           </Row>
           <Scrollbars
-              className="rct-scroll"
-              autoHeight
-              autoHeightMin={'90vh'}
+            className="rct-scroll"
+            autoHeight
+            autoHeightMin={'90vh'}
           >
             <List
               component="nav"
               className={classes.root}
             >
               {accessGroups.map(group => (
-                <ListItem 
+                <ListItem
                   key={group.id}
                   button
                   selected={selectedGroup ? selectedGroup.id == group.id : false}
                   onClick={() => this.onChange(group)}
                 >
-                  <ListItemText primary={group.name} className={classes.listItem}/>
+                  <ListItemText primary={group.name} className={classes.listItem} />
                 </ListItem>
               ))}
             </List>

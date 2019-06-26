@@ -23,7 +23,6 @@ import {
 } from "Components/AsyncComponent/AsyncComponent";
 import SettingsDirectory from "Components/Setting/SettingsDirectory";
 
-import { getAllUsers, getAllRoles, getAllGroups } from "Actions";
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -42,7 +41,7 @@ class Settings extends Component {
   }
 
   render() {
-    const { match, classes } = this.props;
+    const { match, classes, location } = this.props;
     if (location.pathname === "/app/settings") {
       return <Redirect to={"/app/settings/general/my-profile"} />;
     }
@@ -70,6 +69,7 @@ class Settings extends Component {
                 component={Async_setting_gen_companyDetails_component}
               />
               {/* ------- Users and Controls ------- */}
+
               <Route
                 exact
                 path={`${match.url}/users-and-controls/users`}
@@ -142,6 +142,6 @@ Settings.propTypes = {
 export default withRouter(
   connect(
     null,
-    { getAllUsers, getAllRoles, getAllGroups }
+    {}
   )(withStyles(styles)(Settings))
 );

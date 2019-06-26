@@ -17,7 +17,7 @@ import {
   DELETE_GROUP,
   DELETE_GROUP_SUCCESS,
   DELETE_GROUP_FAILURE,
-  
+
   GET_GROUP_FAILURE,
 
   CHANGE_SELECTED_GROUP,
@@ -29,9 +29,9 @@ import {
 export const getAllGroups = () => ({
   type: GET_ALL_GROUPS
 });
-export const getAllGroupsSuccess = (groups, groupRoles) => ({
+export const getAllGroupsSuccess = (groups) => ({
   type: GET_ALL_GROUPS_SUCCESS,
-  payload: {groups, groupRoles}
+  payload: { groups }
 });
 
 /**
@@ -54,7 +54,7 @@ export const addGroupFailure = (err) => ({
  */
 export const onChangeUpdateGroup = (field, value) => ({
   type: ON_CHANGE_UPDATE_GROUP,
-  payload: {field, value}
+  payload: { field, value }
 });
 export const updateGroup = () => ({
   type: UPDATE_GROUP

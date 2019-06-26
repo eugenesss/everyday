@@ -1,11 +1,11 @@
 import { all, call, fork, put, takeEvery, select, delay } from "redux-saga/effects";
-import { 
+import {
   GET_ALL_GROUPS,
   ADD_GROUP,
   UPDATE_GROUP,
   DELETE_GROUP,
 } from "Types";
-import { 
+import {
   getAllGroupsSuccess,
 
   addGroupSuccess,
@@ -18,20 +18,22 @@ import {
   deleteGroupFailure,
 
   getGroupFailure,
- } from "Actions";
+} from "Actions";
 import api from "Api";
 
 //=========================
 // REQUESTS
 //=========================
 const getAllGroupsRequest = async () => {
-  const result = await api.get(`/accessgroups`)
-  return result.data
+  const result = await api.post(`/accesssettings/viewall`)
+  return result.data.data
 }
+/*
 const getAllGroupRolesRequest = async () => {
   const result = await api.get(`/accessgrouproles`)
   return result.data
 }
+*/
 const addGroupRequest = async () => {
   const result = await api.post(`/accessgroups`, {
     "name": "New Group"
@@ -54,16 +56,16 @@ const deleteGroupRequest = async (group) => {
 //=========================
 function* getAllGroupsFromDB() {
   try {
-    const groups =  yield call(getAllGroupsRequest)
-    const groupRoles = yield call(getAllGroupRolesRequest)
-    yield put(getAllGroupsSuccess(groups, groupRoles))
+    const groups = yield call(getAllGroupsRequest)
+    //const groupRoles = yield call(getAllGroupRolesRequest)
+    yield put(getAllGroupsSuccess(groups))
   } catch (err) {
     yield put(getGroupFailure(err))
   }
 }
 function* addGroupToDB() {
   try {
-    const data =  yield call(addGroupRequest)
+    const data = yield call(addGroupRequest)
     yield put(addGroupSuccess(data))
   } catch (err) {
     yield put(addGroupFailure(err))
@@ -75,7 +77,7 @@ function* updateGroupToDB() {
   try {
     const data = yield call(updateGroupNameRequest, group.name, group.id);
     yield put(updateGroupSuccess(data));
-  } catch (err)  {
+  } catch (err) {
     yield put(updateGroupFailure(err));
   }
 }
@@ -110,7 +112,7 @@ export function* deleteGroupWatcher() {
 // FORK SAGAS TO STORE
 //=======================
 export default function* rootSaga() {
-  yield all([,
+  yield all([
     fork(getAllGroupsWatcher),
     fork(addGroupWatcher),
     fork(updateGroupWatcher),
