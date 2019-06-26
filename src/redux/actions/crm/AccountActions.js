@@ -17,7 +17,10 @@ import {
   SUBMIT_EDIT_ACCOUNT,
   ADD_NOTE_ACCOUNT,
   ADD_NOTE_ACCOUNT_SUCCESS,
-  ADD_NOTE_ACCOUNT_FAILURE
+  ADD_NOTE_ACCOUNT_FAILURE,
+  SET_ACCOUNT_ACTIVE,
+  SET_ACCOUNT_ACTIVE_SUCCESS,
+  SET_ACCOUNT_ACTIVE_FAILURE
 } from "Types";
 
 /**
@@ -126,5 +129,21 @@ export const addNoteAccountSuccess = data => ({
 });
 export const addNoteAccountFailure = error => ({
   type: ADD_NOTE_ACCOUNT_FAILURE,
+  payload: error
+});
+
+/**
+ * Set Active
+ */
+export const setAccountActive = (id, status) => ({
+  type: SET_ACCOUNT_ACTIVE,
+  payload: { id, status }
+});
+export const setAccountActiveSuccess = data => ({
+  type: SET_ACCOUNT_ACTIVE_SUCCESS,
+  payload: data
+});
+export const setAccountActiveFailure = error => ({
+  type: SET_ACCOUNT_ACTIVE_FAILURE,
   payload: error
 });

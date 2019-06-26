@@ -32,7 +32,8 @@ import {
   getSingleAccount,
   clearSingleAccount,
   startAccountEdit,
-  addNoteAccount
+  addNoteAccount,
+  setAccountActive
 } from "Actions";
 // Add events dialog
 // Delete Account, Transfer Account
@@ -87,7 +88,7 @@ class crm_view_account extends Component {
     this.props.history.push("/app/crm/new/deal");
   }
   setInactive(acct) {
-    console.log("inactive");
+    this.props.setAccountActive(acct.id, !acct.isActive);
   }
 
   /**
@@ -111,11 +112,17 @@ class crm_view_account extends Component {
           title="View Account"
           createLink="/crm/new/account"
           extraButtons={[
-            {
-              color: "danger",
-              label: "Set Inactive",
-              handleOnClick: () => this.setInactive(account)
-            }
+            account.isActive
+              ? {
+                  color: "danger",
+                  label: "Set Inactive",
+                  handleOnClick: () => this.setInactive(account)
+                }
+              : {
+                  color: "success",
+                  label: "Set Active",
+                  handleOnClick: () => this.setInactive(account)
+                }
           ]}
           moreButton={
             <MoreButton>
@@ -212,11 +219,12 @@ export default withRouter(
   connect(
     mapStateToProps,
     {
+      show,
       getSingleAccount,
       clearSingleAccount,
       startAccountEdit,
-      show,
-      addNoteAccount
+      addNoteAccount,
+      setAccountActive
     }
   )(crm_view_account)
 );

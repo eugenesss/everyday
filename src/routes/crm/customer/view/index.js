@@ -31,7 +31,8 @@ import {
   getSingleCustomer,
   clearSingleCustomer,
   startCustomerEdit,
-  addNoteCustomer
+  addNoteCustomer,
+  setCustomerActive
 } from "Actions";
 
 // Add events dialog
@@ -83,7 +84,7 @@ class crm_view_customer extends Component {
     console.log("new events");
   }
   setInactive(cust) {
-    console.log("inactive");
+    this.props.setCustomerActive(cust.id, !cust.isActive);
   }
 
   /**
@@ -109,11 +110,17 @@ class crm_view_customer extends Component {
               title="View Customer"
               createLink="/crm/new/customer"
               extraButtons={[
-                {
-                  color: "danger",
-                  label: "Set Inactive",
-                  handleOnClick: () => this.setInactive(customer)
-                }
+                customer.isActive
+                  ? {
+                      color: "danger",
+                      label: "Set Inactive",
+                      handleOnClick: () => this.setInactive(customer)
+                    }
+                  : {
+                      color: "success",
+                      label: "Set Active",
+                      handleOnClick: () => this.setInactive(customer)
+                    }
               ]}
               moreButton={
                 <MoreButton>
@@ -224,7 +231,8 @@ export default withRouter(
       clearSingleCustomer,
       startCustomerEdit,
       show,
-      addNoteCustomer
+      addNoteCustomer,
+      setCustomerActive
     }
   )(crm_view_customer)
 );

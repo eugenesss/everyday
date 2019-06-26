@@ -18,7 +18,10 @@ import {
   SUBMIT_EDIT_CUSTOMER,
   ADD_NOTE_CUSTOMER,
   ADD_NOTE_CUSTOMER_SUCCESS,
-  ADD_NOTE_CUSTOMER_FAILURE
+  ADD_NOTE_CUSTOMER_FAILURE,
+  SET_CUSTOMER_ACTIVE,
+  SET_CUSTOMER_ACTIVE_SUCCESS,
+  SET_CUSTOMER_ACTIVE_FAILURE
 } from "Types";
 
 const INIT_STATE = {
@@ -219,6 +222,32 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         customerToView: { ...state.customerToView, sectionLoading: false }
+      };
+
+    /**
+     * Set Active
+     */
+    case SET_CUSTOMER_ACTIVE:
+      NotificationManager.success("Customer Status Updated");
+      return {
+        ...state,
+        customerToView: { ...state.customerToView, loading: true }
+      };
+    case SET_CUSTOMER_ACTIVE_SUCCESS:
+      return {
+        ...state,
+        customerToView: {
+          ...state.customerToView,
+          customer: action.payload,
+          loading: false
+        }
+      };
+    case SET_CUSTOMER_ACTIVE_FAILURE:
+      NotificationManager.error("Error");
+      console.log(action.payload);
+      return {
+        ...state,
+        customerToView: { ...state.customerToView, loading: false }
       };
 
     default:

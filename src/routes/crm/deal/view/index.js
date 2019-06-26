@@ -129,6 +129,8 @@ class crm_view_deal extends Component {
                     type={deal.type && deal.type.name}
                     ownerName={deal.userInfo && deal.userInfo.name}
                     amount={deal.amount}
+                    account={deal.accountInfo}
+                    customer={deal.customerInfo}
                   />
                 </div>
                 <div className="col-md-9 border-left px-20 py-30">

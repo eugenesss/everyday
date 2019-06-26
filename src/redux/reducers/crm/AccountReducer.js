@@ -18,7 +18,10 @@ import {
   SUBMIT_EDIT_ACCOUNT,
   ADD_NOTE_ACCOUNT,
   ADD_NOTE_ACCOUNT_SUCCESS,
-  ADD_NOTE_ACCOUNT_FAILURE
+  ADD_NOTE_ACCOUNT_FAILURE,
+  SET_ACCOUNT_ACTIVE,
+  SET_ACCOUNT_ACTIVE_SUCCESS,
+  SET_ACCOUNT_ACTIVE_FAILURE
 } from "Types";
 
 const INIT_STATE = {
@@ -219,6 +222,32 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         accountToView: { ...state.accountToView, sectionLoading: false }
+      };
+
+    /**
+     * Set Active
+     */
+    case SET_ACCOUNT_ACTIVE:
+      NotificationManager.success("Account Status Updated");
+      return {
+        ...state,
+        accountToView: { ...state.accountToView, loading: true }
+      };
+    case SET_ACCOUNT_ACTIVE_SUCCESS:
+      return {
+        ...state,
+        accountToView: {
+          ...state.accountToView,
+          account: action.payload,
+          loading: false
+        }
+      };
+    case SET_ACCOUNT_ACTIVE_FAILURE:
+      NotificationManager.error("Error");
+      console.log(action.payload);
+      return {
+        ...state,
+        accountToView: { ...state.accountToView, loading: false }
       };
 
     default:

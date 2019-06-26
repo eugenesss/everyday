@@ -13,7 +13,8 @@ import {
   GET_SINGLE_CUSTOMER,
   SUBMIT_CUSTOMER,
   SUBMIT_EDIT_CUSTOMER,
-  ADD_NOTE_CUSTOMER
+  ADD_NOTE_CUSTOMER,
+  SET_CUSTOMER_ACTIVE
 } from "Types";
 import {
   getCustomerFailure,
@@ -22,7 +23,9 @@ import {
   submitCustomerSuccess,
   submitCustomerError,
   addNoteCustomerSuccess,
-  addNoteCustomerFailure
+  addNoteCustomerFailure,
+  setCustomerActiveSuccess,
+  setCustomerActiveFailure
 } from "Actions";
 
 import api from "Api";
@@ -56,6 +59,10 @@ const editCustomerRequest = async cust => {
 };
 const addNoteCustomerRequest = async (id, note) => {
   const result = await api.post(`/customers/${id}/notes`, note);
+  return result.data;
+};
+const setCustomerActiveRequest = async (id, status) => {
+  const result = await api.patch(`/customers/${id}`, { isActive: status });
   return result.data;
 };
 
@@ -140,6 +147,16 @@ function* addNoteCustomerToDB({ payload }) {
     yield put(addNoteCustomerFailure(error));
   }
 }
+function* setCustomerToDB({ payload }) {
+  const { id, status } = payload;
+  try {
+    const data = yield call(setCustomerActiveRequest, id, status);
+    yield delay(500);
+    yield put(setCustomerActiveSuccess(data));
+  } catch (error) {
+    yield put(setCustomerActiveFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -162,6 +179,9 @@ export function* editCustomerWatcher() {
 export function* addNoteCustomerWatcher() {
   yield takeEvery(ADD_NOTE_CUSTOMER, addNoteCustomerToDB);
 }
+export function* setCustomerActiveWatcher() {
+  yield takeEvery(SET_CUSTOMER_ACTIVE, setCustomerToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -173,6 +193,7 @@ export default function* rootSaga() {
     fork(getSingleCustomerWatcher),
     fork(postCustomerWatcher),
     fork(editCustomerWatcher),
-    fork(addNoteCustomerWatcher)
+    fork(addNoteCustomerWatcher),
+    fork(setCustomerActiveWatcher)
   ]);
 }

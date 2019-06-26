@@ -62,10 +62,10 @@ class SelectDealStage extends Component {
           onClickStep={this.props.onClickStep}
         />
         <div>
-          <div className="row" style={{ padding: "2% 2%" }}>
+          <div className="row" style={{ padding: "0% 2%" }}>
             <div className="col-md-6">
               <div
-                className="p-20"
+                className="py-10 px-20"
                 style={{ maxWidth: "60%", marginLeft: "30px" }}
               >
                 <UpdateDealStageForm />
