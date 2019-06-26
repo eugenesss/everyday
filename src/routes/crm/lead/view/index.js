@@ -33,11 +33,11 @@ import {
   clearSingleLead,
   handleConvertModal,
   startLeadEdit,
-  deleteLead
+  deleteLead,
+  addNoteLead
 } from "Actions";
-// addNoteToLead(leadID) onNoteChange, clearNote
 // Add events dialog
-// Delete Lead, Transfer Lead
+//  Transfer Lead
 
 class crm_view_lead extends Component {
   constructor(props) {
@@ -45,6 +45,7 @@ class crm_view_lead extends Component {
     this.state = { activeIndex: 0 };
     this.convert = this.convert.bind(this);
     this.edit = this.edit.bind(this);
+    this.addNote = this.addNote.bind(this);
   }
   componentWillMount() {
     var id = this.props.match.params.id;
@@ -66,7 +67,9 @@ class crm_view_lead extends Component {
     this.props.history.push("/app/crm/leads/edit");
   }
 
-  // Delete record
+  /**
+   * DELETE RECORD
+   */
   handleDelete(leadId) {
     this.props.deleteLead(leadId);
     setTimeout(() => {
@@ -74,7 +77,7 @@ class crm_view_lead extends Component {
     }, 500);
   }
   delete(lead) {
-    this.props.show("delete_dialog", {
+    this.props.show("alert_delete", {
       name: lead.name,
       action: () => this.handleDelete(lead.id)
     });
@@ -85,13 +88,22 @@ class crm_view_lead extends Component {
     console.log("new events");
   }
 
-  // convert lead
+  /**
+   * CONVERT LEAD
+   */
   convert() {
     this.props.handleConvertModal();
   }
 
+  /**
+   * NEW NOTE
+   */
+  addNote(note) {
+    this.props.addNoteLead(this.props.match.params.id, note);
+  }
+
   render() {
-    const { lead, loading } = this.props.leadToView;
+    const { lead, loading, sectionLoading } = this.props.leadToView;
     const { activeIndex } = this.state;
     return (
       <React.Fragment>
@@ -165,6 +177,7 @@ class crm_view_lead extends Component {
                   activeIndex={activeIndex}
                   handleChange={this.changeTabView}
                   fullBlock
+                  loading={sectionLoading}
                 >
                   <div>
                     <LeadDetails lead={lead} />
@@ -181,7 +194,10 @@ class crm_view_lead extends Component {
                     <ClosedEvents events={lead.pastEvents} />
                   </div>
                   <div>
-                    <NotesLayout allNotes={lead.notes} handleAddNote />
+                    <NotesLayout
+                      allNotes={lead.notes}
+                      handleAddNote={this.addNote}
+                    />
                   </div>
                 </VerticalContainer>
               </div>
@@ -215,7 +231,8 @@ export default withRouter(
       handleConvertModal,
       startLeadEdit,
       show,
-      deleteLead
+      deleteLead,
+      addNoteLead
     }
   )(crm_view_lead)
 );

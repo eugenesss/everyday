@@ -7,6 +7,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
+import ActiveStatusBadge from "Components/Everyday/StatusBadge/ActiveStatusBadge";
+
 const AccountList = ({ tableData, loading, title, action }) => {
   const columns = [
     {
@@ -35,6 +37,15 @@ const AccountList = ({ tableData, loading, title, action }) => {
     },
     { label: "Website", name: "website" },
     { label: "Office", name: "office" },
+    {
+      label: "Status",
+      name: "isActive",
+      options: {
+        customBodyRender: value => {
+          return <ActiveStatusBadge isActive={value} />;
+        }
+      }
+    },
     {
       label: "Owner",
       name: "userInfo",

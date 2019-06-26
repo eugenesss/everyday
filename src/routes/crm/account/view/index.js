@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
@@ -30,9 +31,9 @@ import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 import {
   getSingleAccount,
   clearSingleAccount,
-  startAccountEdit
+  startAccountEdit,
+  addNoteAccount
 } from "Actions";
-// addNoteToAccount(acctID), onNoteChange, clearNote
 // Add events dialog
 // Delete Account, Transfer Account
 
@@ -42,6 +43,7 @@ class crm_view_account extends Component {
     this.state = { activeIndex: 0 };
     this.edit = this.edit.bind(this);
     this.handleNewDeal = this.handleNewDeal.bind(this);
+    this.addNote = this.addNote.bind(this);
   }
   componentWillMount() {
     var id = this.props.match.params.id;
@@ -60,18 +62,43 @@ class crm_view_account extends Component {
     this.props.startAccountEdit(acct);
     this.props.history.push("/app/crm/accounts/edit");
   }
-  delete() {
-    console.log("delete");
+
+  /**
+   * DELETE RECORD
+   */
+  handleDelete(acctId) {
+    //this.props.deleteCustomer(acctId);
+    console.log(acctId);
+    setTimeout(() => {
+      this.props.history.push(`/app/crm/accounts`);
+    }, 500);
   }
+  delete(acct) {
+    this.props.show("alert_delete", {
+      name: acct.name,
+      action: () => this.handleDelete(acct.id)
+    });
+  }
+
   newEvent() {
     console.log("new events");
   }
   handleNewDeal() {
     this.props.history.push("/app/crm/new/deal");
   }
+  setInactive(acct) {
+    console.log("inactive");
+  }
+
+  /**
+   * NEW NOTE
+   */
+  addNote(note) {
+    this.props.addNoteAccount(this.props.match.params.id, note);
+  }
 
   render() {
-    const { loading, account } = this.props.accountToView;
+    const { loading, account, sectionLoading } = this.props.accountToView;
     const { activeIndex } = this.state;
     return loading ? (
       <RctPageLoader />
@@ -83,11 +110,18 @@ class crm_view_account extends Component {
         <PageTitleBar
           title="View Account"
           createLink="/crm/new/account"
+          extraButtons={[
+            {
+              color: "danger",
+              label: "Set Inactive",
+              handleOnClick: () => this.setInactive(account)
+            }
+          ]}
           moreButton={
             <MoreButton>
               {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
               {{ handleOnClick: () => this.edit(account), label: "Edit" }}
-              {{ handleOnClick: this.delete.bind(this), label: "Delete" }}
+              {{ handleOnClick: () => this.delete(account), label: "Delete" }}
             </MoreButton>
           }
         />
@@ -132,6 +166,7 @@ class crm_view_account extends Component {
               activeIndex={activeIndex}
               handleChange={this.changeTabView}
               fullBlock
+              loading={sectionLoading}
             >
               <div>
                 <AccountDetails account={account} />
@@ -150,7 +185,10 @@ class crm_view_account extends Component {
                 <ClosedEvents events={account.closedEvents} />
               </div>
               <div>
-                <NotesLayout allNotes={account.notes} handleAddNote />
+                <NotesLayout
+                  allNotes={account.notes}
+                  handleAddNote={this.addNote}
+                />
               </div>
             </VerticalContainer>
           </div>
@@ -173,6 +211,12 @@ const mapStateToProps = ({ crmState }) => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { getSingleAccount, clearSingleAccount, startAccountEdit }
+    {
+      getSingleAccount,
+      clearSingleAccount,
+      startAccountEdit,
+      show,
+      addNoteAccount
+    }
   )(crm_view_account)
 );

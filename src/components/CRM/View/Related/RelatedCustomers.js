@@ -1,12 +1,58 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import ViewSectionLayout from "Components/CRM/View/Layout/ViewSectionLayout";
 import RelatedTable from "./RelatedTable";
 
 const columns = [
-  { label: "Customer Name", name: "name" },
-  { label: "Email", name: "amount" },
-  { label: "Mobile", name: "stage" },
-  { label: "Fax", name: "stage" }
+  {
+    name: "id",
+    options: {
+      display: "excluded",
+      filter: false,
+      sort: false,
+      download: false
+    }
+  },
+  {
+    label: "Customer Name",
+    name: "name",
+    options: {
+      customBodyRender: (value, tableMeta) => {
+        return (
+          <NavLink to={`/app/crm/customers/${tableMeta.rowData[0]}`}>
+            {value}
+          </NavLink>
+        );
+      }
+    }
+  },
+  {
+    label: "Email",
+    name: "baseContact",
+    options: {
+      customBodyRender: value => {
+        return value ? value.email : " ";
+      }
+    }
+  },
+  {
+    label: "Mobile",
+    name: "baseContact",
+    options: {
+      customBodyRender: value => {
+        return value ? value.mobile : " ";
+      }
+    }
+  },
+  {
+    label: "Office",
+    name: "baseContact",
+    options: {
+      customBodyRender: value => {
+        return value ? value.phone : " ";
+      }
+    }
+  }
 ];
 
 const RelatedCustomers = ({ customers }) => {

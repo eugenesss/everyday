@@ -14,7 +14,8 @@ import {
   GET_DEAL_SUMMARY,
   SUBMIT_DEAL,
   ON_SUBMIT_NEW_STAGE,
-  SUBMIT_EDIT_DEAL
+  SUBMIT_EDIT_DEAL,
+  ADD_NOTE_DEAL
 } from "Types";
 import {
   getDealSuccess,
@@ -25,12 +26,14 @@ import {
   submitDealSuccess,
   submitDealError,
   newStageSuccess,
-  newStageFailure
+  newStageFailure,
+  addNoteDealSuccess,
+  addNoteDealFailure
 } from "Actions";
 
 import api from "Api";
 
-import { dealList, deal, leadSummary } from "Components/DummyData";
+import { leadSummary } from "Components/DummyData";
 
 //=========================
 // REQUESTS
@@ -73,10 +76,15 @@ const postNewStageRequest = async payload => {
     dealID: dealID,
     stageID: stageID
   });
+  console.log(result);
   return result.data.data;
 };
 const patchDealRequest = async deal => {
   const result = await api.patch(`/deals/${deal.id}`, deal);
+  return result.data;
+};
+const addNoteDealRequest = async (id, note) => {
+  const result = await api.post(`/deals/${id}/notes`, note);
   return result.data;
 };
 
@@ -177,6 +185,15 @@ function* patchDealToDB() {
     yield put(submitDealError(error));
   }
 }
+function* addNoteDealToDB({ payload }) {
+  const { id, note } = payload;
+  try {
+    const data = yield call(addNoteDealRequest, id, note);
+    yield put(addNoteDealSuccess(data));
+  } catch (error) {
+    yield put(addNoteDealFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -202,6 +219,9 @@ export function* updateDealStageWatcher() {
 export function* patchDealWatcher() {
   yield takeEvery(SUBMIT_EDIT_DEAL, patchDealToDB);
 }
+export function* addNoteDealWatcher() {
+  yield takeEvery(ADD_NOTE_DEAL, addNoteDealToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -214,6 +234,7 @@ export default function* rootSaga() {
     fork(getDealSummaryWatcher),
     fork(postDealWatcher),
     fork(updateDealStageWatcher),
-    fork(patchDealWatcher)
+    fork(patchDealWatcher),
+    fork(addNoteDealWatcher)
   ]);
 }

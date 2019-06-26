@@ -15,7 +15,10 @@ import {
   SUBMIT_CUSTOMER_SUCCESS,
   SUBMIT_CUSTOMER_ERROR,
   START_CUSTOMER_EDIT,
-  SUBMIT_EDIT_CUSTOMER
+  SUBMIT_EDIT_CUSTOMER,
+  ADD_NOTE_CUSTOMER,
+  ADD_NOTE_CUSTOMER_SUCCESS,
+  ADD_NOTE_CUSTOMER_FAILURE
 } from "Types";
 
 const INIT_STATE = {
@@ -28,7 +31,8 @@ const INIT_STATE = {
   },
   customerToView: {
     loading: false,
-    customer: null
+    customer: null,
+    sectionLoading: false
   },
   customerForm: {
     loading: false,
@@ -188,6 +192,33 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         customerForm: { ...state.customerForm, loading: true }
+      };
+
+    /**
+     * Notes
+     */
+    case ADD_NOTE_CUSTOMER:
+      return {
+        ...state,
+        customerToView: { ...state.customerToView, sectionLoading: true }
+      };
+    case ADD_NOTE_CUSTOMER_SUCCESS:
+      var newNotes = Object.assign([], state.customerToView.customer.notes);
+      newNotes.unshift(action.payload);
+      return {
+        ...state,
+        customerToView: {
+          ...state.customerToView,
+          customer: { ...state.customerToView.customer, notes: newNotes },
+          sectionLoading: false
+        }
+      };
+    case ADD_NOTE_CUSTOMER_FAILURE:
+      NotificationManager.error("Error in adding Note");
+      console.log(action.payload);
+      return {
+        ...state,
+        customerToView: { ...state.customerToView, sectionLoading: false }
       };
 
     default:

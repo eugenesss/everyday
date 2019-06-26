@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
+import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
@@ -30,15 +30,20 @@ import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 
 // Actions
-import { getSingleDeal, clearSingleDeal, startDealEdit } from "Actions";
-// Edit Deal, Delete Deal, Update Stage/Amount, getDealStage,
-// addNoteToDeal(dealID), onNoteChange, clearNote
+import {
+  getSingleDeal,
+  clearSingleDeal,
+  startDealEdit,
+  addNoteDeal
+} from "Actions";
+//  Delete Deal, Update Stage/Amount,
 // Add Event Dialog
 
 class crm_view_deal extends Component {
   constructor(props) {
     super(props);
     this.state = { activeIndex: 0 };
+    this.addNote = this.addNote.bind(this);
   }
   componentWillMount() {
     var id = this.props.match.params.id;
@@ -57,15 +62,37 @@ class crm_view_deal extends Component {
     this.props.startDealEdit(deal);
     this.props.history.push("/app/crm/deals/edit");
   }
-  delete() {
-    console.log("delete");
+
+  /**
+   * DELETE RECORD
+   */
+  handleDelete(dealId) {
+    //this.props.deleteCustomer(dealId);
+    console.log(dealId);
+    setTimeout(() => {
+      this.props.history.push(`/app/crm/accounts`);
+    }, 500);
   }
+  delete(deal) {
+    this.props.show("alert_delete", {
+      name: deal.name,
+      action: () => this.handleDelete(deal.id)
+    });
+  }
+
   newEvent() {
     console.log("new events");
   }
 
+  /**
+   * NEW NOTE
+   */
+  addNote(note) {
+    this.props.addNoteDeal(this.props.match.params.id, note);
+  }
+
   render() {
-    const { loading, deal } = this.props.dealToView;
+    const { loading, deal, sectionLoading } = this.props.dealToView;
     const { activeIndex } = this.state;
     return (
       <React.Fragment>
@@ -87,7 +114,7 @@ class crm_view_deal extends Component {
                   }}
                   {{ handleOnClick: () => this.edit(deal), label: "Edit" }}
                   {{
-                    handleOnClick: this.delete.bind(this),
+                    handleOnClick: () => this.delete(deal),
                     label: "Delete"
                   }}
                 </MoreButton>
@@ -104,7 +131,7 @@ class crm_view_deal extends Component {
                     amount={deal.amount}
                   />
                 </div>
-                <div className="col-md-9 border-left">
+                <div className="col-md-9 border-left px-20 py-30">
                   <SelectDealStage deal={deal} />
                 </div>
               </div>
@@ -139,6 +166,7 @@ class crm_view_deal extends Component {
                   activeIndex={activeIndex}
                   handleChange={this.changeTabView}
                   fullBlock
+                  loading={sectionLoading}
                 >
                   <div>
                     <DealDetails deal={deal} />
@@ -152,42 +180,14 @@ class crm_view_deal extends Component {
                     <ClosedEvents events={deal.closedEvents} />
                   </div>
                   <div>
-                    <NotesLayout allNotes={deal.notes} handleAddNote />
+                    <NotesLayout
+                      allNotes={deal.notes}
+                      handleAddNote={this.addNote}
+                    />
                   </div>
                 </VerticalContainer>
               </div>
             </div>
-
-            {/* 
-            </RctCollapsibleCard>
-            <RctCollapsibleCard heading={"Update Deal Stage"} fullBlock>
-              <SelectDealStage deal={deal} />
-            </RctCollapsibleCard>
-            <TabsWrapper>
-              <div icon="zmdi-coffee text-success" label="DETAILS">
-                <DealDetails deal={deal} />
-                <DescriptionDetails desc={deal.description} />
-              </div>
-              <div icon="zmdi-book-image text-secondary" label="HISTORY">
-                <DealHistory history={deal.history} />
-              </div>
-              <div icon="zmdi-pizza text-warning" label="EVENTS">
-                <NewEventsButton handleOnClick={this.newEvent} />
-                <UpcomingEvents events={deal.upcomingEvents} />
-                <hr />
-                <ClosedEvents events={deal.closedEvents} />
-              </div>
-              <div icon="zmdi-assignment text-danger" label="NOTES">
-                <div className="row">
-                  <div className="col-md-4">
-                    <NewNote  />
-                  </div>
-                  <div className="col-md-8">
-                    <DisplayAllNotes notes={deal.notes} />
-                  </div>
-                </div>
-              </div>
-            </TabsWrapper> */}
           </React.Fragment>
         ) : (
           <PageErrorMessage
@@ -210,6 +210,6 @@ const mapStateToProps = ({ crmState }) => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { getSingleDeal, clearSingleDeal, startDealEdit }
+    { getSingleDeal, clearSingleDeal, startDealEdit, show, addNoteDeal }
   )(crm_view_deal)
 );

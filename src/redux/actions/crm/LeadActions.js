@@ -29,7 +29,10 @@ import {
   SUBMIT_EDIT_LEAD,
   DELETE_LEAD,
   DELETE_LEAD_SUCCESS,
-  DELETE_LEAD_FAILURE
+  DELETE_LEAD_FAILURE,
+  ADD_NOTE_LEAD,
+  ADD_NOTE_LEAD_SUCCESS,
+  ADD_NOTE_LEAD_FAILURE
 } from "Types";
 
 /**
@@ -196,5 +199,21 @@ export const deleteLeadSuccess = id => ({
 });
 export const deleteLeadFailure = error => ({
   type: DELETE_LEAD_FAILURE,
+  payload: error
+});
+
+/**
+ * Notes
+ */
+export const addNoteLead = (id, note) => ({
+  type: ADD_NOTE_LEAD,
+  payload: { id, note }
+});
+export const addNoteLeadSuccess = data => ({
+  type: ADD_NOTE_LEAD_SUCCESS,
+  payload: data
+});
+export const addNoteLeadFailure = error => ({
+  type: ADD_NOTE_LEAD_FAILURE,
   payload: error
 });

@@ -30,7 +30,10 @@ import {
   SUBMIT_EDIT_LEAD,
   DELETE_LEAD,
   DELETE_LEAD_SUCCESS,
-  DELETE_LEAD_FAILURE
+  DELETE_LEAD_FAILURE,
+  ADD_NOTE_LEAD,
+  ADD_NOTE_LEAD_SUCCESS,
+  ADD_NOTE_LEAD_FAILURE
 } from "Types";
 
 const INIT_STATE = {
@@ -47,7 +50,8 @@ const INIT_STATE = {
   },
   leadToView: {
     loading: false,
-    lead: null
+    lead: null,
+    sectionLoading: false
   },
   leadForm: {
     loading: false,
@@ -335,6 +339,33 @@ export default (state = INIT_STATE, action) => {
         ...state,
         leadToView: { ...state.leadToView, loading: false },
         leadList: { ...state.leadList, loading: false }
+      };
+
+    /**
+     * Notes
+     */
+    case ADD_NOTE_LEAD:
+      return {
+        ...state,
+        leadToView: { ...state.leadToView, sectionLoading: true }
+      };
+    case ADD_NOTE_LEAD_SUCCESS:
+      var newNotes = Object.assign([], state.leadToView.lead.notes);
+      newNotes.unshift(action.payload);
+      return {
+        ...state,
+        leadToView: {
+          ...state.leadToView,
+          lead: { ...state.leadToView.lead, notes: newNotes },
+          sectionLoading: false
+        }
+      };
+    case ADD_NOTE_LEAD_FAILURE:
+      NotificationManager.error("Error in adding Note");
+      console.log(action.payload);
+      return {
+        ...state,
+        leadToView: { ...state.leadToView, sectionLoading: false }
       };
 
     default:

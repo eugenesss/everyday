@@ -12,14 +12,17 @@ import {
   GET_ALL_ACCOUNT,
   GET_SINGLE_ACCOUNT,
   SUBMIT_ACCOUNT,
-  SUBMIT_EDIT_ACCOUNT
+  SUBMIT_EDIT_ACCOUNT,
+  ADD_NOTE_ACCOUNT
 } from "Types";
 import {
   getAccountFailure,
   getAccountSuccess,
   getSingleAccountSuccess,
   submitAccountSuccess,
-  submitAccountError
+  submitAccountError,
+  addNoteAccountSuccess,
+  addNoteAccountFailure
 } from "Actions";
 
 import api from "Api";
@@ -49,6 +52,10 @@ const postAccountRequest = async acct => {
 };
 const patchAccountRequest = async acct => {
   const result = await api.patch(`/accounts/${acct.id}`, acct);
+  return result.data;
+};
+const addNoteAccountRequest = async (id, note) => {
+  const result = await api.post(`/accounts/${id}/notes`, note);
   return result.data;
 };
 
@@ -124,6 +131,15 @@ function* patchAccountToDB() {
     yield put(submitAccountError(error));
   }
 }
+function* addNoteAccountToDB({ payload }) {
+  const { id, note } = payload;
+  try {
+    const data = yield call(addNoteAccountRequest, id, note);
+    yield put(addNoteAccountSuccess(data));
+  } catch (error) {
+    yield put(addNoteAccountFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -143,6 +159,9 @@ export function* postAccountWatcher() {
 export function* patchAccountWatcher() {
   yield takeEvery(SUBMIT_EDIT_ACCOUNT, patchAccountToDB);
 }
+export function* addNoteAccountWatcher() {
+  yield takeEvery(ADD_NOTE_ACCOUNT, addNoteAccountToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -153,6 +172,7 @@ export default function* rootSaga() {
     fork(getAllAccountWatcher),
     fork(getSingleAccountWatcher),
     fork(postAccountWatcher),
-    fork(patchAccountWatcher)
+    fork(patchAccountWatcher),
+    fork(addNoteAccountWatcher)
   ]);
 }

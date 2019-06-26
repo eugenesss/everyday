@@ -18,7 +18,7 @@ import ForgetPassword from "../routes/forgetpassword/forgetpassword";
 import NotFound from "./error_pages/Err404";
 
 import Auth from "../Auth/Auth";
-import DeleteDialog from "Components/Everyday/DeleteDialog";
+import AlertDelete from "Components/Everyday/Alert/AlertDelete";
 
 /**
  * Initial Path To Check Whether User Is Logged In Or Not
@@ -48,7 +48,7 @@ class App extends Component {
     return (
       <RctThemeProvider>
         <NotificationContainer />
-        <DeleteDialog />
+        <AlertDelete />
         <InitialPath
           path={`${match.url}app`}
           authUser={user}

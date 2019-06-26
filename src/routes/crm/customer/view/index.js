@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
@@ -29,9 +30,10 @@ import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 import {
   getSingleCustomer,
   clearSingleCustomer,
-  startCustomerEdit
+  startCustomerEdit,
+  addNoteCustomer
 } from "Actions";
-// addNoteToCustomer(custID), onNoteChange, clearNote
+
 // Add events dialog
 // Delete Customer, Transfer Customer
 
@@ -39,6 +41,8 @@ class crm_view_customer extends Component {
   constructor(props) {
     super(props);
     this.state = { activeIndex: 0 };
+    this.edit = this.edit.bind(this);
+    this.addNote = this.addNote.bind(this);
   }
   componentWillMount() {
     var id = this.props.match.params.id;
@@ -57,9 +61,24 @@ class crm_view_customer extends Component {
     this.props.startCustomerEdit(cust);
     this.props.history.push("/app/crm/customers/edit");
   }
-  delete() {
-    console.log("delete");
+
+  /**
+   * DELETE RECORD
+   */
+  handleDelete(custId) {
+    //this.props.deleteCustomer(custId);
+    console.log(custId);
+    setTimeout(() => {
+      this.props.history.push(`/app/crm/customers`);
+    }, 500);
   }
+  delete(cust) {
+    this.props.show("alert_delete", {
+      name: cust.name,
+      action: () => this.handleDelete(cust.id)
+    });
+  }
+
   newEvent() {
     console.log("new events");
   }
@@ -67,8 +86,15 @@ class crm_view_customer extends Component {
     console.log("inactive");
   }
 
+  /**
+   * NEW NOTE
+   */
+  addNote(note) {
+    this.props.addNoteCustomer(this.props.match.params.id, note);
+  }
+
   render() {
-    const { loading, customer } = this.props.customerToView;
+    const { loading, customer, sectionLoading } = this.props.customerToView;
     const { activeIndex } = this.state;
     return (
       <React.Fragment>
@@ -97,7 +123,7 @@ class crm_view_customer extends Component {
                   }}
                   {{ handleOnClick: () => this.edit(customer), label: "Edit" }}
                   {{
-                    handleOnClick: this.delete.bind(this),
+                    handleOnClick: () => this.delete(customer),
                     label: "Delete"
                   }}
                 </MoreButton>
@@ -144,6 +170,7 @@ class crm_view_customer extends Component {
                   activeIndex={activeIndex}
                   handleChange={this.changeTabView}
                   fullBlock
+                  loading={sectionLoading}
                 >
                   <div>
                     <CustomerDetails customer={customer} />
@@ -163,7 +190,10 @@ class crm_view_customer extends Component {
                     <ClosedEvents events={customer.closedEvents} />
                   </div>
                   <div>
-                    <NotesLayout allNotes={customer.notes} handleAddNote />
+                    <NotesLayout
+                      allNotes={customer.notes}
+                      handleAddNote={this.addNote}
+                    />
                   </div>
                 </VerticalContainer>
               </div>
@@ -189,6 +219,12 @@ const mapStateToProps = ({ crmState }) => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { getSingleCustomer, clearSingleCustomer, startCustomerEdit }
+    {
+      getSingleCustomer,
+      clearSingleCustomer,
+      startCustomerEdit,
+      show,
+      addNoteCustomer
+    }
   )(crm_view_customer)
 );

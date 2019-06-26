@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   DetailsLayout,
   SingleDetail
@@ -26,11 +27,26 @@ const DealDetails = ({ deal }) => {
       <SingleDetail title="Stage" value={deal.stage.name} />
       <SingleDetail title="Closing Date" value={getTheDate(deal.closingDate)} />
       <SingleDetail title="Source" value={deal.source && deal.source.name} />
-      <SingleDetail title="Account" value={deal.account.name} />
+      <SingleDetail
+        title="Account"
+        value={
+          deal.accountInfo && (
+            <Link to={`/app/crm/accounts/${deal.accountInfo.id}`}>
+              {deal.accountInfo.name}
+            </Link>
+          )
+        }
+      />
       <SingleDetail title="Type" value={deal.type && deal.type.name} />
       <SingleDetail
         title="Customer"
-        value={deal.customer && deal.customer.name}
+        value={
+          deal.customerInfo && (
+            <Link to={`/app/crm/customers/${deal.customerInfo.id}`}>
+              {deal.customerInfo.name}
+            </Link>
+          )
+        }
       />
       <SingleDetail title="" value="" />
       <SingleDetail

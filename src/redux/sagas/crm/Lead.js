@@ -15,7 +15,8 @@ import {
   SUBMIT_NEW_LEAD,
   CONVERT_LEAD,
   SUBMIT_EDIT_LEAD,
-  DELETE_LEAD
+  DELETE_LEAD,
+  ADD_NOTE_LEAD
 } from "Types";
 import {
   getLeadSuccess,
@@ -28,7 +29,9 @@ import {
   convertLeadSuccess,
   convertLeadFailure,
   deleteLeadSuccess,
-  deleteLeadFailure
+  deleteLeadFailure,
+  addNoteLeadSuccess,
+  addNoteLeadFailure
 } from "Actions";
 
 import api from "Api";
@@ -82,6 +85,10 @@ const editLeadRequest = async lead => {
 };
 const deleteLeadRequest = async id => {
   const result = await api.delete(`/leads/${id}`);
+  return result.data;
+};
+const addNoteLeadRequest = async (id, note) => {
+  const result = await api.post(`/leads/${id}/notes`, note);
   return result.data;
 };
 
@@ -196,6 +203,15 @@ function* deleteLeadFromDB({ payload }) {
     yield put(deleteLeadFailure(error));
   }
 }
+function* addLeadNoteToDB({ payload }) {
+  const { id, note } = payload;
+  try {
+    const data = yield call(addNoteLeadRequest, id, note);
+    yield put(addNoteLeadSuccess(data));
+  } catch (error) {
+    yield put(addNoteLeadFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -224,6 +240,9 @@ export function* editLeadWatcher() {
 export function* deleteLeadWatcher() {
   yield takeEvery(DELETE_LEAD, deleteLeadFromDB);
 }
+export function* addNoteLeadWatcher() {
+  yield takeEvery(ADD_NOTE_LEAD, addLeadNoteToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -237,6 +256,7 @@ export default function* rootSaga() {
     fork(postLeadWatcher),
     fork(convertLeadWatcher),
     fork(editLeadWatcher),
-    fork(deleteLeadWatcher)
+    fork(deleteLeadWatcher),
+    fork(addNoteLeadWatcher)
   ]);
 }

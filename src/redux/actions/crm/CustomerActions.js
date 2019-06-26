@@ -14,7 +14,10 @@ import {
   SUBMIT_CUSTOMER_SUCCESS,
   SUBMIT_CUSTOMER_ERROR,
   START_CUSTOMER_EDIT,
-  SUBMIT_EDIT_CUSTOMER
+  SUBMIT_EDIT_CUSTOMER,
+  ADD_NOTE_CUSTOMER,
+  ADD_NOTE_CUSTOMER_SUCCESS,
+  ADD_NOTE_CUSTOMER_FAILURE
 } from "Types";
 
 /**
@@ -108,4 +111,20 @@ export const startCustomerEdit = cust => ({
 });
 export const submitEditCustomer = () => ({
   type: SUBMIT_EDIT_CUSTOMER
+});
+
+/**
+ * Notes
+ */
+export const addNoteCustomer = (id, note) => ({
+  type: ADD_NOTE_CUSTOMER,
+  payload: { id, note }
+});
+export const addNoteCustomerSuccess = data => ({
+  type: ADD_NOTE_CUSTOMER_SUCCESS,
+  payload: data
+});
+export const addNoteCustomerFailure = error => ({
+  type: ADD_NOTE_CUSTOMER_FAILURE,
+  payload: error
 });

@@ -25,7 +25,10 @@ import {
   ON_SUBMIT_NEW_STAGE_SUCCESS,
   ON_SUBMIT_NEW_STAGE_FAILURE,
   START_DEAL_EDIT,
-  SUBMIT_EDIT_DEAL
+  SUBMIT_EDIT_DEAL,
+  ADD_NOTE_DEAL,
+  ADD_NOTE_DEAL_SUCCESS,
+  ADD_NOTE_DEAL_FAILURE
 } from "Types";
 
 /**
@@ -175,4 +178,20 @@ export const startDealEdit = Deal => ({
 });
 export const submitEditDeal = () => ({
   type: SUBMIT_EDIT_DEAL
+});
+
+/**
+ * Notes
+ */
+export const addNoteDeal = (id, note) => ({
+  type: ADD_NOTE_DEAL,
+  payload: { id, note }
+});
+export const addNoteDealSuccess = data => ({
+  type: ADD_NOTE_DEAL_SUCCESS,
+  payload: data
+});
+export const addNoteDealFailure = error => ({
+  type: ADD_NOTE_DEAL_FAILURE,
+  payload: error
 });

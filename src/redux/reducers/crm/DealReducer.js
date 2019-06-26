@@ -26,7 +26,10 @@ import {
   ON_SUBMIT_NEW_STAGE_SUCCESS,
   ON_SUBMIT_NEW_STAGE_FAILURE,
   START_DEAL_EDIT,
-  SUBMIT_EDIT_DEAL
+  SUBMIT_EDIT_DEAL,
+  ADD_NOTE_DEAL,
+  ADD_NOTE_DEAL_SUCCESS,
+  ADD_NOTE_DEAL_FAILURE
 } from "Types";
 
 const INIT_STATE = {
@@ -50,6 +53,7 @@ const INIT_STATE = {
   dealToView: {
     loading: false,
     deal: null,
+    sectionLoading: false,
     dealStageStepper: {
       activeStep: 0,
       completed: new Set(),
@@ -289,6 +293,33 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         dealForm: { ...state.dealForm, loading: true }
+      };
+
+    /**
+     * Notes
+     */
+    case ADD_NOTE_DEAL:
+      return {
+        ...state,
+        dealToView: { ...state.dealToView, sectionLoading: true }
+      };
+    case ADD_NOTE_DEAL_SUCCESS:
+      var newNotes = Object.assign([], state.dealToView.deal.notes);
+      newNotes.unshift(action.payload);
+      return {
+        ...state,
+        dealToView: {
+          ...state.dealToView,
+          deal: { ...state.dealToView.deal, notes: newNotes },
+          sectionLoading: false
+        }
+      };
+    case ADD_NOTE_DEAL_FAILURE:
+      NotificationManager.error("Error in adding Note");
+      console.log(action.payload);
+      return {
+        ...state,
+        dealToView: { ...state.dealToView, sectionLoading: false }
       };
 
     default:

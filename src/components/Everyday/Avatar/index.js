@@ -2,15 +2,22 @@ import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 
 const IconAvatar = ({ name, size, customClasses, props }) => {
-  var getInitials = name => {
-    var names = name.split(" "),
-      initials = names[0].substring(0, 1).toUpperCase();
-
-    if (names.length > 1) {
-      initials += names[names.length - 1].substring(0, 1).toUpperCase();
+  function getInitials(name) {
+    if (name) {
+      var array = name.split(" ");
+      switch (array.length) {
+        case 1:
+          return array[0].charAt(0).toUpperCase();
+          break;
+        default:
+          return (
+            array[0].charAt(0).toUpperCase() +
+            array[array.length - 1].charAt(0).toUpperCase()
+          );
+      }
     }
-    return initials;
-  };
+    return false;
+  }
 
   var getFontSize = () => {
     if (size == "40") return "12px";
