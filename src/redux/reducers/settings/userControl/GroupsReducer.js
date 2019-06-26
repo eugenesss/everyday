@@ -2,7 +2,7 @@
  * Users Reducers
  */
 import { NotificationManager } from "react-notifications";
-import { 
+import {
   GET_ALL_GROUPS,
   GET_ALL_GROUPS_SUCCESS,
 
@@ -18,11 +18,11 @@ import {
   DELETE_GROUP,
   DELETE_GROUP_SUCCESS,
   DELETE_GROUP_FAILURE,
-  
+
   GET_GROUP_FAILURE,
 
   CHANGE_SELECTED_GROUP,
- } from "Types";
+} from "Types";
 
 const INIT_STATE = {
   selectedGroup: null,
@@ -44,16 +44,24 @@ export default (state = INIT_STATE, action) => {
      * Get All Groups
      */
     case GET_ALL_GROUPS:
-      return { 
+      return {
         ...state,
         groupsLoading: true
       };
     case GET_ALL_GROUPS_SUCCESS:
+      const allusergroupsettings = action.payload.groups;
+      var allgroups = [];
+      allusergroupsettings.forEach(userSetting => {
+        var addgroups = userSetting.groups.filter(group => {
+          return -1 === allgroups.findIndex(grp => { return grp.id === group.id });
+        });
+        allgroups = allgroups.concat(addgroups);
+      });
+      console.log(allgroups);
       return {
         ...state,
         groupsLoading: false,
-        accessGroups: action.payload.groups,
-        accessGroupRoles: action.payload.groupRoles
+        accessGroups: allgroups
       }
 
     /**
@@ -88,7 +96,7 @@ export default (state = INIT_STATE, action) => {
         ...state,
         selectedGroup: {
           ...state.selectedGroup,
-          [action.payload.field] : action.payload.value
+          [action.payload.field]: action.payload.value
         }
       }
     case UPDATE_GROUP:
@@ -131,11 +139,11 @@ export default (state = INIT_STATE, action) => {
         ...state,
         groupsLoading: false
       }
-    
+
     /**
      * Get Group Failure
      */
-    case GET_GROUP_FAILURE: 
+    case GET_GROUP_FAILURE:
       NotificationManager.warning("Error in fetching Group Data");
       console.log(action.payload);
       return INIT_STATE;
@@ -144,15 +152,15 @@ export default (state = INIT_STATE, action) => {
      * State Changes
      */
     case CHANGE_SELECTED_GROUP:
-      var selectedGroupRoles = Object.assign([], state.accessGroupRoles).filter(groupRole => 
+      var selectedGroupRoles = Object.assign([], state.accessGroupRoles).filter(groupRole =>
         groupRole.accessGroupId == action.payload.id
       );
-      return { 
+      return {
         ...state,
         selectedGroup: action.payload,
         selectedGroupRoles: selectedGroupRoles
       };
-      
+
     default:
       return { ...state };
   }

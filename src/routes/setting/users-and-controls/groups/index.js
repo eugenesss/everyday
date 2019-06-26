@@ -8,10 +8,16 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import GroupsManager from "Components/Setting/UserControl/Groups/GroupsManager";
 import GroupsList from "Components/Setting/UserControl/Groups/GroupsList";
+import { getAllGroups } from "Actions"
 
 class GroupsLayout extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount() {
+
+    this.props.getAllGroups();
   }
 
   render() {
@@ -41,5 +47,5 @@ const mapStateToProps = ({ groupsState }) => {
 
 export default connect(
   mapStateToProps,
-  {}
+  { getAllGroups }
 )(GroupsLayout);
