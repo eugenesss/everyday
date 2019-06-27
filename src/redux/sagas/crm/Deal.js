@@ -15,6 +15,7 @@ import {
   SUBMIT_DEAL,
   ON_SUBMIT_NEW_STAGE,
   SUBMIT_EDIT_DEAL,
+  DELETE_DEAL,
   ADD_NOTE_DEAL
 } from "Types";
 import {
@@ -27,6 +28,8 @@ import {
   submitDealError,
   newStageSuccess,
   newStageFailure,
+  deleteDealSuccess,
+  deleteDealFailure,
   addNoteDealSuccess,
   addNoteDealFailure
 } from "Actions";
@@ -39,10 +42,6 @@ import { leadSummary } from "Components/DummyData";
 // REQUESTS
 //=========================
 const getAllDealRequest = async () => {
-  const result = await api.get("/deals");
-  return result.data;
-};
-const getMyDealRequest = async () => {
   const result = await api.get("/deals");
   return result.data;
 };
@@ -76,11 +75,14 @@ const postNewStageRequest = async payload => {
     dealID: dealID,
     stageID: stageID
   });
-  console.log(result);
   return result.data.data;
 };
 const patchDealRequest = async deal => {
   const result = await api.patch(`/deals/${deal.id}`, deal);
+  return result.data;
+};
+const deleteDealRequest = async id => {
+  const result = await api.delete(`/deals/${id}`);
   return result.data;
 };
 const addNoteDealRequest = async (id, note) => {
@@ -97,11 +99,6 @@ function* changeDealList({ payload }) {
     if (payload == "All Deals") {
       // All Deals
       data = yield call(getAllDealRequest);
-      yield delay(500);
-      yield put(getDealSuccess(data));
-    } else if (payload == "My Deals") {
-      // My Deals
-      data = yield call(getMyDealRequest);
       yield delay(500);
       yield put(getDealSuccess(data));
     } else if (payload == "Open Deals") {
@@ -185,6 +182,15 @@ function* patchDealToDB() {
     yield put(submitDealError(error));
   }
 }
+function* deleteDealFromDB({ payload }) {
+  try {
+    const deleteResult = yield call(deleteDealRequest, payload);
+    yield delay(500);
+    yield put(deleteDealSuccess(payload));
+  } catch (error) {
+    yield put(deleteDealFailure(error));
+  }
+}
 function* addNoteDealToDB({ payload }) {
   const { id, note } = payload;
   try {
@@ -219,6 +225,9 @@ export function* updateDealStageWatcher() {
 export function* patchDealWatcher() {
   yield takeEvery(SUBMIT_EDIT_DEAL, patchDealToDB);
 }
+export function* deleteDealWatcher() {
+  yield takeEvery(DELETE_DEAL, deleteDealFromDB);
+}
 export function* addNoteDealWatcher() {
   yield takeEvery(ADD_NOTE_DEAL, addNoteDealToDB);
 }
@@ -235,6 +244,7 @@ export default function* rootSaga() {
     fork(postDealWatcher),
     fork(updateDealStageWatcher),
     fork(patchDealWatcher),
+    fork(deleteDealWatcher),
     fork(addNoteDealWatcher)
   ]);
 }

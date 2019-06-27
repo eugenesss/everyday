@@ -39,7 +39,7 @@ import {
 const INIT_STATE = {
   leadList: {
     nowShowing: "All Leads",
-    options: ["All Leads", "My Leads", "Open Leads", "Hot Leads", "Cold Leads"],
+    options: ["All Leads", "Open Leads", "Hot Leads", "Cold Leads"],
     action: false,
     loading: false,
     tableData: []

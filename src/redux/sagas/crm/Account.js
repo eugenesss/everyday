@@ -37,11 +37,11 @@ const getAllAccountRequest = async () => {
   const result = await api.get("/accounts");
   return result.data;
 };
-const getMyAccountRequest = async () => {
+const getActiveAccountRequest = async () => {
   const result = await api.get("/accounts");
   return result.data;
 };
-const getOpenAccountRequest = async () => {
+const getInactiveAccountRequest = async () => {
   const result = await api.get("/accounts");
   return result.data;
 };
@@ -77,14 +77,14 @@ function* changeAccountList({ payload }) {
       data = yield call(getAllAccountRequest);
       yield delay(500);
       yield put(getAccountSuccess(data));
-    } else if (payload == "My Accounts") {
+    } else if (payload == "Active Accounts") {
       // My Accounts
-      data = yield call(getMyAccountRequest);
+      data = yield call(getActiveAccountRequest);
       yield delay(500);
       yield put(getAccountSuccess(data));
-    } else if (payload == "Open Accounts") {
+    } else if (payload == "Inactive Accounts") {
       // Open Accounts
-      data = yield call(getOpenAccountRequest);
+      data = yield call(getInactiveAccountRequest);
       yield delay(500);
       yield put(getAccountSuccess(data));
     } else {

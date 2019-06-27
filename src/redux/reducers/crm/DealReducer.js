@@ -27,6 +27,9 @@ import {
   ON_SUBMIT_NEW_STAGE_FAILURE,
   START_DEAL_EDIT,
   SUBMIT_EDIT_DEAL,
+  DELETE_DEAL,
+  DELETE_DEAL_SUCCESS,
+  DELETE_DEAL_FAILURE,
   ADD_NOTE_DEAL,
   ADD_NOTE_DEAL_SUCCESS,
   ADD_NOTE_DEAL_FAILURE
@@ -35,13 +38,7 @@ import {
 const INIT_STATE = {
   dealList: {
     nowShowing: "All Deals",
-    options: [
-      "All Deals",
-      "My Deals",
-      "Open Deals",
-      "Closed Deals",
-      "Won Deals"
-    ],
+    options: ["All Deals", "Open Deals", "Closed Deals", "Won Deals"],
     action: false,
     loading: false,
     tableData: []
@@ -293,6 +290,39 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         dealForm: { ...state.dealForm, loading: true }
+      };
+
+    /**
+     * Delete
+     */
+    case DELETE_DEAL:
+      return {
+        ...state,
+        dealToView: { ...state.dealToView, loading: true },
+        dealList: { ...state.dealList, loading: true }
+      };
+    case DELETE_DEAL_SUCCESS:
+      NotificationManager.success("Deal Deleted");
+      // remove from state
+      var afterDeleteData = Object.assign([], state.dealList.tableData).filter(
+        cust => cust.id != action.payload
+      );
+      return {
+        ...state,
+        dealToView: { ...state.dealToView, loading: false },
+        dealList: {
+          ...state.dealList,
+          loading: false,
+          tableData: afterDeleteData
+        }
+      };
+    case DELETE_DEAL_FAILURE:
+      NotificationManager.error("Error in Deleting Deal");
+      console.log(action.payload);
+      return {
+        ...state,
+        dealToView: { ...state.dealToView, loading: false },
+        dealList: { ...state.dealList, loading: false }
       };
 
     /**

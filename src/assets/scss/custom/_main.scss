@@ -23,24 +23,9 @@
   }
 }
 .rct-block {
-<<<<<<< HEAD
-	background-color: $block-bg;
-	// border-radius: $block-border-radius;
-	border-radius: 0;
-	box-shadow: $block-shadow;
-	border: $block-border;
-	transition: $block-transition;
-	margin-bottom: $block-margin-bottom;
-	position: relative;
-	.rct-block-content {
-		padding: $block-spacing;
-	}
-	&:hover {
-		box-shadow: $block-hover-shadow;
-	}
-=======
   background-color: $block-bg;
-  border-radius: $block-border-radius;
+  // border-radius: $block-border-radius;
+  border-radius: 0;
   box-shadow: $block-shadow;
   border: $block-border;
   transition: $block-transition;
@@ -52,7 +37,6 @@
   &:hover {
     box-shadow: $block-hover-shadow;
   }
->>>>>>> 88b98be98f85a1be3030de050bcf66c6b052bcd1
 }
 .rct-block-title {
   padding: $block-title-spacing;

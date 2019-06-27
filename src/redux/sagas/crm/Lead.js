@@ -45,10 +45,6 @@ const getAllLeadRequest = async () => {
   const result = await api.get("/leads");
   return result.data;
 };
-const getMyLeadRequest = async () => {
-  const result = await api.get("/leads");
-  return result.data;
-};
 const getOpenLeadRequest = async () => {
   const result = await api.get("/leads");
   return result.data;
@@ -101,11 +97,6 @@ function* changeLeadList({ payload }) {
     if (payload == "All Leads") {
       // All Leads
       data = yield call(getAllLeadRequest);
-      yield delay(500);
-      yield put(getLeadSuccess(data));
-    } else if (payload == "My Leads") {
-      // My Leads
-      data = yield call(getMyLeadRequest);
       yield delay(500);
       yield put(getLeadSuccess(data));
     } else if (payload == "Open Leads") {
@@ -196,7 +187,7 @@ function* editLeadToDB() {
 }
 function* deleteLeadFromDB({ payload }) {
   try {
-    const deleteResult = yield call(deleteLeadRequest, payload);
+    yield call(deleteLeadRequest, payload);
     yield delay(500);
     yield put(deleteLeadSuccess(payload));
   } catch (error) {

@@ -31,12 +31,13 @@ import {
   getSingleCustomer,
   clearSingleCustomer,
   startCustomerEdit,
+  deleteCustomer,
   addNoteCustomer,
   setCustomerActive
 } from "Actions";
 
 // Add events dialog
-// Delete Customer, Transfer Customer
+// Transfer Customer
 
 class crm_view_customer extends Component {
   constructor(props) {
@@ -67,8 +68,8 @@ class crm_view_customer extends Component {
    * DELETE RECORD
    */
   handleDelete(custId) {
-    //this.props.deleteCustomer(custId);
-    console.log(custId);
+    this.props.deleteCustomer(custId);
+    //console.log(custId);
     setTimeout(() => {
       this.props.history.push(`/app/crm/customers`);
     }, 500);
@@ -227,10 +228,11 @@ export default withRouter(
   connect(
     mapStateToProps,
     {
+      show,
       getSingleCustomer,
       clearSingleCustomer,
       startCustomerEdit,
-      show,
+      deleteCustomer,
       addNoteCustomer,
       setCustomerActive
     }

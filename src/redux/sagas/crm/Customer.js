@@ -13,6 +13,7 @@ import {
   GET_SINGLE_CUSTOMER,
   SUBMIT_CUSTOMER,
   SUBMIT_EDIT_CUSTOMER,
+  DELETE_CUSTOMER,
   ADD_NOTE_CUSTOMER,
   SET_CUSTOMER_ACTIVE
 } from "Types";
@@ -22,6 +23,8 @@ import {
   getSingleCustomerSuccess,
   submitCustomerSuccess,
   submitCustomerError,
+  deleteCustomerSuccess,
+  deleteCustomerFailure,
   addNoteCustomerSuccess,
   addNoteCustomerFailure,
   setCustomerActiveSuccess,
@@ -37,11 +40,11 @@ const getAllCustomerRequest = async () => {
   const result = await api.get("/customers");
   return result.data;
 };
-const getMyCustomerRequest = async () => {
+const getActiveCustomerRequest = async () => {
   const result = await api.get("/customers");
   return result.data;
 };
-const getOpenCustomerRequest = async () => {
+const getInactiveCustomerRequest = async () => {
   const result = await api.get("/customers");
   return result.data;
 };
@@ -55,6 +58,10 @@ const postCustomerRequest = async cust => {
 };
 const editCustomerRequest = async cust => {
   const result = await api.patch(`/customers/${cust.id}`, cust);
+  return result.data;
+};
+const deleteCustomerRequest = async id => {
+  const result = await api.delete(`/customers/${id}`);
   return result.data;
 };
 const addNoteCustomerRequest = async (id, note) => {
@@ -77,14 +84,14 @@ function* changeCustomerList({ payload }) {
       data = yield call(getAllCustomerRequest);
       yield delay(500);
       yield put(getCustomerSuccess(data));
-    } else if (payload == "My Customers") {
+    } else if (payload == "Active Customers") {
       // My Customers
-      data = yield call(getMyCustomerRequest);
+      data = yield call(getActiveCustomerRequest);
       yield delay(500);
       yield put(getCustomerSuccess(data));
-    } else if (payload == "Open Customers") {
+    } else if (payload == "Inactive Customers") {
       // Open Customers
-      data = yield call(getOpenCustomerRequest);
+      data = yield call(getInactiveCustomerRequest);
       yield delay(500);
       yield put(getCustomerSuccess(data));
     } else {
@@ -138,6 +145,15 @@ function* editCustomerToDB() {
     yield put(submitCustomerError(error));
   }
 }
+function* deleteCustomerFromDB({ payload }) {
+  try {
+    const deleteResult = yield call(deleteCustomerRequest, payload);
+    yield delay(500);
+    yield put(deleteCustomerSuccess(payload));
+  } catch (error) {
+    yield put(deleteCustomerFailure(error));
+  }
+}
 function* addNoteCustomerToDB({ payload }) {
   const { id, note } = payload;
   try {
@@ -176,6 +192,9 @@ export function* postCustomerWatcher() {
 export function* editCustomerWatcher() {
   yield takeEvery(SUBMIT_EDIT_CUSTOMER, editCustomerToDB);
 }
+export function* deleteCustomerWatcher() {
+  yield takeEvery(DELETE_CUSTOMER, deleteCustomerFromDB);
+}
 export function* addNoteCustomerWatcher() {
   yield takeEvery(ADD_NOTE_CUSTOMER, addNoteCustomerToDB);
 }
@@ -193,6 +212,7 @@ export default function* rootSaga() {
     fork(getSingleCustomerWatcher),
     fork(postCustomerWatcher),
     fork(editCustomerWatcher),
+    fork(deleteCustomerWatcher),
     fork(addNoteCustomerWatcher),
     fork(setCustomerActiveWatcher)
   ]);

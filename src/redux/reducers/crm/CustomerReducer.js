@@ -16,6 +16,9 @@ import {
   SUBMIT_CUSTOMER_ERROR,
   START_CUSTOMER_EDIT,
   SUBMIT_EDIT_CUSTOMER,
+  DELETE_CUSTOMER,
+  DELETE_CUSTOMER_SUCCESS,
+  DELETE_CUSTOMER_FAILURE,
   ADD_NOTE_CUSTOMER,
   ADD_NOTE_CUSTOMER_SUCCESS,
   ADD_NOTE_CUSTOMER_FAILURE,
@@ -27,7 +30,7 @@ import {
 const INIT_STATE = {
   customerList: {
     nowShowing: "All Customers",
-    options: ["All Customers", "My Customers", "Open Customers"],
+    options: ["All Customers", "Active Customers", "Inactive Customers"],
     action: false,
     loading: false,
     tableData: []
@@ -195,6 +198,40 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         customerForm: { ...state.customerForm, loading: true }
+      };
+
+    /**
+     * Delete
+     */
+    case DELETE_CUSTOMER:
+      return {
+        ...state,
+        customerToView: { ...state.customerToView, loading: true },
+        customerList: { ...state.customerList, loading: true }
+      };
+    case DELETE_CUSTOMER_SUCCESS:
+      NotificationManager.success("Customer Deleted");
+      // remove from state
+      var afterDeleteData = Object.assign(
+        [],
+        state.customerList.tableData
+      ).filter(cust => cust.id != action.payload);
+      return {
+        ...state,
+        customerToView: { ...state.customerToView, loading: false },
+        customerList: {
+          ...state.customerList,
+          loading: false,
+          tableData: afterDeleteData
+        }
+      };
+    case DELETE_CUSTOMER_FAILURE:
+      NotificationManager.error("Error in Deleting Customer");
+      console.log(action.payload);
+      return {
+        ...state,
+        customerToView: { ...state.customerToView, loading: false },
+        customerList: { ...state.customerList, loading: false }
       };
 
     /**

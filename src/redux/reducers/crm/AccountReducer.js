@@ -27,7 +27,7 @@ import {
 const INIT_STATE = {
   accountList: {
     nowShowing: "All Accounts",
-    options: ["All Accounts", "My Accounts", "Open Accounts"],
+    options: ["All Accounts", "Active Accounts", "Inactive Accounts"],
     action: false,
     loading: false,
     tableData: []

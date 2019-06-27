@@ -26,6 +26,9 @@ import {
   ON_SUBMIT_NEW_STAGE_FAILURE,
   START_DEAL_EDIT,
   SUBMIT_EDIT_DEAL,
+  DELETE_DEAL,
+  DELETE_DEAL_SUCCESS,
+  DELETE_DEAL_FAILURE,
   ADD_NOTE_DEAL,
   ADD_NOTE_DEAL_SUCCESS,
   ADD_NOTE_DEAL_FAILURE
@@ -178,6 +181,22 @@ export const startDealEdit = Deal => ({
 });
 export const submitEditDeal = () => ({
   type: SUBMIT_EDIT_DEAL
+});
+
+/**
+ * Delete
+ */
+export const deleteDeal = id => ({
+  type: DELETE_DEAL,
+  payload: id
+});
+export const deleteDealSuccess = id => ({
+  type: DELETE_DEAL_SUCCESS,
+  payload: id
+});
+export const deleteDealFailure = error => ({
+  type: DELETE_DEAL_FAILURE,
+  payload: error
 });
 
 /**

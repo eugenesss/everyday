@@ -15,13 +15,6 @@ import routerService from "../services/_routerService";
 import { getUserRights } from "Actions";
 
 class RctHorizontalApp extends Component {
-<<<<<<< HEAD
-
-  componentDidMount() {
-    console.log('-RctHorizontalApp-')
-  }
-  
-=======
   componentDidMount() {
     //var state = store.getState();
     //var access = state.authUser.access;
@@ -31,9 +24,7 @@ class RctHorizontalApp extends Component {
     }
   }
 
->>>>>>> 88b98be98f85a1be3030de050bcf66c6b052bcd1
   render() {
-    
     const { match, location } = this.props;
     if (location.pathname === "/") {
       return <Redirect to={"/app/homebase"} />;

@@ -6,15 +6,12 @@ import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILURE,
-
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FAILURE,
-
   SIGNUP_USER,
   SIGNUP_USER_SUCCESS,
   SIGNUP_USER_FAILURE,
-
   HANDLE_REGISTER_FORM,
   HANDLE_REGISTER_ERROR,
   LOGIN_USER_RESENT_EMAIL,
@@ -23,13 +20,9 @@ import {
   LOGIN_USER_RESET_PASSWORD,
   LOGIN_USER_RESET_PASSWORD_SUCCESS,
   LOGIN_USER_RESET_PASSWORD_FAILURE,
-<<<<<<< HEAD
-
-  HANDLE_RESET_SUCCESS
-=======
+  HANDLE_RESET_SUCCESS,
   USER_RIGHTS_SUCCESS,
   USER_RIGHTS_FAILURE
->>>>>>> 88b98be98f85a1be3030de050bcf66c6b052bcd1
 } from "Types";
 
 /**
@@ -66,7 +59,6 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-
     /**
      * Login User
      */
@@ -209,7 +201,7 @@ export default (state = INIT_STATE, action) => {
     case HANDLE_RESET_SUCCESS:
       return {
         ...state,
-        register :{
+        register: {
           form: {
             email: "",
             password: "",
@@ -232,9 +224,7 @@ export default (state = INIT_STATE, action) => {
           success: false
         }
       };
-  
 
-        
     /**
      * Handle Change
      */

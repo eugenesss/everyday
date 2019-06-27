@@ -34,9 +34,10 @@ import {
   getSingleDeal,
   clearSingleDeal,
   startDealEdit,
-  addNoteDeal
+  addNoteDeal,
+  deleteDeal
 } from "Actions";
-//  Delete Deal, Update Stage/Amount,
+//  Update Stage/Amount,
 // Add Event Dialog
 
 class crm_view_deal extends Component {
@@ -67,10 +68,10 @@ class crm_view_deal extends Component {
    * DELETE RECORD
    */
   handleDelete(dealId) {
-    //this.props.deleteCustomer(dealId);
-    console.log(dealId);
+    this.props.deleteDeal(dealId);
+    //console.log(dealId);
     setTimeout(() => {
-      this.props.history.push(`/app/crm/accounts`);
+      this.props.history.push(`/app/crm/deals`);
     }, 500);
   }
   delete(deal) {
@@ -212,6 +213,13 @@ const mapStateToProps = ({ crmState }) => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { getSingleDeal, clearSingleDeal, startDealEdit, show, addNoteDeal }
+    {
+      getSingleDeal,
+      clearSingleDeal,
+      startDealEdit,
+      show,
+      addNoteDeal,
+      deleteDeal
+    }
   )(crm_view_deal)
 );

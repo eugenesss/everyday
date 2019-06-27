@@ -15,6 +15,9 @@ import {
   SUBMIT_CUSTOMER_ERROR,
   START_CUSTOMER_EDIT,
   SUBMIT_EDIT_CUSTOMER,
+  DELETE_CUSTOMER,
+  DELETE_CUSTOMER_SUCCESS,
+  DELETE_CUSTOMER_FAILURE,
   ADD_NOTE_CUSTOMER,
   ADD_NOTE_CUSTOMER_SUCCESS,
   ADD_NOTE_CUSTOMER_FAILURE,
@@ -114,6 +117,22 @@ export const startCustomerEdit = cust => ({
 });
 export const submitEditCustomer = () => ({
   type: SUBMIT_EDIT_CUSTOMER
+});
+
+/**
+ * Delete
+ */
+export const deleteCustomer = id => ({
+  type: DELETE_CUSTOMER,
+  payload: id
+});
+export const deleteCustomerSuccess = id => ({
+  type: DELETE_CUSTOMER_SUCCESS,
+  payload: id
+});
+export const deleteCustomerFailure = error => ({
+  type: DELETE_CUSTOMER_FAILURE,
+  payload: error
 });
 
 /**
