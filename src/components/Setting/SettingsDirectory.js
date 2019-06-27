@@ -13,6 +13,8 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 
+import { accessControlHelper } from "../../helpers/accessControlHelper";
+
 const styles = theme => ({
   root: {
     width: "100%",
@@ -94,65 +96,66 @@ class SettingsDirectory extends Component {
                 </ListItem>
               </List>
             </Collapse>
-
-            <ListItem button onClick={() => this.handleClick("user")}>
-              <ListItemText
-                inset
-                primary={"User & Controls"}
-                className={classes.listItem}
-              />
-              {this.state.user ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={this.state.user} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItem
-                  button
-                  className={classes.nested}
-                  onClick={() =>
-                    this.handleClickItem(
-                      "/app/settings/users-and-controls/users"
-                    )
-                  }
-                  selected={
-                    location.pathname ===
-                    "/app/settings/users-and-controls/users"
-                  }
-                >
-                  <ListItemText inset secondary={"Users"} />
+            {accessControlHelper(["AccessSetting:viewall"], null) ?
+              <React.Fragment>
+                <ListItem button onClick={() => this.handleClick("user")}>
+                  <ListItemText
+                    inset
+                    primary={"User & Controls"}
+                    className={classes.listItem}
+                  />
+                  {this.state.user ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
-                <ListItem
-                  button
-                  className={classes.nested}
-                  onClick={() =>
-                    this.handleClickItem(
-                      "/app/settings/users-and-controls/roles-and-permissions"
-                    )
-                  }
-                  selected={
-                    location.pathname ===
-                    "/app/settings/users-and-controls/roles-and-permissions"
-                  }
-                >
-                  <ListItemText inset secondary={"Roles & Permissions"} />
-                </ListItem>
-                <ListItem
-                  button
-                  className={classes.nested}
-                  onClick={() =>
-                    this.handleClickItem(
-                      "/app/settings/users-and-controls/groups"
-                    )
-                  }
-                  selected={
-                    location.pathname ===
-                    "/app/settings/users-and-controls/groups"
-                  }
-                >
-                  <ListItemText inset secondary={"Groups"} />
-                </ListItem>
-              </List>
-            </Collapse>
-
+                <Collapse in={this.state.user} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    <ListItem
+                      button
+                      className={classes.nested}
+                      onClick={() =>
+                        this.handleClickItem(
+                          "/app/settings/users-and-controls/users"
+                        )
+                      }
+                      selected={
+                        location.pathname ===
+                        "/app/settings/users-and-controls/users"
+                      }
+                    >
+                      <ListItemText inset secondary={"Users"} />
+                    </ListItem>
+                    <ListItem
+                      button
+                      className={classes.nested}
+                      onClick={() =>
+                        this.handleClickItem(
+                          "/app/settings/users-and-controls/roles-and-permissions"
+                        )
+                      }
+                      selected={
+                        location.pathname ===
+                        "/app/settings/users-and-controls/roles-and-permissions"
+                      }
+                    >
+                      <ListItemText inset secondary={"Roles & Permissions"} />
+                    </ListItem>
+                    <ListItem
+                      button
+                      className={classes.nested}
+                      onClick={() =>
+                        this.handleClickItem(
+                          "/app/settings/users-and-controls/groups"
+                        )
+                      }
+                      selected={
+                        location.pathname ===
+                        "/app/settings/users-and-controls/groups"
+                      }
+                    >
+                      <ListItemText inset secondary={"Groups"} />
+                    </ListItem>
+                  </List>
+                </Collapse>
+              </React.Fragment> : ""}
             <ListItem button onClick={() => this.handleClick("crm")}>
               <ListItemText
                 inset

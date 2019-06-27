@@ -5,17 +5,14 @@ import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
 
 const NotesLayout = ({ handleAddNote, allNotes }) => {
   return (
-    <div className="row no-gutters">
-      <div
-        className="col-3"
-        style={{ backgroundColor: "#e6e6e6", paddingBottom: "480px" }}
-      >
+    <div className="row no-gutters" style={{ backgroundColor: "#e6e6e6" }}>
+      <div className="col-3 pb-40">
         <TabsHeader title="New Note" customClasses="bg-dark" />
         <div className="px-20 mt-60">
-          <NewNote handleAddNote />
+          <NewNote handleAddNote={handleAddNote} />
         </div>
       </div>
-      <div className="col-9">
+      <div className="col-9 bg-white">
         <DisplayAllNotes notes={allNotes} />
       </div>
     </div>

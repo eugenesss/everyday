@@ -1,10 +1,12 @@
 import React from "react";
 import Avatar from "Components/Everyday/Avatar";
 
-const ViewCardTitle = ({ name, subHeading }) => {
+const ViewCardTitle = ({ name, subHeading, noAvatar }) => {
   return (
-    <div className="text-center">
-      <Avatar name={name} size={80} customClasses="d-inline-block mb-10" />
+    <div className="text-center pb-10">
+      {!noAvatar && (
+        <Avatar name={name} size={80} customClasses="d-inline-block mb-10" />
+      )}
       <h1 className="mb-5">{name}</h1>
       {subHeading.length > 1 ? (
         subHeading.map((child, key) => {

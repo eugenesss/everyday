@@ -1,79 +1,73 @@
 import React from "react";
-import Moment from "moment";
+import { Link } from "react-router-dom";
+import {
+  DetailsLayout,
+  SingleDetail
+} from "Components/CRM/View/Layout/Details";
 import NumberFormat from "react-number-format";
-import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
-import SingleDetail from "Components/CRM/View/Details/SingleDetail";
-import DetailsTable from "Components/CRM/View/Details/DetailsTable";
 import NameTimeStamp from "Components/Everyday/NameTimeStamp";
+import { getTheDate } from "Helpers/helpers";
 
 const DealDetails = ({ deal }) => {
   return (
-    <div className="pb-10">
-      <TabsHeader title="Deal Details" />
-      <DetailsTable>
-        <tr>
-          <SingleDetail
-            title="Owner"
-            value={deal.userInfo && deal.userInfo.name}
+    <DetailsLayout title="Deal Details" bgColorClass="bg-danger">
+      <SingleDetail title="Owner" value={deal.userInfo && deal.userInfo.name} />
+      <SingleDetail
+        title="Amount"
+        value={
+          <NumberFormat
+            value={deal.amount}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"$"}
           />
-          <SingleDetail
-            title="Amount"
-            value={
-              <NumberFormat
-                value={deal.amount}
-                displayType={"text"}
-                thousandSeparator={true}
-                prefix={"$"}
-              />
-            }
+        }
+      />
+      <SingleDetail title="Name" value={deal.name} />
+      <SingleDetail title="Stage" value={deal.stage.name} />
+      <SingleDetail title="Closing Date" value={getTheDate(deal.closingDate)} />
+      <SingleDetail title="Source" value={deal.source && deal.source.name} />
+      <SingleDetail
+        title="Account"
+        value={
+          deal.accountInfo && (
+            <Link to={`/app/crm/accounts/${deal.accountInfo.id}`}>
+              {deal.accountInfo.name}
+            </Link>
+          )
+        }
+      />
+      <SingleDetail title="Type" value={deal.type && deal.type.name} />
+      <SingleDetail
+        title="Customer"
+        value={
+          deal.customerInfo && (
+            <Link to={`/app/crm/customers/${deal.customerInfo.id}`}>
+              {deal.customerInfo.name}
+            </Link>
+          )
+        }
+      />
+      <SingleDetail title="" value="" />
+      <SingleDetail
+        title="Modified By"
+        value={
+          <NameTimeStamp
+            name={deal.updaterInfo && deal.updaterInfo.name}
+            timeStamp={deal.updatedAt}
           />
-        </tr>
-        <tr>
-          <SingleDetail title="Name" value={deal.name} />
-          <SingleDetail title="Stage" value={deal.stage.name} />
-        </tr>
-        <tr>
-          <SingleDetail
-            title="Closing Date"
-            value={Moment(deal.closingDate).format("D MMMM YYYY")}
+        }
+      />
+      <SingleDetail
+        title="Created By"
+        value={
+          <NameTimeStamp
+            name={deal.creatorInfo && deal.creatorInfo.name}
+            timeStamp={deal.createdAt}
           />
-          <SingleDetail
-            title="Source"
-            value={deal.source && deal.source.name}
-          />
-        </tr>
-        <tr>
-          <SingleDetail title="Account" value={deal.account.name} />
-          <SingleDetail title="Type" value={deal.type && deal.type.name} />
-        </tr>
-        <tr>
-          <SingleDetail
-            title="Customer"
-            value={deal.customer && deal.customer.name}
-          />
-        </tr>
-        <tr>
-          <SingleDetail
-            title="Modified By"
-            value={
-              <NameTimeStamp
-                name={deal.updaterInfo && deal.updaterInfo.name}
-                timeStamp="08-05-2019 09:30 "
-              />
-            }
-          />
-          <SingleDetail
-            title="Created By"
-            value={
-              <NameTimeStamp
-                name={deal.creatorInfo && deal.creatorInfo.name}
-                timeStamp="08-05-2019 09:30 "
-              />
-            }
-          />
-        </tr>
-      </DetailsTable>
-    </div>
+        }
+      />
+    </DetailsLayout>
   );
 };
 

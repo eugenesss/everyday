@@ -14,7 +14,9 @@ import {
   GET_LEAD_SUMMARY,
   SUBMIT_NEW_LEAD,
   CONVERT_LEAD,
-  SUBMIT_EDIT_LEAD
+  SUBMIT_EDIT_LEAD,
+  DELETE_LEAD,
+  ADD_NOTE_LEAD
 } from "Types";
 import {
   getLeadSuccess,
@@ -25,7 +27,11 @@ import {
   newLeadSuccess,
   newLeadError,
   convertLeadSuccess,
-  convertLeadFailure
+  convertLeadFailure,
+  deleteLeadSuccess,
+  deleteLeadFailure,
+  addNoteLeadSuccess,
+  addNoteLeadFailure
 } from "Actions";
 
 import api from "Api";
@@ -71,11 +77,18 @@ const convertLeadRequest = async data => {
   const result = await api.post(`/leads/convert/${data.leadID}`, {
     dealDetails: data.dealDetails
   });
-  console.log(result);
   return result.data;
 };
 const editLeadRequest = async lead => {
   const result = await api.patch(`/leads/${lead.id}`, lead);
+  return result.data;
+};
+const deleteLeadRequest = async id => {
+  const result = await api.delete(`/leads/${id}`);
+  return result.data;
+};
+const addNoteLeadRequest = async (id, note) => {
+  const result = await api.post(`/leads/${id}/notes`, note);
   return result.data;
 };
 
@@ -181,6 +194,24 @@ function* editLeadToDB() {
     yield put(newLeadError(error));
   }
 }
+function* deleteLeadFromDB({ payload }) {
+  try {
+    const deleteResult = yield call(deleteLeadRequest, payload);
+    yield delay(500);
+    yield put(deleteLeadSuccess(payload));
+  } catch (error) {
+    yield put(deleteLeadFailure(error));
+  }
+}
+function* addLeadNoteToDB({ payload }) {
+  const { id, note } = payload;
+  try {
+    const data = yield call(addNoteLeadRequest, id, note);
+    yield put(addNoteLeadSuccess(data));
+  } catch (error) {
+    yield put(addNoteLeadFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -206,6 +237,12 @@ export function* convertLeadWatcher() {
 export function* editLeadWatcher() {
   yield takeEvery(SUBMIT_EDIT_LEAD, editLeadToDB);
 }
+export function* deleteLeadWatcher() {
+  yield takeEvery(DELETE_LEAD, deleteLeadFromDB);
+}
+export function* addNoteLeadWatcher() {
+  yield takeEvery(ADD_NOTE_LEAD, addLeadNoteToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -218,6 +255,8 @@ export default function* rootSaga() {
     fork(getLeadSummaryWatcher),
     fork(postLeadWatcher),
     fork(convertLeadWatcher),
-    fork(editLeadWatcher)
+    fork(editLeadWatcher),
+    fork(deleteLeadWatcher),
+    fork(addNoteLeadWatcher)
   ]);
 }

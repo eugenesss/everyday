@@ -1,55 +1,105 @@
 import React from "react";
-import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
+import { NavLink } from "react-router-dom";
+import ViewSectionLayout from "Components/CRM/View/Layout/ViewSectionLayout";
+import RelatedTable from "./RelatedTable";
+import AddNewButton from "Components/Everyday/AddNewButton";
+import NumberFormat from "react-number-format";
+import { getTheDate } from "Helpers/helpers";
 
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+const columns = [
+  {
+    name: "id",
+    options: {
+      display: "excluded",
+      filter: false,
+      sort: false,
+      download: false
+    }
+  },
+  {
+    label: "Deal Name",
+    name: "name",
+    options: {
+      customBodyRender: (value, tableMeta) => {
+        return (
+          <NavLink to={`/app/crm/deals/${tableMeta.rowData[0]}`}>
+            {value}
+          </NavLink>
+        );
+      }
+    }
+  },
+  {
+    label: "Amount",
+    name: "amount",
+    options: {
+      customBodyRender: value => {
+        return (
+          <NumberFormat
+            value={value}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"$"}
+          />
+        );
+      }
+    }
+  },
+  {
+    label: "Stage",
+    name: "stage",
+    options: {
+      customBodyRender: value => {
+        return value ? value.name : "";
+      }
+    }
+  },
+  {
+    label: "Chance",
+    name: "stage",
+    options: {
+      filter: false,
+      display: false,
+      customBodyRender: value => {
+        return value ? value.chance : "";
+      }
+    }
+  },
+  {
+    label: "Source",
+    name: "source",
+    options: {
+      customBodyRender: value => {
+        return value ? value.name : "";
+      }
+    }
+  },
+  {
+    label: "Type",
+    name: "type",
+    options: {
+      customBodyRender: value => {
+        return value ? value.name : "";
+      }
+    }
+  },
+  {
+    label: "Closing Date",
+    name: "closingDate",
+    options: {
+      customBodyRender: value => {
+        return getTheDate(value);
+      }
+    }
+  }
+];
 
-const RelatedDeals = ({ deals }) => {
+const RelatedDeals = ({ deals, handleNewDeal }) => {
   return (
-    <div>
-      <TabsHeader title="Related Deals" />
-      <div className="table-responsive">
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>Stage</TableCell>
-              <TableCell>Probability</TableCell>
-              <TableCell>Closing Date</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Owner</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {deals ? (
-              deals.map((deal, key) => {
-                return (
-                  <TableRow key={key} hover>
-                    <TableCell>{deal.name}</TableCell>
-                    <TableCell>{deal.amount}</TableCell>
-                    <TableCell>{deal.stage.name}</TableCell>
-                    <TableCell>{deal.stage.chance}</TableCell>
-                    <TableCell>{deal.closingDate}</TableCell>
-                    <TableCell>{deal.type && deal.type.name}</TableCell>
-                    <TableCell>{deal.owner.name}</TableCell>
-                  </TableRow>
-                );
-              })
-            ) : (
-              <TableRow>
-                <TableCell colSpan={8} className="text-center">
-                  <i>No Related Deals</i>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-    </div>
+    <ViewSectionLayout title="Related Deals" bgColorClass="bg-info">
+      <RelatedTable columns={columns} tableData={deals} />
+      <AddNewButton handleOnClick={handleNewDeal} label="+ New Deal" />
+    </ViewSectionLayout>
   );
 };
 

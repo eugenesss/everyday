@@ -13,12 +13,12 @@ import RctThemeProvider from "./RctThemeProvider";
 import HorizontalLayout from "./HorizontalLayout";
 import Login from "Routes/login";
 import Register from "Routes/register";
-import ForgetPassword from '../routes/forgetpassword/forgetpassword'
+import ForgetPassword from "../routes/forgetpassword/forgetpassword";
 
 import NotFound from "./error_pages/Err404";
 
-
-import Auth from '../Auth/Auth'
+import Auth from "../Auth/Auth";
+import AlertDelete from "Components/Everyday/Alert/AlertDelete";
 
 /**
  * Initial Path To Check Whether User Is Logged In Or Not
@@ -32,23 +32,32 @@ class App extends Component {
 
 
   render() {
-
     const { location, match, user } = this.props;
 
     // check if user is authenticated, if not redirect to login
     switch (new Auth().isAuthenticated()) {
       case false:
-          if (location.pathname === "/") { return <Redirect to={"/login"} /> }
+        if (location.pathname === "/") {
+          return <Redirect to={"/login"} />;
+        }
       case true:
+<<<<<<< HEAD
           if (location.pathname === "/") { return <Redirect to={"/app/homebase"} /> }
           new Auth().handleAuthentication()
       default:break
+=======
+        if (location.pathname === "/") {
+          return <Redirect to={"/app/homebase"} />;
+        }
+      default:
+        break;
+>>>>>>> 88b98be98f85a1be3030de050bcf66c6b052bcd1
     }
-
 
     return (
       <RctThemeProvider>
         <NotificationContainer />
+        <AlertDelete />
         <InitialPath
           path={`${match.url}app`}
           authUser={user}
@@ -64,7 +73,6 @@ class App extends Component {
           {/* <Route path={"/404"} exact component={NotFound} /> */}
           <Route component={NotFound} />
         </Switch>
-
       </RctThemeProvider>
     );
   }
@@ -78,8 +86,4 @@ const mapStateToProps = ({ authUser }) => {
 
 // export default App;
 
-export default connect(
-  mapStateToProps,
-)(App);
-
-
+export default connect(mapStateToProps)(App);

@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
-
 // Card
 import LeadCard from "Components/CRM/Lead/LeadCard";
 // Vertical Tabs
@@ -33,11 +32,12 @@ import {
   getSingleLead,
   clearSingleLead,
   handleConvertModal,
-  startLeadEdit
+  startLeadEdit,
+  deleteLead,
+  addNoteLead
 } from "Actions";
-// addNoteToLead(leadID) onNoteChange, clearNote
 // Add events dialog
-// Delete Lead, Edit Lead, Transfer Lead
+//  Transfer Lead
 
 class crm_view_lead extends Component {
   constructor(props) {
@@ -45,6 +45,7 @@ class crm_view_lead extends Component {
     this.state = { activeIndex: 0 };
     this.convert = this.convert.bind(this);
     this.edit = this.edit.bind(this);
+    this.addNote = this.addNote.bind(this);
   }
   componentWillMount() {
     var id = this.props.match.params.id;
@@ -60,22 +61,49 @@ class crm_view_lead extends Component {
   transfer() {
     console.log("transger");
   }
+  // edit
   edit(lead) {
     this.props.startLeadEdit(lead);
     this.props.history.push("/app/crm/leads/edit");
   }
-  delete() {
-    console.log("delete");
+
+  /**
+   * DELETE RECORD
+   */
+  handleDelete(leadId) {
+    this.props.deleteLead(leadId);
+    setTimeout(() => {
+      this.props.history.push(`/app/crm/leads`);
+    }, 500);
   }
+  delete(lead) {
+    this.props.show("alert_delete", {
+      name: lead.name,
+      action: () => this.handleDelete(lead.id)
+    });
+  }
+
+  // events
   newEvent() {
     console.log("new events");
   }
+
+  /**
+   * CONVERT LEAD
+   */
   convert() {
     this.props.handleConvertModal();
   }
 
+  /**
+   * NEW NOTE
+   */
+  addNote(note) {
+    this.props.addNoteLead(this.props.match.params.id, note);
+  }
+
   render() {
-    const { lead, loading } = this.props.leadToView;
+    const { lead, loading, sectionLoading } = this.props.leadToView;
     const { activeIndex } = this.state;
     return (
       <React.Fragment>
@@ -104,7 +132,7 @@ class crm_view_lead extends Component {
                     label: "Transfer Lead"
                   }}
                   {{
-                    handleOnClick: this.delete.bind(this),
+                    handleOnClick: () => this.delete(lead),
                     label: "Delete"
                   }}
                 </MoreButton>
@@ -112,7 +140,7 @@ class crm_view_lead extends Component {
             />
             <div className="row">
               <div className="col-md-3">
-                <RctCollapsibleCard fullBlock>
+                <div>
                   <LeadCard
                     name={lead.name}
                     companyName={lead.companyName}
@@ -124,49 +152,52 @@ class crm_view_lead extends Component {
                     email={lead.baseContact.email}
                     interest={lead.interest}
                   />
-                </RctCollapsibleCard>
-
-                <VerticalTab
-                  activeIndex={activeIndex}
-                  handleChange={this.changeTabView}
-                  selectedcolor="crm"
-                >
-                  {{
-                    icon: "zmdi-info-outline text-warning",
-                    label: "DETAILS"
-                  }}
-                  {{
-                    icon: "zmdi-calendar text-success",
-                    label: "EVENTS"
-                  }}
-                  {{
-                    icon: "zmdi-comment-text text-info",
-                    label: "NOTES"
-                  }}
-                </VerticalTab>
+                  <VerticalTab
+                    activeIndex={activeIndex}
+                    handleChange={this.changeTabView}
+                    selectedcolor="crm"
+                  >
+                    {{
+                      icon: "zmdi-info-outline",
+                      label: "DETAILS"
+                    }}
+                    {{
+                      icon: "zmdi-calendar",
+                      label: "EVENTS"
+                    }}
+                    {{
+                      icon: "zmdi-comment-text",
+                      label: "NOTES"
+                    }}
+                  </VerticalTab>
+                </div>
               </div>
               <div className="col-md-9">
                 <VerticalContainer
                   activeIndex={activeIndex}
                   handleChange={this.changeTabView}
                   fullBlock
+                  loading={sectionLoading}
                 >
                   <div>
                     <LeadDetails lead={lead} />
                     <AddressDetails
                       addressDetails={lead.baseContact._address}
                     />
-                    <DescriptionDetails desc={lead.description} />
+                    <DescriptionDetails desc={lead.baseContact.info} />
                   </div>
                   <div>
                     <UpcomingEvents
                       events={lead.upcomingEvents}
                       handleNewEvent={this.newEvent}
                     />
-                    <ClosedEvents events={lead.closedEvents} />
+                    <ClosedEvents events={lead.pastEvents} />
                   </div>
                   <div>
-                    <NotesLayout allNotes={lead.notes} handleAddNote />
+                    <NotesLayout
+                      allNotes={lead.notes}
+                      handleAddNote={this.addNote}
+                    />
                   </div>
                 </VerticalContainer>
               </div>
@@ -194,6 +225,14 @@ const mapStateToProps = ({ crmState }) => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { getSingleLead, clearSingleLead, handleConvertModal, startLeadEdit }
+    {
+      getSingleLead,
+      clearSingleLead,
+      handleConvertModal,
+      startLeadEdit,
+      show,
+      deleteLead,
+      addNoteLead
+    }
   )(crm_view_lead)
 );

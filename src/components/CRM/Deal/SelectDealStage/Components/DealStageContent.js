@@ -3,7 +3,7 @@ import { Card, CardTitle } from "reactstrap";
 
 const DealStageContent = ({ activeStep, dealStage }) => {
   return (
-    <Card body color="secondary" className="text-white">
+    <Card body color="primary" className="text-white align-self-center">
       <CardTitle className="p-10">
         <strong>Key Notes</strong>
       </CardTitle>

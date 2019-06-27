@@ -1,11 +1,12 @@
 import React from "react";
-import { EventsLayout, EventsTable } from "Components/CRM/View/Layout/Events";
+import ViewSectionLayout from "Components/CRM/View/Layout/ViewSectionLayout";
+import EventsTable from "./EventsTable";
 
 const ClosedEvents = ({ events }) => {
   return (
-    <EventsLayout title="Closed Events" bgColorClass="bg-dark">
+    <ViewSectionLayout title="Closed Events" bgColorClass="bg-dark">
       <EventsTable tableData={events} />
-    </EventsLayout>
+    </ViewSectionLayout>
   );
 };
 

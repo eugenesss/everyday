@@ -7,6 +7,8 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 
+import ActiveStatusBadge from "Components/Everyday/StatusBadge/ActiveStatusBadge";
+
 const CustomerList = ({ tableData, loading, title, action }) => {
   const columns = [
     {
@@ -26,7 +28,7 @@ const CustomerList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Account",
-      name: "account",
+      name: "accountInfo",
       options: {
         customBodyRender: value => {
           return (
@@ -52,6 +54,15 @@ const CustomerList = ({ tableData, loading, title, action }) => {
       options: {
         customBodyRender: value => {
           return value.mobile ? value.mobile : "";
+        }
+      }
+    },
+    {
+      label: "Status",
+      name: "isActive",
+      options: {
+        customBodyRender: value => {
+          return <ActiveStatusBadge isActive={value} />;
         }
       }
     },

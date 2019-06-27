@@ -1,54 +1,65 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import ViewSectionLayout from "Components/CRM/View/Layout/ViewSectionLayout";
+import RelatedTable from "./RelatedTable";
 
-import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+const columns = [
+  {
+    name: "id",
+    options: {
+      display: "excluded",
+      filter: false,
+      sort: false,
+      download: false
+    }
+  },
+  {
+    label: "Customer Name",
+    name: "name",
+    options: {
+      customBodyRender: (value, tableMeta) => {
+        return (
+          <NavLink to={`/app/crm/customers/${tableMeta.rowData[0]}`}>
+            {value}
+          </NavLink>
+        );
+      }
+    }
+  },
+  {
+    label: "Email",
+    name: "baseContact",
+    options: {
+      customBodyRender: value => {
+        return value ? value.email : " ";
+      }
+    }
+  },
+  {
+    label: "Mobile",
+    name: "baseContact",
+    options: {
+      customBodyRender: value => {
+        return value ? value.mobile : " ";
+      }
+    }
+  },
+  {
+    label: "Office",
+    name: "baseContact",
+    options: {
+      customBodyRender: value => {
+        return value ? value.phone : " ";
+      }
+    }
+  }
+];
 
 const RelatedCustomers = ({ customers }) => {
   return (
-    <div>
-      <TabsHeader title="Customers" />
-      <div className="table-responsive">
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Customer Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Mobile</TableCell>
-              <TableCell>Fax</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {customers ? (
-              customers.map((customer, key) => {
-                return (
-                  <TableRow key={key} hover>
-                    <TableCell>
-                      <Link to={`/app/crm/customers/${customer.id}`}>
-                        {customer.name}
-                      </Link>
-                    </TableCell>
-                    <TableCell>{customer.email}</TableCell>
-                    <TableCell>{customer.mobile}</TableCell>
-                    <TableCell>{customer.fax}</TableCell>
-                  </TableRow>
-                );
-              })
-            ) : (
-              <TableRow>
-                <TableCell colSpan={4} className="text-center">
-                  <i>No Related Customers</i>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-    </div>
+    <ViewSectionLayout title="Related Customer" bgColorClass="bg-secondary">
+      <RelatedTable columns={columns} tableData={customers} />
+    </ViewSectionLayout>
   );
 };
 

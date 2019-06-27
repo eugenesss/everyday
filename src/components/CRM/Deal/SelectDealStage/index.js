@@ -6,8 +6,6 @@ import Button from "@material-ui/core/Button";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import DealStageStepper from "./Components/DealStageStepper";
 
-// import { dealStage } from "Components/DummyData";
-
 //Page Req
 import DealStageContent from "./Components/DealStageContent";
 import UpdateDealStageForm from "Components/Form/Deal/UpdateDealStageForm";
@@ -64,10 +62,10 @@ class SelectDealStage extends Component {
           onClickStep={this.props.onClickStep}
         />
         <div>
-          <div className="row" style={{ padding: "2% 2%" }}>
+          <div className="row" style={{ padding: "0% 2%" }}>
             <div className="col-md-6">
               <div
-                className="p-20"
+                className="py-10 px-20"
                 style={{ maxWidth: "60%", marginLeft: "30px" }}
               >
                 <UpdateDealStageForm />
@@ -82,7 +80,7 @@ class SelectDealStage extends Component {
                 </Button>
               </div>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6 ">
               <DealStageContent activeStep={activeStep} dealStage={dealStage} />
             </div>
           </div>

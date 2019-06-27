@@ -190,9 +190,9 @@ class LeadForm extends Component {
           <TableRow>
             <FormBlock
               label="Office"
-              value={lead.baseContact.office}
+              value={lead.baseContact.phone}
               handleChange={this.props.handleChangeLead}
-              target="office"
+              target="phone"
               targetType="baseContact"
             />
             <FormBlock
@@ -206,10 +206,10 @@ class LeadForm extends Component {
 
           <TableRow>
             <FormBlock
-              label="Fax"
-              value={lead.baseContact.fax}
+              label="Website"
+              value={lead.baseContact.website}
               handleChange={this.props.handleChangeLead}
-              target="fax"
+              target="website"
               targetType="baseContact"
             />
           </TableRow>

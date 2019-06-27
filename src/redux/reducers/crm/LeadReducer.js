@@ -27,7 +27,13 @@ import {
   CONVERT_LEAD_FAILURE,
   UNMOUNT_CONVERT_LEAD,
   START_LEAD_EDIT,
-  SUBMIT_EDIT_LEAD
+  SUBMIT_EDIT_LEAD,
+  DELETE_LEAD,
+  DELETE_LEAD_SUCCESS,
+  DELETE_LEAD_FAILURE,
+  ADD_NOTE_LEAD,
+  ADD_NOTE_LEAD_SUCCESS,
+  ADD_NOTE_LEAD_FAILURE
 } from "Types";
 
 const INIT_STATE = {
@@ -44,7 +50,8 @@ const INIT_STATE = {
   },
   leadToView: {
     loading: false,
-    lead: null
+    lead: null,
+    sectionLoading: false
   },
   leadForm: {
     loading: false,
@@ -213,7 +220,7 @@ export default (state = INIT_STATE, action) => {
     case CLEAR_NEW_LEAD:
       return { ...state, leadForm: INIT_STATE.leadForm };
     case NEW_LEAD_SUCCESS:
-      NotificationManager.success("Lead Created");
+      NotificationManager.success("Success!");
       return { ...state, leadForm: INIT_STATE.leadForm };
     case NEW_LEAD_ERROR:
       NotificationManager.error("Error in POST API");
@@ -299,6 +306,66 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         leadForm: { ...state.leadForm, loading: true }
+      };
+
+    /**
+     * Delete
+     */
+    case DELETE_LEAD:
+      return {
+        ...state,
+        leadToView: { ...state.leadToView, loading: true },
+        leadList: { ...state.leadList, loading: true }
+      };
+    case DELETE_LEAD_SUCCESS:
+      NotificationManager.success("Lead Deleted!");
+      // remove from state
+      var afterDeleteData = Object.assign([], state.leadList.tableData).filter(
+        lead => lead.id != action.payload
+      );
+      return {
+        ...state,
+        leadToView: { ...state.leadToView, loading: false },
+        leadList: {
+          ...state.leadList,
+          loading: false,
+          tableData: afterDeleteData
+        }
+      };
+    case DELETE_LEAD_FAILURE:
+      NotificationManager.error("Error in Deleting Lead");
+      console.log(action.payload);
+      return {
+        ...state,
+        leadToView: { ...state.leadToView, loading: false },
+        leadList: { ...state.leadList, loading: false }
+      };
+
+    /**
+     * Notes
+     */
+    case ADD_NOTE_LEAD:
+      return {
+        ...state,
+        leadToView: { ...state.leadToView, sectionLoading: true }
+      };
+    case ADD_NOTE_LEAD_SUCCESS:
+      var newNotes = Object.assign([], state.leadToView.lead.notes);
+      newNotes.unshift(action.payload);
+      return {
+        ...state,
+        leadToView: {
+          ...state.leadToView,
+          lead: { ...state.leadToView.lead, notes: newNotes },
+          sectionLoading: false
+        }
+      };
+    case ADD_NOTE_LEAD_FAILURE:
+      NotificationManager.error("Error in adding Note");
+      console.log(action.payload);
+      return {
+        ...state,
+        leadToView: { ...state.leadToView, sectionLoading: false }
       };
 
     default:

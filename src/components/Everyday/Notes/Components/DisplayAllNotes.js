@@ -10,11 +10,11 @@ const DisplayAllNotes = ({ notes, onClickEdit, onClickDelete, action }) => {
       <Scrollbars
         className="rct-scroll"
         autoHeight
-        autoHeightMin={400}
-        autoHeightMax={500}
+        autoHeightMin={600}
+        autoHeightMax={800}
       >
         <List className="p-0">
-          {notes ? (
+          {notes && notes.length > 0 ? (
             notes.map((note, key) => {
               return (
                 <SingleNote

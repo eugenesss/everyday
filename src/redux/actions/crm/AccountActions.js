@@ -14,7 +14,13 @@ import {
   SUBMIT_ACCOUNT_SUCCESS,
   SUBMIT_ACCOUNT_ERROR,
   START_ACCOUNT_EDIT,
-  SUBMIT_EDIT_ACCOUNT
+  SUBMIT_EDIT_ACCOUNT,
+  ADD_NOTE_ACCOUNT,
+  ADD_NOTE_ACCOUNT_SUCCESS,
+  ADD_NOTE_ACCOUNT_FAILURE,
+  SET_ACCOUNT_ACTIVE,
+  SET_ACCOUNT_ACTIVE_SUCCESS,
+  SET_ACCOUNT_ACTIVE_FAILURE
 } from "Types";
 
 /**
@@ -108,4 +114,36 @@ export const startAccountEdit = Account => ({
 });
 export const submitEditAccount = () => ({
   type: SUBMIT_EDIT_ACCOUNT
+});
+
+/**
+ * Notes
+ */
+export const addNoteAccount = (id, note) => ({
+  type: ADD_NOTE_ACCOUNT,
+  payload: { id, note }
+});
+export const addNoteAccountSuccess = data => ({
+  type: ADD_NOTE_ACCOUNT_SUCCESS,
+  payload: data
+});
+export const addNoteAccountFailure = error => ({
+  type: ADD_NOTE_ACCOUNT_FAILURE,
+  payload: error
+});
+
+/**
+ * Set Active
+ */
+export const setAccountActive = (id, status) => ({
+  type: SET_ACCOUNT_ACTIVE,
+  payload: { id, status }
+});
+export const setAccountActiveSuccess = data => ({
+  type: SET_ACCOUNT_ACTIVE_SUCCESS,
+  payload: data
+});
+export const setAccountActiveFailure = error => ({
+  type: SET_ACCOUNT_ACTIVE_FAILURE,
+  payload: error
 });

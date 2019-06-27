@@ -26,7 +26,13 @@ import {
   CONVERT_LEAD_FAILURE,
   UNMOUNT_CONVERT_LEAD,
   START_LEAD_EDIT,
-  SUBMIT_EDIT_LEAD
+  SUBMIT_EDIT_LEAD,
+  DELETE_LEAD,
+  DELETE_LEAD_SUCCESS,
+  DELETE_LEAD_FAILURE,
+  ADD_NOTE_LEAD,
+  ADD_NOTE_LEAD_SUCCESS,
+  ADD_NOTE_LEAD_FAILURE
 } from "Types";
 
 /**
@@ -178,4 +184,36 @@ export const startLeadEdit = lead => ({
 });
 export const submitEditLead = () => ({
   type: SUBMIT_EDIT_LEAD
+});
+
+/**
+ * Delete
+ */
+export const deleteLead = id => ({
+  type: DELETE_LEAD,
+  payload: id
+});
+export const deleteLeadSuccess = id => ({
+  type: DELETE_LEAD_SUCCESS,
+  payload: id
+});
+export const deleteLeadFailure = error => ({
+  type: DELETE_LEAD_FAILURE,
+  payload: error
+});
+
+/**
+ * Notes
+ */
+export const addNoteLead = (id, note) => ({
+  type: ADD_NOTE_LEAD,
+  payload: { id, note }
+});
+export const addNoteLeadSuccess = data => ({
+  type: ADD_NOTE_LEAD_SUCCESS,
+  payload: data
+});
+export const addNoteLeadFailure = error => ({
+  type: ADD_NOTE_LEAD_FAILURE,
+  payload: error
 });

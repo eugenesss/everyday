@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 
 class NewNote extends Component {
   state = {
-    title: "",
+    name: "",
     content: ""
   };
 
@@ -15,7 +15,7 @@ class NewNote extends Component {
   };
 
   clearNoteForm() {
-    this.setState({ title: "", content: "" });
+    this.setState({ name: "", content: "" });
   }
 
   isDisabled(content) {
@@ -27,14 +27,15 @@ class NewNote extends Component {
   }
 
   render() {
+    const { handleAddNote } = this.props;
     return (
       <form noValidate autoComplete="off">
         <TextField
           fullWidth
-          id="noteTitle"
+          id="notename"
           label="Title"
-          value={this.state.title}
-          onChange={this.handleChange("title")}
+          value={this.state.name}
+          onChange={this.handleChange("name")}
           margin="dense"
           variant="outlined"
         />
@@ -60,6 +61,7 @@ class NewNote extends Component {
           </Button>
           <Button
             color="primary"
+            onClick={() => handleAddNote(this.state)}
             disabled={this.isDisabled(this.state.content)}
             variant="contained"
           >

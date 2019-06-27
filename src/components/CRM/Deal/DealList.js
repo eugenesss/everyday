@@ -9,7 +9,7 @@ import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import NumberFormat from "react-number-format";
-import Moment from "moment";
+import { getTheDate } from "Helpers/helpers";
 
 const DealList = ({ tableData, loading, title, action }) => {
   const columns = [
@@ -74,13 +74,13 @@ const DealList = ({ tableData, loading, title, action }) => {
       name: "closingDate",
       options: {
         customBodyRender: value => {
-          return Moment(value).format("D MMMM YYYY");
+          return getTheDate(value);
         }
       }
     },
     {
       label: "Account",
-      name: "account",
+      name: "accountInfo",
       options: {
         customBodyRender: value => {
           return value ? (
@@ -93,7 +93,7 @@ const DealList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Customer",
-      name: "customer",
+      name: "customerInfo",
       options: {
         customBodyRender: value => {
           return value ? (
