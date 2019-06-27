@@ -1,33 +1,10 @@
-import {
-  CHANGE_ACCOUNT_LIST_VIEW,
-  GET_ACCOUNT_FAILURE,
-  GET_ACCOUNT_SUCCESS,
-  GET_ALL_ACCOUNT,
-  GET_MY_ACCOUNT,
-  GET_OPEN_ACCOUNT,
-  GET_SINGLE_ACCOUNT,
-  GET_SINGLE_ACCOUNT_SUCCESS,
-  CLEAR_SINGLE_ACCOUNT,
-  HANDLE_CHANGE_ACCOUNT,
-  SUBMIT_ACCOUNT,
-  CLEAR_ACCOUNT_FORM,
-  SUBMIT_ACCOUNT_SUCCESS,
-  SUBMIT_ACCOUNT_ERROR,
-  START_ACCOUNT_EDIT,
-  SUBMIT_EDIT_ACCOUNT,
-  ADD_NOTE_ACCOUNT,
-  ADD_NOTE_ACCOUNT_SUCCESS,
-  ADD_NOTE_ACCOUNT_FAILURE,
-  SET_ACCOUNT_ACTIVE,
-  SET_ACCOUNT_ACTIVE_SUCCESS,
-  SET_ACCOUNT_ACTIVE_FAILURE
-} from "Types";
+import * as acctType from "Types/crm/AccountTypes";
 
 /**
  * Change List View
  */
 export const changeAccountView = newValue => ({
-  type: CHANGE_ACCOUNT_LIST_VIEW,
+  type: acctType.CHANGE_ACCOUNT_LIST_VIEW,
   payload: newValue
 });
 
@@ -35,7 +12,7 @@ export const changeAccountView = newValue => ({
  * Get ACCOUNT Failure
  */
 export const getAccountFailure = error => ({
-  type: GET_ACCOUNT_FAILURE,
+  type: acctType.GET_ACCOUNT_FAILURE,
   payload: error
 });
 
@@ -43,7 +20,7 @@ export const getAccountFailure = error => ({
  * Get ACCOUNT Success
  */
 export const getAccountSuccess = data => ({
-  type: GET_ACCOUNT_SUCCESS,
+  type: acctType.GET_ACCOUNT_SUCCESS,
   payload: data
 });
 
@@ -51,57 +28,57 @@ export const getAccountSuccess = data => ({
  * Get All ACCOUNTs
  */
 export const getAllAccount = () => ({
-  type: GET_ALL_ACCOUNT
+  type: acctType.GET_ALL_ACCOUNT
 });
 
 /**
  * Get My ACCOUNTs
  */
 export const getMyAccount = () => ({
-  type: GET_MY_ACCOUNT
+  type: acctType.GET_MY_ACCOUNT
 });
 
 /**
  * Get Open ACCOUNTs
  */
 export const getOpenAccount = () => ({
-  type: GET_OPEN_ACCOUNT
+  type: acctType.GET_OPEN_ACCOUNT
 });
 
 /**
  * Get Single Account
  */
 export const getSingleAccount = acctID => ({
-  type: GET_SINGLE_ACCOUNT,
+  type: acctType.GET_SINGLE_ACCOUNT,
   payload: acctID
 });
 export const getSingleAccountSuccess = acctData => ({
-  type: GET_SINGLE_ACCOUNT_SUCCESS,
+  type: acctType.GET_SINGLE_ACCOUNT_SUCCESS,
   payload: acctData
 });
 export const clearSingleAccount = () => ({
-  type: CLEAR_SINGLE_ACCOUNT
+  type: acctType.CLEAR_SINGLE_ACCOUNT
 });
 
 /**
  * New Account
  */
 export const handleChangeAccount = (field, value, type) => ({
-  type: HANDLE_CHANGE_ACCOUNT,
+  type: acctType.HANDLE_CHANGE_ACCOUNT,
   payload: { value, field, type }
 });
 export const submitAccount = () => ({
-  type: SUBMIT_ACCOUNT
+  type: acctType.SUBMIT_ACCOUNT
 });
 export const clearAccountForm = () => ({
-  type: CLEAR_ACCOUNT_FORM
+  type: acctType.CLEAR_ACCOUNT_FORM
 });
 export const submitAccountSuccess = data => ({
-  type: SUBMIT_ACCOUNT_SUCCESS,
+  type: acctType.SUBMIT_ACCOUNT_SUCCESS,
   payload: data
 });
 export const submitAccountError = error => ({
-  type: SUBMIT_ACCOUNT_ERROR,
+  type: acctType.SUBMIT_ACCOUNT_ERROR,
   payload: error
 });
 
@@ -109,26 +86,26 @@ export const submitAccountError = error => ({
  * Edit
  */
 export const startAccountEdit = Account => ({
-  type: START_ACCOUNT_EDIT,
+  type: acctType.START_ACCOUNT_EDIT,
   payload: Account
 });
 export const submitEditAccount = () => ({
-  type: SUBMIT_EDIT_ACCOUNT
+  type: acctType.SUBMIT_EDIT_ACCOUNT
 });
 
 /**
  * Notes
  */
 export const addNoteAccount = (id, note) => ({
-  type: ADD_NOTE_ACCOUNT,
+  type: acctType.ADD_NOTE_ACCOUNT,
   payload: { id, note }
 });
 export const addNoteAccountSuccess = data => ({
-  type: ADD_NOTE_ACCOUNT_SUCCESS,
+  type: acctType.ADD_NOTE_ACCOUNT_SUCCESS,
   payload: data
 });
 export const addNoteAccountFailure = error => ({
-  type: ADD_NOTE_ACCOUNT_FAILURE,
+  type: acctType.ADD_NOTE_ACCOUNT_FAILURE,
   payload: error
 });
 
@@ -136,14 +113,14 @@ export const addNoteAccountFailure = error => ({
  * Set Active
  */
 export const setAccountActive = (id, status) => ({
-  type: SET_ACCOUNT_ACTIVE,
+  type: acctType.SET_ACCOUNT_ACTIVE,
   payload: { id, status }
 });
 export const setAccountActiveSuccess = data => ({
-  type: SET_ACCOUNT_ACTIVE_SUCCESS,
+  type: acctType.SET_ACCOUNT_ACTIVE_SUCCESS,
   payload: data
 });
 export const setAccountActiveFailure = error => ({
-  type: SET_ACCOUNT_ACTIVE_FAILURE,
+  type: acctType.SET_ACCOUNT_ACTIVE_FAILURE,
   payload: error
 });

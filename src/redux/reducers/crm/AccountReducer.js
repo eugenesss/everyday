@@ -1,28 +1,5 @@
 import { NotificationManager } from "react-notifications";
-import {
-  CHANGE_ACCOUNT_LIST_VIEW,
-  GET_ACCOUNT_FAILURE,
-  GET_ACCOUNT_SUCCESS,
-  GET_ALL_ACCOUNT,
-  GET_MY_ACCOUNT,
-  GET_OPEN_ACCOUNT,
-  GET_SINGLE_ACCOUNT,
-  GET_SINGLE_ACCOUNT_SUCCESS,
-  CLEAR_SINGLE_ACCOUNT,
-  HANDLE_CHANGE_ACCOUNT,
-  SUBMIT_ACCOUNT,
-  CLEAR_ACCOUNT_FORM,
-  SUBMIT_ACCOUNT_SUCCESS,
-  SUBMIT_ACCOUNT_ERROR,
-  START_ACCOUNT_EDIT,
-  SUBMIT_EDIT_ACCOUNT,
-  ADD_NOTE_ACCOUNT,
-  ADD_NOTE_ACCOUNT_SUCCESS,
-  ADD_NOTE_ACCOUNT_FAILURE,
-  SET_ACCOUNT_ACTIVE,
-  SET_ACCOUNT_ACTIVE_SUCCESS,
-  SET_ACCOUNT_ACTIVE_FAILURE
-} from "Types";
+import * as acctType from "Types/crm/AccountTypes";
 
 const INIT_STATE = {
   accountList: {
@@ -45,7 +22,7 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    case CHANGE_ACCOUNT_LIST_VIEW:
+    case acctType.CHANGE_ACCOUNT_LIST_VIEW:
       if (action.payload == "My Accounts") {
         return {
           ...state,
@@ -71,7 +48,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Accounts
      */
-    case GET_ACCOUNT_FAILURE:
+    case acctType.GET_ACCOUNT_FAILURE:
       NotificationManager.warning("Error in fetching Account Data");
       console.log(action.payload);
       return {
@@ -79,14 +56,14 @@ export default (state = INIT_STATE, action) => {
         accountToView: INIT_STATE.accountToView,
         accountList: INIT_STATE.accountList
       };
-    case GET_ALL_ACCOUNT:
-    case GET_MY_ACCOUNT:
-    case GET_OPEN_ACCOUNT:
+    case acctType.GET_ALL_ACCOUNT:
+    case acctType.GET_MY_ACCOUNT:
+    case acctType.GET_OPEN_ACCOUNT:
       return {
         ...state,
         accountList: { ...state.accountList, loading: true }
       };
-    case GET_ACCOUNT_SUCCESS:
+    case acctType.GET_ACCOUNT_SUCCESS:
       return {
         ...state,
         accountList: {
@@ -99,12 +76,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Single Account
      */
-    case GET_SINGLE_ACCOUNT:
+    case acctType.GET_SINGLE_ACCOUNT:
       return {
         ...state,
         accountToView: { ...state.accountToView, loading: true }
       };
-    case GET_SINGLE_ACCOUNT_SUCCESS:
+    case acctType.GET_SINGLE_ACCOUNT_SUCCESS:
       return {
         ...state,
         accountToView: {
@@ -113,7 +90,7 @@ export default (state = INIT_STATE, action) => {
           account: action.payload
         }
       };
-    case CLEAR_SINGLE_ACCOUNT:
+    case acctType.CLEAR_SINGLE_ACCOUNT:
       return {
         ...state,
         accountToView: INIT_STATE.accountToView
@@ -122,7 +99,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * New Account
      */
-    case HANDLE_CHANGE_ACCOUNT:
+    case acctType.HANDLE_CHANGE_ACCOUNT:
       if (action.payload.type == "baseContact") {
         return {
           ...state,
@@ -166,16 +143,16 @@ export default (state = INIT_STATE, action) => {
           }
         };
       }
-    case SUBMIT_ACCOUNT:
+    case acctType.SUBMIT_ACCOUNT:
       return {
         ...state,
         accountForm: { ...state.accountForm, loading: true }
       };
-    case CLEAR_ACCOUNT_FORM:
+    case acctType.CLEAR_ACCOUNT_FORM:
       return { ...state, accountForm: INIT_STATE.accountForm };
-    case SUBMIT_ACCOUNT_SUCCESS:
+    case acctType.SUBMIT_ACCOUNT_SUCCESS:
       return { ...state, accountForm: INIT_STATE.accountForm };
-    case SUBMIT_ACCOUNT_ERROR:
+    case acctType.SUBMIT_ACCOUNT_ERROR:
       NotificationManager.error("Error in POST API");
       console.log(action.payload);
       return {
@@ -186,12 +163,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Edit
      */
-    case START_ACCOUNT_EDIT:
+    case acctType.START_ACCOUNT_EDIT:
       return {
         ...state,
         accountForm: { ...state.accountForm, account: action.payload }
       };
-    case SUBMIT_EDIT_ACCOUNT:
+    case acctType.SUBMIT_EDIT_ACCOUNT:
       return {
         ...state,
         accountForm: { ...state.accountForm, loading: true }
@@ -200,12 +177,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Notes
      */
-    case ADD_NOTE_ACCOUNT:
+    case acctType.ADD_NOTE_ACCOUNT:
       return {
         ...state,
         accountToView: { ...state.accountToView, sectionLoading: true }
       };
-    case ADD_NOTE_ACCOUNT_SUCCESS:
+    case acctType.ADD_NOTE_ACCOUNT_SUCCESS:
       var newNotes = Object.assign([], state.accountToView.account.notes);
       newNotes.unshift(action.payload);
       return {
@@ -216,7 +193,7 @@ export default (state = INIT_STATE, action) => {
           sectionLoading: false
         }
       };
-    case ADD_NOTE_ACCOUNT_FAILURE:
+    case acctType.ADD_NOTE_ACCOUNT_FAILURE:
       NotificationManager.error("Error in adding Note");
       console.log(action.payload);
       return {
@@ -227,13 +204,13 @@ export default (state = INIT_STATE, action) => {
     /**
      * Set Active
      */
-    case SET_ACCOUNT_ACTIVE:
+    case acctType.SET_ACCOUNT_ACTIVE:
       NotificationManager.success("Account Status Updated");
       return {
         ...state,
         accountToView: { ...state.accountToView, loading: true }
       };
-    case SET_ACCOUNT_ACTIVE_SUCCESS:
+    case acctType.SET_ACCOUNT_ACTIVE_SUCCESS:
       return {
         ...state,
         accountToView: {
@@ -242,7 +219,7 @@ export default (state = INIT_STATE, action) => {
           loading: false
         }
       };
-    case SET_ACCOUNT_ACTIVE_FAILURE:
+    case acctType.SET_ACCOUNT_ACTIVE_FAILURE:
       NotificationManager.error("Error");
       console.log(action.payload);
       return {

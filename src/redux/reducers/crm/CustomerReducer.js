@@ -1,31 +1,5 @@
 import { NotificationManager } from "react-notifications";
-import {
-  CHANGE_CUSTOMER_LIST_VIEW,
-  GET_CUSTOMER_FAILURE,
-  GET_CUSTOMER_SUCCESS,
-  GET_ALL_CUSTOMER,
-  GET_MY_CUSTOMER,
-  GET_OPEN_CUSTOMER,
-  GET_SINGLE_CUSTOMER,
-  GET_SINGLE_CUSTOMER_SUCCESS,
-  CLEAR_SINGLE_CUSTOMER,
-  HANDLE_CHANGE_CUSTOMER,
-  SUBMIT_CUSTOMER,
-  CLEAR_CUSTOMER_FORM,
-  SUBMIT_CUSTOMER_SUCCESS,
-  SUBMIT_CUSTOMER_ERROR,
-  START_CUSTOMER_EDIT,
-  SUBMIT_EDIT_CUSTOMER,
-  DELETE_CUSTOMER,
-  DELETE_CUSTOMER_SUCCESS,
-  DELETE_CUSTOMER_FAILURE,
-  ADD_NOTE_CUSTOMER,
-  ADD_NOTE_CUSTOMER_SUCCESS,
-  ADD_NOTE_CUSTOMER_FAILURE,
-  SET_CUSTOMER_ACTIVE,
-  SET_CUSTOMER_ACTIVE_SUCCESS,
-  SET_CUSTOMER_ACTIVE_FAILURE
-} from "Types";
+import * as custType from "Types/crm/CustomerTypes";
 
 const INIT_STATE = {
   customerList: {
@@ -48,7 +22,7 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    case CHANGE_CUSTOMER_LIST_VIEW:
+    case custType.CHANGE_CUSTOMER_LIST_VIEW:
       if (action.payload == "My Customers") {
         return {
           ...state,
@@ -74,7 +48,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Customers
      */
-    case GET_CUSTOMER_FAILURE:
+    case custType.GET_CUSTOMER_FAILURE:
       NotificationManager.warning("Error in fetching Customer Data");
       console.log(action.payload);
       return {
@@ -82,14 +56,14 @@ export default (state = INIT_STATE, action) => {
         customerToView: INIT_STATE.customerToView,
         customerList: INIT_STATE.customerList
       };
-    case GET_ALL_CUSTOMER:
-    case GET_MY_CUSTOMER:
-    case GET_OPEN_CUSTOMER:
+    case custType.GET_ALL_CUSTOMER:
+    case custType.GET_MY_CUSTOMER:
+    case custType.GET_OPEN_CUSTOMER:
       return {
         ...state,
         customerList: { ...state.customerList, loading: true }
       };
-    case GET_CUSTOMER_SUCCESS:
+    case custType.GET_CUSTOMER_SUCCESS:
       return {
         ...state,
         customerList: {
@@ -102,12 +76,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Single Customer
      */
-    case GET_SINGLE_CUSTOMER:
+    case custType.GET_SINGLE_CUSTOMER:
       return {
         ...state,
         customerToView: { ...state.customerToView, loading: true }
       };
-    case GET_SINGLE_CUSTOMER_SUCCESS:
+    case custType.GET_SINGLE_CUSTOMER_SUCCESS:
       return {
         ...state,
         customerToView: {
@@ -116,7 +90,7 @@ export default (state = INIT_STATE, action) => {
           customer: action.payload
         }
       };
-    case CLEAR_SINGLE_CUSTOMER:
+    case custType.CLEAR_SINGLE_CUSTOMER:
       return {
         ...state,
         customerToView: INIT_STATE.customerToView
@@ -125,7 +99,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * New Customer
      */
-    case HANDLE_CHANGE_CUSTOMER:
+    case custType.HANDLE_CHANGE_CUSTOMER:
       if (action.payload.type == "baseContact") {
         return {
           ...state,
@@ -169,16 +143,16 @@ export default (state = INIT_STATE, action) => {
           }
         };
       }
-    case SUBMIT_CUSTOMER:
+    case custType.SUBMIT_CUSTOMER:
       return {
         ...state,
         customerForm: { ...state.customerForm, loading: true }
       };
-    case CLEAR_CUSTOMER_FORM:
+    case custType.CLEAR_CUSTOMER_FORM:
       return { ...state, customerForm: INIT_STATE.customerForm };
-    case SUBMIT_CUSTOMER_SUCCESS:
+    case custType.SUBMIT_CUSTOMER_SUCCESS:
       return { ...state, customerForm: INIT_STATE.customerForm };
-    case SUBMIT_CUSTOMER_ERROR:
+    case custType.SUBMIT_CUSTOMER_ERROR:
       NotificationManager.error("Error in POST API");
       console.log(action.payload);
       return {
@@ -189,12 +163,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Edit
      */
-    case START_CUSTOMER_EDIT:
+    case custType.START_CUSTOMER_EDIT:
       return {
         ...state,
         customerForm: { ...state.customerForm, customer: action.payload }
       };
-    case SUBMIT_EDIT_CUSTOMER:
+    case custType.SUBMIT_EDIT_CUSTOMER:
       return {
         ...state,
         customerForm: { ...state.customerForm, loading: true }
@@ -203,13 +177,13 @@ export default (state = INIT_STATE, action) => {
     /**
      * Delete
      */
-    case DELETE_CUSTOMER:
+    case custType.DELETE_CUSTOMER:
       return {
         ...state,
         customerToView: { ...state.customerToView, loading: true },
         customerList: { ...state.customerList, loading: true }
       };
-    case DELETE_CUSTOMER_SUCCESS:
+    case custType.DELETE_CUSTOMER_SUCCESS:
       NotificationManager.success("Customer Deleted");
       // remove from state
       var afterDeleteData = Object.assign(
@@ -225,7 +199,7 @@ export default (state = INIT_STATE, action) => {
           tableData: afterDeleteData
         }
       };
-    case DELETE_CUSTOMER_FAILURE:
+    case custType.DELETE_CUSTOMER_FAILURE:
       NotificationManager.error("Error in Deleting Customer");
       console.log(action.payload);
       return {
@@ -237,12 +211,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Notes
      */
-    case ADD_NOTE_CUSTOMER:
+    case custType.ADD_NOTE_CUSTOMER:
       return {
         ...state,
         customerToView: { ...state.customerToView, sectionLoading: true }
       };
-    case ADD_NOTE_CUSTOMER_SUCCESS:
+    case custType.ADD_NOTE_CUSTOMER_SUCCESS:
       var newNotes = Object.assign([], state.customerToView.customer.notes);
       newNotes.unshift(action.payload);
       return {
@@ -253,7 +227,7 @@ export default (state = INIT_STATE, action) => {
           sectionLoading: false
         }
       };
-    case ADD_NOTE_CUSTOMER_FAILURE:
+    case custType.ADD_NOTE_CUSTOMER_FAILURE:
       NotificationManager.error("Error in adding Note");
       console.log(action.payload);
       return {
@@ -264,13 +238,13 @@ export default (state = INIT_STATE, action) => {
     /**
      * Set Active
      */
-    case SET_CUSTOMER_ACTIVE:
+    case custType.SET_CUSTOMER_ACTIVE:
       NotificationManager.success("Customer Status Updated");
       return {
         ...state,
         customerToView: { ...state.customerToView, loading: true }
       };
-    case SET_CUSTOMER_ACTIVE_SUCCESS:
+    case custType.SET_CUSTOMER_ACTIVE_SUCCESS:
       return {
         ...state,
         customerToView: {
@@ -279,7 +253,7 @@ export default (state = INIT_STATE, action) => {
           loading: false
         }
       };
-    case SET_CUSTOMER_ACTIVE_FAILURE:
+    case custType.SET_CUSTOMER_ACTIVE_FAILURE:
       NotificationManager.error("Error");
       console.log(action.payload);
       return {

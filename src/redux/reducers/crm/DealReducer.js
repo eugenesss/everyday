@@ -1,39 +1,5 @@
 import { NotificationManager } from "react-notifications";
-import {
-  CHANGE_DEAL_LIST_VIEW,
-  GET_DEAL_FAILURE,
-  GET_DEAL_SUCCESS,
-  GET_ALL_DEAL,
-  GET_MY_DEAL,
-  GET_OPEN_DEAL,
-  GET_CLOSED_DEAL,
-  GET_WON_DEAL,
-  GET_SINGLE_DEAL,
-  GET_SINGLE_DEAL_SUCCESS,
-  CLEAR_SINGLE_DEAL,
-  GET_DEAL_SUMMARY,
-  GET_DEAL_SUMMARY_SUCCESS,
-  GET_DEAL_SUMMARY_FAILURE,
-  HANDLE_CHANGE_DEAL,
-  SUBMIT_DEAL,
-  CLEAR_DEAL_FORM,
-  SUBMIT_DEAL_SUCCESS,
-  SUBMIT_DEAL_ERROR,
-  ON_CLICK_STEP,
-  SET_CURRENT_STEP,
-  ON_CHANGE_STEP_STATE,
-  ON_SUBMIT_NEW_STAGE,
-  ON_SUBMIT_NEW_STAGE_SUCCESS,
-  ON_SUBMIT_NEW_STAGE_FAILURE,
-  START_DEAL_EDIT,
-  SUBMIT_EDIT_DEAL,
-  DELETE_DEAL,
-  DELETE_DEAL_SUCCESS,
-  DELETE_DEAL_FAILURE,
-  ADD_NOTE_DEAL,
-  ADD_NOTE_DEAL_SUCCESS,
-  ADD_NOTE_DEAL_FAILURE
-} from "Types";
+import * as dealType from "Types/crm/DealTypes";
 
 const INIT_STATE = {
   dealList: {
@@ -62,7 +28,7 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    case CHANGE_DEAL_LIST_VIEW:
+    case dealType.CHANGE_DEAL_LIST_VIEW:
       if (action.payload == "My Deals") {
         return {
           ...state,
@@ -88,7 +54,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Deal Summary
      */
-    case GET_DEAL_SUMMARY:
+    case dealType.GET_DEAL_SUMMARY:
       return {
         ...state,
         dealSummary: {
@@ -96,7 +62,7 @@ export default (state = INIT_STATE, action) => {
           loading: true
         }
       };
-    case GET_DEAL_SUMMARY_SUCCESS:
+    case dealType.GET_DEAL_SUMMARY_SUCCESS:
       return {
         ...state,
         dealSummary: {
@@ -105,7 +71,7 @@ export default (state = INIT_STATE, action) => {
           loading: false
         }
       };
-    case GET_DEAL_SUMMARY_FAILURE:
+    case dealType.GET_DEAL_SUMMARY_FAILURE:
       NotificationManager.warning("Error in fetching Deal Summary");
       console.log(action.payload);
       return { ...state, dealSummary: INIT_STATE.dealSummary };
@@ -113,7 +79,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Deals
      */
-    case GET_DEAL_FAILURE:
+    case dealType.GET_DEAL_FAILURE:
       NotificationManager.warning("Error in fetching Deal Data");
       console.log(action.payload);
       return {
@@ -121,16 +87,16 @@ export default (state = INIT_STATE, action) => {
         dealToView: INIT_STATE.dealToView,
         dealList: INIT_STATE.dealList
       };
-    case GET_ALL_DEAL:
-    case GET_MY_DEAL:
-    case GET_OPEN_DEAL:
-    case GET_CLOSED_DEAL:
-    case GET_WON_DEAL:
+    case dealType.GET_ALL_DEAL:
+    case dealType.GET_MY_DEAL:
+    case dealType.GET_OPEN_DEAL:
+    case dealType.GET_CLOSED_DEAL:
+    case dealType.GET_WON_DEAL:
       return {
         ...state,
         dealList: { ...state.dealList, loading: true }
       };
-    case GET_DEAL_SUCCESS:
+    case dealType.GET_DEAL_SUCCESS:
       return {
         ...state,
         dealList: {
@@ -143,12 +109,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Single Deal
      */
-    case GET_SINGLE_DEAL:
+    case dealType.GET_SINGLE_DEAL:
       return {
         ...state,
         dealToView: { ...state.dealToView, loading: true }
       };
-    case GET_SINGLE_DEAL_SUCCESS:
+    case dealType.GET_SINGLE_DEAL_SUCCESS:
       return {
         ...state,
         dealToView: {
@@ -157,7 +123,7 @@ export default (state = INIT_STATE, action) => {
           deal: action.payload
         }
       };
-    case CLEAR_SINGLE_DEAL:
+    case dealType.CLEAR_SINGLE_DEAL:
       return {
         ...state,
         dealToView: INIT_STATE.dealToView
@@ -166,7 +132,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Handle Deal Stage
      */
-    case ON_CLICK_STEP:
+    case dealType.ON_CLICK_STEP:
       return {
         ...state,
         dealToView: {
@@ -177,7 +143,7 @@ export default (state = INIT_STATE, action) => {
           }
         }
       };
-    case SET_CURRENT_STEP:
+    case dealType.SET_CURRENT_STEP:
       const completed = new Set();
       for (let i = 0; i <= action.payload; i++) {
         completed.add(i);
@@ -193,7 +159,7 @@ export default (state = INIT_STATE, action) => {
           }
         }
       };
-    case ON_CHANGE_STEP_STATE:
+    case dealType.ON_CHANGE_STEP_STATE:
       const activeStep = state.dealToView.dealStageStepper.activeStep;
       const completedSet = new Set();
       for (let i = 0; i <= activeStep; i++) {
@@ -210,7 +176,7 @@ export default (state = INIT_STATE, action) => {
           }
         }
       };
-    case ON_SUBMIT_NEW_STAGE:
+    case dealType.ON_SUBMIT_NEW_STAGE:
       return {
         ...state,
         dealToView: {
@@ -221,7 +187,7 @@ export default (state = INIT_STATE, action) => {
           }
         }
       };
-    case ON_SUBMIT_NEW_STAGE_SUCCESS:
+    case dealType.ON_SUBMIT_NEW_STAGE_SUCCESS:
       return {
         ...state,
         dealToView: {
@@ -233,7 +199,7 @@ export default (state = INIT_STATE, action) => {
           }
         }
       };
-    case ON_SUBMIT_NEW_STAGE_FAILURE:
+    case dealType.ON_SUBMIT_NEW_STAGE_FAILURE:
       NotificationManager.error("Error in POST API");
       console.log(action.payload);
       return {
@@ -250,7 +216,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * New Deal
      */
-    case HANDLE_CHANGE_DEAL:
+    case dealType.HANDLE_CHANGE_DEAL:
       return {
         ...state,
         dealForm: {
@@ -261,16 +227,16 @@ export default (state = INIT_STATE, action) => {
           }
         }
       };
-    case SUBMIT_DEAL:
+    case dealType.SUBMIT_DEAL:
       return {
         ...state,
         dealForm: { ...state.dealForm, loading: true }
       };
-    case CLEAR_DEAL_FORM:
+    case dealType.CLEAR_DEAL_FORM:
       return { ...state, dealForm: INIT_STATE.dealForm };
-    case SUBMIT_DEAL_SUCCESS:
+    case dealType.SUBMIT_DEAL_SUCCESS:
       return { ...state, dealForm: INIT_STATE.dealForm };
-    case SUBMIT_DEAL_ERROR:
+    case dealType.SUBMIT_DEAL_ERROR:
       NotificationManager.error("Error in POST API");
       console.log(action.payload);
       return {
@@ -281,12 +247,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Edit
      */
-    case START_DEAL_EDIT:
+    case dealType.START_DEAL_EDIT:
       return {
         ...state,
         dealForm: { ...state.dealForm, deal: action.payload }
       };
-    case SUBMIT_EDIT_DEAL:
+    case dealType.SUBMIT_EDIT_DEAL:
       return {
         ...state,
         dealForm: { ...state.dealForm, loading: true }
@@ -295,13 +261,13 @@ export default (state = INIT_STATE, action) => {
     /**
      * Delete
      */
-    case DELETE_DEAL:
+    case dealType.DELETE_DEAL:
       return {
         ...state,
         dealToView: { ...state.dealToView, loading: true },
         dealList: { ...state.dealList, loading: true }
       };
-    case DELETE_DEAL_SUCCESS:
+    case dealType.DELETE_DEAL_SUCCESS:
       NotificationManager.success("Deal Deleted");
       // remove from state
       var afterDeleteData = Object.assign([], state.dealList.tableData).filter(
@@ -316,7 +282,7 @@ export default (state = INIT_STATE, action) => {
           tableData: afterDeleteData
         }
       };
-    case DELETE_DEAL_FAILURE:
+    case dealType.DELETE_DEAL_FAILURE:
       NotificationManager.error("Error in Deleting Deal");
       console.log(action.payload);
       return {
@@ -328,12 +294,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Notes
      */
-    case ADD_NOTE_DEAL:
+    case dealType.ADD_NOTE_DEAL:
       return {
         ...state,
         dealToView: { ...state.dealToView, sectionLoading: true }
       };
-    case ADD_NOTE_DEAL_SUCCESS:
+    case dealType.ADD_NOTE_DEAL_SUCCESS:
       var newNotes = Object.assign([], state.dealToView.deal.notes);
       newNotes.unshift(action.payload);
       return {
@@ -344,7 +310,7 @@ export default (state = INIT_STATE, action) => {
           sectionLoading: false
         }
       };
-    case ADD_NOTE_DEAL_FAILURE:
+    case dealType.ADD_NOTE_DEAL_FAILURE:
       NotificationManager.error("Error in adding Note");
       console.log(action.payload);
       return {

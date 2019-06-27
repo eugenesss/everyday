@@ -1,44 +1,9 @@
-import {
-  CHANGE_DEAL_LIST_VIEW,
-  GET_DEAL_FAILURE,
-  GET_DEAL_SUCCESS,
-  GET_ALL_DEAL,
-  GET_MY_DEAL,
-  GET_OPEN_DEAL,
-  GET_CLOSED_DEAL,
-  GET_WON_DEAL,
-  GET_SINGLE_DEAL,
-  GET_SINGLE_DEAL_SUCCESS,
-  CLEAR_SINGLE_DEAL,
-  GET_DEAL_SUMMARY,
-  GET_DEAL_SUMMARY_SUCCESS,
-  GET_DEAL_SUMMARY_FAILURE,
-  HANDLE_CHANGE_DEAL,
-  SUBMIT_DEAL,
-  CLEAR_DEAL_FORM,
-  SUBMIT_DEAL_SUCCESS,
-  SUBMIT_DEAL_ERROR,
-  ON_CLICK_STEP,
-  SET_CURRENT_STEP,
-  ON_CHANGE_STEP_STATE,
-  ON_SUBMIT_NEW_STAGE,
-  ON_SUBMIT_NEW_STAGE_SUCCESS,
-  ON_SUBMIT_NEW_STAGE_FAILURE,
-  START_DEAL_EDIT,
-  SUBMIT_EDIT_DEAL,
-  DELETE_DEAL,
-  DELETE_DEAL_SUCCESS,
-  DELETE_DEAL_FAILURE,
-  ADD_NOTE_DEAL,
-  ADD_NOTE_DEAL_SUCCESS,
-  ADD_NOTE_DEAL_FAILURE
-} from "Types";
-
+import * as dealType from "Types/crm/DealTypes";
 /**
  * Change List View
  */
 export const changeDealView = newValue => ({
-  type: CHANGE_DEAL_LIST_VIEW,
+  type: dealType.CHANGE_DEAL_LIST_VIEW,
   payload: newValue
 });
 
@@ -46,7 +11,7 @@ export const changeDealView = newValue => ({
  * Get DEAL Failure
  */
 export const getDealFailure = error => ({
-  type: GET_DEAL_FAILURE,
+  type: dealType.GET_DEAL_FAILURE,
   payload: error
 });
 
@@ -54,7 +19,7 @@ export const getDealFailure = error => ({
  * Get DEAL Success
  */
 export const getDealSuccess = data => ({
-  type: GET_DEAL_SUCCESS,
+  type: dealType.GET_DEAL_SUCCESS,
   payload: data
 });
 
@@ -62,64 +27,64 @@ export const getDealSuccess = data => ({
  * Get All DEALs
  */
 export const getAllDeal = () => ({
-  type: GET_ALL_DEAL
+  type: dealType.GET_ALL_DEAL
 });
 
 /**
  * Get My DEALs
  */
 export const getMyDeal = () => ({
-  type: GET_MY_DEAL
+  type: dealType.GET_MY_DEAL
 });
 
 /**
  * Get Open DEALs
  */
 export const getOpenDeal = () => ({
-  type: GET_OPEN_DEAL
+  type: dealType.GET_OPEN_DEAL
 });
 
 /**
  * Get Closed DEALs
  */
 export const getClosedDeal = () => ({
-  type: GET_CLOSED_DEAL
+  type: dealType.GET_CLOSED_DEAL
 });
 
 /**
  * Get Won DEALs
  */
 export const getWonDeal = () => ({
-  type: GET_WON_DEAL
+  type: dealType.GET_WON_DEAL
 });
 
 /**
  * Get Single Deal
  */
 export const getSingleDeal = dealId => ({
-  type: GET_SINGLE_DEAL,
+  type: dealType.GET_SINGLE_DEAL,
   payload: dealId
 });
 export const getSingleDealSuccess = dealData => ({
-  type: GET_SINGLE_DEAL_SUCCESS,
+  type: dealType.GET_SINGLE_DEAL_SUCCESS,
   payload: dealData
 });
 export const clearSingleDeal = () => ({
-  type: CLEAR_SINGLE_DEAL
+  type: dealType.CLEAR_SINGLE_DEAL
 });
 
 /**
  * Get Deal Summary
  */
 export const getDealSummary = () => ({
-  type: GET_DEAL_SUMMARY
+  type: dealType.GET_DEAL_SUMMARY
 });
 export const getDealSummarySuccess = data => ({
-  type: GET_DEAL_SUMMARY_SUCCESS,
+  type: dealType.GET_DEAL_SUMMARY_SUCCESS,
   payload: data
 });
 export const getDealSummaryFailure = error => ({
-  type: GET_DEAL_SUMMARY_FAILURE,
+  type: dealType.GET_DEAL_SUMMARY_FAILURE,
   payload: error
 });
 
@@ -127,21 +92,21 @@ export const getDealSummaryFailure = error => ({
  * New Deal
  */
 export const handleChangeDeal = (field, value) => ({
-  type: HANDLE_CHANGE_DEAL,
+  type: dealType.HANDLE_CHANGE_DEAL,
   payload: { value, field }
 });
 export const submitDeal = () => ({
-  type: SUBMIT_DEAL
+  type: dealType.SUBMIT_DEAL
 });
 export const clearDealForm = () => ({
-  type: CLEAR_DEAL_FORM
+  type: dealType.CLEAR_DEAL_FORM
 });
 export const submitDealSuccess = data => ({
-  type: SUBMIT_DEAL_SUCCESS,
+  type: dealType.SUBMIT_DEAL_SUCCESS,
   payload: data
 });
 export const submitDealError = error => ({
-  type: SUBMIT_DEAL_ERROR,
+  type: dealType.SUBMIT_DEAL_ERROR,
   payload: error
 });
 
@@ -149,26 +114,26 @@ export const submitDealError = error => ({
  * Handle Deal Stage
  */
 export const onClickStep = step => ({
-  type: ON_CLICK_STEP,
+  type: dealType.ON_CLICK_STEP,
   payload: step
 });
 export const setCurrentStep = currentStep => ({
-  type: SET_CURRENT_STEP,
+  type: dealType.SET_CURRENT_STEP,
   payload: currentStep
 });
 export const onChangeStepState = () => ({
-  type: ON_CHANGE_STEP_STATE
+  type: dealType.ON_CHANGE_STEP_STATE
 });
 export const submitNewStage = (dealID, stageID) => ({
-  type: ON_SUBMIT_NEW_STAGE,
+  type: dealType.ON_SUBMIT_NEW_STAGE,
   payload: { dealID, stageID }
 });
 export const newStageSuccess = deal => ({
-  type: ON_SUBMIT_NEW_STAGE_SUCCESS,
+  type: dealType.ON_SUBMIT_NEW_STAGE_SUCCESS,
   payload: deal
 });
 export const newStageFailure = error => ({
-  type: ON_SUBMIT_NEW_STAGE_FAILURE,
+  type: dealType.ON_SUBMIT_NEW_STAGE_FAILURE,
   payload: error
 });
 
@@ -176,26 +141,26 @@ export const newStageFailure = error => ({
  * Edit
  */
 export const startDealEdit = Deal => ({
-  type: START_DEAL_EDIT,
+  type: dealType.START_DEAL_EDIT,
   payload: Deal
 });
 export const submitEditDeal = () => ({
-  type: SUBMIT_EDIT_DEAL
+  type: dealType.SUBMIT_EDIT_DEAL
 });
 
 /**
  * Delete
  */
 export const deleteDeal = id => ({
-  type: DELETE_DEAL,
+  type: dealType.DELETE_DEAL,
   payload: id
 });
 export const deleteDealSuccess = id => ({
-  type: DELETE_DEAL_SUCCESS,
+  type: dealType.DELETE_DEAL_SUCCESS,
   payload: id
 });
 export const deleteDealFailure = error => ({
-  type: DELETE_DEAL_FAILURE,
+  type: dealType.DELETE_DEAL_FAILURE,
   payload: error
 });
 
@@ -203,14 +168,14 @@ export const deleteDealFailure = error => ({
  * Notes
  */
 export const addNoteDeal = (id, note) => ({
-  type: ADD_NOTE_DEAL,
+  type: dealType.ADD_NOTE_DEAL,
   payload: { id, note }
 });
 export const addNoteDealSuccess = data => ({
-  type: ADD_NOTE_DEAL_SUCCESS,
+  type: dealType.ADD_NOTE_DEAL_SUCCESS,
   payload: data
 });
 export const addNoteDealFailure = error => ({
-  type: ADD_NOTE_DEAL_FAILURE,
+  type: dealType.ADD_NOTE_DEAL_FAILURE,
   payload: error
 });

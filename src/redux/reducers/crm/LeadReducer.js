@@ -1,40 +1,5 @@
 import { NotificationManager } from "react-notifications";
-import {
-  CHANGE_LEAD_LIST_VIEW,
-  GET_LEAD_FAILURE,
-  GET_ALL_LEAD,
-  GET_MY_LEAD,
-  GET_OPEN_LEAD,
-  GET_HOT_LEAD,
-  GET_COLD_LEAD,
-  GET_LEAD_SUCCESS,
-  GET_SINGLE_LEAD,
-  GET_SINGLE_LEAD_SUCCESS,
-  CLEAR_SINGLE_LEAD,
-  GET_LEAD_SUMMARY,
-  GET_LEAD_SUMMARY_SUCCESS,
-  GET_LEAD_SUMMARY_FAILURE,
-  HANDLE_CHANGE_NEW_LEAD,
-  SUBMIT_NEW_LEAD,
-  CLEAR_NEW_LEAD,
-  NEW_LEAD_SUCCESS,
-  NEW_LEAD_ERROR,
-  HANDLE_CONVERT_MODAL,
-  HANDLE_SUCCESS_CONVERT_MODAL,
-  HANDLE_CHANGE_CONVERT_LEAD,
-  CONVERT_LEAD,
-  CONVERT_LEAD_SUCCESS,
-  CONVERT_LEAD_FAILURE,
-  UNMOUNT_CONVERT_LEAD,
-  START_LEAD_EDIT,
-  SUBMIT_EDIT_LEAD,
-  DELETE_LEAD,
-  DELETE_LEAD_SUCCESS,
-  DELETE_LEAD_FAILURE,
-  ADD_NOTE_LEAD,
-  ADD_NOTE_LEAD_SUCCESS,
-  ADD_NOTE_LEAD_FAILURE
-} from "Types";
+import * as leadType from "Types/crm/LeadTypes";
 
 const INIT_STATE = {
   leadList: {
@@ -64,13 +29,14 @@ const INIT_STATE = {
     dealDetails: {},
     newDeal: null,
     newCust: {},
-    newAcct: {}
+    newAcct: {},
+    accountExist: false
   }
 };
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    case CHANGE_LEAD_LIST_VIEW:
+    case leadType.CHANGE_LEAD_LIST_VIEW:
       if (action.payload == "My Leads") {
         return {
           ...state,
@@ -96,7 +62,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Lead Summary
      */
-    case GET_LEAD_SUMMARY:
+    case leadType.GET_LEAD_SUMMARY:
       return {
         ...state,
         leadSummary: {
@@ -104,7 +70,7 @@ export default (state = INIT_STATE, action) => {
           loading: true
         }
       };
-    case GET_LEAD_SUMMARY_SUCCESS:
+    case leadType.GET_LEAD_SUMMARY_SUCCESS:
       return {
         ...state,
         leadSummary: {
@@ -113,7 +79,7 @@ export default (state = INIT_STATE, action) => {
           loading: false
         }
       };
-    case GET_LEAD_SUMMARY_FAILURE:
+    case leadType.GET_LEAD_SUMMARY_FAILURE:
       NotificationManager.warning("Error in fetching Lead Summary");
       console.log(action.payload);
       return { ...state, leadSummary: INIT_STATE.leadSummary };
@@ -121,7 +87,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Leads
      */
-    case GET_LEAD_FAILURE:
+    case leadType.GET_LEAD_FAILURE:
       NotificationManager.warning("Error in fetching Lead Data");
       console.log(action.payload);
       return {
@@ -129,16 +95,16 @@ export default (state = INIT_STATE, action) => {
         leadToView: INIT_STATE.leadToView,
         leadList: INIT_STATE.leadList
       };
-    case GET_ALL_LEAD:
-    case GET_MY_LEAD:
-    case GET_OPEN_LEAD:
-    case GET_HOT_LEAD:
-    case GET_COLD_LEAD:
+    case leadType.GET_ALL_LEAD:
+    case leadType.GET_MY_LEAD:
+    case leadType.GET_OPEN_LEAD:
+    case leadType.GET_HOT_LEAD:
+    case leadType.GET_COLD_LEAD:
       return {
         ...state,
         leadList: { ...state.leadList, loading: true }
       };
-    case GET_LEAD_SUCCESS:
+    case leadType.GET_LEAD_SUCCESS:
       return {
         ...state,
         leadList: {
@@ -151,9 +117,9 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Single Lead
      */
-    case GET_SINGLE_LEAD:
+    case leadType.GET_SINGLE_LEAD:
       return { ...state, leadToView: { ...state.leadToView, loading: true } };
-    case GET_SINGLE_LEAD_SUCCESS:
+    case leadType.GET_SINGLE_LEAD_SUCCESS:
       return {
         ...state,
         leadToView: {
@@ -162,7 +128,7 @@ export default (state = INIT_STATE, action) => {
           lead: action.payload
         }
       };
-    case CLEAR_SINGLE_LEAD:
+    case leadType.CLEAR_SINGLE_LEAD:
       return {
         ...state,
         leadToView: INIT_STATE.leadToView
@@ -171,7 +137,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * New Lead
      */
-    case HANDLE_CHANGE_NEW_LEAD:
+    case leadType.HANDLE_CHANGE_NEW_LEAD:
       if (action.payload.type == "baseContact") {
         return {
           ...state,
@@ -215,14 +181,14 @@ export default (state = INIT_STATE, action) => {
           }
         };
       }
-    case SUBMIT_NEW_LEAD:
+    case leadType.SUBMIT_NEW_LEAD:
       return { ...state, leadForm: { ...state.leadForm, loading: true } };
-    case CLEAR_NEW_LEAD:
+    case leadType.CLEAR_NEW_LEAD:
       return { ...state, leadForm: INIT_STATE.leadForm };
-    case NEW_LEAD_SUCCESS:
+    case leadType.NEW_LEAD_SUCCESS:
       NotificationManager.success("Success!");
       return { ...state, leadForm: INIT_STATE.leadForm };
-    case NEW_LEAD_ERROR:
+    case leadType.NEW_LEAD_ERROR:
       NotificationManager.error("Error in POST API");
       console.log(action.payload);
       return { ...state, leadForm: { ...state.leadForm, loading: false } };
@@ -230,7 +196,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Convert Lead
      */
-    case HANDLE_CONVERT_MODAL:
+    case leadType.HANDLE_CONVERT_MODAL:
       return {
         ...state,
         leadToConvert: {
@@ -238,7 +204,7 @@ export default (state = INIT_STATE, action) => {
           modal: !state.leadToConvert.modal
         }
       };
-    case HANDLE_SUCCESS_CONVERT_MODAL:
+    case leadType.HANDLE_SUCCESS_CONVERT_MODAL:
       return {
         ...state,
         leadToConvert: {
@@ -246,7 +212,7 @@ export default (state = INIT_STATE, action) => {
           successMsg: !state.leadToConvert.successMsg
         }
       };
-    case HANDLE_CHANGE_CONVERT_LEAD:
+    case leadType.HANDLE_CHANGE_CONVERT_LEAD:
       return {
         ...state,
         leadToConvert: {
@@ -257,7 +223,7 @@ export default (state = INIT_STATE, action) => {
           }
         }
       };
-    case CONVERT_LEAD:
+    case leadType.CONVERT_LEAD:
       return {
         ...state,
         leadToConvert: {
@@ -265,7 +231,7 @@ export default (state = INIT_STATE, action) => {
           loading: true
         }
       };
-    case CONVERT_LEAD_SUCCESS:
+    case leadType.CONVERT_LEAD_SUCCESS:
       return {
         ...state,
         leadToConvert: {
@@ -278,7 +244,7 @@ export default (state = INIT_STATE, action) => {
           newAcct: action.payload.newAcct
         }
       };
-    case CONVERT_LEAD_FAILURE:
+    case leadType.CONVERT_LEAD_FAILURE:
       NotificationManager.warning("Error in Convert POST API");
       console.log(action.payload);
       return {
@@ -288,7 +254,7 @@ export default (state = INIT_STATE, action) => {
           loading: false
         }
       };
-    case UNMOUNT_CONVERT_LEAD:
+    case leadType.UNMOUNT_CONVERT_LEAD:
       return {
         ...state,
         leadToConvert: INIT_STATE.leadToConvert
@@ -297,12 +263,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Edit
      */
-    case START_LEAD_EDIT:
+    case leadType.START_LEAD_EDIT:
       return {
         ...state,
         leadForm: { ...state.leadForm, lead: action.payload }
       };
-    case SUBMIT_EDIT_LEAD:
+    case leadType.SUBMIT_EDIT_LEAD:
       return {
         ...state,
         leadForm: { ...state.leadForm, loading: true }
@@ -311,13 +277,13 @@ export default (state = INIT_STATE, action) => {
     /**
      * Delete
      */
-    case DELETE_LEAD:
+    case leadType.DELETE_LEAD:
       return {
         ...state,
         leadToView: { ...state.leadToView, loading: true },
         leadList: { ...state.leadList, loading: true }
       };
-    case DELETE_LEAD_SUCCESS:
+    case leadType.DELETE_LEAD_SUCCESS:
       NotificationManager.success("Lead Deleted!");
       // remove from state
       var afterDeleteData = Object.assign([], state.leadList.tableData).filter(
@@ -332,7 +298,7 @@ export default (state = INIT_STATE, action) => {
           tableData: afterDeleteData
         }
       };
-    case DELETE_LEAD_FAILURE:
+    case leadType.DELETE_LEAD_FAILURE:
       NotificationManager.error("Error in Deleting Lead");
       console.log(action.payload);
       return {
@@ -344,12 +310,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Notes
      */
-    case ADD_NOTE_LEAD:
+    case leadType.ADD_NOTE_LEAD:
       return {
         ...state,
         leadToView: { ...state.leadToView, sectionLoading: true }
       };
-    case ADD_NOTE_LEAD_SUCCESS:
+    case leadType.ADD_NOTE_LEAD_SUCCESS:
       var newNotes = Object.assign([], state.leadToView.lead.notes);
       newNotes.unshift(action.payload);
       return {
@@ -360,7 +326,7 @@ export default (state = INIT_STATE, action) => {
           sectionLoading: false
         }
       };
-    case ADD_NOTE_LEAD_FAILURE:
+    case leadType.ADD_NOTE_LEAD_FAILURE:
       NotificationManager.error("Error in adding Note");
       console.log(action.payload);
       return {
