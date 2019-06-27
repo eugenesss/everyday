@@ -171,7 +171,6 @@ export default (state = INIT_STATE, action) => {
      */
     case GET_ROLE_FAILURE: 
       NotificationManager.warning("Error in fetching Role Data");
-      console.log(action.payload);
       return INIT_STATE;
 
     /**

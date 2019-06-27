@@ -4,7 +4,9 @@ import {
   SIGNUP_USER_FAILURE,
   HANDLE_REGISTER_FORM,
 
-  HANDLE_REGISTER_ERROR
+  HANDLE_REGISTER_ERROR,
+
+  HANDLE_RESET_SUCCESS
 } from "Types";
 
 export const registerUser = () => ({
@@ -27,4 +29,8 @@ export const handleRegForm = (field, value, type) => ({
 export const handleRegErrorForm = (value) => ({
   type: HANDLE_REGISTER_ERROR,
   payload: value
+});
+
+export const resetSuccess = () => ({
+  type: HANDLE_RESET_SUCCESS
 });

@@ -45,7 +45,9 @@ const CalendarToolbar = (toolbar) => {
           </div>
         ) : (
           <div className="toolbar-container mb-10">
+
             <Row>
+
               <Col>
                 <Button variant="contained" color="primary" onClick={goToToday} className="mr-10">
                   Today
@@ -57,9 +59,11 @@ const CalendarToolbar = (toolbar) => {
                   today.getFullYear()
                 } variant="outlined" />
               </Col>
+              
               <Col>
                 <h2 className="text-center">{toolbar.label}</h2>
               </Col>
+              
               <Col>
                 <div className="navigation-buttons float-right">
                   <Tooltip title="Previous">
@@ -88,6 +92,7 @@ const CalendarToolbar = (toolbar) => {
                   
                 </div>
               </Col>
+
             </Row>
           </div>
         )}

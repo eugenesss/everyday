@@ -30,6 +30,9 @@ import calendarSagas from "./calendar/Calendar";
 import loginSagas from "./auth/Login";
 import registerSagas from "./auth/Register";
 
+// uploadFile
+import uploadFileSagas from './upload/uploadFile'
+
 export default function* rootSaga(getState) {
   yield all([
     calendarSagas(),
@@ -48,6 +51,7 @@ export default function* rootSaga(getState) {
     dealSagas(),
     crmFieldSagas(),
     loginSagas(),
-    registerSagas()
+    registerSagas(),
+    uploadFileSagas()
   ]);
 }

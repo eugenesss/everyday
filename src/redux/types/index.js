@@ -31,3 +31,7 @@ export * from "./crm/SalesTeamTypes";
 // Login
 export * from "./auth/LoginTypes";
 export * from "./auth/RegisterTypes";
+
+// UploadFile Actions
+export * from './upload/uploadFile'
+

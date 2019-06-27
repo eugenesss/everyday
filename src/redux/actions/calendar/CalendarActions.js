@@ -4,6 +4,8 @@
 import {
   GET_ALL_EVENTS,
   GET_ALL_EVENTS_SUCCESS,
+  GET_ALL_EVENTS_FAILURE,
+
   
   ON_CHANGE_ADD_EVENT,
   ADD_EVENT,
@@ -42,6 +44,10 @@ export const getAllEventsSuccess = (events, myEvents) => ({
   type: GET_ALL_EVENTS_SUCCESS,
   payload: { events, myEvents }
 })
+export const getAllEventsFailure = (events, myEvents) => ({
+  type: GET_ALL_EVENTS_FAILURE,
+  payload: { events, myEvents }
+})
 
 /**
  * Add Events
@@ -50,8 +56,9 @@ export const onChangeAddEvent = (field, value) => ({
   type: ON_CHANGE_ADD_EVENT,
   payload: {field, value}
 })
-export const addEvent = () => ({
-  type: ADD_EVENT
+export const addEvent = (item) => ({
+  type: ADD_EVENT,
+  payload: item
 })
 export const addEventSuccess = (event) => ({
   type: ADD_EVENT_SUCCESS,

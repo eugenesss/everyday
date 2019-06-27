@@ -15,7 +15,7 @@ import PaymentDetailForm from "./Forms/PaymentDetailForm";
 import { Link } from "react-router-dom";
 
 // Actions
-import { registerUser, handleRegForm, handleRegErrorForm} from "Actions";
+import { registerUser, handleRegForm, handleRegErrorForm, resetSuccess} from "Actions";
 
 
 import {EmailValidator, PasswordValidator, StepperZeroValidator, CheckCreditCard} from "./Validation/Validation"
@@ -36,7 +36,6 @@ function getSteps() { return ["Enter Your Details", "Select a Plan", "Payment De
 //       return "Unknown step";
 //   }
 // }
-
 
 
 
@@ -72,6 +71,7 @@ class RegisterSteps extends React.Component {
           } else {
             this.props.handleRegErrorForm(info)
           }
+          
 
         break
       
@@ -80,12 +80,6 @@ class RegisterSteps extends React.Component {
             this.props.handleRegErrorForm('Please tick the one of the plans')
           )
         break
-
-      // case 2:
-      //     this.setState({
-      //       activeStep: this.state.activeStep + 1
-      //     });
-      //   break
 
       default:break
     }
@@ -105,7 +99,6 @@ class RegisterSteps extends React.Component {
       activeStep: 0
     });
   };
-
 
 
   /**
@@ -128,11 +121,14 @@ class RegisterSteps extends React.Component {
     if (result) {
       this.props.registerUser()
     } else {
-      // window.alert(info)
       this.props.handleRegErrorForm(info)
     }
   } 
 
+
+  componentWillUnmount() {
+    this.props.resetSuccess()
+  }
 
 
 
@@ -141,8 +137,6 @@ class RegisterSteps extends React.Component {
     const steps = getSteps();
     const { activeStep } = this.state;
     const { loading, success } = this.props;
-
-
     let StepperPage = null
     switch (this.state.activeStep) {
       case 0:
@@ -188,7 +182,6 @@ class RegisterSteps extends React.Component {
                 <Step key={label}>
                   <StepLabel>{label}</StepLabel>
                   <StepContent>
-                    
                     
                     {/* <div className="px-20 py-40">{getStepForm(index)}</div> */}
                   
@@ -285,6 +278,6 @@ const mapStateToProps = ({ authUser }) => {
 
 export default connect(
   mapStateToProps,
-  { registerUser, handleRegForm, handleRegErrorForm}
+  { registerUser, handleRegForm, handleRegErrorForm, resetSuccess}
 )(RegisterSteps);
 

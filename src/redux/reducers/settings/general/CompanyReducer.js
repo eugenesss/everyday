@@ -39,7 +39,6 @@ export default (state = INIT_STATE, action) => {
       }
     case GET_COMPANY_FAILURE:
       NotificationManager.warning("Error in fetching Company Data");
-      console.log(action.payload);
       return INIT_STATE;
 
     /**

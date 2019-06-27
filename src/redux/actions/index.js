@@ -34,3 +34,7 @@ export * from "./settings/userControl/HierarchiesActions";
 //Login actions
 export * from "./auth/LoginActions";
 export * from "./auth/RegisterActions";
+
+// UploadFile Actions
+export * from './upload/uploadFileActions'
+

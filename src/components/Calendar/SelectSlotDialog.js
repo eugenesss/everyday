@@ -30,7 +30,7 @@ const SelectSlotDialog = ({ handleClose, showCreateEvent, slotSelected, open, ..
           <Fab color="primary" variant="extended" aria-label="Add Event">
             <i className="zmdi zmdi-calendar-note" />
           </Fab>
-          <ListItemText primary={"Add Event"} />
+          <ListItemText style={{paddingLeft: 20}} primary={"Add Event"} />
         </ListItem>
       </List>
     </DialogRoot>

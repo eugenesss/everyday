@@ -6,12 +6,15 @@ import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILURE,
+
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FAILURE,
+
   SIGNUP_USER,
   SIGNUP_USER_SUCCESS,
   SIGNUP_USER_FAILURE,
+
   HANDLE_REGISTER_FORM,
   HANDLE_REGISTER_ERROR,
 
@@ -23,6 +26,7 @@ import {
   LOGIN_USER_RESET_PASSWORD_SUCCESS,
   LOGIN_USER_RESET_PASSWORD_FAILURE,
 
+  HANDLE_RESET_SUCCESS
 } from "Types";
 
 /**
@@ -60,6 +64,7 @@ const INIT_STATE = {
 export default (state = INIT_STATE, action) => {
 
   switch (action.type) {
+
     /**
      * Login User
      */
@@ -142,7 +147,38 @@ export default (state = INIT_STATE, action) => {
         ...state,
         register: { ...state.register, loading: false }
       };
+    /**
+     * Reset Success
+     */
+    case HANDLE_RESET_SUCCESS:
+      return {
+        ...state,
+        register :{
+          form: {
+            email: "",
+            password: "",
+            repassword: undefined,
+            priceplan: "",
+            userInfo: { firstName: "", lastName: "" },
+            companyInfo: { name: "" },
+            paymentInfo: {
+              name: "",
+              payment_name: "",
+              paymentType: "CreditCard",
+              payment_no: "",
+              payment_username: "",
+              payment_company: "",
+              payment_expiry: "",
+              payment_code: ""
+            }
+          },
+          loading: false,
+          success: false
+        }
+      };
+  
 
+        
     /**
      * Handle Change
      */

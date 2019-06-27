@@ -23,7 +23,8 @@
 }
 .rct-block {
 	background-color: $block-bg;
-	border-radius: $block-border-radius;
+	// border-radius: $block-border-radius;
+	border-radius: 0;
 	box-shadow: $block-shadow;
 	border: $block-border;
 	transition: $block-transition;
@@ -122,3 +123,15 @@
 		}
 	}
 }
+
+// .row-calander-container{
+// 	display: flex;
+// 	flex-direction: row !important;
+// }
+
+// @media (max-width: 1544px) {
+// 	.row-calander-container{
+// 		display: flex;
+// 		flex-direction: column !important;
+// 	}
+// }

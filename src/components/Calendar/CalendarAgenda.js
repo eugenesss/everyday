@@ -20,6 +20,7 @@ const CalendarAgenda = ({showEvents, classes, defaultDate}) => {
         date = dayAftTom
         break;
     }
+    
     return (
       <React.Fragment>
         <BigCalendar
@@ -28,7 +29,7 @@ const CalendarAgenda = ({showEvents, classes, defaultDate}) => {
           defaultView={"agenda"}
           views={["agenda"]}
           toolbar={false}
-          length={0}
+          length={5}
           defaultDate={date}
         />
       </React.Fragment>

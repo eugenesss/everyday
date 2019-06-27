@@ -11,11 +11,18 @@ import RctHorizontalLayout from "Components/RctHorizontalLayout";
 import routerService from "../services/_routerService";
 
 class RctHorizontalApp extends Component {
+
+  componentDidMount() {
+    console.log('-RctHorizontalApp-')
+  }
+  
   render() {
+    
     const { match, location } = this.props;
     if (location.pathname === "/") {
       return <Redirect to={"/app/homebase"} />;
     }
+
     return (
       <RctHorizontalLayout>
         {routerService &&

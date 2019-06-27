@@ -31,6 +31,7 @@ class ProfileLayout extends Component {
   }
 
   componentDidMount() {
+    console.log('profile layout')
     this.props.updateUserStart(this.props.userView)
   }
 
@@ -43,7 +44,10 @@ class ProfileLayout extends Component {
         </Row> */}
         <Row>
           <Col lg={4}>
-            <UserBlock user={userView}/>
+            <UserBlock 
+              user={userView}
+              uploadFile ={(e) => {console.log(e.target.files[0])}}
+            />
           </Col>
           <Col lg={8} className={classes.userFeedBlock}>
             <UserFeedBlock/>
@@ -60,7 +64,8 @@ ProfileLayout.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ usersState }) => {
+const mapStateToProps = ({ usersState, uploadFile  }) => {
+  console.log(uploadFile)
   const { me, usersLoading } = usersState;
   return { me, usersLoading };
 };

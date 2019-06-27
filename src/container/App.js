@@ -28,6 +28,9 @@ const InitialPath = ({ component: Component, ...rest }) => (
 );
 
 class App extends Component {
+
+
+
   render() {
 
     const { location, match, user } = this.props;
@@ -38,6 +41,7 @@ class App extends Component {
           if (location.pathname === "/") { return <Redirect to={"/login"} /> }
       case true:
           if (location.pathname === "/") { return <Redirect to={"/app/homebase"} /> }
+          new Auth().handleAuthentication()
       default:break
     }
 

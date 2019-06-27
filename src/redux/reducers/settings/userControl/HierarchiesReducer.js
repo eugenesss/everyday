@@ -130,7 +130,6 @@ export default (state = INIT_STATE, action) => {
      */
     case GET_HIERARCHY_FAILURE: 
       NotificationManager.warning("Error in fetching Hierarchy Data");
-      console.log(action.payload);
       return INIT_STATE;
       
     /**

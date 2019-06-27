@@ -26,7 +26,7 @@ import {
 } from "Types";
 
 const INIT_STATE = {
-  eventAdd: null,
+  eventAdd: {},
   isAddEvent: false,
   slotSelected: null,
   isSlotSelected: false,
@@ -41,8 +41,8 @@ const INIT_STATE = {
 };
 
 export default (state = INIT_STATE, action) => {
-  switch (action.type) {
 
+  switch (action.type) {
     /**
      * Get All Events
      */
@@ -52,6 +52,8 @@ export default (state = INIT_STATE, action) => {
         eventsLoading: true
       }
     case GET_ALL_EVENTS_SUCCESS:
+      // console.log(action.payload)
+      
       return {
         ...state,
         allEvents: action.payload.events,
@@ -84,10 +86,14 @@ export default (state = INIT_STATE, action) => {
       }
     case ADD_EVENT_SUCCESS:
       NotificationManager.success("Event Added")
+      // const event = action.payload
+      let showEvents = [...state.showEvents]
+      showEvents.push(action.payload)
       return {
         ...state,
         eventsLoading: false,
-        isAddEvent: false
+        isAddEvent: false,
+        showEvents: showEvents
       }
     case ADD_EVENT_FAILURE:
       NotificationManager.warning("Failed to Add Event")
@@ -96,7 +102,6 @@ export default (state = INIT_STATE, action) => {
         eventsLoading: false,
         isAddEvent: false
       }
-
 
     /**
      * State Changes
@@ -144,35 +149,18 @@ export default (state = INIT_STATE, action) => {
       };
 
     case SHOW_CREATE_EVENT:
-      var sDate = state.slotSelected.start;
-      var eDate = state.slotSelected.end;
-      var startDate =
-        sDate.getDate() +
-        " / " +
-        convertMonth(sDate.getMonth()) +
-        " / " +
-        sDate.getFullYear();
-      var endDate =
-        eDate.getDate() +
-        " / " +
-        convertMonth(eDate.getMonth()) +
-        " / " +
-        eDate.getFullYear();
-      var startTime = sDate.getHours() + " : " + sDate.getMinutes();
-      var endTime = eDate.getHours() + " : " + eDate.getMinutes();
+      var item = state.eventAdd
+      
       return {
         ...state,
         isAddEvent: true,
         isSlotSelected: false,
         eventAdd: {
-          constants: {
-            sDate: sDate,
-            eDate: eDate
-          },
-          startDate: startDate,
-          endDate: endDate,
-          startTime: startTime,
-          endTime: endTime
+          startTime: item.startTime,
+          endTime: item.endTime,
+          title : item.title,
+          description : item.description,
+          all_day: item.all_day,
         }
       };
 
@@ -186,3 +174,4 @@ export default (state = INIT_STATE, action) => {
       return { ...state };
   }
 };
+

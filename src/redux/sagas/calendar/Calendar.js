@@ -6,30 +6,24 @@ import {
 import { 
   getAllEventsSuccess,
   getAllEventsFailure,
+  getEventFailure,
 
   addEventSuccess,
   addEventFailure,
  } from "Actions";
 //import api from "Api";
 import { events } from "Components/CalendarDummyData"
+import api from "Api";
+
+
 
 //=========================
 // REQUESTS
 //=========================
 const getAllEventsRequest = async () => {
   try {
-    //const result = await api.get("/events");
-    const result = events;
-    return result;
-  } catch (err) {
-    return err;
-  }
-}
-const addEventRequest = async (newEvent) => {
-  try {
-    //const result = await api.post("/events")
-    const result = newEvent;
-    return result;
+    const result = await api.get("/events");
+    return result.data;
   } catch (err) {
     return err;
   }
@@ -39,24 +33,47 @@ const addEventRequest = async (newEvent) => {
 // CALL(GENERATOR) ACTIONS
 //=========================
 function* getAllEventsFromDB() {
+
   try {
-    const getMe = state => state.usersState.me
-    const me = yield select(getMe)
-    const events = yield call(getAllEventsRequest);
-    const myEvents = events.filter((event) => {
-      return event.owner.id == me.id
+    // const getMe = state => state.usersState.me
+    // console.log('getMe')
+    // console.log(getMe)
+    // const me = yield select(getMe)
+    // console.log(me)
+    let myEvents = yield call(getAllEventsRequest);
+    myEvents.map((item) => {
+      item.start = new Date(item.start)
+      item.end = new Date(item.end)
+      return
     })
-    yield put(getAllEventsSuccess(events, myEvents));
+    yield put(getAllEventsSuccess(myEvents, myEvents));
   } catch (err) {
-    yield put(getAllEventsFailure(err));
+    console.log(err)
+    yield put(getEventFailure(err));
   }
 }
-function* addEventToDB() {
-  const getNewEvent = state => state.calendarState.eventAdd;
-  const newEvent = yield select(getNewEvent)
+
+
+const addEventRequest = async (newEvent) => {
   try {
-    const data = yield call(addEventRequest, newEvent);
-    yield put(addEventSuccess(data));
+    const result = await api.post("/events", {data: newEvent})
+    // const result = newEvent;
+    return result.data;
+  } catch (err) {
+    return err;
+  }
+}
+
+function* addEventToDB(item) {
+  // const getNewEvent = state => state.calendarState.eventAdd;
+  // const newEvent = yield select(getNewEvent)
+  // console.log(item.payload)
+  try {
+    const data = yield call(addEventRequest, item.payload);
+    if (!data.success == 1){
+      throw 'Unable to add event now'
+    }
+    yield put(addEventSuccess(item.payload));
   } catch (err) {
     yield put(addEventFailure(err));
   }

@@ -137,7 +137,6 @@ export default (state = INIT_STATE, action) => {
      */
     case GET_GROUP_FAILURE: 
       NotificationManager.warning("Error in fetching Group Data");
-      console.log(action.payload);
       return INIT_STATE;
 
     /**

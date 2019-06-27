@@ -3,6 +3,9 @@
  */
 export const GET_ALL_EVENTS = "GET_ALL_EVENTS";
 export const GET_ALL_EVENTS_SUCCESS = "GET_ALL_EVENTS_SUCCESS";
+export const GET_ALL_EVENTS_FAILURE = "GET_ALL_EVENTS_FAILURE";
+
+
 
 export const ON_CHANGE_ADD_EVENT = "ON_CHANGE_ADD_EVENT";
 export const ADD_EVENT = "ADD_EVENT";

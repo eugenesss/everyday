@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Col, Row } from "reactstrap";
+import { Col, Row, Container } from "reactstrap";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import BigCalendar from "react-big-calendar";
@@ -13,6 +13,8 @@ import CustomToolbar from "Components/Calendar/CustomToolbar";
 import CalendarAgenda from "Components/Calendar/CalendarAgenda";
 import SelectSlotDialog from "Components/Calendar/SelectSlotDialog";
 import AddEventDialog from "Components/Calendar/AddEventDialog";
+import EventInfoDialog from "./EventInfoDialog";
+
 
 import MenuItem from "@material-ui/core/MenuItem";
 import AppBar from "@material-ui/core/AppBar";
@@ -23,7 +25,6 @@ import Typography from "@material-ui/core/Typography";
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-
 import { getAllEvents } from "Actions";
 
 import {
@@ -57,7 +58,7 @@ const styles = theme => ({
     width: 500
   },
   tabs: {
-    marginLeft: 8
+    // marginLeft: 8
   },
   displayBlock: {
     display: "block"
@@ -85,6 +86,19 @@ class CalendarLayout extends Component {
     this.props.getAllEvents();
   }
 
+  state = {
+    eventInfoOpen : false,
+    eventInfo : {},
+
+
+    isSlotSelected: false,
+    slotSelected: null,
+
+    showEventSelected: false
+
+  };
+
+
   render() {
     const {
       match,
@@ -95,175 +109,234 @@ class CalendarLayout extends Component {
       showEvents,
       viewIndex,
       dayView,
-      isSlotSelected,
-      slotSelected,
+      // isSlotSelected,
+      // slotSelected,
       isAddEvent,
       eventAdd,
+      myEvents,
 
       onChangeEventView,
       onChangeCalendarView,
       onChangeDayView,
-      showSelectedSlot,
-      hideSelectedSlot,
-      showCreateEvent,
+
+      // showSelectedSlot,
+      // hideSelectedSlot,
+
+      // showCreateEvent,
       hideCreateEvent
     } = this.props;
+
+    
     return (
       <React.Fragment>
-        <Row className={"align-items-center"}>
-          <Col md={3}>
-            <TextField
-              value={eventView}
-              fullWidth
-              select
-              id="Calendar"
-              label="Calendar"
-              className={classes.textField}
-              InputLabelProps={{ shrink: true }}
-              onChange={e => onChangeEventView(e.target.value)}
-              SelectProps={{
-                MenuProps: {
-                  className: classes.menu
-                }
-              }}
-              margin="normal"
-              variant="outlined"
-            >
-              {eventViewOptions.map(option => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Col>
-          <Col className={classes.tabs}>
-            <AppBar position="static" color="default">
-              <Tabs
-                value={viewIndex}
-                onChange={onChangeCalendarView}
-                indicatorColor="primary"
-                textColor="primary"
-                variant="fullWidth"
-              >
-                <Tab label="Month" />
-                <Tab label="Week" />
-                <Tab label="Day" />
-              </Tabs>
-            </AppBar>
-          </Col>
-        </Row>
+
+
         <Row>
-          <Col md={3} className={classes.displayInlineTable}>
-            <h2 className={classes.textField + " mt-20"}>Events Today</h2>
-            <CalendarAgenda
-              showEvents={showEvents}
-              classes={classes}
-              defaultDate={"today"}
-            />
-            <h2 className={classes.textField + " mt-20"}>Events Tomorrow</h2>
-            <CalendarAgenda
-              showEvents={showEvents}
-              classes={classes}
-              defaultDate={"tomorrow"}
-            />
-            <h2 className={classes.textField + " mt-20"}>
-              Events Day After Tomorrow
-            </h2>
-            <CalendarAgenda
-              showEvents={showEvents}
-              classes={classes}
-              defaultDate={"dayAftTom"}
-            />
+          <Col lg={3} style={{display:'flex', flexDirection:'column', marginBottom: 50}}>
+           
+            <TextField
+                value={eventView}
+                fullWidth
+                style={{width: '100%', marginLeft: 0, marginRight: 0, marginTop: 0}}
+                select
+                id="Calendar"
+                label="Calendar"
+                className={classes.textField}
+                InputLabelProps={{ shrink: true }}
+                onChange={e => onChangeEventView(e.target.value)}
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu
+                  }
+                }}
+                margin="normal"
+                variant="outlined"
+              >
+                {eventViewOptions.map(option => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+            
+            <div style={{display:'flex', flexDirection:'column'}}>
+              <h2 className={classes.textField + " mt-20"}>Events Today</h2>
+              <CalendarAgenda
+                showEvents={showEvents}
+                classes={classes}
+                defaultDate={"today"}
+              />
+              <h2 className={classes.textField + " mt-20"}>Events Tomorrow</h2>
+              <CalendarAgenda
+                showEvents={showEvents}
+                classes={classes}
+                defaultDate={"tomorrow"}
+              />
+              <h2 className={classes.textField + " mt-20"}>
+                Events Day After Tomorrow
+              </h2>
+              <CalendarAgenda
+                showEvents={showEvents}
+                classes={classes}
+                defaultDate={"dayAftTom"}
+              />
+            </div>
           </Col>
-          <Col md={9}>
-            <SwipeableViews
-              axis={"x"}
-              index={viewIndex}
-              onChangeIndex={onChangeCalendarView}
-            >
-              <TabContainer classes={classes}>
-                <RctCollapsibleCard>
-                  <BigCalendar
-                    selectable
-                    events={showEvents}
-                    views={["month"]}
-                    step={60}
-                    showMultiDayTimes
-                    defaultDate={new Date()}
-                    onSelectSlot={showSelectedSlot}
-                    components={{
-                      toolbar: CustomToolbar
-                    }}
-                  />
-                </RctCollapsibleCard>
-              </TabContainer>
-              <TabContainer classes={classes}>
-                <RctCollapsibleCard>
-                  <BigCalendar
-                    selectable
-                    events={showEvents}
-                    defaultView={"week"}
-                    views={["week"]}
-                    step={60}
-                    showMultiDayTimes
-                    defaultDate={new Date()}
-                    onSelectSlot={showSelectedSlot}
-                    components={{
-                      toolbar: CustomToolbar
-                    }}
-                  />
-                </RctCollapsibleCard>
-              </TabContainer>
-              <TabContainer classes={classes}>
-                <Row>
-                  <Col md={3}>
-                    <RctCollapsibleCard customClasses={"center"}>
-                      <Row className="justify-content-center">
-                        <ReactCalendar
-                          value={dayView}
-                          onClickDay={e => {
-                            onChangeDayView(e);
+
+          <Col lg={9}>
+            <Col>
+              <AppBar position="static" color="default">
+                <Tabs
+                  value={viewIndex}
+                  onChange={onChangeCalendarView}
+                  indicatorColor="primary"
+                  textColor="primary"
+                  variant="fullWidth"
+                >
+                  <Tab label="Month" />
+                  <Tab label="Week" />
+                  <Tab label="Day" />
+                </Tabs>
+              </AppBar>
+            </Col> 
+
+            <Col>
+              <SwipeableViews
+                axis={"x"}
+                index={viewIndex}
+                onChangeIndex={onChangeCalendarView}
+                style={{borderRadius: 0}}
+              >
+                <TabContainer classes={classes}>
+                  <RctCollapsibleCard>
+                    <BigCalendar
+                      selectable
+                      events={showEvents}
+                      views={["month"]}
+                      step={60}
+                      showMultiDayTimes
+                      onNavigate={e =>{
+                        console.log('onNavigate')
+                        console.log(e)
+                      }}
+                      onSelectEvent={e=>{
+                        this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: e})
+                      }}
+                      defaultDate={new Date()}
+                      // onSelectSlot={showSelectedSlot}
+                      onSelectSlot={(e) => this.setState({isSlotSelected: !this.state.isSlotSelected, slotSelected: e})}
+                      components={{
+                        toolbar: CustomToolbar
+                      }}
+                    />
+                  </RctCollapsibleCard>
+                </TabContainer>
+                <TabContainer classes={classes}>
+                  <RctCollapsibleCard>
+                    <BigCalendar
+                      selectable
+                      events={showEvents}
+                      defaultView={"week"}
+                      views={["week"]}
+                      step={60}
+                      showMultiDayTimes
+                      onNavigate={e =>{
+                        console.log('onNavigate')
+                        console.log(e)
+                      }}
+                      onSelectEvent={e=>{
+                        this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: e})
+                      }}
+                      defaultDate={new Date()}
+                      // onSelectSlot={showSelectedSlot}
+                      onSelectSlot={(e) => this.setState({isSlotSelected: !this.state.isSlotSelected, slotSelected: e})}
+                      components={{
+                        toolbar: CustomToolbar
+                      }}
+                    />
+                  </RctCollapsibleCard>
+                </TabContainer>
+                <TabContainer classes={classes}>
+                  <Row>
+                    <Col md={3}>
+                      <RctCollapsibleCard customClasses={"center"}>
+                        <Row className="justify-content-center">
+                          <ReactCalendar
+                            value={dayView}
+                            onClickDay={e => {
+                              console.log(e)
+                              onChangeDayView(e);
+                            }}
+                          />
+                        </Row>
+                      </RctCollapsibleCard>
+                    </Col>
+                    <Col>
+                      <RctCollapsibleCard>
+                        <BigCalendar
+                          selectable
+                          date={dayView}
+                          onNavigate={date => {
+                            console.log(date)
+                            onChangeDayView(date);
+                          }}
+                          onSelectEvent={e=>{
+                            this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: e})
+                          }}
+                          events={showEvents}
+                          defaultView={"day"}
+                          views={["day"]}
+                          step={60}
+                          showMultiDayTimes
+                          // onSelectSlot={showSelectedSlot}
+                          onSelectSlot={(e) => this.setState({isSlotSelected: !this.state.isSlotSelected, slotSelected: e})}
+                          components={{
+                            toolbar: CustomToolbar
                           }}
                         />
-                      </Row>
-                    </RctCollapsibleCard>
-                  </Col>
-                  <Col>
-                    <RctCollapsibleCard>
-                      <BigCalendar
-                        selectable
-                        date={dayView}
-                        onNavigate={date => {
-                          onChangeDayView(date);
-                        }}
-                        events={showEvents}
-                        defaultView={"day"}
-                        views={["day"]}
-                        step={60}
-                        showMultiDayTimes
-                        onSelectSlot={showSelectedSlot}
-                        components={{
-                          toolbar: CustomToolbar
-                        }}
-                      />
-                    </RctCollapsibleCard>
-                  </Col>
-                </Row>
-              </TabContainer>
-            </SwipeableViews>
-          </Col>
+                      </RctCollapsibleCard>
+                    </Col>
+                  </Row>
+                </TabContainer>
+              </SwipeableViews>
+            </Col>
+
+          </Col>     
         </Row>
-        <SelectSlotDialog
-          open={isSlotSelected}
-          handleClose={hideSelectedSlot}
-          slotSelected={slotSelected}
-          showCreateEvent={showCreateEvent}
-        />
-        <AddEventDialog
-          open={isAddEvent}
-          handleClose={hideCreateEvent}
-          eventAdd={eventAdd}
-        />
+
+
+
+        {this.state.eventInfoOpen && 
+          <EventInfoDialog
+            open={this.state.eventInfoOpen}
+            handleClose={() => this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: {}})}  
+            information = {this.state.eventInfo}   
+          />
+        }
+
+        {this.state.isSlotSelected &&
+          <SelectSlotDialog
+            open={this.state.isSlotSelected}
+            handleClose={() => this.setState({isSlotSelected: false})}
+            // onSelectSlot={() => this.setState({isSlotSelected: !this.state.isSlotSelected})}
+            slotSelected={this.state.slotSelected}
+            showCreateEvent={() => {
+              this.props.showCreateEvent()
+              this.setState({isSlotSelected: false})
+            }}
+          />
+        }
+      
+        {isAddEvent &&
+          <AddEventDialog
+            open={isAddEvent}
+            handleClose={hideCreateEvent}
+            eventAdd={eventAdd}
+            dayView={this.state.slotSelected}
+          />
+        }
+      
+    
       </React.Fragment>
     );
   }
@@ -284,7 +357,9 @@ const mapStateToProps = ({ calendarState }) => {
     isSlotSelected,
     slotSelected,
     isAddEvent,
-    eventAdd
+    eventAdd,
+
+    myEvents
   } = calendarState;
   return {
     eventView,
@@ -295,7 +370,8 @@ const mapStateToProps = ({ calendarState }) => {
     isSlotSelected,
     slotSelected,
     isAddEvent,
-    eventAdd
+    eventAdd,
+    myEvents
   };
 };
 
@@ -312,3 +388,8 @@ export default connect(
     getAllEvents
   }
 )(withStyles(styles)(CalendarLayout));
+
+
+// myEvents: [],
+// allEvents: [],
+// showEvents: [],

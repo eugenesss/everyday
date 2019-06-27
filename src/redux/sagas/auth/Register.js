@@ -19,6 +19,7 @@ const registerUserRequest = async form => {
   return result.data;
 };
 
+
 function* registerUserToDB() {
   const getRegisterForm = state => state.authUser.register.form;
   const form = yield select(getRegisterForm);
@@ -31,10 +32,13 @@ function* registerUserToDB() {
   }
 }
 
+
 export function* registerUserWatcher() {
   yield takeEvery(SIGNUP_USER, registerUserToDB);
 }
 
+
 export default function* rootSaga() {
   yield all([fork(registerUserWatcher)]);
 }
+

@@ -57,6 +57,7 @@ class SettingsDirectory extends Component {
       <Paper className={classes.paper}>
         <Scrollbars className="rct-scroll" autoHeight autoHeightMin={"100vh"}>
           <List component="nav" className={classes.root}>
+            
             <ListItem button onClick={() => this.handleClick("general")}>
               <ListItemText
                 inset
@@ -83,13 +84,10 @@ class SettingsDirectory extends Component {
                   button
                   className={classes.nested}
                   onClick={() =>
-                    this.handleClickItem(
-                      "/app/settings/general/company-details"
-                    )
+                    this.handleClickItem("/app/settings/general/company-details")
                   }
                   selected={
-                    location.pathname ===
-                    "/app/settings/general/company-details"
+                    location.pathname === "/app/settings/general/company-details"
                   }
                 >
                   <ListItemText inset secondary={"Company Details"} />
@@ -279,6 +277,7 @@ class SettingsDirectory extends Component {
                 </ListItem>
               </List>
             </Collapse>
+         
           </List>
         </Scrollbars>
       </Paper>

@@ -2,24 +2,24 @@ import React from "react";
 import { Col, Row } from "reactstrap";
 
 import DialogRoot from "Components/Dialog/DialogRoot"
-import AddEventForm from "Components/Form/Setting/AddEventForm"
+import EventInformation from "./EventInformation"
 
 import { convertMonth, convertDay } from "Helpers/helpers";
 
 
-const AddEventDialog = ({ classes, handleClose, eventAdd, open, dayView, dispatch, ...other }) => {
+const EventInfoDialog = ({ classes, handleClose, eventAdd, open, information, dayView, dispatch, ...other }) => {
   return (
     <DialogRoot
       show={open}
       handleHide={handleClose}
       size="md"
-      title={<Col>Add Event</Col> }
+      title={<Col>Event Information</Col> }
     >
-      <AddEventForm
-        dayView={dayView}
+      <EventInformation
+        information={information}
       />
     </DialogRoot>
   );
 }
 
-export default AddEventDialog;
+export default EventInfoDialog;

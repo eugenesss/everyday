@@ -163,7 +163,6 @@ export default (state = INIT_STATE, action) => {
      */
     case GET_USER_FAILURE:
       NotificationManager.warning("Error in fetching User Data");
-      console.log(action.payload);
       return INIT_STATE;
 
 
