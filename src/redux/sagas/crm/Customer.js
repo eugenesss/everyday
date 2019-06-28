@@ -147,7 +147,7 @@ function* editCustomerToDB() {
 }
 function* deleteCustomerFromDB({ payload }) {
   try {
-    const deleteResult = yield call(deleteCustomerRequest, payload);
+    yield call(deleteCustomerRequest, payload);
     yield delay(500);
     yield put(deleteCustomerSuccess(payload));
   } catch (error) {

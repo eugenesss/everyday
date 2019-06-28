@@ -94,6 +94,22 @@ export const submitEditAccount = () => ({
 });
 
 /**
+ * Delete
+ */
+export const deleteAccount = id => ({
+  type: acctType.DELETE_ACCOUNT,
+  payload: id
+});
+export const deleteAccountSuccess = id => ({
+  type: acctType.DELETE_ACCOUNT_SUCCESS,
+  payload: id
+});
+export const deleteAccountFailure = error => ({
+  type: acctType.DELETE_ACCOUNT_FAILURE,
+  payload: error
+});
+
+/**
  * Notes
  */
 export const addNoteAccount = (id, note) => ({

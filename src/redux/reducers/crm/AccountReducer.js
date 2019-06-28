@@ -175,6 +175,40 @@ export default (state = INIT_STATE, action) => {
       };
 
     /**
+     * Delete
+     */
+    case acctType.DELETE_ACCOUNT:
+      return {
+        ...state,
+        accountToView: { ...state.accountToView, loading: true },
+        accountList: { ...state.accountList, loading: true }
+      };
+    case acctType.DELETE_ACCOUNT_SUCCESS:
+      NotificationManager.success("Account Deleted");
+      // remove from state
+      var afterDeleteData = Object.assign(
+        [],
+        state.accountList.tableData
+      ).filter(acct => acct.id != action.payload);
+      return {
+        ...state,
+        accountToView: { ...state.accountToView, loading: false },
+        accountList: {
+          ...state.accountList,
+          loading: false,
+          tableData: afterDeleteData
+        }
+      };
+    case acctType.DELETE_ACCOUNT_FAILURE:
+      NotificationManager.error(action.payload.message);
+      console.log(action.payload);
+      return {
+        ...state,
+        accountToView: { ...state.accountToView, loading: false },
+        accountList: { ...state.accountList, loading: false }
+      };
+
+    /**
      * Notes
      */
     case acctType.ADD_NOTE_ACCOUNT:

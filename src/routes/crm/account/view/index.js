@@ -33,10 +33,11 @@ import {
   clearSingleAccount,
   startAccountEdit,
   addNoteAccount,
-  setAccountActive
+  setAccountActive,
+  deleteAccount
 } from "Actions";
 // Add events dialog
-// Delete Account, Transfer Account
+// Transfer Account
 
 class crm_view_account extends Component {
   constructor(props) {
@@ -68,8 +69,7 @@ class crm_view_account extends Component {
    * DELETE RECORD
    */
   handleDelete(acctId) {
-    //this.props.deleteCustomer(acctId);
-    console.log(acctId);
+    this.props.deleteAccount(acctId);
     setTimeout(() => {
       this.props.history.push(`/app/crm/accounts`);
     }, 500);
@@ -224,7 +224,8 @@ export default withRouter(
       clearSingleAccount,
       startAccountEdit,
       addNoteAccount,
-      setAccountActive
+      setAccountActive,
+      deleteAccount
     }
   )(crm_view_account)
 );

@@ -14,6 +14,7 @@ import {
   SUBMIT_ACCOUNT,
   SUBMIT_EDIT_ACCOUNT,
   ADD_NOTE_ACCOUNT,
+  DELETE_ACCOUNT,
   SET_ACCOUNT_ACTIVE
 } from "Types";
 import {
@@ -22,6 +23,8 @@ import {
   getSingleAccountSuccess,
   submitAccountSuccess,
   submitAccountError,
+  deleteAccountSuccess,
+  deleteAccountFailure,
   addNoteAccountSuccess,
   addNoteAccountFailure,
   setAccountActiveSuccess,
@@ -55,6 +58,10 @@ const postAccountRequest = async acct => {
 };
 const patchAccountRequest = async acct => {
   const result = await api.patch(`/accounts/${acct.id}`, acct);
+  return result.data;
+};
+const deleteAccountRequest = async id => {
+  const result = await api.delete(`/accounts/${id}`);
   return result.data;
 };
 const addNoteAccountRequest = async (id, note) => {
@@ -138,6 +145,21 @@ function* patchAccountToDB() {
     yield put(submitAccountError(error));
   }
 }
+function* deleteAccountFromDB({ payload }) {
+  try {
+    yield call(deleteAccountRequest, payload);
+    yield delay(500);
+    yield put(deleteAccountSuccess(payload));
+  } catch (error) {
+    let errorMessage;
+    if (error.response) {
+      errorMessage = error.response.data.error;
+    } else {
+      errorMessage = error;
+    }
+    yield put(deleteAccountFailure(errorMessage));
+  }
+}
 function* addNoteAccountToDB({ payload }) {
   const { id, note } = payload;
   try {
@@ -176,6 +198,9 @@ export function* postAccountWatcher() {
 export function* patchAccountWatcher() {
   yield takeEvery(SUBMIT_EDIT_ACCOUNT, patchAccountToDB);
 }
+export function* deleteAccounttWatcher() {
+  yield takeEvery(DELETE_ACCOUNT, deleteAccountFromDB);
+}
 export function* addNoteAccountWatcher() {
   yield takeEvery(ADD_NOTE_ACCOUNT, addNoteAccountToDB);
 }
@@ -193,6 +218,7 @@ export default function* rootSaga() {
     fork(getSingleAccountWatcher),
     fork(postAccountWatcher),
     fork(patchAccountWatcher),
+    fork(deleteAccounttWatcher),
     fork(addNoteAccountWatcher),
     fork(setAccountActiveWatcher)
   ]);
