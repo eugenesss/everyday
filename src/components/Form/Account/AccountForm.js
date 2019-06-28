@@ -28,8 +28,8 @@ class AccountForm extends Component {
     this.props.clearAccountForm();
   }
 
-  checkDisabled(name, owner) {
-    const disabled = name && owner;
+  checkDisabled(name, userId) {
+    const disabled = name && userId;
     return disabled;
   }
 
@@ -42,7 +42,10 @@ class AccountForm extends Component {
         <FormSubmitResetButtons
           onReset={this.props.clearAccountForm}
           onSubmit={this.props.handleSubmit}
-          disabled={this.checkDisabled(account.baseContact.name, account.owner)}
+          disabled={this.checkDisabled(
+            account.baseContact.name,
+            account.userId
+          )}
         />
         <FormTable>
           <TableRow>
@@ -57,9 +60,9 @@ class AccountForm extends Component {
             <FormBlock
               required
               label="Owner"
-              value={account.owner ? account.owner : ""}
+              value={account.userId ? account.userId : ""}
               handleChange={this.props.handleChangeAccount}
-              target="owner"
+              target="userId"
               selectValues={users}
             />
           </TableRow>

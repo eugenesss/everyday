@@ -35,7 +35,7 @@ const DealReportTable = ({ deals }) => (
               </TableCell>
               <TableCell>{deal.source && deal.source.name}</TableCell>
               <TableCell>{deal.type && deal.type.name}</TableCell>
-              <TableCell>{deal.owner && deal.owner.name}</TableCell>
+              <TableCell>{deal.userInfo && deal.userInfo.name}</TableCell>
             </TableRow>
           );
         })}

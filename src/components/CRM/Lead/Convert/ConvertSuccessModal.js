@@ -19,10 +19,15 @@ class ConvertSuccessModal extends Component {
     this.props.history.push("/app/crm/leads");
   }
   render() {
-    const { successMsg, newDeal, newAcct, newCust } = this.props.leadToConvert;
+    const {
+      show,
+      newDeal,
+      newAcct,
+      newCust
+    } = this.props.leadToConvert.successMsg;
     return (
       <DialogRoot
-        show={successMsg}
+        show={show}
         handleHide={() => this.closeModal()}
         size="xl"
         title="Lead Converted Successfully!"

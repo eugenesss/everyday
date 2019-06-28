@@ -23,14 +23,18 @@ const INIT_STATE = {
     lead: { baseContact: { _address: {} } }
   },
   leadToConvert: {
-    modal: false,
-    successMsg: false,
-    loading: false,
-    dealDetails: {},
-    newDeal: null,
-    newCust: {},
-    newAcct: {},
-    accountExist: false
+    modal: {
+      count: 0,
+      data: [],
+      loading: false,
+      show: false
+    },
+    successMsg: {
+      show: false,
+      newDeal: null,
+      newCust: {},
+      newAcct: {}
+    }
   }
 };
 
@@ -201,7 +205,10 @@ export default (state = INIT_STATE, action) => {
         ...state,
         leadToConvert: {
           ...state.leadToConvert,
-          modal: !state.leadToConvert.modal
+          modal: {
+            ...state.leadToConvert.modal,
+            show: !state.leadToConvert.modal.show
+          }
         }
       };
     case leadType.HANDLE_SUCCESS_CONVERT_MODAL:
@@ -209,26 +216,44 @@ export default (state = INIT_STATE, action) => {
         ...state,
         leadToConvert: {
           ...state.leadToConvert,
-          successMsg: !state.leadToConvert.successMsg
+          successMsg: INIT_STATE.leadToConvert.successMsg
         }
       };
-    case leadType.HANDLE_CHANGE_CONVERT_LEAD:
+    case leadType.CHECK_ACCOUNT_EXIST:
       return {
         ...state,
+        leadToView: { ...state.leadToView, loading: true }
+      };
+    case leadType.CHECK_ACCOUNT_EXIST_SUCCESS:
+      return {
+        ...state,
+        leadToView: { ...state.leadToView, loading: false },
         leadToConvert: {
           ...state.leadToConvert,
-          dealDetails: {
-            ...state.leadToConvert.dealDetails,
-            [action.payload.field]: action.payload.value
+          modal: {
+            ...state.leadToConvert.modal,
+            show: true,
+            count: action.payload.count,
+            data: action.payload.existingAccounts
           }
         }
+      };
+    case leadType.CHECK_ACCOUNT_EXIST_FAILURE:
+      NotificationManager.error("Error in Account Check");
+      console.log(action.payload);
+      return {
+        ...state,
+        leadToView: { ...state.leadToView, loading: false }
       };
     case leadType.CONVERT_LEAD:
       return {
         ...state,
         leadToConvert: {
           ...state.leadToConvert,
-          loading: true
+          modal: {
+            ...state.leadToConvert.modal,
+            loading: true
+          }
         }
       };
     case leadType.CONVERT_LEAD_SUCCESS:
@@ -236,12 +261,13 @@ export default (state = INIT_STATE, action) => {
         ...state,
         leadToConvert: {
           ...state.leadToConvert,
-          modal: false,
-          successMsg: true,
-          loading: false,
-          newDeal: action.payload.newDeal,
-          newCust: action.payload.newCust,
-          newAcct: action.payload.newAcct
+          modal: INIT_STATE.leadToConvert.modal,
+          successMsg: {
+            show: true,
+            newDeal: action.payload.newDeal,
+            newCust: action.payload.newCust,
+            newAcct: action.payload.newAcct
+          }
         }
       };
     case leadType.CONVERT_LEAD_FAILURE:
@@ -251,13 +277,11 @@ export default (state = INIT_STATE, action) => {
         ...state,
         leadToConvert: {
           ...state.leadToConvert,
-          loading: false
+          modal: {
+            ...state.leadToConvert.modal,
+            loading: false
+          }
         }
-      };
-    case leadType.UNMOUNT_CONVERT_LEAD:
-      return {
-        ...state,
-        leadToConvert: INIT_STATE.leadToConvert
       };
 
     /**

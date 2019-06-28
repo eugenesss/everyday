@@ -1,9 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import DataList from "Components/Everyday/DataList";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
+// import IconButton from "@material-ui/core/IconButton";
+// import Tooltip from "@material-ui/core/Tooltip";
+import MUIDataTable from "mui-datatables";
+import { listOptions } from "Helpers/helpers";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
@@ -58,33 +59,48 @@ const AccountList = ({ tableData, loading, title, action }) => {
     { label: "Fax", name: "fax", options: { display: false } }
   ];
 
-  if (action == true) {
-    columns.push({
-      name: "Actions",
-      options: {
-        filter: false,
-        sort: false,
-        customBodyRender: value => {
-          return (
-            <Tooltip id="tooltip-icon" title="Edit">
-              <IconButton
-                className="text-primary mr-2"
-                aria-label="Edit Account"
-                onClick={() => {
-                  this.toggleEditModal(value);
-                }}
-              >
-                <i className="zmdi zmdi-edit" />
-              </IconButton>
-            </Tooltip>
-          );
-        }
-      }
-    });
-  }
+  // if (action == true) {
+  //   columns.push({
+  //     name: "Actions",
+  //     options: {
+  //       filter: false,
+  //       sort: false,
+  //       customBodyRender: value => {
+  //         return (
+  //           <Tooltip id="tooltip-icon" title="Edit">
+  //             <IconButton
+  //               className="text-primary mr-2"
+  //               aria-label="Edit Account"
+  //               onClick={() => {
+  //                 this.toggleEditModal(value);
+  //               }}
+  //             >
+  //               <i className="zmdi zmdi-edit" />
+  //             </IconButton>
+  //           </Tooltip>
+  //         );
+  //       }
+  //     }
+  //   });
+  // }
+
+  // listOptions.onRowClick = rowData => onRowClick(rowData[0]);
+  listOptions.customToolbarSelect = (
+    selectedRows,
+    displayData,
+    setSelectRows
+  ) =>
+    // delete multiple function
+    null;
+
   return (
     <RctCollapsibleCard fullBlock>
-      <DataList title={title} columns={columns} tableData={tableData} />
+      <MUIDataTable
+        title={title}
+        columns={columns}
+        data={tableData}
+        options={listOptions}
+      />
       {loading && <RctSectionLoader />}
     </RctCollapsibleCard>
   );

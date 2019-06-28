@@ -16,7 +16,8 @@ import {
   CONVERT_LEAD,
   SUBMIT_EDIT_LEAD,
   DELETE_LEAD,
-  ADD_NOTE_LEAD
+  ADD_NOTE_LEAD,
+  CHECK_ACCOUNT_EXIST
 } from "Types";
 import {
   getLeadSuccess,
@@ -31,7 +32,9 @@ import {
   deleteLeadSuccess,
   deleteLeadFailure,
   addNoteLeadSuccess,
-  addNoteLeadFailure
+  addNoteLeadFailure,
+  checkAccountExistSuccess,
+  checkAccountExistFailure
 } from "Actions";
 
 import api from "Api";
@@ -69,9 +72,10 @@ const postLeadRequest = async lead => {
   const result = await api.post("/leads", lead);
   return result.data;
 };
-const convertLeadRequest = async data => {
-  const result = await api.post(`/leads/convert/${data.leadID}`, {
-    dealDetails: data.dealDetails
+const convertLeadRequest = async (id, dealDetails, accountId) => {
+  const result = await api.post(`/leads/convert/${id}`, {
+    dealDetails: dealDetails,
+    existingAccountId: accountId
   });
   return result.data;
 };
@@ -85,6 +89,12 @@ const deleteLeadRequest = async id => {
 };
 const addNoteLeadRequest = async (id, note) => {
   const result = await api.post(`/leads/${id}/notes`, note);
+  return result.data;
+};
+const checkAccountRequest = async companyName => {
+  const result = await api.post(`/accounts/accountExist`, {
+    accountName: companyName
+  });
   return result.data;
 };
 
@@ -161,13 +171,9 @@ function* postLeadToDB() {
   }
 }
 function* convertLeadToDB({ payload }) {
+  const { id, dealDetails, accountId } = payload;
   try {
-    const getDealDetail = state =>
-      state.crmState.leadState.leadToConvert.dealDetails;
-    const dealDetails = yield select(getDealDetail);
-    const leadID = payload;
-    const id = { dealDetails, leadID };
-    const data = yield call(convertLeadRequest, id);
+    const data = yield call(convertLeadRequest, id, dealDetails, accountId);
     yield delay(500);
     yield put(convertLeadSuccess(data));
   } catch (error) {
@@ -203,6 +209,14 @@ function* addLeadNoteToDB({ payload }) {
     yield put(addNoteLeadFailure(error));
   }
 }
+function* checkAccountFromDB({ payload }) {
+  try {
+    const data = yield call(checkAccountRequest, payload);
+    yield put(checkAccountExistSuccess(data.count, data.data));
+  } catch (error) {
+    yield put(checkAccountExistFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -234,6 +248,9 @@ export function* deleteLeadWatcher() {
 export function* addNoteLeadWatcher() {
   yield takeEvery(ADD_NOTE_LEAD, addLeadNoteToDB);
 }
+export function* checkAccountExistWatcher() {
+  yield takeEvery(CHECK_ACCOUNT_EXIST, checkAccountFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -248,6 +265,7 @@ export default function* rootSaga() {
     fork(convertLeadWatcher),
     fork(editLeadWatcher),
     fork(deleteLeadWatcher),
-    fork(addNoteLeadWatcher)
+    fork(addNoteLeadWatcher),
+    fork(checkAccountExistWatcher)
   ]);
 }

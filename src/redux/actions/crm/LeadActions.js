@@ -114,13 +114,21 @@ export const newLeadError = error => ({
 /**
  * Convert Lead
  */
-export const handleChangeConvertLead = (field, value) => ({
-  type: leadType.HANDLE_CHANGE_CONVERT_LEAD,
-  payload: { field, value }
+export const checkAccountExist = companyName => ({
+  type: leadType.CHECK_ACCOUNT_EXIST,
+  payload: companyName
 });
-export const convertLead = leadID => ({
+export const checkAccountExistSuccess = (count, existingAccounts) => ({
+  type: leadType.CHECK_ACCOUNT_EXIST_SUCCESS,
+  payload: { count, existingAccounts }
+});
+export const checkAccountExistFailure = error => ({
+  type: leadType.CHECK_ACCOUNT_EXIST_FAILURE,
+  payload: error
+});
+export const convertLead = (id, dealDetails, accountId) => ({
   type: leadType.CONVERT_LEAD,
-  payload: leadID
+  payload: { id, dealDetails, accountId }
 });
 export const convertLeadSuccess = data => ({
   type: leadType.CONVERT_LEAD_SUCCESS,
@@ -129,9 +137,6 @@ export const convertLeadSuccess = data => ({
 export const convertLeadFailure = error => ({
   type: leadType.CONVERT_LEAD_FAILURE,
   payload: error
-});
-export const unmountConvertLead = () => ({
-  type: leadType.UNMOUNT_CONVERT_LEAD
 });
 export const handleConvertModal = () => ({
   type: leadType.HANDLE_CONVERT_MODAL

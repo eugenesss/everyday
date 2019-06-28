@@ -98,6 +98,7 @@ class crm_view_customer extends Component {
   render() {
     const { loading, customer, sectionLoading } = this.props.customerToView;
     const { activeIndex } = this.state;
+    console.log(customer);
     return (
       <React.Fragment>
         {loading ? (
@@ -142,7 +143,7 @@ class crm_view_customer extends Component {
                 <div>
                   <CustomerCard
                     name={customer.name}
-                    account={customer.account}
+                    account={customer.accountInfo}
                     ownerName={customer.userInfo && customer.userInfo.name}
                     mobile={customer.baseContact.mobile}
                     office={customer.baseContact.office}

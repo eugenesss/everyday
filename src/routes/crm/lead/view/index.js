@@ -24,8 +24,8 @@ import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 // Notes Tab
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 // Convert Lead Modal
-import ConvertLeadModal from "Components/CRM/Lead/ConvertModals/ConvertLeadModal";
-import ConvertSuccessModal from "Components/CRM/Lead/ConvertModals/ConvertSuccessModal";
+import ConvertLeadModal from "Components/CRM/Lead/Convert/ConvertLeadModal";
+import ConvertSuccessModal from "Components/CRM/Lead/Convert/ConvertSuccessModal";
 
 //Actions
 import {
@@ -34,7 +34,8 @@ import {
   handleConvertModal,
   startLeadEdit,
   deleteLead,
-  addNoteLead
+  addNoteLead,
+  checkAccountExist
 } from "Actions";
 // Add events dialog
 //  Transfer Lead
@@ -43,7 +44,7 @@ class crm_view_lead extends Component {
   constructor(props) {
     super(props);
     this.state = { activeIndex: 0 };
-    this.convert = this.convert.bind(this);
+    this.startConvert = this.startConvert.bind(this);
     this.edit = this.edit.bind(this);
     this.addNote = this.addNote.bind(this);
   }
@@ -89,10 +90,10 @@ class crm_view_lead extends Component {
   }
 
   /**
-   * CONVERT LEAD
+   * START CONVERT LEAD
    */
-  convert() {
-    this.props.handleConvertModal();
+  startConvert(companyName) {
+    this.props.checkAccountExist(companyName);
   }
 
   /**
@@ -121,7 +122,7 @@ class crm_view_lead extends Component {
                 {
                   color: "success",
                   label: "Convert",
-                  handleOnClick: () => this.convert(lead)
+                  handleOnClick: () => this.startConvert(lead.companyName)
                 }
               ]}
               moreButton={
@@ -232,7 +233,8 @@ export default withRouter(
       startLeadEdit,
       show,
       deleteLead,
-      addNoteLead
+      addNoteLead,
+      checkAccountExist
     }
   )(crm_view_lead)
 );

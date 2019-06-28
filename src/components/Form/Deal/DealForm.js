@@ -54,7 +54,7 @@ class DealForm extends Component {
           onSubmit={this.props.handleSubmit}
           disabled={this.checkDisabled(
             deal.name,
-            deal.owner,
+            deal.userId,
             deal.amount,
             deal.stageId,
             deal.closingDate,
@@ -73,9 +73,9 @@ class DealForm extends Component {
             <FormBlock
               required
               label="Owner"
-              value={deal.owner ? deal.owner : ""}
+              value={deal.userId ? deal.userId : ""}
               handleChange={this.props.handleChangeDeal}
-              target="owner"
+              target="userId"
               selectValues={users}
             />
           </TableRow>

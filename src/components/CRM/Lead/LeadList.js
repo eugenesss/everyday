@@ -2,9 +2,10 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 //Page req
-import DataList from "Components/Everyday/DataList";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
+// import IconButton from "@material-ui/core/IconButton";
+// import Tooltip from "@material-ui/core/Tooltip";
+import MUIDataTable from "mui-datatables";
+import { listOptions } from "Helpers/helpers";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
@@ -100,47 +101,47 @@ const LeadList = ({ tableData, loading, title, action }) => {
     { label: "Office", name: "office", options: { display: false } },
     { label: "Fax", name: "fax", options: { display: false } }
   ];
-  /* if (action == true) {
-    columns.push({
-      name: "Actions",
-      options: {
-        filter: false,
-        sort: false,
-        customBodyRender: value => {
-          return (
-            <React.Fragment>
-              <Tooltip id="tooltip-icon" title="Edit">
-                <IconButton
-                  className="text-primary mr-2"
-                  aria-label="Edit Lead"
-                  onClick={() => {
-                    this.toggleEditModal(value);
-                  }}
-                >
-                  <i className="zmdi zmdi-edit" />
-                </IconButton>
-              </Tooltip>
-              <Tooltip id="tooltip-icon" title="Convert">
-                <IconButton
-                  className="text-success mr-2"
-                  aria-label="Convert Lead"
-                  onClick={() => {
-                    this.toggleConvertModal(value);
-                  }}
-                >
-                  <i className="zmdi zmdi-check-all" />
-                </IconButton>
-              </Tooltip>
-            </React.Fragment>
-          );
-        }
-      }
-    });
-  } */
+  // if (action == true) {
+  //   columns.push({
+  //     name: "Actions",
+  //     options: {
+  //       filter: false,
+  //       sort: false,
+  //       customBodyRender: value => {
+  //         return (
+  //           <Tooltip id="tooltip-icon" title="Edit">
+  //             <IconButton
+  //               className="text-primary mr-2"
+  //               aria-label="Edit Lead"
+  //               onClick={() => {
+  //                 console.log("edit");
+  //               }}
+  //             >
+  //               <i className="zmdi zmdi-edit" />
+  //             </IconButton>
+  //           </Tooltip>
+  //         );
+  //       }
+  //     }
+  //   });
+  // }
 
+  // listOptions.onRowClick = rowData => onRowClick(rowData[0]);
+  listOptions.customToolbarSelect = (
+    selectedRows,
+    displayData,
+    setSelectRows
+  ) =>
+    // delete multiple function
+    null;
   return (
     <RctCollapsibleCard fullBlock>
-      <DataList title={title} columns={columns} tableData={tableData} />
+      <MUIDataTable
+        title={title}
+        columns={columns}
+        data={tableData}
+        options={listOptions}
+      />
       {loading && <RctSectionLoader />}
     </RctCollapsibleCard>
   );

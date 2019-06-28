@@ -16,9 +16,9 @@ const CustomerDetails = ({ customer }) => {
       <SingleDetail
         title="Account"
         value={
-          customer.account && (
-            <Link to={`/app/crm/accounts/${customer.account.id}`}>
-              {customer.account.name}
+          customer.accountInfo && (
+            <Link to={`/app/crm/accounts/${customer.accountInfo.id}`}>
+              {customer.accountInfo.name}
             </Link>
           )
         }
