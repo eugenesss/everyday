@@ -98,7 +98,6 @@ class crm_view_customer extends Component {
   render() {
     const { loading, customer, sectionLoading } = this.props.customerToView;
     const { activeIndex } = this.state;
-    console.log(customer);
     return (
       <React.Fragment>
         {loading ? (

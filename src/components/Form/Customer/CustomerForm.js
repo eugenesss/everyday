@@ -38,7 +38,7 @@ class CustomerForm extends Component {
   render() {
     const { customer } = this.props.customerForm;
     const { leadSource } = this.props.crmField;
-    const { users, allAccounts } = this.props;
+    const { users, allAccounts, edit } = this.props;
     return (
       <React.Fragment>
         <FormSubmitResetButtons
@@ -60,14 +60,16 @@ class CustomerForm extends Component {
               targetType="baseContact"
               required
             />
-            <FormBlock
-              required
-              label="Owner"
-              value={customer.userId ? customer.userId : ""}
-              handleChange={this.props.handleChangeCustomer}
-              target="userId"
-              selectValues={users}
-            />
+            {!edit && (
+              <FormBlock
+                required
+                label="Owner"
+                value={customer.userId ? customer.userId : ""}
+                handleChange={this.props.handleChangeCustomer}
+                target="userId"
+                selectValues={users}
+              />
+            )}
           </TableRow>
           <TableRow>
             <FormBlock

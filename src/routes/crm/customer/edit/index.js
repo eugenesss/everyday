@@ -29,7 +29,7 @@ class crm_edit_customer extends Component {
           {loading && <RctSectionLoader />}
           <div className="row">
             <div className="col-md-11">
-              <CustomerForm handleSubmit={this.props.submitEditCustomer} />
+              <CustomerForm edit handleSubmit={this.props.submitEditCustomer} />
             </div>
           </div>
         </RctCollapsibleCard>

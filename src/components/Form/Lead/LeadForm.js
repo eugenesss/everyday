@@ -50,7 +50,7 @@ class LeadForm extends Component {
       industry,
       leadInterest
     } = this.props.crmField;
-    const { users } = this.props;
+    const { users, edit } = this.props;
     return (
       <React.Fragment>
         <FormSubmitResetButtons
@@ -72,14 +72,16 @@ class LeadForm extends Component {
               targetType="baseContact"
               required
             />
-            <FormBlock
-              required
-              label="Owner"
-              value={lead.userId ? lead.userId : ""}
-              selectValues={users}
-              handleChange={this.props.handleChangeLead}
-              target="userId"
-            />
+            {!edit && (
+              <FormBlock
+                required
+                label="Owner"
+                value={lead.userId ? lead.userId : ""}
+                selectValues={users}
+                handleChange={this.props.handleChangeLead}
+                target="userId"
+              />
+            )}
           </TableRow>
           <TableRow>
             <FormBlock

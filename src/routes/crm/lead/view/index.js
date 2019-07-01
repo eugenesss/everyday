@@ -59,8 +59,12 @@ class crm_view_lead extends Component {
   // Change view tab state
   changeTabView = (_, activeIndex) => this.setState({ activeIndex });
 
-  transfer() {
+  /**
+   * Transfer Record
+   */
+  transfer(lead) {
     console.log("transger");
+    this.props.show("transfer_record", { name: lead.name });
   }
   // edit
   edit(lead) {

@@ -30,7 +30,7 @@ class crm_edit_deal extends Component {
           {loading && <RctSectionLoader />}
           <div className="row">
             <div className="col-md-11">
-              <DealForm isEdit handleSubmit={this.props.submitEditDeal} />
+              <DealForm edit handleSubmit={this.props.submitEditDeal} />
             </div>
           </div>
         </RctCollapsibleCard>

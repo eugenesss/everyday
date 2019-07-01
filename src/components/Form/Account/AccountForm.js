@@ -57,14 +57,16 @@ class AccountForm extends Component {
               targetType="baseContact"
               required
             />
-            <FormBlock
-              required
-              label="Owner"
-              value={account.userId ? account.userId : ""}
-              handleChange={this.props.handleChangeAccount}
-              target="userId"
-              selectValues={users}
-            />
+            {!edit && (
+              <FormBlock
+                required
+                label="Owner"
+                value={account.userId ? account.userId : ""}
+                handleChange={this.props.handleChangeAccount}
+                target="userId"
+                selectValues={users}
+              />
+            )}
           </TableRow>
           <TableRow>
             <FormBlock

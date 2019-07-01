@@ -27,7 +27,7 @@ class crm_edit_lead extends Component {
           {loading && <RctSectionLoader />}
           <div className="row">
             <div className="col-md-11">
-              <LeadForm handleSubmit={this.props.submitEditLead} />
+              <LeadForm edit handleSubmit={this.props.submitEditLead} />
             </div>
           </div>
         </RctCollapsibleCard>

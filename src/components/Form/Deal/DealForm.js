@@ -45,7 +45,7 @@ class DealForm extends Component {
 
   render() {
     const { deal } = this.props.dealForm;
-    const { users, allAccounts, allCustomers, isEdit } = this.props;
+    const { users, allAccounts, allCustomers, edit } = this.props;
     const { leadSource, dealStage, dealType } = this.props.crmField;
     return (
       <React.Fragment>
@@ -70,14 +70,16 @@ class DealForm extends Component {
               target="name"
               required
             />
-            <FormBlock
-              required
-              label="Owner"
-              value={deal.userId ? deal.userId : ""}
-              handleChange={this.props.handleChangeDeal}
-              target="userId"
-              selectValues={users}
-            />
+            {!edit && (
+              <FormBlock
+                required
+                label="Owner"
+                value={deal.userId ? deal.userId : ""}
+                handleChange={this.props.handleChangeDeal}
+                target="userId"
+                selectValues={users}
+              />
+            )}
           </TableRow>
           <TableRow>
             <FormBlock
@@ -92,7 +94,7 @@ class DealForm extends Component {
                 />
               }
             />
-            {!isEdit && (
+            {!edit && (
               <FormBlock
                 required
                 label="Stage"

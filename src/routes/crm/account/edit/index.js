@@ -27,7 +27,7 @@ class crm_new_account extends Component {
           {loading && <RctSectionLoader />}
           <div className="row">
             <div className="col-md-11">
-              <AccountForm handleSubmit={this.props.submitEditAccount} />
+              <AccountForm edit handleSubmit={this.props.submitEditAccount} />
             </div>
           </div>
         </RctCollapsibleCard>

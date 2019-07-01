@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 //Page req
-import DataList from "Components/Everyday/DataList";
+// import DataList from "Components/Everyday/DataList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
@@ -78,7 +78,7 @@ const CreditNoteList = ({ tableData, loading, title, action }) => {
 
   return (
     <RctCollapsibleCard fullBlock>
-      <DataList title={title} columns={columns} tableData={tableData} />
+      {/* <DataList title={title} columns={columns} tableData={tableData} /> */}
       {loading && <RctSectionLoader />}
     </RctCollapsibleCard>
   );
