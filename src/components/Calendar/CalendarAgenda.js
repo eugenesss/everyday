@@ -2,6 +2,14 @@ import React from "react";
 
 import BigCalendar from 'react-big-calendar';
 
+
+// filteredEvents = showEvents.filter(e => {
+//   if (e.start.toDateString() === tomorrow.toDateString() + 1) {
+//     filteredEvents.push(e)
+//   }
+// })
+
+
 const CalendarAgenda = ({showEvents, classes, defaultDate}) => {
     var today = new Date
     var tomorrow = new Date
@@ -29,7 +37,7 @@ const CalendarAgenda = ({showEvents, classes, defaultDate}) => {
           defaultView={"agenda"}
           views={["agenda"]}
           toolbar={false}
-          length={5}
+          length={0}
           defaultDate={date}
         />
       </React.Fragment>

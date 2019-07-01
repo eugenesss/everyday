@@ -7,6 +7,8 @@ import StepContent from "@material-ui/core/StepContent";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import LoadingButton from "Components/Everyday/LoadingButton/LoadingButton";
+import StepButton from '@material-ui/core/StepButton';
+
 
 // Form Components
 import RegisterForm from "./Forms/UserRegisterForm";
@@ -57,33 +59,70 @@ class RegisterSteps extends React.Component {
 
 
 
-  handleNext = () => {
+  handleNext = (next) => {
 
     let state = {...this.state}
     
-    switch (state.activeStep) {
+    if (next) {
+      switch (state.activeStep) {
 
-      case 0:
-          const [result, info] = StepperZeroValidator(this.props, state.emailState, state.passwordState) 
-        
-          if (result) {
-            this.setState({activeStep: state.activeStep + 1})
-          } else {
-            this.props.handleRegErrorForm(info)
-          }
+        case 0:
+            const [result, info] = StepperZeroValidator(this.props, state.emailState, state.passwordState) 
           
+            if (result) {
+              this.setState({activeStep: state.activeStep + 1})
+            } else {
+              this.props.handleRegErrorForm(info)
+            }
+          
+          break
+        
+        case 1:
+            state.planState !== "" ? this.setState({ activeStep: this.state.activeStep + 1}) : (
+              this.props.handleRegErrorForm('Please tick the one of the plans')
+            )
+          break
 
-        break
+        default:break
+      }
+    } else {
       
-      case 1:
-          state.planState !== "" ? this.setState({ activeStep: this.state.activeStep + 1}) : (
-            this.props.handleRegErrorForm('Please tick the one of the plans')
-          )
-        break
+      console.log(next)
 
-      default:break
+      switch (next) {
+
+        case 0:
+            this.setState({activeStep: 0})
+          break
+        
+        case 1:
+            const [result, info] = StepperZeroValidator(this.props, state.emailState, state.passwordState) 
+          
+            if (result) {
+              this.setState({activeStep: 1})
+            } else {
+              this.props.handleRegErrorForm(info)
+            }
+          break
+        case 2:
+
+            const [results, infos] = StepperZeroValidator(this.props, state.emailState, state.passwordState) 
+          
+            if (results) {
+              state.planState !== "" ? this.setState({ activeStep: 2}) : (
+                this.props.handleRegErrorForm('Please tick one of the plans')
+              )
+            } else {
+              this.props.handleRegErrorForm(infos)
+            }
+
+          
+          break
+        default:break
+      }
+
     }
-    
+
   };
 
 
@@ -116,7 +155,6 @@ class RegisterSteps extends React.Component {
    * Validation of Credit Cards
    */
   validateCard = () => {
-
     const [result, info] = CheckCreditCard(this.props.paymentInfo)
     if (result) {
       this.props.registerUser()
@@ -143,28 +181,86 @@ class RegisterSteps extends React.Component {
      
         // Implement Email | Password Validation
         StepperPage = (
-          <RegisterForm
-            validateEmail = {(e) => this.validateEmail(e)}
-            emailState={this.state.emailState}
-            validatePassword = {(password, repassword) => this.validatePassword(password, repassword)}
-            passwordState={this.state.passwordState}
-            {...this.props}
-          />
+          <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+              <RegisterForm
+                validateEmail = {(e) => this.validateEmail(e)}
+                emailState={this.state.emailState}
+                validatePassword = {(password, repassword) => this.validatePassword(password, repassword)}
+                passwordState={this.state.passwordState}
+                {...this.props}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                className="text-white mr-10 mb-10"
+                onClick={this.handleNext}
+              >
+                Next
+              </Button>
+          </div>
         )
           break
       case 1:
         StepperPage = (
-          <SelectPlanForm
-            validatePlate={(e) => this.validatePlate(e)}
-            {...this.props}
-          />
+          <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+            <SelectPlanForm
+              validatePlate={(e) => this.validatePlate(e)}
+              {...this.props}
+            />
+
+            <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
+              <Button
+                  variant="contained"
+                  className="btn-danger text-white mr-10 mb-10"
+                  disabled={activeStep === 0}
+                  onClick={this.handleBack}
+                >
+                  Back
+                </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="text-white mr-10 mb-10"
+                onClick={this.handleNext}
+              >
+                Next
+              </Button>
+            </div>
+
+          </div>
+         
         )
           break
       case 2:
         StepperPage = (
-          <PaymentDetailForm 
-            {...this.props}
-          />
+          <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+              <PaymentDetailForm 
+                {...this.props}
+              />
+
+              <div style={{marginBottom: 15, marginTop: 15}}>
+                  By signing up, you agree to Everday's Term of Service*  
+              </div>
+
+              <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
+                <Button
+                    variant="contained"
+                    className="btn-danger text-white mr-10 mb-10"
+                    disabled={activeStep === 0}
+                    onClick={this.handleBack}
+                  >
+                    Back
+                  </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="text-white mr-10 mb-10"
+                  onClick={this.handleNext}
+                >
+                  Next
+                </Button>
+              </div>
+          </div>
         )
           break
       default:
@@ -176,64 +272,98 @@ class RegisterSteps extends React.Component {
     return (
       <div>
         {!success ? (
-          <Stepper activeStep={activeStep} orientation="vertical">
-            {steps.map((label, index) => {
-              return (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                  <StepContent>
+
+          <div>
+              <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+              {steps.map((label, index) => {
+                const stepProps = {};
+                const buttonProps = {};
+              
+                return (
+                  <Step key={label} {...stepProps}>
+                    <StepButton
+                      onClick={() => this.handleNext(index)}
+                      // onClick={() => console.log(index)}
+
+                      // completed={isStepComplete(index)}
+                      // {...buttonProps}
+                    >
+                      {label}
+                    </StepButton>
+                  </Step>
+                );
+              })}
+            </Stepper>
+          
+            <div style={{display:'flex', width: '100%', justifyContent:'center', alignItems:'center'}}>
+              {StepperPage}
+            </div>
+
+            
+          </div>
+          
+          
+        
+          // <Stepper nonLinear activeStep={activeStep}>
+          //   {steps.map((label, index) => {
+          //     return (
+          //       <Step key={label}>
+          //         <StepLabel>{label}</StepLabel>
+          //         <StepContent>
                     
-                    {/* <div className="px-20 py-40">{getStepForm(index)}</div> */}
+          //           {/* <div className="px-20 py-40">{getStepForm(index)}</div> */}
                   
-                    <div className="px-20 py-40">{StepperPage}</div>
+          //           <div className="px-20 py-40">{StepperPage}</div>
                     
-                    <div>
-                      {activeStep === steps.length - 1 && (
-                        <React.Fragment>
-                          <p className="text-muted">
-                            By signing up you agree to Everyday
-                            <sup style={{ fontSize: "8px" }}>TM</sup>
-                          </p>
-                          <p>
-                            <Link to="/terms-condition" className="text-muted">
-                              Terms of Service
-                            </Link>
-                          </p>
-                        </React.Fragment>
-                      )}
-                      <Button
-                        variant="contained"
-                        className="btn-danger text-white mr-10 mb-10"
-                        disabled={activeStep === 0}
-                        onClick={this.handleBack}
-                      >
-                        Back
-                      </Button>
-                      {activeStep === steps.length - 1 ? (
-                        <LoadingButton
-                          onClickFunc={() => this.validateCard()}
-                          loading={loading}
-                          color="success"
-                          label="Finish"
-                        />
-                      ) : (
+          //           <div>
+          //             {activeStep === steps.length - 1 && (
+          //               <React.Fragment>
+          //                 <p className="text-muted">
+          //                   By signing up you agree to Everyday
+          //                   <sup style={{ fontSize: "8px" }}>TM</sup>
+          //                 </p>
+          //                 <p>
+          //                   <Link to="/terms-condition" className="text-muted">
+          //                     Terms of Service
+          //                   </Link>
+          //                 </p>
+          //               </React.Fragment>
+          //             )}
+          //             <Button
+          //               variant="contained"
+          //               className="btn-danger text-white mr-10 mb-10"
+          //               disabled={activeStep === 0}
+          //               onClick={this.handleBack}
+          //             >
+          //               Back
+          //             </Button>
+          //             {activeStep === steps.length - 1 ? (
+          //               <LoadingButton
+          //                 onClickFunc={() => this.validateCard()}
+          //                 loading={loading}
+          //                 color="success"
+          //                 label="Finish"
+          //               />
+          //             ) : (
 
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          className="text-white mr-10 mb-10"
-                          onClick={this.handleNext}
-                        >
-                          Next
-                        </Button>
+          //               <Button
+          //                 variant="contained"
+          //                 color="primary"
+          //                 className="text-white mr-10 mb-10"
+          //                 onClick={this.handleNext}
+          //               >
+          //                 Next
+          //               </Button>
 
-                      )}
-                    </div>
-                  </StepContent>
-                </Step>
-              );
-            })}
-          </Stepper>
+          //             )}
+          //           </div>
+          //         </StepContent>
+          //       </Step>
+          //     );
+          //   })}
+          // </Stepper>
+
+
         ) : (
           <Paper square elevation={0} className="pl-40">
 

@@ -7,7 +7,10 @@ import EventInformation from "./EventInformation"
 import { convertMonth, convertDay } from "Helpers/helpers";
 
 
-const EventInfoDialog = ({ classes, handleClose, eventAdd, open, information, dayView, dispatch, ...other }) => {
+const EventInfoDialog = ({ classes, edit, deleteNow, handleClose, eventAdd, open, information, dayView, dispatch, ...other }) => {
+  
+  
+  
   return (
     <DialogRoot
       show={open}
@@ -15,9 +18,29 @@ const EventInfoDialog = ({ classes, handleClose, eventAdd, open, information, da
       size="md"
       title={<Col>Event Information</Col> }
     >
-      <EventInformation
-        information={information}
-      />
+    
+      {information.length == 1 &&
+        <EventInformation
+          information={information[0]}
+          // edit={(element, value) => edit(element, value)}
+          // edit ={(id) => edit(id)}
+          deleteNow={(itemId) => deleteNow(itemId)}
+        />
+      }
+
+      {information.length > 1 &&
+        information.map((item, index) =>{
+          return (
+            <EventInformation
+              key={index}
+              information={item}
+              // edit ={(id) => edit(id)}
+              deleteNow={(itemId) => deleteNow(itemId)}
+            />
+          )
+        })
+      }
+
     </DialogRoot>
   );
 }

@@ -81,7 +81,7 @@ const PaymentDetailForm = props => {
         <Label for="payment_name" className="fs-13 text-right" sm={2}>
           Name on Card
         </Label>
-        <Col sm={4}>
+        <Col>
           <Input
             value={paymentInfo.payment_name}
             name="payment_name"
@@ -96,13 +96,12 @@ const PaymentDetailForm = props => {
             <i className="ti-user" />
           </span>
         </Col>
-        <Col sm={6} />
       </FormGroup>
       <FormGroup row className="has-wrapper">
         <Label for="payment_no" className="fs-13 text-right" sm={2}>
           Credit Card Number
         </Label>
-        <Col sm={4}>
+        <Col>
           <Input
             value={paymentInfo.payment_no}
             name="payment_no"
@@ -118,13 +117,12 @@ const PaymentDetailForm = props => {
             <i className="ti-credit-card" />
           </span>
         </Col>
-        <Col sm={6} />
       </FormGroup>
       <FormGroup row className="has-wrapper">
         <Label for="payment_expiry" className="fs-13 text-right" sm={2}>
           Valid To
         </Label>
-        <Col sm={2}>
+        <Col >
           <Input
             value={paymentInfo.payment_expiry}
             name="payment_expiry"
@@ -143,7 +141,7 @@ const PaymentDetailForm = props => {
         <Label for="payment_code" className="fs-13 text-right" sm={1}>
           CVC
         </Label>
-        <Col sm={1}>
+        <Col>
           <Input
             value={paymentInfo.payment_code}
             name="payment_code"
@@ -157,7 +155,7 @@ const PaymentDetailForm = props => {
           />
         </Col>
       </FormGroup>
-    
+  
     </Form>
   );
 };

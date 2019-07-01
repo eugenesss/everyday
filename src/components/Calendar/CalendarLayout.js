@@ -25,7 +25,7 @@ import Typography from "@material-ui/core/Typography";
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import { getAllEvents } from "Actions";
+import { getAllEvents,deleteEvent } from "Actions";
 
 import {
   onChangeEventView,
@@ -89,14 +89,17 @@ class CalendarLayout extends Component {
   state = {
     eventInfoOpen : false,
     eventInfo : {},
-
-
     isSlotSelected: false,
     slotSelected: null,
-
-    showEventSelected: false
-
+    showEventSelected: false,
+    editNow: false
   };
+
+
+  EditEventInformation = (element, value) => {
+    console.log(element, value)
+  }
+
 
 
   render() {
@@ -184,7 +187,7 @@ class CalendarLayout extends Component {
           </Col>
 
           <Col lg={9}>
-            <Col>
+            <Col style={{flexBasis:0, flexGrow:0}}>
               <AppBar position="static" color="default">
                 <Tabs
                   value={viewIndex}
@@ -216,11 +219,11 @@ class CalendarLayout extends Component {
                       step={60}
                       showMultiDayTimes
                       onNavigate={e =>{
-                        console.log('onNavigate')
-                        console.log(e)
+                        const filteredEvents = showEvents.filter(item => item.start.toDateString() === e.toDateString())
+                        this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: filteredEvents})
                       }}
                       onSelectEvent={e=>{
-                        this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: e})
+                        this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: [e]})
                       }}
                       defaultDate={new Date()}
                       // onSelectSlot={showSelectedSlot}
@@ -241,14 +244,13 @@ class CalendarLayout extends Component {
                       step={60}
                       showMultiDayTimes
                       onNavigate={e =>{
-                        console.log('onNavigate')
-                        console.log(e)
+                        const filteredEvents = showEvents.filter(item => item.start.toDateString() === e.toDateString())
+                        this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: filteredEvents})
                       }}
                       onSelectEvent={e=>{
-                        this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: e})
+                        this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: [e]})
                       }}
                       defaultDate={new Date()}
-                      // onSelectSlot={showSelectedSlot}
                       onSelectSlot={(e) => this.setState({isSlotSelected: !this.state.isSlotSelected, slotSelected: e})}
                       components={{
                         toolbar: CustomToolbar
@@ -276,12 +278,13 @@ class CalendarLayout extends Component {
                         <BigCalendar
                           selectable
                           date={dayView}
-                          onNavigate={date => {
-                            console.log(date)
-                            onChangeDayView(date);
+                          onNavigate={e =>{
+                            const filteredEvents = showEvents.filter(item => item.start.toDateString() === e.toDateString())
+                            this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: filteredEvents})
+                            onChangeDayView(e);
                           }}
                           onSelectEvent={e=>{
-                            this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: e})
+                            this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: [e]})
                           }}
                           events={showEvents}
                           defaultView={"day"}
@@ -311,6 +314,12 @@ class CalendarLayout extends Component {
             open={this.state.eventInfoOpen}
             handleClose={() => this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: {}})}  
             information = {this.state.eventInfo}   
+            // edit = {(id) => console.log(id)}
+            deleteNow={(itemId) => {
+              // console.log(this.state.eventInfo.userId)
+              this.setState({eventInfoOpen: !this.state.eventInfoOpen, eventInfo: [{}]})
+              this.props.deleteEvent(itemId)}
+            }
           />
         }
 
@@ -385,7 +394,8 @@ export default connect(
     hideSelectedSlot,
     showCreateEvent,
     hideCreateEvent,
-    getAllEvents
+    getAllEvents,
+    deleteEvent
   }
 )(withStyles(styles)(CalendarLayout));
 

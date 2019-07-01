@@ -1,16 +1,28 @@
 import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
-import { 
-  GET_ALL_EVENTS,
-  ADD_EVENT,
-} from "Types";
-import { 
-  getAllEventsSuccess,
-  getAllEventsFailure,
-  getEventFailure,
+// import { 
+//   GET_ALL_EVENTS,
+//   ADD_EVENT,
+// } from "Types";
 
-  addEventSuccess,
-  addEventFailure,
- } from "Actions";
+import * as Types from 'Types'
+
+// import { 
+//   getAllEventsSuccess,
+//   getAllEventsFailure,
+//   getEventFailure,
+//   addEventSuccess,
+//   addEventFailure,
+//   deleteEvent,
+//   deleteEventSuccess,
+//   deleteEventFailure,
+//  } from "Actions";
+
+ import * as Actions from 'Actions'
+
+
+
+
+
 //import api from "Api";
 import { events } from "Components/CalendarDummyData"
 import api from "Api";
@@ -33,7 +45,6 @@ const getAllEventsRequest = async () => {
 // CALL(GENERATOR) ACTIONS
 //=========================
 function* getAllEventsFromDB() {
-
   try {
     // const getMe = state => state.usersState.me
     // console.log('getMe')
@@ -46,17 +57,16 @@ function* getAllEventsFromDB() {
       item.end = new Date(item.end)
       return
     })
-    yield put(getAllEventsSuccess(myEvents, myEvents));
+    yield put(Actions.getAllEventsSuccess(myEvents, myEvents));
   } catch (err) {
-    console.log(err)
-    yield put(getEventFailure(err));
+    yield put(Actions.getEventFailure(err));
   }
 }
 
 
 const addEventRequest = async (newEvent) => {
   try {
-    const result = await api.post("/events", {data: newEvent})
+    const result = await api.post("/events", newEvent)
     // const result = newEvent;
     return result.data;
   } catch (err) {
@@ -68,14 +78,66 @@ function* addEventToDB(item) {
   // const getNewEvent = state => state.calendarState.eventAdd;
   // const newEvent = yield select(getNewEvent)
   // console.log(item.payload)
+
   try {
-    const data = yield call(addEventRequest, item.payload);
-    if (!data.success == 1){
-      throw 'Unable to add event now'
-    }
-    yield put(addEventSuccess(item.payload));
+    const data = yield call(addEventRequest, item.payload);   
+    yield put(Actions.addEventSuccess(data));
   } catch (err) {
-    yield put(addEventFailure(err));
+    console.log(err)
+    yield put(Actions.addEventFailure(err));
+  }
+}
+
+
+const deleteEventRequest = async (id) => {
+  try {
+    const result = await api.delete(`/events/${id}`)
+    // const result = newEvent;
+    return result.data;
+  } catch (err) {
+    return err;
+  }
+}
+
+function* deleteEventFromDB(item) {
+  // const getNewEvent = state => state.calendarState.eventAdd;
+  // const newEvent = yield select(getNewEvent)
+  // console.log(item.payload)
+  try {
+    const data = yield call(deleteEventRequest, item.payload);
+    if (!data.count == 1){
+      throw 'Item could not be deleted'
+    }
+    yield put(Actions.deleteEventSuccess(item.payload));
+  } catch (err) {
+    yield put(Actions.deleteEventFailure(err));
+  }
+}
+
+
+
+
+const updateEventRequest = async (id) => {
+  try {
+    const result = await api.put(`/events/?id=${id.id}`, id)
+    // const result = newEvent;
+    return result.data;
+  } catch (err) {
+    return err;
+  }
+}
+
+function* updateEventFromDB(item) {
+  // const getNewEvent = state => state.calendarState.eventAdd;
+  // const newEvent = yield select(getNewEvent)
+ 
+  try {
+    const data = yield call(updateEventRequest, item.payload);
+    yield put(Actions.updateEventSuccess(data));
+  } catch (err) {
+    console.log("err")
+    console.log(err)
+    yield put(Actions.updateEventFailure(err));
   }
 }
 
@@ -83,10 +145,17 @@ function* addEventToDB(item) {
 // WATCHER FUNCTIONS
 //=======================
 export function* getAllEventsWatcher() {
-  yield takeEvery(GET_ALL_EVENTS, getAllEventsFromDB);
+  yield takeEvery(Types.GET_ALL_EVENTS, getAllEventsFromDB);
 }
 export function* addEventWatcher() {
-  yield takeEvery(ADD_EVENT, addEventToDB);
+  yield takeEvery(Types.ADD_EVENT, addEventToDB);
+}
+export function* deleteEventWatcher() {
+  yield takeEvery(Types.DELETE_EVENT, deleteEventFromDB);
+}
+
+export function* updateEventWatcher() {
+  yield takeEvery(Types.UPDATE_EVENT, updateEventFromDB);
 }
 
 //=======================
@@ -96,5 +165,7 @@ export default function* rootSaga() {
   yield all([,
     fork(getAllEventsWatcher),
     fork(addEventWatcher),
+    fork(deleteEventWatcher),
+    fork(updateEventWatcher),
   ]);
 }

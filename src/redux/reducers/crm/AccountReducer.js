@@ -50,7 +50,6 @@ export default (state = INIT_STATE, action) => {
      */
     case acctType.GET_ACCOUNT_FAILURE:
       NotificationManager.warning("Error in fetching Account Data");
-      console.log(action.payload);
       return {
         ...state,
         accountToView: INIT_STATE.accountToView,
