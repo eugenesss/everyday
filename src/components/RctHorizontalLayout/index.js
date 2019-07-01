@@ -29,7 +29,7 @@ class RctHorizontalLayout extends Component {
       >
         <div className="rct-page-content">
           {children}
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </Scrollbars>
     );

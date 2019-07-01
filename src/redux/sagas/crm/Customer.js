@@ -15,7 +15,8 @@ import {
   SUBMIT_EDIT_CUSTOMER,
   DELETE_CUSTOMER,
   ADD_NOTE_CUSTOMER,
-  SET_CUSTOMER_ACTIVE
+  SET_CUSTOMER_ACTIVE,
+  TRANSFER_CUSTOMER
 } from "Types";
 import {
   getCustomerFailure,
@@ -28,7 +29,9 @@ import {
   addNoteCustomerSuccess,
   addNoteCustomerFailure,
   setCustomerActiveSuccess,
-  setCustomerActiveFailure
+  setCustomerActiveFailure,
+  transferCustomerSuccess,
+  transferCustomerFailure
 } from "Actions";
 
 import api from "Api";
@@ -71,6 +74,13 @@ const addNoteCustomerRequest = async (id, note) => {
 const setCustomerActiveRequest = async (id, status) => {
   const result = await api.patch(`/customers/${id}`, { isActive: status });
   return result.data;
+};
+const transferCustomerRequest = async (id, newOwner) => {
+  const result = await api.post("/customers/transfer", {
+    custIds: [id],
+    newOwner
+  });
+  return result.data.updatedRecords[0];
 };
 
 //=========================
@@ -173,6 +183,17 @@ function* setCustomerToDB({ payload }) {
     yield put(setCustomerActiveFailure(error));
   }
 }
+function* transferCustomerInDB({ payload }) {
+  const { id, newOwner } = payload;
+  try {
+    const data = yield call(transferCustomerRequest, id, newOwner);
+    window.location.replace(`/app/crm/customers/${data.id}`);
+    yield delay(500);
+    yield put(transferCustomerSuccess(data));
+  } catch (error) {
+    yield put(transferCustomerFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -201,6 +222,9 @@ export function* addNoteCustomerWatcher() {
 export function* setCustomerActiveWatcher() {
   yield takeEvery(SET_CUSTOMER_ACTIVE, setCustomerToDB);
 }
+export function* transferCustomerWatcher() {
+  yield takeEvery(TRANSFER_CUSTOMER, transferCustomerInDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -214,6 +238,7 @@ export default function* rootSaga() {
     fork(editCustomerWatcher),
     fork(deleteCustomerWatcher),
     fork(addNoteCustomerWatcher),
-    fork(setCustomerActiveWatcher)
+    fork(setCustomerActiveWatcher),
+    fork(transferCustomerWatcher)
   ]);
 }

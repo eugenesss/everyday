@@ -8,7 +8,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
 // Card
 import CustomerCard from "Components/CRM/Customer/CustomerCard";
 // Vertical Tabs
@@ -33,11 +33,10 @@ import {
   startCustomerEdit,
   deleteCustomer,
   addNoteCustomer,
-  setCustomerActive
+  setCustomerActive,
+  transferCustomer
 } from "Actions";
-
 // Add events dialog
-// Transfer Customer
 
 class crm_view_customer extends Component {
   constructor(props) {
@@ -45,6 +44,7 @@ class crm_view_customer extends Component {
     this.state = { activeIndex: 0 };
     this.edit = this.edit.bind(this);
     this.addNote = this.addNote.bind(this);
+    this.trasnfer = this.transfer.bind(this);
   }
   componentWillMount() {
     var id = this.props.match.params.id;
@@ -56,12 +56,25 @@ class crm_view_customer extends Component {
   // Change view tab state
   changeTabView = (_, activeIndex) => this.setState({ activeIndex });
 
-  reload() {
-    console.log("reload");
-  }
+  /**
+   * Edit
+   */
   edit(cust) {
     this.props.startCustomerEdit(cust);
     this.props.history.push("/app/crm/customers/edit");
+  }
+
+  /**
+   * Transfer Record
+   */
+  transfer(customer) {
+    this.props.show("transfer_record", {
+      name: customer.name,
+      action: val => this.handleTransfer(customer.id, val)
+    });
+  }
+  handleTransfer(id, newOwner) {
+    this.props.transferCustomer(id, newOwner);
   }
 
   /**
@@ -125,11 +138,11 @@ class crm_view_customer extends Component {
               ]}
               moreButton={
                 <MoreButton>
-                  {{
-                    handleOnClick: this.reload.bind(this),
-                    label: "Reload"
-                  }}
                   {{ handleOnClick: () => this.edit(customer), label: "Edit" }}
+                  {{
+                    handleOnClick: () => this.transfer(customer),
+                    label: "Transfer"
+                  }}
                   {{
                     handleOnClick: () => this.delete(customer),
                     label: "Delete"
@@ -208,10 +221,7 @@ class crm_view_customer extends Component {
             </div>
           </React.Fragment>
         ) : (
-          <PageErrorMessage
-            heading="Not Found"
-            message="This could be because of a network problem or the record might have been deleted"
-          />
+          <RecordNotFound />
         )}
       </React.Fragment>
     );
@@ -234,7 +244,8 @@ export default withRouter(
       startCustomerEdit,
       deleteCustomer,
       addNoteCustomer,
-      setCustomerActive
+      setCustomerActive,
+      transferCustomer
     }
   )(crm_view_customer)
 );

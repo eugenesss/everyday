@@ -9,7 +9,7 @@ import MoreButton from "Components/PageTitleBar/MoreButton";
 
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 // Deal Card
 import DealCard from "Components/CRM/Deal/DealCard";
@@ -35,16 +35,17 @@ import {
   clearSingleDeal,
   startDealEdit,
   addNoteDeal,
-  deleteDeal
+  deleteDeal,
+  transferDeal
 } from "Actions";
 //  Update Stage/Amount,
-// Add Event Dialog
 
 class crm_view_deal extends Component {
   constructor(props) {
     super(props);
     this.state = { activeIndex: 0 };
     this.addNote = this.addNote.bind(this);
+    this.transfer = this.transfer.bind(this);
   }
   componentWillMount() {
     var id = this.props.match.params.id;
@@ -56,9 +57,22 @@ class crm_view_deal extends Component {
   // Change view tab state
   changeTabView = (_, activeIndex) => this.setState({ activeIndex });
 
-  reload() {
-    console.log("reload");
+  /**
+   * Transfer Record
+   */
+  transfer(deal) {
+    this.props.show("transfer_record", {
+      name: deal.name,
+      action: val => this.handleTransfer(deal.id, val)
+    });
   }
+  handleTransfer(id, newOwner) {
+    this.props.transferDeal(id, newOwner);
+  }
+
+  /**
+   * Edit
+   */
   edit(deal) {
     this.props.startDealEdit(deal);
     this.props.history.push("/app/crm/deals/edit");
@@ -109,11 +123,11 @@ class crm_view_deal extends Component {
               createLink="/crm/new/deal"
               moreButton={
                 <MoreButton>
-                  {{
-                    handleOnClick: this.reload.bind(this),
-                    label: "Reload"
-                  }}
                   {{ handleOnClick: () => this.edit(deal), label: "Edit" }}
+                  {{
+                    handleOnClick: () => this.transfer(deal),
+                    label: "Transfer"
+                  }}
                   {{
                     handleOnClick: () => this.delete(deal),
                     label: "Delete"
@@ -193,10 +207,7 @@ class crm_view_deal extends Component {
             </div>
           </React.Fragment>
         ) : (
-          <PageErrorMessage
-            heading="Not Found"
-            message="This could be because of a network problem or the record might have been deleted"
-          />
+          <RecordNotFound />
         )}
       </React.Fragment>
     );
@@ -219,7 +230,8 @@ export default withRouter(
       startDealEdit,
       show,
       addNoteDeal,
-      deleteDeal
+      deleteDeal,
+      transferDeal
     }
   )(crm_view_deal)
 );

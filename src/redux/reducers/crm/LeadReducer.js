@@ -358,6 +358,26 @@ export default (state = INIT_STATE, action) => {
         leadToView: { ...state.leadToView, sectionLoading: false }
       };
 
+    /**
+     * Transfer
+     */
+    case leadType.TRANSFER_LEAD:
+      return { ...state, leadToView: { ...state.leadToView, loading: true } };
+    case leadType.TRANSFER_LEAD_SUCCESS:
+      NotificationManager.success("Record Transferred");
+      return {
+        ...state,
+        leadToView: {
+          ...state.leadToView,
+          lead: action.payload,
+          loading: false
+        }
+      };
+    case leadType.TRANSFER_LEAD_FAILURE:
+      NotificationManager.error("Error in Transferring Record");
+      console.log(action.payload);
+      return { ...state, leadToView: { ...state.leadToView, loading: false } };
+
     default:
       return { ...state };
   }

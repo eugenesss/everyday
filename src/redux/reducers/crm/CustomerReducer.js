@@ -261,6 +261,32 @@ export default (state = INIT_STATE, action) => {
         customerToView: { ...state.customerToView, loading: false }
       };
 
+    /**
+     * Transfer
+     */
+    case custType.TRANSFER_CUSTOMER:
+      return {
+        ...state,
+        customerToView: { ...state.customerToView, loading: true }
+      };
+    case custType.TRANSFER_CUSTOMER_SUCCESS:
+      NotificationManager.success("Record Transferred");
+      return {
+        ...state,
+        customerToView: {
+          ...state.customerToView,
+          customer: action.payload,
+          loading: false
+        }
+      };
+    case custType.TRANSFER_CUSTOMER_FAILURE:
+      NotificationManager.error("Error in Transferring Record");
+      console.log(action.payload);
+      return {
+        ...state,
+        customerToView: { ...state.customerToView, loading: false }
+      };
+
     default:
       return { ...state };
   }

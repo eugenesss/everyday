@@ -8,7 +8,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
 // Card
 import LeadCard from "Components/CRM/Lead/LeadCard";
 // Vertical Tabs
@@ -35,10 +35,10 @@ import {
   startLeadEdit,
   deleteLead,
   addNoteLead,
-  checkAccountExist
+  checkAccountExist,
+  transferLead
 } from "Actions";
 // Add events dialog
-//  Transfer Lead
 
 class crm_view_lead extends Component {
   constructor(props) {
@@ -47,6 +47,7 @@ class crm_view_lead extends Component {
     this.startConvert = this.startConvert.bind(this);
     this.edit = this.edit.bind(this);
     this.addNote = this.addNote.bind(this);
+    this.transfer = this.transfer.bind(this);
   }
   componentWillMount() {
     var id = this.props.match.params.id;
@@ -63,10 +64,18 @@ class crm_view_lead extends Component {
    * Transfer Record
    */
   transfer(lead) {
-    console.log("transger");
-    this.props.show("transfer_record", { name: lead.name });
+    this.props.show("transfer_record", {
+      name: lead.name,
+      action: val => this.handleTransfer(lead.id, val)
+    });
   }
-  // edit
+  handleTransfer(id, newOwner) {
+    this.props.transferLead(id, newOwner);
+  }
+
+  /**
+   * Edit
+   */
   edit(lead) {
     this.props.startLeadEdit(lead);
     this.props.history.push("/app/crm/leads/edit");
@@ -133,8 +142,8 @@ class crm_view_lead extends Component {
                 <MoreButton>
                   {{ handleOnClick: () => this.edit(lead), label: "Edit" }}
                   {{
-                    handleOnClick: this.transfer.bind(this),
-                    label: "Transfer Lead"
+                    handleOnClick: () => this.transfer(lead),
+                    label: "Transfer"
                   }}
                   {{
                     handleOnClick: () => this.delete(lead),
@@ -211,10 +220,7 @@ class crm_view_lead extends Component {
             <ConvertSuccessModal />
           </React.Fragment>
         ) : (
-          <PageErrorMessage
-            heading="Not Found"
-            message="This could be because of a network problem or the record might have been deleted"
-          />
+          <RecordNotFound />
         )}
       </React.Fragment>
     );
@@ -238,7 +244,8 @@ export default withRouter(
       show,
       deleteLead,
       addNoteLead,
-      checkAccountExist
+      checkAccountExist,
+      transferLead
     }
   )(crm_view_lead)
 );

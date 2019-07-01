@@ -14,19 +14,31 @@ const SingleNote = ({ note, onClickEdit, onClickDelete, action }) => {
     >
       <div className="post-content d-flex">
         <div className="post-img mr-10">
-          <Avatar name={"note.creatorInfo"} size={40} />
+          <Avatar
+            name={note.creatorInfo ? note.creatorInfo.name : "U"}
+            size={40}
+          />
         </div>
         <div className="post-info">
           <h4 className="mb-5">{note.name}</h4>
-          <p>{note.content}</p>
+          <p className="mb-5">{note.content}</p>
           <div className="meta-info fs-12 text-muted mb-5">
-            <span className="mr-15 d-inline-block">
-              <i className="zmdi zmdi-calendar mr-5" />
-              {getTheDate(note.createdAt)}
-            </span>
-            <span className="mr-15 d-inline-block">
+            <div className="d-inline-block">
+              <span className="mr-10 d-inline-block">
+                <i className="zmdi zmdi-calendar mr-5" />
+                {getTheDate(note.createdAt)}
+              </span>
+              <span className="mr-10 d-inline-block">•</span>
+            </div>
+            <span className="mr-10 d-inline-block">
               <i className="zmdi zmdi-time mr-5" />
               {getTheTime(note.createdAt)}
+            </span>
+            <span className="mr-10 d-inline-block">•</span>
+            <span className="mr-15 d-inline-block">
+              <p className="mb-0 fs-12 text-muted">
+                <i>{note.creatorInfo && note.creatorInfo.name}</i>
+              </p>
             </span>
           </div>
         </div>

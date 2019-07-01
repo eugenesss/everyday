@@ -15,7 +15,8 @@ import {
   SUBMIT_EDIT_ACCOUNT,
   ADD_NOTE_ACCOUNT,
   DELETE_ACCOUNT,
-  SET_ACCOUNT_ACTIVE
+  SET_ACCOUNT_ACTIVE,
+  TRANSFER_ACCOUNT
 } from "Types";
 import {
   getAccountFailure,
@@ -28,7 +29,9 @@ import {
   addNoteAccountSuccess,
   addNoteAccountFailure,
   setAccountActiveSuccess,
-  setAccountActiveFailure
+  setAccountActiveFailure,
+  transferAccountSuccess,
+  transferAccountFailure
 } from "Actions";
 
 import api from "Api";
@@ -71,6 +74,13 @@ const addNoteAccountRequest = async (id, note) => {
 const setAccountActiveRequest = async (id, status) => {
   const result = await api.patch(`/accounts/${id}`, { isActive: status });
   return result.data;
+};
+const transferAccountRequest = async (id, newOwner) => {
+  const result = await api.post("/accounts/transfer", {
+    acctIds: [id],
+    newOwner
+  });
+  return result.data.updatedRecords[0];
 };
 
 //=========================
@@ -179,6 +189,17 @@ function* setAccountActiveToDB({ payload }) {
     yield put(setAccountActiveFailure(error));
   }
 }
+function* transferAccountInDB({ payload }) {
+  const { id, newOwner } = payload;
+  try {
+    const data = yield call(transferAccountRequest, id, newOwner);
+    window.location.replace(`/app/crm/accounts/${data.id}`);
+    yield delay(500);
+    yield put(transferAccountSuccess(data));
+  } catch (error) {
+    yield put(transferAccountFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -207,6 +228,9 @@ export function* addNoteAccountWatcher() {
 export function* setAccountActiveWatcher() {
   yield takeEvery(SET_ACCOUNT_ACTIVE, setAccountActiveToDB);
 }
+export function* transferAccountWatcher() {
+  yield takeEvery(TRANSFER_ACCOUNT, transferAccountInDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -220,6 +244,7 @@ export default function* rootSaga() {
     fork(patchAccountWatcher),
     fork(deleteAccounttWatcher),
     fork(addNoteAccountWatcher),
-    fork(setAccountActiveWatcher)
+    fork(setAccountActiveWatcher),
+    fork(transferAccountWatcher)
   ]);
 }

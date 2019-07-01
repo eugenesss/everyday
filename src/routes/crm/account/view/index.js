@@ -8,7 +8,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
 // Account Card
 import AccountCard from "Components/CRM/Account/AccountCard";
 // Vertical Tabs
@@ -34,10 +34,10 @@ import {
   startAccountEdit,
   addNoteAccount,
   setAccountActive,
-  deleteAccount
+  deleteAccount,
+  transferAccount
 } from "Actions";
 // Add events dialog
-// Transfer Account
 
 class crm_view_account extends Component {
   constructor(props) {
@@ -55,14 +55,26 @@ class crm_view_account extends Component {
     this.props.clearSingleAccount();
   }
   // Change view tab state
-  changeTabView = (_, activeIndex) => this.setState({ activeIndex });
 
-  reload() {
-    console.log("reload");
-  }
+  /**
+   * Edit
+   */
   edit(acct) {
     this.props.startAccountEdit(acct);
     this.props.history.push("/app/crm/accounts/edit");
+  }
+
+  /**
+   * Transfer Record
+   */
+  transfer(account) {
+    this.props.show("transfer_record", {
+      name: account.name,
+      action: val => this.handleTransfer(account.id, val)
+    });
+  }
+  handleTransfer(id, newOwner) {
+    this.props.transferAccount(id, newOwner);
   }
 
   /**
@@ -126,8 +138,11 @@ class crm_view_account extends Component {
           ]}
           moreButton={
             <MoreButton>
-              {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
               {{ handleOnClick: () => this.edit(account), label: "Edit" }}
+              {{
+                handleOnClick: () => this.transfer(account),
+                label: "Transfer"
+              }}
               {{ handleOnClick: () => this.delete(account), label: "Delete" }}
             </MoreButton>
           }
@@ -202,10 +217,7 @@ class crm_view_account extends Component {
         </div>
       </React.Fragment>
     ) : (
-      <PageErrorMessage
-        heading="Not Found"
-        message="This could be because of a network problem or the record might have been deleted"
-      />
+      <RecordNotFound />
     );
   }
 }
@@ -225,7 +237,8 @@ export default withRouter(
       startAccountEdit,
       addNoteAccount,
       setAccountActive,
-      deleteAccount
+      deleteAccount,
+      transferAccount
     }
   )(crm_view_account)
 );
