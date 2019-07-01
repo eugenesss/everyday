@@ -119,7 +119,7 @@ function* deleteEventFromDB(item) {
 
 const updateEventRequest = async (id) => {
   try {
-    const result = await api.put(`/events/?id=${id.id}`, id)
+    const result = await api.patch(`/events/?id=${id.id}`, id)
     // const result = newEvent;
     return result.data;
   } catch (err) {
