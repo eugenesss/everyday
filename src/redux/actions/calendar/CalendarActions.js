@@ -20,7 +20,7 @@ import {
   DELETE_EVENT,
   DELETE_EVENT_SUCCESS,
   DELETE_EVENT_FAILURE,
-  
+
   GET_EVENT_FAILURE,
 
   CHANGE_DAY_VIEW,
@@ -68,6 +68,41 @@ export const addEventFailure = (err) => ({
   type: ADD_EVENT_FAILURE,
   payload: err
 })
+
+export const deleteEvent = (id) => ({
+  type: DELETE_EVENT,
+  payload: id
+})
+
+export const deleteEventSuccess = (item) => ({
+  type: DELETE_EVENT_SUCCESS,
+  payload: item
+})
+
+export const deleteEventFailure = (item) => ({
+  type: DELETE_EVENT_FAILURE,
+  payload: item
+})
+
+
+export const updateEvent = (id) => ({
+  type: UPDATE_EVENT,
+  payload: id
+})
+
+export const updateEventSuccess = (item) => ({
+  type: UPDATE_EVENT_SUCCESS,
+  payload: item
+})
+
+export const updateEventFailure = (item) => ({
+  type: UPDATE_EVENT_FAILURE,
+  payload: item
+})
+
+
+
+
 
 /**
  * Get Event Failure

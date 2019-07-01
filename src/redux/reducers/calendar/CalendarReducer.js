@@ -3,27 +3,9 @@
  */
 import { NotificationManager } from "react-notifications";
 import { convertMonth } from "Helpers/helpers";
-import {
-  GET_ALL_EVENTS,
-  GET_ALL_EVENTS_SUCCESS,
 
-  ON_CHANGE_ADD_EVENT,
-  ADD_EVENT,
-  ADD_EVENT_SUCCESS,
-  ADD_EVENT_FAILURE,
+import * as Types from 'Types'
 
-  GET_EVENT_FAILURE,
-
-  CHANGE_DAY_VIEW,
-  CHANGE_EVENT_VIEW,
-  CHANGE_CALENDAR_VIEW,
-  SHOW_SELECTED_SLOT,
-  HIDE_SELECTED_SLOT,
-  SHOW_SELECTED_EVENT,
-  SHOW_CREATE_EVENT,
-  HIDE_CREATE_EVENT,
-  SHOW_UPDATE_EVENT
-} from "Types";
 
 const INIT_STATE = {
   eventAdd: {},
@@ -42,18 +24,19 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
 
+  let showEvents = [...state.showEvents]
+
   switch (action.type) {
     /**
      * Get All Events
      */
-    case GET_ALL_EVENTS:
+    case Types.GET_ALL_EVENTS:
       return {
         ...state,
         eventsLoading: true
       }
-    case GET_ALL_EVENTS_SUCCESS:
+    case Types.GET_ALL_EVENTS_SUCCESS:
       // console.log(action.payload)
-      
       return {
         ...state,
         allEvents: action.payload.events,
@@ -61,7 +44,7 @@ export default (state = INIT_STATE, action) => {
         showEvents: action.payload.myEvents,
         eventsLoading: false
       }
-    case GET_EVENT_FAILURE:
+    case Types.GET_EVENT_FAILURE:
       NotificationManager.warning("Failed to get events from database.")
       return {
         ...state,
@@ -71,7 +54,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Add Event
      */
-    case ON_CHANGE_ADD_EVENT:
+    case Types.ON_CHANGE_ADD_EVENT:
       return {
         ...state,
         eventAdd: {
@@ -79,23 +62,50 @@ export default (state = INIT_STATE, action) => {
           [action.payload.field]: action.payload.value
         }
       }
-    case ADD_EVENT:
+    case Types.ADD_EVENT:
       return {
         ...state,
         eventsLoading: true,
       }
-    case ADD_EVENT_SUCCESS:
+
+    case Types.DELETE_EVENT:
+      return {
+        ...state,
+        eventsLoading: true,
+      }
+    case Types.DELETE_EVENT_SUCCESS:
+   
+      NotificationManager.success("Event has been sucessfully deleted")
+      showEvents = showEvents.filter(e => e.id != action.payload)
+
+      return {
+        ...state,
+        showEvents: showEvents,
+        eventsLoading: true,
+      }
+    case Types.DELETE_EVENT_FAILURE:
+      NotificationManager.warning(action.payload  + '. ' + 'As you might have deleted before')
+      return {
+        ...state,
+        eventsLoading: true,
+      }
+
+
+    case Types.ADD_EVENT_SUCCESS:
       NotificationManager.success("Event Added")
       // const event = action.payload
-      let showEvents = [...state.showEvents]
-      showEvents.push(action.payload)
+      let event = action.payload
+      event.start = new Date(event.start)
+      event.end = new Date(event.end)
+      showEvents.push(event)
+
       return {
         ...state,
         eventsLoading: false,
         isAddEvent: false,
         showEvents: showEvents
       }
-    case ADD_EVENT_FAILURE:
+    case Types.ADD_EVENT_FAILURE:
       NotificationManager.warning("Failed to Add Event")
       return {
         ...state,
@@ -103,23 +113,52 @@ export default (state = INIT_STATE, action) => {
         isAddEvent: false
       }
 
+    case Types.UPDATE_EVENT_SUCCESS:
+        NotificationManager.success("Event Updated")
+
+
+        let data = showEvents.map(item => {
+          if(item.id == action.payload.id) {
+            item = action.payload
+            item.start = new Date(action.payload.start)
+            item.end = new Date(action.payload.end)
+            return item
+          } else {
+            return item
+          }
+        })
+
+        return {
+          ...state,
+          eventsLoading: false,
+          isAddEvent: false,
+          showEvents: data
+        }
+    case Types.UPDATE_EVENT_FAILURE:
+        NotificationManager.warning("Failed to Update Event")
+        return {
+          ...state,
+          eventsLoading: false,
+          isAddEvent: false
+        }
+
     /**
      * State Changes
      */
-    case CHANGE_DAY_VIEW:
+    case Types.CHANGE_DAY_VIEW:
       return {
         ...state,
         dayView: action.payload,
         viewIndex: 2
       };
 
-    case CHANGE_EVENT_VIEW:
+    case Types.CHANGE_EVENT_VIEW:
       switch (action.payload) {
         case "My Calendar":
-          var showEvents = state.myEvents;
+          showEvents = state.myEvents;
           break;
         case "Company Calendar":
-          var showEvents = state.allEvents;
+          showEvents = state.allEvents;
           break;
       }
       return {
@@ -128,27 +167,27 @@ export default (state = INIT_STATE, action) => {
         eventView: action.payload
       };
 
-    case CHANGE_CALENDAR_VIEW:
+    case Types.CHANGE_CALENDAR_VIEW:
       return {
         ...state,
         viewIndex: action.payload
       };
 
-    case SHOW_SELECTED_SLOT:
+    case Types.SHOW_SELECTED_SLOT:
       return {
         ...state,
         slotSelected: action.payload,
         isSlotSelected: true
       };
 
-    case HIDE_SELECTED_SLOT:
+    case Types.HIDE_SELECTED_SLOT:
       return {
         ...state,
         slotSelected: null,
         isSlotSelected: false
       };
 
-    case SHOW_CREATE_EVENT:
+    case Types.SHOW_CREATE_EVENT:
       var item = state.eventAdd
       
       return {
@@ -164,7 +203,7 @@ export default (state = INIT_STATE, action) => {
         }
       };
 
-    case HIDE_CREATE_EVENT:
+    case Types.HIDE_CREATE_EVENT:
       return {
         ...state,
         isAddEvent: false

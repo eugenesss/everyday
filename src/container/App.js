@@ -41,17 +41,11 @@ class App extends Component {
           return <Redirect to={"/login"} />;
         }
       case true:
-<<<<<<< HEAD
-          if (location.pathname === "/") { return <Redirect to={"/app/homebase"} /> }
-          new Auth().handleAuthentication()
-      default:break
-=======
         if (location.pathname === "/") {
           return <Redirect to={"/app/homebase"} />;
         }
       default:
         break;
->>>>>>> 88b98be98f85a1be3030de050bcf66c6b052bcd1
     }
 
     return (

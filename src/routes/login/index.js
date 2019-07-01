@@ -139,6 +139,7 @@ class Signin extends Component {
                               onChange={event =>
                                 this.setState({ password: event.target.value })
                               }
+                              // style={{caretColor:'black', }}
                             />
                             
                             <span className="has-icon">
@@ -237,17 +238,17 @@ export default withRouter(connect(
 const emptyField = {
   borderBottom: '0.3px solid rgba(0,0,0,0.5)', borderRadius: 0, padding: 0,
   boxShadow: 'none', borderTop: 'none', borderLeft: 'none', borderRight: 'none',
-  fontWeight: '300', fontSize: '16px', color : '#ebedf2',
+  fontWeight: '300', fontSize: '16px', color : '#ebedf2', caretColor: 'black'
 }
 
 const PasswordStyle = {
   borderBottom: '0.3px solid rgba(0,0,0,0.5)', borderRadius: 0, padding: 0,
   boxShadow: 'none', borderTop: 'none', borderLeft: 'none', borderRight: 'none',
-  fontWeight: '500', fontSize: '18px', color : 'black', letterSpacing: '8px'
+  fontWeight: '500', fontSize: '18px', color : 'black', letterSpacing: '8px', caretColor: 'black'
 }
 
 const EmailStyle = {
   borderBottom: '0.3px solid rgba(0,0,0,0.5)', borderRadius: 0, padding: 0,
   boxShadow: 'none', borderTop: 'none', borderLeft: 'none', borderRight: 'none',
-  fontWeight: '500', fontSize: '18px', color : 'black',
+  fontWeight: '500', fontSize: '18px', color : 'black', caretColor: 'black'
 }

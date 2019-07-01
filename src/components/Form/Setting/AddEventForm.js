@@ -42,8 +42,8 @@ class UpdatePasswordForm extends Component {
 
     this.state = {
       description: "",
-      end_date: this.props.dayView.end,
-      start_date: this.props.dayView.start,
+      start_date: new Date(this.props.dayView.start).setHours(12,0,0),
+      end_date: new Date(this.props.dayView.end).setHours(16,0,0),
       title: "",
       all_day: false,
     }
@@ -118,8 +118,8 @@ class UpdatePasswordForm extends Component {
     } else {
       this.setState({
         all_day:false,
-        end_date: "",
-        start_date: ""
+        start_date: new Date(this.props.dayView.start).setHours(12,0,0),
+        end_date: new Date(this.props.dayView.end).setHours(16,0,0),
       })
     }
   }
@@ -153,7 +153,7 @@ class UpdatePasswordForm extends Component {
               margin="normal"
               id="mui-pickers-time"
               label="Time picker"
-              value={this.state.start_date != "" ? new Date(this.state.start_date) : new Date()}
+              value={this.state.start_date}
               onChange={e => {this.editField("start_date", e._d)}}
               KeyboardButtonProps={{
                 'aria-label': 'change time',
@@ -166,7 +166,7 @@ class UpdatePasswordForm extends Component {
               margin="normal"
               id="mui-pickers-time"
               label="Time picker"
-              value={this.state.end_date != "" ? new Date(this.state.end_date) : new Date()}
+              value={this.state.end_date}
               onChange={e => { this.editField("end_date", e._d)}}
               KeyboardButtonProps={{
                 'aria-label': 'change time',

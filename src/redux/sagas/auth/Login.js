@@ -33,15 +33,9 @@ const signInUserWithEmailPasswordRequest = async (email, password) => {
   return result.data;
 };
 
-<<<<<<< HEAD
-const getUserAccessRightsRequest = async ()  => {
-  const result = await api.get(`/accesssettings/user/accessRights`);
-  return result.data;
-=======
 const getUserAccessRightsRequest = async () => {
   const result = await api.get(`/accesssettings/user/accessRights`);
   return result.data.data;
->>>>>>> 88b98be98f85a1be3030de050bcf66c6b052bcd1
 };
 
 function* signInUserWithEmailPassword({ payload }) {
@@ -58,15 +52,7 @@ function* signInUserWithEmailPassword({ payload }) {
     if (signInUser.id) {
       localStorage.setItem("user_id", signInUser.userId);
       localStorage.setItem("accessKey", signInUser.id);
-<<<<<<< HEAD
-      
-      const userRights = yield call(
-        getUserAccessRightsRequest,
-        signInUser.userId
-      );
-=======
       const userRights = yield call(getUserAccessRightsRequest);
->>>>>>> 88b98be98f85a1be3030de050bcf66c6b052bcd1
 
       new Auth().setSession(signInUser);
       yield put(signinUserSuccess(signInUser, userRights));
