@@ -140,10 +140,12 @@ class acct_view_quotation extends Component {
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div className="col-md-5">
-                    <NewNote /* onAddNote="function" */ />
+                    {
+                    // <NewNote /* onAddNote="function" */ />
+                    }
                   </div>
                   <div className="col-md-7">
-                    <DisplayAllNotes notes={quotation.notes} />
+                    {/* <DisplayAllNotes notes={quotation.notes} /> */}
                   </div>
                 </div>
               </div>
