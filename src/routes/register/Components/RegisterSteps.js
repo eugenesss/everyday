@@ -83,12 +83,16 @@ class RegisterSteps extends React.Component {
             )
           break
 
+        case 2:
+            this.validateCard()
+          break
+
+
         default:break
       }
+
     } else {
       
-      console.log(next)
-
       switch (next) {
 
         case 0:
@@ -112,10 +116,10 @@ class RegisterSteps extends React.Component {
               state.planState !== "" ? this.setState({ activeStep: 2}) : (
                 this.props.handleRegErrorForm('Please tick one of the plans')
               )
+
             } else {
               this.props.handleRegErrorForm(infos)
             }
-
           
           break
         default:break
@@ -157,6 +161,7 @@ class RegisterSteps extends React.Component {
   validateCard = () => {
     const [result, info] = CheckCreditCard(this.props.paymentInfo)
     if (result) {
+      console.log(this.state)
       this.props.registerUser()
     } else {
       this.props.handleRegErrorForm(info)
