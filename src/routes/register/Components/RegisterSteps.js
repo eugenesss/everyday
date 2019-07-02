@@ -83,12 +83,16 @@ class RegisterSteps extends React.Component {
             )
           break
 
+        case 2:
+            this.validateCard()
+          break
+
+
         default:break
       }
+
     } else {
       
-      console.log(next)
-
       switch (next) {
 
         case 0:
@@ -106,16 +110,18 @@ class RegisterSteps extends React.Component {
           break
         case 2:
 
+            console.log('next, step 2')
             const [results, infos] = StepperZeroValidator(this.props, state.emailState, state.passwordState) 
           
             if (results) {
               state.planState !== "" ? this.setState({ activeStep: 2}) : (
                 this.props.handleRegErrorForm('Please tick one of the plans')
               )
+
+
             } else {
               this.props.handleRegErrorForm(infos)
             }
-
           
           break
         default:break
