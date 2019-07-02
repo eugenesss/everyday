@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
-
+import { newAccount } from "Helpers/url/crmRoutes";
 //sub components
 import AccountList from "Components/CRM/Account/AccountList";
 
@@ -56,7 +56,7 @@ class crm_account extends Component {
               />
             </div>
           }
-          createLink="/crm/new/account"
+          createLink={newAccount}
           moreButton={
             <MoreButton>
               {{ handleOnClick: this.reload.bind(this), label: "Reload" }}

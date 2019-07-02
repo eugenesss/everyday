@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import MUIDataTable from "mui-datatables";
 import { listOptions } from "Helpers/helpers";
+import { singleCustomer, singleAccount } from "Helpers/url/crmRoutes";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 // import IconButton from "@material-ui/core/IconButton";
@@ -22,7 +23,7 @@ const CustomerList = ({ tableData, loading, title, action }) => {
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
-            <NavLink to={`customers/${tableMeta.rowData[0]}`}>{value}</NavLink>
+            <NavLink to={singleCustomer(tableMeta.rowData[0])}>{value}</NavLink>
           );
         }
       }
@@ -34,7 +35,7 @@ const CustomerList = ({ tableData, loading, title, action }) => {
         customBodyRender: value => {
           return (
             value != null && (
-              <NavLink to={`accounts/${value.id}`}>{value.name}</NavLink>
+              <NavLink to={singleAccount(value.id)}>{value.name}</NavLink>
             )
           );
         }

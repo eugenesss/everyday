@@ -16,6 +16,7 @@ import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSumma
 
 // Actions
 import { changeDealView, getAllDeal, getDealSummary } from "Actions";
+import { newDeal } from "Helpers/url/crmRoutes";
 
 class crm_deal extends Component {
   state = {
@@ -64,7 +65,7 @@ class crm_deal extends Component {
               <ShowListSummaryButton action={() => this.toggleSummary()} />
             </div>
           }
-          createLink="/crm/new/deal"
+          createLink={newDeal}
           moreButton={
             <MoreButton>
               {{ handleOnClick: this.reload.bind(this), label: "Reload" }}

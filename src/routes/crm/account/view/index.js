@@ -27,7 +27,12 @@ import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 // Notes Tab
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 // Routes
-import { editAccount, accountPage, newDeal } from "Helpers/url/crmRoutes";
+import {
+  editAccount,
+  accountPage,
+  newDeal,
+  newAccount
+} from "Helpers/url/crmRoutes";
 // Actions
 import {
   getSingleAccount,
@@ -124,7 +129,7 @@ class crm_view_account extends Component {
         </Helmet>
         <PageTitleBar
           title="View Account"
-          createLink="/crm/new/account"
+          createLink={newAccount}
           extraButtons={[
             account.isActive
               ? {

@@ -26,7 +26,7 @@ import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 // Notes Tab
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 // routes
-import { customerPage, editCustomer } from "Helpers/url/crmRoutes";
+import { customerPage, editCustomer, newCustomer } from "Helpers/url/crmRoutes";
 // Actions
 import {
   getSingleCustomer,
@@ -123,7 +123,7 @@ class crm_view_customer extends Component {
             </Helmet>
             <PageTitleBar
               title="View Customer"
-              createLink="/crm/new/customer"
+              createLink={newCustomer}
               extraButtons={[
                 customer.isActive
                   ? {

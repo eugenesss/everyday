@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 // import Tooltip from "@material-ui/core/Tooltip";
 import MUIDataTable from "mui-datatables";
 import { listOptions } from "Helpers/helpers";
+import { singleLead } from "Helpers/url/crmRoutes";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
@@ -25,7 +26,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
       options: {
         customBodyRender: (value, tableMeta) => {
           return (
-            <NavLink to={`leads/${tableMeta.rowData[0]}`}>{value}</NavLink>
+            <NavLink to={singleLead(tableMeta.rowData[0])}>{value}</NavLink>
           );
         }
       }

@@ -27,7 +27,7 @@ import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 import ConvertLeadModal from "Components/CRM/Lead/Convert/ConvertLeadModal";
 import ConvertSuccessModal from "Components/CRM/Lead/Convert/ConvertSuccessModal";
 // routes
-import { editLead, leadPage } from "Helpers/url/crmRoutes";
+import { editLead, leadPage, newLead } from "Helpers/url/crmRoutes";
 //Actions
 import {
   getSingleLead,
@@ -131,7 +131,7 @@ class crm_view_lead extends Component {
             </Helmet>
             <PageTitleBar
               title="View Lead"
-              createLink="/crm/new/lead"
+              createLink={newLead}
               extraButtons={[
                 {
                   color: "success",

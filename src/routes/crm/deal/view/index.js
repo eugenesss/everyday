@@ -29,7 +29,7 @@ import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 // Notes Tab
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 // routes
-import { editDeal, dealPage } from "Helpers/url/crmRoutes";
+import { editDeal, dealPage, newDeal } from "Helpers/url/crmRoutes";
 // Actions
 import {
   getSingleDeal,
@@ -121,7 +121,7 @@ class crm_view_deal extends Component {
             </Helmet>
             <PageTitleBar
               title="View Deal"
-              createLink="/crm/new/deal"
+              createLink={newDeal}
               moreButton={
                 <MoreButton>
                   {{ handleOnClick: () => this.edit(deal), label: "Edit" }}

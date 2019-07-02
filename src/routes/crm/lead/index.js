@@ -18,6 +18,7 @@ import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSumma
 
 // Actions
 import { changeLeadView, getAllLead, getLeadSummary } from "Actions";
+import { newLead } from "Helpers/url/crmRoutes";
 
 class crm_lead extends Component {
   state = {
@@ -66,7 +67,7 @@ class crm_lead extends Component {
               <ShowListSummaryButton action={() => this.toggleSummary()} />
             </div>
           }
-          createLink="/crm/new/lead"
+          createLink={newLead}
           moreButton={
             <MoreButton>
               {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
