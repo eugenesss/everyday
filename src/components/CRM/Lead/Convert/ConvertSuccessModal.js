@@ -9,7 +9,7 @@ import DialogRoot from "Components/Dialog/DialogRoot";
 import ConvertedBlock from "./Components/ConvertedBlock";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import NumberFormat from "react-number-format";
-import { leadPage } from "Helpers/url/crmRoutes";
+import { leadPage } from "Helpers/url/crm";
 // Actions
 import { handleSuccessConvertModal } from "Actions";
 

@@ -39,7 +39,7 @@ import {
   transferLeadSuccess,
   transferLeadFailure
 } from "Actions";
-import { singleLead } from "Helpers/url/crmRoutes";
+import { singleLead } from "Helpers/url/crm";
 
 import api from "Api";
 

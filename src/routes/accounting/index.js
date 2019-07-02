@@ -1,94 +1,70 @@
-import React, { Component } from "react";
+import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 // async components
-import {
-  Async_acct_quotation_component,
-  Async_acct_invoice_component,
-  Async_acct_credit_note_component,
-  Async_acct_payment_component,
-  Async_acct_new_quotation_component,
-  Async_acct_new_invoice_component,
-  Async_acct_new_credit_note_component,
-  Async_acct_new_payment_component,
-  Async_view_quotation,
-  Async_view_invoice,
-  Async_view_credit_note,
-  Async_view_payment
-} from "Components/AsyncComponent/AsyncComponent";
+import * as async from "Components/AsyncComponent/Accounting";
+import * as url from "Helpers/url/accounting";
 
-export default class crmSwitcher extends Component {
-  render() {
-    const { match } = this.props;
-    return (
-      <div className="saas-dashboard">
-        <Switch>
-          {/* ------- /Quotations ------- */}
-          <Route
-            exact
-            path={`${match.url}/quotations`}
-            component={Async_acct_quotation_component}
-          />
-          <Route
-            path={`${match.url}/quotations/:id`}
-            component={Async_view_quotation}
-          />
+function acctSwitcher() {
+  return (
+    <div className="saas-dashboard">
+      <Switch>
+        {/* ------- /Quotations ------- */}
+        <Route
+          exact
+          path={url.quotePage}
+          component={async.acct_quotation_component}
+        />
+        <Route
+          path={url.newQuote}
+          component={async.acct_new_quotation_component}
+        />
+        <Route path={`${url.quotePage}/:id`} component={async.view_quotation} />
 
-          {/* ------- /Invoice ------- */}
-          <Route
-            exact
-            path={`${match.url}/invoices`}
-            component={Async_acct_invoice_component}
-          />
-          <Route
-            path={`${match.url}/invoices/:id`}
-            component={Async_view_invoice}
-          />
+        {/* ------- /Invoice ------- */}
+        <Route
+          exact
+          path={url.invoicePage}
+          component={async.acct_invoice_component}
+        />
+        <Route
+          path={url.newInvoice}
+          component={async.acct_new_invoice_component}
+        />
+        <Route path={`${url.invoicePage}/:id`} component={async.view_invoice} />
 
-          {/* ------- /Credit_Note ------- */}
-          <Route
-            exact
-            path={`${match.url}/credit_note`}
-            component={Async_acct_credit_note_component}
-          />
-          <Route
-            path={`${match.url}/credit_note/:id`}
-            component={Async_view_credit_note}
-          />
+        {/* ------- /Credit_Note ------- */}
+        <Route
+          exact
+          path={url.crednotePage}
+          component={async.acct_credit_note_component}
+        />
+        <Route
+          path={url.newCredNote}
+          component={async.acct_new_credit_note_component}
+        />
+        <Route
+          path={`${url.crednotePage}/:id`}
+          component={async.view_credit_note}
+        />
 
-          {/* ------- /Payment ------- */}
-          <Route
-            exact
-            path={`${match.url}/payment`}
-            component={Async_acct_payment_component}
-          />
-          <Route
-            path={`${match.url}/payment/:id`}
-            component={Async_view_payment}
-          />
+        {/* ------- /Payment ------- */}
+        <Route
+          exact
+          path={url.paymentPage}
+          component={async.acct_payment_component}
+        />
+        <Route
+          path={url.newPayment}
+          component={async.acct_new_payment_component}
+        />
+        <Route path={`${url.paymentPage}/:id`} component={async.view_payment} />
 
-          {/* ------- /Create ------- */}
-          <Route
-            path={`${match.url}/new/quotation`}
-            component={Async_acct_new_quotation_component}
-          />
-          <Route
-            path={`${match.url}/new/invoice`}
-            component={Async_acct_new_invoice_component}
-          />
-          <Route
-            path={`${match.url}/new/credit_note`}
-            component={Async_acct_new_credit_note_component}
-          />
-          <Route
-            path={`${match.url}/new/payment`}
-            component={Async_acct_new_payment_component}
-          />
-
-          {/* ------- /404 ------- */}
-          <Redirect to="/404" />
-        </Switch>
-      </div>
-    );
-  }
+        {/* ------- /404 ------- */}
+        <Redirect to="/404" />
+      </Switch>
+    </div>
+  );
 }
+
+export default acctSwitcher;

@@ -2,10 +2,8 @@
  * Horizontal Menu
  */
 import React, { Component } from "react";
-
 import { NavLink } from "react-router-dom";
 import navLinks from "./NavLinks";
-
 import NavMenuItem from "./NavMenuItem";
 
 class HorizontalMenu extends Component {

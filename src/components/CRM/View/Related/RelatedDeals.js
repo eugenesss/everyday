@@ -5,7 +5,7 @@ import RelatedTable from "./RelatedTable";
 import AddNewButton from "Components/Everyday/AddNewButton";
 import NumberFormat from "react-number-format";
 import { getTheDate } from "Helpers/helpers";
-import { singleDeal } from "Helpers/url/crmRoutes";
+import { singleDeal } from "Helpers/url/crm";
 
 const columns = [
   {

@@ -32,7 +32,7 @@ import {
   accountPage,
   newDeal,
   newAccount
-} from "Helpers/url/crmRoutes";
+} from "Helpers/url/crm";
 // Actions
 import {
   getSingleAccount,

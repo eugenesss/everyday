@@ -16,7 +16,7 @@ import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSumma
 
 // Actions
 import { changeDealView, getAllDeal, getDealSummary } from "Actions";
-import { newDeal } from "Helpers/url/crmRoutes";
+import { newDeal } from "Helpers/url/crm";
 
 class crm_deal extends Component {
   state = {

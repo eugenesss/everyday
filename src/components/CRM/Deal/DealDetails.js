@@ -7,7 +7,7 @@ import {
 import NumberFormat from "react-number-format";
 import NameTimeStamp from "Components/Everyday/NameTimeStamp";
 import { getTheDate } from "Helpers/helpers";
-import { singleAccount, singleCustomer } from "Helpers/url/crmRoutes";
+import { singleAccount, singleCustomer } from "Helpers/url/crm";
 
 const DealDetails = ({ deal }) => {
   return (

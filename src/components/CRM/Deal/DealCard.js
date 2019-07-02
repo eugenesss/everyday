@@ -8,7 +8,7 @@ import {
 import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 import NumberFormat from "react-number-format";
 
-import { singleAccount, singleCustomer } from "Helpers/url/crmRoutes";
+import { singleAccount, singleCustomer } from "Helpers/url/crm";
 
 const DealCard = ({
   name,

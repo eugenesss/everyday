@@ -29,7 +29,7 @@ import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 // Notes Tab
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 // routes
-import { editDeal, dealPage, newDeal } from "Helpers/url/crmRoutes";
+import { editDeal, dealPage, newDeal } from "Helpers/url/crm";
 // Actions
 import {
   getSingleDeal,

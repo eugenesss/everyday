@@ -6,7 +6,7 @@ import {
   ViewCardDetails
 } from "Components/CRM/View/Layout/ViewCard";
 import ActiveStatusBadge from "Components/Everyday/StatusBadge/ActiveStatusBadge";
-import { singleAccount } from "Helpers/url/crmRoutes";
+import { singleAccount } from "Helpers/url/crm";
 
 const CustomerCard = ({
   name,

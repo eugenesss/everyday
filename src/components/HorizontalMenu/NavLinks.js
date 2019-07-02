@@ -1,10 +1,18 @@
+// crm routes
 import {
   leadPage,
   customerPage,
   accountPage,
   dealPage,
   teamPage
-} from "Helpers/url/crmRoutes";
+} from "Helpers/url/crm";
+// acct routes
+import {
+  quotePage,
+  invoicePage,
+  crednotePage,
+  paymentPage
+} from "Helpers/url/accounting";
 
 export default {
   crm: [
@@ -72,25 +80,25 @@ export default {
     {
       menu_title: "sidebar.quotations",
       menu_icon: "zmdi zmdi-receipt text-everyday",
-      path: "/app/acct/quotations",
+      path: quotePage,
       child_routes: null
     },
     {
       menu_title: "sidebar.invoices",
       menu_icon: "zmdi zmdi-shopping-cart text-everyday",
-      path: "/app/acct/invoices",
+      path: invoicePage,
       child_routes: null
     },
     {
       menu_title: "sidebar.payment",
       menu_icon: "zmdi zmdi-card text-everyday",
-      path: "/app/acct/payment",
+      path: paymentPage,
       child_routes: null
     },
     {
       menu_title: "sidebar.credit_note",
       menu_icon: "zmdi zmdi-store text-everyday",
-      path: "/app/acct/credit_note",
+      path: crednotePage,
       child_routes: null
     }
   ]

@@ -36,7 +36,7 @@ import {
   transferDealSuccess,
   transferDealFailure
 } from "Actions";
-import { singleDeal } from "Helpers/url/crmRoutes";
+import { singleDeal } from "Helpers/url/crm";
 
 import api from "Api";
 

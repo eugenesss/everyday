@@ -18,7 +18,7 @@ import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSumma
 
 // Actions
 import { changeLeadView, getAllLead, getLeadSummary } from "Actions";
-import { newLead } from "Helpers/url/crmRoutes";
+import { newLead } from "Helpers/url/crm";
 
 class crm_lead extends Component {
   state = {

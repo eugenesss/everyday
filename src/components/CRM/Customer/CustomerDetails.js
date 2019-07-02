@@ -6,7 +6,7 @@ import {
 } from "Components/CRM/View/Layout/Details";
 import NameTimeStamp from "Components/Everyday/NameTimeStamp";
 
-import { singleAccount } from "Helpers/url/crmRoutes";
+import { singleAccount } from "Helpers/url/crm";
 
 const CustomerDetails = ({ customer }) => {
   return (

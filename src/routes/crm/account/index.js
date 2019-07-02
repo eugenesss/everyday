@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
-import { newAccount } from "Helpers/url/crmRoutes";
+import { newAccount } from "Helpers/url/crm";
 //sub components
 import AccountList from "Components/CRM/Account/AccountList";
 

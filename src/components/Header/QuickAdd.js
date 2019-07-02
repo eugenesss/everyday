@@ -16,7 +16,7 @@ import {
   newCustomer,
   newAccount,
   newDeal
-} from "Helpers/url/crmRoutes";
+} from "Helpers/url/crm";
 
 // intl messages
 import IntlMessages from "Util/IntlMessages";

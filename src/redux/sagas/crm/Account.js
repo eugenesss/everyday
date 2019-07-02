@@ -33,7 +33,7 @@ import {
   transferAccountSuccess,
   transferAccountFailure
 } from "Actions";
-import { singleAccount } from "Helpers/url/crmRoutes";
+import { singleAccount } from "Helpers/url/crm";
 
 import api from "Api";
 

@@ -27,7 +27,7 @@ import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 import ConvertLeadModal from "Components/CRM/Lead/Convert/ConvertLeadModal";
 import ConvertSuccessModal from "Components/CRM/Lead/Convert/ConvertSuccessModal";
 // routes
-import { editLead, leadPage, newLead } from "Helpers/url/crmRoutes";
+import { editLead, leadPage, newLead } from "Helpers/url/crm";
 //Actions
 import {
   getSingleLead,

@@ -20,60 +20,6 @@ export const Async_proj_component = Loadable({
   loading: () => <RctPageLoader />
 });
 
-// accounting management
-export const Async_acct_quotation_component = Loadable({
-  loader: () => import("Routes/accounting/quotation"),
-  loading: () => <RctPageLoader />
-});
-export const Async_acct_invoice_component = Loadable({
-  loader: () => import("Routes/accounting/invoice"),
-  loading: () => <RctPageLoader />
-});
-export const Async_acct_credit_note_component = Loadable({
-  loader: () => import("Routes/accounting/credit_note"),
-  loading: () => <RctPageLoader />
-});
-export const Async_acct_payment_component = Loadable({
-  loader: () => import("Routes/accounting/payment"),
-  loading: () => <RctPageLoader />
-});
-
-// accounting management view
-export const Async_view_quotation = Loadable({
-  loader: () => import("Routes/accounting/quotation/view"),
-  loading: () => <RctPageLoader />
-});
-export const Async_view_invoice = Loadable({
-  loader: () => import("Routes/accounting/invoice/view"),
-  loading: () => <RctPageLoader />
-});
-export const Async_view_credit_note = Loadable({
-  loader: () => import("Routes/accounting/credit_note/view"),
-  loading: () => <RctPageLoader />
-});
-export const Async_view_payment = Loadable({
-  loader: () => import("Routes/accounting/payment/view"),
-  loading: () => <RctPageLoader />
-});
-
-// accounting management new
-export const Async_acct_new_quotation_component = Loadable({
-  loader: () => import("Routes/accounting/new/quotation"),
-  loading: () => <RctPageLoader />
-});
-export const Async_acct_new_invoice_component = Loadable({
-  loader: () => import("Routes/accounting/new/invoice"),
-  loading: () => <RctPageLoader />
-});
-export const Async_acct_new_credit_note_component = Loadable({
-  loader: () => import("Routes/accounting/new/credit_note"),
-  loading: () => <RctPageLoader />
-});
-export const Async_acct_new_payment_component = Loadable({
-  loader: () => import("Routes/accounting/new/payment"),
-  loading: () => <RctPageLoader />
-});
-
 // report
 export const Async_report_component = Loadable({
   loader: () => import("Routes/report"),

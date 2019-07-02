@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import ViewSectionLayout from "Components/CRM/View/Layout/ViewSectionLayout";
 import RelatedTable from "./RelatedTable";
-import { singleCustomer } from "Helpers/url/crmRoutes";
+import { singleCustomer } from "Helpers/url/crm";
 
 const columns = [
   {

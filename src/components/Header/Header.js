@@ -11,7 +11,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { withRouter } from "react-router-dom";
 
 // components
-import QuickLinks from "./QuickLinks";
 import QuickAdd from "./QuickAdd";
 import Notifications from "./Notifications";
 import UserBlock from "./UserBlock";
@@ -37,16 +36,7 @@ class Header extends Component {
     return (
       <AppBar position="static" className="rct-header">
         <Toolbar className="d-flex justify-content-between w-100">
-          <div className="d-flex align-items-center">
-            <ul
-              className="list-inline mb-0 ml-0 navbar-left"
-              //  style={{ marginLeft: "24px" }}
-            >
-              <QuickAdd />
-              <QuickLinks />
-            </ul>
-          </div>
-          <div className="site-logo" style={{ marginLeft: "68px" }}>
+          <div className="site-logo">
             <Link to="/" className="logo-mini">
               <img
                 src={require("Assets/img/appLogo_yellow.png")}
@@ -57,17 +47,7 @@ class Header extends Component {
             </Link>
           </div>
           <ul className="navbar-right list-inline mb-0">
-            {/* <li className="list-inline-item">
-              <Tooltip title="Chat" placement="bottom">
-                <IconButton
-                  className="text-white"
-                  aria-label="chat"
-                  href="/app/chat"
-                >
-                  <i className="zmdi zmdi-comments" />
-                </IconButton>
-              </Tooltip>
-            </li> */}
+            <QuickAdd />
             <Notifications classes={classes} />
             <MiniCalendar classes={classes} />
             <li className="list-inline-item">
