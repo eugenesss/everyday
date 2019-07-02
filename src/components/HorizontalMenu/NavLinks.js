@@ -1,34 +1,41 @@
-// horizontal nav links
+import {
+  leadPage,
+  customerPage,
+  accountPage,
+  dealPage,
+  teamPage
+} from "Helpers/url/crmRoutes";
+
 export default {
   crm: [
     {
       menu_title: "sidebar.leads",
       menu_icon: "zmdi zmdi-account-circle text-primary",
-      path: "/app/crm/leads",
+      path: leadPage,
       child_routes: null
     },
     {
       menu_title: "sidebar.customers",
       menu_icon: "zmdi zmdi-accounts-outline text-primary",
-      path: "/app/crm/customers",
+      path: customerPage,
       child_routes: null
     },
     {
       menu_title: "sidebar.accounts",
       menu_icon: "zmdi zmdi-city-alt text-primary",
-      path: "/app/crm/accounts",
+      path: accountPage,
       child_routes: null
     },
     {
       menu_title: "sidebar.deals",
       menu_icon: "zmdi zmdi-case text-primary",
-      path: "/app/crm/deals",
+      path: dealPage,
       child_routes: null
     },
     {
       menu_title: "sidebar.teams",
       menu_icon: "zmdi zmdi-accounts-alt text-primary",
-      path: "/app/crm/team",
+      path: teamPage,
       child_routes: null
     }
   ],

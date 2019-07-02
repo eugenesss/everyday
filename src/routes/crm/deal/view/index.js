@@ -28,7 +28,8 @@ import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 // Notes Tab
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
-
+// routes
+import { editDeal, dealPage } from "Helpers/url/crmRoutes";
 // Actions
 import {
   getSingleDeal,
@@ -75,7 +76,7 @@ class crm_view_deal extends Component {
    */
   edit(deal) {
     this.props.startDealEdit(deal);
-    this.props.history.push("/app/crm/deals/edit");
+    this.props.history.push(editDeal);
   }
 
   /**
@@ -85,7 +86,7 @@ class crm_view_deal extends Component {
     this.props.deleteDeal(dealId);
     //console.log(dealId);
     setTimeout(() => {
-      this.props.history.push(`/app/crm/deals`);
+      this.props.history.push(dealPage);
     }, 500);
   }
   delete(deal) {

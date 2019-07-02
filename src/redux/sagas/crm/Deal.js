@@ -36,6 +36,7 @@ import {
   transferDealSuccess,
   transferDealFailure
 } from "Actions";
+import { singleDeal } from "Helpers/url/crmRoutes";
 
 import api from "Api";
 
@@ -211,7 +212,7 @@ function* transferDealInDB({ payload }) {
   const { id, newOwner } = payload;
   try {
     const data = yield call(transferDealRequest, id, newOwner);
-    window.location.replace(`/app/crm/deals/${data.id}`);
+    window.location.replace(singleDeal(data.id));
     yield delay(500);
     yield put(transferDealSuccess(data));
   } catch (error) {

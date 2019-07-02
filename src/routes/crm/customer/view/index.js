@@ -25,7 +25,8 @@ import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 // Notes Tab
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
-
+// routes
+import { customerPage, editCustomer } from "Helpers/url/crmRoutes";
 // Actions
 import {
   getSingleCustomer,
@@ -61,7 +62,7 @@ class crm_view_customer extends Component {
    */
   edit(cust) {
     this.props.startCustomerEdit(cust);
-    this.props.history.push("/app/crm/customers/edit");
+    this.props.history.push(editCustomer);
   }
 
   /**
@@ -84,7 +85,7 @@ class crm_view_customer extends Component {
     this.props.deleteCustomer(custId);
     //console.log(custId);
     setTimeout(() => {
-      this.props.history.push(`/app/crm/customers`);
+      this.props.history.push(customerPage);
     }, 500);
   }
   delete(cust) {

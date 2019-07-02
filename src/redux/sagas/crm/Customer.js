@@ -33,6 +33,7 @@ import {
   transferCustomerSuccess,
   transferCustomerFailure
 } from "Actions";
+import { singleCustomer } from "Helpers/url/crmRoutes";
 
 import api from "Api";
 
@@ -187,7 +188,7 @@ function* transferCustomerInDB({ payload }) {
   const { id, newOwner } = payload;
   try {
     const data = yield call(transferCustomerRequest, id, newOwner);
-    window.location.replace(`/app/crm/customers/${data.id}`);
+    window.location.replace(singleCustomer(data.id));
     yield delay(500);
     yield put(transferCustomerSuccess(data));
   } catch (error) {

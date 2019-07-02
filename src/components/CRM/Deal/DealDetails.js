@@ -7,6 +7,7 @@ import {
 import NumberFormat from "react-number-format";
 import NameTimeStamp from "Components/Everyday/NameTimeStamp";
 import { getTheDate } from "Helpers/helpers";
+import { singleAccount, singleCustomer } from "Helpers/url/crmRoutes";
 
 const DealDetails = ({ deal }) => {
   return (
@@ -31,7 +32,7 @@ const DealDetails = ({ deal }) => {
         title="Account"
         value={
           deal.accountInfo && (
-            <Link to={`/app/crm/accounts/${deal.accountInfo.id}`}>
+            <Link to={singleAccount(deal.accountInfo.id)}>
               {deal.accountInfo.name}
             </Link>
           )
@@ -42,7 +43,7 @@ const DealDetails = ({ deal }) => {
         title="Customer"
         value={
           deal.customerInfo && (
-            <Link to={`/app/crm/customers/${deal.customerInfo.id}`}>
+            <Link to={singleCustomer(deal.customerInfo.id)}>
               {deal.customerInfo.name}
             </Link>
           )

@@ -39,6 +39,7 @@ import {
   transferLeadSuccess,
   transferLeadFailure
 } from "Actions";
+import { singleLead } from "Helpers/url/crmRoutes";
 
 import api from "Api";
 
@@ -228,7 +229,7 @@ function* transferLeadToDB({ payload }) {
   const { id, newOwner } = payload;
   try {
     const data = yield call(transferLeadRequest, id, newOwner);
-    window.location.replace(`/app/crm/leads/${data.id}`);
+    window.location.replace(singleLead(data.id));
     yield delay(500);
     yield put(transferLeadSuccess(data));
   } catch (error) {

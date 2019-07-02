@@ -33,6 +33,7 @@ import {
   transferAccountSuccess,
   transferAccountFailure
 } from "Actions";
+import { singleAccount } from "Helpers/url/crmRoutes";
 
 import api from "Api";
 
@@ -193,7 +194,7 @@ function* transferAccountInDB({ payload }) {
   const { id, newOwner } = payload;
   try {
     const data = yield call(transferAccountRequest, id, newOwner);
-    window.location.replace(`/app/crm/accounts/${data.id}`);
+    window.location.replace(singleAccount(data.id));
     yield delay(500);
     yield put(transferAccountSuccess(data));
   } catch (error) {

@@ -26,7 +26,8 @@ import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 // Notes Tab
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
-
+// Routes
+import { editAccount, accountPage, newDeal } from "Helpers/url/crmRoutes";
 // Actions
 import {
   getSingleAccount,
@@ -55,13 +56,14 @@ class crm_view_account extends Component {
     this.props.clearSingleAccount();
   }
   // Change view tab state
+  changeTabView = (_, activeIndex) => this.setState({ activeIndex });
 
   /**
    * Edit
    */
   edit(acct) {
     this.props.startAccountEdit(acct);
-    this.props.history.push("/app/crm/accounts/edit");
+    this.props.history.push(editAccount);
   }
 
   /**
@@ -83,7 +85,7 @@ class crm_view_account extends Component {
   handleDelete(acctId) {
     this.props.deleteAccount(acctId);
     setTimeout(() => {
-      this.props.history.push(`/app/crm/accounts`);
+      this.props.history.push(accountPage);
     }, 500);
   }
   delete(acct) {
@@ -97,7 +99,7 @@ class crm_view_account extends Component {
     console.log("new events");
   }
   handleNewDeal() {
-    this.props.history.push("/app/crm/new/deal");
+    this.props.history.push(newDeal);
   }
   setInactive(acct) {
     this.props.setAccountActive(acct.id, !acct.isActive);

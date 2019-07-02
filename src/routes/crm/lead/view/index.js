@@ -26,7 +26,8 @@ import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 // Convert Lead Modal
 import ConvertLeadModal from "Components/CRM/Lead/Convert/ConvertLeadModal";
 import ConvertSuccessModal from "Components/CRM/Lead/Convert/ConvertSuccessModal";
-
+// routes
+import { editLead, leadPage } from "Helpers/url/crmRoutes";
 //Actions
 import {
   getSingleLead,
@@ -78,7 +79,7 @@ class crm_view_lead extends Component {
    */
   edit(lead) {
     this.props.startLeadEdit(lead);
-    this.props.history.push("/app/crm/leads/edit");
+    this.props.history.push(editLead);
   }
 
   /**
@@ -87,7 +88,7 @@ class crm_view_lead extends Component {
   handleDelete(leadId) {
     this.props.deleteLead(leadId);
     setTimeout(() => {
-      this.props.history.push(`/app/crm/leads`);
+      this.props.history.push(leadPage);
     }, 500);
   }
   delete(lead) {
