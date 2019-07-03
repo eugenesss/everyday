@@ -31,7 +31,10 @@ import loginSagas from "./auth/Login";
 import registerSagas from "./auth/Register";
 
 // uploadFile
-import uploadFileSagas from './upload/uploadFile'
+import uploadFileSagas from "./upload/uploadFile";
+
+// import record
+import importRecordSagas from "./import/Import";
 
 export default function* rootSaga(getState) {
   yield all([
@@ -52,6 +55,7 @@ export default function* rootSaga(getState) {
     crmFieldSagas(),
     loginSagas(),
     registerSagas(),
-    uploadFileSagas()
+    uploadFileSagas(),
+    importRecordSagas()
   ]);
 }

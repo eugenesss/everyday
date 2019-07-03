@@ -11,21 +11,13 @@ import IconButton from "@material-ui/core/IconButton";
 
 // helpers
 import { getAppLayout } from "Helpers/helpers";
-import {
-  newLead,
-  newCustomer,
-  newAccount,
-  newDeal
-} from "Helpers/url/crm";
+import { newLead, newCustomer, newAccount, newDeal } from "Helpers/url/crm";
 
 // intl messages
 import IntlMessages from "Util/IntlMessages";
 
 const QuickLinks = ({ location }) => (
-  <UncontrolledDropdown
-    nav
-    className="list-inline-item quciklink-dropdown tour-step-1"
-  >
+  <UncontrolledDropdown nav className="list-inline-item notification-dropdown">
     <DropdownToggle nav className="p-0">
       <Tooltip title="Quick Add" placement="bottom">
         <IconButton aria-label="bell">

@@ -38,7 +38,7 @@ const PageTitleBar = ({
             );
           })}
         {createLink && (
-          <Link to={`/${getAppLayout(location)}${createLink}`}>
+          <Link to={createLink}>
             <Tooltip title="Add New" placement="bottom">
               <Fab
                 size="small"

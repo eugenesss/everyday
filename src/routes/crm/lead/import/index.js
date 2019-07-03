@@ -1,14 +1,40 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
+// Global Req
+import { Helmet } from "react-helmet";
+// Components
+import ImportRecords from "Components/Everyday/ImportRecords";
+
+// Actions
+import { importRecord, fetchImportMapping } from "Actions";
 
 class crm_import_lead extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.importLeadRecord = this.importLeadRecord.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.fetchImportMapping("leads");
+  }
+  importLeadRecord(file) {
+    this.props.importRecord("leads", file);
+  }
+
   render() {
     return (
-      <div>
-        <p>import page</p>
-      </div>
+      <React.Fragment>
+        <Helmet>
+          <title>Everyday | Import Leads</title>
+        </Helmet>
+        <ImportRecords importType="lead" importAction={this.importLeadRecord} />
+      </React.Fragment>
     );
   }
 }
 
-export default crm_import_lead;
+export default connect(
+  null,
+  { importRecord, fetchImportMapping }
+)(crm_import_lead);

@@ -1,24 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 //Sub Components
 import LeadList from "Components/CRM/Lead/LeadList";
-
 //Page Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
-
 // List View
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
-
 // ListSummary
 import ListSummary from "Components/Everyday/ListSummary/ListSummary";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
-
 // Actions
 import { changeLeadView, getAllLead, getLeadSummary } from "Actions";
-import { newLead } from "Helpers/url/crm";
+import { newLead, importLead } from "Helpers/url/crm";
 
 class crm_lead extends Component {
   state = {
@@ -37,8 +32,8 @@ class crm_lead extends Component {
   reload() {
     console.log("reload");
   }
-  massImportLeads() {
-    console.log("massImportLeads");
+  importLead() {
+    this.props.history.push(importLead);
   }
 
   render() {
@@ -72,8 +67,8 @@ class crm_lead extends Component {
             <MoreButton>
               {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
               {{
-                handleOnClick: this.massImportLeads.bind(this),
-                label: "Mass Import Leads (csv)"
+                handleOnClick: this.importLead.bind(this),
+                label: "Import"
               }}
             </MoreButton>
           }
