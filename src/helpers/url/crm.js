@@ -5,48 +5,40 @@
 /**
  * Lead Pages
  */
-export const leadPage = "/app/crm/leads";
-export const singleLead = id => {
-  return `${leadPage}/${id}`;
-};
-export const newLead = leadPage + "/new";
-export const editLead = leadPage + "/edit";
-export const importLead = leadPage + "/import";
+export const leadListPage = "/app/crm/leads";
+export const singleLead = id => `${leadListPage}/${id}`;
+export const leadNewPage = leadListPage + "/new";
+export const leadEditPage = id => `${leadListPage}/${id}/edit`;
+export const leadImportPage = leadListPage + "/import";
 
 /**
  * Customer Pages
  */
-export const customerPage = "/app/crm/customers";
-export const singleCustomer = id => {
-  return `${customerPage}/${id}`;
-};
-export const newCustomer = customerPage + "/new";
-export const editCustomer = customerPage + "/edit";
-export const importCustomer = customerPage + "/import";
+export const customerListPage = "/app/crm/customers";
+export const singleCustomer = id => `${customerListPage}/${id}`;
+export const customerNewPage = customerListPage + "/new";
+export const customerEditPage = customerListPage + "/edit";
+export const customerImportPage = customerListPage + "/import";
 
 /**
  * Account Pages
  */
-export const accountPage = "/app/crm/accounts";
-export const singleAccount = id => {
-  return `${accountPage}/${id}`;
-};
-export const newAccount = accountPage + "/new";
-export const editAccount = accountPage + "/edit";
-export const importAccount = accountPage + "/import";
+export const accountListPage = "/app/crm/accounts";
+export const singleAccount = id => `${accountListPage}/${id}`;
+export const accountNewPage = accountListPage + "/new";
+export const accountEditPage = accountListPage + "/edit";
+export const accountImportPage = accountListPage + "/import";
 
 /**
  * Deal Pages
  */
-export const dealPage = "/app/crm/deals";
-export const singleDeal = id => {
-  return `${dealPage}/${id}`;
-};
-export const newDeal = dealPage + "/new";
-export const editDeal = dealPage + "/edit";
-export const importDeal = dealPage + "/import";
+export const dealListPage = "/app/crm/deals";
+export const singleDeal = id => `${dealListPage}/${id}`;
+export const dealNewPage = dealListPage + "/new";
+export const dealEditPage = dealListPage + "/edit";
+export const dealImportPage = dealListPage + "/import";
 
 /**
  * Team Pages
  */
-export const teamPage = "/app/crm/teams";
+export const teamListPage = "/app/crm/teams";

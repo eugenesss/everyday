@@ -5,19 +5,19 @@ import Loadable from "react-loadable";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 
 // crm
-export const crm_lead_component = Loadable({
+export const crm_lead_list = Loadable({
   loader: () => import("Routes/crm/lead"),
   loading: () => <RctPageLoader />
 });
-export const crm_customer_component = Loadable({
+export const crm_customer_list = Loadable({
   loader: () => import("Routes/crm/customer"),
   loading: () => <RctPageLoader />
 });
-export const crm_account_component = Loadable({
+export const crm_account_list = Loadable({
   loader: () => import("Routes/crm/account"),
   loading: () => <RctPageLoader />
 });
-export const crm_deal_component = Loadable({
+export const crm_deal_list = Loadable({
   loader: () => import("Routes/crm/deal"),
   loading: () => <RctPageLoader />
 });
@@ -45,19 +45,19 @@ export const crm_single_deal = Loadable({
 });
 
 // crm_new
-export const crm_new_lead_component = Loadable({
+export const crm_new_lead = Loadable({
   loader: () => import("Routes/crm/lead/new"),
   loading: () => <RctPageLoader />
 });
-export const crm_new_customer_component = Loadable({
+export const crm_new_customer = Loadable({
   loader: () => import("Routes/crm/customer/new"),
   loading: () => <RctPageLoader />
 });
-export const crm_new_account_component = Loadable({
+export const crm_new_account = Loadable({
   loader: () => import("Routes/crm/account/new"),
   loading: () => <RctPageLoader />
 });
-export const crm_new_deal_component = Loadable({
+export const crm_new_deal = Loadable({
   loader: () => import("Routes/crm/deal/new"),
   loading: () => <RctPageLoader />
 });

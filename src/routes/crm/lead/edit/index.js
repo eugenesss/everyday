@@ -1,47 +1,53 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
-// Sub components
-import { Helmet } from "react-helmet";
-
 // intl messages
 import IntlMessages from "Util/IntlMessages";
-
 // Page Components
+import { Helmet } from "react-helmet";
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import LeadForm from "Components/Form/Lead/LeadForm";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 // Actions
-import { submitEditLead } from "Actions";
+import { editLead, getSingleLead } from "Actions";
 
 class crm_edit_lead extends Component {
+  componentWillMount() {
+    var id = this.props.match.params.id;
+    this.props.getSingleLead(id);
+  }
+
   render() {
-    const { loading } = this.props.leadForm;
+    const { lead, loading } = this.props.leadToView;
     return (
       <React.Fragment>
         <Helmet>
           <title>Everyday | Edit Lead</title>
         </Helmet>
-        <RctCollapsibleCard heading={<IntlMessages id="sidebar.editLead" />}>
-          {loading && <RctSectionLoader />}
+        {loading ? (
+          <RctPageLoader />
+        ) : (
           <div className="row">
-            <div className="col-md-11">
-              <LeadForm edit handleSubmit={this.props.submitEditLead} />
+            <div className="col-md-10 offset-md-1">
+              <RctCollapsibleCard
+                heading={<IntlMessages id="sidebar.editLead" />}
+              >
+                <LeadForm edit={lead} handleSubmit={this.props.editLead} />
+              </RctCollapsibleCard>
             </div>
           </div>
-        </RctCollapsibleCard>
+        )}
       </React.Fragment>
     );
   }
 }
 const mapStateToProps = ({ crmState }) => {
   const { leadState } = crmState;
-  const { leadForm } = leadState;
-  return { leadForm };
+  const { leadToView } = leadState;
+  return { leadToView };
 };
 
 export default connect(
   mapStateToProps,
-  { submitEditLead }
+  { editLead, getSingleLead }
 )(crm_edit_lead);

@@ -92,22 +92,32 @@ export const getLeadSummaryFailure = error => ({
 /**
  * New Lead
  */
-export const handleChangeLead = (field, value, type) => ({
-  type: types.HANDLE_CHANGE_NEW_LEAD,
-  payload: { type, value, field }
-});
-export const submitNewLead = () => ({
-  type: types.SUBMIT_NEW_LEAD
-});
-export const clearNewLead = () => ({
-  type: types.CLEAR_NEW_LEAD
+export const newLead = form => ({
+  type: types.NEW_LEAD,
+  payload: form
 });
 export const newLeadSuccess = lead => ({
   type: types.NEW_LEAD_SUCCESS,
   payload: lead
 });
-export const newLeadError = error => ({
-  type: types.NEW_LEAD_ERROR,
+export const newLeadFailure = error => ({
+  type: types.NEW_LEAD_FAILURE,
+  payload: error
+});
+
+/**
+ * Edit
+ */
+export const editLead = form => ({
+  type: types.EDIT_LEAD,
+  payload: form
+});
+export const editLeadSuccess = data => ({
+  type: types.EDIT_LEAD_SUCCESS,
+  payload: data
+});
+export const editLeadFailure = error => ({
+  type: types.EDIT_LEAD_FAILURE,
   payload: error
 });
 
@@ -143,17 +153,6 @@ export const handleConvertModal = () => ({
 });
 export const handleSuccessConvertModal = () => ({
   type: types.HANDLE_SUCCESS_CONVERT_MODAL
-});
-
-/**
- * Edit
- */
-export const startLeadEdit = lead => ({
-  type: types.START_LEAD_EDIT,
-  payload: lead
-});
-export const submitEditLead = () => ({
-  type: types.SUBMIT_EDIT_LEAD
 });
 
 /**

@@ -1,10 +1,10 @@
 // crm routes
 import {
-  leadPage,
-  customerPage,
-  accountPage,
-  dealPage,
-  teamPage
+  leadListPage,
+  customerListPage,
+  accountListPage,
+  dealListPage,
+  teamListPage
 } from "Helpers/url/crm";
 // acct routes
 import {
@@ -19,27 +19,27 @@ export default {
     {
       menu_title: "sidebar.leads",
       menu_icon: "zmdi zmdi-account-circle text-primary",
-      path: leadPage
+      path: leadListPage
     },
     {
       menu_title: "sidebar.customers",
       menu_icon: "zmdi zmdi-accounts-outline text-primary",
-      path: customerPage
+      path: customerListPage
     },
     {
       menu_title: "sidebar.accounts",
       menu_icon: "zmdi zmdi-city-alt text-primary",
-      path: accountPage
+      path: accountListPage
     },
     {
       menu_title: "sidebar.deals",
       menu_icon: "zmdi zmdi-case text-primary",
-      path: dealPage
+      path: dealListPage
     },
     {
       menu_title: "sidebar.teams",
       menu_icon: "zmdi zmdi-accounts-alt text-primary",
-      path: teamPage
+      path: teamListPage
     }
   ],
   account: [

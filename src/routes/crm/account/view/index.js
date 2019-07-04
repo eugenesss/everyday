@@ -28,10 +28,10 @@ import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 // Routes
 import {
-  editAccount,
-  accountPage,
-  newDeal,
-  newAccount
+  accountEditPage,
+  accountListPage,
+  dealNewPage,
+  accountNewPage
 } from "Helpers/url/crm";
 // Actions
 import {
@@ -68,7 +68,7 @@ class crm_view_account extends Component {
    */
   edit(acct) {
     this.props.startAccountEdit(acct);
-    this.props.history.push(editAccount);
+    this.props.history.push(accountEditPage);
   }
 
   /**
@@ -90,7 +90,7 @@ class crm_view_account extends Component {
   handleDelete(acctId) {
     this.props.deleteAccount(acctId);
     setTimeout(() => {
-      this.props.history.push(accountPage);
+      this.props.history.push(accountListPage);
     }, 500);
   }
   delete(acct) {
@@ -104,7 +104,7 @@ class crm_view_account extends Component {
     console.log("new events");
   }
   handleNewDeal() {
-    this.props.history.push(newDeal);
+    this.props.history.push(dealNewPage);
   }
   setInactive(acct) {
     this.props.setAccountActive(acct.id, !acct.isActive);
@@ -129,7 +129,7 @@ class crm_view_account extends Component {
         </Helmet>
         <PageTitleBar
           title="View Account"
-          createLink={newAccount}
+          createLink={accountNewPage}
           extraButtons={[
             account.isActive
               ? {

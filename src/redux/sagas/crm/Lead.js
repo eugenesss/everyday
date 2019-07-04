@@ -12,9 +12,9 @@ import {
   GET_ALL_LEAD,
   GET_SINGLE_LEAD,
   GET_LEAD_SUMMARY,
-  SUBMIT_NEW_LEAD,
+  NEW_LEAD,
   CONVERT_LEAD,
-  SUBMIT_EDIT_LEAD,
+  EDIT_LEAD,
   DELETE_LEAD,
   ADD_NOTE_LEAD,
   CHECK_ACCOUNT_EXIST,
@@ -27,7 +27,9 @@ import {
   getLeadSummarySuccess,
   getLeadSummaryFailure,
   newLeadSuccess,
-  newLeadError,
+  newLeadFailure,
+  editLeadSuccess,
+  editLeadFailure,
   convertLeadSuccess,
   convertLeadFailure,
   deleteLeadSuccess,
@@ -167,15 +169,13 @@ function* getLeadSummaryFromDB() {
     yield put(getLeadSummaryFailure(error));
   }
 }
-function* postLeadToDB() {
+function* postLeadToDB({ payload }) {
   try {
-    const getLeadState = state => state.crmState.leadState.leadForm.lead;
-    const lead = yield select(getLeadState);
-    const data = yield call(postLeadRequest, lead);
+    const data = yield call(postLeadRequest, payload);
     yield delay(500);
     yield put(newLeadSuccess(data));
   } catch (error) {
-    yield put(newLeadError(error));
+    yield put(newLeadFailure(error));
   }
 }
 function* convertLeadToDB({ payload }) {
@@ -188,15 +188,13 @@ function* convertLeadToDB({ payload }) {
     yield put(convertLeadFailure(error));
   }
 }
-function* editLeadToDB() {
+function* editLeadToDB({ payload }) {
   try {
-    const getLeadState = state => state.crmState.leadState.leadForm.lead;
-    const lead = yield select(getLeadState);
-    const data = yield call(editLeadRequest, lead);
+    const data = yield call(editLeadRequest, payload);
     yield delay(500);
-    yield put(newLeadSuccess(data));
+    yield put(editLeadSuccess(data));
   } catch (error) {
-    yield put(newLeadError(error));
+    yield put(editLeadFailure(error));
   }
 }
 function* deleteLeadFromDB({ payload }) {
@@ -253,13 +251,13 @@ export function* getLeadSummaryWatcher() {
   yield takeEvery(GET_LEAD_SUMMARY, getLeadSummaryFromDB);
 }
 export function* postLeadWatcher() {
-  yield takeEvery(SUBMIT_NEW_LEAD, postLeadToDB);
+  yield takeEvery(NEW_LEAD, postLeadToDB);
 }
 export function* convertLeadWatcher() {
   yield takeEvery(CONVERT_LEAD, convertLeadToDB);
 }
 export function* editLeadWatcher() {
-  yield takeEvery(SUBMIT_EDIT_LEAD, editLeadToDB);
+  yield takeEvery(EDIT_LEAD, editLeadToDB);
 }
 export function* deleteLeadWatcher() {
   yield takeEvery(DELETE_LEAD, deleteLeadFromDB);

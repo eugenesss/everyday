@@ -26,7 +26,11 @@ import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 // Notes Tab
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 // routes
-import { customerPage, editCustomer, newCustomer } from "Helpers/url/crm";
+import {
+  customerListPage,
+  customerEditPage,
+  customerNewPage
+} from "Helpers/url/crm";
 // Actions
 import {
   getSingleCustomer,
@@ -62,7 +66,7 @@ class crm_view_customer extends Component {
    */
   edit(cust) {
     this.props.startCustomerEdit(cust);
-    this.props.history.push(editCustomer);
+    this.props.history.push(customerEditPage);
   }
 
   /**
@@ -85,7 +89,7 @@ class crm_view_customer extends Component {
     this.props.deleteCustomer(custId);
     //console.log(custId);
     setTimeout(() => {
-      this.props.history.push(customerPage);
+      this.props.history.push(customerListPage);
     }, 500);
   }
   delete(cust) {
@@ -123,7 +127,7 @@ class crm_view_customer extends Component {
             </Helmet>
             <PageTitleBar
               title="View Customer"
-              createLink={newCustomer}
+              createLink={customerNewPage}
               extraButtons={[
                 customer.isActive
                   ? {

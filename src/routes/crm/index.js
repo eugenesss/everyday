@@ -10,58 +10,68 @@ function crmSwitcher() {
     <div className="saas-dashboard">
       <Switch>
         {/* ------- /Leads ------- */}
-        <Route exact path={url.leadPage} component={async.crm_lead_component} />
-        <Route path={url.newLead} component={async.crm_new_lead_component} />
-        <Route path={url.editLead} component={async.crm_edit_lead} />
-        <Route path={url.importLead} component={async.crm_import_lead} />
-        <Route path={`${url.leadPage}/:id`} component={async.crm_single_lead} />
+        <Route exact path={url.leadListPage} component={async.crm_lead_list} />
+        <Route path={url.leadNewPage} component={async.crm_new_lead} />
+        <Route path={url.leadImportPage} component={async.crm_import_lead} />
+        <Route
+          exact
+          path={`${url.leadListPage}/:id`}
+          component={async.crm_single_lead}
+        />
+        <Route
+          path={`${url.leadListPage}/:id/edit`}
+          component={async.crm_edit_lead}
+        />
 
         {/* ------- /Customers ------- */}
         <Route
           exact
-          path={url.customerPage}
-          component={async.crm_customer_component}
+          path={url.customerListPage}
+          component={async.crm_customer_list}
+        />
+        <Route path={url.customerNewPage} component={async.crm_new_customer} />
+        <Route
+          path={url.customerEditPage}
+          component={async.crm_edit_customer}
         />
         <Route
-          path={url.newCustomer}
-          component={async.crm_new_customer_component}
-        />
-        <Route path={url.editCustomer} component={async.crm_edit_customer} />
-        <Route
-          path={url.importCustomer}
+          path={url.customerImportPage}
           component={async.crm_import_customer}
         />
         <Route
-          path={`${url.customerPage}/:id`}
+          path={`${url.customerListPage}/:id`}
           component={async.crm_single_customer}
         />
 
         {/* ------- /Accounts ------- */}
         <Route
           exact
-          path={url.accountPage}
-          component={async.crm_account_component}
+          path={url.accountListPage}
+          component={async.crm_account_list}
+        />
+        <Route path={url.accountNewPage} component={async.crm_new_account} />
+        <Route path={url.accountEditPage} component={async.crm_edit_account} />
+        <Route
+          path={url.accountImportPage}
+          component={async.crm_import_account}
         />
         <Route
-          path={url.newAccount}
-          component={async.crm_new_account_component}
-        />
-        <Route path={url.editAccount} component={async.crm_edit_account} />
-        <Route path={url.importAccount} component={async.crm_import_account} />
-        <Route
-          path={`${url.accountPage}/:id`}
+          path={`${url.accountListPage}/:id`}
           component={async.crm_single_account}
         />
 
         {/* ------- /Deals ------- */}
-        <Route exact path={url.dealPage} component={async.crm_deal_component} />
-        <Route path={url.newDeal} component={async.crm_new_deal_component} />
-        <Route exact path={url.editDeal} component={async.crm_edit_deal} />
-        <Route path={url.importDeal} component={async.crm_import_deal} />
-        <Route path={`${url.dealPage}/:id`} component={async.crm_single_deal} />
+        <Route exact path={url.dealListPage} component={async.crm_deal_list} />
+        <Route path={url.dealNewPage} component={async.crm_new_deal} />
+        <Route exact path={url.dealEditPage} component={async.crm_edit_deal} />
+        <Route path={url.dealImportPage} component={async.crm_import_deal} />
+        <Route
+          path={`${url.dealListPage}/:id`}
+          component={async.crm_single_deal}
+        />
 
         {/* ------- /Team ------- */}
-        <Route path={url.teamPage} component={async.crm_team_component} />
+        <Route path={url.teamListPage} component={async.crm_team_component} />
 
         {/* ------- /404 ------- */}
         <Redirect to="/404" />

@@ -27,13 +27,12 @@ import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 import ConvertLeadModal from "Components/CRM/Lead/Convert/ConvertLeadModal";
 import ConvertSuccessModal from "Components/CRM/Lead/Convert/ConvertSuccessModal";
 // routes
-import { editLead, leadPage, newLead } from "Helpers/url/crm";
+import { leadEditPage, leadListPage, leadNewPage } from "Helpers/url/crm";
 //Actions
 import {
   getSingleLead,
   clearSingleLead,
   handleConvertModal,
-  startLeadEdit,
   deleteLead,
   addNoteLead,
   checkAccountExist,
@@ -78,8 +77,7 @@ class crm_view_lead extends Component {
    * Edit
    */
   edit(lead) {
-    this.props.startLeadEdit(lead);
-    this.props.history.push(editLead);
+    this.props.history.push(leadEditPage(lead.id));
   }
 
   /**
@@ -88,7 +86,7 @@ class crm_view_lead extends Component {
   handleDelete(leadId) {
     this.props.deleteLead(leadId);
     setTimeout(() => {
-      this.props.history.push(leadPage);
+      this.props.history.push(leadListPage);
     }, 500);
   }
   delete(lead) {
@@ -122,16 +120,16 @@ class crm_view_lead extends Component {
     const { activeIndex } = this.state;
     return (
       <React.Fragment>
+        <Helmet>
+          <title>Everyday | View Lead</title>
+        </Helmet>
         {loading ? (
           <RctPageLoader />
         ) : lead ? (
           <React.Fragment>
-            <Helmet>
-              <title>Everyday | View Lead</title>
-            </Helmet>
             <PageTitleBar
               title="View Lead"
-              createLink={newLead}
+              createLink={leadNewPage}
               extraButtons={[
                 {
                   color: "success",
@@ -241,7 +239,6 @@ export default withRouter(
       getSingleLead,
       clearSingleLead,
       handleConvertModal,
-      startLeadEdit,
       show,
       deleteLead,
       addNoteLead,
