@@ -1,6 +1,4 @@
 import {
-  CHANGE_REPORT_VIEW,
-  OPEN_NESTED_VIEW,
   REPORT_ON_DATES_CHANGE,
   REPORT_ON_FOCUS_CHANGE,
   REPORT_RESET_DATES,
@@ -13,18 +11,6 @@ import {
   GET_INDIVIDUAL_REPORT_SUCCESS,
   ON_CHANGE_STAFF_SELECT
 } from "Types";
-
-/**
- * Change Report View
- */
-export const changeReportView = (title, componentToRender) => ({
-  type: CHANGE_REPORT_VIEW,
-  payload: { title, componentToRender }
-});
-export const openNestedView = nested => ({
-  type: OPEN_NESTED_VIEW,
-  payload: nested
-});
 
 /**
  * Report Date Range Picker

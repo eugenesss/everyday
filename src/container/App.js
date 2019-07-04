@@ -49,19 +49,17 @@ class App extends Component {
       <RctThemeProvider>
         <NotificationContainer />
         <SystemDialogs />
-        <InitialPath
-          path={`${match.url}app`}
-          authUser={user}
-          component={HorizontalLayout}
-        />
 
-        {/* Added switch to match URL Link */}
         <Switch>
+          <InitialPath
+            path={`${match.url}app`}
+            authUser={user}
+            component={HorizontalLayout}
+          />
           <Route path={`/login`} exact component={Login} />
           <Route path={`/register`} exact component={Register} />
           <Route path={`/forgetpassword`} exact component={ForgetPassword} />
 
-          {/* <Route path={"/404"} exact component={NotFound} /> */}
           <Route component={NotFound} />
         </Switch>
       </RctThemeProvider>

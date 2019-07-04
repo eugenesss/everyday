@@ -1,7 +1,5 @@
 import { NotificationManager } from "react-notifications";
 import {
-  CHANGE_REPORT_VIEW,
-  OPEN_NESTED_VIEW,
   REPORT_ON_DATES_CHANGE,
   REPORT_ON_FOCUS_CHANGE,
   REPORT_RESET_DATES,
@@ -16,9 +14,6 @@ import {
 } from "Types";
 
 const INIT_STATE = {
-  title: "",
-  nestedView: { sales: false, leads: false, deals: false },
-  componentToRender: "",
   dateRange: { startDate: null, endDate: null, focusedInput: null },
   dealReportData: { loading: false },
   leadReportData: { loading: false },
@@ -27,24 +22,6 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    /**
-     * Change Report View
-     */
-    case OPEN_NESTED_VIEW:
-      return {
-        ...state,
-        nestedView: {
-          ...state.nestedView,
-          [action.payload]: !state.nestedView[action.payload]
-        }
-      };
-    case CHANGE_REPORT_VIEW:
-      return {
-        ...state,
-        title: action.payload.title,
-        componentToRender: action.payload.componentToRender
-      };
-
     /**
      * Report Date Range Picker
      */

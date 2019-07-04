@@ -3,9 +3,15 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 
-const DrawerListItem = ({ onClickListItem, title, icon, secondary }) => {
+const DrawerListItem = ({
+  onClickListItem,
+  title,
+  icon,
+  secondary,
+  selected
+}) => {
   return (
-    <ListItem button onClick={onClickListItem}>
+    <ListItem selected={selected} button onClick={onClickListItem}>
       {icon && (
         <ListItemIcon>
           <i className={`zmdi ${icon} zmdi-hc-lg`} />
