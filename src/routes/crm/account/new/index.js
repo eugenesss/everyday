@@ -10,39 +10,32 @@ import IntlMessages from "Util/IntlMessages";
 // Page Components
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import AccountForm from "Components/Form/Account/AccountForm";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 // Actions
-import { submitAccount } from "Actions";
+import { newAccount } from "Actions";
 
 class crm_new_account extends Component {
   render() {
-    const { loading } = this.props.accountForm;
     return (
       <React.Fragment>
         <Helmet>
           <title>Everyday | New Account</title>
           <meta name="description" content="Everyday Account Creation" />
         </Helmet>
-        <RctCollapsibleCard heading={<IntlMessages id="sidebar.newAccount" />}>
-          {loading && <RctSectionLoader />}
-          <div className="row">
-            <div className="col-md-11">
-              <AccountForm handleSubmit={this.props.submitAccount} />
-            </div>
+        <div className="row">
+          <div className="col-md-10 offset-md-1">
+            <RctCollapsibleCard
+              heading={<IntlMessages id="sidebar.newAccount" />}
+            >
+              <AccountForm handleSubmit={this.props.newAccount} />
+            </RctCollapsibleCard>
           </div>
-        </RctCollapsibleCard>
+        </div>
       </React.Fragment>
     );
   }
 }
-const mapStateToProps = ({ crmState }) => {
-  const { accountState } = crmState;
-  const { accountForm } = accountState;
-  return { accountForm };
-};
-
 export default connect(
-  mapStateToProps,
-  { submitAccount }
+  null,
+  { newAccount }
 )(crm_new_account);

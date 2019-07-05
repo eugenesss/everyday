@@ -61,7 +61,7 @@ function crmSwitcher() {
           component={async.crm_single_account}
         />
         <Route
-          path={`${url.accountEditPage}/:id/edit`}
+          path={`${url.accountListPage}/:id/edit`}
           component={async.crm_edit_account}
         />
 
@@ -75,7 +75,7 @@ function crmSwitcher() {
           component={async.crm_single_deal}
         />
         <Route
-          path={`${url.dealEditPage}/:id/edit`}
+          path={`${url.dealListPage}/:id/edit`}
           component={async.crm_edit_deal}
         />
 

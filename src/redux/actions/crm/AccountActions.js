@@ -63,34 +63,33 @@ export const clearSingleAccount = () => ({
 /**
  * New Account
  */
-export const handleChangeAccount = (field, value, type) => ({
-  type: acctType.HANDLE_CHANGE_ACCOUNT,
-  payload: { value, field, type }
+export const newAccount = form => ({
+  type: acctType.NEW_ACCOUNT,
+  payload: form
 });
-export const submitAccount = () => ({
-  type: acctType.SUBMIT_ACCOUNT
-});
-export const clearAccountForm = () => ({
-  type: acctType.CLEAR_ACCOUNT_FORM
-});
-export const submitAccountSuccess = data => ({
-  type: acctType.SUBMIT_ACCOUNT_SUCCESS,
+export const newAccountSuccess = data => ({
+  type: acctType.NEW_ACCOUNT_SUCCESS,
   payload: data
 });
-export const submitAccountError = error => ({
-  type: acctType.SUBMIT_ACCOUNT_ERROR,
+export const newAccountFailure = error => ({
+  type: acctType.NEW_ACCOUNT_FAILURE,
   payload: error
 });
 
 /**
  * Edit
  */
-export const startAccountEdit = Account => ({
-  type: acctType.START_ACCOUNT_EDIT,
-  payload: Account
+export const editAccount = form => ({
+  type: acctType.EDIT_ACCOUNT,
+  payload: form
 });
-export const submitEditAccount = () => ({
-  type: acctType.SUBMIT_EDIT_ACCOUNT
+export const editAccountSuccess = data => ({
+  type: acctType.EDIT_ACCOUNT_SUCCESS,
+  payload: data
+});
+export const editAccountFailure = error => ({
+  type: acctType.EDIT_ACCOUNT_FAILURE,
+  payload: error
 });
 
 /**

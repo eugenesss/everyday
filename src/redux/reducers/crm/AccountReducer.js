@@ -98,60 +98,16 @@ export default (state = INIT_STATE, action) => {
     /**
      * New Account
      */
-    case acctType.HANDLE_CHANGE_ACCOUNT:
-      if (action.payload.type == "baseContact") {
-        return {
-          ...state,
-          accountForm: {
-            ...state.accountForm,
-            account: {
-              ...state.accountForm.account,
-              baseContact: {
-                ...state.accountForm.account.baseContact,
-                [action.payload.field]: action.payload.value
-              }
-            }
-          }
-        };
-      } else if (action.payload.type == "address") {
-        return {
-          ...state,
-          accountForm: {
-            ...state.accountForm,
-            account: {
-              ...state.accountForm.account,
-              baseContact: {
-                ...state.accountForm.account.baseContact,
-                _address: {
-                  ...state.accountForm.account.baseContact._address,
-                  [action.payload.field]: action.payload.value
-                }
-              }
-            }
-          }
-        };
-      } else {
-        return {
-          ...state,
-          accountForm: {
-            ...state.accountForm,
-            account: {
-              ...state.accountForm.account,
-              [action.payload.field]: action.payload.value
-            }
-          }
-        };
-      }
-    case acctType.SUBMIT_ACCOUNT:
+
+    case acctType.NEW_ACCOUNT:
       return {
         ...state,
         accountForm: { ...state.accountForm, loading: true }
       };
-    case acctType.CLEAR_ACCOUNT_FORM:
+    case acctType.NEW_ACCOUNT_SUCCESS:
+      NotificationManager.success("Account Created");
       return { ...state, accountForm: INIT_STATE.accountForm };
-    case acctType.SUBMIT_ACCOUNT_SUCCESS:
-      return { ...state, accountForm: INIT_STATE.accountForm };
-    case acctType.SUBMIT_ACCOUNT_ERROR:
+    case acctType.NEW_ACCOUNT_FAILURE:
       NotificationManager.error("Error in POST API");
       console.log(action.payload);
       return {
@@ -162,15 +118,23 @@ export default (state = INIT_STATE, action) => {
     /**
      * Edit
      */
-    case acctType.START_ACCOUNT_EDIT:
-      return {
-        ...state,
-        accountForm: { ...state.accountForm, account: action.payload }
-      };
-    case acctType.SUBMIT_EDIT_ACCOUNT:
+    case acctType.EDIT_ACCOUNT:
       return {
         ...state,
         accountForm: { ...state.accountForm, loading: true }
+      };
+    case acctType.EDIT_ACCOUNT_SUCCESS:
+      NotificationManager.success("Account Edited");
+      return {
+        ...state,
+        accountForm: { ...state.accountForm, loading: false }
+      };
+    case acctType.EDIT_ACCOUNT_FAILURE:
+      NotificationManager.error("Error in Edit");
+      console.log(action.payload);
+      return {
+        ...state,
+        accountForm: { ...state.accountForm, loading: false }
       };
 
     /**

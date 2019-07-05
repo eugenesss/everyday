@@ -37,7 +37,6 @@ import {
 import {
   getSingleAccount,
   clearSingleAccount,
-  startAccountEdit,
   addNoteAccount,
   setAccountActive,
   deleteAccount,
@@ -67,8 +66,7 @@ class crm_view_account extends Component {
    * Edit
    */
   edit(acct) {
-    this.props.startAccountEdit(acct);
-    this.props.history.push(accountEditPage);
+    this.props.history.push(accountEditPage(acct.id));
   }
 
   /**
@@ -241,7 +239,6 @@ export default withRouter(
       show,
       getSingleAccount,
       clearSingleAccount,
-      startAccountEdit,
       addNoteAccount,
       setAccountActive,
       deleteAccount,
