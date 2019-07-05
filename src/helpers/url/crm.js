@@ -17,7 +17,7 @@ export const leadImportPage = leadListPage + "/import";
 export const customerListPage = "/app/crm/customers";
 export const singleCustomer = id => `${customerListPage}/${id}`;
 export const customerNewPage = customerListPage + "/new";
-export const customerEditPage = customerListPage + "/edit";
+export const customerEditPage = id => `${customerListPage}/${id}/edit`;
 export const customerImportPage = customerListPage + "/import";
 
 /**
@@ -26,7 +26,7 @@ export const customerImportPage = customerListPage + "/import";
 export const accountListPage = "/app/crm/accounts";
 export const singleAccount = id => `${accountListPage}/${id}`;
 export const accountNewPage = accountListPage + "/new";
-export const accountEditPage = accountListPage + "/edit";
+export const accountEditPage = id => `${accountListPage}/${id}/edit`;
 export const accountImportPage = accountListPage + "/import";
 
 /**
@@ -35,7 +35,7 @@ export const accountImportPage = accountListPage + "/import";
 export const dealListPage = "/app/crm/deals";
 export const singleDeal = id => `${dealListPage}/${id}`;
 export const dealNewPage = dealListPage + "/new";
-export const dealEditPage = dealListPage + "/edit";
+export const dealEditPage = id => `${dealListPage}/${id}/edit`;
 export const dealImportPage = dealListPage + "/import";
 
 /**

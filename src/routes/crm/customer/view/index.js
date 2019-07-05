@@ -35,7 +35,6 @@ import {
 import {
   getSingleCustomer,
   clearSingleCustomer,
-  startCustomerEdit,
   deleteCustomer,
   addNoteCustomer,
   setCustomerActive,
@@ -65,8 +64,7 @@ class crm_view_customer extends Component {
    * Edit
    */
   edit(cust) {
-    this.props.startCustomerEdit(cust);
-    this.props.history.push(customerEditPage);
+    this.props.history.push(customerEditPage(cust.id));
   }
 
   /**
@@ -246,7 +244,6 @@ export default withRouter(
       show,
       getSingleCustomer,
       clearSingleCustomer,
-      startCustomerEdit,
       deleteCustomer,
       addNoteCustomer,
       setCustomerActive,

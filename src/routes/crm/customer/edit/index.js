@@ -9,41 +9,51 @@ import IntlMessages from "Util/IntlMessages";
 
 // Page Components
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import CustomerForm from "Components/Form/Customer/CustomerForm";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 // Actions
-import { submitEditCustomer } from "Actions";
+import { editCustomer, getSingleCustomer } from "Actions";
 
 class crm_edit_customer extends Component {
+  componentWillMount() {
+    var id = this.props.match.params.id;
+    this.props.getSingleCustomer(id);
+  }
   render() {
-    const { loading } = this.props.customerForm;
+    const { loading, customer } = this.props.customerToView;
     return (
       <React.Fragment>
         <Helmet>
           <title>Everyday | Edit Customer</title>
         </Helmet>
-        <RctCollapsibleCard
-          heading={<IntlMessages id="sidebar.editCustomer" />}
-        >
-          {loading && <RctSectionLoader />}
+        {loading ? (
+          <RctPageLoader />
+        ) : (
           <div className="row">
             <div className="col-md-11">
-              <CustomerForm edit handleSubmit={this.props.submitEditCustomer} />
+              <RctCollapsibleCard
+                heading={<IntlMessages id="sidebar.editCustomer" />}
+              >
+                <CustomerForm
+                  edit={customer}
+                  handleSubmit={this.props.editCustomer}
+                />
+              </RctCollapsibleCard>
             </div>
           </div>
-        </RctCollapsibleCard>
+        )}
       </React.Fragment>
     );
   }
 }
 const mapStateToProps = ({ crmState }) => {
   const { customerState } = crmState;
-  const { customerForm } = customerState;
-  return { customerForm };
+  const { customerToView } = customerState;
+  return { customerToView };
 };
 
 export default connect(
   mapStateToProps,
-  { submitEditCustomer }
+  { editCustomer, getSingleCustomer }
 )(crm_edit_customer);

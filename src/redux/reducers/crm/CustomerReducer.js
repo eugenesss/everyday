@@ -99,60 +99,16 @@ export default (state = INIT_STATE, action) => {
     /**
      * New Customer
      */
-    case custType.HANDLE_CHANGE_CUSTOMER:
-      if (action.payload.type == "baseContact") {
-        return {
-          ...state,
-          customerForm: {
-            ...state.customerForm,
-            customer: {
-              ...state.customerForm.customer,
-              baseContact: {
-                ...state.customerForm.customer.baseContact,
-                [action.payload.field]: action.payload.value
-              }
-            }
-          }
-        };
-      } else if (action.payload.type == "address") {
-        return {
-          ...state,
-          customerForm: {
-            ...state.customerForm,
-            customer: {
-              ...state.customerForm.customer,
-              baseContact: {
-                ...state.customerForm.customer.baseContact,
-                _address: {
-                  ...state.customerForm.customer.baseContact._address,
-                  [action.payload.field]: action.payload.value
-                }
-              }
-            }
-          }
-        };
-      } else {
-        return {
-          ...state,
-          customerForm: {
-            ...state.customerForm,
-            customer: {
-              ...state.customerForm.customer,
-              [action.payload.field]: action.payload.value
-            }
-          }
-        };
-      }
-    case custType.SUBMIT_CUSTOMER:
+
+    case custType.NEW_CUSTOMER:
       return {
         ...state,
         customerForm: { ...state.customerForm, loading: true }
       };
-    case custType.CLEAR_CUSTOMER_FORM:
+    case custType.NEW_CUSTOMER_SUCCESS:
+      NotificationManager.success("Customer Created");
       return { ...state, customerForm: INIT_STATE.customerForm };
-    case custType.SUBMIT_CUSTOMER_SUCCESS:
-      return { ...state, customerForm: INIT_STATE.customerForm };
-    case custType.SUBMIT_CUSTOMER_ERROR:
+    case custType.NEW_CUSTOMER_FAILURE:
       NotificationManager.error("Error in POST API");
       console.log(action.payload);
       return {
@@ -163,15 +119,23 @@ export default (state = INIT_STATE, action) => {
     /**
      * Edit
      */
-    case custType.START_CUSTOMER_EDIT:
-      return {
-        ...state,
-        customerForm: { ...state.customerForm, customer: action.payload }
-      };
-    case custType.SUBMIT_EDIT_CUSTOMER:
+    case custType.EDIT_CUSTOMER:
       return {
         ...state,
         customerForm: { ...state.customerForm, loading: true }
+      };
+    case custType.EDIT_CUSTOMER_SUCCESS:
+      NotificationManager.success("Customer Edited");
+      return {
+        ...state,
+        customerForm: INIT_STATE.customerForm
+      };
+    case custType.EDIT_CUSTOMER_FAILURE:
+      NotificationManager.error("Error in Edit");
+      console.log(action.payload);
+      return {
+        ...state,
+        customerForm: { ...state.customerForm, loading: false }
       };
 
     /**

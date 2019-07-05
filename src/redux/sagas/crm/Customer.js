@@ -1,18 +1,10 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-  select,
-  delay
-} from "redux-saga/effects";
+import { all, call, fork, put, takeEvery, delay } from "redux-saga/effects";
 import {
   CHANGE_CUSTOMER_LIST_VIEW,
   GET_ALL_CUSTOMER,
   GET_SINGLE_CUSTOMER,
-  SUBMIT_CUSTOMER,
-  SUBMIT_EDIT_CUSTOMER,
+  NEW_CUSTOMER,
+  EDIT_CUSTOMER,
   DELETE_CUSTOMER,
   ADD_NOTE_CUSTOMER,
   SET_CUSTOMER_ACTIVE,
@@ -22,8 +14,10 @@ import {
   getCustomerFailure,
   getCustomerSuccess,
   getSingleCustomerSuccess,
-  submitCustomerSuccess,
-  submitCustomerError,
+  newCustomerSuccess,
+  newCustomerFailure,
+  editCustomerSuccess,
+  editCustomerFailure,
   deleteCustomerSuccess,
   deleteCustomerFailure,
   addNoteCustomerSuccess,
@@ -132,28 +126,22 @@ function* getCustomerFromDB({ payload }) {
     yield put(getCustomerFailure(error));
   }
 }
-function* postCustomerToDB() {
+function* postCustomerToDB({ payload }) {
   try {
-    const getCustState = state =>
-      state.crmState.customerState.customerForm.customer;
-    const cust = yield select(getCustState);
-    const data = yield call(postCustomerRequest, cust);
+    const data = yield call(postCustomerRequest, payload);
     yield delay(500);
-    yield put(submitCustomerSuccess(data));
+    yield put(newCustomerSuccess(data));
   } catch (error) {
-    yield put(submitCustomerError(error));
+    yield put(newCustomerFailure(error));
   }
 }
-function* editCustomerToDB() {
+function* editCustomerToDB({ payload }) {
   try {
-    const getCustState = state =>
-      state.crmState.customerState.customerForm.customer;
-    const cust = yield select(getCustState);
-    const data = yield call(editCustomerRequest, cust);
+    const data = yield call(editCustomerRequest, payload);
     yield delay(500);
-    yield put(submitCustomerSuccess(data));
+    yield put(editCustomerSuccess(data));
   } catch (error) {
-    yield put(submitCustomerError(error));
+    yield put(editCustomerFailure(error));
   }
 }
 function* deleteCustomerFromDB({ payload }) {
@@ -209,10 +197,10 @@ export function* getSingleCustomerWatcher() {
   yield takeEvery(GET_SINGLE_CUSTOMER, getCustomerFromDB);
 }
 export function* postCustomerWatcher() {
-  yield takeEvery(SUBMIT_CUSTOMER, postCustomerToDB);
+  yield takeEvery(NEW_CUSTOMER, postCustomerToDB);
 }
 export function* editCustomerWatcher() {
-  yield takeEvery(SUBMIT_EDIT_CUSTOMER, editCustomerToDB);
+  yield takeEvery(EDIT_CUSTOMER, editCustomerToDB);
 }
 export function* deleteCustomerWatcher() {
   yield takeEvery(DELETE_CUSTOMER, deleteCustomerFromDB);

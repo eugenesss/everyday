@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 //Form Components
 import TableRow from "@material-ui/core/TableRow";
@@ -20,42 +21,90 @@ import {
   getAllAccount
 } from "Actions";
 
+const initialState = { customer: { baseContact: { _address: {} } } };
+
 class CustomerForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = initialState;
+    this.handleChange = this.handleChange.bind(this);
+    this.checkDisabled = this.checkDisabled.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
   componentWillMount() {
     this.props.getLeadSource();
     this.props.getAllUsers();
     this.props.getAllAccount();
-  }
-  componentWillUnmount() {
-    this.props.clearCustomerForm();
+    if (this.props.edit) this.setState({ customer: this.props.edit });
   }
 
-  checkDisabled(firstName, lastName, userId) {
-    const disabled = firstName && lastName && userId;
+  handleChange(field, value, type) {
+    if (type == "baseContact") {
+      this.setState({
+        ...this.state,
+        customer: {
+          ...this.state.customer,
+          baseContact: {
+            ...this.state.customer.baseContact,
+            [field]: value
+          }
+        }
+      });
+    } else if (type == "address") {
+      this.setState({
+        ...this.state,
+        customer: {
+          ...this.state.customer,
+          baseContact: {
+            ...this.state.customer.baseContact,
+            _address: {
+              ...this.state.customer.baseContact._address,
+              [field]: value
+            }
+          }
+        }
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        customer: {
+          ...this.state.customer,
+          [field]: value
+        }
+      });
+    }
+  }
+
+  onSubmit() {
+    this.props.handleSubmit(this.state.customer);
+  }
+
+  checkDisabled() {
+    const disabled =
+      this.state.customer.baseContact.firstName &&
+      this.state.customer.baseContact.lastName &&
+      this.state.customer.userId;
     return disabled;
   }
 
   render() {
-    const { customer } = this.props.customerForm;
+    const { customer } = this.state;
+    const { loading } = this.props.customerForm;
     const { leadSource } = this.props.crmField;
     const { users, allAccounts, edit } = this.props;
     return (
       <React.Fragment>
+        {loading && <RctSectionLoader />}
         <FormSubmitResetButtons
-          onReset={this.props.clearCustomerForm}
-          onSubmit={this.props.handleSubmit}
-          disabled={this.checkDisabled(
-            customer.baseContact.firstName,
-            customer.baseContact.lastName,
-            customer.userId
-          )}
+          onSubmit={this.onSubmit}
+          disabled={this.checkDisabled()}
         />
         <FormTable>
           <TableRow>
             <FormBlock
               label="First Name"
               value={customer.baseContact.firstName}
-              handleChange={this.props.handleChangeCustomer}
+              handleChange={this.handleChange}
               target="firstName"
               targetType="baseContact"
               required
@@ -65,7 +114,7 @@ class CustomerForm extends Component {
                 required
                 label="Owner"
                 value={customer.userId ? customer.userId : ""}
-                handleChange={this.props.handleChangeCustomer}
+                handleChange={this.handleChange}
                 target="userId"
                 selectValues={users}
               />
@@ -75,7 +124,7 @@ class CustomerForm extends Component {
             <FormBlock
               label="Last Name"
               value={customer.baseContact.lastName}
-              handleChange={this.props.handleChangeCustomer}
+              handleChange={this.handleChange}
               target="lastName"
               targetType="baseContact"
               required
@@ -83,7 +132,7 @@ class CustomerForm extends Component {
             <FormBlock
               label="Account"
               value={customer.accountId}
-              handleChange={this.props.handleChangeCustomer}
+              handleChange={this.handleChange}
               target="accountId"
               selectValues={allAccounts}
             />
@@ -96,14 +145,14 @@ class CustomerForm extends Component {
             <FormBlock
               label="Job Title"
               value={customer.baseContact.title}
-              handleChange={this.props.handleChangeCustomer}
+              handleChange={this.handleChange}
               target="title"
               targetType="baseContact"
             />
             <FormBlock
               label="Source"
               value={customer.sourceId}
-              handleChange={this.props.handleChangeCustomer}
+              handleChange={this.handleChange}
               target="sourceId"
               selectValues={leadSource}
             />
@@ -115,14 +164,14 @@ class CustomerForm extends Component {
             <FormBlock
               label="Email"
               value={customer.baseContact.email}
-              handleChange={this.props.handleChangeCustomer}
+              handleChange={this.handleChange}
               target="email"
               targetType="baseContact"
             />
             <FormBlock
               label="Mobile"
               value={customer.baseContact.mobile}
-              handleChange={this.props.handleChangeCustomer}
+              handleChange={this.handleChange}
               target="mobile"
               targetType="baseContact"
             />
@@ -134,14 +183,14 @@ class CustomerForm extends Component {
             <FormBlock
               label="Office"
               value={customer.baseContact.office}
-              handleChange={this.props.handleChangeCustomer}
+              handleChange={this.handleChange}
               target="office"
               targetType="baseContact"
             />
             <FormBlock
               label="Fax"
               value={customer.baseContact.fax}
-              handleChange={this.props.handleChangeCustomer}
+              handleChange={this.handleChange}
               target="fax"
               targetType="baseContact"
             />
@@ -149,7 +198,7 @@ class CustomerForm extends Component {
         </FormTable>
         <hr />
         <AddressFormInput
-          handleChange={this.props.handleChangeCustomer}
+          handleChange={this.handleChange}
           address_1={customer.baseContact._address.address_1}
           address_2={customer.baseContact._address.address_2}
           city={customer.baseContact._address.city}
@@ -158,7 +207,7 @@ class CustomerForm extends Component {
         />
         <hr />
         <DescriptionFormInput
-          handleChange={this.props.handleChangeCustomer}
+          handleChange={this.handleChange}
           description={customer.baseContact.description}
         />
       </React.Fragment>

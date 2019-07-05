@@ -63,34 +63,36 @@ export const clearSingleCustomer = () => ({
 /**
  * New Customer
  */
-export const handleChangeCustomer = (field, value, type) => ({
-  type: custType.HANDLE_CHANGE_CUSTOMER,
-  payload: { value, field, type }
+
+export const newCustomer = form => ({
+  type: custType.NEW_CUSTOMER,
+  payload: form
 });
-export const submitCustomer = () => ({
-  type: custType.SUBMIT_CUSTOMER
-});
-export const clearCustomerForm = () => ({
-  type: custType.CLEAR_CUSTOMER_FORM
-});
-export const submitCustomerSuccess = data => ({
-  type: custType.SUBMIT_CUSTOMER_SUCCESS,
+
+export const newCustomerSuccess = data => ({
+  type: custType.NEW_CUSTOMER_SUCCESS,
   payload: data
 });
-export const submitCustomerError = error => ({
-  type: custType.SUBMIT_CUSTOMER_ERROR,
+export const newCustomerFailure = error => ({
+  type: custType.NEW_CUSTOMER_FAILURE,
   payload: error
 });
 
 /**
  * Edit
  */
-export const startCustomerEdit = cust => ({
-  type: custType.START_CUSTOMER_EDIT,
-  payload: cust
+
+export const editCustomer = form => ({
+  type: custType.EDIT_CUSTOMER,
+  payload: form
 });
-export const submitEditCustomer = () => ({
-  type: custType.SUBMIT_EDIT_CUSTOMER
+export const editCustomerSuccess = data => ({
+  type: custType.EDIT_CUSTOMER_SUCCESS,
+  payload: data
+});
+export const editCustomerFailure = error => ({
+  type: custType.EDIT_CUSTOMER_FAILURE,
+  payload: error
 });
 
 /**
