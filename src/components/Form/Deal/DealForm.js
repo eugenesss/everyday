@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 //Form Components
 import TableRow from "@material-ui/core/TableRow";
@@ -14,8 +15,6 @@ import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
 
 // Actions
 import {
-  handleChangeDeal,
-  clearDealForm,
   getLeadSource,
   getDealType,
   getDealStage,
@@ -25,6 +24,12 @@ import {
 } from "Actions";
 
 class DealForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { deal: {} };
+    this.handleChange = this.handleChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
   componentWillMount() {
     this.props.getLeadSource();
     this.props.getDealStage();
@@ -32,41 +37,50 @@ class DealForm extends Component {
     this.props.getAllUsers();
     this.props.getAllAccount();
     this.props.getAllCustomer();
-  }
-  componentWillUnmount() {
-    this.props.clearDealForm();
+    if (this.props.edit) this.setState({ deal: this.props.edit });
   }
 
-  checkDisabled(name, owner, amount, stageId, closingDate, accountId) {
+  handleChange(field, value) {
+    this.setState({ deal: { ...this.state.deal, [field]: value } });
+  }
+
+  onSubmit() {
+    this.props.handleSubmit(this.state.deal);
+  }
+
+  checkDisabled() {
+    const {
+      name,
+      userId,
+      amount,
+      stageId,
+      closingDate,
+      accountId
+    } = this.state.deal;
     const disabled =
-      name && owner && amount && stageId && closingDate && accountId;
+      name && userId && amount && stageId && closingDate && accountId;
     return disabled;
   }
 
   render() {
-    const { deal } = this.props.dealForm;
+    const { deal } = this.state;
+    const { loading } = this.props.dealForm;
     const { users, allAccounts, allCustomers, edit } = this.props;
     const { leadSource, dealStage, dealType } = this.props.crmField;
     return (
       <React.Fragment>
+        {loading && <RctSectionLoader />}
         <FormSubmitResetButtons
           onReset={this.props.clearDealForm}
-          onSubmit={this.props.handleSubmit}
-          disabled={this.checkDisabled(
-            deal.name,
-            deal.userId,
-            deal.amount,
-            deal.stageId,
-            deal.closingDate,
-            deal.accountId
-          )}
+          onSubmit={this.onSubmit}
+          disabled={this.checkDisabled()}
         />
         <FormTable>
           <TableRow>
             <FormBlock
               label="Name"
               value={deal.name}
-              handleChange={this.props.handleChangeDeal}
+              handleChange={this.handleChange}
               target="name"
               required
             />
@@ -75,7 +89,7 @@ class DealForm extends Component {
                 required
                 label="Owner"
                 value={deal.userId ? deal.userId : ""}
-                handleChange={this.props.handleChangeDeal}
+                handleChange={this.handleChange}
                 target="userId"
                 selectValues={users}
               />
@@ -88,9 +102,7 @@ class DealForm extends Component {
               customTextField={
                 <AmountInput
                   value={deal.amount}
-                  onChange={e =>
-                    this.props.handleChangeDeal("amount", e.target.value)
-                  }
+                  onChange={e => this.handleChange("amount", e.target.value)}
                 />
               }
             />
@@ -99,7 +111,7 @@ class DealForm extends Component {
                 required
                 label="Stage"
                 value={deal.stageId}
-                handleChange={this.props.handleChangeDeal}
+                handleChange={this.handleChange}
                 target="stageId"
                 selectValues={dealStage}
               />
@@ -113,10 +125,7 @@ class DealForm extends Component {
                 <DatePickerInput
                   value={deal.closingDate ? deal.closingDate : null}
                   onChange={date =>
-                    this.props.handleChangeDeal(
-                      "closingDate",
-                      date.format("YYYY-MM-DD")
-                    )
+                    this.handleChange("closingDate", date.format("YYYY-MM-DD"))
                   }
                 />
               }
@@ -125,7 +134,7 @@ class DealForm extends Component {
               required
               label="Account"
               value={deal.accountId}
-              handleChange={this.props.handleChangeDeal}
+              handleChange={this.handleChange}
               target="accountId"
               selectValues={allAccounts}
             />
@@ -134,7 +143,7 @@ class DealForm extends Component {
             <FormBlock
               label="Customer"
               value={deal.customerId}
-              handleChange={this.props.handleChangeDeal}
+              handleChange={this.handleChange}
               target="customerId"
               selectValues={allCustomers}
             />
@@ -146,7 +155,7 @@ class DealForm extends Component {
             <FormBlock
               label="Type"
               value={deal.typeId}
-              handleChange={this.props.handleChangeDeal}
+              handleChange={this.handleChange}
               target="typeId"
               selectValues={dealType}
             />
@@ -155,7 +164,7 @@ class DealForm extends Component {
             <FormBlock
               label="Source"
               value={deal.sourceId}
-              handleChange={this.props.handleChangeDeal}
+              handleChange={this.handleChange}
               target="sourceId"
               selectValues={leadSource}
             />
@@ -163,7 +172,7 @@ class DealForm extends Component {
         </FormTable>
         <hr />
         <DescriptionFormInput
-          handleChange={this.props.handleChangeDeal}
+          handleChange={this.handleChange}
           description={deal.description}
         />
       </React.Fragment>
@@ -182,8 +191,6 @@ const mapStateToProps = ({ crmState, usersState }) => {
 export default connect(
   mapStateToProps,
   {
-    handleChangeDeal,
-    clearDealForm,
     getLeadSource,
     getDealType,
     getDealStage,

@@ -34,7 +34,6 @@ import { dealEditPage, dealListPage, dealNewPage } from "Helpers/url/crm";
 import {
   getSingleDeal,
   clearSingleDeal,
-  startDealEdit,
   addNoteDeal,
   deleteDeal,
   transferDeal
@@ -75,8 +74,7 @@ class crm_view_deal extends Component {
    * Edit
    */
   edit(deal) {
-    this.props.startDealEdit(deal);
-    this.props.history.push(dealEditPage);
+    this.props.history.push(dealEditPage(deal.id));
   }
 
   /**
@@ -228,7 +226,6 @@ export default withRouter(
     {
       getSingleDeal,
       clearSingleDeal,
-      startDealEdit,
       show,
       addNoteDeal,
       deleteDeal,

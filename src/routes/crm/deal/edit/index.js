@@ -10,41 +10,49 @@ import IntlMessages from "Util/IntlMessages";
 // Page Components
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import DealForm from "Components/Form/Deal/DealForm";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 
 // Actions
-import { submitEditDeal } from "Actions";
+import { editDeal, getSingleDeal } from "Actions";
 
 class crm_edit_deal extends Component {
-  state = {};
+  componentDidMount() {
+    var id = this.props.match.params.id;
+    this.props.getSingleDeal(id);
+  }
 
   render() {
-    const { loading } = this.props.dealForm;
+    const { loading, deal } = this.props.dealToView;
     return (
       <React.Fragment>
         <Helmet>
           <title>Everyday | New Deal</title>
           <meta name="description" content="Everyday Deals Creation" />
         </Helmet>
-        <RctCollapsibleCard heading={<IntlMessages id="sidebar.newDeal" />}>
-          {loading && <RctSectionLoader />}
+        {loading ? (
+          <RctPageLoader />
+        ) : (
           <div className="row">
-            <div className="col-md-11">
-              <DealForm edit handleSubmit={this.props.submitEditDeal} />
+            <div className="col-md-10 offset-md-1">
+              <RctCollapsibleCard
+                heading={<IntlMessages id="sidebar.newDeal" />}
+              >
+                <DealForm edit={deal} handleSubmit={this.props.editDeal} />
+              </RctCollapsibleCard>
             </div>
           </div>
-        </RctCollapsibleCard>
+        )}
       </React.Fragment>
     );
   }
 }
 const mapStateToProps = ({ crmState }) => {
   const { dealState } = crmState;
-  const { dealForm } = dealState;
-  return { dealForm };
+  const { dealToView } = dealState;
+  return { dealToView };
 };
 
 export default connect(
   mapStateToProps,
-  { submitEditDeal }
+  { editDeal, getSingleDeal }
 )(crm_edit_deal);

@@ -216,27 +216,15 @@ export default (state = INIT_STATE, action) => {
     /**
      * New Deal
      */
-    case dealType.HANDLE_CHANGE_DEAL:
-      return {
-        ...state,
-        dealForm: {
-          ...state.dealForm,
-          deal: {
-            ...state.dealForm.deal,
-            [action.payload.field]: action.payload.value
-          }
-        }
-      };
-    case dealType.SUBMIT_DEAL:
+    case dealType.NEW_DEAL:
       return {
         ...state,
         dealForm: { ...state.dealForm, loading: true }
       };
-    case dealType.CLEAR_DEAL_FORM:
+    case dealType.NEW_DEAL_SUCCESS:
+      NotificationManager.success("Deal Created");
       return { ...state, dealForm: INIT_STATE.dealForm };
-    case dealType.SUBMIT_DEAL_SUCCESS:
-      return { ...state, dealForm: INIT_STATE.dealForm };
-    case dealType.SUBMIT_DEAL_ERROR:
+    case dealType.NEW_DEAL_FAILURE:
       NotificationManager.error("Error in POST API");
       console.log(action.payload);
       return {
@@ -247,15 +235,23 @@ export default (state = INIT_STATE, action) => {
     /**
      * Edit
      */
-    case dealType.START_DEAL_EDIT:
-      return {
-        ...state,
-        dealForm: { ...state.dealForm, deal: action.payload }
-      };
-    case dealType.SUBMIT_EDIT_DEAL:
+    case dealType.EDIT_DEAL:
       return {
         ...state,
         dealForm: { ...state.dealForm, loading: true }
+      };
+    case dealType.EDIT_DEAL_SUCCESS:
+      NotificationManager.success("Deal Edited");
+      return {
+        ...state,
+        dealForm: { ...state.dealForm, loading: false }
+      };
+    case dealType.EDIT_DEAL_FAILURE:
+      NotificationManager.error("Error in Edit");
+      console.log(action.payload);
+      return {
+        ...state,
+        dealForm: { ...state.dealForm, loading: false }
       };
 
     /**

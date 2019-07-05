@@ -91,22 +91,34 @@ export const getDealSummaryFailure = error => ({
 /**
  * New Deal
  */
-export const handleChangeDeal = (field, value) => ({
-  type: dealType.HANDLE_CHANGE_DEAL,
-  payload: { value, field }
+
+export const newDeal = form => ({
+  type: dealType.NEW_DEAL,
+  payload: form
 });
-export const submitDeal = () => ({
-  type: dealType.SUBMIT_DEAL
-});
-export const clearDealForm = () => ({
-  type: dealType.CLEAR_DEAL_FORM
-});
-export const submitDealSuccess = data => ({
-  type: dealType.SUBMIT_DEAL_SUCCESS,
+
+export const newDealSuccess = data => ({
+  type: dealType.NEW_DEAL_SUCCESS,
   payload: data
 });
-export const submitDealError = error => ({
-  type: dealType.SUBMIT_DEAL_ERROR,
+export const newDealFailure = error => ({
+  type: dealType.NEW_DEAL_FAILURE,
+  payload: error
+});
+
+/**
+ * Edit
+ */
+export const editDeal = form => ({
+  type: dealType.EDIT_DEAL,
+  payload: form
+});
+export const editDealSuccess = data => ({
+  type: dealType.EDIT_DEAL_SUCCESS,
+  payload: data
+});
+export const editDealFailure = error => ({
+  type: dealType.EDIT_DEAL_FAILURE,
   payload: error
 });
 
@@ -135,17 +147,6 @@ export const newStageSuccess = deal => ({
 export const newStageFailure = error => ({
   type: dealType.ON_SUBMIT_NEW_STAGE_FAILURE,
   payload: error
-});
-
-/**
- * Edit
- */
-export const startDealEdit = Deal => ({
-  type: dealType.START_DEAL_EDIT,
-  payload: Deal
-});
-export const submitEditDeal = () => ({
-  type: dealType.SUBMIT_EDIT_DEAL
 });
 
 /**
