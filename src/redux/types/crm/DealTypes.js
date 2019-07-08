@@ -32,6 +32,11 @@ export const EDIT_DEAL = "EDIT_DEAL";
 export const EDIT_DEAL_SUCCESS = "EDIT_DEAL_SUCCESS";
 export const EDIT_DEAL_FAILURE = "EDIT_DEAL_FAILURE";
 
+// Form Fields
+export const GET_DEAL_FORM_FIELDS = "GET_DEAL_FORM_FIELDS";
+export const GET_DEAL_FORM_SUCCESS = "GET_DEAL_FORM_SUCCESS";
+export const GET_DEAL_FORM_FAILURE = "GET_DEAL_FORM_FAILURE";
+
 // Deal Stage Stepper
 export const ON_CLICK_STEP = "ON_CLICK_STEP";
 export const SET_CURRENT_STEP = "SET_CURRENT_STEP";

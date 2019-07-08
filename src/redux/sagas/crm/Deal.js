@@ -1,12 +1,4 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-  select,
-  delay
-} from "redux-saga/effects";
+import { all, call, fork, put, takeEvery, delay } from "redux-saga/effects";
 import {
   CHANGE_DEAL_LIST_VIEW,
   GET_ALL_DEAL,
@@ -17,7 +9,8 @@ import {
   EDIT_DEAL,
   DELETE_DEAL,
   ADD_NOTE_DEAL,
-  TRANSFER_DEAL
+  TRANSFER_DEAL,
+  GET_DEAL_FORM_FIELDS
 } from "Types";
 import {
   getDealSuccess,
@@ -36,7 +29,9 @@ import {
   addNoteDealSuccess,
   addNoteDealFailure,
   transferDealSuccess,
-  transferDealFailure
+  transferDealFailure,
+  getDealFormSuccess,
+  getDealFormFailure
 } from "Actions";
 import { singleDeal } from "Helpers/url/crm";
 
@@ -97,6 +92,10 @@ const addNoteDealRequest = async (id, note) => {
 const transferDealRequest = async (id, newOwner) => {
   const result = await api.post(`/deals/transfer`, { dealIds: [id], newOwner });
   return result.data.updatedRecords[0];
+};
+const getDealFormFieldsRequest = async () => {
+  const result = await api.get("/deals/formFields");
+  return result.data;
 };
 
 //=========================
@@ -190,7 +189,6 @@ function* patchDealToDB({ payload }) {
 }
 function* deleteDealFromDB({ payload }) {
   try {
-    yield call(deleteDealRequest, payload);
     yield delay(500);
     yield put(deleteDealSuccess(payload));
   } catch (error) {
@@ -215,6 +213,14 @@ function* transferDealInDB({ payload }) {
     yield put(transferDealSuccess(data));
   } catch (error) {
     yield put(transferDealFailure(error));
+  }
+}
+function* getDealFormFieldsFromDB() {
+  try {
+    const data = yield call(getDealFormFieldsRequest);
+    yield put(getDealFormSuccess(data));
+  } catch (error) {
+    yield put(getDealFormFailure(error));
   }
 }
 
@@ -251,6 +257,9 @@ export function* addNoteDealWatcher() {
 export function* transferDealWatcher() {
   yield takeEvery(TRANSFER_DEAL, transferDealInDB);
 }
+export function* getDealFormFieldsWatcher() {
+  yield takeEvery(GET_DEAL_FORM_FIELDS, getDealFormFieldsFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -266,6 +275,7 @@ export default function* rootSaga() {
     fork(patchDealWatcher),
     fork(deleteDealWatcher),
     fork(addNoteDealWatcher),
-    fork(transferDealWatcher)
+    fork(transferDealWatcher),
+    fork(getDealFormFieldsWatcher)
   ]);
 }

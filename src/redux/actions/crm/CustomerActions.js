@@ -1,10 +1,10 @@
-import * as custType from "Types/crm/CustomerTypes";
+import * as types from "Types/crm/CustomerTypes";
 
 /**
  * Change List View
  */
 export const changeCustomerView = newValue => ({
-  type: custType.CHANGE_CUSTOMER_LIST_VIEW,
+  type: types.CHANGE_CUSTOMER_LIST_VIEW,
   payload: newValue
 });
 
@@ -12,7 +12,7 @@ export const changeCustomerView = newValue => ({
  * Get CUSTOMER Failure
  */
 export const getCustomerFailure = error => ({
-  type: custType.GET_CUSTOMER_FAILURE,
+  type: types.GET_CUSTOMER_FAILURE,
   payload: error
 });
 
@@ -20,7 +20,7 @@ export const getCustomerFailure = error => ({
  * Get CUSTOMER Success
  */
 export const getCustomerSuccess = data => ({
-  type: custType.GET_CUSTOMER_SUCCESS,
+  type: types.GET_CUSTOMER_SUCCESS,
   payload: data
 });
 
@@ -28,36 +28,36 @@ export const getCustomerSuccess = data => ({
  * Get All CUSTOMERs
  */
 export const getAllCustomer = () => ({
-  type: custType.GET_ALL_CUSTOMER
+  type: types.GET_ALL_CUSTOMER
 });
 
 /**
  * Get My CUSTOMERs
  */
 export const getMyCustomer = () => ({
-  type: custType.GET_MY_CUSTOMER
+  type: types.GET_MY_CUSTOMER
 });
 
 /**
  * Get Open CUSTOMERs
  */
 export const getOpenCustomer = () => ({
-  type: custType.GET_OPEN_CUSTOMER
+  type: types.GET_OPEN_CUSTOMER
 });
 
 /**
  * Get Single Customer
  */
 export const getSingleCustomer = custID => ({
-  type: custType.GET_SINGLE_CUSTOMER,
+  type: types.GET_SINGLE_CUSTOMER,
   payload: custID
 });
 export const getSingleCustomerSuccess = custData => ({
-  type: custType.GET_SINGLE_CUSTOMER_SUCCESS,
+  type: types.GET_SINGLE_CUSTOMER_SUCCESS,
   payload: custData
 });
 export const clearSingleCustomer = () => ({
-  type: custType.CLEAR_SINGLE_CUSTOMER
+  type: types.CLEAR_SINGLE_CUSTOMER
 });
 
 /**
@@ -65,16 +65,16 @@ export const clearSingleCustomer = () => ({
  */
 
 export const newCustomer = form => ({
-  type: custType.NEW_CUSTOMER,
+  type: types.NEW_CUSTOMER,
   payload: form
 });
 
 export const newCustomerSuccess = data => ({
-  type: custType.NEW_CUSTOMER_SUCCESS,
+  type: types.NEW_CUSTOMER_SUCCESS,
   payload: data
 });
 export const newCustomerFailure = error => ({
-  type: custType.NEW_CUSTOMER_FAILURE,
+  type: types.NEW_CUSTOMER_FAILURE,
   payload: error
 });
 
@@ -83,15 +83,30 @@ export const newCustomerFailure = error => ({
  */
 
 export const editCustomer = form => ({
-  type: custType.EDIT_CUSTOMER,
+  type: types.EDIT_CUSTOMER,
   payload: form
 });
 export const editCustomerSuccess = data => ({
-  type: custType.EDIT_CUSTOMER_SUCCESS,
+  type: types.EDIT_CUSTOMER_SUCCESS,
   payload: data
 });
 export const editCustomerFailure = error => ({
-  type: custType.EDIT_CUSTOMER_FAILURE,
+  type: types.EDIT_CUSTOMER_FAILURE,
+  payload: error
+});
+
+/**
+ * Form Fields
+ */
+export const getCustomerFormFields = () => ({
+  type: types.GET_CUSTOMER_FORM_FIELDS
+});
+export const getCustomerFormSuccess = fields => ({
+  type: types.GET_CUSTOMER_FORM_SUCCESS,
+  payload: fields
+});
+export const getCustomerFormFailure = error => ({
+  type: types.GET_CUSTOMER_FORM_FAILURE,
   payload: error
 });
 
@@ -99,15 +114,15 @@ export const editCustomerFailure = error => ({
  * Delete
  */
 export const deleteCustomer = id => ({
-  type: custType.DELETE_CUSTOMER,
+  type: types.DELETE_CUSTOMER,
   payload: id
 });
 export const deleteCustomerSuccess = id => ({
-  type: custType.DELETE_CUSTOMER_SUCCESS,
+  type: types.DELETE_CUSTOMER_SUCCESS,
   payload: id
 });
 export const deleteCustomerFailure = error => ({
-  type: custType.DELETE_CUSTOMER_FAILURE,
+  type: types.DELETE_CUSTOMER_FAILURE,
   payload: error
 });
 
@@ -115,15 +130,15 @@ export const deleteCustomerFailure = error => ({
  * Notes
  */
 export const addNoteCustomer = (id, note) => ({
-  type: custType.ADD_NOTE_CUSTOMER,
+  type: types.ADD_NOTE_CUSTOMER,
   payload: { id, note }
 });
 export const addNoteCustomerSuccess = data => ({
-  type: custType.ADD_NOTE_CUSTOMER_SUCCESS,
+  type: types.ADD_NOTE_CUSTOMER_SUCCESS,
   payload: data
 });
 export const addNoteCustomerFailure = error => ({
-  type: custType.ADD_NOTE_CUSTOMER_FAILURE,
+  type: types.ADD_NOTE_CUSTOMER_FAILURE,
   payload: error
 });
 
@@ -131,15 +146,15 @@ export const addNoteCustomerFailure = error => ({
  * Set Active
  */
 export const setCustomerActive = (id, status) => ({
-  type: custType.SET_CUSTOMER_ACTIVE,
+  type: types.SET_CUSTOMER_ACTIVE,
   payload: { id, status }
 });
 export const setCustomerActiveSuccess = data => ({
-  type: custType.SET_CUSTOMER_ACTIVE_SUCCESS,
+  type: types.SET_CUSTOMER_ACTIVE_SUCCESS,
   payload: data
 });
 export const setCustomerActiveFailure = error => ({
-  type: custType.SET_CUSTOMER_ACTIVE_FAILURE,
+  type: types.SET_CUSTOMER_ACTIVE_FAILURE,
   payload: error
 });
 
@@ -147,14 +162,14 @@ export const setCustomerActiveFailure = error => ({
  * Transfer
  */
 export const transferCustomer = (id, newOwner) => ({
-  type: custType.TRANSFER_CUSTOMER,
+  type: types.TRANSFER_CUSTOMER,
   payload: { id, newOwner }
 });
 export const transferCustomerSuccess = data => ({
-  type: custType.TRANSFER_CUSTOMER_SUCCESS,
+  type: types.TRANSFER_CUSTOMER_SUCCESS,
   payload: data
 });
 export const transferCustomerFailure = error => ({
-  type: custType.TRANSFER_CUSTOMER_FAILURE,
+  type: types.TRANSFER_CUSTOMER_FAILURE,
   payload: error
 });

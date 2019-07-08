@@ -1,12 +1,4 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-  select,
-  delay
-} from "redux-saga/effects";
+import { all, call, fork, put, takeEvery, delay } from "redux-saga/effects";
 import {
   CHANGE_LEAD_LIST_VIEW,
   GET_ALL_LEAD,
@@ -18,7 +10,8 @@ import {
   DELETE_LEAD,
   ADD_NOTE_LEAD,
   CHECK_ACCOUNT_EXIST,
-  TRANSFER_LEAD
+  TRANSFER_LEAD,
+  GET_LEADFORM_FIELDS
 } from "Types";
 import {
   getLeadSuccess,
@@ -39,7 +32,9 @@ import {
   checkAccountExistSuccess,
   checkAccountExistFailure,
   transferLeadSuccess,
-  transferLeadFailure
+  transferLeadFailure,
+  getLeadFormFieldsSuccess,
+  getLeadFormFieldsFailure
 } from "Actions";
 import { singleLead } from "Helpers/url/crm";
 
@@ -106,6 +101,10 @@ const checkAccountRequest = async companyName => {
 const transferLeadRequest = async (id, newOwner) => {
   const result = await api.post(`/leads/transfer`, { leadIds: [id], newOwner });
   return result.data.updatedRecords[0];
+};
+const getLeadFormFieldsRequest = async () => {
+  const result = await api.get("/leads/formFields");
+  return result.data;
 };
 
 //=========================
@@ -234,6 +233,14 @@ function* transferLeadToDB({ payload }) {
     yield put(transferLeadFailure(error));
   }
 }
+function* getLeadFormFieldsFromDB() {
+  try {
+    const data = yield call(getLeadFormFieldsRequest);
+    yield put(getLeadFormFieldsSuccess(data));
+  } catch (error) {
+    yield put(getLeadFormFieldsFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -271,6 +278,9 @@ export function* checkAccountExistWatcher() {
 export function* transferLeadWatcher() {
   yield takeEvery(TRANSFER_LEAD, transferLeadToDB);
 }
+export function* getLeadFormFieldsWatcher() {
+  yield takeEvery(GET_LEADFORM_FIELDS, getLeadFormFieldsFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -287,6 +297,7 @@ export default function* rootSaga() {
     fork(deleteLeadWatcher),
     fork(addNoteLeadWatcher),
     fork(checkAccountExistWatcher),
-    fork(transferLeadWatcher)
+    fork(transferLeadWatcher),
+    fork(getLeadFormFieldsWatcher)
   ]);
 }

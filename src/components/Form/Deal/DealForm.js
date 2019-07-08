@@ -14,14 +14,7 @@ import AmountInput from "Components/Form/Components/Inputs/AmountInput";
 import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
 
 // Actions
-import {
-  getLeadSource,
-  getDealType,
-  getDealStage,
-  getAllUsers,
-  getAllAccount,
-  getAllCustomer
-} from "Actions";
+import { getDealFormFields } from "Actions";
 
 class DealForm extends Component {
   constructor(props) {
@@ -31,12 +24,7 @@ class DealForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   componentWillMount() {
-    this.props.getLeadSource();
-    this.props.getDealStage();
-    this.props.getDealType();
-    this.props.getAllUsers();
-    this.props.getAllAccount();
-    this.props.getAllCustomer();
+    this.props.getDealFormFields();
     if (this.props.edit) this.setState({ deal: this.props.edit });
   }
 
@@ -64,9 +52,16 @@ class DealForm extends Component {
 
   render() {
     const { deal } = this.state;
-    const { loading } = this.props.dealForm;
-    const { users, allAccounts, allCustomers, edit } = this.props;
-    const { leadSource, dealStage, dealType } = this.props.crmField;
+    const { loading, fields } = this.props.dealForm;
+    const {
+      users,
+      accounts,
+      customers,
+      leadSource,
+      dealStage,
+      dealType
+    } = fields;
+    const { edit } = this.props;
     return (
       <React.Fragment>
         {loading && <RctSectionLoader />}
@@ -136,7 +131,7 @@ class DealForm extends Component {
               value={deal.accountId}
               handleChange={this.handleChange}
               target="accountId"
-              selectValues={allAccounts}
+              selectValues={accounts}
             />
           </TableRow>
           <TableRow>
@@ -145,7 +140,7 @@ class DealForm extends Component {
               value={deal.customerId}
               handleChange={this.handleChange}
               target="customerId"
-              selectValues={allCustomers}
+              selectValues={customers}
             />
           </TableRow>
           {/**
@@ -179,23 +174,15 @@ class DealForm extends Component {
     );
   }
 }
-const mapStateToProps = ({ crmState, usersState }) => {
-  const { dealState, crmField, customerState, accountState } = crmState;
-  const { users } = usersState;
-  const allCustomers = customerState.customerList.tableData;
-  const allAccounts = accountState.accountList.tableData;
+const mapStateToProps = ({ crmState }) => {
+  const { dealState } = crmState;
   const { dealForm } = dealState;
-  return { dealForm, crmField, users, allAccounts, allCustomers };
+  return { dealForm };
 };
 
 export default connect(
   mapStateToProps,
   {
-    getLeadSource,
-    getDealType,
-    getDealStage,
-    getAllUsers,
-    getAllAccount,
-    getAllCustomer
+    getDealFormFields
   }
 )(DealForm);

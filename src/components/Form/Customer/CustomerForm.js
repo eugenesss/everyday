@@ -13,13 +13,7 @@ import DescriptionFormInput from "Components/Form/Components/Inputs/DescriptionF
 import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetButtons";
 
 // Actions
-import {
-  handleChangeCustomer,
-  clearCustomerForm,
-  getLeadSource,
-  getAllUsers,
-  getAllAccount
-} from "Actions";
+import { getCustomerFormFields } from "Actions";
 
 const initialState = { customer: { baseContact: { _address: {} } } };
 
@@ -32,9 +26,7 @@ class CustomerForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   componentWillMount() {
-    this.props.getLeadSource();
-    this.props.getAllUsers();
-    this.props.getAllAccount();
+    this.props.getCustomerFormFields();
     if (this.props.edit) this.setState({ customer: this.props.edit });
   }
 
@@ -89,9 +81,9 @@ class CustomerForm extends Component {
 
   render() {
     const { customer } = this.state;
-    const { loading } = this.props.customerForm;
-    const { leadSource } = this.props.crmField;
-    const { users, allAccounts, edit } = this.props;
+    const { loading, fields } = this.props.customerForm;
+    const { leadSource, accounts, users } = fields;
+    const { edit } = this.props;
     return (
       <React.Fragment>
         {loading && <RctSectionLoader />}
@@ -134,7 +126,7 @@ class CustomerForm extends Component {
               value={customer.accountId}
               handleChange={this.handleChange}
               target="accountId"
-              selectValues={allAccounts}
+              selectValues={accounts}
             />
           </TableRow>
           <TableRow />
@@ -215,22 +207,15 @@ class CustomerForm extends Component {
   }
 }
 
-const mapStateToProps = ({ crmState, usersState }) => {
-  const { customerState, crmField, accountState } = crmState;
-  const { accountList } = accountState;
-  const allAccounts = accountList.tableData;
-  const { users } = usersState;
+const mapStateToProps = ({ crmState }) => {
+  const { customerState } = crmState;
   const { customerForm } = customerState;
-  return { customerForm, crmField, users, allAccounts };
+  return { customerForm };
 };
 
 export default connect(
   mapStateToProps,
   {
-    handleChangeCustomer,
-    clearCustomerForm,
-    getLeadSource,
-    getAllUsers,
-    getAllAccount
+    getCustomerFormFields
   }
 )(CustomerForm);

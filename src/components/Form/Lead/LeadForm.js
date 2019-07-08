@@ -6,8 +6,6 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import TableRow from "@material-ui/core/TableRow";
 import FormBlock from "Components/Form/Components/FormBlock";
 import FormTable from "Components/Form/Components/FormTable";
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
 
 // Input Components
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
@@ -16,13 +14,7 @@ import CompanyPicker from "Components/Form/Components/Pickers/CompanyPicker";
 import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetButtons";
 
 // Actions
-import {
-  getLeadSource,
-  getLeadStatus,
-  getIndustry,
-  getLeadInterest,
-  getAllUsers
-} from "Actions";
+import { getLeadFormFields } from "Actions";
 
 const initialState = {
   lead: { baseContact: { _address: {} } }
@@ -37,11 +29,7 @@ class LeadForm extends Component {
   }
 
   componentWillMount() {
-    this.props.getLeadSource();
-    this.props.getLeadStatus();
-    this.props.getIndustry();
-    this.props.getLeadInterest();
-    this.props.getAllUsers();
+    this.props.getLeadFormFields();
     if (this.props.edit) this.setState({ lead: this.props.edit });
   }
 
@@ -95,14 +83,9 @@ class LeadForm extends Component {
   }
 
   render() {
-    const { loading } = this.props.leadForm;
-    const {
-      leadSource,
-      leadStatus,
-      industry,
-      leadInterest
-    } = this.props.crmField;
-    const { users, edit } = this.props;
+    const { loading, fields } = this.props.leadForm;
+    const { leadSource, leadStatus, industry, leadInterest, users } = fields;
+    const { edit } = this.props;
     const { lead } = this.state;
     return (
       <React.Fragment>
@@ -195,23 +178,11 @@ class LeadForm extends Component {
               selectValues={industry}
             />
             <FormBlock
-              label="Interest Level"
-              customTextField={
-                <TextField
-                  select
-                  fullWidth
-                  value={lead.interest ? lead.interest : ""}
-                  onChange={e => this.handleChange("interest", e.target.value)}
-                  margin="dense"
-                >
-                  {leadInterest &&
-                    leadInterest.map((select, key) => (
-                      <MenuItem key={key} value={select.level}>
-                        {select.name}
-                      </MenuItem>
-                    ))}
-                </TextField>
-              }
+              label="Interest"
+              value={lead.interest ? lead.interest : ""}
+              handleChange={this.handleChange}
+              target="interest"
+              selectValues={leadInterest}
             />
           </TableRow>
           {/**
@@ -281,20 +252,15 @@ class LeadForm extends Component {
     );
   }
 }
-const mapStateToProps = ({ crmState, usersState }) => {
-  const { leadState, crmField } = crmState;
-  const { users } = usersState;
+const mapStateToProps = ({ crmState }) => {
+  const { leadState } = crmState;
   const { leadForm } = leadState;
-  return { leadForm, crmField, users };
+  return { leadForm };
 };
 
 export default connect(
   mapStateToProps,
   {
-    getLeadSource,
-    getLeadStatus,
-    getIndustry,
-    getLeadInterest,
-    getAllUsers
+    getLeadFormFields
   }
 )(LeadForm);

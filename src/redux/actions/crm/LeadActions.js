@@ -122,6 +122,21 @@ export const editLeadFailure = error => ({
 });
 
 /**
+ * Fields
+ */
+export const getLeadFormFields = () => ({
+  type: types.GET_LEADFORM_FIELDS
+});
+export const getLeadFormFieldsSuccess = fields => ({
+  type: types.GET_LEADFORM_FIELDS_SUCCESS,
+  payload: fields
+});
+export const getLeadFormFieldsFailure = error => ({
+  type: types.GET_LEADFORM_FIELDS_FAILURE,
+  payload: error
+});
+
+/**
  * Convert Lead
  */
 export const checkAccountExist = companyName => ({

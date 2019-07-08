@@ -23,7 +23,17 @@ const INIT_STATE = {
       loading: false
     }
   },
-  dealForm: { loading: false, deal: {} }
+  dealForm: {
+    loading: false,
+    fields: {
+      leadSource: [],
+      dealStage: [],
+      dealType: [],
+      users: [],
+      accounts: [],
+      customers: []
+    }
+  }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -253,6 +263,19 @@ export default (state = INIT_STATE, action) => {
         ...state,
         dealForm: { ...state.dealForm, loading: false }
       };
+
+    /**
+     * Form Fields
+     */
+    case types.GET_DEAL_FORM_SUCCESS:
+      return {
+        ...state,
+        dealForm: { ...state.dealForm, fields: action.payload.fields }
+      };
+    case types.GET_DEAL_FORM_FAILURE:
+      NotificationManager.error("Error in fetching form fields");
+      console.log(action.payload);
+      return { ...state };
 
     /**
      * Delete

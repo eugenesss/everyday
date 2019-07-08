@@ -8,7 +8,8 @@ import {
   DELETE_CUSTOMER,
   ADD_NOTE_CUSTOMER,
   SET_CUSTOMER_ACTIVE,
-  TRANSFER_CUSTOMER
+  TRANSFER_CUSTOMER,
+  GET_CUSTOMER_FORM_FIELDS
 } from "Types";
 import {
   getCustomerFailure,
@@ -25,7 +26,9 @@ import {
   setCustomerActiveSuccess,
   setCustomerActiveFailure,
   transferCustomerSuccess,
-  transferCustomerFailure
+  transferCustomerFailure,
+  getCustomerFormSuccess,
+  getCustomerFormFailure
 } from "Actions";
 import { singleCustomer } from "Helpers/url/crm";
 
@@ -76,6 +79,10 @@ const transferCustomerRequest = async (id, newOwner) => {
     newOwner
   });
   return result.data.updatedRecords[0];
+};
+const getCustomerFormFieldsRequest = async () => {
+  const result = await api.get("/customers/formFields");
+  return result.data;
 };
 
 //=========================
@@ -183,6 +190,14 @@ function* transferCustomerInDB({ payload }) {
     yield put(transferCustomerFailure(error));
   }
 }
+function* getCustomerFormFieldsFromDB() {
+  try {
+    const data = yield call(getCustomerFormFieldsRequest);
+    yield put(getCustomerFormSuccess(data));
+  } catch (error) {
+    yield put(getCustomerFormFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -214,6 +229,9 @@ export function* setCustomerActiveWatcher() {
 export function* transferCustomerWatcher() {
   yield takeEvery(TRANSFER_CUSTOMER, transferCustomerInDB);
 }
+export function* getCustomerFormFieldWatcher() {
+  yield takeEvery(GET_CUSTOMER_FORM_FIELDS, getCustomerFormFieldsFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -228,6 +246,7 @@ export default function* rootSaga() {
     fork(deleteCustomerWatcher),
     fork(addNoteCustomerWatcher),
     fork(setCustomerActiveWatcher),
-    fork(transferCustomerWatcher)
+    fork(transferCustomerWatcher),
+    fork(getCustomerFormFieldWatcher)
   ]);
 }

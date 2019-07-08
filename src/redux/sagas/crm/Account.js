@@ -8,7 +8,8 @@ import {
   ADD_NOTE_ACCOUNT,
   DELETE_ACCOUNT,
   SET_ACCOUNT_ACTIVE,
-  TRANSFER_ACCOUNT
+  TRANSFER_ACCOUNT,
+  GET_ACCOUNT_FORM_FIELDS
 } from "Types";
 import {
   getAccountFailure,
@@ -25,7 +26,9 @@ import {
   setAccountActiveSuccess,
   setAccountActiveFailure,
   transferAccountSuccess,
-  transferAccountFailure
+  transferAccountFailure,
+  getAccountFormSuccess,
+  getAccountFormFailure
 } from "Actions";
 import { singleAccount } from "Helpers/url/crm";
 
@@ -76,6 +79,10 @@ const transferAccountRequest = async (id, newOwner) => {
     newOwner
   });
   return result.data.updatedRecords[0];
+};
+const getAccountFielsRequest = async () => {
+  const result = await api.get("/accounts/formFields");
+  return result.data;
 };
 
 //=========================
@@ -189,6 +196,14 @@ function* transferAccountInDB({ payload }) {
     yield put(transferAccountFailure(error));
   }
 }
+function* getAccountFieldsFromDB() {
+  try {
+    const data = yield call(getAccountFielsRequest);
+    yield put(getAccountFormSuccess(data));
+  } catch (error) {
+    yield put(getAccountFormFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -220,6 +235,9 @@ export function* setAccountActiveWatcher() {
 export function* transferAccountWatcher() {
   yield takeEvery(TRANSFER_ACCOUNT, transferAccountInDB);
 }
+export function* getAccountFormFieldsWatcher() {
+  yield takeEvery(GET_ACCOUNT_FORM_FIELDS, getAccountFieldsFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -234,6 +252,7 @@ export default function* rootSaga() {
     fork(deleteAccounttWatcher),
     fork(addNoteAccountWatcher),
     fork(setAccountActiveWatcher),
-    fork(transferAccountWatcher)
+    fork(transferAccountWatcher),
+    fork(getAccountFormFieldsWatcher)
   ]);
 }

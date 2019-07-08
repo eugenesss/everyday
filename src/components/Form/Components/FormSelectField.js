@@ -22,7 +22,7 @@ const FormSelectField = ({
     >
       {selectValues &&
         selectValues.map((select, key) => (
-          <MenuItem key={key} value={select.id}>
+          <MenuItem key={key} value={select.value}>
             {select.name}
           </MenuItem>
         ))}

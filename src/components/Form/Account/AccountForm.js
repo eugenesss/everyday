@@ -13,7 +13,7 @@ import DescriptionFormInput from "Components/Form/Components/Inputs/DescriptionF
 import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetButtons";
 
 // Actions
-import { getIndustry, getAllUsers } from "Actions";
+import { getAccountFormFields } from "Actions";
 
 class AccountForm extends Component {
   constructor(props) {
@@ -23,8 +23,7 @@ class AccountForm extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   componentWillMount() {
-    this.props.getIndustry();
-    this.props.getAllUsers();
+    this.props.getAccountFormFields();
     if (this.props.edit) this.setState({ account: this.props.edit });
   }
 
@@ -76,11 +75,10 @@ class AccountForm extends Component {
   }
 
   render() {
-    const { loading } = this.props.accountForm;
-    const { industry } = this.props.crmField;
-    const { users, edit } = this.props;
+    const { loading, fields } = this.props.accountForm;
+    const { industry, users } = fields;
+    const { edit } = this.props;
     const { account } = this.state;
-    console.log(account);
     return (
       <React.Fragment>
         {loading && <RctSectionLoader />}
@@ -170,17 +168,15 @@ class AccountForm extends Component {
   }
 }
 
-const mapStateToProps = ({ crmState, usersState }) => {
-  const { accountState, crmField } = crmState;
-  const { users } = usersState;
+const mapStateToProps = ({ crmState }) => {
+  const { accountState } = crmState;
   const { accountForm } = accountState;
-  return { accountForm, crmField, users };
+  return { accountForm };
 };
 
 export default connect(
   mapStateToProps,
   {
-    getIndustry,
-    getAllUsers
+    getAccountFormFields
   }
 )(AccountForm);

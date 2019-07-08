@@ -20,7 +20,13 @@ const INIT_STATE = {
   },
   leadForm: {
     loading: false,
-    lead: { baseContact: { _address: {} } }
+    fields: {
+      leadSource: [],
+      leadStatus: [],
+      industry: [],
+      leadInterest: [],
+      users: []
+    }
   },
   leadToConvert: {
     modal: {
@@ -163,6 +169,19 @@ export default (state = INIT_STATE, action) => {
       NotificationManager.error("Error in Edit Lead");
       console.log(action.payload);
       return { ...state, leadForm: { ...state.leadForm, loading: false } };
+
+    /**
+     * Fields
+     */
+    case types.GET_LEADFORM_FIELDS_SUCCESS:
+      return {
+        ...state,
+        leadForm: { ...state.leadForm, fields: action.payload.fields }
+      };
+    case types.GET_LEADFORM_FIELDS_FAILURE:
+      NotificationManager.error("Error in fetching form fields");
+      console.log(action.payload);
+      return { ...state };
 
     /**
      * Convert Lead

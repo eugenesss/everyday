@@ -1,5 +1,5 @@
 import { NotificationManager } from "react-notifications";
-import * as custType from "Types/crm/CustomerTypes";
+import * as types from "Types/crm/CustomerTypes";
 
 const INIT_STATE = {
   customerList: {
@@ -16,13 +16,17 @@ const INIT_STATE = {
   },
   customerForm: {
     loading: false,
-    customer: { baseContact: { _address: {} } }
+    fields: {
+      leadSource: [],
+      users: [],
+      accounts: []
+    }
   }
 };
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    case custType.CHANGE_CUSTOMER_LIST_VIEW:
+    case types.CHANGE_CUSTOMER_LIST_VIEW:
       if (action.payload == "My Customers") {
         return {
           ...state,
@@ -48,7 +52,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Customers
      */
-    case custType.GET_CUSTOMER_FAILURE:
+    case types.GET_CUSTOMER_FAILURE:
       NotificationManager.warning("Error in fetching Customer Data");
       console.log(action.payload);
       return {
@@ -56,14 +60,14 @@ export default (state = INIT_STATE, action) => {
         customerToView: INIT_STATE.customerToView,
         customerList: INIT_STATE.customerList
       };
-    case custType.GET_ALL_CUSTOMER:
-    case custType.GET_MY_CUSTOMER:
-    case custType.GET_OPEN_CUSTOMER:
+    case types.GET_ALL_CUSTOMER:
+    case types.GET_MY_CUSTOMER:
+    case types.GET_OPEN_CUSTOMER:
       return {
         ...state,
         customerList: { ...state.customerList, loading: true }
       };
-    case custType.GET_CUSTOMER_SUCCESS:
+    case types.GET_CUSTOMER_SUCCESS:
       return {
         ...state,
         customerList: {
@@ -76,12 +80,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Single Customer
      */
-    case custType.GET_SINGLE_CUSTOMER:
+    case types.GET_SINGLE_CUSTOMER:
       return {
         ...state,
         customerToView: { ...state.customerToView, loading: true }
       };
-    case custType.GET_SINGLE_CUSTOMER_SUCCESS:
+    case types.GET_SINGLE_CUSTOMER_SUCCESS:
       return {
         ...state,
         customerToView: {
@@ -90,7 +94,7 @@ export default (state = INIT_STATE, action) => {
           customer: action.payload
         }
       };
-    case custType.CLEAR_SINGLE_CUSTOMER:
+    case types.CLEAR_SINGLE_CUSTOMER:
       return {
         ...state,
         customerToView: INIT_STATE.customerToView
@@ -100,15 +104,15 @@ export default (state = INIT_STATE, action) => {
      * New Customer
      */
 
-    case custType.NEW_CUSTOMER:
+    case types.NEW_CUSTOMER:
       return {
         ...state,
         customerForm: { ...state.customerForm, loading: true }
       };
-    case custType.NEW_CUSTOMER_SUCCESS:
+    case types.NEW_CUSTOMER_SUCCESS:
       NotificationManager.success("Customer Created");
       return { ...state, customerForm: INIT_STATE.customerForm };
-    case custType.NEW_CUSTOMER_FAILURE:
+    case types.NEW_CUSTOMER_FAILURE:
       NotificationManager.error("Error in POST API");
       console.log(action.payload);
       return {
@@ -119,18 +123,18 @@ export default (state = INIT_STATE, action) => {
     /**
      * Edit
      */
-    case custType.EDIT_CUSTOMER:
+    case types.EDIT_CUSTOMER:
       return {
         ...state,
         customerForm: { ...state.customerForm, loading: true }
       };
-    case custType.EDIT_CUSTOMER_SUCCESS:
+    case types.EDIT_CUSTOMER_SUCCESS:
       NotificationManager.success("Customer Edited");
       return {
         ...state,
-        customerForm: INIT_STATE.customerForm
+        customerForm: { ...state.customerForm, loading: false }
       };
-    case custType.EDIT_CUSTOMER_FAILURE:
+    case types.EDIT_CUSTOMER_FAILURE:
       NotificationManager.error("Error in Edit");
       console.log(action.payload);
       return {
@@ -139,15 +143,28 @@ export default (state = INIT_STATE, action) => {
       };
 
     /**
+     * Form Fields
+     */
+    case types.GET_CUSTOMER_FORM_SUCCESS:
+      return {
+        ...state,
+        customerForm: { ...state.customerForm, fields: action.payload.fields }
+      };
+    case types.GET_CUSTOMER_FORM_FAILURE:
+      NotificationManager.error("Error in fetching form fields");
+      console.log(action.payload);
+      return { ...state };
+
+    /**
      * Delete
      */
-    case custType.DELETE_CUSTOMER:
+    case types.DELETE_CUSTOMER:
       return {
         ...state,
         customerToView: { ...state.customerToView, loading: true },
         customerList: { ...state.customerList, loading: true }
       };
-    case custType.DELETE_CUSTOMER_SUCCESS:
+    case types.DELETE_CUSTOMER_SUCCESS:
       NotificationManager.success("Customer Deleted");
       // remove from state
       var afterDeleteData = Object.assign(
@@ -163,7 +180,7 @@ export default (state = INIT_STATE, action) => {
           tableData: afterDeleteData
         }
       };
-    case custType.DELETE_CUSTOMER_FAILURE:
+    case types.DELETE_CUSTOMER_FAILURE:
       NotificationManager.error("Error in Deleting Customer");
       console.log(action.payload);
       return {
@@ -175,12 +192,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Notes
      */
-    case custType.ADD_NOTE_CUSTOMER:
+    case types.ADD_NOTE_CUSTOMER:
       return {
         ...state,
         customerToView: { ...state.customerToView, sectionLoading: true }
       };
-    case custType.ADD_NOTE_CUSTOMER_SUCCESS:
+    case types.ADD_NOTE_CUSTOMER_SUCCESS:
       var newNotes = Object.assign([], state.customerToView.customer.notes);
       newNotes.unshift(action.payload);
       return {
@@ -191,7 +208,7 @@ export default (state = INIT_STATE, action) => {
           sectionLoading: false
         }
       };
-    case custType.ADD_NOTE_CUSTOMER_FAILURE:
+    case types.ADD_NOTE_CUSTOMER_FAILURE:
       NotificationManager.error("Error in adding Note");
       console.log(action.payload);
       return {
@@ -202,13 +219,13 @@ export default (state = INIT_STATE, action) => {
     /**
      * Set Active
      */
-    case custType.SET_CUSTOMER_ACTIVE:
+    case types.SET_CUSTOMER_ACTIVE:
       NotificationManager.success("Customer Status Updated");
       return {
         ...state,
         customerToView: { ...state.customerToView, loading: true }
       };
-    case custType.SET_CUSTOMER_ACTIVE_SUCCESS:
+    case types.SET_CUSTOMER_ACTIVE_SUCCESS:
       return {
         ...state,
         customerToView: {
@@ -217,7 +234,7 @@ export default (state = INIT_STATE, action) => {
           loading: false
         }
       };
-    case custType.SET_CUSTOMER_ACTIVE_FAILURE:
+    case types.SET_CUSTOMER_ACTIVE_FAILURE:
       NotificationManager.error("Error");
       console.log(action.payload);
       return {
@@ -228,12 +245,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Transfer
      */
-    case custType.TRANSFER_CUSTOMER:
+    case types.TRANSFER_CUSTOMER:
       return {
         ...state,
         customerToView: { ...state.customerToView, loading: true }
       };
-    case custType.TRANSFER_CUSTOMER_SUCCESS:
+    case types.TRANSFER_CUSTOMER_SUCCESS:
       NotificationManager.success("Record Transferred");
       return {
         ...state,
@@ -243,7 +260,7 @@ export default (state = INIT_STATE, action) => {
           loading: false
         }
       };
-    case custType.TRANSFER_CUSTOMER_FAILURE:
+    case types.TRANSFER_CUSTOMER_FAILURE:
       NotificationManager.error("Error in Transferring Record");
       console.log(action.payload);
       return {
