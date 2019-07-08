@@ -1,4 +1,4 @@
-import * as types from "Types/crm/typess";
+import * as types from "Types/crm/DealTypes";
 /**
  * Change List View
  */
