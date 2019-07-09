@@ -16,6 +16,11 @@ import {
   GET_QUOTE_SUMMARY_FAILURE,
   HANDLE_CHANGE_QUOTATION,
   SUBMIT_QUOTATION,
+  SUBMIT_QUOTATION_SUCCESS,
+  SUBMIT_QUOTATION_FAILURE,
+  DELETE_QUOTATION,
+  DELETE_QUOTATION_SUCCESS,
+  DELETE_QUOTATION_FAILURE,
   CLEAR_QUOTATION_FORM,
   ADD_NEW_PRODUCT_QUOTATION,
   REMOVE_PRODUCT_QUOTATION,
@@ -122,12 +127,45 @@ export const getQuotationSummaryFailure = error => ({
 /**
  * New Quote
  */
-export const submitNewQuote = () => ({
-  type: SUBMIT_QUOTATION
+export const submitNewQuote = (item, products) => ({
+  type: SUBMIT_QUOTATION,
+  payload: {item: item, products: products}
+  // payload: item
+
 });
+
+export const submitNewQuoteSuccess = (item) => ({
+  type: SUBMIT_QUOTATION_SUCCESS,
+  payload: item
+});
+
+export const submitNewQuoteFailure = (item) => ({
+  type: SUBMIT_QUOTATION_FAILURE,
+  payload: item
+});
+
 export const clearQuoteForm = () => ({
   type: CLEAR_QUOTATION_FORM
 });
+
+/**
+ * Delete Quotation in DB
+ */
+export const deleteSingleQuote = (item) => ({
+  type: DELETE_QUOTATION,
+  payload: item
+});
+
+export const deleteSingleQuoteSuccess = (item) => ({
+  type: DELETE_QUOTATION_SUCCESS,
+  payload: item
+});
+
+export const deleteSingleQuoteFailure = (item) => ({
+  type: DELETE_QUOTATION_FAILURE,
+  payload: item
+});
+
 
 /**
  * Quote Product List

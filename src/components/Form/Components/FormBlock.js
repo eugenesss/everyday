@@ -15,6 +15,8 @@ const FormBlock = ({
   required,
   empty
 }) => {
+
+
   return (
     <React.Fragment>
       <TableCell style={{ borderBottom: "none", width: "15%" }} align="right">
@@ -36,7 +38,8 @@ const FormBlock = ({
           ) : (
             <FormTextField
               value={value}
-              handleChange={handleChange}
+              // handleChange={handleChange}
+              handleChange ={(e, value, target) => handleChange(e, value, target)}
               target={target}
               targetType={targetType}
             />

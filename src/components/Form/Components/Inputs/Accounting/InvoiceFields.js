@@ -6,35 +6,71 @@ import FormTable from "Components/Form/Components/FormTable";
 import FormTextField from "Components/Form/Components/FormTextField";
 import FormSelectField from "Components/Form/Components/FormSelectField";
 
+
+import Moment from 'moment'
 // input
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
+import {
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
-const InvoiceFields = ({ handleChange, handleAttnTo, invoice }) => {
+const InvoiceFields = ({currencyTable, handleChange, quotation, handleAttnTo, invoice, tableData, attn_to_array , users}) => {
+
+  
   return (
     <div className="row">
+
       <div className="col-md-6">
-        <Form>
-          <FormGroup row>
-            <Label for="Email-1" className="fs-13 text-right" sm={2}>
-              Subject
+        <div style={{display:'flex', flexDirection:'row'}}>
+            <Label for="Select-1" className="fs-13 text-center" sm={2}>
+              Date
             </Label>
             <Col sm={10}>
-              <FormTextField
-                value={"subject"}
-                //handleChange={handleChange}
-                //target={target}
-                //targetType={targetType}
+              {/* <FormTextField
+                value={Moment(quotation.date).format('LL')}
+                disabled={true}
+              /> */}
+              <KeyboardDatePicker
+                margin="normal"
+                style={{marginTop:0}}
+                // id="mui-pickers-date"
+                value={Moment(quotation.date).format('LLL')}
+                onChange={e => handleChange('date', e._d)}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
               />
             </Col>
-          </FormGroup>
+        </div>
+      </div>
+                
+      <div className="col-md-6">
+        <div style={{display:'flex', flexDirection:'row'}}>
+          <Label for="Select-1" className="fs-13 text-center" sm={2}>
+            Status
+          </Label>
+          <Col sm={10}>
+            <FormTextField
+              value={quotation.status}
+              disabled={true}
+            />
+          </Col>
+        </div>
+      </div>
+
+      <div className="col-md-6">
+        <Form>
+     
           <FormGroup row>
             <Label for="Select-1" className="fs-13 text-right" sm={2}>
-              Related Account
+              Account
             </Label>
             <Col sm={10}>
               <FormSelectField
-                //value={}
-                selectValues={[{ id: 1, name: "Account 1" }]}
+                value={quotation.account}
+                target={"account"}
+                handleChange ={(e, value, target) => handleChange(e, value, target)}
+                selectValues={tableData}
               />
             </Col>
           </FormGroup>
@@ -44,8 +80,24 @@ const InvoiceFields = ({ handleChange, handleAttnTo, invoice }) => {
             </Label>
             <Col sm={10}>
               <FormSelectField
-                //value={}
-                selectValues={[{ id: 1, name: "Account 1" }]}
+                value={quotation.attn_toId}
+                selectValues={attn_to_array}
+                // selectValues={[{id: 1, name: "Hello World", email: 'helloworld@gmail.com'}]}
+                target={"attn_toId"}
+                handleChange ={(e, value, target) => handleChange(e, value, target)}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup row>
+            <Label for="Email-1" className="fs-13 text-right" sm={2}>
+              Description
+            </Label>
+            <Col sm={10}>
+              <FormTextField
+                value={quotation.description}
+                handleChange ={(e, value, target) => handleChange(e, value, target)}
+                target={'description'}
+                //targetType={targetType}
               />
             </Col>
           </FormGroup>
@@ -54,59 +106,82 @@ const InvoiceFields = ({ handleChange, handleAttnTo, invoice }) => {
               Currency
             </Label>
             <Col sm={4}>
-              <FormSelectField
-                //value={}
-                selectValues={[{ id: 1, name: "Account 1" }]}
+               <FormSelectField
+                value={quotation.currency}
+                target={"currency"}
+                handleChange ={(e, value, target) => handleChange(e, value, target)}
+                selectValues={currencyTable}
               />
             </Col>
-            <Label for="Select-1" className="fs-13 text-right" sm={2}>
-              Date
-            </Label>
-            <Col sm={4}>
-              <FormSelectField
-                //value={}
-                selectValues={[{ id: 1, name: "Account 1" }]}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup row>
             <Label for="Select-1" className="fs-13 text-right" sm={2}>
               Currency Rate
             </Label>
             <Col sm={4}>
-              <FormTextField value={""} />
+              <FormTextField 
+                value={quotation.currency_rate}
+                handleChange ={(e, value, target) => handleChange(e, value, target)}
+                target={'currency_rate'}
+              />
             </Col>
           </FormGroup>
+        
+          <FormTable>
+          <TableRow>
+            <FormBlock 
+              label="Email"
+              target={"Email"}
+              value={quotation.email}
+              required
+              handleChange ={(e, value, target) => handleChange(e, value, target)}
+            />
+            <FormBlock 
+              label="mobile"
+              value={quotation.mobile}
+              target={"mobile"}
+              handleChange ={(e, value, target) => handleChange(e, value, target)}
+            />
+          </TableRow>
+        </FormTable>
         </Form>
       </div>
+     
       <div className="col-md-6">
         <FormTable>
           <TableRow>
             <FormBlock
               label="Owner"
-              selectValues={[{ id: 1, name: "Admin admin" }]}
+              target={"owner"}
+              value={quotation.owner}
+              selectValues={users}
+              handleChange ={(e, value, target) => handleChange(e, value, target)}
               required
             />
-            <TableCell colSpan={2} style={{ borderBottom: "none" }}>
-              <TextField
-                fullWidth
-                inputProps={{
-                  readOnly: true
-                }}
-                id="standard-disabled"
-                label="Status"
-                defaultValue="Draft"
-                margin="dense"
-                variant="outlined"
-              />
-            </TableCell>
           </TableRow>
         </FormTable>
-        <AddressFormInput />
+
+
+        <AddressFormInput 
+          handleChange ={(e, value, target) => handleChange(e, value, target)}
+          address_1={quotation.address_1}
+          address_2={quotation.address_2}
+          city={quotation.city}
+          state={quotation.state}
+          zip={quotation.zip}
+        />
         <FormTable>
           <TableRow>
-            <FormBlock label="Email" required />
-            <FormBlock label="Phone" />
+            <FormBlock 
+              label="office"
+              target={"office"}
+              value={quotation.office}
+              handleChange ={(e, value, target) => handleChange(e, value, target)}
+            />
+            <FormBlock 
+              label="fax"
+              target={"fax"}
+              value={quotation.fax}
+              handleChange ={(e, value, target) => handleChange(e, value, target)}
+            />
           </TableRow>
         </FormTable>
       </div>

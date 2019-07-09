@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
-
+import { Route, Redirect } from 'react-router'
 //buttons
 import MatButton from "@material-ui/core/Button";
 
@@ -27,12 +27,13 @@ import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 // import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
-import { getSingleQuotation, clearSingleQuotation } from "Actions";
+import { getSingleQuotation, clearSingleQuotation, deleteSingleQuote } from "Actions";
 // addNoteToQuotation(acctID), onNoteChange, clearNote
 // Add events dialog
 // Delete Quotation, Edit Quotation, Transfer Quotation
 
 class acct_view_quotation extends Component {
+
   componentWillMount() {
     var id = this.props.match.params.id;
     this.props.getSingleQuotation(id);
@@ -42,12 +43,22 @@ class acct_view_quotation extends Component {
     this.props.clearSingleQuotation();
   }
 
+  Redirect=()=> {
+    const {deleted} = this.props.quotationList
+    if(deleted){
+      return(<Redirect to="/app/acct/quotations"/>)
+    }
+  }
+
   render() {
-    const { loading, quotation } = this.props.quotationToView;
+    const {loading, quotation} = this.props.quotationToView;
+
     return loading ? (
       <RctPageLoader />
     ) : quotation ? (
+        
       <React.Fragment>
+        {this.Redirect()}
         <Helmet>
           <title>Everyday | View Quotation</title>
         </Helmet>
@@ -69,16 +80,20 @@ class acct_view_quotation extends Component {
           ]}
           createLink="/acct/new/quotation"
           moreButton={
-            <MoreButton>
+            <MoreButton > 
               {{
-                label: "Edit"
+                label: "Edit", handleOnClick: ()=> console.log('Edit item')
               }}
-              {{ label: "Delete" }}
-              {{
-                label: "Clone"
+              {{ 
+                label: "Delete", handleOnClick: (() => {
+                  this.props.deleteSingleQuote(this.props.match.params.id)
+                })
               }}
               {{
-                label: "New Version"
+                label: "Clone", handleOnClick: ()=> console.log('Clone item')
+              }}
+              {{
+                label: "New Version",handleOnClick: ()=> console.log('Create new version of the quotation')
               }}
             </MoreButton>
           }
@@ -153,6 +168,7 @@ class acct_view_quotation extends Component {
           </div>
         </div>
       </React.Fragment>
+  
     ) : (
       <PageErrorMessage
         heading="Not Found"
@@ -163,11 +179,13 @@ class acct_view_quotation extends Component {
 }
 const mapStateToProps = ({ accountingState }) => {
   const { quotationState } = accountingState;
-  const { quotationToView } = quotationState;
-  return { quotationToView };
+  const { quotationToView, quotationList } = quotationState;
+  return { quotationToView, quotationList };
 };
+
+// deleted
 
 export default connect(
   mapStateToProps,
-  { getSingleQuotation, clearSingleQuotation }
+  { getSingleQuotation, clearSingleQuotation, deleteSingleQuote }
 )(acct_view_quotation);

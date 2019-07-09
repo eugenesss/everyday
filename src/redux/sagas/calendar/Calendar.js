@@ -5,21 +5,7 @@ import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
 // } from "Types";
 
 import * as Types from 'Types'
-
-// import { 
-//   getAllEventsSuccess,
-//   getAllEventsFailure,
-//   getEventFailure,
-//   addEventSuccess,
-//   addEventFailure,
-//   deleteEvent,
-//   deleteEventSuccess,
-//   deleteEventFailure,
-//  } from "Actions";
-
- import * as Actions from 'Actions'
-
-
+import * as Actions from 'Actions'
 
 
 

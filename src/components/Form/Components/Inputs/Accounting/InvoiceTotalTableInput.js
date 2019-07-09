@@ -19,14 +19,14 @@ const InvoiceTotalTableInput = ({ invoice }) => {
         </TableRow>
         <TableRow>
           <TableCell>Discount</TableCell>
-          <TableCell align="right">input %</TableCell>
+          <TableCell align="right"></TableCell>
           <TableCell align="right">
             {ccyFormat(invoice.discount_total)}
           </TableCell>
         </TableRow>
         <TableRow>
           <TableCell>Tax</TableCell>
-          <TableCell align="right">input %</TableCell>
+          <TableCell align="right"></TableCell>
           <TableCell align="right">{ccyFormat(invoice.tax_amount)}</TableCell>
         </TableRow>
         <TableRow>

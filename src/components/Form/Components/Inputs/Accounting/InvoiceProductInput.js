@@ -7,7 +7,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TextField from "@material-ui/core/TextField";
 
 import InvoiceTotalTableInput from "./InvoiceTotalTableInput";
-
+import FormSelectField from "Components/Form/Components/FormSelectField";
 import MatButton from "@material-ui/core/Button";
 
 function ccyFormat(num) {
@@ -19,30 +19,39 @@ const InvoiceProductInput = ({
   products,
   handleChange,
   handleAdd,
-  handleRemove
+  handleRemove,
+  taxTable
 }) => {
   return (
     <React.Fragment>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Item</TableCell>
+            <TableCell>No</TableCell>
+            {/* <TableCell>Item</TableCell> */}
             <TableCell>Description</TableCell>
             <TableCell style={{ width: "10%" }}>Qty</TableCell>
             <TableCell style={{ width: "10%" }}>Unit Price</TableCell>
-            <TableCell style={{ width: "10%", padding: "4px 24px 4px 24px" }}>
+            {/* <TableCell style={{ width: "10%", padding: "4px 24px 4px 24px" }}>
               Discount (%)
+            </TableCell> */}
+            <TableCell style={{ width: "10%", padding: "4px 24px 4px 24px" }}>
+              Tax ID
             </TableCell>
             <TableCell style={{ width: "10%" }}>Tax (%)</TableCell>
-            <TableCell style={{ width: "5%" }}>Amount</TableCell>
-            <TableCell style={{ width: "5%" }} />
+            <TableCell style={{ width: "10%" }}>Amount</TableCell>
+            <TableCell style={{ width: "10%" }} />
           </TableRow>
         </TableHead>
         <TableBody>
           {products.map((row, key) => {
+            // console.log(row)
             return (
               <TableRow key={key}>
                 <TableCell>
+                  <p>{key+1}</p>
+                </TableCell>
+                {/* <TableCell>
                   <TextField
                     value={row.name}
                     onChange={e => handleChange(key, "name", e.target.value)}
@@ -50,7 +59,7 @@ const InvoiceProductInput = ({
                     margin="dense"
                     variant="outlined"
                   />
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   <TextField
                     value={row.description}
@@ -86,7 +95,7 @@ const InvoiceProductInput = ({
                     step="1"
                   />
                 </TableCell>
-                <TableCell style={{ padding: "4px 24px 4px 24px" }}>
+                {/* <TableCell style={{ padding: "4px 24px 4px 24px" }}>
                   <TextField
                     value={row.discount}
                     onChange={e =>
@@ -98,20 +107,35 @@ const InvoiceProductInput = ({
                     type="number"
                     step="1"
                   />
-                </TableCell>
+                </TableCell> */}
                 <TableCell style={{ padding: "4px 24px 4px 24px" }}>
-                  <TextField
+                    <FormSelectField
+                      value={row.tax_id}
+                      selectValues={taxTable}
+                      // selectValues={[{id: 1, name: "Hello World", email: 'helloworld@gmail.com'}]}
+                      target={"tax_id"}
+                      handleChange ={(target, e, targetType) => handleChange(key, "tax_id", e)}
+                    />
+                </TableCell>
+
+
+                <TableCell style={{ padding: "4px 24px 4px 24px" }}>
+                  {/* <TextField
                     value={row.tax_amount}
-                    onChange={e =>
-                      handleChange(key, "tax_amount", e.target.value)
-                    }
+                    // onChange={e =>
+                    //   handleChange(key, "tax_amount", e.target.value)
+                    // }
                     fullWidth
                     margin="dense"
                     variant="outlined"
                     type="number"
                     step="1"
-                  />
+                  /> */}
+                  <p>{row.tax_rate}</p>
                 </TableCell>
+
+
+
                 <TableCell>{ccyFormat(row.amount)}</TableCell>
                 <TableCell>
                   <MatButton

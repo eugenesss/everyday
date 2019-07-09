@@ -161,7 +161,6 @@ class RegisterSteps extends React.Component {
   validateCard = () => {
     const [result, info] = CheckCreditCard(this.props.paymentInfo)
     if (result) {
-      console.log(this.state)
       this.props.registerUser()
     } else {
       this.props.handleRegErrorForm(info)

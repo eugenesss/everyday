@@ -22,7 +22,7 @@ import {
   toggleQuotationDropDown,
   toggleQuotationSummary,
   getAllQuotation,
-  getQuotationSummary
+  getQuotationSummary,
 } from "Actions";
 
 class acct_quotation extends Component {
@@ -37,10 +37,11 @@ class acct_quotation extends Component {
       options,
       nowShowing,
       action,
-      tableData,
-      loading
+      loading,
+      tableData
     } = this.props.quotationState.quotationList;
     const { showSummary, summary } = this.props.quotationState.quotationSummary;
+
     return (
       <React.Fragment>
         <Helmet>
@@ -68,8 +69,8 @@ class acct_quotation extends Component {
         <QuotationList
           title={nowShowing}
           action={action}
-          tableData={tableData}
           loading={loading}
+          tableData={tableData}
         />
       </React.Fragment>
     );
@@ -88,6 +89,6 @@ export default connect(
     toggleQuotationDropDown,
     toggleQuotationSummary,
     getAllQuotation,
-    getQuotationSummary
+    getQuotationSummary,
   }
 )(acct_quotation);

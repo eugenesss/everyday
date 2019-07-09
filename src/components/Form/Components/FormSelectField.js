@@ -10,6 +10,7 @@ const FormSelectField = ({
   handleChange,
   selectValues
 }) => {
+  
   return (
     <TextField
       select
@@ -17,12 +18,12 @@ const FormSelectField = ({
       label={label}
       value={value ? value : ""}
       onChange={e => handleChange(target, e.target.value, targetType)}
+      // onChange={e => console.log(e.target.value)}
       margin="dense"
-      // variant="outlined"
     >
       {selectValues &&
         selectValues.map((select, key) => (
-          <MenuItem key={key} value={select.id}>
+          <MenuItem key={key} value={select}>
             {select.name}
           </MenuItem>
         ))}

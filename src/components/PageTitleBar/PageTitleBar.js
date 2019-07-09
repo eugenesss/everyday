@@ -15,6 +15,7 @@ const PageTitleBar = ({
   moreButton,
   extraButtons
 }) => {
+
   return (
     <div className="page-title d-flex justify-content-between align-items-center">
       {title && (
