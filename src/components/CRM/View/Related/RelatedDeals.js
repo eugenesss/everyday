@@ -5,6 +5,7 @@ import RelatedTable from "./RelatedTable";
 import AddNewButton from "Components/Everyday/AddNewButton";
 import NumberFormat from "react-number-format";
 import { getTheDate } from "Helpers/helpers";
+import { singleDeal } from "Helpers/url/crm";
 
 const columns = [
   {
@@ -21,11 +22,7 @@ const columns = [
     name: "name",
     options: {
       customBodyRender: (value, tableMeta) => {
-        return (
-          <NavLink to={`/app/crm/deals/${tableMeta.rowData[0]}`}>
-            {value}
-          </NavLink>
-        );
+        return <NavLink to={singleDeal(tableMeta.rowData[0])}>{value}</NavLink>;
       }
     }
   },

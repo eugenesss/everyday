@@ -8,6 +8,8 @@ import {
 import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 import NumberFormat from "react-number-format";
 
+import { singleAccount, singleCustomer } from "Helpers/url/crm";
+
 const DealCard = ({
   name,
   stage,
@@ -42,18 +44,14 @@ const DealCard = ({
           title: "Account",
           icon: "zmdi-city-alt",
           detail: account && (
-            <NavLink to={`/app/crm/accounts/${account.id}`}>
-              {account.name}
-            </NavLink>
+            <NavLink to={singleAccount(account.id)}>{account.name}</NavLink>
           )
         }}
         {{
           title: "Customer",
           icon: "zmdi-accounts-outline",
           detail: customer && (
-            <NavLink to={`/app/crm/customers/${customer.id}`}>
-              {customer.name}
-            </NavLink>
+            <NavLink to={singleCustomer(customer.id)}>{customer.name}</NavLink>
           )
         }}
       </ViewCardDetails>

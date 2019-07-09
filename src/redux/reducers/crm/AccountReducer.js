@@ -260,6 +260,32 @@ export default (state = INIT_STATE, action) => {
         accountToView: { ...state.accountToView, loading: false }
       };
 
+    /**
+     * Transfer
+     */
+    case acctType.TRANSFER_ACCOUNT:
+      return {
+        ...state,
+        accountToView: { ...state.accountToView, loading: true }
+      };
+    case acctType.TRANSFER_ACCOUNT_SUCCESS:
+      NotificationManager.success("Record Transferred");
+      return {
+        ...state,
+        accountToView: {
+          ...state.accountToView,
+          account: action.payload,
+          loading: false
+        }
+      };
+    case acctType.TRANSFER_ACCOUNT_FAILURE:
+      NotificationManager.error("Error in Transferring Record");
+      console.log(action.payload);
+      return {
+        ...state,
+        accountToView: { ...state.accountToView, loading: false }
+      };
+
     default:
       return { ...state };
   }

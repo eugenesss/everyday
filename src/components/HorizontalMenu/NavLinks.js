@@ -1,34 +1,49 @@
-// horizontal nav links
+// crm routes
+import {
+  leadPage,
+  customerPage,
+  accountPage,
+  dealPage,
+  teamPage
+} from "Helpers/url/crm";
+// acct routes
+import {
+  quotePage,
+  invoicePage,
+  crednotePage,
+  paymentPage
+} from "Helpers/url/accounting";
+
 export default {
   crm: [
     {
       menu_title: "sidebar.leads",
       menu_icon: "zmdi zmdi-account-circle text-primary",
-      path: "/app/crm/leads",
+      path: leadPage,
       child_routes: null
     },
     {
       menu_title: "sidebar.customers",
       menu_icon: "zmdi zmdi-accounts-outline text-primary",
-      path: "/app/crm/customers",
+      path: customerPage,
       child_routes: null
     },
     {
       menu_title: "sidebar.accounts",
       menu_icon: "zmdi zmdi-city-alt text-primary",
-      path: "/app/crm/accounts",
+      path: accountPage,
       child_routes: null
     },
     {
       menu_title: "sidebar.deals",
       menu_icon: "zmdi zmdi-case text-primary",
-      path: "/app/crm/deals",
+      path: dealPage,
       child_routes: null
     },
     {
       menu_title: "sidebar.teams",
       menu_icon: "zmdi zmdi-accounts-alt text-primary",
-      path: "/app/crm/team",
+      path: teamPage,
       child_routes: null
     }
   ],
@@ -65,25 +80,25 @@ export default {
     {
       menu_title: "sidebar.quotations",
       menu_icon: "zmdi zmdi-receipt text-everyday",
-      path: "/app/acct/quotations",
+      path: quotePage,
       child_routes: null
     },
     {
       menu_title: "sidebar.invoices",
       menu_icon: "zmdi zmdi-shopping-cart text-everyday",
-      path: "/app/acct/invoices",
+      path: invoicePage,
       child_routes: null
     },
     {
       menu_title: "sidebar.payment",
       menu_icon: "zmdi zmdi-card text-everyday",
-      path: "/app/acct/payment",
+      path: paymentPage,
       child_routes: null
     },
     {
       menu_title: "sidebar.credit_note",
       menu_icon: "zmdi zmdi-store text-everyday",
-      path: "/app/acct/credit_note",
+      path: crednotePage,
       child_routes: null
     }
   ]

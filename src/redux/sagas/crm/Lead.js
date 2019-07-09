@@ -17,7 +17,8 @@ import {
   SUBMIT_EDIT_LEAD,
   DELETE_LEAD,
   ADD_NOTE_LEAD,
-  CHECK_ACCOUNT_EXIST
+  CHECK_ACCOUNT_EXIST,
+  TRANSFER_LEAD
 } from "Types";
 import {
   getLeadSuccess,
@@ -34,8 +35,11 @@ import {
   addNoteLeadSuccess,
   addNoteLeadFailure,
   checkAccountExistSuccess,
-  checkAccountExistFailure
+  checkAccountExistFailure,
+  transferLeadSuccess,
+  transferLeadFailure
 } from "Actions";
+import { singleLead } from "Helpers/url/crm";
 
 import api from "Api";
 
@@ -96,6 +100,10 @@ const checkAccountRequest = async companyName => {
     accountName: companyName
   });
   return result.data;
+};
+const transferLeadRequest = async (id, newOwner) => {
+  const result = await api.post(`/leads/transfer`, { leadIds: [id], newOwner });
+  return result.data.updatedRecords[0];
 };
 
 //=========================
@@ -217,6 +225,17 @@ function* checkAccountFromDB({ payload }) {
     yield put(checkAccountExistFailure(error));
   }
 }
+function* transferLeadToDB({ payload }) {
+  const { id, newOwner } = payload;
+  try {
+    const data = yield call(transferLeadRequest, id, newOwner);
+    window.location.replace(singleLead(data.id));
+    yield delay(500);
+    yield put(transferLeadSuccess(data));
+  } catch (error) {
+    yield put(transferLeadFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -251,6 +270,9 @@ export function* addNoteLeadWatcher() {
 export function* checkAccountExistWatcher() {
   yield takeEvery(CHECK_ACCOUNT_EXIST, checkAccountFromDB);
 }
+export function* transferLeadWatcher() {
+  yield takeEvery(TRANSFER_LEAD, transferLeadToDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -266,6 +288,7 @@ export default function* rootSaga() {
     fork(editLeadWatcher),
     fork(deleteLeadWatcher),
     fork(addNoteLeadWatcher),
-    fork(checkAccountExistWatcher)
+    fork(checkAccountExistWatcher),
+    fork(transferLeadWatcher)
   ]);
 }

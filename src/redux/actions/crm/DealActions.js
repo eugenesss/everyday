@@ -179,3 +179,19 @@ export const addNoteDealFailure = error => ({
   type: dealType.ADD_NOTE_DEAL_FAILURE,
   payload: error
 });
+
+/**
+ * Transfer
+ */
+export const transferDeal = (id, newOwner) => ({
+  type: dealType.TRANSFER_DEAL,
+  payload: { id, newOwner }
+});
+export const transferDealSuccess = data => ({
+  type: dealType.TRANSFER_DEAL_SUCCESS,
+  payload: data
+});
+export const transferDealFailure = error => ({
+  type: dealType.TRANSFER_DEAL_FAILURE,
+  payload: error
+});

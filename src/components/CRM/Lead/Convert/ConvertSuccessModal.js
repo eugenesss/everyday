@@ -9,14 +9,14 @@ import DialogRoot from "Components/Dialog/DialogRoot";
 import ConvertedBlock from "./Components/ConvertedBlock";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import NumberFormat from "react-number-format";
-
+import { leadPage } from "Helpers/url/crm";
 // Actions
 import { handleSuccessConvertModal } from "Actions";
 
 class ConvertSuccessModal extends Component {
   closeModal() {
     this.props.handleSuccessConvertModal();
-    this.props.history.push("/app/crm/leads");
+    this.props.history.push(leadPage);
   }
   render() {
     const {

@@ -16,7 +16,8 @@ import {
   ON_SUBMIT_NEW_STAGE,
   SUBMIT_EDIT_DEAL,
   DELETE_DEAL,
-  ADD_NOTE_DEAL
+  ADD_NOTE_DEAL,
+  TRANSFER_DEAL
 } from "Types";
 import {
   getDealSuccess,
@@ -31,8 +32,11 @@ import {
   deleteDealSuccess,
   deleteDealFailure,
   addNoteDealSuccess,
-  addNoteDealFailure
+  addNoteDealFailure,
+  transferDealSuccess,
+  transferDealFailure
 } from "Actions";
+import { singleDeal } from "Helpers/url/crm";
 
 import api from "Api";
 
@@ -88,6 +92,10 @@ const deleteDealRequest = async id => {
 const addNoteDealRequest = async (id, note) => {
   const result = await api.post(`/deals/${id}/notes`, note);
   return result.data;
+};
+const transferDealRequest = async (id, newOwner) => {
+  const result = await api.post(`/deals/transfer`, { dealIds: [id], newOwner });
+  return result.data.updatedRecords[0];
 };
 
 //=========================
@@ -200,6 +208,17 @@ function* addNoteDealToDB({ payload }) {
     yield put(addNoteDealFailure(error));
   }
 }
+function* transferDealInDB({ payload }) {
+  const { id, newOwner } = payload;
+  try {
+    const data = yield call(transferDealRequest, id, newOwner);
+    window.location.replace(singleDeal(data.id));
+    yield delay(500);
+    yield put(transferDealSuccess(data));
+  } catch (error) {
+    yield put(transferDealFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -231,6 +250,9 @@ export function* deleteDealWatcher() {
 export function* addNoteDealWatcher() {
   yield takeEvery(ADD_NOTE_DEAL, addNoteDealToDB);
 }
+export function* transferDealWatcher() {
+  yield takeEvery(TRANSFER_DEAL, transferDealInDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -245,6 +267,7 @@ export default function* rootSaga() {
     fork(updateDealStageWatcher),
     fork(patchDealWatcher),
     fork(deleteDealWatcher),
-    fork(addNoteDealWatcher)
+    fork(addNoteDealWatcher),
+    fork(transferDealWatcher)
   ]);
 }

@@ -12,7 +12,8 @@ const DialogRoot = ({
   title,
   size,
   close,
-  dialogAction
+  dialogAction,
+  dialogActionLabel
 }) => {
   return (
     <React.Fragment>
@@ -29,11 +30,15 @@ const DialogRoot = ({
         <DialogContent>{children}</DialogContent>
         <DialogActions>
           {close ? (
-            <Button onClick={handleHide} color="primary" variant="contained">
+            <Button onClick={handleHide} color="danger" variant="contained">
               Close
             </Button>
           ) : null}
-          {dialogAction && dialogAction}
+          {dialogAction && (
+            <Button onClick={dialogAction} color="primary" variant="contained">
+              {dialogActionLabel}
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </React.Fragment>

@@ -318,6 +318,26 @@ export default (state = INIT_STATE, action) => {
         dealToView: { ...state.dealToView, sectionLoading: false }
       };
 
+    /**
+     * Transfer
+     */
+    case dealType.TRANSFER_DEAL:
+      return { ...state, dealToView: { ...state.dealToView, loading: true } };
+    case dealType.TRANSFER_DEAL_SUCCESS:
+      NotificationManager.success("Record Transferred");
+      return {
+        ...state,
+        dealToView: {
+          ...state.dealToView,
+          deal: action.payload,
+          loading: false
+        }
+      };
+    case dealType.TRANSFER_DEAL_FAILURE:
+      NotificationManager.error("Error in Transferring Record");
+      console.log(action.payload);
+      return { ...state, dealToView: { ...state.dealToView, loading: false } };
+
     default:
       return { ...state };
   }

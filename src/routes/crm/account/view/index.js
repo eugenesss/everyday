@@ -8,7 +8,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
 // Account Card
 import AccountCard from "Components/CRM/Account/AccountCard";
 // Vertical Tabs
@@ -26,7 +26,13 @@ import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
 import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 // Notes Tab
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
-
+// Routes
+import {
+  editAccount,
+  accountPage,
+  newDeal,
+  newAccount
+} from "Helpers/url/crm";
 // Actions
 import {
   getSingleAccount,
@@ -34,10 +40,10 @@ import {
   startAccountEdit,
   addNoteAccount,
   setAccountActive,
-  deleteAccount
+  deleteAccount,
+  transferAccount
 } from "Actions";
 // Add events dialog
-// Transfer Account
 
 class crm_view_account extends Component {
   constructor(props) {
@@ -57,12 +63,25 @@ class crm_view_account extends Component {
   // Change view tab state
   changeTabView = (_, activeIndex) => this.setState({ activeIndex });
 
-  reload() {
-    console.log("reload");
-  }
+  /**
+   * Edit
+   */
   edit(acct) {
     this.props.startAccountEdit(acct);
-    this.props.history.push("/app/crm/accounts/edit");
+    this.props.history.push(editAccount);
+  }
+
+  /**
+   * Transfer Record
+   */
+  transfer(account) {
+    this.props.show("transfer_record", {
+      name: account.name,
+      action: val => this.handleTransfer(account.id, val)
+    });
+  }
+  handleTransfer(id, newOwner) {
+    this.props.transferAccount(id, newOwner);
   }
 
   /**
@@ -71,7 +90,7 @@ class crm_view_account extends Component {
   handleDelete(acctId) {
     this.props.deleteAccount(acctId);
     setTimeout(() => {
-      this.props.history.push(`/app/crm/accounts`);
+      this.props.history.push(accountPage);
     }, 500);
   }
   delete(acct) {
@@ -85,7 +104,7 @@ class crm_view_account extends Component {
     console.log("new events");
   }
   handleNewDeal() {
-    this.props.history.push("/app/crm/new/deal");
+    this.props.history.push(newDeal);
   }
   setInactive(acct) {
     this.props.setAccountActive(acct.id, !acct.isActive);
@@ -110,7 +129,7 @@ class crm_view_account extends Component {
         </Helmet>
         <PageTitleBar
           title="View Account"
-          createLink="/crm/new/account"
+          createLink={newAccount}
           extraButtons={[
             account.isActive
               ? {
@@ -126,8 +145,11 @@ class crm_view_account extends Component {
           ]}
           moreButton={
             <MoreButton>
-              {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
               {{ handleOnClick: () => this.edit(account), label: "Edit" }}
+              {{
+                handleOnClick: () => this.transfer(account),
+                label: "Transfer"
+              }}
               {{ handleOnClick: () => this.delete(account), label: "Delete" }}
             </MoreButton>
           }
@@ -202,10 +224,7 @@ class crm_view_account extends Component {
         </div>
       </React.Fragment>
     ) : (
-      <PageErrorMessage
-        heading="Not Found"
-        message="This could be because of a network problem or the record might have been deleted"
-      />
+      <RecordNotFound />
     );
   }
 }
@@ -225,7 +244,8 @@ export default withRouter(
       startAccountEdit,
       addNoteAccount,
       setAccountActive,
-      deleteAccount
+      deleteAccount,
+      transferAccount
     }
   )(crm_view_account)
 );

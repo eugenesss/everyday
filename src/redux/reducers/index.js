@@ -33,12 +33,13 @@ import calendarReducer from "./calendar/CalendarReducer";
 
 // upload file
 import uploadFileReducer from "./upload/uploadFileReducer";
-
+import ImportReducer from "./system/ImportReducer";
 
 const reducers = combineReducers({
   settings,
   authUser: authUserReducer,
-  uploadFile : uploadFileReducer,
+  uploadFile: uploadFileReducer,
+  importRecord: ImportReducer,
   crmState: combineReducers({
     leadState: LeadReducer,
     customerState: CustomerReducer,

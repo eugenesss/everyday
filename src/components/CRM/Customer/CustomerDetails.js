@@ -6,6 +6,8 @@ import {
 } from "Components/CRM/View/Layout/Details";
 import NameTimeStamp from "Components/Everyday/NameTimeStamp";
 
+import { singleAccount } from "Helpers/url/crm";
+
 const CustomerDetails = ({ customer }) => {
   return (
     <DetailsLayout title="Customer Details" bgColorClass="bg-danger">
@@ -17,7 +19,7 @@ const CustomerDetails = ({ customer }) => {
         title="Account"
         value={
           customer.accountInfo && (
-            <Link to={`/app/crm/accounts/${customer.accountInfo.id}`}>
+            <Link to={singleAccount(customer.accountInfo.id)}>
               {customer.accountInfo.name}
             </Link>
           )

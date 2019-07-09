@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { getAppLayout } from "Helpers/helpers";
 import {
   ViewCardLayout,
   ViewCardTitle,
   ViewCardDetails
 } from "Components/CRM/View/Layout/ViewCard";
 import ActiveStatusBadge from "Components/Everyday/StatusBadge/ActiveStatusBadge";
+import { singleAccount } from "Helpers/url/crm";
 
 const CustomerCard = ({
   name,
@@ -22,13 +22,7 @@ const CustomerCard = ({
       <ViewCardTitle
         name={name}
         subHeading={[
-          account && (
-            <Link
-              to={`/${getAppLayout(location)}/crm/account/view/${account.id}`}
-            >
-              {account.name}
-            </Link>
-          ),
+          account && <Link to={singleAccount(account.id)}>{account.name}</Link>,
           <ActiveStatusBadge isActive={isActive} />
         ]}
       />

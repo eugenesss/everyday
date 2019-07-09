@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import ViewSectionLayout from "Components/CRM/View/Layout/ViewSectionLayout";
 import RelatedTable from "./RelatedTable";
+import { singleCustomer } from "Helpers/url/crm";
 
 const columns = [
   {
@@ -19,9 +20,7 @@ const columns = [
     options: {
       customBodyRender: (value, tableMeta) => {
         return (
-          <NavLink to={`/app/crm/customers/${tableMeta.rowData[0]}`}>
-            {value}
-          </NavLink>
+          <NavLink to={singleCustomer(tableMeta.rowData[0])}>{value}</NavLink>
         );
       }
     }

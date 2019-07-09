@@ -10,7 +10,7 @@ import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
 
 // Credit Note Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
@@ -96,10 +96,7 @@ class acct_view_credit_note extends Component {
         </div>
       </React.Fragment>
     ) : (
-      <PageErrorMessage
-        heading="Not Found"
-        message="This could be because of a network problem or the record might have been deleted"
-      />
+      <RecordNotFound />
     );
   }
 }
