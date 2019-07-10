@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 import $ from "jquery";
 import classnames from "classnames";
 import IntlMessages from "Util/IntlMessages";
-import Chip from "@material-ui/core/Chip";
 
 class NavMenuItem extends Component {
   componentDidMount() {
@@ -26,16 +25,11 @@ class NavMenuItem extends Component {
     const { menu } = this.props;
     return (
       <li className="nav-item">
-        {menu.child_routes !== null ? (
+        {menu.child_routes && menu.child_routes !== null ? (
           <Fragment>
             <a href="javascript:void(0);" className="nav-link">
               <i className={menu.menu_icon} />
               {menu.menu_title}
-              {menu.new_item && menu.new_item === true ? (
-                <Chip label="new" className="new-item" color="secondary" />
-              ) : (
-                ""
-              )}
             </a>
             <ul
               className={classnames("list-unstyled sub-menu-child", {
@@ -46,21 +40,8 @@ class NavMenuItem extends Component {
                 if (!subMenu.child_routes) {
                   return (
                     <li className="nav-item" key={subKey}>
-                      <NavLink
-                        to={subMenu.path}
-                        className="nav-link no-arrow"
-                        activeClassName="active"
-                      >
+                      <NavLink to={subMenu.path} className="nav-link no-arrow">
                         {subMenu.menu_title}
-                        {subMenu.new_item && subMenu.new_item === true ? (
-                          <Chip
-                            label="new"
-                            className="new-item"
-                            color="secondary"
-                          />
-                        ) : (
-                          ""
-                        )}
                       </NavLink>
                     </li>
                   );
@@ -73,11 +54,7 @@ class NavMenuItem extends Component {
                     <ul className="list-unstyled sub-menu-sub-child">
                       {subMenu.child_routes.map((nestedMenu, nestedKey) => (
                         <li className="nav-item" key={nestedKey}>
-                          <NavLink
-                            to={nestedMenu.path}
-                            className="nav-link"
-                            activeClassName="active"
-                          >
+                          <NavLink to={nestedMenu.path} className="nav-link">
                             {nestedMenu.menu_title}
                           </NavLink>
                         </li>

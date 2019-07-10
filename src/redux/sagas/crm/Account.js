@@ -1,29 +1,24 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-  select,
-  delay
-} from "redux-saga/effects";
+import { all, call, fork, put, takeEvery, delay } from "redux-saga/effects";
 import {
   CHANGE_ACCOUNT_LIST_VIEW,
   GET_ALL_ACCOUNT,
   GET_SINGLE_ACCOUNT,
-  SUBMIT_ACCOUNT,
-  SUBMIT_EDIT_ACCOUNT,
+  NEW_ACCOUNT,
+  EDIT_ACCOUNT,
   ADD_NOTE_ACCOUNT,
   DELETE_ACCOUNT,
   SET_ACCOUNT_ACTIVE,
-  TRANSFER_ACCOUNT
+  TRANSFER_ACCOUNT,
+  GET_ACCOUNT_FORM_FIELDS
 } from "Types";
 import {
   getAccountFailure,
   getAccountSuccess,
   getSingleAccountSuccess,
-  submitAccountSuccess,
-  submitAccountError,
+  newAccountSuccess,
+  newAccountFailure,
+  editAccountSuccess,
+  editAccountFailure,
   deleteAccountSuccess,
   deleteAccountFailure,
   addNoteAccountSuccess,
@@ -31,7 +26,9 @@ import {
   setAccountActiveSuccess,
   setAccountActiveFailure,
   transferAccountSuccess,
-  transferAccountFailure
+  transferAccountFailure,
+  getAccountFormSuccess,
+  getAccountFormFailure
 } from "Actions";
 import { singleAccount } from "Helpers/url/crm";
 
@@ -83,6 +80,10 @@ const transferAccountRequest = async (id, newOwner) => {
   });
   return result.data.updatedRecords[0];
 };
+const getAccountFielsRequest = async () => {
+  const result = await api.get("/accounts/formFields");
+  return result.data;
+};
 
 //=========================
 // CALL(GENERATOR) ACTIONS
@@ -132,28 +133,22 @@ function* getAccountFromDB({ payload }) {
     yield put(getAccountFailure(error));
   }
 }
-function* postAccountToDB() {
+function* postAccountToDB({ payload }) {
   try {
-    const getAcctState = state =>
-      state.crmState.accountState.accountForm.account;
-    const acct = yield select(getAcctState);
-    const data = yield call(postAccountRequest, acct);
+    const data = yield call(postAccountRequest, payload);
     yield delay(500);
-    yield put(submitAccountSuccess(data));
+    yield put(newAccountSuccess(data));
   } catch (error) {
-    yield put(submitAccountError(error));
+    yield put(newAccountFailure(error));
   }
 }
-function* patchAccountToDB() {
+function* patchAccountToDB({ payload }) {
   try {
-    const getAcctState = state =>
-      state.crmState.accountState.accountForm.account;
-    const acct = yield select(getAcctState);
-    const data = yield call(patchAccountRequest, acct);
+    const data = yield call(patchAccountRequest, payload);
     yield delay(500);
-    yield put(submitAccountSuccess(data));
+    yield put(editAccountSuccess(data));
   } catch (error) {
-    yield put(submitAccountError(error));
+    yield put(editAccountFailure(error));
   }
 }
 function* deleteAccountFromDB({ payload }) {
@@ -201,6 +196,14 @@ function* transferAccountInDB({ payload }) {
     yield put(transferAccountFailure(error));
   }
 }
+function* getAccountFieldsFromDB() {
+  try {
+    const data = yield call(getAccountFielsRequest);
+    yield put(getAccountFormSuccess(data));
+  } catch (error) {
+    yield put(getAccountFormFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -215,10 +218,10 @@ export function* getSingleAccountWatcher() {
   yield takeEvery(GET_SINGLE_ACCOUNT, getAccountFromDB);
 }
 export function* postAccountWatcher() {
-  yield takeEvery(SUBMIT_ACCOUNT, postAccountToDB);
+  yield takeEvery(NEW_ACCOUNT, postAccountToDB);
 }
 export function* patchAccountWatcher() {
-  yield takeEvery(SUBMIT_EDIT_ACCOUNT, patchAccountToDB);
+  yield takeEvery(EDIT_ACCOUNT, patchAccountToDB);
 }
 export function* deleteAccounttWatcher() {
   yield takeEvery(DELETE_ACCOUNT, deleteAccountFromDB);
@@ -231,6 +234,9 @@ export function* setAccountActiveWatcher() {
 }
 export function* transferAccountWatcher() {
   yield takeEvery(TRANSFER_ACCOUNT, transferAccountInDB);
+}
+export function* getAccountFormFieldsWatcher() {
+  yield takeEvery(GET_ACCOUNT_FORM_FIELDS, getAccountFieldsFromDB);
 }
 
 //=======================
@@ -246,6 +252,7 @@ export default function* rootSaga() {
     fork(deleteAccounttWatcher),
     fork(addNoteAccountWatcher),
     fork(setAccountActiveWatcher),
-    fork(transferAccountWatcher)
+    fork(transferAccountWatcher),
+    fork(getAccountFormFieldsWatcher)
   ]);
 }

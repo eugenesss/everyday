@@ -1,23 +1,16 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-  select,
-  delay
-} from "redux-saga/effects";
+import { all, call, fork, put, takeEvery, delay } from "redux-saga/effects";
 import {
   CHANGE_DEAL_LIST_VIEW,
   GET_ALL_DEAL,
   GET_SINGLE_DEAL,
   GET_DEAL_SUMMARY,
-  SUBMIT_DEAL,
+  NEW_DEAL,
   ON_SUBMIT_NEW_STAGE,
-  SUBMIT_EDIT_DEAL,
+  EDIT_DEAL,
   DELETE_DEAL,
   ADD_NOTE_DEAL,
-  TRANSFER_DEAL
+  TRANSFER_DEAL,
+  GET_DEAL_FORM_FIELDS
 } from "Types";
 import {
   getDealSuccess,
@@ -25,8 +18,10 @@ import {
   getSingleDealSuccess,
   getDealSummarySuccess,
   getDealSummaryFailure,
-  submitDealSuccess,
-  submitDealError,
+  newDealSuccess,
+  newDealFailure,
+  editDealSuccess,
+  editDealFailure,
   newStageSuccess,
   newStageFailure,
   deleteDealSuccess,
@@ -34,7 +29,9 @@ import {
   addNoteDealSuccess,
   addNoteDealFailure,
   transferDealSuccess,
-  transferDealFailure
+  transferDealFailure,
+  getDealFormSuccess,
+  getDealFormFailure
 } from "Actions";
 import { singleDeal } from "Helpers/url/crm";
 
@@ -73,8 +70,7 @@ const postDealRequest = async deal => {
   const result = await api.post("/deals", deal);
   return result.data;
 };
-const postNewStageRequest = async payload => {
-  const { dealID, stageID } = payload;
+const postNewStageRequest = async (dealID, stageID) => {
   const result = await api.post(`/deals/updateStage`, {
     dealID: dealID,
     stageID: stageID
@@ -96,6 +92,10 @@ const addNoteDealRequest = async (id, note) => {
 const transferDealRequest = async (id, newOwner) => {
   const result = await api.post(`/deals/transfer`, { dealIds: [id], newOwner });
   return result.data.updatedRecords[0];
+};
+const getDealFormFieldsRequest = async () => {
+  const result = await api.get("/deals/formFields");
+  return result.data;
 };
 
 //=========================
@@ -159,40 +159,36 @@ function* getDealSummaryFromDB() {
     yield put(getDealSummaryFailure(error));
   }
 }
-function* postDealToDB() {
+function* postDealToDB({ payload }) {
   try {
-    const getDealState = state => state.crmState.dealState.dealForm.deal;
-    const deal = yield select(getDealState);
-    const data = yield call(postDealRequest, deal);
+    const data = yield call(postDealRequest, payload);
     yield delay(500);
-    yield put(submitDealSuccess(data));
+    yield put(newDealSuccess(data));
   } catch (error) {
-    yield put(submitDealError(error));
+    yield put(newDealFailure(error));
   }
 }
 function* postStageToDB({ payload }) {
+  const { dealID, stageID } = payload;
   try {
-    const deal = yield call(postNewStageRequest, payload);
+    const deal = yield call(postNewStageRequest, dealID, stageID);
     yield delay(500);
     yield put(newStageSuccess(deal));
   } catch (error) {
     yield put(newStageFailure(error));
   }
 }
-function* patchDealToDB() {
+function* patchDealToDB({ payload }) {
   try {
-    const getDealState = state => state.crmState.dealState.dealForm.deal;
-    const deal = yield select(getDealState);
-    const data = yield call(patchDealRequest, deal);
+    const data = yield call(patchDealRequest, payload);
     yield delay(500);
-    yield put(submitDealSuccess(data));
+    yield put(editDealSuccess(data));
   } catch (error) {
-    yield put(submitDealError(error));
+    yield put(editDealFailure(error));
   }
 }
 function* deleteDealFromDB({ payload }) {
   try {
-    const deleteResult = yield call(deleteDealRequest, payload);
     yield delay(500);
     yield put(deleteDealSuccess(payload));
   } catch (error) {
@@ -219,6 +215,14 @@ function* transferDealInDB({ payload }) {
     yield put(transferDealFailure(error));
   }
 }
+function* getDealFormFieldsFromDB() {
+  try {
+    const data = yield call(getDealFormFieldsRequest);
+    yield put(getDealFormSuccess(data));
+  } catch (error) {
+    yield put(getDealFormFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -236,13 +240,13 @@ export function* getDealSummaryWatcher() {
   yield takeEvery(GET_DEAL_SUMMARY, getDealSummaryFromDB);
 }
 export function* postDealWatcher() {
-  yield takeEvery(SUBMIT_DEAL, postDealToDB);
+  yield takeEvery(NEW_DEAL, postDealToDB);
 }
 export function* updateDealStageWatcher() {
   yield takeEvery(ON_SUBMIT_NEW_STAGE, postStageToDB);
 }
 export function* patchDealWatcher() {
-  yield takeEvery(SUBMIT_EDIT_DEAL, patchDealToDB);
+  yield takeEvery(EDIT_DEAL, patchDealToDB);
 }
 export function* deleteDealWatcher() {
   yield takeEvery(DELETE_DEAL, deleteDealFromDB);
@@ -252,6 +256,9 @@ export function* addNoteDealWatcher() {
 }
 export function* transferDealWatcher() {
   yield takeEvery(TRANSFER_DEAL, transferDealInDB);
+}
+export function* getDealFormFieldsWatcher() {
+  yield takeEvery(GET_DEAL_FORM_FIELDS, getDealFormFieldsFromDB);
 }
 
 //=======================
@@ -268,6 +275,7 @@ export default function* rootSaga() {
     fork(patchDealWatcher),
     fork(deleteDealWatcher),
     fork(addNoteDealWatcher),
-    fork(transferDealWatcher)
+    fork(transferDealWatcher),
+    fork(getDealFormFieldsWatcher)
   ]);
 }

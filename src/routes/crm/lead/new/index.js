@@ -10,39 +10,31 @@ import IntlMessages from "Util/IntlMessages";
 // Page Components
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import LeadForm from "Components/Form/Lead/LeadForm";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 // Actions
-import { submitNewLead } from "Actions";
+import { newLead } from "Actions";
 
 class crm_new_lead extends Component {
   render() {
-    const { loading } = this.props.leadForm;
     return (
       <React.Fragment>
         <Helmet>
           <title>Everyday | New Lead</title>
           <meta name="description" content="Everyday Leads Creation" />
         </Helmet>
-        <RctCollapsibleCard heading={<IntlMessages id="sidebar.newLead" />}>
-          {loading && <RctSectionLoader />}
-          <div className="row">
-            <div className="col-md-11">
-              <LeadForm handleSubmit={this.props.submitNewLead} />
-            </div>
+        <div className="row">
+          <div className="col-md-10 offset-md-1">
+            <RctCollapsibleCard heading={<IntlMessages id="sidebar.newLead" />}>
+              <LeadForm handleSubmit={this.props.newLead} />
+            </RctCollapsibleCard>
           </div>
-        </RctCollapsibleCard>
+        </div>
       </React.Fragment>
     );
   }
 }
-const mapStateToProps = ({ crmState }) => {
-  const { leadState } = crmState;
-  const { leadForm } = leadState;
-  return { leadForm };
-};
 
 export default connect(
-  mapStateToProps,
-  { submitNewLead }
+  null,
+  { newLead }
 )(crm_new_lead);

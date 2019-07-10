@@ -20,7 +20,13 @@ const INIT_STATE = {
   },
   leadForm: {
     loading: false,
-    lead: { baseContact: { _address: {} } }
+    fields: {
+      leadSource: [],
+      leadStatus: [],
+      industry: [],
+      leadInterest: [],
+      users: []
+    }
   },
   leadToConvert: {
     modal: {
@@ -141,61 +147,41 @@ export default (state = INIT_STATE, action) => {
     /**
      * New Lead
      */
-    case types.HANDLE_CHANGE_NEW_LEAD:
-      if (action.payload.type == "baseContact") {
-        return {
-          ...state,
-          leadForm: {
-            ...state.leadForm,
-            lead: {
-              ...state.leadForm.lead,
-              baseContact: {
-                ...state.leadForm.lead.baseContact,
-                [action.payload.field]: action.payload.value
-              }
-            }
-          }
-        };
-      } else if (action.payload.type == "address") {
-        return {
-          ...state,
-          leadForm: {
-            ...state.leadForm,
-            lead: {
-              ...state.leadForm.lead,
-              baseContact: {
-                ...state.leadForm.lead.baseContact,
-                _address: {
-                  ...state.leadForm.lead.baseContact._address,
-                  [action.payload.field]: action.payload.value
-                }
-              }
-            }
-          }
-        };
-      } else {
-        return {
-          ...state,
-          leadForm: {
-            ...state.leadForm,
-            lead: {
-              ...state.leadForm.lead,
-              [action.payload.field]: action.payload.value
-            }
-          }
-        };
-      }
-    case types.SUBMIT_NEW_LEAD:
+    case types.NEW_LEAD:
       return { ...state, leadForm: { ...state.leadForm, loading: true } };
-    case types.CLEAR_NEW_LEAD:
-      return { ...state, leadForm: INIT_STATE.leadForm };
     case types.NEW_LEAD_SUCCESS:
-      NotificationManager.success("Success!");
-      return { ...state, leadForm: INIT_STATE.leadForm };
-    case types.NEW_LEAD_ERROR:
+      NotificationManager.success("Lead Created");
+      return { ...state, leadForm: { ...state.leadForm, loading: false } };
+    case types.NEW_LEAD_FAILURE:
       NotificationManager.error("Error in POST API");
       console.log(action.payload);
       return { ...state, leadForm: { ...state.leadForm, loading: false } };
+
+    /**
+     * Edit
+     */
+    case types.EDIT_LEAD:
+      return { ...state, leadForm: { ...state.leadForm, loading: true } };
+    case types.EDIT_LEAD_SUCCESS:
+      NotificationManager.success("Lead Edited");
+      return { ...state, leadForm: { ...state.leadForm, loading: false } };
+    case types.EDIT_LEAD_FAILURE:
+      NotificationManager.error("Error in Edit Lead");
+      console.log(action.payload);
+      return { ...state, leadForm: { ...state.leadForm, loading: false } };
+
+    /**
+     * Fields
+     */
+    case types.GET_LEADFORM_FIELDS_SUCCESS:
+      return {
+        ...state,
+        leadForm: { ...state.leadForm, fields: action.payload.fields }
+      };
+    case types.GET_LEADFORM_FIELDS_FAILURE:
+      NotificationManager.error("Error in fetching form fields");
+      console.log(action.payload);
+      return { ...state };
 
     /**
      * Convert Lead
@@ -282,20 +268,6 @@ export default (state = INIT_STATE, action) => {
             loading: false
           }
         }
-      };
-
-    /**
-     * Edit
-     */
-    case types.START_LEAD_EDIT:
-      return {
-        ...state,
-        leadForm: { ...state.leadForm, lead: action.payload }
-      };
-    case types.SUBMIT_EDIT_LEAD:
-      return {
-        ...state,
-        leadForm: { ...state.leadForm, loading: true }
       };
 
     /**

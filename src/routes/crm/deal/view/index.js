@@ -29,12 +29,11 @@ import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
 // Notes Tab
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 // routes
-import { editDeal, dealPage, newDeal } from "Helpers/url/crm";
+import { dealEditPage, dealListPage, dealNewPage } from "Helpers/url/crm";
 // Actions
 import {
   getSingleDeal,
   clearSingleDeal,
-  startDealEdit,
   addNoteDeal,
   deleteDeal,
   transferDeal
@@ -75,8 +74,7 @@ class crm_view_deal extends Component {
    * Edit
    */
   edit(deal) {
-    this.props.startDealEdit(deal);
-    this.props.history.push(editDeal);
+    this.props.history.push(dealEditPage(deal.id));
   }
 
   /**
@@ -86,7 +84,7 @@ class crm_view_deal extends Component {
     this.props.deleteDeal(dealId);
     //console.log(dealId);
     setTimeout(() => {
-      this.props.history.push(dealPage);
+      this.props.history.push(dealListPage);
     }, 500);
   }
   delete(deal) {
@@ -121,7 +119,7 @@ class crm_view_deal extends Component {
             </Helmet>
             <PageTitleBar
               title="View Deal"
-              createLink={newDeal}
+              createLink={dealNewPage}
               moreButton={
                 <MoreButton>
                   {{ handleOnClick: () => this.edit(deal), label: "Edit" }}
@@ -228,7 +226,6 @@ export default withRouter(
     {
       getSingleDeal,
       clearSingleDeal,
-      startDealEdit,
       show,
       addNoteDeal,
       deleteDeal,

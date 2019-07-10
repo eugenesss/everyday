@@ -1,108 +1,105 @@
 import { NotificationManager } from "react-notifications";
-import {
-  CHANGE_REPORT_VIEW,
-  OPEN_NESTED_VIEW,
-  REPORT_ON_DATES_CHANGE,
-  REPORT_ON_FOCUS_CHANGE,
-  REPORT_RESET_DATES,
-  GET_REPORT_FAILURE,
-  GET_DEAL_REPORT,
-  GET_DEAL_REPORT_SUCCESS,
-  GET_LEAD_REPORT,
-  GET_LEAD_REPORT_SUCCESS,
-  GET_INDIVIDUAL_REPORT,
-  GET_INDIVIDUAL_REPORT_SUCCESS,
-  ON_CHANGE_STAFF_SELECT
-} from "Types";
+import * as types from "Types/system/ReportTypes";
 
 const INIT_STATE = {
-  title: "",
-  nestedView: { sales: false, leads: false, deals: false },
-  componentToRender: "",
-  dateRange: { startDate: null, endDate: null, focusedInput: null },
-  dealReportData: { loading: false },
+  dealsReport: {
+    dealsByOwner: { loading: false, data: null },
+    dealsByType: { loading: false, data: null },
+    dealsPipeline: { loading: false, data: null }
+  },
   leadReportData: { loading: false },
   individualData: { loading: false, staff: "" }
 };
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    /**
-     * Change Report View
-     */
-    case OPEN_NESTED_VIEW:
-      return {
-        ...state,
-        nestedView: {
-          ...state.nestedView,
-          [action.payload]: !state.nestedView[action.payload]
-        }
-      };
-    case CHANGE_REPORT_VIEW:
-      return {
-        ...state,
-        title: action.payload.title,
-        componentToRender: action.payload.componentToRender
-      };
-
-    /**
-     * Report Date Range Picker
-     */
-    case REPORT_ON_DATES_CHANGE:
-      return {
-        ...state,
-        dateRange: {
-          ...state.dateRange,
-          startDate: action.payload.startDate,
-          endDate: action.payload.endDate
-        }
-      };
-    case REPORT_ON_FOCUS_CHANGE:
-      return {
-        ...state,
-        dateRange: {
-          ...state.dateRange,
-          focusedInput: action.payload.focusedInput
-        }
-      };
-    case REPORT_RESET_DATES:
-      return { ...state, dateRange: INIT_STATE.dateRange };
-
-    /**
-     * Get Report Failure
-     */
-    case GET_REPORT_FAILURE:
+    //=====================
+    // Reports Failure
+    //=====================
+    case types.GET_REPORT_FAILURE:
       NotificationManager.error("Error in fetching Report");
       console.log(action.payload);
       return INIT_STATE;
 
-    /**
-     * Get Deal Report
-     */
-    case GET_DEAL_REPORT:
+    //=====================
+    // Deal Reports
+    //=====================
+
+    //Deal By Owner
+    case types.GET_DEALS_BY_OWNER:
       return {
         ...state,
-        dealReportData: { ...state.dealReportData, loading: true }
+        dealsReport: {
+          ...state.dealsReport,
+          dealsByOwner: { ...state.dealsReport.dealsByOwner, loading: true }
+        }
       };
-    case GET_DEAL_REPORT_SUCCESS:
+    case types.GET_DEALS_BY_OWNER_SUCCESS:
       return {
         ...state,
-        dealReportData: {
-          ...state.dealReportData,
-          loading: false,
-          ...action.payload
+        dealsReport: {
+          ...state.dealsReport,
+          dealsByOwner: {
+            ...state.dealsReport.dealsByOwner,
+            loading: false,
+            data: action.payload
+          }
         }
       };
 
-    /**
-     * Get Lead Report
-     */
-    case GET_LEAD_REPORT:
+    // Deal By Type
+    case types.GET_DEALS_BY_TYPE:
+      return {
+        ...state,
+        dealsReport: {
+          ...state.dealsReport,
+          dealsByType: { ...state.dealsReport.dealsByType, loading: true }
+        }
+      };
+    case types.GET_DEALS_BY_TYPE_SUCCESS:
+      return {
+        ...state,
+        dealsReport: {
+          ...state.dealsReport,
+          dealsByType: {
+            ...state.dealsReport.dealsByType,
+            loading: false,
+            data: action.payload
+          }
+        }
+      };
+
+    // Deals Pipeline
+    case types.GET_DEALS_PIPELINE:
+      return {
+        ...state,
+        dealsReport: {
+          ...state.dealsReport,
+          dealsPipeline: { ...state.dealsReport.dealsPipeline, loading: true }
+        }
+      };
+    case types.GET_DEALS_PIPELINE_SUCCESS:
+      return {
+        ...state,
+        dealsReport: {
+          ...state.dealsReport,
+          dealsPipeline: {
+            ...state.dealsReport.dealsPipeline,
+            loading: false,
+            data: action.payload
+          }
+        }
+      };
+
+    //=====================
+    // Lead Reports
+    //=====================
+    case types.GET_LEAD_REPORT:
       return {
         ...state,
         leadReportData: { ...state.leadReportData, loading: true }
       };
-    case GET_LEAD_REPORT_SUCCESS:
+    case types.GET_LEAD_REPORT_SUCCESS:
       return {
         ...state,
         leadReportData: {
@@ -112,15 +109,15 @@ export default (state = INIT_STATE, action) => {
         }
       };
 
-    /**
-     * Get Individual Report
-     */
-    case GET_INDIVIDUAL_REPORT:
+    //=====================
+    // Individual Reports
+    //=====================
+    case types.GET_INDIVIDUAL_REPORT:
       return {
         ...state,
         individualData: { ...state.individualData, loading: true }
       };
-    case GET_INDIVIDUAL_REPORT_SUCCESS:
+    case types.GET_INDIVIDUAL_REPORT_SUCCESS:
       return {
         ...state,
         individualData: {
@@ -129,7 +126,7 @@ export default (state = INIT_STATE, action) => {
           ...action.payload
         }
       };
-    case ON_CHANGE_STAFF_SELECT:
+    case types.ON_CHANGE_STAFF_SELECT:
       return {
         ...state,
         individualData: {

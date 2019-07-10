@@ -36,6 +36,9 @@ import uploadFileSagas from "./upload/uploadFile";
 // import record
 import importRecordSagas from "./import/Import";
 
+// reports
+import reportSagas from "./report/Report";
+
 export default function* rootSaga(getState) {
   yield all([
     calendarSagas(),
@@ -56,6 +59,7 @@ export default function* rootSaga(getState) {
     loginSagas(),
     registerSagas(),
     uploadFileSagas(),
-    importRecordSagas()
+    importRecordSagas(),
+    reportSagas()
   ]);
 }

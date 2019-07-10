@@ -1,22 +1,48 @@
-import { dealList, leadList } from "./DummyData";
+import { dealList } from "./DummyData";
+import ChartConfig from "Constants/chart-config";
 
 const labels = ["Label One", "Label Two", "Label Three"];
 const data = [10, 30, 20];
 const data2 = [5, 13, 30];
 const data3 = [20, 2, 5];
 const datasets = [
-  { label: "Prospecting", backgroundColor: "red", data: data },
-  { label: "Negotiation", backgroundColor: "blue", data: data2 },
-  { label: "Closed Won", backgroundColor: "green", data: data3 }
+  {
+    label: "Prospecting",
+    backgroundColor: ChartConfig.color.primary,
+    data: data
+  },
+  {
+    label: "Negotiation",
+    backgroundColor: ChartConfig.color.warning,
+    data: data2
+  },
+  { label: "Closed Won", backgroundColor: ChartConfig.color.info, data: data3 }
 ];
 
 // Stacked Bar Chart
-export const dealByOwner = { labels, datasets };
+// export const dealByOwner = { labels, datasets };
+export const dealsByOwner = [
+  { name: "User 1", totalDeals: 20 },
+  { name: "User 2", totalDeals: 9 },
+  { name: "User 3", totalDeals: 25 },
+  { name: "User 4", totalDeals: 12 },
+  { name: "User 5", totalDeals: 1 },
+  { name: "User 6", totalDeals: 0 }
+];
 
 // Donut
 export const dealByType = {
   labels,
-  datasets: [{ data, backgroundColor: ["red", "green", "blue"] }]
+  datasets: [
+    {
+      data,
+      backgroundColor: [
+        ChartConfig.color.primary,
+        ChartConfig.color.warning,
+        ChartConfig.color.info
+      ]
+    }
+  ]
 };
 
 // Pie
@@ -25,7 +51,11 @@ export const dealStage = {
   datasets: [
     {
       data: [300, 50, 100],
-      backgroundColor: ["blue", "red", "green"]
+      backgroundColor: [
+        ChartConfig.color.primary,
+        ChartConfig.color.warning,
+        ChartConfig.color.info
+      ]
     }
   ]
 };
@@ -54,7 +84,11 @@ export const LeadStatus = {
   datasets: [
     {
       data: [300, 50, 100, 80, 10],
-      backgroundColor: ["blue", "red", "green", "yellow", "purple"]
+      backgroundColor: [
+        ChartConfig.color.primary,
+        ChartConfig.color.warning,
+        ChartConfig.color.info
+      ]
     }
   ]
 };

@@ -13,7 +13,7 @@ import ListSummary from "Components/Everyday/ListSummary/ListSummary";
 import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 // Actions
 import { changeLeadView, getAllLead, getLeadSummary } from "Actions";
-import { newLead, importLead } from "Helpers/url/crm";
+import { leadNewPage, leadImportPage } from "Helpers/url/crm";
 
 class crm_lead extends Component {
   state = {
@@ -33,7 +33,7 @@ class crm_lead extends Component {
     console.log("reload");
   }
   importLead() {
-    this.props.history.push(importLead);
+    this.props.history.push(leadImportPage);
   }
 
   render() {
@@ -62,7 +62,7 @@ class crm_lead extends Component {
               <ShowListSummaryButton action={() => this.toggleSummary()} />
             </div>
           }
-          createLink={newLead}
+          createLink={leadNewPage}
           moreButton={
             <MoreButton>
               {{ handleOnClick: this.reload.bind(this), label: "Reload" }}

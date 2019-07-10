@@ -11,7 +11,7 @@ import MoreButton from "Components/PageTitleBar/MoreButton";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 import { changeCustomerView, getAllCustomer } from "Actions";
-import { newCustomer } from "Helpers/url/crm";
+import { customerNewPage } from "Helpers/url/crm";
 
 class crm_customer extends Component {
   componentDidMount() {
@@ -50,7 +50,7 @@ class crm_customer extends Component {
               />
             </div>
           }
-          createLink={newCustomer}
+          createLink={customerNewPage}
           moreButton={
             <MoreButton>
               {{ handleOnClick: this.reload.bind(this), label: "Reload" }}

@@ -1,24 +1,17 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-  select,
-  delay
-} from "redux-saga/effects";
+import { all, call, fork, put, takeEvery, delay } from "redux-saga/effects";
 import {
   CHANGE_LEAD_LIST_VIEW,
   GET_ALL_LEAD,
   GET_SINGLE_LEAD,
   GET_LEAD_SUMMARY,
-  SUBMIT_NEW_LEAD,
+  NEW_LEAD,
   CONVERT_LEAD,
-  SUBMIT_EDIT_LEAD,
+  EDIT_LEAD,
   DELETE_LEAD,
   ADD_NOTE_LEAD,
   CHECK_ACCOUNT_EXIST,
-  TRANSFER_LEAD
+  TRANSFER_LEAD,
+  GET_LEADFORM_FIELDS
 } from "Types";
 import {
   getLeadSuccess,
@@ -27,7 +20,9 @@ import {
   getLeadSummarySuccess,
   getLeadSummaryFailure,
   newLeadSuccess,
-  newLeadError,
+  newLeadFailure,
+  editLeadSuccess,
+  editLeadFailure,
   convertLeadSuccess,
   convertLeadFailure,
   deleteLeadSuccess,
@@ -37,7 +32,9 @@ import {
   checkAccountExistSuccess,
   checkAccountExistFailure,
   transferLeadSuccess,
-  transferLeadFailure
+  transferLeadFailure,
+  getLeadFormFieldsSuccess,
+  getLeadFormFieldsFailure
 } from "Actions";
 import { singleLead } from "Helpers/url/crm";
 
@@ -105,6 +102,10 @@ const transferLeadRequest = async (id, newOwner) => {
   const result = await api.post(`/leads/transfer`, { leadIds: [id], newOwner });
   return result.data.updatedRecords[0];
 };
+const getLeadFormFieldsRequest = async () => {
+  const result = await api.get("/leads/formFields");
+  return result.data;
+};
 
 //=========================
 // CALL(GENERATOR) ACTIONS
@@ -167,15 +168,13 @@ function* getLeadSummaryFromDB() {
     yield put(getLeadSummaryFailure(error));
   }
 }
-function* postLeadToDB() {
+function* postLeadToDB({ payload }) {
   try {
-    const getLeadState = state => state.crmState.leadState.leadForm.lead;
-    const lead = yield select(getLeadState);
-    const data = yield call(postLeadRequest, lead);
+    const data = yield call(postLeadRequest, payload);
     yield delay(500);
     yield put(newLeadSuccess(data));
   } catch (error) {
-    yield put(newLeadError(error));
+    yield put(newLeadFailure(error));
   }
 }
 function* convertLeadToDB({ payload }) {
@@ -188,15 +187,13 @@ function* convertLeadToDB({ payload }) {
     yield put(convertLeadFailure(error));
   }
 }
-function* editLeadToDB() {
+function* editLeadToDB({ payload }) {
   try {
-    const getLeadState = state => state.crmState.leadState.leadForm.lead;
-    const lead = yield select(getLeadState);
-    const data = yield call(editLeadRequest, lead);
+    const data = yield call(editLeadRequest, payload);
     yield delay(500);
-    yield put(newLeadSuccess(data));
+    yield put(editLeadSuccess(data));
   } catch (error) {
-    yield put(newLeadError(error));
+    yield put(editLeadFailure(error));
   }
 }
 function* deleteLeadFromDB({ payload }) {
@@ -236,6 +233,14 @@ function* transferLeadToDB({ payload }) {
     yield put(transferLeadFailure(error));
   }
 }
+function* getLeadFormFieldsFromDB() {
+  try {
+    const data = yield call(getLeadFormFieldsRequest);
+    yield put(getLeadFormFieldsSuccess(data));
+  } catch (error) {
+    yield put(getLeadFormFieldsFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -253,13 +258,13 @@ export function* getLeadSummaryWatcher() {
   yield takeEvery(GET_LEAD_SUMMARY, getLeadSummaryFromDB);
 }
 export function* postLeadWatcher() {
-  yield takeEvery(SUBMIT_NEW_LEAD, postLeadToDB);
+  yield takeEvery(NEW_LEAD, postLeadToDB);
 }
 export function* convertLeadWatcher() {
   yield takeEvery(CONVERT_LEAD, convertLeadToDB);
 }
 export function* editLeadWatcher() {
-  yield takeEvery(SUBMIT_EDIT_LEAD, editLeadToDB);
+  yield takeEvery(EDIT_LEAD, editLeadToDB);
 }
 export function* deleteLeadWatcher() {
   yield takeEvery(DELETE_LEAD, deleteLeadFromDB);
@@ -272,6 +277,9 @@ export function* checkAccountExistWatcher() {
 }
 export function* transferLeadWatcher() {
   yield takeEvery(TRANSFER_LEAD, transferLeadToDB);
+}
+export function* getLeadFormFieldsWatcher() {
+  yield takeEvery(GET_LEADFORM_FIELDS, getLeadFormFieldsFromDB);
 }
 
 //=======================
@@ -289,6 +297,7 @@ export default function* rootSaga() {
     fork(deleteLeadWatcher),
     fork(addNoteLeadWatcher),
     fork(checkAccountExistWatcher),
-    fork(transferLeadWatcher)
+    fork(transferLeadWatcher),
+    fork(getLeadFormFieldsWatcher)
   ]);
 }

@@ -1,10 +1,10 @@
 // crm routes
 import {
-  leadPage,
-  customerPage,
-  accountPage,
-  dealPage,
-  teamPage
+  leadListPage,
+  customerListPage,
+  accountListPage,
+  dealListPage,
+  teamListPage
 } from "Helpers/url/crm";
 // acct routes
 import {
@@ -19,87 +19,49 @@ export default {
     {
       menu_title: "sidebar.leads",
       menu_icon: "zmdi zmdi-account-circle text-primary",
-      path: leadPage,
-      child_routes: null
+      path: leadListPage
     },
     {
       menu_title: "sidebar.customers",
       menu_icon: "zmdi zmdi-accounts-outline text-primary",
-      path: customerPage,
-      child_routes: null
+      path: customerListPage
     },
     {
       menu_title: "sidebar.accounts",
       menu_icon: "zmdi zmdi-city-alt text-primary",
-      path: accountPage,
-      child_routes: null
+      path: accountListPage
     },
     {
       menu_title: "sidebar.deals",
       menu_icon: "zmdi zmdi-case text-primary",
-      path: dealPage,
-      child_routes: null
+      path: dealListPage
     },
     {
       menu_title: "sidebar.teams",
       menu_icon: "zmdi zmdi-accounts-alt text-primary",
-      path: teamPage,
-      child_routes: null
-    }
-  ],
-  project: [
-    {
-      menu_title: "sidebar.dashboard",
-      menu_icon: "zmdi zmdi-view-dashboard",
-
-      child_routes: [
-        {
-          path: "/app/dashboard/ecommerce",
-          menu_title: "sidebar.ecommerce"
-        },
-        {
-          path: "/dashboard/crm/dashboard",
-          menu_title: "sidebar.crm"
-        },
-        {
-          path: "/horizontal/dashboard/saas",
-          menu_title: "sidebar.saas"
-        },
-        {
-          path: "/agency/dashboard/agency",
-          menu_title: "sidebar.agency"
-        },
-        {
-          path: "/boxed/dashboard/news",
-          menu_title: "sidebar.news"
-        }
-      ]
+      path: teamListPage
     }
   ],
   account: [
     {
       menu_title: "sidebar.quotations",
       menu_icon: "zmdi zmdi-receipt text-everyday",
-      path: quotePage,
-      child_routes: null
+      path: quotePage
     },
     {
       menu_title: "sidebar.invoices",
       menu_icon: "zmdi zmdi-shopping-cart text-everyday",
-      path: invoicePage,
-      child_routes: null
+      path: invoicePage
     },
     {
       menu_title: "sidebar.payment",
       menu_icon: "zmdi zmdi-card text-everyday",
-      path: paymentPage,
-      child_routes: null
+      path: paymentPage
     },
     {
       menu_title: "sidebar.credit_note",
       menu_icon: "zmdi zmdi-store text-everyday",
-      path: crednotePage,
-      child_routes: null
+      path: crednotePage
     }
   ]
 };

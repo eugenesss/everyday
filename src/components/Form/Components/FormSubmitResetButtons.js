@@ -1,20 +1,12 @@
 import React from "react";
 import MatButton from "@material-ui/core/Button";
 
-const FormSubmitResetButtons = ({ onReset, onSubmit, disabled }) => {
+const FormSubmitResetButtons = ({ onSubmit, disabled }) => {
   return (
     <div className="row mb-30">
       <div className="col-md-10" />
       <div className="col-md-2 text-right">
         <div className="d-block">
-          <MatButton
-            variant="contained"
-            color="default"
-            className="text-dark mr-20"
-            onClick={() => onReset()}
-          >
-            Reset
-          </MatButton>
           <MatButton
             variant="contained"
             color="primary"

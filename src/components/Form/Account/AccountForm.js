@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 //Form Components
 import TableRow from "@material-ui/core/TableRow";
@@ -12,47 +13,85 @@ import DescriptionFormInput from "Components/Form/Components/Inputs/DescriptionF
 import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetButtons";
 
 // Actions
-import {
-  handleChangeAccount,
-  clearAccountForm,
-  getIndustry,
-  getAllUsers
-} from "Actions";
+import { getAccountFormFields } from "Actions";
 
 class AccountForm extends Component {
-  componentWillMount() {
-    this.props.getIndustry();
-    this.props.getAllUsers();
+  constructor(props) {
+    super(props);
+    this.state = { account: { baseContact: { _address: {} } } };
+    this.onSubmit = this.onSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
-  componentWillUnmount() {
-    this.props.clearAccountForm();
+  componentWillMount() {
+    this.props.getAccountFormFields();
+    if (this.props.edit) this.setState({ account: this.props.edit });
   }
 
-  checkDisabled(name, userId) {
-    const disabled = name && userId;
+  handleChange(field, value, type) {
+    if (type == "baseContact") {
+      this.setState({
+        ...this.state,
+        account: {
+          ...this.state.account,
+          baseContact: {
+            ...this.state.account.baseContact,
+            [field]: value
+          }
+        }
+      });
+    } else if (type == "address") {
+      this.setState({
+        ...this.state,
+        account: {
+          ...this.state.account,
+          baseContact: {
+            ...this.state.account.baseContact,
+            _address: {
+              ...this.state.account.baseContact._address,
+              [field]: value
+            }
+          }
+        }
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        account: {
+          ...this.state.account,
+          [field]: value
+        }
+      });
+    }
+  }
+
+  onSubmit() {
+    this.props.handleSubmit(this.state.account);
+  }
+
+  checkDisabled() {
+    const disabled =
+      this.state.account.baseContact.name && this.state.account.userId;
     return disabled;
   }
 
   render() {
-    const { account } = this.props.accountForm;
-    const { industry } = this.props.crmField;
-    const { users, edit } = this.props;
+    const { loading, fields } = this.props.accountForm;
+    const { industry, users } = fields;
+    const { edit } = this.props;
+    const { account } = this.state;
     return (
       <React.Fragment>
+        {loading && <RctSectionLoader />}
         <FormSubmitResetButtons
-          onReset={this.props.clearAccountForm}
-          onSubmit={this.props.handleSubmit}
-          disabled={this.checkDisabled(
-            account.baseContact.name,
-            account.userId
-          )}
+          onSubmit={this.onSubmit}
+          disabled={this.checkDisabled()}
         />
         <FormTable>
           <TableRow>
             <FormBlock
               label="Name"
               value={account.baseContact.name}
-              handleChange={this.props.handleChangeAccount}
+              handleChange={this.handleChange}
               target="name"
               targetType="baseContact"
               required
@@ -62,7 +101,7 @@ class AccountForm extends Component {
                 required
                 label="Owner"
                 value={account.userId ? account.userId : ""}
-                handleChange={this.props.handleChangeAccount}
+                handleChange={this.handleChange}
                 target="userId"
                 selectValues={users}
               />
@@ -72,7 +111,7 @@ class AccountForm extends Component {
             <FormBlock
               label="Industry"
               value={account.industryId}
-              handleChange={this.props.handleChangeAccount}
+              handleChange={this.handleChange}
               target="industryId"
               selectValues={industry}
             />
@@ -85,14 +124,14 @@ class AccountForm extends Component {
             <FormBlock
               label="Office"
               value={account.baseContact.office}
-              handleChange={this.props.handleChangeAccount}
+              handleChange={this.handleChange}
               target="office"
               targetType="baseContact"
             />
             <FormBlock
               label="Mobile"
               value={account.baseContact.mobile}
-              handleChange={this.props.handleChangeAccount}
+              handleChange={this.handleChange}
               target="mobile"
               targetType="baseContact"
             />
@@ -104,7 +143,7 @@ class AccountForm extends Component {
             <FormBlock
               label="Fax"
               value={account.baseContact.fax}
-              handleChange={this.props.handleChangeAccount}
+              handleChange={this.handleChange}
               target="fax"
               targetType="baseContact"
             />
@@ -112,7 +151,7 @@ class AccountForm extends Component {
         </FormTable>
         <hr />
         <AddressFormInput
-          handleChange={this.props.handleChangeAccount}
+          handleChange={this.handleChange}
           address_1={account.baseContact._address.address_1}
           address_2={account.baseContact._address.address_2}
           city={account.baseContact._address.city}
@@ -121,7 +160,7 @@ class AccountForm extends Component {
         />
         <hr />
         <DescriptionFormInput
-          handleChange={this.props.handleChangeAccount}
+          handleChange={this.handleChange}
           description={account.baseContact.info}
         />
       </React.Fragment>
@@ -129,19 +168,15 @@ class AccountForm extends Component {
   }
 }
 
-const mapStateToProps = ({ crmState, usersState }) => {
-  const { accountState, crmField } = crmState;
-  const { users } = usersState;
+const mapStateToProps = ({ crmState }) => {
+  const { accountState } = crmState;
   const { accountForm } = accountState;
-  return { accountForm, crmField, users };
+  return { accountForm };
 };
 
 export default connect(
   mapStateToProps,
   {
-    handleChangeAccount,
-    clearAccountForm,
-    getIndustry,
-    getAllUsers
+    getAccountFormFields
   }
 )(AccountForm);

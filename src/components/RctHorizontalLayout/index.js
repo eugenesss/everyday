@@ -14,12 +14,12 @@ class RctHorizontalLayout extends Component {
   renderPage() {
     const { pathname } = this.props.location;
     const { children, match } = this.props;
-    if (
-      pathname.startsWith(`${match.url}/reports`) ||
-      pathname === `${match.url}/todo`
-    ) {
-      return <div className="rct-page-content p-0">{children}</div>;
-    }
+    // if (
+    //   pathname.startsWith(`${match.url}/reports`) ||
+    //   pathname === `${match.url}/todo`
+    // ) {
+    //   return <div className="rct-page-content p-0">{children}</div>;
+    // }
     return (
       <Scrollbars
         className="rct-scroll"

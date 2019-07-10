@@ -11,7 +11,12 @@ import IconButton from "@material-ui/core/IconButton";
 
 // helpers
 import { getAppLayout } from "Helpers/helpers";
-import { newLead, newCustomer, newAccount, newDeal } from "Helpers/url/crm";
+import {
+  leadNewPage,
+  customerNewPage,
+  accountNewPage,
+  dealNewPage
+} from "Helpers/url/crm";
 
 // intl messages
 import IntlMessages from "Util/IntlMessages";
@@ -38,25 +43,25 @@ const QuickLinks = ({ location }) => (
           </div>
           <ul className="list-unstyled mb-0 dropdown-list">
             <li>
-              <Link to={newLead}>
+              <Link to={leadNewPage}>
                 <i className="zmdi zmdi-account-circle text-primary mr-10" />
                 <IntlMessages id="sidebar.lead" />
               </Link>
             </li>
             <li>
-              <Link to={newCustomer}>
+              <Link to={customerNewPage}>
                 <i className="zmdi zmdi-accounts-outline text-primary mr-10" />
                 <IntlMessages id="sidebar.customer" />
               </Link>
             </li>
             <li>
-              <Link to={newAccount}>
+              <Link to={accountNewPage}>
                 <i className="zmdi zmdi-city-alt text-primary mr-10" />
                 <IntlMessages id="sidebar.account" />
               </Link>
             </li>
             <li>
-              <Link to={newDeal}>
+              <Link to={dealNewPage}>
                 <i className="text-primary zmdi zmdi-case mr-10" />
                 <IntlMessages id="sidebar.deal" />
               </Link>

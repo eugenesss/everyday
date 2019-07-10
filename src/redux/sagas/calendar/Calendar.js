@@ -1,9 +1,8 @@
 import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
-// import { 
-//   GET_ALL_EVENTS,
-//   ADD_EVENT,
-// } from "Types";
+import * as Types from "Types";
+import * as Actions from "Actions";
 
+<<<<<<< HEAD
 import * as Types from 'Types'
 import * as Actions from 'Actions'
 
@@ -11,9 +10,9 @@ import * as Actions from 'Actions'
 
 //import api from "Api";
 import { events } from "Components/CalendarDummyData"
+=======
+>>>>>>> f5f1919908c0e80c23e889e685e218290644720f
 import api from "Api";
-
-
 
 //=========================
 // REQUESTS
@@ -25,7 +24,7 @@ const getAllEventsRequest = async () => {
   } catch (err) {
     return err;
   }
-}
+};
 
 //=========================
 // CALL(GENERATOR) ACTIONS
@@ -38,27 +37,26 @@ function* getAllEventsFromDB() {
     // const me = yield select(getMe)
     // console.log(me)
     let myEvents = yield call(getAllEventsRequest);
-    myEvents.map((item) => {
-      item.start = new Date(item.start)
-      item.end = new Date(item.end)
-      return
-    })
+    myEvents.map(item => {
+      item.start = new Date(item.start);
+      item.end = new Date(item.end);
+      return;
+    });
     yield put(Actions.getAllEventsSuccess(myEvents, myEvents));
   } catch (err) {
     yield put(Actions.getEventFailure(err));
   }
 }
 
-
-const addEventRequest = async (newEvent) => {
+const addEventRequest = async newEvent => {
   try {
-    const result = await api.post("/events", newEvent)
+    const result = await api.post("/events", newEvent);
     // const result = newEvent;
     return result.data;
   } catch (err) {
     return err;
   }
-}
+};
 
 function* addEventToDB(item) {
   // const getNewEvent = state => state.calendarState.eventAdd;
@@ -66,24 +64,23 @@ function* addEventToDB(item) {
   // console.log(item.payload)
 
   try {
-    const data = yield call(addEventRequest, item.payload);   
+    const data = yield call(addEventRequest, item.payload);
     yield put(Actions.addEventSuccess(data));
   } catch (err) {
-    console.log(err)
+    console.log(err);
     yield put(Actions.addEventFailure(err));
   }
 }
 
-
-const deleteEventRequest = async (id) => {
+const deleteEventRequest = async id => {
   try {
-    const result = await api.delete(`/events/${id}`)
+    const result = await api.delete(`/events/${id}`);
     // const result = newEvent;
     return result.data;
   } catch (err) {
     return err;
   }
-}
+};
 
 function* deleteEventFromDB(item) {
   // const getNewEvent = state => state.calendarState.eventAdd;
@@ -91,8 +88,8 @@ function* deleteEventFromDB(item) {
   // console.log(item.payload)
   try {
     const data = yield call(deleteEventRequest, item.payload);
-    if (!data.count == 1){
-      throw 'Item could not be deleted'
+    if (!data.count == 1) {
+      throw "Item could not be deleted";
     }
     yield put(Actions.deleteEventSuccess(item.payload));
   } catch (err) {
@@ -100,29 +97,26 @@ function* deleteEventFromDB(item) {
   }
 }
 
-
-
-
-const updateEventRequest = async (id) => {
+const updateEventRequest = async id => {
   try {
-    const result = await api.patch(`/events/?id=${id.id}`, id)
+    const result = await api.patch(`/events/?id=${id.id}`, id);
     // const result = newEvent;
     return result.data;
   } catch (err) {
     return err;
   }
-}
+};
 
 function* updateEventFromDB(item) {
   // const getNewEvent = state => state.calendarState.eventAdd;
   // const newEvent = yield select(getNewEvent)
- 
+
   try {
     const data = yield call(updateEventRequest, item.payload);
     yield put(Actions.updateEventSuccess(data));
   } catch (err) {
-    console.log("err")
-    console.log(err)
+    console.log("err");
+    console.log(err);
     yield put(Actions.updateEventFailure(err));
   }
 }
@@ -148,10 +142,11 @@ export function* updateEventWatcher() {
 // FORK SAGAS TO STORE
 //=======================
 export default function* rootSaga() {
-  yield all([,
+  yield all([
+    ,
     fork(getAllEventsWatcher),
     fork(addEventWatcher),
     fork(deleteEventWatcher),
-    fork(updateEventWatcher),
+    fork(updateEventWatcher)
   ]);
 }

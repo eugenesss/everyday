@@ -12,10 +12,6 @@ import MomentUtils from "@date-io/moment";
 // css
 import "./lib/reactifyCss";
 
-// react-dates
-import "react-dates/initialize";
-import "react-dates/lib/css/_datepicker.css";
-
 // app component
 import App from "./container/App";
 

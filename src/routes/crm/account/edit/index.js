@@ -10,38 +10,50 @@ import IntlMessages from "Util/IntlMessages";
 // Page Components
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import AccountForm from "Components/Form/Account/AccountForm";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 
 // Actions
-import { submitEditAccount } from "Actions";
+import { editAccount, getSingleAccount } from "Actions";
 
 class crm_new_account extends Component {
+  componentDidMount() {
+    var id = this.props.match.params.id;
+    this.props.getSingleAccount(id);
+  }
   render() {
-    const { loading } = this.props.accountForm;
+    const { loading, account } = this.props.accountToView;
     return (
       <React.Fragment>
         <Helmet>
           <title>Everyday | Edit Account</title>
         </Helmet>
-        <RctCollapsibleCard heading={<IntlMessages id="sidebar.editAccount" />}>
-          {loading && <RctSectionLoader />}
+        {loading ? (
+          <RctPageLoader />
+        ) : (
           <div className="row">
-            <div className="col-md-11">
-              <AccountForm edit handleSubmit={this.props.submitEditAccount} />
+            <div className="col-md-10 offset-md-1">
+              <RctCollapsibleCard
+                heading={<IntlMessages id="sidebar.editAccount" />}
+              >
+                <AccountForm
+                  edit={account}
+                  handleSubmit={this.props.editAccount}
+                />
+              </RctCollapsibleCard>
             </div>
           </div>
-        </RctCollapsibleCard>
+        )}
       </React.Fragment>
     );
   }
 }
 const mapStateToProps = ({ crmState }) => {
   const { accountState } = crmState;
-  const { accountForm } = accountState;
-  return { accountForm };
+  const { accountToView } = accountState;
+  return { accountToView };
 };
 
 export default connect(
   mapStateToProps,
-  { submitEditAccount }
+  { editAccount, getSingleAccount }
 )(crm_new_account);

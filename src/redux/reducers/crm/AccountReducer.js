@@ -1,5 +1,5 @@
 import { NotificationManager } from "react-notifications";
-import * as acctType from "Types/crm/AccountTypes";
+import * as types from "Types/crm/AccountTypes";
 
 const INIT_STATE = {
   accountList: {
@@ -16,13 +16,16 @@ const INIT_STATE = {
   },
   accountForm: {
     loading: false,
-    account: { baseContact: { _address: {} } }
+    fields: {
+      industry: [],
+      users: []
+    }
   }
 };
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    case acctType.CHANGE_ACCOUNT_LIST_VIEW:
+    case types.CHANGE_ACCOUNT_LIST_VIEW:
       if (action.payload == "My Accounts") {
         return {
           ...state,
@@ -48,21 +51,21 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Accounts
      */
-    case acctType.GET_ACCOUNT_FAILURE:
+    case types.GET_ACCOUNT_FAILURE:
       NotificationManager.warning("Error in fetching Account Data");
       return {
         ...state,
         accountToView: INIT_STATE.accountToView,
         accountList: INIT_STATE.accountList
       };
-    case acctType.GET_ALL_ACCOUNT:
-    case acctType.GET_MY_ACCOUNT:
-    case acctType.GET_OPEN_ACCOUNT:
+    case types.GET_ALL_ACCOUNT:
+    case types.GET_MY_ACCOUNT:
+    case types.GET_OPEN_ACCOUNT:
       return {
         ...state,
         accountList: { ...state.accountList, loading: true }
       };
-    case acctType.GET_ACCOUNT_SUCCESS:
+    case types.GET_ACCOUNT_SUCCESS:
       return {
         ...state,
         accountList: {
@@ -75,12 +78,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Single Account
      */
-    case acctType.GET_SINGLE_ACCOUNT:
+    case types.GET_SINGLE_ACCOUNT:
       return {
         ...state,
         accountToView: { ...state.accountToView, loading: true }
       };
-    case acctType.GET_SINGLE_ACCOUNT_SUCCESS:
+    case types.GET_SINGLE_ACCOUNT_SUCCESS:
       return {
         ...state,
         accountToView: {
@@ -89,7 +92,7 @@ export default (state = INIT_STATE, action) => {
           account: action.payload
         }
       };
-    case acctType.CLEAR_SINGLE_ACCOUNT:
+    case types.CLEAR_SINGLE_ACCOUNT:
       return {
         ...state,
         accountToView: INIT_STATE.accountToView
@@ -98,60 +101,16 @@ export default (state = INIT_STATE, action) => {
     /**
      * New Account
      */
-    case acctType.HANDLE_CHANGE_ACCOUNT:
-      if (action.payload.type == "baseContact") {
-        return {
-          ...state,
-          accountForm: {
-            ...state.accountForm,
-            account: {
-              ...state.accountForm.account,
-              baseContact: {
-                ...state.accountForm.account.baseContact,
-                [action.payload.field]: action.payload.value
-              }
-            }
-          }
-        };
-      } else if (action.payload.type == "address") {
-        return {
-          ...state,
-          accountForm: {
-            ...state.accountForm,
-            account: {
-              ...state.accountForm.account,
-              baseContact: {
-                ...state.accountForm.account.baseContact,
-                _address: {
-                  ...state.accountForm.account.baseContact._address,
-                  [action.payload.field]: action.payload.value
-                }
-              }
-            }
-          }
-        };
-      } else {
-        return {
-          ...state,
-          accountForm: {
-            ...state.accountForm,
-            account: {
-              ...state.accountForm.account,
-              [action.payload.field]: action.payload.value
-            }
-          }
-        };
-      }
-    case acctType.SUBMIT_ACCOUNT:
+
+    case types.NEW_ACCOUNT:
       return {
         ...state,
         accountForm: { ...state.accountForm, loading: true }
       };
-    case acctType.CLEAR_ACCOUNT_FORM:
+    case types.NEW_ACCOUNT_SUCCESS:
+      NotificationManager.success("Account Created");
       return { ...state, accountForm: INIT_STATE.accountForm };
-    case acctType.SUBMIT_ACCOUNT_SUCCESS:
-      return { ...state, accountForm: INIT_STATE.accountForm };
-    case acctType.SUBMIT_ACCOUNT_ERROR:
+    case types.NEW_ACCOUNT_FAILURE:
       NotificationManager.error("Error in POST API");
       console.log(action.payload);
       return {
@@ -162,27 +121,48 @@ export default (state = INIT_STATE, action) => {
     /**
      * Edit
      */
-    case acctType.START_ACCOUNT_EDIT:
-      return {
-        ...state,
-        accountForm: { ...state.accountForm, account: action.payload }
-      };
-    case acctType.SUBMIT_EDIT_ACCOUNT:
+    case types.EDIT_ACCOUNT:
       return {
         ...state,
         accountForm: { ...state.accountForm, loading: true }
       };
+    case types.EDIT_ACCOUNT_SUCCESS:
+      NotificationManager.success("Account Edited");
+      return {
+        ...state,
+        accountForm: { ...state.accountForm, loading: false }
+      };
+    case types.EDIT_ACCOUNT_FAILURE:
+      NotificationManager.error("Error in Edit");
+      console.log(action.payload);
+      return {
+        ...state,
+        accountForm: { ...state.accountForm, loading: false }
+      };
+
+    /**
+     * Form Fields
+     */
+    case types.GET_ACCOUNT_FORM_SUCCESS:
+      return {
+        ...state,
+        accountForm: { ...state.accountForm, fields: action.payload.fields }
+      };
+    case types.GET_ACCOUNT_FORM_FAILURE:
+      NotificationManager.error("Error in fetching form fields");
+      console.log(action.payload);
+      return { ...state };
 
     /**
      * Delete
      */
-    case acctType.DELETE_ACCOUNT:
+    case types.DELETE_ACCOUNT:
       return {
         ...state,
         accountToView: { ...state.accountToView, loading: true },
         accountList: { ...state.accountList, loading: true }
       };
-    case acctType.DELETE_ACCOUNT_SUCCESS:
+    case types.DELETE_ACCOUNT_SUCCESS:
       NotificationManager.success("Account Deleted");
       // remove from state
       var afterDeleteData = Object.assign(
@@ -198,7 +178,7 @@ export default (state = INIT_STATE, action) => {
           tableData: afterDeleteData
         }
       };
-    case acctType.DELETE_ACCOUNT_FAILURE:
+    case types.DELETE_ACCOUNT_FAILURE:
       NotificationManager.error(action.payload.message);
       console.log(action.payload);
       return {
@@ -210,12 +190,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Notes
      */
-    case acctType.ADD_NOTE_ACCOUNT:
+    case types.ADD_NOTE_ACCOUNT:
       return {
         ...state,
         accountToView: { ...state.accountToView, sectionLoading: true }
       };
-    case acctType.ADD_NOTE_ACCOUNT_SUCCESS:
+    case types.ADD_NOTE_ACCOUNT_SUCCESS:
       var newNotes = Object.assign([], state.accountToView.account.notes);
       newNotes.unshift(action.payload);
       return {
@@ -226,7 +206,7 @@ export default (state = INIT_STATE, action) => {
           sectionLoading: false
         }
       };
-    case acctType.ADD_NOTE_ACCOUNT_FAILURE:
+    case types.ADD_NOTE_ACCOUNT_FAILURE:
       NotificationManager.error("Error in adding Note");
       console.log(action.payload);
       return {
@@ -237,13 +217,13 @@ export default (state = INIT_STATE, action) => {
     /**
      * Set Active
      */
-    case acctType.SET_ACCOUNT_ACTIVE:
+    case types.SET_ACCOUNT_ACTIVE:
       NotificationManager.success("Account Status Updated");
       return {
         ...state,
         accountToView: { ...state.accountToView, loading: true }
       };
-    case acctType.SET_ACCOUNT_ACTIVE_SUCCESS:
+    case types.SET_ACCOUNT_ACTIVE_SUCCESS:
       return {
         ...state,
         accountToView: {
@@ -252,7 +232,7 @@ export default (state = INIT_STATE, action) => {
           loading: false
         }
       };
-    case acctType.SET_ACCOUNT_ACTIVE_FAILURE:
+    case types.SET_ACCOUNT_ACTIVE_FAILURE:
       NotificationManager.error("Error");
       console.log(action.payload);
       return {
@@ -263,12 +243,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Transfer
      */
-    case acctType.TRANSFER_ACCOUNT:
+    case types.TRANSFER_ACCOUNT:
       return {
         ...state,
         accountToView: { ...state.accountToView, loading: true }
       };
-    case acctType.TRANSFER_ACCOUNT_SUCCESS:
+    case types.TRANSFER_ACCOUNT_SUCCESS:
       NotificationManager.success("Record Transferred");
       return {
         ...state,
@@ -278,7 +258,7 @@ export default (state = INIT_STATE, action) => {
           loading: false
         }
       };
-    case acctType.TRANSFER_ACCOUNT_FAILURE:
+    case types.TRANSFER_ACCOUNT_FAILURE:
       NotificationManager.error("Error in Transferring Record");
       console.log(action.payload);
       return {

@@ -9,4 +9,4 @@ const ReportMaintenanceMessage = () => {
   );
 };
 
-export default ReportMaintenanceMessage;
+export { ReportMaintenanceMessage };

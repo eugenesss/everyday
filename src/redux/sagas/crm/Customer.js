@@ -1,29 +1,24 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-  select,
-  delay
-} from "redux-saga/effects";
+import { all, call, fork, put, takeEvery, delay } from "redux-saga/effects";
 import {
   CHANGE_CUSTOMER_LIST_VIEW,
   GET_ALL_CUSTOMER,
   GET_SINGLE_CUSTOMER,
-  SUBMIT_CUSTOMER,
-  SUBMIT_EDIT_CUSTOMER,
+  NEW_CUSTOMER,
+  EDIT_CUSTOMER,
   DELETE_CUSTOMER,
   ADD_NOTE_CUSTOMER,
   SET_CUSTOMER_ACTIVE,
-  TRANSFER_CUSTOMER
+  TRANSFER_CUSTOMER,
+  GET_CUSTOMER_FORM_FIELDS
 } from "Types";
 import {
   getCustomerFailure,
   getCustomerSuccess,
   getSingleCustomerSuccess,
-  submitCustomerSuccess,
-  submitCustomerError,
+  newCustomerSuccess,
+  newCustomerFailure,
+  editCustomerSuccess,
+  editCustomerFailure,
   deleteCustomerSuccess,
   deleteCustomerFailure,
   addNoteCustomerSuccess,
@@ -31,7 +26,9 @@ import {
   setCustomerActiveSuccess,
   setCustomerActiveFailure,
   transferCustomerSuccess,
-  transferCustomerFailure
+  transferCustomerFailure,
+  getCustomerFormSuccess,
+  getCustomerFormFailure
 } from "Actions";
 import { singleCustomer } from "Helpers/url/crm";
 
@@ -83,6 +80,10 @@ const transferCustomerRequest = async (id, newOwner) => {
   });
   return result.data.updatedRecords[0];
 };
+const getCustomerFormFieldsRequest = async () => {
+  const result = await api.get("/customers/formFields");
+  return result.data;
+};
 
 //=========================
 // CALL(GENERATOR) ACTIONS
@@ -132,28 +133,22 @@ function* getCustomerFromDB({ payload }) {
     yield put(getCustomerFailure(error));
   }
 }
-function* postCustomerToDB() {
+function* postCustomerToDB({ payload }) {
   try {
-    const getCustState = state =>
-      state.crmState.customerState.customerForm.customer;
-    const cust = yield select(getCustState);
-    const data = yield call(postCustomerRequest, cust);
+    const data = yield call(postCustomerRequest, payload);
     yield delay(500);
-    yield put(submitCustomerSuccess(data));
+    yield put(newCustomerSuccess(data));
   } catch (error) {
-    yield put(submitCustomerError(error));
+    yield put(newCustomerFailure(error));
   }
 }
-function* editCustomerToDB() {
+function* editCustomerToDB({ payload }) {
   try {
-    const getCustState = state =>
-      state.crmState.customerState.customerForm.customer;
-    const cust = yield select(getCustState);
-    const data = yield call(editCustomerRequest, cust);
+    const data = yield call(editCustomerRequest, payload);
     yield delay(500);
-    yield put(submitCustomerSuccess(data));
+    yield put(editCustomerSuccess(data));
   } catch (error) {
-    yield put(submitCustomerError(error));
+    yield put(editCustomerFailure(error));
   }
 }
 function* deleteCustomerFromDB({ payload }) {
@@ -195,6 +190,14 @@ function* transferCustomerInDB({ payload }) {
     yield put(transferCustomerFailure(error));
   }
 }
+function* getCustomerFormFieldsFromDB() {
+  try {
+    const data = yield call(getCustomerFormFieldsRequest);
+    yield put(getCustomerFormSuccess(data));
+  } catch (error) {
+    yield put(getCustomerFormFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -209,10 +212,10 @@ export function* getSingleCustomerWatcher() {
   yield takeEvery(GET_SINGLE_CUSTOMER, getCustomerFromDB);
 }
 export function* postCustomerWatcher() {
-  yield takeEvery(SUBMIT_CUSTOMER, postCustomerToDB);
+  yield takeEvery(NEW_CUSTOMER, postCustomerToDB);
 }
 export function* editCustomerWatcher() {
-  yield takeEvery(SUBMIT_EDIT_CUSTOMER, editCustomerToDB);
+  yield takeEvery(EDIT_CUSTOMER, editCustomerToDB);
 }
 export function* deleteCustomerWatcher() {
   yield takeEvery(DELETE_CUSTOMER, deleteCustomerFromDB);
@@ -225,6 +228,9 @@ export function* setCustomerActiveWatcher() {
 }
 export function* transferCustomerWatcher() {
   yield takeEvery(TRANSFER_CUSTOMER, transferCustomerInDB);
+}
+export function* getCustomerFormFieldWatcher() {
+  yield takeEvery(GET_CUSTOMER_FORM_FIELDS, getCustomerFormFieldsFromDB);
 }
 
 //=======================
@@ -240,6 +246,7 @@ export default function* rootSaga() {
     fork(deleteCustomerWatcher),
     fork(addNoteCustomerWatcher),
     fork(setCustomerActiveWatcher),
-    fork(transferCustomerWatcher)
+    fork(transferCustomerWatcher),
+    fork(getCustomerFormFieldWatcher)
   ]);
 }
