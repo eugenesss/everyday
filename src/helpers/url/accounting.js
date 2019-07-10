@@ -12,6 +12,21 @@ export const singleQuote = id => {
 export const newQuote = quotePage + "/new";
 export const editQuote = quotePage + "/edit";
 export const importQuote = quotePage + "/import";
+
+/**
+ * Quotation Pages
+ */
+// export const quotationPage = "/app/acct/quotations";
+// export const singleQuotation = id => {
+//   return `${quotationPage}/${id}`;
+// };
+// export const newQuotation = quotationPage + "/new";
+// export const editQuotation = quotationPage + "/edit";
+// export const importQuotation = quotationPage + "/import";
+
+
+
+
 /**
  * Invoice Pages
  */

@@ -15,6 +15,7 @@ import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSumma
 
 // List
 import QuotationList from "Components/Accounting/Quotation/QuotationList";
+import { newQuote } from "Helpers/url/accounting";
 
 // Actions
 import {
@@ -63,10 +64,11 @@ class acct_quotation extends Component {
               />
             </div>
           }
-          createLink="/acct/new/quotation"
+          createLink={newQuote}
         />
         {showSummary && <ListSummary summary={summary} />}
         <QuotationList
+          // edit
           title={nowShowing}
           action={action}
           loading={loading}

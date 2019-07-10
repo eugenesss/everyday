@@ -67,11 +67,12 @@ const INIT_STATE = {
       date: new Date(),
       currency: "",
       currency_rate: "",
-      total: 0,
+
       version: "",
       subtotal: 0,
       tax_amount: 0,
       discount_total: 0,
+      totalAmt: 0,
 
 
       description: "",
@@ -91,11 +92,9 @@ const INIT_STATE = {
       sent_date: "",
       tnc: "",
     
-
-      quoteID: "QUOT-100001",
+      quoteID: "",
       account: null,
       status: "Draft",
-      totalAmt: 100,
       sentOn: new Date(),
       dueDate: new Date(),
 
@@ -145,7 +144,6 @@ export default (state = INIT_STATE, action) => {
     // let subTotal = 0
     let totalTax = 0
     // let total = 0
-    console.log(product)
     if (product.length > 0) {
       product.forEach(element =>{
         totalTax = totalTax + element.tax_amount
@@ -368,7 +366,7 @@ export default (state = INIT_STATE, action) => {
             quotation: {
               ...state.quotationForm.quotation,
               subtotal: productTotal,
-              total: getTotal(productTotal, state.quotationForm.quotation),
+              totalAmt: getTotal(productTotal, state.quotationForm.quotation),
               tax_amount: tax
             }
           }

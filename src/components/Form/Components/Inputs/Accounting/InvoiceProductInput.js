@@ -20,7 +20,8 @@ const InvoiceProductInput = ({
   handleChange,
   handleAdd,
   handleRemove,
-  taxTable
+  taxTable,
+  disabled
 }) => {
   return (
     <React.Fragment>
@@ -61,39 +62,65 @@ const InvoiceProductInput = ({
                   />
                 </TableCell> */}
                 <TableCell>
-                  <TextField
-                    value={row.description}
-                    onChange={e =>
-                      handleChange(key, "description", e.target.value)
-                    }
-                    fullWidth
-                    margin="dense"
-                    variant="outlined"
-                  />
+
+                  {!disabled && 
+                    <TextField
+                        value={row.description}
+                        onChange={e =>
+                          handleChange(key, "description", e.target.value)
+                        }
+                        fullWidth
+                        margin="dense"
+                        variant="outlined"
+                        disabled={disabled}
+                    />
+                  }
+
+                  {disabled && 
+                    <p>{row.description}</p>
+                  }
+
                 </TableCell>
                 <TableCell style={{ padding: "4px 24px 4px 24px" }}>
-                  <TextField
-                    value={row.quantity}
-                    onChange={e =>
-                      handleChange(key, "quantity", e.target.value)
+                  
+                    {!disabled && 
+                      <TextField
+                        value={row.quantity}
+                        onChange={e =>
+                          handleChange(key, "quantity", e.target.value)
+                        }
+                        fullWidth
+                        margin="dense"
+                        variant="outlined"
+                        type="number"
+                        step="1"
+                        disabled={disabled}
+                      />
                     }
-                    fullWidth
-                    margin="dense"
-                    variant="outlined"
-                    type="number"
-                    step="1"
-                  />
+
+                    {disabled && 
+                      <p>{row.quantity}</p>
+                    }
+
                 </TableCell>
                 <TableCell style={{ padding: "4px 24px 4px 24px" }}>
-                  <TextField
-                    value={row.price}
-                    onChange={e => handleChange(key, "price", e.target.value)}
-                    fullWidth
-                    margin="dense"
-                    variant="outlined"
-                    type="number"
-                    step="1"
-                  />
+
+                    {!disabled && 
+                      <TextField
+                        value={row.price}
+                        onChange={e => handleChange(key, "price", e.target.value)}
+                        fullWidth
+                        margin="dense"
+                        variant="outlined"
+                        type="number"
+                        step="1"
+                        disabled={disabled}
+                      />
+                    }
+                
+                    {disabled && 
+                      <p>{row.price}</p>
+                    }
                 </TableCell>
                 {/* <TableCell style={{ padding: "4px 24px 4px 24px" }}>
                   <TextField
@@ -109,13 +136,21 @@ const InvoiceProductInput = ({
                   />
                 </TableCell> */}
                 <TableCell style={{ padding: "4px 24px 4px 24px" }}>
-                    <FormSelectField
-                      value={row.tax_id}
-                      selectValues={taxTable}
-                      // selectValues={[{id: 1, name: "Hello World", email: 'helloworld@gmail.com'}]}
-                      target={"tax_id"}
-                      handleChange ={(target, e, targetType) => handleChange(key, "tax_id", e)}
-                    />
+                   
+                    {!disabled && 
+                      <FormSelectField
+                        value={row.tax_id}
+                        selectValues={taxTable}
+                        // selectValues={[{id: 1, name: "Hello World", email: 'helloworld@gmail.com'}]}
+                        target={"tax_id"}
+                        handleChange ={(target, e, targetType) => handleChange(key, "tax_id", e)}
+                        disabled={disabled}
+                      />
+                    }
+
+                    {disabled && 
+                      <p>{row.tax_id.name}</p>
+                    }
                 </TableCell>
 
 
@@ -135,16 +170,21 @@ const InvoiceProductInput = ({
                 </TableCell>
 
 
-
                 <TableCell>{ccyFormat(row.amount)}</TableCell>
-                <TableCell>
-                  <MatButton
-                    onClick={() => handleRemove(key)}
-                    className="text-danger"
-                  >
-                    <i className="zmdi zmdi-delete zmdi-hc-2x" />
-                  </MatButton>
-                </TableCell>
+
+
+                {!disabled && 
+                    <TableCell>
+                      <MatButton
+                        onClick={() => handleRemove(key)}
+                        className="text-danger"
+                      >
+                        <i className="zmdi zmdi-delete zmdi-hc-2x" />
+                      </MatButton>
+                    </TableCell>
+                }
+
+
               </TableRow>
             );
           })}
@@ -153,9 +193,11 @@ const InvoiceProductInput = ({
       <div className="row">
         <div className="col-md-6">
           <div>
+            {!disabled && 
             <MatButton onClick={() => handleAdd()} className="text-primary">
               + New Product
             </MatButton>
+            }
           </div>
         </div>
         <div className="col-md-6 text-right">

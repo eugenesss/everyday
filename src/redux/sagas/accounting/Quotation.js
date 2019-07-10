@@ -37,6 +37,8 @@ const submitquoteSummaryRequest = async(item) => {
   let quotationLine = [...item.payload.products]
   let postData = {...item.payload.item}
 
+  console.log(postData)
+
   let quotationData = {
     date : postData.date.toString(),
     sent_date : postData.date.toString(),
@@ -45,14 +47,22 @@ const submitquoteSummaryRequest = async(item) => {
     owner: {companyId: postData.owner.companyId, id: postData.owner.id, name: postData.owner.name},
     currency : postData.currency,
     currency_rate : postData.currency_rate,
-    dueDate : duedate.toDateString(),
-    totalAmt : postData.total,
+    due_date : duedate.toDateString(),
+
+    totalAmt : postData.totalAmt,
     subtotal : postData.subtotal,
-    tax_amount : postData.tax_amount
+    tax_amount : postData.tax_amount,
+    discount_total: postData.discount_total,
+
+    custinfo: postData.account.fullAddress,
+    shipinfo: postData.account.fullAddress,
+
+    quotationline: quotationLine
   }
 
 
-  const result = await api.post("/quotations", {quotation: quotationData, quotationline: quotationLine});
+
+  const result = await api.post("/quotations", quotationData);
   return result.data;
 }
 
@@ -79,9 +89,11 @@ const getClosedQuoteRequest = async () => {
   const result = quoteList;
   return result;
 };
-const getQuoteRequest = async quoteID => {
-  const result = quote;
-  return result;
+const getQuoteRequest = async (quoteID) => {
+  console.log('quoteID')
+  console.log(quoteID)
+  const result = await api.get(`/quotations/${quoteID}`);
+  return result.data;
 };
 const getQuoteSummaryRequest = async () => {
   const result = leadSummary;

@@ -50,3 +50,14 @@ export const importDeal = dealPage + "/import";
  * Team Pages
  */
 export const teamPage = "/app/crm/teams";
+
+
+/**
+ * Quotation Pages
+ */
+// export const quotationPage = "/app/acct/quotations";
+// export const singleQuotation = id => {
+//   return `${quotationPage}/${id}`;
+// };
+// export const newQuotation = quotationPage + "/new";
+// export const editQuotation = quotationPage + "/edit";

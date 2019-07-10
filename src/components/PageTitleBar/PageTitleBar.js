@@ -11,6 +11,7 @@ import { getAppLayout } from "Helpers/helpers";
 const PageTitleBar = ({
   title,
   createLink,
+  editLink,
   location,
   moreButton,
   extraButtons
@@ -38,6 +39,7 @@ const PageTitleBar = ({
               </Button>
             );
           })}
+
         {createLink && (
           <Link to={createLink}>
             <Tooltip title="Add New" placement="bottom">
@@ -53,6 +55,12 @@ const PageTitleBar = ({
             </Tooltip>
           </Link>
         )}
+
+
+
+
+
+
         {moreButton && moreButton}
       </div>
     </div>

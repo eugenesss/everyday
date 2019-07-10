@@ -20,6 +20,13 @@ function acctSwitcher() {
           component={async.acct_new_quotation_component}
         />
         <Route path={`${url.quotePage}/:id`} component={async.view_quotation} />
+        <Route path={url.editQuote} component={async.acct_view_quotation} />
+
+
+
+
+
+
 
         {/* ------- /Invoice ------- */}
         <Route

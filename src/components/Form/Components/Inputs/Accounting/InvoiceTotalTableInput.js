@@ -9,6 +9,7 @@ function ccyFormat(num) {
 }
 
 const InvoiceTotalTableInput = ({ invoice }) => {
+
   return (
     <Table>
       <TableBody>
@@ -31,7 +32,7 @@ const InvoiceTotalTableInput = ({ invoice }) => {
         </TableRow>
         <TableRow>
           <TableCell colSpan={2}>Total</TableCell>
-          <TableCell align="right">{ccyFormat(invoice.total)}</TableCell>
+          <TableCell align="right">{ccyFormat(invoice.totalAmt)}</TableCell>
         </TableRow>
       </TableBody>
     </Table>

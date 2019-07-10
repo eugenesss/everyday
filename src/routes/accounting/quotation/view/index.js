@@ -19,6 +19,9 @@ import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 // Quotation Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
+import { newQuote, editQuote } from "Helpers/url/accounting";
+import { editLead, leadPage, newLead } from "Helpers/url/crm";
+
 // Activity Log Tab
 // import ActivityLog from "Components/Everyday/ActivityLog";
 
@@ -43,12 +46,24 @@ class acct_view_quotation extends Component {
     this.props.clearSingleQuotation();
   }
 
+  state = {
+    disabled: true
+  }
   Redirect=()=> {
     const {deleted} = this.props.quotationList
     if(deleted){
       return(<Redirect to="/app/acct/quotations"/>)
     }
   }
+
+  edit(quotation) {
+    console.log(quotation)
+    console.log('push to edit!')
+    // this.props.startQuotationEdit(quotation);
+    this.props.history.push(editQuote);
+  }
+
+
 
   render() {
     const {loading, quotation} = this.props.quotationToView;
@@ -78,11 +93,11 @@ class acct_view_quotation extends Component {
               label: "To PDF & Print"
             }
           ]}
-          createLink="/acct/new/quotation"
+          createLink={newQuote}
           moreButton={
             <MoreButton > 
               {{
-                label: "Edit", handleOnClick: ()=> console.log('Edit item')
+                label: "Edit", handleOnClick: () => this.edit(quotation)
               }}
               {{ 
                 label: "Delete", handleOnClick: (() => {
@@ -104,11 +119,13 @@ class acct_view_quotation extends Component {
               <AccountingDetails
                 type="quotation"
                 accountID={quotation.quoteID}
-                status={quotation.status.name}
+                status={quotation.state}
                 account={quotation.account && quotation.account.name}
                 customer={quotation.customer && quotation.customer.name}
-                sentDate={quotation.sentOn}
+                sent_date={quotation.sent_date}
+                created_date={quotation.createdAt}
                 owner={quotation.owner.name}
+                price={quotation.totalAmt}
               />
             </RctCollapsibleCard>
           </div>
@@ -147,7 +164,7 @@ class acct_view_quotation extends Component {
             </div>
             <TabsWrapper>
               <div icon="zmdi-shopping-basket text-success" label="QUOTATION">
-                <ViewTemplate order={quotation} id={quotation.quoteID} />
+                <ViewTemplate order={quotation} id={quotation.quoteID} disabled={this.state.disabled}/>
               </div>
               {/*  <div icon="zmdi-pizza text-warning" label="ACTIVITY LOG">
                 <ActivityLog />
@@ -177,6 +194,7 @@ class acct_view_quotation extends Component {
     );
   }
 }
+
 const mapStateToProps = ({ accountingState }) => {
   const { quotationState } = accountingState;
   const { quotationToView, quotationList } = quotationState;

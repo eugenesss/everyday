@@ -1,13 +1,16 @@
 import React from "react";
+import Moment from 'moment'
 
 const AccountingDetails = ({
   accountID,
   status,
   account,
   customer,
-  sentDate,
+  sent_date,
+  created_date,
   owner,
-  type
+  type,
+  price
 }) => {
   const bgColor =
     (type == "quotation" && "#7fb38b") ||
@@ -23,7 +26,7 @@ const AccountingDetails = ({
             <h1 className="mb-0">{accountID} - V2</h1>
             <span>{status}</span>
             <br />
-            <span>2019-01-01</span>
+            <span>{Moment(created_date).format('LL')}</span>
           </div>
         </div>
         <ul className="list-unstyled my-25" style={{ paddingLeft: "10%" }}>
@@ -46,25 +49,26 @@ const AccountingDetails = ({
           <li className="py-10 d-flex align-items-center">
             <i className="zmdi zmdi-email mr-20 fs-12" />
             <a href="mail-to:phoebe@gmail.com" className="fs-14 text-dark">
-              Owner
+              {owner}
             </a>
           </li>
           <li className="py-10 d-flex align-items-center">
             <i className="zmdi zmdi-email mr-20 fs-12" />
             <a href="mail-to:phoebe@gmail.com" className="fs-14 text-dark">
-              USD 1.23
+              {price}
             </a>
           </li>
           <li className="py-10 d-flex align-items-center">
             <i className="zmdi zmdi-email mr-20 fs-12" />
             <a href="mail-to:phoebe@gmail.com" className="fs-14 text-dark">
-              $20.50
+              {price}
             </a>
           </li>
           <li className="py-10 d-flex align-items-center">
             <i className="zmdi zmdi-email mr-20 fs-12" />
             <a href="mail-to:phoebe@gmail.com" className="fs-14 text-dark">
-              2019-01-01
+              {Moment(sent_date).format('LLL')}
+              
             </a>
           </li>
         </ul>

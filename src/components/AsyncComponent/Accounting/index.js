@@ -57,3 +57,10 @@ export const acct_new_payment_component = Loadable({
   loader: () => import("Routes/accounting/new/payment"),
   loading: () => <RctPageLoader />
 });
+
+
+// crm_edit
+export const acct_view_quotation = Loadable({
+  loader: () => import("Routes/accounting/quotation/edit"),
+  loading: () => <RctPageLoader />
+});

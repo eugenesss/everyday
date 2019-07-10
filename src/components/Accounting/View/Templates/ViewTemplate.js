@@ -1,6 +1,11 @@
 import React from "react";
 
-const ViewTemplate = ({ order, id }) => {
+import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/InvoiceProductInput";
+import moment from "moment"
+
+
+const ViewTemplate = ({ order, id, disabled }) => {
+  
   return (
     <div className="p-20">
       <div className="d-flex justify-content-between mb-50">
@@ -17,9 +22,9 @@ const ViewTemplate = ({ order, id }) => {
         </div>
         <div className="companyAddress text-right">
         <div className="address">
-            <span>1 Infinite Loop</span>
-            <span>95014 Cuperino, CA</span>
-            <span>United States</span>
+            <span>{order.custinfo}</span>
+            {/* <span>95014 Cuperino, CA</span>
+            <span>United States</span> */}
           </div>
           <div className="address">
             <span>Telephone: 800-692-7753</span>
@@ -30,37 +35,28 @@ const ViewTemplate = ({ order, id }) => {
       </div>
       <div className="d-flex justify-content-between mb-30 add-full-card">
      
-          <div className="add-card">
+          <div className="add-card" style={{borderRadius: 15, margin: 5}}>
             <h4 className="mb-15">Attn To</h4>
-            <span className="name">Name</span>
-            <span>#12-01</span>
-            <span>123 sdgsg</span>
-            <span>dsga sdgsag sdg </span>
-            <span>Singapore 123155</span>
-            <span>Phone: 1235 525 </span>
-            <span>Email: 1425 23532</span>
+            <span>{order.custinfo}</span>
           </div>
        
-          <div className="add-card">
+          <div className="add-card" style={{borderRadius: 15, margin: 5}}>
             <h4 className="mb-15">Ship To</h4>
-            <span className="name">Name</span>
-            <span>#12-01</span>
-            <span>123 sdgsg</span>
-            <span>dsga sdgsag sdg </span>
-            <span>Singapore 123155</span>
-            <span>Phone: 1235 525 </span>
-            <span>Email: 1425 23532</span>
+            <span>{order.shipinfo}</span>
           </div>
 
           <div className="invoice-address text-right">
             <h3>{id}</h3>
-            <span>Date: {order.sentOn}</span>
+            <div className="d-flex flex-column">
+              <span>Last sent on:</span>
+              <span>{moment(order.sent_date).format("LL")}</span>
+            </div>
           </div>
       </div>
 
       <div className="table-responsive mb-20">
         <table className="table table-borderless">
-          <thead>
+          {/* <thead>
             <tr>
               <th>#</th>
               <th>Description</th>
@@ -70,9 +66,9 @@ const ViewTemplate = ({ order, id }) => {
               <th>Tax</th>
               <th>Total</th>
             </tr>
-          </thead>
+          </thead> */}
           <tbody>
-            {order.products &&
+            {/* {order.products &&
               order.products.map((product, key) => (
                 <tr key={key}>
                   <td>{key}</td>
@@ -83,8 +79,19 @@ const ViewTemplate = ({ order, id }) => {
                   <td>$0</td>
                   <td>${product.total.toFixed(2)}</td>
                 </tr>
-              ))}
-            <tr>
+              ))} */}
+          <InvoiceProductInput
+            products={order.quotationline}
+            invoice={order}
+            disabled={disabled}
+            // handleChange={this.props.handleProdQuote}
+            // handleAdd={this.props.addNewProdQuote}
+            // handleRemove={this.props.removeProdQuote}
+          />
+
+
+
+            {/* <tr>
               <td colSpan="5">&nbsp;</td>
               <td className="fw-bold">Subtotal</td>
               <td>${order.netAmt}</td>
@@ -110,7 +117,7 @@ const ViewTemplate = ({ order, id }) => {
               <td colSpan="5">&nbsp;</td>
               <td className="fw-bold">Total</td>
               <td>${order.totalAmt}</td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>

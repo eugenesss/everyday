@@ -35,7 +35,7 @@ const QuotationList = ({loading, title, action, tableData }) => {
       name: "attn_toId",
       options: {
         customBodyRender: value => {
-          return value ? value : "";
+          return value ? value.name : "";
         }
       }
     },
