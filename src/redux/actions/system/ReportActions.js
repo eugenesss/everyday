@@ -1,74 +1,70 @@
-import {
-  REPORT_ON_DATES_CHANGE,
-  REPORT_ON_FOCUS_CHANGE,
-  REPORT_RESET_DATES,
-  GET_REPORT_FAILURE,
-  GET_DEAL_REPORT,
-  GET_DEAL_REPORT_SUCCESS,
-  GET_LEAD_REPORT,
-  GET_LEAD_REPORT_SUCCESS,
-  GET_INDIVIDUAL_REPORT,
-  GET_INDIVIDUAL_REPORT_SUCCESS,
-  ON_CHANGE_STAFF_SELECT
-} from "Types";
+import * as types from "Types/system/ReportTypes";
 
-/**
- * Report Date Range Picker
- */
-export const reportOnChangeDate = ({ startDate, endDate }) => ({
-  type: REPORT_ON_DATES_CHANGE,
-  payload: { startDate, endDate }
-});
-export const reportOnFocusChange = ({ focusedInput }) => ({
-  type: REPORT_ON_FOCUS_CHANGE,
-  payload: { focusedInput }
-});
-export const reportResetDate = () => ({
-  type: REPORT_RESET_DATES
-});
-
-/**
- * Get Reports Failure
- */
+//=====================
+// Reports Failure
+//=====================
 export const getReportFailure = error => ({
-  type: GET_REPORT_FAILURE,
+  type: types.GET_REPORT_FAILURE,
   payload: error
 });
 
-/**
- * Get Deal Reports
- */
-export const getDealReport = () => ({
-  type: GET_DEAL_REPORT
+//=====================
+// Deal Reports
+//=====================
+
+// Deal by Owner
+export const getDealsByOwner = (start, end) => ({
+  type: types.GET_DEALS_BY_OWNER,
+  payload: { start, end }
 });
-export const getDealReportSuccess = data => ({
-  type: GET_DEAL_REPORT_SUCCESS,
+export const getDealsByOwnerSuccess = data => ({
+  type: types.GET_DEALS_BY_OWNER_SUCCESS,
   payload: data
 });
 
-/**
- * Get Lead Reports
- */
+// Deal by Type
+export const getDealsByType = (start, end) => ({
+  type: types.GET_DEALS_BY_TYPE,
+  payload: { start, end }
+});
+export const getDealsByTypeSuccess = data => ({
+  type: types.GET_DEALS_BY_TYPE_SUCCESS,
+  payload: data
+});
+
+// Deals Pipeline
+export const getDealsPipeline = (start, end) => ({
+  type: types.GET_DEALS_PIPELINE,
+  payload: { start, end }
+});
+export const getDealsPipelineSuccess = data => ({
+  type: types.GET_DEALS_PIPELINE_SUCCESS,
+  payload: data
+});
+
+//=====================
+// Lead Reports
+//=====================
 export const getLeadReport = () => ({
-  type: GET_LEAD_REPORT
+  type: types.GET_LEAD_REPORT
 });
 export const getLeadReportSuccess = data => ({
-  type: GET_LEAD_REPORT_SUCCESS,
+  type: types.GET_LEAD_REPORT_SUCCESS,
   payload: data
 });
 
-/**
- * Get Individual Report
- */
+//=====================
+// Individual Reports
+//=====================
 export const getIndividualReport = staffID => ({
-  type: GET_INDIVIDUAL_REPORT,
+  type: types.GET_INDIVIDUAL_REPORT,
   payload: staffID
 });
 export const getIndividualReportSuccess = data => ({
-  type: GET_INDIVIDUAL_REPORT_SUCCESS,
+  type: types.GET_INDIVIDUAL_REPORT_SUCCESS,
   payload: data
 });
 export const onChangeStaffSelect = value => ({
-  type: ON_CHANGE_STAFF_SELECT,
+  type: types.ON_CHANGE_STAFF_SELECT,
   payload: value
 });

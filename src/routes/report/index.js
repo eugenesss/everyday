@@ -6,7 +6,7 @@ import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard
 
 //Page Req
 import ReportDrawer from "Components/Report/ReportDrawer";
-import ReportViewComponent from "Components/Report/ReportViewComponent";
+import ReportViews from "Components/Report/Views";
 
 class ReportsComponent extends Component {
   constructor(props) {
@@ -55,7 +55,7 @@ class ReportsComponent extends Component {
             />
           </div>
           <div className="col-10">
-            <ReportViewComponent componentToRender={activeView} />
+            <ReportViews componentToRender={activeView} />
           </div>
         </div>
         <RctCollapsibleCard fullBlock />

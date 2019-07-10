@@ -37,10 +37,22 @@ const ReportDrawer = ({
           openNested={() => openNestedView("deals")}
         >
           <DrawerListItem
-            onClickListItem={() => changeReportView("allDeals")}
-            title="All Deals"
+            onClickListItem={() => changeReportView("dealsByOwner")}
+            title="Deals By Owner"
             secondary
-            selected={activeView == "allDeals"}
+            selected={activeView == "dealsByOwner"}
+          />
+          <DrawerListItem
+            onClickListItem={() => changeReportView("dealsByType")}
+            title="Deals By Type"
+            secondary
+            selected={activeView == "dealsByType"}
+          />
+          <DrawerListItem
+            onClickListItem={() => changeReportView("dealsPipeline")}
+            title="Deals Pipeline"
+            secondary
+            selected={activeView == "dealsPipeline"}
           />
         </DrawerListCollapsible>
         <DrawerListCollapsible

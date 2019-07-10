@@ -9,4 +9,4 @@ const ReportDefaultMessage = () => {
   );
 };
 
-export default ReportDefaultMessage;
+export { ReportDefaultMessage };
