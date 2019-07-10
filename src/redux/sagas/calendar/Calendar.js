@@ -2,16 +2,6 @@ import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
 import * as Types from "Types";
 import * as Actions from "Actions";
 
-<<<<<<< HEAD
-import * as Types from 'Types'
-import * as Actions from 'Actions'
-
-
-
-//import api from "Api";
-import { events } from "Components/CalendarDummyData"
-=======
->>>>>>> f5f1919908c0e80c23e889e685e218290644720f
 import api from "Api";
 
 //=========================

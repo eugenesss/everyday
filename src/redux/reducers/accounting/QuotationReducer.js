@@ -63,7 +63,6 @@ const INIT_STATE = {
     loading: false,
     attn_to_array: [],
     quotation: {
-
       date: new Date(),
       currency: "",
       currency_rate: "",
@@ -97,7 +96,6 @@ const INIT_STATE = {
       status: "Draft",
       sentOn: new Date(),
       dueDate: new Date(),
-
     },
     products: [
       {

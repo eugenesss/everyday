@@ -41,19 +41,4 @@ export const dealImportPage = dealListPage + "/import";
 /**
  * Team Pages
  */
-<<<<<<< HEAD
-export const teamPage = "/app/crm/teams";
-
-
-/**
- * Quotation Pages
- */
-// export const quotationPage = "/app/acct/quotations";
-// export const singleQuotation = id => {
-//   return `${quotationPage}/${id}`;
-// };
-// export const newQuotation = quotationPage + "/new";
-// export const editQuotation = quotationPage + "/edit";
-=======
 export const teamListPage = "/app/crm/teams";
->>>>>>> f5f1919908c0e80c23e889e685e218290644720f
