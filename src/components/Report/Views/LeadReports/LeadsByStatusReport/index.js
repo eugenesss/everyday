@@ -3,20 +3,20 @@ import { connect } from "react-redux";
 import ReportContainer from "Components/Report/Components/ReportContainer";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 // Charts
-import DealsPipelineChart from "Components/Charts/DealsPipelineChart";
+import LeadsByStatusChart from "Components/Charts/LeadsByStatusChart";
 // Action
-import { getDealsPipeline } from "Actions";
+import { getLeadsByStatus } from "Actions";
 
-function DealsPipelineReport(props) {
-  const { loading, data } = props.dealsPipeline;
+function LeadsByStatusReport(props) {
+  const { loading, data } = props.leadsByStatus;
   return (
     <React.Fragment>
       {loading && <RctSectionLoader />}
-      <ReportContainer handleSubmit={props.getDealsPipeline}>
+      <ReportContainer handleSubmit={props.getLeadsByStatus}>
         {data ? (
-          <DealsPipelineChart data={data} />
+          <LeadsByStatusChart data={data} />
         ) : (
-          <p className="text-center text-muted">
+          <p className="text-muted text-center">
             <i>No Records</i>
           </p>
         )}
@@ -24,13 +24,12 @@ function DealsPipelineReport(props) {
     </React.Fragment>
   );
 }
-
 const mapStateToProps = ({ reportState }) => {
-  const { dealsPipeline } = reportState.dealsReport;
-  return { dealsPipeline };
+  const { leadsByStatus } = reportState.leadsReport;
+  return { leadsByStatus };
 };
 
 export default connect(
   mapStateToProps,
-  { getDealsPipeline }
-)(DealsPipelineReport);
+  { getLeadsByStatus }
+)(LeadsByStatusReport);

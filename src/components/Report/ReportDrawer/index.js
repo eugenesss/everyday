@@ -29,7 +29,7 @@ const ReportDrawer = ({
         paper: classes.drawerPaper
       }}
     >
-      <List subheader={<ListSubheader>All Reports</ListSubheader>}>
+      <List subheader={<ListSubheader>Reports List</ListSubheader>}>
         <DrawerListCollapsible
           icon="zmdi-case"
           title="Deals"
@@ -38,13 +38,13 @@ const ReportDrawer = ({
         >
           <DrawerListItem
             onClickListItem={() => changeReportView("dealsByOwner")}
-            title="Deals By Owner"
+            title="Deals by Owner"
             secondary
             selected={activeView == "dealsByOwner"}
           />
           <DrawerListItem
             onClickListItem={() => changeReportView("dealsByType")}
-            title="Deals By Type"
+            title="Deals by Type"
             secondary
             selected={activeView == "dealsByType"}
           />
@@ -62,10 +62,22 @@ const ReportDrawer = ({
           openNested={() => openNestedView("leads")}
         >
           <DrawerListItem
-            onClickListItem={() => changeReportView("leadsReport")}
-            title="Leads report"
+            onClickListItem={() => changeReportView("leadsByStatus")}
+            title="Leads by Status"
             secondary
-            selected={activeView == "leadsReport"}
+            selected={activeView == "leadsByStatus"}
+          />
+          <DrawerListItem
+            onClickListItem={() => changeReportView("leadsByOwner")}
+            title="Leads by Owner"
+            secondary
+            selected={activeView == "leadsByOwner"}
+          />
+          <DrawerListItem
+            onClickListItem={() => changeReportView("leadsBySource")}
+            title="Leads by Source"
+            secondary
+            selected={activeView == "leadsBySource"}
           />
         </DrawerListCollapsible>
         <DrawerListCollapsible

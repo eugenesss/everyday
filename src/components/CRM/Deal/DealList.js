@@ -53,7 +53,7 @@ const DealList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Stage",
-      name: "stage",
+      name: "stageInfo",
       options: {
         customBodyRender: value => {
           return value ? value.name : "";
@@ -62,7 +62,7 @@ const DealList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Chance",
-      name: "stage",
+      name: "stageInfo",
       options: {
         filter: false,
         display: false,
@@ -117,7 +117,7 @@ const DealList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Source",
-      name: "source",
+      name: "sourceInfo",
       options: {
         display: false,
         customBodyRender: value => {
@@ -127,7 +127,7 @@ const DealList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Type",
-      name: "type",
+      name: "typeInfo",
       options: {
         display: false,
         customBodyRender: value => {

@@ -10,12 +10,12 @@ const LeadDetails = ({ lead }) => {
     <DetailsLayout title="Lead Details" bgColorClass="bg-danger">
       <SingleDetail title="Owner" value={lead.userInfo && lead.userInfo.name} />
       <SingleDetail title="Company" value={lead.companyName} />
-      <SingleDetail title="Status" value={lead.status && lead.status.name} />
+      <SingleDetail title="Status" value={lead.statusInfo && lead.statusInfo.name} />
       <SingleDetail title="Interest" value={lead.interest} />
-      <SingleDetail title="Source" value={lead.source && lead.source.name} />
+      <SingleDetail title="Source" value={lead.sourceInfo && lead.sourceInfo.name} />
       <SingleDetail
         title="Industry"
-        value={lead.industry && lead.industry.name}
+        value={lead.industryInfo && lead.industryInfo.name}
       />
       <SingleDetail title="Mobile" value={lead.baseContact.mobile} />
       <SingleDetail title="Email" value={lead.baseContact.email} />

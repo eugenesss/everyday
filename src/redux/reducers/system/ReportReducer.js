@@ -7,7 +7,11 @@ const INIT_STATE = {
     dealsByType: { loading: false, data: null },
     dealsPipeline: { loading: false, data: null }
   },
-  leadReportData: { loading: false },
+  leadsReport: {
+    leadsByStatus: { loading: false, data: null },
+    leadsByOwner: { loading: false, data: null },
+    leadsBySource: { loading: false, data: null }
+  },
   individualData: { loading: false, staff: "" }
 };
 
@@ -94,18 +98,70 @@ export default (state = INIT_STATE, action) => {
     //=====================
     // Lead Reports
     //=====================
-    case types.GET_LEAD_REPORT:
+
+    // Leads by status
+    case types.GET_LEADS_BY_STATUS:
       return {
         ...state,
-        leadReportData: { ...state.leadReportData, loading: true }
+        leadsReport: {
+          ...state.leadsReport,
+          leadsByStatus: { ...state.leadsByStatus, loading: true }
+        }
       };
-    case types.GET_LEAD_REPORT_SUCCESS:
+    case types.GET_LEADS_BY_STATUS_SUCCESS:
       return {
         ...state,
-        leadReportData: {
-          ...state.leadReportData,
-          loading: false,
-          ...action.payload
+        leadsReport: {
+          ...state.leadsReport,
+          leadsByStatus: {
+            ...state.leadsByStatus,
+            loading: false,
+            data: action.payload
+          }
+        }
+      };
+
+    // Leads by owner
+    case types.GET_LEADS_BY_OWNER:
+      return {
+        ...state,
+        leadsReport: {
+          ...state.leadsReport,
+          leadsByOwner: { ...state.leadsByOwner, loading: true }
+        }
+      };
+    case types.GET_LEADS_BY_OWNER_SUCCESS:
+      return {
+        ...state,
+        leadsReport: {
+          ...state.leadsReport,
+          leadsByOwner: {
+            ...state.leadsByOwner,
+            loading: false,
+            data: action.payload
+          }
+        }
+      };
+
+    // Leads by source
+    case types.GET_LEADS_BY_SOURCE:
+      return {
+        ...state,
+        leadsReport: {
+          ...state.leadsReport,
+          leadsBySource: { ...state.leadsBySource, loading: true }
+        }
+      };
+    case types.GET_LEADS_BY_SOURCE_SUCCESS:
+      return {
+        ...state,
+        leadsReport: {
+          ...state.leadsReport,
+          leadsBySource: {
+            ...state.leadsBySource,
+            loading: false,
+            data: action.payload
+          }
         }
       };
 

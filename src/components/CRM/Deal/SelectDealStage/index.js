@@ -21,11 +21,13 @@ import {
 class SelectDealStage extends Component {
   componentWillMount() {
     this.props.getDealStage();
-    this.props.setCurrentStep(this.props.deal.stage.step);
+    this.props.setCurrentStep(this.props.deal.stageInfo.step);
   }
 
   isCurrentStep() {
-    if (this.props.deal.stage.step == this.props.dealStageStepper.activeStep) {
+    if (
+      this.props.deal.stageInfo.step == this.props.dealStageStepper.activeStep
+    ) {
       return true;
     } else {
       return false;

@@ -157,8 +157,8 @@ class crm_view_lead extends Component {
                   <LeadCard
                     name={lead.name}
                     companyName={lead.companyName}
-                    status={lead.status && lead.status.name}
-                    statusColor={lead.status && lead.status.color}
+                    status={lead.statusInfo && lead.statusInfo.name}
+                    statusColor={lead.statusInfo && lead.statusInfo.color}
                     ownerName={lead.userInfo && lead.userInfo.name}
                     mobile={lead.baseContact.mobile}
                     office={lead.baseContact.office}

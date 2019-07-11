@@ -139,8 +139,8 @@ class crm_view_deal extends Component {
                 <div className="col-md-3 align-self-center">
                   <DealCard
                     name={deal.name}
-                    stage={deal.stage}
-                    type={deal.type && deal.type.name}
+                    stage={deal.stageInfo}
+                    type={deal.typeInfo && deal.typeInfo.name}
                     ownerName={deal.userInfo && deal.userInfo.name}
                     amount={deal.amount}
                     account={deal.accountInfo}

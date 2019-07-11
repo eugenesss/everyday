@@ -12,7 +12,9 @@ import DealsByTypeReport from "./DealReports/DealsByTypeReport";
 import DealsPipelineReport from "./DealReports/DealsPipelineReport";
 
 // Lead Reports
-// import LeadsReport from "./View/LeadsReport";
+import LeadsByStatusReport from "./LeadReports/LeadsByStatusReport";
+import LeadsByOwnerReport from "./LeadReports/LeadsByOwnerReport";
+import LeadsBySourceReport from "./LeadReports/LeadsBySourceReport";
 
 // Individual Report
 // import IndividualReport from "./View/IndividualReport";
@@ -25,8 +27,12 @@ const ReportRender = ({ componentToRender }) => {
       return <DealsByTypeReport />;
     case "dealsPipeline":
       return <DealsPipelineReport />;
-    case "leadsReport":
-      return <ReportMaintenanceMessage />;
+    case "leadsByStatus":
+      return <LeadsByStatusReport />;
+    case "leadsByOwner":
+      return <LeadsByOwnerReport />;
+    case "leadsBySource":
+      return <LeadsBySourceReport />;
     case "proposalReport":
       return <ReportMaintenanceMessage />;
     case "invoiceReport":

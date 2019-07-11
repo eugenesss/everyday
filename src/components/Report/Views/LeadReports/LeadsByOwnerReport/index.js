@@ -3,20 +3,20 @@ import { connect } from "react-redux";
 import ReportContainer from "Components/Report/Components/ReportContainer";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 // Charts
-import DealsPipelineChart from "Components/Charts/DealsPipelineChart";
+import LeadsByOwnerChart from "Components/Charts/LeadsByOwnerChart";
 // Action
-import { getDealsPipeline } from "Actions";
+import { getLeadsByOwner } from "Actions";
 
-function DealsPipelineReport(props) {
-  const { loading, data } = props.dealsPipeline;
+function LeadsByOwnerReport(props) {
+  const { loading, data } = props.leadsByOwner;
   return (
     <React.Fragment>
       {loading && <RctSectionLoader />}
-      <ReportContainer handleSubmit={props.getDealsPipeline}>
+      <ReportContainer handleSubmit={props.getLeadsByOwner}>
         {data ? (
-          <DealsPipelineChart data={data} />
+          <LeadsByOwnerChart data={data} />
         ) : (
-          <p className="text-center text-muted">
+          <p className="text-muted text-center">
             <i>No Records</i>
           </p>
         )}
@@ -26,11 +26,11 @@ function DealsPipelineReport(props) {
 }
 
 const mapStateToProps = ({ reportState }) => {
-  const { dealsPipeline } = reportState.dealsReport;
-  return { dealsPipeline };
+  const { leadsByOwner } = reportState.leadsReport;
+  return { leadsByOwner };
 };
 
 export default connect(
   mapStateToProps,
-  { getDealsPipeline }
-)(DealsPipelineReport);
+  { getLeadsByOwner }
+)(LeadsByOwnerReport);

@@ -45,11 +45,34 @@ export const getDealsPipelineSuccess = data => ({
 //=====================
 // Lead Reports
 //=====================
-export const getLeadReport = () => ({
-  type: types.GET_LEAD_REPORT
+
+// Lead by status
+export const getLeadsByStatus = (start, end) => ({
+  type: types.GET_LEADS_BY_STATUS,
+  payload: { start, end }
 });
-export const getLeadReportSuccess = data => ({
-  type: types.GET_LEAD_REPORT_SUCCESS,
+export const getLeadsByStatusSuccess = data => ({
+  type: types.GET_LEADS_BY_STATUS_SUCCESS,
+  payload: data
+});
+
+// Lead by owner
+export const getLeadsByOwner = (start, end) => ({
+  type: types.GET_LEADS_BY_OWNER,
+  payload: { start, end }
+});
+export const getLeadsByOwnerSuccess = data => ({
+  type: types.GET_LEADS_BY_OWNER_SUCCESS,
+  payload: data
+});
+
+// Lead by source
+export const getLeadsBySource = (start, end) => ({
+  type: types.GET_LEADS_BY_SOURCE,
+  payload: { start, end }
+});
+export const getLeadsBySourceSuccess = data => ({
+  type: types.GET_LEADS_BY_SOURCE_SUCCESS,
   payload: data
 });
 

@@ -33,8 +33,8 @@ class ReportContainer extends Component {
 
   submit() {
     this.props.handleSubmit(
-      this.state.startDate.format("YYYY-MM-DD"),
-      this.state.endDate.format("YYYY-MM-DD")
+      this.state.startDate.format("YYYY-MM-DD HH:mm:ss"),
+      this.state.endDate.format("YYYY-MM-DD HH:mm:ss")
     );
   }
 

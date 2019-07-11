@@ -1,44 +1,13 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Table } from "reactstrap";
+import NumberFormat from "react-number-format";
+import { getTheDate } from "Helpers/helpers";
 
 function DealsByTypeChart(props) {
-  const propsData = [
-    {
-      type: "Type Name",
-      totalDeals: 3,
-      color: "#FF6384",
-      deals: [
-        {
-          name: "name",
-          amount: 12000,
-          closingDate: "date",
-          userInfo: { name: "name", id: "id" },
-          stage: { name: "stage", chance: 20 },
-          accountInfo: { name: "account" }
-        },
-        {
-          name: "name",
-          amount: 12000,
-          closingDate: "date",
-          userInfo: { name: "name", id: "id" },
-          stage: { name: "stage", chance: 20 },
-          accountInfo: { name: "account" }
-        },
-        {
-          name: "name",
-          amount: 12000,
-          closingDate: "date",
-          userInfo: { name: "name", id: "id" },
-          stage: { name: "stage", chance: 20 },
-          accountInfo: { name: "account" }
-        }
-      ]
-    }
-  ];
-  const labels = propsData.map(dat => dat.type);
-  const data = propsData.map(dat => dat.totalDeals);
-  const backgroundColor = propsData.map(dat => dat.color);
+  const labels = props.data.map(dat => dat.name);
+  const data = props.data.map(dat => dat.totalDeals);
+  const backgroundColor = props.data.map(dat => dat.color);
 
   const chartData = {
     labels,
@@ -53,7 +22,7 @@ function DealsByTypeChart(props) {
     <React.Fragment>
       <div className="row">
         <div className="col-12 align-self-center">
-          <Doughnut height={70} data={chartData} options={options} />
+          <Doughnut height={70} data={chartData} />
         </div>
       </div>
       <div className="row mt-30">
@@ -63,31 +32,57 @@ function DealsByTypeChart(props) {
               <tr>
                 <th>Type</th>
                 <th>Deal Name</th>
-                <th>Amount</th>
                 <th>Closing Date</th>
                 <th>Owner</th>
                 <th>Stage</th>
                 <th>Chance</th>
+                <th>Amount</th>
               </tr>
             </thead>
             <tbody>
-              {propsData.map(type =>
-                type.deals.map((deal, key) => (
-                  <tr key={key}>
-                    {key == 0 && (
-                      <td rowSpan={type.totalDeals}>
-                        <strong>{type.type}</strong>
+              {props.data.map((type, k) => (
+                <React.Fragment key={k}>
+                  {type.deals.map((deal, key) => (
+                    <tr key={key}>
+                      {key == 0 && (
+                        <td rowSpan={type.totalDeals}>
+                          <strong>{`${type.name} (${type.totalDeals})`}</strong>
+                        </td>
+                      )}
+                      <td>{deal.name}</td>
+                      <td>{getTheDate(deal.closingDate)}</td>
+                      <td>{deal.userInfo}</td>
+                      <td>{deal.stage}</td>
+                      <td>{deal.chance}</td>
+                      <td>
+                        <NumberFormat
+                          value={deal.amount}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          prefix={"$"}
+                        />
                       </td>
-                    )}
-                    <td>{deal.name}</td>
-                    <td>{deal.amount}</td>
-                    <td>{deal.closingDate}</td>
-                    <td>{deal.userInfo.name}</td>
-                    <td>{deal.stage.name}</td>
-                    <td>{deal.stage.chance}</td>
-                  </tr>
-                ))
-              )}
+                    </tr>
+                  ))}
+                  {type.deals.length > 0 && (
+                    <tr>
+                      <td colSpan={6} className="text-right pr-20">
+                        <strong>Total Amount</strong>
+                      </td>
+                      <td>
+                        <strong>
+                          <NumberFormat
+                            value={type.totalAmount}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix={"$"}
+                          />
+                        </strong>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
+              ))}
             </tbody>
           </Table>
         </div>

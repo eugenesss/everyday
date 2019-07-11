@@ -3,20 +3,20 @@ import { connect } from "react-redux";
 import ReportContainer from "Components/Report/Components/ReportContainer";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 // Charts
-import DealsPipelineChart from "Components/Charts/DealsPipelineChart";
+import LeadsBySourceChart from "Components/Charts/LeadsBySourceChart";
 // Action
-import { getDealsPipeline } from "Actions";
+import { getLeadsBySource } from "Actions";
 
-function DealsPipelineReport(props) {
-  const { loading, data } = props.dealsPipeline;
+function LeadsBySourceReport(props) {
+  const { loading, data } = props.leadsBySource;
   return (
     <React.Fragment>
       {loading && <RctSectionLoader />}
-      <ReportContainer handleSubmit={props.getDealsPipeline}>
+      <ReportContainer handleSubmit={props.getLeadsBySource}>
         {data ? (
-          <DealsPipelineChart data={data} />
+          <LeadsBySourceChart data={data} />
         ) : (
-          <p className="text-center text-muted">
+          <p className="text-muted text-center">
             <i>No Records</i>
           </p>
         )}
@@ -26,11 +26,11 @@ function DealsPipelineReport(props) {
 }
 
 const mapStateToProps = ({ reportState }) => {
-  const { dealsPipeline } = reportState.dealsReport;
-  return { dealsPipeline };
+  const { leadsBySource } = reportState.leadsReport;
+  return { leadsBySource };
 };
 
 export default connect(
   mapStateToProps,
-  { getDealsPipeline }
-)(DealsPipelineReport);
+  { getLeadsBySource }
+)(LeadsBySourceReport);

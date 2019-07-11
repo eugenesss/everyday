@@ -43,7 +43,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Status",
-      name: "status",
+      name: "statusInfo",
       options: {
         customBodyRender: value => {
           return value ? value.name : "";
@@ -52,7 +52,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Source",
-      name: "source",
+      name: "sourceInfo",
       options: {
         customBodyRender: value => {
           return value ? value.name : "";
@@ -90,7 +90,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Industry",
-      name: "industry",
+      name: "industryInfo",
       options: {
         display: false,
         customBodyRender: value => {
