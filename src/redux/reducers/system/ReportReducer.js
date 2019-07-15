@@ -12,6 +12,10 @@ const INIT_STATE = {
     leadsByOwner: { loading: false, data: null },
     leadsBySource: { loading: false, data: null }
   },
+  acctcustReport: {
+    topSpenderAccount: { loading: false, data: null },
+    topSpenderCustomer: { loading: false, data: null }
+  },
   individualData: { loading: false, staff: "" }
 };
 
@@ -162,6 +166,46 @@ export default (state = INIT_STATE, action) => {
             loading: false,
             data: action.payload
           }
+        }
+      };
+
+    //=====================
+    // Acct Cust Reports
+    //=====================
+
+    // Top Spender Accounts
+    case types.GET_TOP_SPENDER_ACCOUNT:
+      return {
+        ...state,
+        acctcustReport: {
+          ...state.acctcustReport,
+          topSpenderAccount: { loading: true }
+        }
+      };
+    case types.GET_TOP_SPENDER_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        acctcustReport: {
+          ...state.acctcustReport,
+          topSpenderAccount: { loading: false, data: action.payload }
+        }
+      };
+
+    // Top Spender Customers
+    case types.GET_TOP_SPENDER_CUSTOMER:
+      return {
+        ...state,
+        acctcustReport: {
+          ...state.acctcustReport,
+          topSpenderCustomer: { loading: true }
+        }
+      };
+    case types.GET_TOP_SPENDER_CUSTOMER_SUCCESS:
+      return {
+        ...state,
+        acctcustReport: {
+          ...state.acctcustReport,
+          topSpenderCustomer: { loading: false, data: action.payload }
         }
       };
 

@@ -5,7 +5,9 @@ import {
   GET_DEALS_PIPELINE,
   GET_LEADS_BY_STATUS,
   GET_LEADS_BY_OWNER,
-  GET_LEADS_BY_SOURCE
+  GET_LEADS_BY_SOURCE,
+  GET_TOP_SPENDER_ACCOUNT,
+  GET_TOP_SPENDER_CUSTOMER
 } from "Types";
 import {
   getReportFailure,
@@ -14,7 +16,9 @@ import {
   getDealsPipelineSuccess,
   getLeadsByStatusSuccess,
   getLeadsByOwnerSuccess,
-  getLeadsBySourceSuccess
+  getLeadsBySourceSuccess,
+  getTopSpenderAccountSuccess,
+  getTopSpenderCustomerSuccess
 } from "Actions";
 
 import api from "Api";
@@ -59,6 +63,20 @@ const getLeadsByOwnerRequest = async (startDate, endDate) => {
 };
 const getLeadsBySourceRequest = async (startDate, endDate) => {
   const result = await api.post("/leads/reports/leadsbysource", {
+    startDate,
+    endDate
+  });
+  return result.data.data;
+};
+const getTopSpenderAccountRequest = async (startDate, endDate) => {
+  const result = await api.post("/accounts/reports/topspender", {
+    startDate,
+    endDate
+  });
+  return result.data.data;
+};
+const getTopSpenderCustomerRequest = async (startDate, endDate) => {
+  const result = await api.post("/customers/reports/topspender", {
     startDate,
     endDate
   });
@@ -128,6 +146,26 @@ function* getLeadsBySource({ payload }) {
     yield put(getReportFailure(error));
   }
 }
+function* getTopSpenderAccount({ payload }) {
+  const { start, end } = payload;
+  try {
+    const data = yield call(getTopSpenderAccountRequest, start, end);
+    yield delay(500);
+    yield put(getTopSpenderAccountSuccess(data));
+  } catch (error) {
+    yield put(getReportFailure(error));
+  }
+}
+function* getTopSpenderCustomer({ payload }) {
+  const { start, end } = payload;
+  try {
+    const data = yield call(getTopSpenderCustomerRequest, start, end);
+    yield delay(500);
+    yield put(getTopSpenderCustomerSuccess(data));
+  } catch (error) {
+    yield put(getReportFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -150,6 +188,12 @@ export function* getLeadsByOwnerWatcher() {
 export function* getLeadsBySourceWatcher() {
   yield takeEvery(GET_LEADS_BY_SOURCE, getLeadsBySource);
 }
+export function* getTopSpenderAccountWatcher() {
+  yield takeEvery(GET_TOP_SPENDER_ACCOUNT, getTopSpenderAccount);
+}
+export function* getTopSpenderCustomerWatcher() {
+  yield takeEvery(GET_TOP_SPENDER_CUSTOMER, getTopSpenderCustomer);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -161,6 +205,8 @@ export default function* rootSaga() {
     fork(getDealsPipelineWatcher),
     fork(getLeadsByStatusWatcher),
     fork(getLeadsByOwnerWatcher),
-    fork(getLeadsBySourceWatcher)
+    fork(getLeadsBySourceWatcher),
+    fork(getTopSpenderAccountWatcher),
+    fork(getTopSpenderCustomerWatcher)
   ]);
 }

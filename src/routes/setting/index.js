@@ -23,7 +23,6 @@ import {
 } from "Components/AsyncComponent/AsyncComponent";
 import SettingsDirectory from "Components/Setting/SettingsDirectory";
 
-
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 

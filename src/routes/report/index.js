@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 // page req
 import { Helmet } from "react-helmet";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 
 //Page Req
 import ReportDrawer from "Components/Report/ReportDrawer";
@@ -13,7 +12,7 @@ class ReportsComponent extends Component {
     super(props);
     this.state = {
       activeView: "",
-      nestedView: { sales: false, leads: false, deals: false },
+      nestedView: { sales: false, leads: false, deals: false, acctcust: false },
       dateRange: { startDate: null, endDate: null, focusedInput: null }
     };
     this.handleNestedView = this.handleNestedView.bind(this);
@@ -58,7 +57,6 @@ class ReportsComponent extends Component {
             <ReportViews componentToRender={activeView} />
           </div>
         </div>
-        <RctCollapsibleCard fullBlock />
       </div>
     );
   }

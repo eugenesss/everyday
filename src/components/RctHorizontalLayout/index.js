@@ -2,7 +2,6 @@
  * Rct Horizontal Menu Layout
  */
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
 
 // Components
@@ -12,14 +11,7 @@ import HorizontalMenu from "Components/HorizontalMenu/HorizontalMenu";
 
 class RctHorizontalLayout extends Component {
   renderPage() {
-    const { pathname } = this.props.location;
-    const { children, match } = this.props;
-    // if (
-    //   pathname.startsWith(`${match.url}/reports`) ||
-    //   pathname === `${match.url}/todo`
-    // ) {
-    //   return <div className="rct-page-content p-0">{children}</div>;
-    // }
+    const { children } = this.props;
     return (
       <Scrollbars
         className="rct-scroll"
@@ -42,7 +34,7 @@ class RctHorizontalLayout extends Component {
           <div className="rct-page-wrapper">
             <div className="rct-app-content">
               <div className="app-header">
-                <Header horizontalMenu />
+                <Header />
               </div>
               <div className="rct-page">
                 <HorizontalMenu />
@@ -56,4 +48,4 @@ class RctHorizontalLayout extends Component {
   }
 }
 
-export default withRouter(RctHorizontalLayout);
+export default RctHorizontalLayout;

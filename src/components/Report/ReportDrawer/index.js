@@ -81,6 +81,25 @@ const ReportDrawer = ({
           />
         </DrawerListCollapsible>
         <DrawerListCollapsible
+          icon="zmdi-city-alt"
+          title={"Accounts & Customers"}
+          state={nestedView.acctcust}
+          openNested={() => openNestedView("acctcust")}
+        >
+          <DrawerListItem
+            onClickListItem={() => changeReportView("topSpenderAccount")}
+            title="Top Spender Report (Accounts)"
+            secondary
+            selected={activeView == "topSpenderAccount"}
+          />
+          <DrawerListItem
+            onClickListItem={() => changeReportView("topSpenderCustomer")}
+            title="Top Spender Report (Customers)"
+            secondary
+            selected={activeView == "topSpenderCustomer"}
+          />
+        </DrawerListCollapsible>
+        <DrawerListCollapsible
           icon="zmdi-money-box"
           title="Sales"
           state={nestedView.sales}

@@ -5,39 +5,40 @@ import { Table } from "reactstrap";
 import NumberFormat from "react-number-format";
 import { getTheDate } from "Helpers/helpers";
 
-function DealsByOwnerChart(props) {
-  // mapping props
-  const labels = props.data.map(d => d.name);
-  const data = props.data.map(d => d.totalDeals);
+function TopSpenderAccountChart(props) {
+  const labels = props.data.map(label => label.name);
+  const data = props.data.map(dat => dat.totalSpent);
 
   const chartData = {
     labels,
     datasets: [
       {
-        label: "Deals Owned",
+        label: "Total Spent",
         backgroundColor: ChartConfig.color.info,
         data
       }
     ]
   };
-  const options = {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            fontColor: ChartConfig.axesColor,
-            beginAtZero: true,
-            min: 0
-          }
-        }
-      ]
-    }
-  };
   return (
     <React.Fragment>
       <div className="row">
         <div className="col-12">
-          <Bar data={chartData} height={80} options={options} />
+          <Bar
+            data={chartData}
+            height={50}
+            options={{
+              scales: {
+                yAxes: [
+                  {
+                    ticks: {
+                      beginAtZero: true,
+                      min: 0
+                    }
+                  }
+                ]
+              }
+            }}
+          />
         </div>
       </div>
       <div className="row mt-30">
@@ -45,30 +46,30 @@ function DealsByOwnerChart(props) {
           <Table size="sm">
             <thead>
               <tr>
-                <th>Owner</th>
+                <th>Account Name</th>
                 <th>Deal Name</th>
-                <th>Closing Date</th>
                 <th>Stage</th>
                 <th>Chance</th>
+                <th>Closed On</th>
                 <th>Amount</th>
               </tr>
             </thead>
             <tbody>
-              {props.data.map((owner, i) => (
+              {props.data.map((acct, i) => (
                 <React.Fragment key={i}>
-                  {owner.deals.map((deal, key) => (
+                  {acct.deals.map((deal, key) => (
                     <tr key={key}>
                       {key == 0 && (
-                        <td rowSpan={owner.totalDeals}>
-                          <strong>{`${owner.name} (${
-                            owner.totalDeals
-                          })`}</strong>
+                        <td rowSpan={acct.deals.length}>
+                          <strong>
+                            {`${acct.name} (${acct.deals.length} deals)`}
+                          </strong>
                         </td>
                       )}
                       <td>{deal.name}</td>
-                      <td>{getTheDate(deal.closingDate)}</td>
                       <td>{deal.stage}</td>
                       <td>{deal.chance}</td>
+                      <td>{getTheDate(deal.closingDate)}</td>
                       <td>
                         <NumberFormat
                           value={deal.amount}
@@ -79,23 +80,21 @@ function DealsByOwnerChart(props) {
                       </td>
                     </tr>
                   ))}
-                  {owner.deals.length > 0 && (
-                    <tr>
-                      <td colSpan={5} className="text-right pr-20">
-                        <strong>Total Amount</strong>
-                      </td>
-                      <td>
-                        <strong>
-                          <NumberFormat
-                            value={owner.totalAmount}
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix={"$"}
-                          />
-                        </strong>
-                      </td>
-                    </tr>
-                  )}
+                  <tr>
+                    <td colSpan={5} className="text-right pr-20">
+                      <strong>Total Spent</strong>
+                    </td>
+                    <td>
+                      <strong>
+                        <NumberFormat
+                          value={acct.totalSpent}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          prefix={"$"}
+                        />
+                      </strong>
+                    </td>
+                  </tr>
                 </React.Fragment>
               ))}
             </tbody>
@@ -106,4 +105,4 @@ function DealsByOwnerChart(props) {
   );
 }
 
-export default DealsByOwnerChart;
+export default TopSpenderAccountChart;

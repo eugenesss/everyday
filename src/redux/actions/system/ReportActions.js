@@ -77,6 +77,30 @@ export const getLeadsBySourceSuccess = data => ({
 });
 
 //=====================
+// Acct Cust Reports
+//=====================
+
+// Top Spender Accounts
+export const getTopSpenderAccount = (start, end) => ({
+  type: types.GET_TOP_SPENDER_ACCOUNT,
+  payload: { start, end }
+});
+export const getTopSpenderAccountSuccess = data => ({
+  type: types.GET_TOP_SPENDER_ACCOUNT_SUCCESS,
+  payload: data
+});
+
+// Top Spender Customer
+export const getTopSpenderCustomer = (start, end) => ({
+  type: types.GET_TOP_SPENDER_CUSTOMER,
+  payload: { start, end }
+});
+export const getTopSpenderCustomerSuccess = data => ({
+  type: types.GET_TOP_SPENDER_CUSTOMER_SUCCESS,
+  payload: data
+});
+
+//=====================
 // Individual Reports
 //=====================
 export const getIndividualReport = staffID => ({
