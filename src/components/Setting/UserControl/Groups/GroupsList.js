@@ -41,9 +41,9 @@ class GroupsList extends Component {
     super(props);
   }
 
-  onChange(group) {
-    this.props.onChangeSelectedGroup(group);
-    this.props.onChangeSelectedGroupRole(this.props.selectedGroupRoles)
+  async onChange(group) {
+    await this.props.onChangeSelectedGroup(group);
+    await this.props.onChangeSelectedGroupRole(this.props.selectedGroupRoles);
   }
 
   render() {

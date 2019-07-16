@@ -25,7 +25,7 @@ import api from "Api";
 // REQUESTS
 //=========================
 const getAllGroupsRequest = async () => {
-  const result = await api.post(`/accesssettings/viewall`)
+  const result = await api.post(`/accessgroups/viewall`)
   return result.data.data
 }
 /*

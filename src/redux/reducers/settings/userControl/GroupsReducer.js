@@ -49,15 +49,16 @@ export default (state = INIT_STATE, action) => {
         groupsLoading: true
       };
     case GET_ALL_GROUPS_SUCCESS:
-      const allusergroupsettings = action.payload.groups;
-      var allgroups = [];
+      const allgroups = action.payload.groups;
+      //var allgroups = [];
+      /*
       allusergroupsettings.forEach(userSetting => {
         var addgroups = userSetting.groups.filter(group => {
           return -1 === allgroups.findIndex(grp => { return grp.id === group.id });
         });
         allgroups = allgroups.concat(addgroups);
       });
-      console.log(allgroups);
+      */
       return {
         ...state,
         groupsLoading: false,
@@ -152,9 +153,12 @@ export default (state = INIT_STATE, action) => {
      * State Changes
      */
     case CHANGE_SELECTED_GROUP:
+      /*
       var selectedGroupRoles = Object.assign([], state.accessGroupRoles).filter(groupRole =>
         groupRole.accessGroupId == action.payload.id
       );
+      */
+      var selectedGroupRoles = action.payload.roles;
       return {
         ...state,
         selectedGroup: action.payload,
