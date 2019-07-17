@@ -13,7 +13,8 @@ const FormBlock = ({
   selectValues,
   customTextField,
   required,
-  empty
+  empty,
+  accounting
 }) => {
 
 
@@ -27,18 +28,18 @@ const FormBlock = ({
         {!empty &&
           (customTextField ? (
             customTextField
-          ) : selectValues ? (
+          ) : selectValues ? 
             <FormSelectField
               value={value}
               handleChange={handleChange}
               target={target}
               targetType={targetType}
               selectValues={selectValues}
+              accounting={accounting}
             />
-          ) : (
+          : (
             <FormTextField
               value={value}
-              // handleChange={handleChange}
               handleChange ={(e, value, target) => handleChange(e, value, target)}
               target={target}
               targetType={targetType}

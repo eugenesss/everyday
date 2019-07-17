@@ -1,35 +1,6 @@
 import { NotificationManager } from "react-notifications";
-import {
-  QUOTATION_LIST_DROPDOWN,
-  CHANGE_QUOTATION_LIST_VIEW,
-  TOGGLE_QUOTATION_SUMMARY,
-  GET_QUOTATION_FAILURE,
-  GET_QUOTATION_SUCCESS,
-  GET_ALL_QUOTATION,
-  GET_MY_QUOTATION,
-  GET_OPEN_QUOTATION,
-  GET_CLOSED_QUOTATION,
-  GET_SINGLE_QUOTATION,
-  GET_SINGLE_QUOTATION_SUCCESS,
-  CLEAR_SINGLE_QUOTATION,
-  GET_QUOTE_SUMMARY,
-  GET_QUOTE_SUMMARY_SUCCESS,
-  GET_QUOTE_SUMMARY_FAILURE,
-  HANDLE_CHANGE_QUOTATION,
-  SUBMIT_QUOTATION,
-  CLEAR_QUOTATION_FORM,
-  SUBMIT_QUOTATION_SUCCESS,
-  SUBMIT_QUOTATION_FAILURE,
-  DELETE_QUOTATION,
-  DELETE_QUOTATION_SUCCESS,
-  DELETE_QUOTATION_FAILURE,
-  ADD_NEW_PRODUCT_QUOTATION,
-  REMOVE_PRODUCT_QUOTATION,
-  HANDLE_PRODUCT_QUOTATION,
-  HANDLE_RELATED_TO_QUOTATION,
-  HANDLE_ATTN_TO_QUOTATION,
-  HANDLE_DISCOUNT_TAX_QUOTATION
-} from "Types";
+
+import * as types from "Types/accounting/QuotationTypes";
 
 
 const INIT_STATE = {
@@ -47,6 +18,7 @@ const INIT_STATE = {
     deleted: false,
     tableData: [],
     currencyTable:[{name: 'SGD', rate: 1},{name: 'USD', rate: 1.3},{name: 'EU', rate: 1.5}],
+    discountTable:[{name: 'Entry', rate: 0}, {name: 'Amateur', rate: 10},{name: 'Intermediate', rate: 15},{name: 'Pro', rate: 20}],
     taxTable:[{name: 'GST 7%', rate: 7},{name: 'GST Inclusive', rate: 0}]
 
   },
@@ -73,27 +45,29 @@ const INIT_STATE = {
       discount_total: 0,
       totalAmt: 0,
 
+      discount: "",
+      discount_rate: 0,
 
       description: "",
       owner: "",
-      account:"",
+      accountId:"",
       attn_toId:"",
-      
+      details: '',
       address_1:"",
       address_2:"",
       city: "",
       state: "",
       zip: "",
-      email: "",
-      mobile:"",
-      office: "",
-      fax: "",
+      // email: "",
+      // mobile:"",
+      // office: "",
+      // fax: "",
       sent_date: "",
       tnc: "",
     
       quoteID: "",
       account: null,
-      status: "Draft",
+      state: "Draft",
       sentOn: new Date(),
       dueDate: new Date(),
     },
@@ -101,9 +75,9 @@ const INIT_STATE = {
       {
         // name: "",
         description: "",
-        quantity: "",
-        price: "",
-        discount: "",
+        quantity: 0,
+        price: 0,
+        discount: 0,
         tax_id:"",
         tax_rate: 0,
         tax_amount: 0,
@@ -125,17 +99,22 @@ export default (state = INIT_STATE, action) => {
   function getSingleProductTotal(product) {
     var subtotal = product.price * product.quantity;
     var tax = (product.tax_id.rate / 100) * subtotal;
-    var discount = (product.discount / 100) * subtotal;
-    var total = subtotal + tax - discount;
+    // var discount = (product.discount / 100) * subtotal;
+    var total = subtotal + tax - product.discount;
+
+    if(total<0) {
+      total = 0
+    }
     return total;
   }
 
 
-  function getTotal(subTotal, invoice) {
-    var tax = (invoice.tax_amount / 100) * subTotal;
-    var discount = (invoice.discount_total / 100) * subTotal;
-    var total = subTotal + tax - discount;
+  function getTotal(subTotal, discount) {
+ 
+    var total = (subTotal) * (1-(discount/100));
+  
     return total;
+
   }
 
   function getTax (product) {
@@ -152,7 +131,7 @@ export default (state = INIT_STATE, action) => {
 
 
   switch (action.type) {
-    case QUOTATION_LIST_DROPDOWN:
+    case types.QUOTATION_LIST_DROPDOWN:
       return {
         ...state,
         quotationList: {
@@ -160,7 +139,7 @@ export default (state = INIT_STATE, action) => {
           dropdownOpen: !state.quotationList.dropdownOpen
         }
       };
-    case CHANGE_QUOTATION_LIST_VIEW:
+    case types.CHANGE_QUOTATION_LIST_VIEW:
       if (action.payload == "My Quotations") {
         return {
           ...state,
@@ -186,7 +165,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Quotation Summary
      */
-    case TOGGLE_QUOTATION_SUMMARY:
+    case types.TOGGLE_QUOTATION_SUMMARY:
       return {
         ...state,
         quotationSummary: {
@@ -194,7 +173,7 @@ export default (state = INIT_STATE, action) => {
           showSummary: !state.quotationSummary.showSummary
         }
       };
-    case GET_QUOTE_SUMMARY:
+    case types.GET_QUOTE_SUMMARY:
       return {
         ...state,
         quotationSummary: {
@@ -202,7 +181,7 @@ export default (state = INIT_STATE, action) => {
           loading: true
         }
       };
-    case GET_QUOTE_SUMMARY_SUCCESS:
+    case types.GET_QUOTE_SUMMARY_SUCCESS:
       return {
         ...state,
         quotationSummary: {
@@ -211,7 +190,7 @@ export default (state = INIT_STATE, action) => {
           loading: false
         }
       };
-    case GET_QUOTE_SUMMARY_FAILURE:
+    case types.GET_QUOTE_SUMMARY_FAILURE:
       NotificationManager.warning("Error in fetching Quotation Summary");
       console.log(action.payload);
       return { ...state, quotationSummary: INIT_STATE.quotationSummary };
@@ -219,19 +198,19 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Quotes
      */
-    case GET_QUOTATION_FAILURE:
+    case types.GET_QUOTATION_FAILURE:
       NotificationManager.warning("Error in fetching Quotation Data");
       console.log(action.payload);
       return INIT_STATE;
-    case GET_ALL_QUOTATION:
-    case GET_MY_QUOTATION:
-    case GET_OPEN_QUOTATION:
-    case GET_CLOSED_QUOTATION:
+    case types.GET_ALL_QUOTATION:
+    case types.GET_MY_QUOTATION:
+    case types.GET_OPEN_QUOTATION:
+    case types.GET_CLOSED_QUOTATION:
       return {
         ...state,
         quotationList: { ...state.quotationList, loading: true }
       };
-    case GET_QUOTATION_SUCCESS:
+    case types.GET_QUOTATION_SUCCESS:
       return {
         ...state,
         quotationList: {
@@ -244,34 +223,58 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Single Quotation
      */
-    case GET_SINGLE_QUOTATION:
+    case types.GET_SINGLE_QUOTATION:
       return {
         ...state,
         quotationToView: { ...state.quotationToView, loading: true }
       };
-    case GET_SINGLE_QUOTATION_SUCCESS:
+     
+      
+    case types.GET_SINGLE_QUOTATION_SUCCESS:
       return {
         ...state,
         quotationToView: {
           ...state.quotationToView,
           loading: false,
           quotation: action.payload
+        },
+        quotationForm: {
+          ...state.quotationForm,
+          products: action.payload.quotationline,
+          quotation: action.payload
         }
       };
-    case CLEAR_SINGLE_QUOTATION:
+
+    case types.CLEAR_SINGLE_QUOTATION:
+      let initialItem = INIT_STATE.quotationForm.quotation
       return {
         ...state,
         quotationList:{
           ...state.quotationList,
           deleted: false
         },
-        quotationToView: INIT_STATE.quotationToView
+        quotationToView: INIT_STATE.quotationToView,
+        quotationForm: {
+          quotation : initialItem,
+          products: [
+            {
+              description: "",
+              quantity: "",
+              price: "",
+              discount: "",
+              tax_id:"",
+              tax_rate: 0,
+              tax_amount: 0,
+              amount: 0
+            }
+          ]
+        }
       };
 
     /**
      * New Quote
      */
-    case SUBMIT_QUOTATION:
+    case types.SUBMIT_QUOTATION:
       return {
         ...state,
         quotationForm: {
@@ -280,7 +283,7 @@ export default (state = INIT_STATE, action) => {
         }
       };
       
-    case CLEAR_QUOTATION_FORM:
+    case types.CLEAR_QUOTATION_FORM:
       return {
         ...state,
         quotationForm: INIT_STATE.quotationForm,
@@ -289,7 +292,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Quotation Product
      */
-    case ADD_NEW_PRODUCT_QUOTATION:
+    case types.ADD_NEW_PRODUCT_QUOTATION:
       return {
         ...state,
         quotationForm: {
@@ -311,50 +314,102 @@ export default (state = INIT_STATE, action) => {
         }
       };
 
-    case REMOVE_PRODUCT_QUOTATION:
+    case types.REMOVE_PRODUCT_QUOTATION:
       var arr = Object.assign([], state.quotationForm.products);
       var removeArr = [
         ...arr.slice(0, action.payload),
         ...arr.slice(action.payload + 1)
       ];
-      //   var arrAmount = removeArr[action.payload].amount;
+
+      var productTotal = getSubTotal(removeArr, "amount");
+      var tax = getTax(removeArr)
+      
+      let totalAmt = 0
+      removeArr.forEach(item =>{
+        totalAmt = totalAmt + getSingleProductTotal(item);
+      })
+     
+
+      if(removeArr.length == 0){
+        removeArr = [{
+          // name: "",
+          description: "",
+          quantity: 0,
+          price: 0,
+          discount: 0,
+          tax_id:"",
+          tax_rate: 0,
+          tax_amount: 0,
+          amount: 0
+        }]
+        tax = 0
+        totalAmt = 0
+        productTotal = 0
+      }
+
       return {
         ...state,
         quotationForm: {
           ...state.quotationForm,
-          products: removeArr
+          products: removeArr,
+          quotation: {
+            ...state.quotationForm.quotation,
+            subtotal: productTotal - tax,
+            totalAmt: totalAmt + tax,
+            tax_amount: tax
+          }
         }
       };
 
-      case HANDLE_PRODUCT_QUOTATION:
-        
+
+
+      case types.HANDLE_PRODUCT_QUOTATION:
+
         var changeArr = state.quotationForm.products;
     
+        // check if Tax_Id has changed
+      
+
         changeArr[action.payload.key] = {
           ...changeArr[action.payload.key],
           [action.payload.field]: action.payload.value
-        };
-
+        }
+       
         if (action.payload.field == "tax_id"){
           changeArr[action.payload.key] = {
             ...changeArr[action.payload.key],
             tax_rate : action.payload.value.rate,
-          };
+          }
         }
 
-        changeArr[action.payload.key].amount = getSingleProductTotal(
-          changeArr[action.payload.key]
-        );
 
-        if (changeArr.rate != 0){
-          changeArr[action.payload.key].tax_amount = (((changeArr[action.payload.key].tax_rate)/100) * (changeArr[action.payload.key].price * changeArr[action.payload.key].quantity))
-        } else {
-          changeArr[action.payload.key].tax_amount = 0
-        }
+
+        // update single product amount
+        changeArr[action.payload.key].amount = getSingleProductTotal(changeArr[action.payload.key]);
 
         var productTotal = getSubTotal(changeArr, "amount");
         var tax = getTax(changeArr)
-      
+
+        console.log(changeArr[action.payload.key].tax_rate)
+        if (changeArr[action.payload.key].tax_rate != 0){
+          changeArr[action.payload.key].tax_amount = (((changeArr[action.payload.key].tax_rate)/100) * (changeArr[action.payload.key].price * changeArr[action.payload.key].quantity))        
+          tax = getTax(changeArr)
+        } 
+        
+        // else {
+        //   changeArr[action.payload.key].tax_amount = 0
+        // }
+
+            
+        // var totalAmtInvoice = 0
+        // changeArr.forEach(item =>{
+        //  var productSubTotal = (item.price * item.quantity)
+        //  var productSubTax = item.tax_rate * productSubTotal
+        //  var productTotal = productSubTotal + productSubTax - item.discount
+        //  totalAmtInvoice = totalAmtInvoice + productTotal
+        // })
+
+
 
         return {
           ...state,
@@ -363,8 +418,8 @@ export default (state = INIT_STATE, action) => {
             products: changeArr,
             quotation: {
               ...state.quotationForm.quotation,
-              subtotal: productTotal,
-              totalAmt: getTotal(productTotal, state.quotationForm.quotation),
+              subtotal: productTotal - tax,
+              totalAmt: getTotal(productTotal, state.quotationForm.quotation.discount_rate),
               tax_amount: tax
             }
           }
@@ -373,13 +428,16 @@ export default (state = INIT_STATE, action) => {
     /**
      * Handle Change
      */
-    case HANDLE_CHANGE_QUOTATION:
+    case types.HANDLE_CHANGE_QUOTATION:
 
+     
       var changeArr = state.quotationForm.products;
-
+      var productTotal = getSubTotal(changeArr, "amount");
+      var tax = getTax(changeArr)
 
       // auto fill for address, ctiy, state, zip, mobile, office, fax
-      if(action.payload.field == "account") {
+      if(action.payload.field == "accountId") {
+
         return {
           ...state,
           quotationForm: {
@@ -388,14 +446,15 @@ export default (state = INIT_STATE, action) => {
             quotation: {
               ...state.quotationForm.quotation,
               [action.payload.field]: action.payload.value,
-              address_1: action.payload.value.baseContact._address.address_1,
-              address_2: action.payload.value.baseContact._address.address_2,
-              city: action.payload.value.baseContact._address.city,
-              state: "",
-              zip: action.payload.value.baseContact._address.zip,
-              mobile: action.payload.value.baseContact.mobile,
-              office: action.payload.value.baseContact.office,
-              fax: action.payload.value.baseContact.fax,
+
+              details: action.payload.value.baseContact._address.address_1 + `\n` + action.payload.value.baseContact._address.address_1 + `\n` + action.payload.value.baseContact._address.city + `\n` + action.payload.value.baseContact._address.zip,
+              // address_1: action.payload.value.baseContact._address.address_1,
+              // address_2: action.payload.value.baseContact._address.address_2,
+              // city: action.payload.value.baseContact._address.city,
+              // zip: action.payload.value.baseContact._address.zip,
+              // mobile: action.payload.value.baseContact.mobile,
+              // office: action.payload.value.baseContact.office,
+              // fax: action.payload.value.baseContact.fax,
             }
           }
         };
@@ -410,7 +469,7 @@ export default (state = INIT_STATE, action) => {
             quotation: {
               ...state.quotationForm.quotation,
               [action.payload.field]: action.payload.value,
-              email:action.payload.value.baseContact.email,
+              // email:action.payload.value.baseContact.email,
             }
           }
         };
@@ -430,9 +489,32 @@ export default (state = INIT_STATE, action) => {
         };
       }
 
-      var productTotal = getSubTotal(changeArr, "amount");
-      var tax = getTax(changeArr)
 
+      if(action.payload.field == "discount") {
+        
+        // productTotal = getSubTotal(changeArr, "amount");
+        // tax = getTax(changeArr)
+
+
+        return {
+          ...state,
+          quotationForm: {
+            ...state.quotationForm,
+            quotation: {
+              ...state.quotationForm.quotation,
+              discount: action.payload.value,
+              discount_rate: action.payload.value.rate,
+
+              // subtotal: productTotal,
+              // tax_amount: tax,
+
+              totalAmt: getTotal(productTotal, action.payload.value.rate),
+            }
+          }
+        };
+      }
+
+   
       return {
         ...state,
         quotationForm: {
@@ -450,15 +532,81 @@ export default (state = INIT_STATE, action) => {
 
 
 
+    case types.SUBMIT_QUOTATION_SUCCESS:
 
+      if (action.edit) {
+        NotificationManager.success("Your quotation has been successfully edited")
 
-    case SUBMIT_QUOTATION_SUCCESS:
-      NotificationManager.success("New quotation submitted")
-      let initialItem = INIT_STATE.quotationForm.quotation
+        return {
+          ...state,
+          quotationForm: {
+            ...state.quotationForm,
+            quotation: {
+              ...state.quotationForm.quotation,
+            }
+          }
+        };
+
+      } else {
+        NotificationManager.success("New quotation submitted")
+        let initialItem = INIT_STATE.quotationForm.quotation
+        return {
+          ...state,
+          quotationForm: {
+            quotation : initialItem,
+            products: [
+              {
+                description: "",
+                quantity: "",
+                price: "",
+                discount: "",
+                tax_id:"",
+                tax_rate: 0,
+                tax_amount: 0,
+                amount: 0
+              }
+            ]
+          }
+        }
+      }
+      
+      
+
+    case types.SUBMIT_QUOTATION_FAILURE:
+      NotificationManager.warning("Unable to submit quotation, please try again")
+
       return {
         ...state,
         quotationForm: {
-          quotation : initialItem,
+          ...state.quotationForm,
+          quotation: {
+            ...state.quotationForm.quotation,
+          }
+        }
+      };
+
+    case types.DELETE_QUOTATION:
+      // console.log(action.payload)
+      // NotificationManager.warning("Unable to submit quotation, please try again")
+      return {
+        ...state,
+        quotationList: {
+          ...state.quotationList,
+        }
+        
+      };
+
+    case types.DELETE_QUOTATION_SUCCESS:
+      // console.log(action.payload)
+      NotificationManager.success("Quotation successfully deleted")
+      return {
+        ...state,
+        quotationList: {
+          ...state.quotationList,
+          deleted: true
+        },
+        quotationForm: {
+          quotation : INIT_STATE.quotationForm.quotation,
           products: [
             {
               description: "",
@@ -472,45 +620,9 @@ export default (state = INIT_STATE, action) => {
             }
           ]
         }
-      }
-      
-
-    case SUBMIT_QUOTATION_FAILURE:
-      NotificationManager.warning("Unable to submit quotation, please try again")
-
-      return {
-        ...state,
-        quotationForm: {
-          ...state.quotationForm,
-          quotation: {
-            ...state.quotationForm.quotation,
-          }
-        }
       };
 
-    case DELETE_QUOTATION:
-      // console.log(action.payload)
-      // NotificationManager.warning("Unable to submit quotation, please try again")
-      return {
-        ...state,
-        quotationList: {
-          ...state.quotationList,
-        }
-        
-      };
-
-    case DELETE_QUOTATION_SUCCESS:
-      // console.log(action.payload)
-      NotificationManager.success("Quotation successfully deleted")
-      return {
-        ...state,
-        quotationList: {
-          ...state.quotationList,
-          deleted: true
-        }
-      };
-
-    case DELETE_QUOTATION_FAILURE:
+    case types.DELETE_QUOTATION_FAILURE:
       NotificationManager.error(action.payload)
       return {
         ...state,
@@ -521,9 +633,10 @@ export default (state = INIT_STATE, action) => {
 
 
 
-    case HANDLE_RELATED_TO_QUOTATION:
-    //return
-    case HANDLE_ATTN_TO_QUOTATION:
+    case types.HANDLE_RELATED_TO_QUOTATION:
+    return
+
+    case types.HANDLE_ATTN_TO_QUOTATION:
       var attnTo = action.payload.value;
       return {
         ...state,
@@ -542,6 +655,56 @@ export default (state = INIT_STATE, action) => {
           }
         }
       };
+
+          /**
+     * Notes
+     */
+    case types.ADD_NOTE_QUOTATION:
+      return {
+        ...state,
+        quotationToView: { ...state.quotationToView, sectionLoading: true }
+      };
+    case types.ADD_NOTE_QUOTATION_SUCCESS:
+      var newNotes = Object.assign([], state.quotationToView.quotation.notes);
+      newNotes.unshift(action.payload);
+      return {
+        ...state,
+        quotationToView: {
+          ...state.quotationToView,
+          quotation: { ...state.quotationToView.quotation, notes: newNotes },
+          sectionLoading: false
+        }
+      };
+    case types.ADD_NOTE_QUOTATION_FAILURE:
+      NotificationManager.error("Error in adding Note");
+      return {
+        ...state,
+        quotationToView: { ...state.quotationToView, sectionLoading: false }
+      };
+
+    
+    case types.HANDLE_STATE_UPDATE:
+        return {
+          ...state,
+          quotationToView: { ...state.quotationToView, loading: true }
+        };
+    
+    case types.HANDLE_STATE_UPDATE_SUCCESS:
+        NotificationManager.success("Quotation has been converted successfully");
+        return {
+          ...state,
+          quotationToView: { quotation: action.payload, loading: false }
+        };
+
+    case types.HANDLE_STATE_UPDATE_FAILURE:
+        NotificationManager.error("Unable to handle request, please try again");
+        return {
+          ...state,
+          quotationToView: { ...state.quotationToView, loading: false }
+        };
+
+
+
 
     default:
       return { ...state };

@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 
 
 // Actions
-import { addNewProdQuote, removeProdQuote, handleProdQuote,  handleChangeQuote, getAllAccount, getAllUsers, submitNewQuote} from "Actions";
+import { clearSingleQuotation, addNewProdQuote, removeProdQuote, handleProdQuote,  handleChangeQuote, getAllAccount, getAllUsers, submitNewQuote} from "Actions";
 
 // get all account
 // get all customer
@@ -18,9 +18,11 @@ import { addNewProdQuote, removeProdQuote, handleProdQuote,  handleChangeQuote, 
 // get owners
 
 class QuotationForm extends Component {
+  
   state = {};
 
   componentDidMount() {
+    this.props.clearSingleQuotation();
     this.props.getAllAccount()
     this.props.getAllUsers();
   }
@@ -28,7 +30,7 @@ class QuotationForm extends Component {
   render() {
     const { products, quotation, attn_to_array } = this.props.quotationForm;
     const tableData = this.props.tableData
-    const {currencyTable, taxTable} = this.props.quotationList
+    const {currencyTable, taxTable, discountTable} = this.props.quotationList
     const users = this.props.users
 
 
@@ -38,6 +40,7 @@ class QuotationForm extends Component {
           handleChange  = {(e, value, target) => this.props.handleChangeQuote(e, value, target)}
           tableData={tableData}
           currencyTable={currencyTable}
+          discountTable={discountTable}
           quotation={quotation}
           users={users}
           attn_to_array={attn_to_array}
@@ -55,13 +58,13 @@ class QuotationForm extends Component {
           />
         </div>
         <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop: 20}}>
-            <Button variant="contained" color="secondary" className="mr-10" style={{color:'white'}}>
+            {/* <Button variant="contained" color="secondary" className="mr-10" style={{color:'white'}}>
               Save Draft
-            </Button>
+            </Button> */}
             <Button onClick={() => {
                 this.props.submitNewQuote(quotation, products)
               }} variant="contained" color="primary"  className="mr-10">
-              Submit
+              Save
             </Button>
         </div>
       </React.Fragment>
@@ -79,5 +82,5 @@ const mapStateToProps = ({ accountingState, crmState, usersState }) => {
 
 export default connect(
   mapStateToProps,
-  { addNewProdQuote, removeProdQuote, handleProdQuote, handleChangeQuote, getAllAccount, getAllUsers, submitNewQuote}
+  { addNewProdQuote, clearSingleQuotation, removeProdQuote, handleProdQuote, handleChangeQuote, getAllAccount, getAllUsers, submitNewQuote}
 )(QuotationForm);

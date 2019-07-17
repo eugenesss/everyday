@@ -5,6 +5,7 @@ import FormBlock from "Components/Form/Components/FormBlock";
 import FormTable from "Components/Form/Components/FormTable";
 import FormTextField from "Components/Form/Components/FormTextField";
 import FormSelectField from "Components/Form/Components/FormSelectField";
+// import TextField from "@material-ui/core/TextField";
 
 
 import Moment from 'moment'
@@ -14,9 +15,10 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-const InvoiceFields = ({currencyTable, handleChange, quotation, handleAttnTo, invoice, tableData, attn_to_array , users}) => {
+const InvoiceFields = ({currencyTable, handleChange, quotation, handleAttnTo, invoice, discountTable, tableData, attn_to_array , users}) => {
 
-  
+
+
   return (
     <div className="row">
 
@@ -51,7 +53,7 @@ const InvoiceFields = ({currencyTable, handleChange, quotation, handleAttnTo, in
           </Label>
           <Col sm={10}>
             <FormTextField
-              value={quotation.status}
+              value={quotation.state}
               disabled={true}
             />
           </Col>
@@ -67,10 +69,11 @@ const InvoiceFields = ({currencyTable, handleChange, quotation, handleAttnTo, in
             </Label>
             <Col sm={10}>
               <FormSelectField
-                value={quotation.account}
-                target={"account"}
+                value={quotation.accountId}
+                target={"accountId"}
                 handleChange ={(e, value, target) => handleChange(e, value, target)}
                 selectValues={tableData}
+                accounting={true}
               />
             </Col>
           </FormGroup>
@@ -82,25 +85,13 @@ const InvoiceFields = ({currencyTable, handleChange, quotation, handleAttnTo, in
               <FormSelectField
                 value={quotation.attn_toId}
                 selectValues={attn_to_array}
-                // selectValues={[{id: 1, name: "Hello World", email: 'helloworld@gmail.com'}]}
                 target={"attn_toId"}
                 handleChange ={(e, value, target) => handleChange(e, value, target)}
+                accounting={true}
               />
             </Col>
           </FormGroup>
-          <FormGroup row>
-            <Label for="Email-1" className="fs-13 text-right" sm={2}>
-              Description
-            </Label>
-            <Col sm={10}>
-              <FormTextField
-                value={quotation.description}
-                handleChange ={(e, value, target) => handleChange(e, value, target)}
-                target={'description'}
-                //targetType={targetType}
-              />
-            </Col>
-          </FormGroup>
+
           <FormGroup row>
             <Label for="Select-1" className="fs-13 text-right" sm={2}>
               Currency
@@ -111,6 +102,7 @@ const InvoiceFields = ({currencyTable, handleChange, quotation, handleAttnTo, in
                 target={"currency"}
                 handleChange ={(e, value, target) => handleChange(e, value, target)}
                 selectValues={currencyTable}
+                accounting={true}
               />
             </Col>
             <Label for="Select-1" className="fs-13 text-right" sm={2}>
@@ -124,8 +116,47 @@ const InvoiceFields = ({currencyTable, handleChange, quotation, handleAttnTo, in
               />
             </Col>
           </FormGroup>
+
+          <FormGroup row>
+            <Label for="Select-1" className="fs-13 text-right" sm={2}>
+              Discount
+            </Label>
+            <Col sm={4}>
+               <FormSelectField
+                value={quotation.discount}
+                target={"discount"}
+                handleChange ={(e, value, target) => handleChange(e, value, target)}
+                selectValues={discountTable}
+                accounting={true}
+              />
+            </Col>
+            <Label for="Select-1" className="fs-13 text-right" sm={2}>
+              Discount Rate
+            </Label>
+            <Col sm={4}>
+              <FormTextField 
+                value={quotation.discount_rate? `${quotation.discount_rate}%` : '0%'}
+                handleChange ={(e, value, target) => handleChange(e, value, target)}
+                target={'discount_rate'}
+              />
+            </Col>
+          </FormGroup>
+
+          <FormGroup row>
+            <Label for="Email-1" className="fs-13 text-right" sm={2}>
+              Description
+            </Label>
+            <Col sm={10}>
+              <FormTextField
+                value={quotation.description}
+                handleChange ={(e, value, target) => handleChange(e, value, target)}
+                target={'description'}
+                //targetType={targetType}
+              />
+            </Col>
+          </FormGroup>
         
-          <FormTable>
+          {/* <FormTable>
           <TableRow>
             <FormBlock 
               label="Email"
@@ -141,25 +172,70 @@ const InvoiceFields = ({currencyTable, handleChange, quotation, handleAttnTo, in
               handleChange ={(e, value, target) => handleChange(e, value, target)}
             />
           </TableRow>
-        </FormTable>
+        </FormTable> */}
         </Form>
       </div>
      
       <div className="col-md-6">
+
+
+        <div style={{display:'flex', flexDirection:'row'}}>
+          <Label for="Select-1" className="fs-13 text-center" sm={2}>
+            Attention To
+          </Label>
+          <Col sm={10}>
+              <TextField
+                id="outlined-multiline-static"
+                // label="details"
+                multiline
+                rows="6"
+                // defaultValue="Fill up with account details"
+                value={quotation.details}
+                // className={classes.textField}
+                onChange ={(e) => handleChange('details', e.target.value)}
+                margin="normal"
+                variant="outlined"
+              />
+          </Col>
+        </div>
+
+
+      
+
+        {/* <FormGroup row>
+            <TableRow>
+              <TableCell style={{ borderBottom: "none", width: "15%" }} align="right">
+                Attention To
+              </TableCell>
+              <TableCell style={{ borderBottom: "none", width: "15%" }} align="right">
+              <TextField
+                    id="outlined-textarea"
+                    // label="Multiline Placeholder"
+                    placeholder="Placeholder"
+                    multiline
+                    // className={classes.textField}
+                    margin="normal"
+                    // variant="outlined"
+              />
+              </TableCell>
+            </TableRow>
+         </FormGroup> */}
+
         <FormTable>
           <TableRow>
-            <FormBlock
+          <FormBlock
               label="Owner"
               target={"owner"}
               value={quotation.owner}
               selectValues={users}
               handleChange ={(e, value, target) => handleChange(e, value, target)}
               required
+              accounting={true}
             />
           </TableRow>
         </FormTable>
 
-
+{/* 
         <AddressFormInput 
           handleChange ={(e, value, target) => handleChange(e, value, target)}
           address_1={quotation.address_1}
@@ -167,8 +243,8 @@ const InvoiceFields = ({currencyTable, handleChange, quotation, handleAttnTo, in
           city={quotation.city}
           state={quotation.state}
           zip={quotation.zip}
-        />
-        <FormTable>
+        /> */}
+        {/* <FormTable>
           <TableRow>
             <FormBlock 
               label="office"
@@ -183,7 +259,7 @@ const InvoiceFields = ({currencyTable, handleChange, quotation, handleAttnTo, in
               handleChange ={(e, value, target) => handleChange(e, value, target)}
             />
           </TableRow>
-        </FormTable>
+        </FormTable> */}
       </div>
     </div>
   );

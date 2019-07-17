@@ -10,19 +10,10 @@ function acctSwitcher() {
     <div className="saas-dashboard">
       <Switch>
         {/* ------- /Quotations ------- */}
-        <Route
-          exact
-          path={url.quotePage}
-          component={async.acct_quotation_component}
-        />
-        <Route
-          path={url.newQuote}
-          component={async.acct_new_quotation_component}
-        />
-        <Route path={`${url.quotePage}/:id`} component={async.view_quotation} />
-        <Route path={url.editQuote} component={async.acct_view_quotation} />
-
-
+        <Route exact path={url.quotePage} component={async.acct_quotation_component} />
+        <Route path={url.newQuote} component={async.acct_new_quotation_component} />
+        <Route exact path={`${url.quotePage}/:id`} component={async.view_quotation}/>
+        <Route path={`${url.quotePage}/:id/edit`} component={async.acct_edit_quotation}/>
 
 
         {/* ------- /Invoice ------- */}

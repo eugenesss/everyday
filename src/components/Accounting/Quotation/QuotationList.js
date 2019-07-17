@@ -39,7 +39,13 @@ const QuotationList = ({loading, title, action, tableData }) => {
         }
       }
     },
-    { label: "Amount", name: "totalAmt" },
+    { label: "Amount", name: "totalAmt",
+      options: {
+        customBodyRender: (value,) => {
+          return value.toFixed(2)
+        }
+      }
+    },
     { label: "Date Sent", name: "sent_date",
       options: {
         customBodyRender: (value, tableMeta) => {
@@ -53,6 +59,13 @@ const QuotationList = ({loading, title, action, tableData }) => {
           return Moment(new Date(value)).format('LL')
         }
       }
+    },
+    { label: "Version", name: "version",
+    options: {
+      customBodyRender: value => {
+        return value
+      }
+    }
     },
     {
       label: "Status",

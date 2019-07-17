@@ -23,6 +23,8 @@ const InvoiceProductInput = ({
   taxTable,
   disabled
 }) => {
+
+  
   return (
     <React.Fragment>
       <Table>
@@ -40,13 +42,15 @@ const InvoiceProductInput = ({
               Tax ID
             </TableCell>
             <TableCell style={{ width: "10%" }}>Tax (%)</TableCell>
+            <TableCell style={{ width: "10%" }}>Discount Unit in Dollar</TableCell>
             <TableCell style={{ width: "10%" }}>Amount</TableCell>
             <TableCell style={{ width: "10%" }} />
           </TableRow>
         </TableHead>
         <TableBody>
           {products.map((row, key) => {
-            // console.log(row)
+
+
             return (
               <TableRow key={key}>
                 <TableCell>
@@ -141,10 +145,9 @@ const InvoiceProductInput = ({
                       <FormSelectField
                         value={row.tax_id}
                         selectValues={taxTable}
-                        // selectValues={[{id: 1, name: "Hello World", email: 'helloworld@gmail.com'}]}
                         target={"tax_id"}
                         handleChange ={(target, e, targetType) => handleChange(key, "tax_id", e)}
-                        disabled={disabled}
+                        accounting={true}
                       />
                     }
 
@@ -166,8 +169,32 @@ const InvoiceProductInput = ({
                     type="number"
                     step="1"
                   /> */}
-                  <p>{row.tax_rate}</p>
+                  {row.tax_rate == 0? <p>0%</p>: <p>{row.tax_rate}</p>}
+                  {/* <p>{row.tax_rate?}</p> */}
                 </TableCell>
+
+
+                <TableCell>
+                  {!disabled && 
+                    <TextField
+                        value={row.discount? row.discount:0}
+                        onChange={e =>
+                          handleChange(key, "discount", e.target.value)
+                        }
+                        fullWidth
+                        type={"number"}
+                        margin="dense"
+                        variant="outlined"
+                        disabled={disabled}
+                    />
+                  }
+
+                  {disabled && 
+                    <p>{row.discount? row.discount:0}</p>
+                  }
+                </TableCell>
+
+             
 
 
                 <TableCell>{ccyFormat(row.amount)}</TableCell>
@@ -190,6 +217,9 @@ const InvoiceProductInput = ({
           })}
         </TableBody>
       </Table>
+      
+      
+      
       <div className="row">
         <div className="col-md-6">
           <div>

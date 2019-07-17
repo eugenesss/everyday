@@ -10,8 +10,10 @@ const AccountingDetails = ({
   created_date,
   owner,
   type,
-  price
+  price,
+  version
 }) => {
+  
   const bgColor =
     (type == "quotation" && "#7fb38b") ||
     (type == "invoice" && "#7f8cb3") ||
@@ -30,6 +32,12 @@ const AccountingDetails = ({
           </div>
         </div>
         <ul className="list-unstyled my-25" style={{ paddingLeft: "10%" }}>
+          <li className="py-10 d-flex align-items-center">
+            <i className="zmdi zmdi-email mr-20 fs-12" />
+            <a href="mail-to:phoebe@gmail.com" className="fs-14 text-dark">
+              Version: {version}
+            </a>
+          </li>
           {account && (
             <li className="py-10 d-flex align-items-center">
               <i className="zmdi zmdi-email mr-20 fs-12" />
@@ -68,7 +76,6 @@ const AccountingDetails = ({
             <i className="zmdi zmdi-email mr-20 fs-12" />
             <a href="mail-to:phoebe@gmail.com" className="fs-14 text-dark">
               {Moment(sent_date).format('LLL')}
-              
             </a>
           </li>
         </ul>

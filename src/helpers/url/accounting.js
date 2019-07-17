@@ -6,12 +6,18 @@
  * Quotation Pages
  */
 export const quotePage = "/app/acct/quotations";
-export const singleQuote = id => {
-  return `${quotePage}/${id}`;
-};
+export const singleQuote = id => {return `${quotePage}/${id}`;};
 export const newQuote = quotePage + "/new";
-export const editQuote = quotePage + "/edit";
+export const editQuote = id => `${quotePage}/${id}/edit`
 export const importQuote = quotePage + "/import";
+
+
+
+// export const leadListPage = "/app/crm/leads";
+// export const singleLead = id => `${leadListPage}/${id}`;
+// export const leadNewPage = leadListPage + "/new";
+// export const leadEditPage = id => `${leadListPage}/${id}/edit`;
+// export const leadImportPage = leadListPage + "/import";
 
 /**
  * Quotation Pages

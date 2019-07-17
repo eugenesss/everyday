@@ -37,13 +37,11 @@ const submitquoteSummaryRequest = async(item) => {
   let quotationLine = [...item.payload.products]
   let postData = {...item.payload.item}
 
-  console.log(postData)
-
   let quotationData = {
     date : postData.date.toString(),
     sent_date : postData.date.toString(),
     attn_toId : {id: postData.attn_toId.id, name: postData.attn_toId.name},
-    accountId : {id: postData.account.id, name: postData.account.name},
+    accountId : {id: postData.accountId.id, name: postData.accountId.name},
     owner: {companyId: postData.owner.companyId, id: postData.owner.id, name: postData.owner.name},
     currency : postData.currency,
     currency_rate : postData.currency_rate,
@@ -52,24 +50,78 @@ const submitquoteSummaryRequest = async(item) => {
     totalAmt : postData.totalAmt,
     subtotal : postData.subtotal,
     tax_amount : postData.tax_amount,
-    discount_total: postData.discount_total,
 
-    custinfo: postData.account.fullAddress,
-    shipinfo: postData.account.fullAddress,
+    discount_rate: postData.discount_rate,
+
+    description: postData.description,
+    details: postData.details,
 
     quotationline: quotationLine
+
+
+
+    // address_1: postData.accountId.baseContact._address.address_1,
+    // address_2: postData.accountId.baseContact._address.address_2,
+    // city: postData.accountId.baseContact._address.city,
+    // zip: postData.accountId.baseContact._address.zip,
+
   }
-
-
 
   const result = await api.post("/quotations", quotationData);
   return result.data;
 }
 
+const submitEditQuoteSummaryRequest = async(item) => {
+
+
+  var today = new Date();
+  var duedate = new Date();
+  duedate.setDate(today.getDate()+3);
+
+  // payload: {item: item, products: products}
+  let quotationLine = [...item.payload.products]
+
+  let quotationData = {...item.payload.item}
+  quotationData.quotationline = quotationLine
+  quotationData.duedate = duedate
+  
+  const result = await api.patch(`/quotations/${quotationData.id}`, quotationData);
+  return result.data;
+}
+
+
+
 const deleteQuotationfromDBRequest = async(item) => {
   const result = await api.delete(`/quotations/${item.payload}`);
   return result.data;
 }
+
+
+const addNoteQuotationRequest = async (id, note) => {
+  const result = await api.post(`/quotations/${id}/notes`, note);
+  return result.data;
+};
+
+
+const patchStateQuotationRequest = async (payload) => {
+  const result = await api.patch(`/quotations/${payload.id}`, {state:payload.value});
+  return result.data;
+};
+
+
+
+const createNewVersionStateQuotationRequest = async (payload) => {
+  const result = await api.post(`/quotations/convert`, {data: payload});
+  return result.data;
+};
+
+const revertPreviousVersionStateQuotationRequest = async (payload) => {
+  const result = await api.post(`/quotations/revertQuotation`, {data: payload});
+  return result.data;
+};
+
+
+
 
 
 // const getAllQuoteRequest = async () => {
@@ -90,8 +142,6 @@ const getClosedQuoteRequest = async () => {
   return result;
 };
 const getQuoteRequest = async (quoteID) => {
-  console.log('quoteID')
-  console.log(quoteID)
   const result = await api.get(`/quotations/${quoteID}`);
   return result.data;
 };
@@ -147,6 +197,7 @@ function* getQuoteFromDB({ payload }) {
   try {
     const data = yield call(getQuoteRequest, payload);
     yield delay(500);
+
     yield put(Actions.getSingleQuotationSuccess(data));
   } catch (error) {
     yield put(Actions.getQuotationFailure(error));
@@ -162,12 +213,28 @@ function* getQuoteSummaryFromDB() {
 }
 
 function* submitQuoteSummarytoDB(item) {
-  try {
-    const data = yield call(submitquoteSummaryRequest, item);
-    yield put(Actions.submitNewQuoteSuccess(data));
-  } catch (error) {
-    yield put(Actions.submitNewQuoteFailure(error));
+
+
+  if(item.payload.edit) {
+
+    try {
+      const data = yield call(submitEditQuoteSummaryRequest, item);
+      yield put(Actions.submitNewQuoteSuccess(data, true));
+    } catch (error) {
+      yield put(Actions.submitNewQuoteFailure(error));
+    }
+  
+  } else{
+
+    try {
+      const data = yield call(submitquoteSummaryRequest, item);
+      yield put(Actions.submitNewQuoteSuccess(data));
+    } catch (error) {
+      yield put(Actions.submitNewQuoteFailure(error));
+    }
+
   }
+ 
 }
 
 
@@ -187,8 +254,47 @@ function* deleteQuotationfromDB(item) {
 
 
 
+function* addQuotationNoteToDB({ payload }) {
+  const { id, note } = payload;
+  try {
+    const data = yield call(addNoteQuotationRequest, id, note);
+    yield put(Actions.addNoteQuotationSuccess(data));
+  } catch (error) {
+    yield put(Actions.addNoteQuotationFailure(error));
+  }
+}
 
 
+
+
+function* patchStateQuotation({ payload }) {
+  try {
+    const data = yield call(patchStateQuotationRequest, payload);
+    yield put(Actions.HandleStateUpdateSuccess(data));
+  } catch (error) {
+    yield put(Actions.HandleStateUpdateFailure(error));
+  }
+}
+
+
+function* createNewVersionStateQuotation({ payload }) {
+  try {
+    const data = yield call(createNewVersionStateQuotationRequest, payload);
+    yield put(Actions.HandleStateUpdateSuccess(data.data));
+  } catch (error) {
+    yield put(Actions.HandleStateUpdateFailure(error));
+  }
+}
+
+
+function* revertPreviousVersionStateQuotation({ payload }) {
+  try {
+    const data = yield call(revertPreviousVersionStateQuotationRequest, payload);
+    yield put(Actions.HandleStateUpdateSuccess(data.data));
+  } catch (error) {
+    yield put(Actions.HandleStateUpdateFailure(error));
+  }
+}
 
 
 
@@ -213,6 +319,21 @@ export function* submitQuoteSummaryWatcher() {
 export function* deleteQuoteSummaryWatcher() {
   yield takeEvery(Types.DELETE_QUOTATION, deleteQuotationfromDB);
 }
+export function* addNoteQuotationWatcher() {
+  yield takeEvery(Types.ADD_NOTE_QUOTATION, addQuotationNoteToDB);
+}
+export function* patchStateQuotationWatcher() {
+  yield takeEvery(Types.HANDLE_STATE_UPDATE, patchStateQuotation);
+}
+export function* createNewVersionQuotationWatcher() {
+  yield takeEvery(Types.HANDLE_STATE_CREATE_NEW_VERSION, createNewVersionStateQuotation);
+}
+export function* revertPreviousVersionQuotationWatcher() {
+  yield takeEvery(Types.HANDLE_STATE_REVERT_PREVIOUS_VERSION, revertPreviousVersionStateQuotation);
+}
+
+
+
 
 
 //=======================
@@ -225,10 +346,14 @@ export default function* rootSaga() {
     fork(getSingleQuotationWatcher),
     fork(getQuoteSummaryWatcher),
     fork(submitQuoteSummaryWatcher),
-    fork(deleteQuoteSummaryWatcher)
+    fork(deleteQuoteSummaryWatcher),
+    fork(addNoteQuotationWatcher),
+    fork(patchStateQuotationWatcher),
+    fork(createNewVersionQuotationWatcher),
+    fork(revertPreviousVersionQuotationWatcher),
 
-
-
+    
+    
   
 
   ]);

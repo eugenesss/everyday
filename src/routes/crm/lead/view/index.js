@@ -49,6 +49,7 @@ class crm_view_lead extends Component {
     this.addNote = this.addNote.bind(this);
     this.transfer = this.transfer.bind(this);
   }
+
   componentWillMount() {
     var id = this.props.match.params.id;
     this.props.getSingleLead(id);
@@ -118,6 +119,7 @@ class crm_view_lead extends Component {
   render() {
     const { lead, loading, sectionLoading } = this.props.leadToView;
     const { activeIndex } = this.state;
+
     return (
       <React.Fragment>
         <Helmet>

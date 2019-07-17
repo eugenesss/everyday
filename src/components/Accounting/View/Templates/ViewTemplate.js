@@ -21,14 +21,12 @@ const ViewTemplate = ({ order, id, disabled }) => {
           
         </div>
         <div className="companyAddress text-right">
-        <div className="address">
-            <span>{order.custinfo}</span>
+          <div className="address">
+            <span>{order.address_1} {order.address_2}</span>
+            <span>{order.city} {order.zip} </span>
+
             {/* <span>95014 Cuperino, CA</span>
             <span>United States</span> */}
-          </div>
-          <div className="address">
-            <span>Telephone: 800-692-7753</span>
-            <span>Fax: 800-692-7753</span>
           </div>
         </div>
         
@@ -37,25 +35,24 @@ const ViewTemplate = ({ order, id, disabled }) => {
      
           <div className="add-card" style={{borderRadius: 15, margin: 5}}>
             <h4 className="mb-15">Attn To</h4>
-            <span>{order.custinfo}</span>
+            <span>{order.details}</span>
           </div>
        
           <div className="add-card" style={{borderRadius: 15, margin: 5}}>
             <h4 className="mb-15">Ship To</h4>
-            <span>{order.shipinfo}</span>
+            <span>{order.details}</span>
           </div>
 
           <div className="invoice-address text-right">
             <h3>{id}</h3>
             <div className="d-flex flex-column">
-              <span>Last sent on:</span>
-              <span>{moment(order.sent_date).format("LL")}</span>
+              <span>Last sent: {moment(order.sent_date).format("LL")}</span>
             </div>
           </div>
       </div>
 
-      <div className="table-responsive mb-20">
-        <table className="table table-borderless">
+      <div >
+        {/* <table className="table table-borderless"> */}
           {/* <thead>
             <tr>
               <th>#</th>
@@ -67,7 +64,7 @@ const ViewTemplate = ({ order, id, disabled }) => {
               <th>Total</th>
             </tr>
           </thead> */}
-          <tbody>
+          {/* <tbody> */}
             {/* {order.products &&
               order.products.map((product, key) => (
                 <tr key={key}>
@@ -80,6 +77,7 @@ const ViewTemplate = ({ order, id, disabled }) => {
                   <td>${product.total.toFixed(2)}</td>
                 </tr>
               ))} */}
+
           <InvoiceProductInput
             products={order.quotationline}
             invoice={order}
@@ -88,8 +86,6 @@ const ViewTemplate = ({ order, id, disabled }) => {
             // handleAdd={this.props.addNewProdQuote}
             // handleRemove={this.props.removeProdQuote}
           />
-
-
 
             {/* <tr>
               <td colSpan="5">&nbsp;</td>
@@ -118,11 +114,13 @@ const ViewTemplate = ({ order, id, disabled }) => {
               <td className="fw-bold">Total</td>
               <td>${order.totalAmt}</td>
             </tr> */}
-          </tbody>
-        </table>
+          {/* </tbody> */}
+        {/* </table> */}
       </div>
       <div className="note-wrapper row">
         <div className="invoice-note col-sm-12 col-md-8">
+          <h3>Description</h3>
+          <p className="fs-12">{order.description}</p>
           <p>
             {" "}
             <strong>Valid For: </strong> 30 days
