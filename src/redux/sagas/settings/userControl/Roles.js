@@ -26,14 +26,16 @@ const getAllAccessRightsRequest = async () => {
   return result.data;
 };
 const getAllAccessRolesRequest = async () => {
-  const result = await api.get(`/accessroles`);
-  return result.data;
+  const result = await api.post(`/accessroles/viewall`);
+
+  return result.data.data;
 };
+/*
 const getAllAccessRolesAccessRightsRequest = async () => {
   const result = await api.get(`/accessroles/accessRights`);
   return result.data.data;
 };
-
+*/
 const addRoleRequest = async () => {
   const result = await api.post(`/accessroles`, {
     "name": "New Role"
@@ -48,7 +50,7 @@ const updateRoleNameRequest = async (roleName, roleId) => {
   return result.data;
 };
 const updateRoleRightRequest = async (roleId, rights) => {
-  const result = await api.patch(`accessRoles/${roleId}/accessRights`, {data: rights})
+  const result = await api.patch(`accessRoles/${roleId}/accessRights`, { data: rights })
   return result.data
 }
 
@@ -68,8 +70,8 @@ function* getAllRolesFromDB() {
   try {
     const accessRights = yield call(getAllAccessRightsRequest);
     const accessRoles = yield call(getAllAccessRolesRequest);
-    const roleRights = yield call(getAllAccessRolesAccessRightsRequest);
-    yield put(getAllRolesSuccess(accessRights, accessRoles, roleRights));
+    //const roleRights = yield call(getAllAccessRolesAccessRightsRequest);
+    yield put(getAllRolesSuccess(accessRights, accessRoles));
   } catch (err) {
     yield put(getRoleFailure(err));
   }

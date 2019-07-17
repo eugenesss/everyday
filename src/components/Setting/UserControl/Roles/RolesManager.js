@@ -83,7 +83,7 @@ class RoleManager extends Component {
     var selectedRoleRights = this.props.selectedRoleRights.slice();
     if (selectedRoleRights.find(right => right.id == selectedRight.id)) {
       let i = selectedRoleRights
-        .map(function(e) {
+        .map(function (e) {
           return e.id;
         })
         .indexOf(selectedRight.id);
@@ -168,14 +168,14 @@ class RoleManager extends Component {
                         </TableHead>
                         <TableBody>
                           {category.map(model => {
-                            if (
+                            var data = [];
+                            if (model.length >= 4 &&
                               model[0].method == "create" &&
                               model[1].method == "read" &&
                               model[2].method == "update" &&
-                              model[3].method == "delete" &&
-                              model.length == 4
+                              model[3].method == "delete"
                             ) {
-                              return (
+                              data.push(
                                 <TableRow
                                   className={classes.row}
                                   key={model[0].name}
@@ -188,72 +188,82 @@ class RoleManager extends Component {
                                       {model[0].description}
                                     </div>
                                   </TableCell>
-                                  {model.map(method => {
-                                    return (
-                                      <TableCell
-                                        align="center"
-                                        key={method.method}
-                                      >
-                                        <Checkbox
-                                          color="primary"
-                                          checked={
-                                            this.checked(method.id) ||
-                                            method.editable == false
-                                          }
-                                          disabled={
-                                            this.disabled(method.method) ||
-                                            !method.editable
-                                          }
-                                          value={`${method.id}`}
-                                          onChange={() =>
-                                            this.handleChange(method)
-                                          }
-                                        />
-                                      </TableCell>
-                                    );
+                                  {model.map((md, index) => {
+                                    if (index < 4) {
+                                      return (
+                                        <TableCell
+                                          align="center"
+                                          key={md.method}
+                                        >
+                                          <Checkbox
+                                            color="primary"
+                                            checked={
+                                              this.checked(md.id) ||
+                                              md.editable == false
+                                            }
+                                            disabled={
+                                              this.disabled(md.method) ||
+                                              !md.editable
+                                            }
+                                            value={`${md.id}`}
+                                            onChange={() =>
+                                              this.handleChange(md)
+                                            }
+                                          />
+                                        </TableCell>
+                                      )
+                                    }
                                   })}
                                 </TableRow>
                               );
-                            } else {
-                              return (
-                                <TableRow
-                                  className={classes.row}
-                                  key={model[0].name}
-                                >
-                                  <TableCell component="th" scope="row">
-                                    {model[0].name}
-                                  </TableCell>
-                                  <TableCell />
-                                  <TableCell />
-                                  {model.map(method => {
-                                    return (
+                            }
+                            if (model.length >= 5 || model.length < 4) {
+                              data.push(model.map((md, index) => {
+                                if (index >= 4 || model.length < 4) {
+                                  return (
+                                    <TableRow
+                                      className={classes.row}
+                                      key={md.name}
+                                    >
+                                      <TableCell component="th" scope="row">
+                                        <div className={classes.heading}>
+                                          {md.name}
+                                        </div>
+                                        <div className={classes.secondaryHeading}>
+                                          {md.method}-{md.description}
+                                        </div>
+                                      </TableCell>
+                                      <TableCell />
+                                      <TableCell />
                                       <TableCell
                                         align="center"
-                                        key={method.method}
+                                        key={md.method}
                                       >
                                         <Switch
                                           color="primary"
                                           checked={
-                                            this.checked(method.id) ||
-                                            method.editable == false
+                                            this.checked(md.id) ||
+                                            md.editable == false
                                           }
                                           disabled={
-                                            this.disabled(method.method) ||
-                                            !method.editable
+                                            this.disabled(md.method) ||
+                                            !md.editable
                                           }
-                                          value={`${method.id}`}
+                                          value={`${md.id}`}
                                           onChange={() =>
-                                            this.handleChange(method)
+                                            this.handleChange(md)
                                           }
                                         />
                                       </TableCell>
-                                    );
-                                  })}
-                                  <TableCell />
-                                </TableRow>
-                              );
+                                      <TableCell />
+                                    </TableRow>
+                                  )
+                                }
+                              }))
                             }
-                          })}
+                            return data
+                          })
+                          }
                         </TableBody>
                       </Table>
                     </ExpansionPanelDetails>

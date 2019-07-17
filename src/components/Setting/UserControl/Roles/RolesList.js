@@ -29,7 +29,7 @@ const styles = () => ({
   icon: {
     height: 24,
     width: 24,
-   },
+  },
   block: {
     display: "block !important"
   },
@@ -39,9 +39,9 @@ class RolesList extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
-    const { 
+    const {
       classes,
 
       selectedRole,
@@ -49,7 +49,7 @@ class RolesList extends Component {
 
       onChangeSelectedRole,
       addRole,
-     } = this.props;
+    } = this.props;
     return (
       <React.Fragment>
         <div className={classes.block}>
@@ -68,22 +68,22 @@ class RolesList extends Component {
             </Col>
           </Row>
           <Scrollbars
-              className="rct-scroll"
-              autoHeight
-              autoHeightMin={'90vh'}
+            className="rct-scroll"
+            autoHeight
+            autoHeightMin={'90vh'}
           >
             <List
               component="nav"
               className={classes.root}
             >
               {accessRoles.map(accessRole => (
-                <ListItem 
+                <ListItem
                   key={accessRole.id}
                   button
                   selected={selectedRole ? selectedRole.id == accessRole.id : false}
                   onClick={() => onChangeSelectedRole(accessRole)}
                 >
-                  <ListItemText primary={accessRole.name} className={classes.listItem}/>
+                  <ListItemText primary={accessRole.name} className={classes.listItem} />
                 </ListItem>
               ))}
             </List>

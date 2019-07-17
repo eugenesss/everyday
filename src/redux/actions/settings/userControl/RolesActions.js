@@ -8,22 +8,24 @@ import {
   ADD_ROLE,
   ADD_ROLE_SUCCESS,
   ADD_ROLE_FAILURE,
-  
+
   ON_CHANGE_UPDATE_ROLE,
   ON_CHANGE_UPDATE_ROLE_RIGHTS,
   UPDATE_ROLE,
   UPDATE_ROLE_SUCCESS,
   UPDATE_ROLE_FAILURE,
-  
+
   DELETE_ROLE,
   DELETE_ROLE_SUCCESS,
   DELETE_ROLE_FAILURE,
 
   GET_ROLE_FAILURE,
 
-  CHANGE_SELECTED_ROLE,  
+  CHANGE_SELECTED_ROLE,
   CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY,
   CHANGE_SELECTED_GROUP_ROLE,
+  CHANGE_REMOVE_GROUP_ROLE,
+  CHANGE_ADD_GROUP_ROLE
 } from "Types";
 
 /**
@@ -32,9 +34,9 @@ import {
 export const getAllRoles = () => ({
   type: GET_ALL_ROLES
 });
-export const getAllRolesSuccess = (accessRights, accessRoles, roleRights) => ({
+export const getAllRolesSuccess = (accessRights, accessRoles) => ({
   type: GET_ALL_ROLES_SUCCESS,
-  payload: {accessRights, accessRoles, roleRights}
+  payload: { accessRights, accessRoles }
 });
 
 /**
@@ -57,7 +59,7 @@ export const addRoleFailure = (err) => ({
  */
 export const onChangeUpdateRole = (field, value) => ({
   type: ON_CHANGE_UPDATE_ROLE,
-  payload: {field, value}
+  payload: { field, value }
 });
 export const onChangeUpdateRoleRights = (value) => ({
   type: ON_CHANGE_UPDATE_ROLE_RIGHTS,
@@ -114,3 +116,13 @@ export const onChangeSelectedGroupRole = (groupRoles) => ({
   type: CHANGE_SELECTED_GROUP_ROLE,
   payload: groupRoles
 })
+
+export const onChangeRemoveGroupRole = (roleId) => ({
+  type: CHANGE_REMOVE_GROUP_ROLE,
+  payload: roleId
+});
+
+export const onChangeAddGroupRole = (roleId) => ({
+  type: CHANGE_ADD_GROUP_ROLE,
+  payload: roleId
+});

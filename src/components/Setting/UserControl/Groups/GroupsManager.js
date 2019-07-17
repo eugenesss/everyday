@@ -16,7 +16,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
-import { onChangeUpdateGroup, updateGroup, deleteGroup } from "Actions";
+import { onChangeUpdateGroup, updateGroup, deleteGroup, onChangeRemoveGroupRole, onChangeAddGroupRole } from "Actions";
 
 const styles = theme => ({
   root: {
@@ -57,9 +57,12 @@ class GroupsManager extends Component {
       selectedGroupRoles,
       selectedRoleGroups,
       unselectedRoleGroups,
-
       updateGroup,
       onChangeUpdateGroup,
+      onChangeAddGroupRole,
+      onChangeRemoveGroupRole,
+      removedRoleName,
+      addedRoleName,
       deleteGroup
     } = this.props;
     return (
@@ -102,13 +105,10 @@ class GroupsManager extends Component {
               <TableBody>
                 {selectedGroupRoles &&
                   selectedGroupRoles.map(r => {
-                    var role = accessRoles.find(
-                      rol => rol.id == r.accessRoleId
-                    );
                     return (
                       <TableRow className={classes.row} key={r.id}>
                         <TableCell component="th" scope="row">
-                          {role ? role.name : null}
+                          {r.name}
                         </TableCell>
                         <TableCell align="center">
                           <Radio
@@ -148,8 +148,8 @@ class GroupsManager extends Component {
                 id="name"
                 label="Remove Role from Group"
                 className={classes.textField}
-                value={[]}
-                onChange={e => console.log(e.target.value)}
+                value={removedRoleName}
+                onChange={e => onChangeRemoveGroupRole(e.target.value)}
                 margin="normal"
               >
                 {selectedRoleGroups.map(role => {
@@ -167,12 +167,12 @@ class GroupsManager extends Component {
                 fullWidth
                 required
                 error={selectedGroup ? !selectedGroup.name : false}
-                disabled={!selectedGroup || unselectedRoleGroups.length == 0}
+                disabled={!unselectedRoleGroups || unselectedRoleGroups.length == 0}
                 id="name"
                 label="Add Role to Group"
                 className={classes.textField}
-                value={[]}
-                onChange={e => console.log(e.target.value)}
+                value={addedRoleName}
+                onChange={e => onChangeAddGroupRole(e.target.value)}
                 margin="normal"
               >
                 {unselectedRoleGroups.map(role => {
@@ -219,18 +219,20 @@ GroupsManager.propTypes = {
 };
 
 const mapStateToProps = ({ groupsState, rolesState }) => {
-  const { selectedRoleGroups, unselectedRoleGroups, accessRoles } = rolesState;
+  const { selectedRoleGroups, unselectedRoleGroups, accessRoles, addedRoleName, removedRoleName } = rolesState;
   const { selectedGroup, selectedGroupRoles } = groupsState;
   return {
     selectedRoleGroups,
     unselectedRoleGroups,
     accessRoles,
     selectedGroup,
-    selectedGroupRoles
+    selectedGroupRoles,
+    addedRoleName,
+    removedRoleName
   };
 };
 
 export default connect(
   mapStateToProps,
-  { onChangeUpdateGroup, updateGroup, deleteGroup }
+  { onChangeUpdateGroup, updateGroup, deleteGroup, onChangeAddGroupRole, onChangeRemoveGroupRole }
 )(withStyles(styles)(GroupsManager));
