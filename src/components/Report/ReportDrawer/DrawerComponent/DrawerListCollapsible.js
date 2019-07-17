@@ -1,7 +1,6 @@
 import React from "react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Collapse from "@material-ui/core/Collapse";
 import List from "@material-ui/core/List";
 
@@ -15,11 +14,6 @@ const DrawerListCollapsible = ({
   return (
     <React.Fragment>
       <ListItem button onClick={openNested}>
-        {icon && (
-          <ListItemIcon>
-            <i className={`zmdi ${icon} zmdi-hc-lg`} />
-          </ListItemIcon>
-        )}
         <ListItemText primary={title} />
         {state ? (
           <i className="zmdi zmdi-chevron-down zmdi-hc-lg" />

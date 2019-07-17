@@ -12,11 +12,6 @@ const DrawerListItem = ({
 }) => {
   return (
     <ListItem selected={selected} button onClick={onClickListItem}>
-      {icon && (
-        <ListItemIcon>
-          <i className={`zmdi ${icon} zmdi-hc-lg`} />
-        </ListItemIcon>
-      )}
       {secondary ? (
         <ListItemText secondary={title} />
       ) : (

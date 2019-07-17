@@ -12,6 +12,10 @@ const styles = theme => ({
     zIndex: 90,
     position: "relative",
     height: "100%"
+  },
+  root: {
+    width: "100%",
+    padding: 10
   }
 });
 
@@ -29,9 +33,11 @@ const ReportDrawer = ({
         paper: classes.drawerPaper
       }}
     >
-      <List subheader={<ListSubheader>Reports List</ListSubheader>}>
+      <List
+        className={classes.root}
+        subheader={<ListSubheader>Reports List</ListSubheader>}
+      >
         <DrawerListCollapsible
-          icon="zmdi-case"
           title="Deals"
           state={nestedView.deals}
           openNested={() => openNestedView("deals")}
@@ -56,7 +62,6 @@ const ReportDrawer = ({
           />
         </DrawerListCollapsible>
         <DrawerListCollapsible
-          icon="zmdi-account-circle"
           title="Leads"
           state={nestedView.leads}
           openNested={() => openNestedView("leads")}
@@ -81,7 +86,6 @@ const ReportDrawer = ({
           />
         </DrawerListCollapsible>
         <DrawerListCollapsible
-          icon="zmdi-city-alt"
           title={"Accounts & Customers"}
           state={nestedView.acctcust}
           openNested={() => openNestedView("acctcust")}
@@ -100,7 +104,6 @@ const ReportDrawer = ({
           />
         </DrawerListCollapsible>
         {/* <DrawerListCollapsible
-          icon="zmdi-money-box"
           title="Sales"
           state={nestedView.sales}
           openNested={() => openNestedView("sales")}
@@ -127,7 +130,6 @@ const ReportDrawer = ({
         <DrawerListItem
           onClickListItem={() => changeReportView("individual")}
           title="Individual"
-          icon="zmdi-account"
           selected={activeView == "individual"}
         />
       </List>
