@@ -161,7 +161,7 @@ class crm_view_customer extends Component {
                     account={customer.accountInfo}
                     ownerName={customer.userInfo && customer.userInfo.name}
                     mobile={customer.baseContact.mobile}
-                    office={customer.baseContact.office}
+                    phone={customer.baseContact.phone}
                     email={customer.baseContact.email}
                     isActive={customer.isActive}
                   />

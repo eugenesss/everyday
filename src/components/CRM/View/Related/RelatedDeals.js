@@ -6,6 +6,7 @@ import AddNewButton from "Components/Everyday/AddNewButton";
 import NumberFormat from "react-number-format";
 import { getTheDate } from "Helpers/helpers";
 import { singleDeal } from "Helpers/url/crm";
+import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 
 const columns = [
   {
@@ -44,16 +45,20 @@ const columns = [
   },
   {
     label: "Stage",
-    name: "stage",
+    name: "stageInfo",
     options: {
       customBodyRender: value => {
-        return value ? value.name : "";
+        return value ? (
+          <StatusBadge name={value.name} color={value.color} />
+        ) : (
+          ""
+        );
       }
     }
   },
   {
     label: "Chance",
-    name: "stage",
+    name: "stageInfo",
     options: {
       filter: false,
       display: false,
@@ -64,7 +69,7 @@ const columns = [
   },
   {
     label: "Source",
-    name: "source",
+    name: "sourceInfo",
     options: {
       customBodyRender: value => {
         return value ? value.name : "";
@@ -73,7 +78,7 @@ const columns = [
   },
   {
     label: "Type",
-    name: "type",
+    name: "typeInfo",
     options: {
       customBodyRender: value => {
         return value ? value.name : "";

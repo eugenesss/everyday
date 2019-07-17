@@ -9,6 +9,7 @@ import { listOptions } from "Helpers/helpers";
 import { singleLead } from "Helpers/url/crm";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 
 //Sub Components
 import LeadInterestLevel from "./LeadInterestLevel";
@@ -37,7 +38,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
       name: "baseContact",
       options: {
         customBodyRender: value => {
-          return value.email ? value.email : "";
+          return value ? value.email : "";
         }
       }
     },
@@ -46,7 +47,15 @@ const LeadList = ({ tableData, loading, title, action }) => {
       name: "statusInfo",
       options: {
         customBodyRender: value => {
-          return value ? value.name : "";
+          return value ? (
+            <StatusBadge
+              name={value.name}
+              color={value.color}
+              value={value.name}
+            />
+          ) : (
+            ""
+          );
         }
       }
     },
@@ -74,7 +83,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
       options: {
         display: false,
         customBodyRender: value => {
-          return value.mobile ? value.mobile : "";
+          return value.mobile ? value.mobile : " ";
         }
       }
     },
@@ -84,7 +93,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
       options: {
         display: false,
         customBodyRender: value => {
-          return value ? value.name : "";
+          return value ? value.name : " ";
         }
       }
     },
@@ -94,13 +103,40 @@ const LeadList = ({ tableData, loading, title, action }) => {
       options: {
         display: false,
         customBodyRender: value => {
-          return value ? value.name : " ";
+          return value ? value : " ";
         }
       }
     },
-    { label: "Website", name: "website", options: { display: false } },
-    { label: "Office", name: "office", options: { display: false } },
-    { label: "Fax", name: "fax", options: { display: false } }
+    {
+      label: "Website",
+      name: "baseContact",
+      options: {
+        display: false,
+        customBodyRender: value => {
+          return value.website ? value.website : " ";
+        }
+      }
+    },
+    {
+      label: "Office",
+      name: "baseContact",
+      options: {
+        display: false,
+        customBodyRender: value => {
+          return value.office ? value.phone : " ";
+        }
+      }
+    },
+    {
+      label: "Fax",
+      name: "baseContact",
+      options: {
+        display: false,
+        customBodyRender: value => {
+          return value.fax ? value.fax : " ";
+        }
+      }
+    }
   ];
   // if (action == true) {
   //   columns.push({

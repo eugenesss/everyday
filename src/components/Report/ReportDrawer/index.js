@@ -99,7 +99,7 @@ const ReportDrawer = ({
             selected={activeView == "topSpenderCustomer"}
           />
         </DrawerListCollapsible>
-        <DrawerListCollapsible
+        {/* <DrawerListCollapsible
           icon="zmdi-money-box"
           title="Sales"
           state={nestedView.sales}
@@ -123,7 +123,7 @@ const ReportDrawer = ({
             secondary
             selected={activeView == "customerValue"}
           />
-        </DrawerListCollapsible>
+        </DrawerListCollapsible> */}
         <DrawerListItem
           onClickListItem={() => changeReportView("individual")}
           title="Individual"

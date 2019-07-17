@@ -43,11 +43,11 @@ class crm_customer extends Component {
         <PageTitleBar
           title={
             <div className="d-flex">
-              <ListViewSelector
+              {/* <ListViewSelector
                 options={options}
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeCustomerView}
-              />
+              /> */}
             </div>
           }
           createLink={customerNewPage}

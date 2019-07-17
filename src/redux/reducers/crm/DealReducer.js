@@ -198,6 +198,7 @@ export default (state = INIT_STATE, action) => {
         }
       };
     case types.ON_SUBMIT_NEW_STAGE_SUCCESS:
+      console.log(action.payload);
       return {
         ...state,
         dealToView: {

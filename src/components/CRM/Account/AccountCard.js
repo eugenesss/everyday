@@ -10,7 +10,7 @@ const AccountCard = ({
   name,
   industry,
   ownerName,
-  office,
+  phone,
   fullAddress,
   isActive,
   website
@@ -26,7 +26,7 @@ const AccountCard = ({
       />
       <ViewCardDetails>
         {{ title: "Owner", icon: "zmdi-account", detail: ownerName }}
-        {{ title: "Office", icon: "zmdi-phone", detail: office }}
+        {{ title: "Office", icon: "zmdi-phone", detail: phone }}
         {{ title: "Website", icon: "zmdi-desktop-mac", detail: website }}
         {{ title: "Address", icon: "zmdi-pin", detail: fullAddress }}
       </ViewCardDetails>

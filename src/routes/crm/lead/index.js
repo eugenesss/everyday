@@ -54,11 +54,11 @@ class crm_lead extends Component {
         <PageTitleBar
           title={
             <div className="d-flex">
-              <ListViewSelector
+              {/* <ListViewSelector
                 options={options}
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeLeadView}
-              />
+              /> */}
               <ShowListSummaryButton action={() => this.toggleSummary()} />
             </div>
           }

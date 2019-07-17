@@ -103,15 +103,11 @@ export const getTopSpenderCustomerSuccess = data => ({
 //=====================
 // Individual Reports
 //=====================
-export const getIndividualReport = staffID => ({
+export const getIndividualReport = (start, end, id) => ({
   type: types.GET_INDIVIDUAL_REPORT,
-  payload: staffID
+  payload: { start, end, id }
 });
 export const getIndividualReportSuccess = data => ({
   type: types.GET_INDIVIDUAL_REPORT_SUCCESS,
   payload: data
-});
-export const onChangeStaffSelect = value => ({
-  type: types.ON_CHANGE_STAFF_SELECT,
-  payload: value
 });

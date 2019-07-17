@@ -13,7 +13,7 @@ const CustomerCard = ({
   account,
   ownerName,
   mobile,
-  office,
+  phone,
   email,
   isActive
 }) => {
@@ -30,7 +30,7 @@ const CustomerCard = ({
         {{ title: "Owner", icon: "zmdi-account", detail: ownerName }}
         {{ title: "Email", icon: "zmdi-email", detail: email }}
         {{ title: "Mobile", icon: "zmdi-smartphone", detail: mobile }}
-        {{ title: "Office", icon: "zmdi-phone", detail: office }}
+        {{ title: "Office", icon: "zmdi-phone", detail: phone }}
       </ViewCardDetails>
     </ViewCardLayout>
   );

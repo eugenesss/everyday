@@ -27,7 +27,7 @@ const CustomerDetails = ({ customer }) => {
       />
       <SingleDetail
         title="Source"
-        value={customer.source && customer.source.name}
+        value={customer.sourceInfo && customer.sourceInfo.name}
       />
       <SingleDetail title="Mobile" value={customer.baseContact.mobile} />
       <SingleDetail title="Email" value={customer.baseContact.email} />

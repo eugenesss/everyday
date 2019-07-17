@@ -9,6 +9,7 @@ import { listOptions } from "Helpers/helpers";
 import { singleDeal } from "Helpers/url/crm";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 
 import NumberFormat from "react-number-format";
 import { getTheDate } from "Helpers/helpers";
@@ -56,7 +57,15 @@ const DealList = ({ tableData, loading, title, action }) => {
       name: "stageInfo",
       options: {
         customBodyRender: value => {
-          return value ? value.name : "";
+          return value.name ? (
+            <StatusBadge
+              name={value.name}
+              color={value.color}
+              value={value.name}
+            />
+          ) : (
+            ""
+          );
         }
       }
     },
@@ -65,7 +74,6 @@ const DealList = ({ tableData, loading, title, action }) => {
       name: "stageInfo",
       options: {
         filter: false,
-        display: false,
         customBodyRender: value => {
           return value ? value.chance : "";
         }

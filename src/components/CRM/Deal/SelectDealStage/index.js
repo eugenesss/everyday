@@ -8,7 +8,6 @@ import DealStageStepper from "./Components/DealStageStepper";
 
 //Page Req
 import DealStageContent from "./Components/DealStageContent";
-import UpdateDealStageForm from "Components/Form/Deal/UpdateDealStageForm";
 
 import {
   onClickStep,
@@ -19,7 +18,7 @@ import {
 } from "Actions";
 
 class SelectDealStage extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.getDealStage();
     this.props.setCurrentStep(this.props.deal.stageInfo.step);
   }
@@ -70,7 +69,7 @@ class SelectDealStage extends Component {
                 className="py-10 px-20"
                 style={{ maxWidth: "60%", marginLeft: "30px" }}
               >
-                <UpdateDealStageForm />
+                {/* <UpdateDealStageForm /> */}
                 <Button
                   variant="contained"
                   color="primary"

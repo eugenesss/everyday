@@ -47,13 +47,13 @@ class crm_account extends Component {
         <PageTitleBar
           title={
             <div className="d-flex">
-              <ListViewSelector
+              {/* <ListViewSelector
                 dropdownOpen={dropdownOpen}
                 toggle={this.props.toggleAccountDropDown}
                 options={options}
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeAccountView}
-              />
+              /> */}
             </div>
           }
           createLink={accountNewPage}

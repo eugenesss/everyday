@@ -21,7 +21,7 @@ import TopSpenderAccountReport from "./AcctCustReports/TopSpenderAccountReport";
 import TopSpenderCustomerReport from "./AcctCustReports/TopSpenderCustomerReport";
 
 // Individual Report
-// import IndividualReport from "./View/IndividualReport";
+import IndividualReport from "./IndividualReport";
 
 const ReportRender = ({ componentToRender }) => {
   switch (componentToRender) {
@@ -63,7 +63,7 @@ const ReportRender = ({ componentToRender }) => {
     // Individual Reports
     //===================
     case "individual":
-      return <ReportMaintenanceMessage />;
+      return <IndividualReport />;
     default:
       return <ReportDefaultMessage />;
   }

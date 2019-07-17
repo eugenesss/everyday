@@ -7,7 +7,8 @@ import {
   GET_LEADS_BY_OWNER,
   GET_LEADS_BY_SOURCE,
   GET_TOP_SPENDER_ACCOUNT,
-  GET_TOP_SPENDER_CUSTOMER
+  GET_TOP_SPENDER_CUSTOMER,
+  GET_INDIVIDUAL_REPORT
 } from "Types";
 import {
   getReportFailure,
@@ -18,7 +19,8 @@ import {
   getLeadsByOwnerSuccess,
   getLeadsBySourceSuccess,
   getTopSpenderAccountSuccess,
-  getTopSpenderCustomerSuccess
+  getTopSpenderCustomerSuccess,
+  getIndividualReportSuccess
 } from "Actions";
 
 import api from "Api";
@@ -27,60 +29,65 @@ import api from "Api";
 // REQUESTS
 //=========================
 const getDealsByOwnerRequest = async (startDate, endDate) => {
-  const result = await api.post("/deals/reports/dealsbyowner", {
+  const result = await api.post("/reports/dealsbyowner", {
     startDate,
     endDate
   });
   return result.data.data;
 };
 const getDealsByTypeRequest = async (startDate, endDate) => {
-  const result = await api.post("/deals/reports/dealsbytype", {
+  const result = await api.post("/reports/dealsbytype", {
     startDate,
     endDate
   });
   return result.data.data;
 };
 const getDealsPipelineRequest = async (startDate, endDate) => {
-  const result = await api.post("/deals/reports/dealspipeline", {
+  const result = await api.post("/reports/dealspipeline", {
     startDate,
     endDate
   });
   return result.data.data;
 };
 const getLeadsByStatusRequest = async (startDate, endDate) => {
-  const result = await api.post("/leads/reports/leadsbystatus", {
+  const result = await api.post("/reports/leadsbystatus", {
     startDate,
     endDate
   });
   return result.data.data;
 };
 const getLeadsByOwnerRequest = async (startDate, endDate) => {
-  const result = await api.post("/leads/reports/leadsbyowner", {
+  const result = await api.post("/reports/leadsbyowner", {
     startDate,
     endDate
   });
   return result.data.data;
 };
 const getLeadsBySourceRequest = async (startDate, endDate) => {
-  const result = await api.post("/leads/reports/leadsbysource", {
+  const result = await api.post("/reports/leadsbysource", {
     startDate,
     endDate
   });
   return result.data.data;
 };
 const getTopSpenderAccountRequest = async (startDate, endDate) => {
-  const result = await api.post("/accounts/reports/topspender", {
+  const result = await api.post("/reports/topspenderacct", {
     startDate,
     endDate
   });
   return result.data.data;
 };
 const getTopSpenderCustomerRequest = async (startDate, endDate) => {
-  const result = await api.post("/customers/reports/topspender", {
+  const result = await api.post("/reports/topspendercust", {
     startDate,
     endDate
   });
   return result.data.data;
+};
+const getIndividualReportRequest = async (startDate, endDate, userId) => {
+  console.log({ startDate, endDate, userId });
+  const result = {};
+  return result;
 };
 
 //=========================
@@ -166,6 +173,16 @@ function* getTopSpenderCustomer({ payload }) {
     yield put(getReportFailure(error));
   }
 }
+function* getIndividualReport({ payload }) {
+  const { start, end, id } = payload;
+  try {
+    const data = yield call(getIndividualReportRequest, start, end, id);
+    yield delay(500);
+    yield put(getIndividualReportSuccess(data));
+  } catch (error) {
+    yield put(getReportFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -194,7 +211,9 @@ export function* getTopSpenderAccountWatcher() {
 export function* getTopSpenderCustomerWatcher() {
   yield takeEvery(GET_TOP_SPENDER_CUSTOMER, getTopSpenderCustomer);
 }
-
+export function* getIndividualReportWatcher() {
+  yield takeEvery(GET_INDIVIDUAL_REPORT, getIndividualReport);
+}
 //=======================
 // FORK SAGAS TO STORE
 //=======================
@@ -207,6 +226,7 @@ export default function* rootSaga() {
     fork(getLeadsByOwnerWatcher),
     fork(getLeadsBySourceWatcher),
     fork(getTopSpenderAccountWatcher),
-    fork(getTopSpenderCustomerWatcher)
+    fork(getTopSpenderCustomerWatcher),
+    fork(getIndividualReportWatcher)
   ]);
 }

@@ -16,7 +16,7 @@ const INIT_STATE = {
     topSpenderAccount: { loading: false, data: null },
     topSpenderCustomer: { loading: false, data: null }
   },
-  individualData: { loading: false, staff: "" }
+  individualReport: { loading: false, data: null }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -215,23 +215,15 @@ export default (state = INIT_STATE, action) => {
     case types.GET_INDIVIDUAL_REPORT:
       return {
         ...state,
-        individualData: { ...state.individualData, loading: true }
+        individualReport: { ...state.individualReport, loading: true }
       };
     case types.GET_INDIVIDUAL_REPORT_SUCCESS:
       return {
         ...state,
-        individualData: {
-          ...state.individualData,
+        individualReport: {
+          ...state.individualReport,
           loading: false,
-          ...action.payload
-        }
-      };
-    case types.ON_CHANGE_STAFF_SELECT:
-      return {
-        ...state,
-        individualData: {
-          ...state.individualData,
-          staff: action.payload
+          data: action.payload
         }
       };
 

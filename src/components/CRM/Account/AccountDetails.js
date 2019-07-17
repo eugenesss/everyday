@@ -12,10 +12,7 @@ const AccountDetails = ({ account }) => {
         title="Owner"
         value={account.userInfo && account.userInfo.name}
       />
-      <SingleDetail
-        title="Industry"
-        value={account.industry && account.industry.name}
-      />
+      <SingleDetail title="Industry" value={account.industryInfo} />
       <SingleDetail title="Office" value={account.baseContact.phone} />
       <SingleDetail title="Website" value={account.baseContact.website} />
       <SingleDetail title="Fax" value={account.baseContact.fax} />

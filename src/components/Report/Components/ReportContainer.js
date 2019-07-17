@@ -141,6 +141,7 @@ class ReportContainer extends Component {
             value={endDate}
             onChange={date => this.handleCustomDate(date, "end")}
           />
+          {this.props.additionalSelection}
           <Button
             variant="contained"
             className="text-white mr-20 mt-5"
@@ -149,7 +150,9 @@ class ReportContainer extends Component {
           >
             Apply
           </Button>
-          <div className="rct-block mt-30 p-30">{this.props.children}</div>
+          <div className={!this.props.noPads ? "mt-30 p-30" : ""}>
+            {this.props.children}
+          </div>
         </div>
       </React.Fragment>
     );

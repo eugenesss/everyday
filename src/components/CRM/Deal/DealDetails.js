@@ -27,7 +27,10 @@ const DealDetails = ({ deal }) => {
       <SingleDetail title="Name" value={deal.name} />
       <SingleDetail title="Stage" value={deal.stageInfo.name} />
       <SingleDetail title="Closing Date" value={getTheDate(deal.closingDate)} />
-      <SingleDetail title="Source" value={deal.sourceInfo && deal.sourceInfo.name} />
+      <SingleDetail
+        title="Source"
+        value={deal.sourceInfo && deal.sourceInfo.name}
+      />
       <SingleDetail
         title="Account"
         value={

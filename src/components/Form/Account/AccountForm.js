@@ -123,9 +123,9 @@ class AccountForm extends Component {
           <TableRow>
             <FormBlock
               label="Office"
-              value={account.baseContact.office}
+              value={account.baseContact.phone}
               handleChange={this.handleChange}
-              target="office"
+              target="phone"
               targetType="baseContact"
             />
             <FormBlock
@@ -137,7 +137,7 @@ class AccountForm extends Component {
             />
           </TableRow>
           {/**
-           * Fax
+           * Fax + website
            */}
           <TableRow>
             <FormBlock
@@ -145,6 +145,13 @@ class AccountForm extends Component {
               value={account.baseContact.fax}
               handleChange={this.handleChange}
               target="fax"
+              targetType="baseContact"
+            />
+            <FormBlock
+              label="Website"
+              value={account.baseContact.website}
+              handleChange={this.handleChange}
+              target="website"
               targetType="baseContact"
             />
           </TableRow>

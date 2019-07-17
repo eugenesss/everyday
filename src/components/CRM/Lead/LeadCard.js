@@ -11,20 +11,19 @@ const LeadCard = ({
   name,
   companyName,
   status,
-  statusColor,
   ownerName,
   mobile,
-  office,
+  phone,
   email,
   interest
 }) => {
   return (
-    <ViewCardLayout statusColor={statusColor}>
+    <ViewCardLayout statusColor={status.color}>
       <ViewCardTitle
         name={name}
         subHeading={[
           companyName,
-          <StatusBadge name={status} color={statusColor} />
+          <StatusBadge name={status.name} color={status.color} />
         ]}
       />
       <div className="row px-20">
@@ -41,7 +40,7 @@ const LeadCard = ({
         {{ title: "Owner", icon: "zmdi-account", detail: ownerName }}
         {{ title: "Email", icon: "zmdi-email", detail: email }}
         {{ title: "Mobile", icon: "zmdi-smartphone", detail: mobile }}
-        {{ title: "Office", icon: "zmdi-phone", detail: office }}
+        {{ title: "Office", icon: "zmdi-phone", detail: phone }}
       </ViewCardDetails>
     </ViewCardLayout>
   );

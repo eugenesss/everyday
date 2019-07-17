@@ -30,15 +30,26 @@ const AccountList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Industry",
-      name: "industry",
+      name: "industryInfo"
+    },
+    {
+      label: "Website",
+      name: "baseContact",
       options: {
         customBodyRender: value => {
-          return value ? value.name : "";
+          return value ? value.website : "";
         }
       }
     },
-    { label: "Website", name: "website" },
-    { label: "Office", name: "office" },
+    {
+      label: "Office",
+      name: "baseContact",
+      options: {
+        customBodyRender: value => {
+          return value ? value.phone : "";
+        }
+      }
+    },
     {
       label: "Status",
       name: "isActive",
@@ -57,7 +68,16 @@ const AccountList = ({ tableData, loading, title, action }) => {
         }
       }
     },
-    { label: "Fax", name: "fax", options: { display: false } }
+    {
+      label: "Fax",
+      name: "baseContact",
+      options: {
+        display: false,
+        customBodyRender: value => {
+          return value ? value.fax : "";
+        }
+      }
+    }
   ];
 
   // if (action == true) {

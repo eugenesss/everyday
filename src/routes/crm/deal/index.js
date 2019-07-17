@@ -57,11 +57,11 @@ class crm_deal extends Component {
         <PageTitleBar
           title={
             <div className="d-flex">
-              <ListViewSelector
+              {/* <ListViewSelector
                 options={options}
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeDealView}
-              />
+              /> */}
               <ShowListSummaryButton action={() => this.toggleSummary()} />
             </div>
           }

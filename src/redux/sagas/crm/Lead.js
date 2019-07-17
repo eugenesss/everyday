@@ -172,6 +172,7 @@ function* postLeadToDB({ payload }) {
   try {
     const data = yield call(postLeadRequest, payload);
     yield delay(500);
+    window.location.replace(singleLead(data.id));
     yield put(newLeadSuccess(data));
   } catch (error) {
     yield put(newLeadFailure(error));
@@ -191,6 +192,7 @@ function* editLeadToDB({ payload }) {
   try {
     const data = yield call(editLeadRequest, payload);
     yield delay(500);
+    window.location.replace(singleLead(data.id));
     yield put(editLeadSuccess(data));
   } catch (error) {
     yield put(editLeadFailure(error));

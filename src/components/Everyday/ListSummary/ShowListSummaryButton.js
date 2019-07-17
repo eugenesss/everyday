@@ -7,7 +7,7 @@ const ShowListSummaryButton = ({ action }) => {
     <Tooltip title="Show Summary" placement="bottom">
       <Button
         variant="contained"
-        className="btn-info text-white ml-20"
+        className="btn-info text-white"
         onClick={action}
       >
         <i className="zmdi zmdi-chart font-lg" />
