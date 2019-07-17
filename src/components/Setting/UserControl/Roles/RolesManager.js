@@ -255,6 +255,7 @@ class RoleManager extends Component {
                                           }
                                         />
                                       </TableCell>
+                                      <TableCell />
                                     </TableRow>
                                   )
                                 }

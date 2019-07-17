@@ -167,7 +167,7 @@ class GroupsManager extends Component {
                 fullWidth
                 required
                 error={selectedGroup ? !selectedGroup.name : false}
-                disabled={!selectedGroup || unselectedRoleGroups.length == 0}
+                disabled={!unselectedRoleGroups || unselectedRoleGroups.length == 0}
                 id="name"
                 label="Add Role to Group"
                 className={classes.textField}

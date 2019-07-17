@@ -159,6 +159,7 @@ export default (state = INIT_STATE, action) => {
       );
       */
       var selectedGroupRoles = action.payload.roles;
+      console.log("here");
       return {
         ...state,
         selectedGroup: action.payload,
