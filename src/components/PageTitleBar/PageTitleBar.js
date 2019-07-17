@@ -11,10 +11,12 @@ import { getAppLayout } from "Helpers/helpers";
 const PageTitleBar = ({
   title,
   createLink,
+  editLink,
   location,
   moreButton,
   extraButtons
 }) => {
+
   return (
     <div className="page-title d-flex justify-content-between align-items-center">
       {title && (
@@ -37,6 +39,7 @@ const PageTitleBar = ({
               </Button>
             );
           })}
+
         {createLink && (
           <Link to={createLink}>
             <Tooltip title="Add New" placement="bottom">
@@ -52,6 +55,12 @@ const PageTitleBar = ({
             </Tooltip>
           </Link>
         )}
+
+
+
+
+
+
         {moreButton && moreButton}
       </div>
     </div>

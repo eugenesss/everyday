@@ -14,6 +14,7 @@ const AddressFormInput = ({
   state,
   zip
 }) => {
+
   return (
     <Table>
       <TableBody>
@@ -27,9 +28,9 @@ const AddressFormInput = ({
           <TableCell colSpan={5} style={{ borderBottom: "none" }}>
             <FormTextField
               value={address_1}
-              handleChange={handleChange}
               target="address_1"
               targetType="address"
+              handleChange={(e, value, target) => handleChange(e, value, target)}
             />
           </TableCell>
         </TableRow>
@@ -43,7 +44,7 @@ const AddressFormInput = ({
           <TableCell colSpan={5} style={{ borderBottom: "none" }}>
             <FormTextField
               value={address_2}
-              handleChange={handleChange}
+              handleChange={(e, value, target) => handleChange(e, value, target)}
               target="address_2"
               targetType="address"
             />
@@ -56,29 +57,29 @@ const AddressFormInput = ({
           <TableCell style={{ borderBottom: "none" }}>
             <FormTextField
               value={city}
-              handleChange={handleChange}
               target="city"
               targetType="address"
+              handleChange={(e, value, target) => handleChange(e, value, target)}
             />
           </TableCell>
-          <TableCell style={{ borderBottom: "none" }} align="right">
+          {/* <TableCell style={{ borderBottom: "none" }} align="right">
             State
-          </TableCell>
-          <TableCell style={{ borderBottom: "none" }}>
+          </TableCell> */}
+          {/* <TableCell style={{ borderBottom: "none" }}>
             <FormTextField
               value={state}
-              handleChange={handleChange}
               target="state"
               targetType="address"
+              handleChange={(e, value, target) => handleChange(e, value, target)}
             />
-          </TableCell>
+          </TableCell> */}
           <TableCell style={{ borderBottom: "none" }} align="right">
             Zip
           </TableCell>
           <TableCell style={{ borderBottom: "none" }}>
             <FormTextField
               value={zip}
-              handleChange={handleChange}
+              handleChange={(e, value, target) => handleChange(e, value, target)}
               target="zip"
               targetType="address"
             />

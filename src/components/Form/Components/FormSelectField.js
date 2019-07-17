@@ -8,17 +8,20 @@ const FormSelectField = ({
   target,
   targetType,
   handleChange,
-  selectValues
+  selectValues,
+  accounting
 }) => {
-  return (
-    <TextField
+  
+  let container = null
+  if(!accounting) {
+    container = (
+      <TextField
       select
       fullWidth
       label={label}
       value={value ? value : ""}
       onChange={e => handleChange(target, e.target.value, targetType)}
       margin="dense"
-      // variant="outlined"
     >
       {selectValues &&
         selectValues.map((select, key) => (
@@ -27,7 +30,28 @@ const FormSelectField = ({
           </MenuItem>
         ))}
     </TextField>
-  );
+    )
+  } else {
+    container = (
+      <TextField
+        select
+        fullWidth
+        label={label}
+        value={value ? value : ""}
+        onChange={e => handleChange(target, e.target.value, targetType)}
+        // onChange={e => console.log(e.target.value)}
+        margin="dense"
+      >
+        {selectValues &&
+          selectValues.map((select, key) => (
+            <MenuItem key={key} value={select}>
+              {select.name}
+            </MenuItem>
+          ))}
+      </TextField>
+    )
+  }
+  return container
 };
 
 export default FormSelectField;

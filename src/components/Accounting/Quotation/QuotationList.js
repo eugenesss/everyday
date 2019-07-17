@@ -2,12 +2,18 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 //Page req
-// import DataList from "Components/Everyday/DataList";
+import MUIDataTable from "mui-datatables";
+import { listOptions } from "Helpers/helpers";
+
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
-const QuotationList = ({ tableData, loading, title, action }) => {
+
+import Moment from 'moment'
+
+const QuotationList = ({loading, title, action, tableData }) => {
+
   const columns = [
     {
       name: "id",
@@ -26,22 +32,47 @@ const QuotationList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Related",
-      name: "account",
+      name: "attn_toId",
       options: {
         customBodyRender: value => {
           return value ? value.name : "";
         }
       }
     },
-    { label: "Amount", name: "totalAmt" },
-    { label: "Date Sent", name: "sentOn" },
-    { label: "Due Date", name: "dueDate" },
-    {
-      label: "Status",
-      name: "status",
+    { label: "Amount", name: "totalAmt",
+      options: {
+        customBodyRender: (value,) => {
+          return value.toFixed(2)
+        }
+      }
+    },
+    { label: "Date Sent", name: "sent_date",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+          return Moment(new Date(value)).format('LL')
+        }
+      }
+    },
+    { label: "Due Date", name: "due_date",
       options: {
         customBodyRender: value => {
-          return value.name;
+          return Moment(new Date(value)).format('LL')
+        }
+      }
+    },
+    { label: "Version", name: "version",
+    options: {
+      customBodyRender: value => {
+        return value
+      }
+    }
+    },
+    {
+      label: "Status",
+      name: "state",
+      options: {
+        customBodyRender: value => {
+          return value;
         }
       }
     }
@@ -74,9 +105,22 @@ const QuotationList = ({ tableData, loading, title, action }) => {
     });
   }
 
+  listOptions.customToolbarSelect = (
+    selectedRows,
+    displayData,
+    setSelectRows
+  ) =>
+    // delete multiple function
+    null;
+
   return (
     <RctCollapsibleCard fullBlock>
-      {/* <DataList title={title} columns={columns} tableData={tableData} /> */}
+      <MUIDataTable
+        title={title}
+        columns={columns}
+        data={tableData}
+        options={listOptions}
+      />
       {loading && <RctSectionLoader />}
     </RctCollapsibleCard>
   );

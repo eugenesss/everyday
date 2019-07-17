@@ -31,7 +31,6 @@ class ProfileLayout extends Component {
   }
 
   componentDidMount() {
-    console.log('profile layout')
     this.props.updateUserStart(this.props.userView)
   }
 
@@ -65,7 +64,6 @@ ProfileLayout.propTypes = {
 };
 
 const mapStateToProps = ({ usersState, uploadFile  }) => {
-  console.log(uploadFile)
   const { me, usersLoading } = usersState;
   return { me, usersLoading };
 };

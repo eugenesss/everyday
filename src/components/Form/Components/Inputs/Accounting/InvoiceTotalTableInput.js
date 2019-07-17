@@ -17,22 +17,34 @@ const InvoiceTotalTableInput = ({ invoice }) => {
           <TableCell colSpan={2}>Subtotal</TableCell>
           <TableCell align="right">{ccyFormat(invoice.subtotal)}</TableCell>
         </TableRow>
-        <TableRow>
-          <TableCell>Discount</TableCell>
-          <TableCell align="right">input %</TableCell>
-          <TableCell align="right">
-            {ccyFormat(invoice.discount_total)}
-          </TableCell>
-        </TableRow>
+       
         <TableRow>
           <TableCell>Tax</TableCell>
-          <TableCell align="right">input %</TableCell>
+          <TableCell align="right"></TableCell>
           <TableCell align="right">{ccyFormat(invoice.tax_amount)}</TableCell>
         </TableRow>
+
+  
+        <TableRow>
+          <TableCell>Discount</TableCell>
+          <TableCell align="right"></TableCell>
+          <TableCell align="right">
+            {invoice.discount_rate? `${invoice.discount_rate}%`: `0%`}
+          </TableCell>
+        </TableRow>
+
+
         <TableRow>
           <TableCell colSpan={2}>Total</TableCell>
-          <TableCell align="right">{ccyFormat(invoice.total)}</TableCell>
+          <TableCell align="right">{ccyFormat(invoice.totalAmt)}</TableCell>
         </TableRow>
+
+        {/* <TableRow>
+          <TableCell rowSpan={4} />
+          <TableCell colSpan={2}>Balance</TableCell>
+          <TableCell align="right">{ccyFormat(invoice.totalAmt)}</TableCell>
+        </TableRow> */}
+
       </TableBody>
     </Table>
   );
