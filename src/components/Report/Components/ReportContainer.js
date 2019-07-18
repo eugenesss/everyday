@@ -150,9 +150,7 @@ class ReportContainer extends Component {
           >
             Apply
           </Button>
-          <div className={!this.props.noPads ? "mt-30 p-30" : ""}>
-            {this.props.children}
-          </div>
+          <div className="rct-block mt-30 p-30">{this.props.children}</div>
         </div>
       </React.Fragment>
     );

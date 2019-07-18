@@ -85,9 +85,13 @@ const getTopSpenderCustomerRequest = async (startDate, endDate) => {
   return result.data.data;
 };
 const getIndividualReportRequest = async (startDate, endDate, userId) => {
-  console.log({ startDate, endDate, userId });
-  const result = {};
-  return result;
+  const result = await api.post("/reports/individualsales", {
+    startDate,
+    endDate,
+    userId
+  });
+  console.log(result);
+  return result.data.data;
 };
 
 //=========================

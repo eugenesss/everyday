@@ -34,7 +34,7 @@ const options = {
 function PeriodSalesChart(props) {
   const labels = props.data.map(label => label.date);
   const data = props.data.map(dat => dat.amount);
-
+  labels.push(props.startDate, props.endDate);
   const chartData = {
     // Labels should be Date objects
     labels,
