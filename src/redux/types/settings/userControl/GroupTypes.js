@@ -21,3 +21,4 @@ export const GET_GROUP_FAILURE = "GET_GROUP_FAILURE";
 
 //State Changes
 export const CHANGE_SELECTED_GROUP = "CHANGE_SELECTED_GROUP";
+export const CHANGE_TIER_NUM = "CHANGE_TIER_NUM";

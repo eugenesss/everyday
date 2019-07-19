@@ -91,7 +91,7 @@ function* updateRoleToDB() {
     const getRole = state => state.rolesState.selectedRole;
     const role = yield select(getRole);
     const data = yield call(updateRoleNameRequest, role.name, role.id);
-    const dataTest = yield call(updateRoleRightRequest, role.id, rights) //NOT WORKING***
+    //const dataTest = yield call(updateRoleRightRequest, role.id, rights) 
     yield put(updateRoleSuccess(data));
   } catch (err) {
     yield put(updateRoleFailure(err));

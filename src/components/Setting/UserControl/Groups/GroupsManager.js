@@ -16,7 +16,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
-import { onChangeUpdateGroup, updateGroup, deleteGroup, onChangeRemoveGroupRole, onChangeAddGroupRole } from "Actions";
+import { onChangeUpdateGroup, updateGroup, deleteGroup, onChangeRemoveGroupRole, onChangeAddGroupRole, onChangeTierNum } from "Actions";
 
 const styles = theme => ({
   root: {
@@ -61,6 +61,7 @@ class GroupsManager extends Component {
       onChangeUpdateGroup,
       onChangeAddGroupRole,
       onChangeRemoveGroupRole,
+      onChangeTierNum,
       removedRoleName,
       addedRoleName,
       deleteGroup
@@ -104,31 +105,34 @@ class GroupsManager extends Component {
               </TableHead>
               <TableBody>
                 {selectedGroupRoles &&
-                  selectedGroupRoles.map(r => {
+                  selectedGroupRoles.map((r, index) => {
                     return (
-                      <TableRow className={classes.row} key={r.id}>
+                      <TableRow className={classes.row} key={index + r.id}>
                         <TableCell component="th" scope="row">
                           {r.name}
                         </TableCell>
                         <TableCell align="center">
                           <Radio
                             checked={r.tier == 1}
-                            value={1}
+                            value={r.id + "-" + 1}
                             color="primary"
+                            onChange={(e, checked) => { onChangeTierNum(e.target.value); }}
                           />
                         </TableCell>
                         <TableCell align="center">
                           <Radio
                             checked={r.tier == 2}
-                            value={2}
+                            value={r.id + "-" + 2}
                             color="primary"
+                            onChange={(e, checked) => { onChangeTierNum(e.target.value); }}
                           />
                         </TableCell>
                         <TableCell align="center">
                           <Radio
                             checked={r.tier == 3}
-                            value={3}
+                            value={r.id + "-" + 3}
                             color="primary"
+                            onChange={(e, checked) => { onChangeTierNum(e.target.value); }}
                           />
                         </TableCell>
                       </TableRow>
@@ -234,5 +238,5 @@ const mapStateToProps = ({ groupsState, rolesState }) => {
 
 export default connect(
   mapStateToProps,
-  { onChangeUpdateGroup, updateGroup, deleteGroup, onChangeAddGroupRole, onChangeRemoveGroupRole }
+  { onChangeUpdateGroup, updateGroup, deleteGroup, onChangeAddGroupRole, onChangeRemoveGroupRole, onChangeTierNum }
 )(withStyles(styles)(GroupsManager));

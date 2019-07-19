@@ -21,6 +21,7 @@ import {
   GET_GROUP_FAILURE,
 
   CHANGE_SELECTED_GROUP,
+  CHANGE_TIER_NUM
 } from "Types";
 
 /**
@@ -97,5 +98,10 @@ export const getGroupFailure = (err) => ({
  */
 export const onChangeSelectedGroup = (newValue) => ({
   type: CHANGE_SELECTED_GROUP,
+  payload: newValue
+});
+
+export const onChangeTierNum = (newValue) => ({
+  type: CHANGE_TIER_NUM,
   payload: newValue
 });
