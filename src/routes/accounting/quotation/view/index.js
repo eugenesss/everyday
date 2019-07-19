@@ -83,8 +83,6 @@ class acct_view_quotation extends Component {
     let buttonCollection = null
     let moreButtons = null
     if(quotation){
-
-      // console.log(quotation)
       
       switch(quotation.state) {
         case "Draft":
@@ -101,6 +99,22 @@ class acct_view_quotation extends Component {
                 <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
+                  onClick={() => this.edit(quotation)}
+                >
+                  Edit Quotation
+                </MatButton>
+                <MatButton
+                  variant="contained"
+                  className="btn-primary mr-10 text-white"
+                  onClick={()=> {
+                    this.props.deleteSingleQuote(this.props.match.params.id)
+                  }}
+                  >
+                  Delete Quotation
+                </MatButton>
+                <MatButton
+                  variant="contained"
+                  className="btn-primary mr-10 text-white"
                   onClick={()=> console.log('To Pdf Print')}
                 >
                   To PDF &amp; Print
@@ -108,23 +122,23 @@ class acct_view_quotation extends Component {
               </div>
             )
 
-            moreButtons = 
-              <MoreButton > 
-              {{
-                label: "Edit", handleOnClick: () => this.edit(quotation)
-              }}
-              {{ 
-                label: "Delete", handleOnClick: (() => {
-                  this.props.deleteSingleQuote(this.props.match.params.id)
-                })
-              }}
-              {{
-                label: "Clone", handleOnClick: ()=> console.log('Clone item')
-              }}
-              {{
-                label: "New Version",handleOnClick: ()=> console.log('Create new version of the quotation')
-              }}
-              </MoreButton>
+            // moreButtons = 
+            //   <MoreButton > 
+            //   {{
+            //     label: "Edit", handleOnClick: () => this.edit(quotation)
+            //   }}
+            //   {{ 
+            //     label: "Delete", handleOnClick: (() => {
+            //       this.props.deleteSingleQuote(this.props.match.params.id)
+            //     })
+            //   }}
+            //   {{
+            //     label: "Clone", handleOnClick: ()=> console.log('Clone item')
+            //   }}
+            //   {{
+            //     label: "New Version",handleOnClick: ()=> console.log('Create new version of the quotation')
+            //   }}
+            //   </MoreButton>
             break
 
         case "Open":
@@ -136,7 +150,36 @@ class acct_view_quotation extends Component {
                   onClick={()=> this.props.HandleStateUpdate(quotation.id, 'Draft')}
                 >
                   Convert to draft
-                </MatButton> */}
+                </MatButton> */}  
+                <MatButton
+                  variant="contained"
+                  className="btn-primary mr-10 text-white"
+                  onClick={() => this.edit(quotation)}
+                >
+                  Edit Quotation
+                </MatButton>
+                <MatButton
+                  variant="contained"
+                  className="btn-primary mr-10 text-white"
+                  onClick={()=> {
+                      if(quotation.version == 1){
+                        this.props.deleteSingleQuote(this.props.match.params.id)
+                      } else {
+                        this.props.HandleStateRevertPreviousVersion(quotation.id, 'Quotation')
+                      }
+                    }}
+                  >
+                    Delete Quotation
+                </MatButton>
+                <MatButton
+                  variant="contained"
+                  className="btn-primary mr-10 text-white"
+                  onClick={()=> {
+                      this.props.HandleStateCreateNewVersion(quotation.id, 'Quotation')
+                  }}
+                >
+                  Create New Quotation Version
+                </MatButton>
                 <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
@@ -154,34 +197,9 @@ class acct_view_quotation extends Component {
                 <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
-                  onClick={()=> this.props.HandleStateCreateNewVersion(quotation.id, 'Quotation')}
-                >
-                  Create New Version
-                </MatButton>
-                <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={() => this.edit(quotation)}
-                >
-                  Edit
-                </MatButton>
-                {quotation.version != 1 &&
-                  quotation.latest && 
-                    <MatButton
-                      variant="contained"
-                      className="btn-primary mr-10 text-white"
-                      onClick={()=> this.props.HandleStateRevertPreviousVersion(quotation.id, 'Quotation')}
-                    >
-                      Delete
-                    </MatButton>
-                }
-                
-                <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
                   onClick={()=> console.log('To Pdf Print')}
                 >
-                  To PDF &amp; Print
+                  Save to PDF &amp; Print
                 </MatButton>
               </div>
             )
@@ -271,6 +289,7 @@ class acct_view_quotation extends Component {
                 owner={quotation.owner.name}
                 price={quotation.totalAmt}
                 version={quotation.version}
+                currency={quotation.currency.name}
               />
             </RctCollapsibleCard>
           </div>

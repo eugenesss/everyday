@@ -48,12 +48,6 @@ class acct_edit_quotation extends Component {
     const {products, quotation} = this.props.quotationForm 
 
 
-    console.log(quotation)
-    console.log(quotation.discount_total)
-    console.log(quotation.discount_rate)
-
-    console.log(quotation.currency)
-
     return loading ? (
       <RctPageLoader />
     ) : quotation.accountId ? (

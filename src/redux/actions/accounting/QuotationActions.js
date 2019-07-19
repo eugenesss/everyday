@@ -215,15 +215,15 @@ export const HandleStateUpdateFailure = (field, value) => ({
   payload: { field, value }
 });
 
-
 export const HandleStateCreateNewVersion = (id, value) => ({
   type: types.HANDLE_STATE_CREATE_NEW_VERSION,
   payload: { id, value }
 });
 
-
-
 export const HandleStateRevertPreviousVersion = (id, value) => ({
   type: types.HANDLE_STATE_REVERT_PREVIOUS_VERSION,
   payload: { id, value }
 });
+
+
+

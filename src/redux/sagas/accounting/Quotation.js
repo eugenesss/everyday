@@ -56,10 +56,9 @@ const submitquoteSummaryRequest = async(item) => {
     description: postData.description,
     details: postData.details,
 
-    quotationline: quotationLine
+    quotationline: quotationLine,
 
-
-
+    userId : postData.owner.id
     // address_1: postData.accountId.baseContact._address.address_1,
     // address_2: postData.accountId.baseContact._address.address_2,
     // city: postData.accountId.baseContact._address.city,
@@ -67,7 +66,7 @@ const submitquoteSummaryRequest = async(item) => {
 
   }
 
-  const result = await api.post("/quotations", quotationData);
+  const result = await api.post("/quotations", {data: quotationData});
   return result.data;
 }
 
@@ -228,7 +227,11 @@ function* submitQuoteSummarytoDB(item) {
 
     try {
       const data = yield call(submitquoteSummaryRequest, item);
-      yield put(Actions.submitNewQuoteSuccess(data));
+      if (data[0] == 0){
+        var error = new Error();
+        throw error
+      }
+      yield put(Actions.submitNewQuoteSuccess(data[1]));
     } catch (error) {
       yield put(Actions.submitNewQuoteFailure(error));
     }

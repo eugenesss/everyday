@@ -43,12 +43,12 @@ const ViewTemplate = ({ order, id, disabled }) => {
             <span>{order.details}</span>
           </div>
 
-          <div className="invoice-address text-right">
+          {/* <div className="invoice-address text-right">
             <h3>{id}</h3>
             <div className="d-flex flex-column">
               <span>Last sent: {moment(order.sent_date).format("LL")}</span>
             </div>
-          </div>
+          </div> */}
       </div>
 
       <div >
