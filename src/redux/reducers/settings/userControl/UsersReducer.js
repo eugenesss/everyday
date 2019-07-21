@@ -16,6 +16,9 @@ import {
   UPDATE_USER,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
+  ON_CHANGE_UPDATE_USER_RIGHTS,
+  UPDATE_USER_RIGHTS,
+  UPDATE_USER_RIGHTS_SUCCESS,
 
   GET_USER_PROFILE,
   GET_USER_PROFILE_SUCCESS,
@@ -64,7 +67,9 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         usersLoading: false,
-        users: action.payload,
+        users: action.payload.users,
+        userSettings: action.payload.settings,
+        accessGroups: action.payload.accessGroups,
         me: action.payload[1] //AuthUser
       }
 
@@ -72,12 +77,26 @@ export default (state = INIT_STATE, action) => {
      * ADD User
      */
     case ON_CHANGE_ADD_USER:
+      var userAdd = {...state.userAdd};
+      if(action.payload.field == "role"){
+        if(userAdd.role == undefined){
+          userAdd.role = [];
+        }
+        var rIndex = userAdd.role.findIndex(role => role == action.payload.value);
+        console.log(rIndex);
+        if(rIndex >= 0){
+          userAdd.role.splice(rIndex,1);
+        }
+        else {
+          userAdd.role.push(action.payload.value);
+        }        
+      }
+      else {
+        userAdd[action.payload.field] = action.payload.value;
+      }      
       return {
         ...state,
-        userAdd: {
-          ...state.userAdd,
-          [action.payload.field]: action.payload.value
-        }
+        userAdd: userAdd
       }
     case ADD_USER:
       return {
@@ -89,6 +108,7 @@ export default (state = INIT_STATE, action) => {
       // var allUsers = Object.assign([], state.users);
       // var users = [...allUsers, action.payload];
       NotificationManager.success("User Added")
+      console.log("here");
       return {
         ...state,
         userAdd: INIT_STATE.userAdd,
@@ -101,6 +121,7 @@ export default (state = INIT_STATE, action) => {
         ...state,
         usersLoading: false
       }
+    
 
     /**
      * UPDATE User
@@ -136,7 +157,34 @@ export default (state = INIT_STATE, action) => {
         ...state,
         profileLoading: false,
       }
-    
+    case ON_CHANGE_UPDATE_USER_RIGHTS:
+      //console.log(action.payload);
+      var userRightsObject = {userid: action.payload.userid, username: action.payload.username, groups: []};
+      for(const grp of action.payload.groups){
+        var grpObject = {id: grp.id, name: grp.name, roles: []};        
+        for(const role of grp.roles){
+          grpObject.roles.push({id: role.id, roleId: role.roleId, name: role.name, tier: role.tier});
+
+        }
+        userRightsObject.groups.push(grpObject);
+      }
+
+      return {
+        ...state,
+        userSettings: userRightsObject
+      }
+    case UPDATE_USER_RIGHTS:
+      return { 
+          ...state,
+          usersLoading: true,
+         };
+    case UPDATE_USER_RIGHTS_SUCCESS:
+        NotificationManager.success("User Updated")
+        return {
+          ...state,
+          usersLoading: false
+        }
+  
 
     /**
      * GET User Profile
@@ -183,10 +231,13 @@ export default (state = INIT_STATE, action) => {
       }
     
     case SHOW_USER_CONTROLS:
+      var allsettings = state.userSettings;
+      var userSetting = allsettings.find( setting => { return action.payload.id == setting.userid});      
       return {
         ...state,
         isUserControl: true,
-        userControl: action.payload
+        userControl: action.payload,
+        userSettings: userSetting
       }
     
     case HIDE_USER_CONTROLS:

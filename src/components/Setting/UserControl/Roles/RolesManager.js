@@ -79,7 +79,7 @@ class RoleManager extends Component {
       else return false;
     } else return false;
   }
-  handleChange(selectedRight) {
+  handleChange(selectedRight, checked) {
 
     var selectedRoleRights = this.props.selectedRoleRights.slice();
     if (selectedRoleRights.find(right => right.id == selectedRight.id)) {
@@ -208,8 +208,8 @@ class RoleManager extends Component {
                                               !md.editable
                                             }
                                             value={`${md.id}`}
-                                            onChange={() =>
-                                              this.handleChange(md)
+                                            onChange={(evt, checked) =>
+                                              this.handleChange(md, checked)
                                             }
                                           />
                                         </TableCell>
@@ -251,8 +251,8 @@ class RoleManager extends Component {
                                           !model[i].editable
                                         }
                                         value={`${model[i].id}`}
-                                        onChange={() =>
-                                          this.handleChange(model[i])
+                                        onChange={(evt, checked) =>
+                                          this.handleChange(model[i], checked)
                                         }
                                       />
                                     </TableCell>

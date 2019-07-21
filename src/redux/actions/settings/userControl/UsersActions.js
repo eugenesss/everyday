@@ -15,6 +15,9 @@ import {
   UPDATE_USER,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
+  ON_CHANGE_UPDATE_USER_RIGHTS,
+  UPDATE_USER_RIGHTS,
+  UPDATE_USER_RIGHTS_SUCCESS,
 
   GET_USER_PROFILE,
   GET_USER_PROFILE_SUCCESS,
@@ -35,9 +38,9 @@ import {
 export const getAllUsers = () => ({
   type: GET_ALL_USERS
 });
-export const getAllUsersSuccess = (users) => ({
+export const getAllUsersSuccess = (users, settings, groups) => ({
   type: GET_ALL_USERS_SUCCESS,
-  payload: users
+  payload: { users: users, settings: settings, accessGroups: groups }
 });
 
 
@@ -83,6 +86,17 @@ export const updateUserFailure = (err) => ({
   type: UPDATE_USER_FAILURE,
   payload: err
 })
+export const onChangeUpdateUserRights = (rights) => ({
+  type: ON_CHANGE_UPDATE_USER_RIGHTS,
+  payload: rights
+});
+export const updateUserRights = () => ({
+  type: UPDATE_USER_RIGHTS
+});
+export const updateUserRightsSuccess = (userRights) => ({
+  type: UPDATE_USER_RIGHTS_SUCCESS,
+  payload: userRights
+});
 
 /**
  * GET User Profile Start

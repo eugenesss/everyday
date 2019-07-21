@@ -13,6 +13,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import {
+  onChangeUpdateUserRights, updateUserRights
+} from "Actions";
 
 const styles = theme => ({
   textField: {
@@ -40,13 +43,42 @@ class UserControlForm extends Component {
     super(props);
   }
 
+  handleChange(groupId, selectedGroupRole) {
+    var userSettings = this.props.userSettings;
+    var groupFound = false
+    for(const gid in userSettings.groups){
+      if(userSettings.groups[gid].id == groupId) {
+        groupFound = true;
+        var rIndex =userSettings.groups[gid].roles.findIndex(role => { return role.id == selectedGroupRole.id});
+        if(rIndex >= 0){
+          userSettings.groups[gid].roles.splice(rIndex, 1);
+        }
+        else {
+          userSettings.groups[gid].roles.push(selectedGroupRole);
+        }                
+        break;
+      }
+      
+    }
+    if(!groupFound){
+      var accessGroups = this.props.accessGroups;
+      var group = accessGroups.find(grp => { return grp.id == groupId});
+      var grpObject = {id: group.id, name: group.name, roles: []};
+      grpObject.roles.push(selectedGroupRole);
+      userSettings.groups.push(grpObject);
+    }
+    //console.log(userSettings);
+    this.props.onChangeUpdateUserRights(userSettings);
+
+  }
+
   render() {
     const {
       userControl,
-      accessGroupRoles,
-      accessRoles,
+      userSettings,
       accessGroups,
-      classes
+      classes,
+      updateUserRights
     } = this.props;
     return (
       <Form>
@@ -64,41 +96,39 @@ class UserControlForm extends Component {
               // error={}
               multiple
               value={[""]}
-              onChange={e => console.log(e.target.value)}
-              // renderValue={selected => (
-              //   <div className={classes.chips}>
-              //     {selected.map((value) => {
-              //       return (
-              //         <Chip key={value} label={value.role.name + " (" + value.group.name + ")"} className={classes.chip} />
-              //       )
-              //     })}
-              //   </div>
-              // )}
             >
-              {accessGroupRoles.map(groupRole => {
-                const role = accessRoles.find(
-                  role => role.id == groupRole.accessRoleId
-                );
-                const group = accessGroups.find(
-                  group => group.id == groupRole.accessGroupId
-                );
-                return (
-                  <MenuItem key={groupRole.id} value={groupRole}>
-                    <Checkbox
-                      color="primary"
-                      //checked={ userControl.access.indexOf(groupRole.id) > -1}
-                    />
-                    <ListItemText
-                      primary={
-                        (role ? role.name : "") +
-                        " (" +
-                        (group ? group.name : "") +
-                        ")"
+              {
+                accessGroups.map(group => {
+                  var items = [];
+                  var userGroup = userSettings.groups.find(grp => {return grp.id == group.id});
+                  for(const groupRole of group.roles){
+                    var selected = false;
+                    var grpId = group.id
+                    if(userGroup != undefined){
+                      var userRole = userGroup.roles.find(rl => { return rl.id == groupRole.id});
+                      if(userRole != undefined){
+                        selected = true;
                       }
-                    />
-                  </MenuItem>
-                );
-              })}
+                    }
+                    items.push(
+                      <MenuItem key={groupRole.id} value={groupRole}>
+                        <Checkbox
+                          color="primary"
+                          checked={ selected}
+                          value={""}
+                          onChange={ (evt, checked) => {
+                            this.handleChange(grpId, groupRole) } }
+                        />
+                        <ListItemText
+                          primary={ groupRole.name +"-"+group.name+" ("+groupRole.tier+")"}
+                        />
+                      </MenuItem>
+                    );
+                  }
+                
+                return items;
+              })
+            }
             </Select>
           </Col>
           <Col>
@@ -106,6 +136,7 @@ class UserControlForm extends Component {
               variant="contained"
               color="primary"
               className="text-white ml-10"
+              onClick={() => updateUserRights()}
             >
               Save
             </Button>
@@ -163,14 +194,12 @@ UserControlForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ usersState, groupsState, rolesState }) => {
-  const { userControl } = usersState;
-  const { accessRoles } = rolesState;
-  const { accessGroups, accessGroupRoles } = groupsState;
-  return { userControl, accessRoles, accessGroups, accessGroupRoles };
+const mapStateToProps = ({ usersState }) => {
+  const { userControl, userSettings, accessGroups } = usersState;
+  return { userControl, userSettings, accessGroups };
 };
 
 export default connect(
   mapStateToProps,
-  {}
+  { onChangeUpdateUserRights, updateUserRights }
 )(withStyles(styles)(UserControlForm));

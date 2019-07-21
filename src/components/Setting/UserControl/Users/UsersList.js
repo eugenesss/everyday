@@ -165,7 +165,7 @@ class UsersList extends Component {
                 <i className={"zmdi zmdi-refresh " + classes.icon} />
               </IconButton>
             </Tooltip>
-            <AccessControl action={["User:create"]}>
+            <AccessControl action={["BaseUser:create"]}>
               <Tooltip id="tooltip-icon" title="Add User">
                 <IconButton
                   className="text-secondary mr-2"
