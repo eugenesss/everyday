@@ -7,6 +7,26 @@ import api from "Api";
 //=========================
 // REQUESTS
 //=========================
+
+const getAllEventsRequestWithFilter = async (start, end) => {
+
+  try {
+    // const result = await api.get(`/events?filter[where][start][lt]=2019-07-18T02:38:03.197Z`);
+    // const stringify = {where: {start: {gt: "2019-07-18T02:38:03.197Z"}}}
+    // const result = await api.get(`/events?filter={where: {start: {gt: "2019-07-18T02:38:03.197Z"}}}`)
+    
+    // const result = await api.get(`events?filter[where][start][gte]=${start}&filter[where][end][lte]=${end}&`);
+    // const result = await api.get(`events?filter[where][start][gte]=${start}&filter[where][end][lte]=${end}&filter[order]=start ASC&`);
+    const result = await api.get(`events?filter[where][end][gt]=${start}&filter[where][end][lt]=${end}&filter[order]=start ASC&`);
+
+    return result.data;
+
+  } catch (err) {
+    return err;
+  }
+};
+
+
 const getAllEventsRequest = async () => {
   try {
     const result = await api.get("/events");
@@ -16,26 +36,45 @@ const getAllEventsRequest = async () => {
   }
 };
 
+
 //=========================
 // CALL(GENERATOR) ACTIONS
 //=========================
-function* getAllEventsFromDB() {
-  try {
-    // const getMe = state => state.usersState.me
-    // console.log('getMe')
-    // console.log(getMe)
-    // const me = yield select(getMe)
-    // console.log(me)
-    let myEvents = yield call(getAllEventsRequest);
-    myEvents.map(item => {
-      item.start = new Date(item.start);
-      item.end = new Date(item.end);
-      return;
-    });
-    yield put(Actions.getAllEventsSuccess(myEvents, myEvents));
-  } catch (err) {
-    yield put(Actions.getEventFailure(err));
+function* getAllEventsFromDB(item) {
+  const {payload} = item
+
+  if(payload.filter){
+
+    try {
+      let myEvents = yield call(getAllEventsRequestWithFilter, payload.start, payload.end);
+      myEvents.map(item => {
+        item.start = new Date(item.start);
+        item.end = new Date(item.end);
+        return;
+      });
+      yield put(Actions.getAllEventsSuccess(myEvents, myEvents));
+    } catch (err) {
+      yield put(Actions.getEventFailure(err));
+    }
+
+
+  } else {
+
+    try {
+      let myEvents = yield call(getAllEventsRequest);
+      myEvents.map(item => {
+        item.start = new Date(item.start);
+        item.end = new Date(item.end);
+        return;
+      });
+      yield put(Actions.getAllEventsSuccess(myEvents, myEvents));
+    } catch (err) {
+      yield put(Actions.getEventFailure(err));
+    }
+
   }
+
+  
 }
 
 const addEventRequest = async newEvent => {

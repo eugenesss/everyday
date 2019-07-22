@@ -44,6 +44,7 @@ export default (state = INIT_STATE, action) => {
         showEvents: action.payload.myEvents,
         eventsLoading: false
       }
+
     case Types.GET_EVENT_FAILURE:
       NotificationManager.warning("Failed to get events from database.")
       return {
@@ -209,6 +210,11 @@ export default (state = INIT_STATE, action) => {
         isAddEvent: false
       };
 
+
+  
+
+
+      
     default:
       return { ...state };
   }
