@@ -25,6 +25,7 @@ class CalendarLayout extends Component {
         return (
             <div style={{display:'flex', flexDirection:'column'}}>
                 <Calendar
+                    className="react-calendar"
                     returnValue="range"
                     value = {[new Date(), new Date(Moment(new Date()).add(numberOfDays, 'day'))]}
                 />
