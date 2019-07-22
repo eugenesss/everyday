@@ -25,7 +25,7 @@ class CustomerForm extends Component {
     this.checkDisabled = this.checkDisabled.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.getCustomerFormFields();
     if (this.props.edit) this.setState({ customer: this.props.edit });
   }

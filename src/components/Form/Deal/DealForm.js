@@ -23,7 +23,7 @@ class DealForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.getDealFormFields();
     if (this.props.edit) this.setState({ deal: this.props.edit });
   }

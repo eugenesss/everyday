@@ -47,7 +47,7 @@ class crm_view_deal extends Component {
     this.addNote = this.addNote.bind(this);
     this.transfer = this.transfer.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleDeal(id);
   }

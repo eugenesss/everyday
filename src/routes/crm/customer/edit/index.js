@@ -16,7 +16,7 @@ import CustomerForm from "Components/Form/Customer/CustomerForm";
 import { editCustomer, getSingleCustomer } from "Actions";
 
 class crm_edit_customer extends Component {
-  componentWillMount() {
+  componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleCustomer(id);
   }

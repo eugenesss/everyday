@@ -15,7 +15,7 @@ class crm_import_lead extends Component {
     this.importLeadRecord = this.importLeadRecord.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchImportMapping("leads");
   }
   importLeadRecord(file) {

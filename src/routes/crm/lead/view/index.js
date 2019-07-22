@@ -50,7 +50,7 @@ class crm_view_lead extends Component {
     this.transfer = this.transfer.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleLead(id);
   }

@@ -9,13 +9,13 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import RolesList from "Components/Setting/UserControl/Roles/RolesList";
 import RolesManager from "Components/Setting/UserControl/Roles/RolesManager";
-import { getAllRoles } from "Actions"
+import { getAllRoles } from "Actions";
 
 class RolesLayout extends Component {
   constructor(props) {
     super(props);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.getAllRoles();
   }
 

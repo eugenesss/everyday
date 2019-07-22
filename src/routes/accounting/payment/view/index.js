@@ -29,7 +29,7 @@ import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices"
 import { getSinglePayment, clearSinglePayment } from "Actions";
 
 class acct_view_payment extends Component {
-  componentWillMount() {
+  componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSinglePayment(id);
   }

@@ -39,6 +39,9 @@ import importRecordSagas from "./import/Import";
 // reports
 import reportSagas from "./report/Report";
 
+// widgets
+import widgetSagas from "./widget/Widget";
+
 export default function* rootSaga(getState) {
   yield all([
     calendarSagas(),
@@ -60,6 +63,7 @@ export default function* rootSaga(getState) {
     registerSagas(),
     uploadFileSagas(),
     importRecordSagas(),
-    reportSagas()
+    reportSagas(),
+    widgetSagas()
   ]);
 }

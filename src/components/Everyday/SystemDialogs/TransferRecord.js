@@ -14,7 +14,7 @@ class TransferRecordModal extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.getAllUsers();
   }
   onChange(field, val) {

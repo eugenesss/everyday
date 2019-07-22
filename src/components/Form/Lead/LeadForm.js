@@ -28,7 +28,7 @@ class LeadForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getLeadFormFields();
     if (this.props.edit) this.setState({ lead: this.props.edit });
   }

@@ -41,7 +41,7 @@ import { getSingleQuotation, clearSingleQuotation, deleteSingleQuote, addNoteQuo
 
 class acct_view_quotation extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleQuotation(id);
   }

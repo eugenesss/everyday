@@ -22,7 +22,7 @@ class AccountForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.getAccountFormFields();
     if (this.props.edit) this.setState({ account: this.props.edit });
   }

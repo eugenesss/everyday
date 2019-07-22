@@ -33,7 +33,7 @@ const styles = () => ({
 });
 
 class Settings extends Component {
-  componentWillMount() {
+  componentDidMount() {
     //this.props.getAllUsers();
     //this.props.getAllRoles();
     //this.props.getAllGroups();

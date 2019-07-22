@@ -90,7 +90,6 @@ const getIndividualReportRequest = async (startDate, endDate, userId) => {
     endDate,
     userId
   });
-  console.log(result);
   return result.data.data;
 };
 

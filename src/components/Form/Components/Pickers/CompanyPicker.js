@@ -95,7 +95,7 @@ class CompanyPicker extends Component {
     suggestions: []
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getAllAccount();
   }
 

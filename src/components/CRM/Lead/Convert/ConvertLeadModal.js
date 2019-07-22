@@ -34,7 +34,7 @@ class ConvertLeadModal extends Component {
     this.convertLead = this.convertLead.bind(this);
     this.handleAccountSelect = this.handleAccountSelect.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.getDealStage();
   }
 

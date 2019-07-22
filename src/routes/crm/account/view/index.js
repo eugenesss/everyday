@@ -52,7 +52,7 @@ class crm_view_account extends Component {
     this.handleNewDeal = this.handleNewDeal.bind(this);
     this.addNote = this.addNote.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleAccount(id);
   }

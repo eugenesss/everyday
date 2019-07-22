@@ -33,7 +33,7 @@ import { getSingleQuotation, clearSingleQuotation, deleteSingleQuote, addNewProd
 class acct_edit_quotation extends Component {
 
 
-  componentWillMount() {
+  componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleQuotation(id, true);
   }

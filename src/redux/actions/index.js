@@ -23,6 +23,8 @@ export * from "./accounting/PaymentActions";
 export * from "./system/ReportActions";
 // Import Record Actions
 export * from "./system/ImportActions";
+// Widget Actions
+export * from "./system/WidgetActions";
 
 // Calendar Actions
 export * from "./calendar/CalendarActions";
