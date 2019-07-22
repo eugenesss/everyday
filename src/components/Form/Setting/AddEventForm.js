@@ -228,13 +228,13 @@ class UpdatePasswordForm extends Component {
             style={{marginBottom: 50}}
           >Add</Button>
 
-          <Button
+          {/* <Button
             variant="contained"
             color="primary"
             className="text-white mb-10 mt-20"
             onClick={() => this.AutoFill()}
             style={{marginBottom: 50}}
-          >Auto Fill For Debug</Button>
+          >Auto Fill For Debug</Button> */}
 
 
         </Row>
