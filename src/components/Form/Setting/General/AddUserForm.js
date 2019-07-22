@@ -46,7 +46,7 @@ class AddUserForm extends Component {
       classes,
 
       userAdd,
-      roles,
+      accessGroups,
 
       addUser,
       onChangeAddUser
@@ -109,6 +109,36 @@ class AddUserForm extends Component {
             />
           </Col>
         </Row>
+        <Row form>
+          <Col md={6}>
+            <TextField
+              value={userAdd.password || ""}
+              required
+              type="password"
+              error={!userAdd.password}
+              className={classes.textField}
+              onChange={e => onChangeAddUser("password", e.target.value)}
+              id="email"
+              label="Password"
+              margin="normal"
+              variant="outlined"
+            />
+          </Col>
+          <Col md={6}>
+            <TextField
+              value={userAdd.repeatpass || ""}
+              required
+              type="password"
+              error={userAdd.password != userAdd.repeatpass}
+              className={classes.textField}
+              onChange={e => onChangeAddUser("repeatpass", e.target.value)}
+              id="contact"
+              label="password"
+              margin="normal"
+              variant="outlined"
+            />
+          </Col>
+        </Row>
         <Row form className={classes.fullWidth}>
           <Col md={12}>
             <InputLabel htmlFor="role" style={{ fontSize: "0.8rem" }}>
@@ -119,18 +149,17 @@ class AddUserForm extends Component {
               style={{ height: "40px", marginTop: "-0.5rem" }}
               multiple
               input={<Input id="role" />}
-              value={
-                userAdd
-                  ? userAdd.role.id
-                    ? userAdd.role.id
-                    : userAdd.role
-                  : []
-              }
-              onChange={e => onChangeAddUser("role", e.target.value)}
+              value={ userAdd && userAdd.role ? userAdd.role : []}              
               renderValue={selected => (
                 <div className={classes.chips}>
-                  {selected.map(function(value) {
-                    var role = roles.find(role => role.id == value);
+                  {selected.map(function(value) {                    
+                    for(const grp of accessGroups){
+                      var role = grp.roles.find(role => role.id == value);
+                      if(role !== undefined){
+                        break;
+                      }
+                    }
+                   
                     return (
                       <Chip
                         key={value}
@@ -142,23 +171,32 @@ class AddUserForm extends Component {
                 </div>
               )}
             >
-              {roles.map(function(role) {
-                return (
-                  <MenuItem
-                    key={role.id}
-                    value={role.id}
-                    disabled={role.name == "Member"}
-                  >
-                    <Checkbox
-                      color="primary"
-                      checked={
-                        userAdd.role.indexOf(role.id) > -1 ||
-                        role.name == "Member"
+              {accessGroups.map(function(group) {
+                var items = [];
+                  for(const role of group.roles){
+                    var selectedItem = false || role.name == "Member";
+                    for(var i in userAdd.role){
+                      if(userAdd.role[i] == role.id){
+                        selectedItem = true;
                       }
-                    />
-                    <ListItemText primary={role.name} />
-                  </MenuItem>
-                );
+                    }                                       
+                    items.push(
+                      <MenuItem
+                      key={role.id}
+                      value={role.id}
+                      disabled={role.name == "Member"}
+                    >
+                      <Checkbox
+                        color="primary"
+                        checked={ selectedItem }
+                        value={role.id}
+                        onChange={e => onChangeAddUser("role", e.target.value)}
+                      />
+                      <ListItemText primary={role.name+"-"+group.name+" ("+role.tier+")"} />
+                    </MenuItem>
+                    );
+                  }   
+                return items;
               })}
             </Select>
           </Col>
@@ -175,6 +213,8 @@ class AddUserForm extends Component {
               !userAdd.email ||
               !this.validateEmail(userAdd.email) ||
               !userAdd.contact ||
+              !userAdd.password ||
+              userAdd.password != userAdd.repeatpass ||
               userAdd.role.length == 0
             }
           >
@@ -190,10 +230,9 @@ AddUserForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ usersState, rolesState }) => {
-  const { userAdd } = usersState;
-  const { roles } = rolesState;
-  return { userAdd, roles };
+const mapStateToProps = ({ usersState }) => {
+  const { userAdd, accessGroups } = usersState; 
+  return { userAdd, accessGroups };
 };
 
 export default connect(

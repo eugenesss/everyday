@@ -50,7 +50,7 @@ const updateRoleNameRequest = async (roleName, roleId) => {
   return result.data;
 };
 const updateRoleRightRequest = async (roleId, rights) => {
-  const result = await api.patch(`accessRoles/${roleId}/accessRights`, { data: rights })
+  const result = await api.post(`accessRoles/saveRights`, { id: roleId, rights: rights })
   return result.data
 }
 
@@ -90,8 +90,8 @@ function* updateRoleToDB() {
     const rights = yield select(getRights)
     const getRole = state => state.rolesState.selectedRole;
     const role = yield select(getRole);
-    const data = yield call(updateRoleNameRequest, role.name, role.id);
-    const dataTest = yield call(updateRoleRightRequest, role.id, rights) //NOT WORKING***
+    yield call(updateRoleNameRequest, role.name, role.id);
+    const data = yield call(updateRoleRightRequest, role.id, rights) 
     yield put(updateRoleSuccess(data));
   } catch (err) {
     yield put(updateRoleFailure(err));

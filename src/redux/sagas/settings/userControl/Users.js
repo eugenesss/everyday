@@ -7,9 +7,11 @@ import {
   updateUserSuccess,
   updateUserFailure,
   getUserProfileSuccess,
-  getUserFailure
+  getUserFailure,
+  updateUserRightsSuccess
 } from "Actions";
 import api from "Api";
+import { UPDATE_USER_RIGHTS } from "../../../types/settings/userControl/UserTypes";
 
 //=========================
 // REQUESTS
@@ -18,9 +20,20 @@ const getAllUsersRequest = async () => {
   const result = await api.get("/users");
   return result.data;
 };
+
+const getAllSettingsRequest = async () => {
+  const result = await api.post("/accesssettings/viewall");
+  return result.data.data;
+}
+
+const getAllGroupsRequest = async () => {
+  const result = await api.post(`/accessgroups/viewall`)
+  return result.data.data
+}
+
 const addUserRequest = async newUser => {
-  const result = newUser;
-  return result;
+  const result = await api.post("/users", newUser);
+  return result.data;
 };
 const updateUserRequest = async user => {
   const result = user;
@@ -31,13 +44,21 @@ const getUserProfileRequest = async userID => {
   return result.data;
 };
 
+const updateUserRights = async (userId, rights) => {
+  const result = await api.post("/accesssettings/saveUserRights", {saveUserId: userId, rights: rights});
+  return result.data;
+}
+
+
 //=========================
 // CALL(GENERATOR) ACTIONS
 //=========================
 function* getAllUsersFromDB() {
   try {
     const data = yield call(getAllUsersRequest);
-    yield put(getAllUsersSuccess(data));
+    const settings = yield call(getAllSettingsRequest);
+    const groups = yield call(getAllGroupsRequest);
+    yield put(getAllUsersSuccess(data, settings, groups));
   } catch (err) {
     yield put(getUserFailure(err));
   }
@@ -45,8 +66,17 @@ function* getAllUsersFromDB() {
 function* addUserToDB() {
   const getNewUser = state => state.usersState.userAdd;
   const newUser = yield select(getNewUser);
+  newUser.name = newUser.firstName +" "+newUser.lastName;
+
   try {
-    const data = yield call(addUserRequest, newUser);
+    var userdata= {roles: []};
+    for(const role of newUser.role){
+      userdata.roles.push({id: role});
+    } 
+    newUser.role = [];
+    const data = yield call(addUserRequest, newUser);    
+    
+    const data2 = yield call(updateUserRights, data.id, [userdata]);    
     yield put(addUserSuccess(data));
   } catch (err) {
     yield put(addUserFailure(err));
@@ -70,6 +100,17 @@ function* getUserProfileFromDB({ payload }) {
     yield put(getUserFailure(err));
   }
 }
+function* updateUserRightsToDB() {
+  const getUserSettings = state => state.usersState.userSettings;
+  const user = yield select(getUserSettings);  
+  try {
+    const data = yield call(updateUserRights, user.userid, user.groups);
+    yield put(updateUserRightsSuccess(data));
+  } catch (err) {
+    yield put(updateUserFailure(err));
+  }
+}
+
 
 //=======================
 // WATCHER FUNCTIONS
@@ -86,6 +127,10 @@ export function* updateUserWatcher() {
 export function* getUserProfileWatcher() {
   yield takeEvery(GET_USER_PROFILE, getUserProfileFromDB);
 }
+export function* updateUserRightsWatcher() {
+  yield takeEvery(UPDATE_USER_RIGHTS, updateUserRightsToDB);
+}
+
 
 //=======================
 // FORK SAGAS TO STORE
@@ -96,6 +141,7 @@ export default function* rootSaga() {
     fork(getAllUsersWatcher),
     fork(addUserWatcher),
     fork(updateUserWatcher),
-    fork(getUserProfileWatcher)
+    fork(getUserProfileWatcher),
+    fork(updateUserRightsWatcher)
   ]);
 }
