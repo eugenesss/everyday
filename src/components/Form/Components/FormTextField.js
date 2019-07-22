@@ -12,12 +12,14 @@ const FormTextField = ({
   return (
     <TextField
       label={label}
-      defaultValue={value}
+      value={value}
       onChange={e => handleChange(target, e.target.value, targetType)}
       fullWidth
       margin="dense"
       // variant="outlined"
       disabled={disabled}
+      autoComplete={value ? value : ""}
+      inputProps={{ autoComplete: "nope" }}
     />
   );
 };

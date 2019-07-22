@@ -128,10 +128,11 @@ function* getAccountFromDB({ payload }) {
   }
 }
 function* postAccountToDB({ payload }) {
+  const { form, redirect } = payload;
   try {
-    const data = yield call(postAccountRequest, payload);
+    const data = yield call(postAccountRequest, form);
     yield delay(500);
-    window.location.replace(singleAccount(data.id));
+    if (redirect) window.location.replace(singleAccount(data.id));
     yield put(newAccountSuccess(data));
   } catch (error) {
     yield put(newAccountFailure(error));

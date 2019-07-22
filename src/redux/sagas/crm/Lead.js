@@ -162,10 +162,11 @@ function* getLeadSummaryFromDB() {
   }
 }
 function* postLeadToDB({ payload }) {
+  const { form, redirect } = payload;
   try {
-    const data = yield call(postLeadRequest, payload);
+    const data = yield call(postLeadRequest, form);
     yield delay(500);
-    window.location.replace(singleLead(data.id));
+    if (redirect) window.location.replace(singleLead(data.id));
     yield put(newLeadSuccess(data));
   } catch (error) {
     yield put(newLeadFailure(error));

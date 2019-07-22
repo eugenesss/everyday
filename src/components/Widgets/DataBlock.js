@@ -11,10 +11,10 @@ const DataBlock = ({ label, amount, money, increase }) => (
         <h3>{label}</h3>
       </div>
       <div className="align-items-end">
-        <span className="d-block text-muted counter-point">
+        <h2 className="d-block text-muted counter-point">
           {money && "$"}
-          <CountUp start={0} end={amount} duration={3} useEasing={true} />
-        </span>
+          <CountUp start={0} end={amount} duration={1} useEasing={true} />
+        </h2>
         {/* <p className="text-right mb-0 text-muted">+54%</p> */}
       </div>
     </div>
