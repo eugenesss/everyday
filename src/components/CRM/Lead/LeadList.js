@@ -7,7 +7,6 @@ import { NavLink } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
 import { listOptions } from "Helpers/helpers";
 import { singleLead } from "Helpers/url/crm";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 
@@ -38,42 +37,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
       name: "baseContact",
       options: {
         customBodyRender: value => {
-          return value ? value.email : "";
-        }
-      }
-    },
-    {
-      label: "Status",
-      name: "statusInfo",
-      options: {
-        customBodyRender: value => {
-          return value ? (
-            <StatusBadge
-              name={value.name}
-              color={value.color}
-              value={value.name}
-            />
-          ) : (
-            ""
-          );
-        }
-      }
-    },
-    {
-      label: "Source",
-      name: "sourceInfo",
-      options: {
-        customBodyRender: value => {
-          return value ? value.name : "";
-        }
-      }
-    },
-    {
-      label: "Interest Level",
-      name: "interest",
-      options: {
-        customBodyRender: value => {
-          return <LeadInterestLevel interest={value} />;
+          return value.email ? value.email : "";
         }
       }
     },
@@ -81,19 +45,49 @@ const LeadList = ({ tableData, loading, title, action }) => {
       label: "Mobile",
       name: "baseContact",
       options: {
-        display: false,
         customBodyRender: value => {
-          return value.mobile ? value.mobile : " ";
+          return value.mobile ? value.mobile : "";
         }
       }
     },
     {
+      label: "Status",
+      name: "statusInfo",
+      options: {
+        customBodyRender: value =>
+          value ? (
+            <StatusBadge
+              name={value.name}
+              color={value.color}
+              value={value.name}
+            />
+          ) : (
+            ""
+          )
+      }
+    },
+    {
+      label: "Source",
+      name: "sourceInfo",
+      options: {
+        customBodyRender: value => (value ? value.name : " ")
+      }
+    },
+    {
+      label: "Interest Level",
+      name: "interest",
+      options: {
+        sort: false,
+        customBodyRender: value => <LeadInterestLevel interest={value} />
+      }
+    },
+
+    {
       label: "Owner",
       name: "userInfo",
       options: {
-        display: false,
         customBodyRender: value => {
-          return value ? value.name : " ";
+          return value ? value.name : "";
         }
       }
     },
@@ -103,7 +97,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
       options: {
         display: false,
         customBodyRender: value => {
-          return value ? value : " ";
+          return value ? value : "";
         }
       }
     },
@@ -113,7 +107,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
       options: {
         display: false,
         customBodyRender: value => {
-          return value.website ? value.website : " ";
+          return value.website ? value.website : "";
         }
       }
     },
@@ -123,7 +117,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
       options: {
         display: false,
         customBodyRender: value => {
-          return value.office ? value.phone : " ";
+          return value.office ? value.phone : "";
         }
       }
     },
@@ -133,7 +127,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
       options: {
         display: false,
         customBodyRender: value => {
-          return value.fax ? value.fax : " ";
+          return value.fax ? value.fax : "";
         }
       }
     }
@@ -172,7 +166,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
     // delete multiple function
     null;
   return (
-    <RctCollapsibleCard fullBlock>
+    <div className="rct-block">
       <MUIDataTable
         title={title}
         columns={columns}
@@ -180,7 +174,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
         options={listOptions}
       />
       {loading && <RctSectionLoader />}
-    </RctCollapsibleCard>
+    </div>
   );
 };
 

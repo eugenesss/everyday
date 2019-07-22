@@ -115,12 +115,16 @@ export default (state = INIT_STATE, action) => {
         leadList: { ...state.leadList, loading: true }
       };
     case types.GET_LEAD_SUCCESS:
+      // sort by createdAt
+      var defaultSort = action.payload.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
       return {
         ...state,
         leadList: {
           ...state.leadList,
           loading: false,
-          tableData: action.payload
+          tableData: defaultSort
         }
       };
 

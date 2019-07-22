@@ -68,12 +68,16 @@ export default (state = INIT_STATE, action) => {
         customerList: { ...state.customerList, loading: true }
       };
     case types.GET_CUSTOMER_SUCCESS:
+      // sort by createdAt
+      var defaultSort = action.payload.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
       return {
         ...state,
         customerList: {
           ...state.customerList,
           loading: false,
-          tableData: action.payload
+          tableData: defaultSort
         }
       };
 

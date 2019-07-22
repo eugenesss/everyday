@@ -73,9 +73,7 @@ class CustomerForm extends Component {
 
   checkDisabled() {
     const disabled =
-      this.state.customer.baseContact.firstName &&
-      this.state.customer.baseContact.lastName &&
-      this.state.customer.userId;
+      this.state.customer.baseContact.lastName && this.state.customer.userId;
     return disabled;
   }
 
@@ -99,7 +97,6 @@ class CustomerForm extends Component {
               handleChange={this.handleChange}
               target="firstName"
               targetType="baseContact"
-              required
             />
             {!edit && (
               <FormBlock

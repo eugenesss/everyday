@@ -33,6 +33,7 @@ import {
   getDealFormSuccess,
   getDealFormFailure
 } from "Actions";
+
 import { singleDeal } from "Helpers/url/crm";
 
 import api from "Api";
@@ -107,25 +108,20 @@ function* changeDealList({ payload }) {
     if (payload == "All Deals") {
       // All Deals
       data = yield call(getAllDealRequest);
-      yield delay(500);
       yield put(getDealSuccess(data));
     } else if (payload == "Open Deals") {
       // Open Deals
       data = yield call(getOpenDealRequest);
-      yield delay(500);
       yield put(getDealSuccess(data));
     } else if (payload == "Closed Deals") {
       // Open Deals
       data = yield call(getClosedDealRequest);
-      yield delay(500);
       yield put(getDealSuccess(data));
     } else if (payload == "Won Deals") {
       // Open Deals
       data = yield call(getWonDealRequest);
-      yield delay(500);
       yield put(getDealSuccess(data));
     } else {
-      yield delay(500);
       data = yield call(getAllDealRequest);
       yield put(getDealSuccess(data));
     }
@@ -136,7 +132,6 @@ function* changeDealList({ payload }) {
 function* getAllDealFromDB() {
   try {
     const data = yield call(getAllDealRequest);
-    yield delay(500);
     yield put(getDealSuccess(data));
   } catch (error) {
     yield put(getDealFailure(error));
@@ -145,7 +140,6 @@ function* getAllDealFromDB() {
 function* getDealFromDB({ payload }) {
   try {
     const data = yield call(getDealRequest, payload);
-    yield delay(500);
     yield put(getSingleDealSuccess(data));
   } catch (error) {
     yield put(getDealFailure(error));
@@ -163,6 +157,7 @@ function* postDealToDB({ payload }) {
   try {
     const data = yield call(postDealRequest, payload);
     yield delay(500);
+    window.location.replace(singleDeal(data.id));
     yield put(newDealSuccess(data));
   } catch (error) {
     yield put(newDealFailure(error));

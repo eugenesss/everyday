@@ -116,25 +116,20 @@ function* changeLeadList({ payload }) {
     if (payload == "All Leads") {
       // All Leads
       data = yield call(getAllLeadRequest);
-      yield delay(500);
       yield put(getLeadSuccess(data));
     } else if (payload == "Open Leads") {
       // Open Leads
       data = yield call(getOpenLeadRequest);
-      yield delay(500);
       yield put(getLeadSuccess(data));
     } else if (payload == "Hot Leads") {
       // Hot Leads
       data = yield call(getHotLeadRequest);
-      yield delay(500);
       yield put(getLeadSuccess(data));
     } else if (payload == "Cold Leads") {
       // Cold Leads
       data = yield call(getColdLeadRequest);
-      yield delay(500);
       yield put(getLeadSuccess(data));
     } else {
-      yield delay(500);
       data = yield call(getAllLeadRequest);
       yield put(getLeadSuccess(data));
     }
@@ -145,7 +140,6 @@ function* changeLeadList({ payload }) {
 function* getAllLeadFromDB() {
   try {
     const data = yield call(getAllLeadRequest);
-    yield delay(500);
     yield put(getLeadSuccess(data));
   } catch (error) {
     yield put(getLeadFailure(error));
@@ -154,7 +148,6 @@ function* getAllLeadFromDB() {
 function* getLeadFromDB({ payload }) {
   try {
     const data = yield call(getLeadRequest, payload);
-    yield delay(500);
     yield put(getSingleLeadSuccess(data));
   } catch (error) {
     yield put(getLeadFailure(error));

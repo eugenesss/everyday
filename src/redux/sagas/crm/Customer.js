@@ -30,6 +30,7 @@ import {
   getCustomerFormSuccess,
   getCustomerFormFailure
 } from "Actions";
+
 import { singleCustomer } from "Helpers/url/crm";
 
 import api from "Api";
@@ -94,20 +95,16 @@ function* changeCustomerList({ payload }) {
     if (payload == "All Customers") {
       // All Customers
       data = yield call(getAllCustomerRequest);
-      yield delay(500);
       yield put(getCustomerSuccess(data));
     } else if (payload == "Active Customers") {
       // My Customers
       data = yield call(getActiveCustomerRequest);
-      yield delay(500);
       yield put(getCustomerSuccess(data));
     } else if (payload == "Inactive Customers") {
       // Open Customers
       data = yield call(getInactiveCustomerRequest);
-      yield delay(500);
       yield put(getCustomerSuccess(data));
     } else {
-      yield delay(500);
       data = yield call(getAllCustomerRequest);
       yield put(getCustomerSuccess(data));
     }
@@ -118,7 +115,6 @@ function* changeCustomerList({ payload }) {
 function* getAllCustomerFromDB() {
   try {
     const data = yield call(getAllCustomerRequest);
-    yield delay(500);
     yield put(getCustomerSuccess(data));
   } catch (error) {
     yield put(getCustomerFailure(error));
@@ -127,7 +123,6 @@ function* getAllCustomerFromDB() {
 function* getCustomerFromDB({ payload }) {
   try {
     const data = yield call(getCustomerRequest, payload);
-    yield delay(500);
     yield put(getSingleCustomerSuccess(data));
   } catch (error) {
     yield put(getCustomerFailure(error));
@@ -137,6 +132,7 @@ function* postCustomerToDB({ payload }) {
   try {
     const data = yield call(postCustomerRequest, payload);
     yield delay(500);
+    window.location.replace(singleCustomer(data.id));
     yield put(newCustomerSuccess(data));
   } catch (error) {
     yield put(newCustomerFailure(error));

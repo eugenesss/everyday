@@ -59,7 +59,7 @@ class crm_lead extends Component {
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeLeadView}
               /> */}
-              <ShowListSummaryButton action={() => this.toggleSummary()} />
+              {/* <ShowListSummaryButton action={() => this.toggleSummary()} /> */}
             </div>
           }
           createLink={leadNewPage}

@@ -94,20 +94,16 @@ function* changeAccountList({ payload }) {
     if (payload == "All Accounts") {
       // All Accounts
       data = yield call(getAllAccountRequest);
-      yield delay(500);
       yield put(getAccountSuccess(data));
     } else if (payload == "Active Accounts") {
       // My Accounts
       data = yield call(getActiveAccountRequest);
-      yield delay(500);
       yield put(getAccountSuccess(data));
     } else if (payload == "Inactive Accounts") {
       // Open Accounts
       data = yield call(getInactiveAccountRequest);
-      yield delay(500);
       yield put(getAccountSuccess(data));
     } else {
-      yield delay(500);
       data = yield call(getAllAccountRequest);
       yield put(getAccountSuccess(data));
     }
@@ -118,7 +114,6 @@ function* changeAccountList({ payload }) {
 function* getAllAccountFromDB() {
   try {
     const data = yield call(getAllAccountRequest);
-    yield delay(500);
     yield put(getAccountSuccess(data));
   } catch (error) {
     yield put(getAccountFailure(error));
@@ -127,7 +122,6 @@ function* getAllAccountFromDB() {
 function* getAccountFromDB({ payload }) {
   try {
     const data = yield call(getAccountRequest, payload);
-    yield delay(500);
     yield put(getSingleAccountSuccess(data));
   } catch (error) {
     yield put(getAccountFailure(error));
@@ -137,6 +131,7 @@ function* postAccountToDB({ payload }) {
   try {
     const data = yield call(postAccountRequest, payload);
     yield delay(500);
+    window.location.replace(singleAccount(data.id));
     yield put(newAccountSuccess(data));
   } catch (error) {
     yield put(newAccountFailure(error));

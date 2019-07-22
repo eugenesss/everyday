@@ -76,7 +76,7 @@ class LeadForm extends Component {
 
   checkDisabled() {
     const disabled =
-      this.state.lead.baseContact.firstName &&
+      this.state.lead.baseContact.lastName &&
       this.state.lead.companyName &&
       this.state.lead.statusId;
     return disabled;
@@ -102,7 +102,6 @@ class LeadForm extends Component {
               handleChange={this.handleChange}
               target="firstName"
               targetType="baseContact"
-              required
             />
             {!edit && (
               <FormBlock
