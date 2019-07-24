@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
 import MUIDataTable from "mui-datatables";
 import IconButton from "@material-ui/core/IconButton";
@@ -12,16 +12,22 @@ import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import AccessControl from "Components/AccessControl";
 
-import { accessControlHelper } from "Helpers/accessControlHelper"
+import { accessControlHelper } from "Helpers/accessControlHelper";
 
 import AddUserDialog from "./AddUserDialog";
 import UserControlDialog from "./UserControlDialog";
-import { getAllUsers, showAddUser, hideAddUser, showUserControls, hideUserControls } from "Actions";
+import {
+  getAllUsers,
+  showAddUser,
+  hideAddUser,
+  showUserControls,
+  hideUserControls
+} from "Actions";
 
 const styles = () => ({
   icon: {
-   height: 24,
-   width: 24,
+    height: 24,
+    width: 24
   }
 });
 
@@ -45,51 +51,60 @@ class UsersList extends Component {
   }
 
   onClickReload = () => {
-    this.props.getAllUsers()
-  }
-  onClickDelete = (user) => {
-    console.log(user)
-  }
-  showActions () {
-    if(accessControlHelper(["User:delete", "SuperAdmin:update", "Password:reset"]))
-      return 'true'
-    else
-      return 'false'
+    this.props.getAllUsers();
+  };
+  onClickDelete = id => {
+    console.log(id);
+  };
+  showActions() {
+    if (
+      accessControlHelper([
+        "User:delete",
+        "SuperAdmin:update",
+        "Password:reset"
+      ])
+    )
+      return "true";
+    else return "false";
   }
 
   render() {
-    const { 
+    const {
       classes,
 
-      users, 
-      usersLoading, 
+      users,
+      usersLoading,
       isAddUser,
       isUserControl,
 
       showAddUser,
       hideAddUser,
       showUserControls,
-      hideUserControls,
-     } = this.props;
+      hideUserControls
+    } = this.props;
 
     const data = users && users.map(user => this.convertData(user));
     const columns = [
       {
-        name: "ID",
+        label: "ID",
+        name: "id",
         options: { display: "excluded", filter: false, sort: false }
       },
       {
-        name: "Name",
+        label: "Name",
+        name: "name",
         options: {
           customBodyRender: (value, tableMeta) => {
             return (
-              <NavLink to={`/app/user/${tableMeta.rowData[0]}`}>{value}</NavLink>
+              <NavLink to={`/app/user/${tableMeta.rowData[0]}`}>
+                {value}
+              </NavLink>
             );
           }
         }
       },
-      { name: "Email" },
-      { name: "Contact" },
+      { label: "Email", name: "email" },
+      { label: "Contact", name: "contact" },
       // {
       //   name: "Role",
       //   options: {
@@ -110,30 +125,30 @@ class UsersList extends Component {
             return (
               <React.Fragment>
                 {/* <AccessControl action={["User:delete"]}> */}
-                  <Tooltip id="tooltip-icon" title="Delete">
-                    <IconButton
-                      className="text-danger mr-2"
-                      aria-label="Delete User"
-                      onClick={() => {
-                        this.onClickDelete(value);
-                      }}
-                    >
-                      <i className={"zmdi zmdi-delete " + classes.icon} />
-                    </IconButton>
-                  </Tooltip>
+                <Tooltip id="tooltip-icon" title="Delete">
+                  <IconButton
+                    className="text-danger mr-2"
+                    aria-label="Delete User"
+                    onClick={() => {
+                      this.onClickDelete(value);
+                    }}
+                  >
+                    <i className={"zmdi zmdi-delete " + classes.icon} />
+                  </IconButton>
+                </Tooltip>
                 {/* </AccessControl> */}
                 {/* <AccessControl action={["SuperAdmin:update", "Password:reset"]}> */}
-                  <Tooltip id="tooltip-icon" title="More">
-                    <IconButton
-                      className="text-primary mr-2"
-                      aria-label="More Options"
-                      onClick={() => {
-                        showUserControls(value);
-                      }}
-                    >
-                      <i className={"zmdi zmdi-edit " + classes.icon} />
-                    </IconButton>
-                  </Tooltip>
+                <Tooltip id="tooltip-icon" title="More">
+                  <IconButton
+                    className="text-primary mr-2"
+                    aria-label="More Options"
+                    onClick={() => {
+                      showUserControls(value);
+                    }}
+                  >
+                    <i className={"zmdi zmdi-edit " + classes.icon} />
+                  </IconButton>
+                </Tooltip>
                 {/* </AccessControl> */}
               </React.Fragment>
             );
@@ -170,13 +185,15 @@ class UsersList extends Component {
                 <IconButton
                   className="text-secondary mr-2"
                   aria-label="Add User"
-                  onClick={() => { showAddUser() }}
+                  onClick={() => {
+                    showAddUser();
+                  }}
                 >
                   <i className={"zmdi zmdi-account-add " + classes.icon} />
                 </IconButton>
               </Tooltip>
             </AccessControl>
-        </React.Fragment>
+          </React.Fragment>
         );
       }
     };
@@ -188,10 +205,7 @@ class UsersList extends Component {
           data={data}
           options={options}
         />
-        <AddUserDialog
-          open={isAddUser}
-          handleClose={hideAddUser}
-        />
+        <AddUserDialog open={isAddUser} handleClose={hideAddUser} />
         <UserControlDialog
           open={isUserControl}
           handleClose={hideUserControls}
@@ -203,7 +217,7 @@ class UsersList extends Component {
 }
 
 UsersList.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 const mapStateToProps = ({ usersState }) => {
@@ -215,4 +229,3 @@ export default connect(
   mapStateToProps,
   { getAllUsers, showAddUser, hideAddUser, showUserControls, hideUserControls }
 )(withStyles(styles)(UsersList));
-
