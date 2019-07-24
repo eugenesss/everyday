@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import CalendarLayout from "Components/Widgets/Calendar/CalendarLayout";
 import CrmSummary from "Components/Widgets/CrmSummary";
+import UntouchedLeadsTable from "Components/Widgets/UntouchedLeadsTable";
 
 export default class Homebase extends Component {
   render() {
@@ -21,7 +22,7 @@ export default class Homebase extends Component {
           <CrmSummary />
           <div className="row">
             <div className="col-8">
-              <div className="rct-block">Untouched Leads</div>
+              <UntouchedLeadsTable />
             </div>
             <div className="col-4">
               <CalendarLayout />
