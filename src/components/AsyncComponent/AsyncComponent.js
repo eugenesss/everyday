@@ -92,7 +92,7 @@ export const Async_setting_acc_quotation_component = Loadable({
 });
 // Cron Job
 export const Async_setting_cron_leadReminders_component = Loadable({
-  loader: () => import("Routes/setting/reminders/LeadReminders"),
+  loader: () => import("Routes/setting/reminders/leadReminders"),
   loading: () => <RctPageLoader />
 });
 export const Async_setting_cron_quotationReminders_component = Loadable({
