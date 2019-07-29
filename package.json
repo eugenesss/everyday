@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "description": "Everday, a System for your Everyday Needs",
   "scripts": {
-    "start": "webpack --mode production",
-    "dev": "webpack-dev-server --mode development --inline --progress"
+    "start": "cross-env NODE_ENV=production npm run build",
+    "dev": "cross-env NODE_ENV=development npm run development",
+    "build": "webpack --mode production",
+    "development": "webpack-dev-server --mode development --inline --progress"
   },
   "keywords": [
     "reactjs"

@@ -1,8 +1,11 @@
 import axios from "axios";
 
+console.log(process.env.NODE_ENV);
 const api = axios.create({
-  baseURL: "http://api.everydaycrm.sg/api"
-  //baseURL: "http://localhost:3001/api",
+  baseURL:
+    process.env.NODE_ENV === "production"
+      ? "http://api.everydaycrm.sg/api"
+      : "http://localhost:3001/api"
   // timeout: 6000,
 });
 
