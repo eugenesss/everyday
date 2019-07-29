@@ -71,9 +71,13 @@ class UserBlock extends Component {
     return (
       <UncontrolledDropdown nav className="list-inline-item cart-dropdown" style={{position:'relative'}}>
         
-        <IconButton className="text-white" aria-label="user" onClick={this._handleChange}>
-          <i className={"zmdi zmdi-face " + classes.icon} />
-        </IconButton>
+        <DropdownToggle nav className="p-0">
+          <Tooltip title="User" placement="bottom">
+            <IconButton className="text-white" aria-label="user">
+              <i className={"zmdi zmdi-face " + classes.icon} />
+            </IconButton>
+          </Tooltip>
+        </DropdownToggle>
 {/* 
         <Slide direction="left" in={this.state.checked} mountOnEnter unmountOnExit style={{ zIndex: 10, border: '1px solid black', position:'absolute', right: 0, bottom: 0, top: 20, width: 250}}>
           <Paper elevation={4} style={{}}>
