@@ -17,8 +17,10 @@ const getAllEventsRequestWithFilter = async (start, end, id) => {
     
     // const result = await api.get(`events?filter[where][start][gte]=${start}&filter[where][end][lte]=${end}&`);
     // const result = await api.get(`events?filter[where][start][gte]=${start}&filter[where][end][lte]=${end}&filter[order]=start ASC&`);
-    const result = await api.get(`events/${id}?filter[where][end][gt]=${start}&filter[where][end][lt]=${end}&filter[order]=start ASC&`);
+    // const result = await api.get(`events?filter[where][userId]=${id}&filter[where][end][gt]=${start}&filter[where][end][lt]=${end}&filter[order]=start ASC&`);
+    const result = await api.get(`events?filter[where][userId]=${id}&filter[where][end][gt]=${start}&filter[where][end][lt]=${end}&filter[order]=start ASC&`);
 
+    console.log(result)
     return result.data;
 
   } catch (err) {
@@ -42,11 +44,11 @@ const getAllEventsRequest = async () => {
 //=========================
 function* getAllEventsFromDB(item) {
   const {payload} = item
-  console.log(payload)
+
   if(payload.filter){
 
     try {
-      let myEvents = yield call(getAllEventsRequestWithFilter, payload.start, payload.end, payload.createdBy);
+      let myEvents = yield call(getAllEventsRequestWithFilter, payload.start, payload.end, payload.id);
       myEvents.map(item => {
         item.start = new Date(item.start);
         item.end = new Date(item.end);

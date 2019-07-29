@@ -11,7 +11,8 @@ const numberOfDays = 6
 class CalendarLayout extends Component {
 
     componentDidMount() {
-        this.props.getAllEvents(true, new Date().toISOString(), Moment(new Date()).add(numberOfDays, 'day').toISOString());
+        const userId = localStorage.getItem('user_id');
+        this.props.getAllEvents(true, new Date().toISOString(), Moment(new Date()).add(numberOfDays, 'day').toISOString(), userId);
     }
 
 
@@ -36,9 +37,7 @@ class CalendarLayout extends Component {
 
 // map state to props
 const mapStateToProps = ({ calendarState }) => {
-    const {
-      myEvents
-    } = calendarState;
+    const { myEvents } = calendarState;
     return {
       myEvents
     };

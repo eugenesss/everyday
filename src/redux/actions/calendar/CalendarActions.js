@@ -6,12 +6,13 @@ import * as types from "Types";
 /**
  * Get All Events
  */
-export const getAllEvents = (filter, start, end) => ({
+export const getAllEvents = (filter, start, end, id) => ({
   type: types.GET_ALL_EVENTS,
   payload: {
     filter,
     start,
-    end
+    end,
+    id
   }
 })
 export const getAllEventsSuccess = (events, myEvents) => ({
