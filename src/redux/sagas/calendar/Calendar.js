@@ -9,7 +9,6 @@ import api from "Api";
 //=========================
 
 const getAllEventsRequestWithFilter = async (start, end, id) => {
-  console.log(id)
   try {
     // const result = await api.get(`/events?filter[where][start][lt]=2019-07-18T02:38:03.197Z`);
     // const stringify = {where: {start: {gt: "2019-07-18T02:38:03.197Z"}}}
@@ -20,7 +19,6 @@ const getAllEventsRequestWithFilter = async (start, end, id) => {
     // const result = await api.get(`events?filter[where][userId]=${id}&filter[where][end][gt]=${start}&filter[where][end][lt]=${end}&filter[order]=start ASC&`);
     const result = await api.get(`events?filter[where][userId]=${id}&filter[where][end][gt]=${start}&filter[where][end][lt]=${end}&filter[order]=start ASC&`);
 
-    console.log(result)
     return result.data;
 
   } catch (err) {
