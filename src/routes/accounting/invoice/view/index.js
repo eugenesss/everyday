@@ -38,7 +38,7 @@ import { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandl
 // Delete Quotation, Edit Quotation, Transfer Quotation
 
 class acct_view_invoice extends Component {
-  componentWillMount() {
+  componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleInvoice(id);
   }

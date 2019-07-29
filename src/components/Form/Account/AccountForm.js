@@ -15,14 +15,30 @@ import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetBu
 // Actions
 import { getAccountFormFields } from "Actions";
 
+const initialState = {
+  account: {
+    baseContact: {
+      name: "",
+      email: "",
+      mobile: "",
+      fax: "",
+      phone: "",
+      website: "",
+      title: "",
+      _address: { address_1: "", address_2: "", city: "", zip: "" }
+    }
+  }
+};
+
 class AccountForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { account: { baseContact: { _address: {} } } };
+    this.state = initialState;
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.onSaveNew = this.onSaveNew.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.getAccountFormFields();
     if (this.props.edit) this.setState({ account: this.props.edit });
   }
@@ -65,7 +81,11 @@ class AccountForm extends Component {
   }
 
   onSubmit() {
-    this.props.handleSubmit(this.state.account);
+    this.props.handleSubmit(this.state.account, true);
+  }
+  onSaveNew() {
+    this.props.handleSubmit(this.state.account, false);
+    this.setState(initialState);
   }
 
   checkDisabled() {
@@ -84,6 +104,7 @@ class AccountForm extends Component {
         {loading && <RctSectionLoader />}
         <FormSubmitResetButtons
           onSubmit={this.onSubmit}
+          onSaveNew={this.onSaveNew}
           disabled={this.checkDisabled()}
         />
         <FormTable>

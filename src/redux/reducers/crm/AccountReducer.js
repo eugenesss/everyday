@@ -66,12 +66,16 @@ export default (state = INIT_STATE, action) => {
         accountList: { ...state.accountList, loading: true }
       };
     case types.GET_ACCOUNT_SUCCESS:
+      // sort by createdAt
+      var defaultSort = action.payload.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
       return {
         ...state,
         accountList: {
           ...state.accountList,
           loading: false,
-          tableData: action.payload
+          tableData: defaultSort
         }
       };
 

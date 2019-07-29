@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
 import { listOptions } from "Helpers/helpers";
 import { singleAccount } from "Helpers/url/crm";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import ActiveStatusBadge from "Components/Everyday/StatusBadge/ActiveStatusBadge";
@@ -115,7 +114,7 @@ const AccountList = ({ tableData, loading, title, action }) => {
     null;
 
   return (
-    <RctCollapsibleCard fullBlock>
+    <div className="rct-block">
       <MUIDataTable
         title={title}
         columns={columns}
@@ -123,7 +122,7 @@ const AccountList = ({ tableData, loading, title, action }) => {
         options={listOptions}
       />
       {loading && <RctSectionLoader />}
-    </RctCollapsibleCard>
+    </div>
   );
 };
 

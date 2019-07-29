@@ -50,7 +50,7 @@ class crm_view_customer extends Component {
     this.addNote = this.addNote.bind(this);
     this.trasnfer = this.transfer.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleCustomer(id);
   }

@@ -16,14 +16,28 @@ import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
 // Actions
 import { getDealFormFields } from "Actions";
 
+const initialState = {
+  deal: {
+    name: "",
+    amount: "",
+    closingDate: "",
+    accountId: "",
+    customerId: "",
+    stageId: "",
+    sourceId: "",
+    typeId: ""
+  }
+};
+
 class DealForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { deal: {} };
+    this.state = initialState;
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onSaveNew = this.onSaveNew.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.getDealFormFields();
     if (this.props.edit) this.setState({ deal: this.props.edit });
   }
@@ -33,7 +47,12 @@ class DealForm extends Component {
   }
 
   onSubmit() {
-    this.props.handleSubmit(this.state.deal);
+    this.props.handleSubmit(this.state.deal, true);
+  }
+
+  onSaveNew() {
+    this.props.handleSubmit(this.state.deal, false);
+    this.setState(initialState);
   }
 
   checkDisabled() {
@@ -68,6 +87,7 @@ class DealForm extends Component {
         <FormSubmitResetButtons
           onReset={this.props.clearDealForm}
           onSubmit={this.onSubmit}
+          onSaveNew={this.onSaveNew}
           disabled={this.checkDisabled()}
         />
         <FormTable>

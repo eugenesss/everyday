@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import ReportContainer from "Components/Report/Components/ReportContainer";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import NumberFormat from "react-number-format";
 
 // User Selction
 import TextField from "@material-ui/core/TextField";
@@ -14,66 +14,6 @@ import DealsPipelineChart from "Components/Charts/DealsPipelineChart";
 import LeadsByStatusChart from "Components/Charts/LeadsByStatusChart";
 // Actions
 import { getIndividualReport, getAllUsers } from "Actions";
-
-const sampleData = {
-  name: "User Name",
-  closingRatio: 3.41,
-  totalDealsWon: 3,
-  totalDealsAmt: 40000,
-  totalLeads: 8,
-  totalDeals: 0,
-  accountsToDeals: 0.56,
-  salesData: [
-    { date: new Date(2017, 7, 16), amount: 3000 },
-    { date: new Date(2017, 7, 16), amount: 2000 },
-    { date: new Date(2017, 10, 17), amount: 4000 }
-  ],
-  pipeline: [
-    {
-      name: "Prospect",
-      totalDeals: 2,
-      totalAmount: 2000,
-      deals: [
-        {
-          name: "deal",
-          amount: 1000,
-          source: "source",
-          userInfo: "user",
-          chance: 40,
-          type: "type"
-        },
-        { name: "deal", amount: 1000, source: "source", type: "type" }
-      ]
-    }
-  ],
-  leadsHealth: [
-    {
-      name: "Contacted",
-      totalLeads: 3,
-      color: "blue",
-      leads: [
-        {
-          name: "Leads One",
-          source: "Cold Call",
-          email: "email",
-          companyName: "companyName"
-        },
-        {
-          name: "Leads One",
-          source: "Cold Call",
-          email: "email",
-          companyName: "companyName"
-        },
-        {
-          name: "Leads One",
-          source: "Cold Call",
-          email: "email",
-          companyName: "companyName"
-        }
-      ]
-    }
-  ]
-};
 
 class IndividualReport extends Component {
   constructor(props) {
@@ -144,7 +84,14 @@ class IndividualReport extends Component {
                       </li>
                       <li>
                         <h4 className="heading mb-10">Total Deal Amount</h4>
-                        <h2>{data.totalDealsAmount}</h2>
+                        <h2>
+                          <NumberFormat
+                            value={data.totalDealsAmount}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix={"$"}
+                          />
+                        </h2>
                       </li>
                       <li>
                         <h4 className="heading mb-10">Total Deals Won</h4>

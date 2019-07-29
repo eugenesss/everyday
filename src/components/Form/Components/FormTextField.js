@@ -1,7 +1,14 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import TextField from "@material-ui/core/TextField";
 
-const FormTextField = ({ label, value, handleChange, target, targetType, disabled }) => {
+const FormTextField = ({
+  label,
+  value,
+  handleChange,
+  target,
+  targetType,
+  disabled
+}) => {
   return (
     <TextField
       label={label}
@@ -11,9 +18,10 @@ const FormTextField = ({ label, value, handleChange, target, targetType, disable
       margin="dense"
       // variant="outlined"
       disabled={disabled}
+      autoComplete={value ? value : ""}
+      inputProps={{ autoComplete: "nope" }}
     />
   );
 };
 
 export default FormTextField;
-

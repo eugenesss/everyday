@@ -1,38 +1,38 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Scrollbars } from 'react-custom-scrollbars'
+import { Scrollbars } from "react-custom-scrollbars";
 import { Col, Row } from "reactstrap";
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
 
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
-import { onChangeSelectedRole, addRole } from 'Actions'
+import { onChangeSelectedRole, addRole } from "Actions";
 
 const styles = () => ({
   root: {
     width: "100%",
-    padding: 10,
+    padding: 10
   },
   listItem: {
-    paddingLeft: '0 !important',
-    paddingRight: 0,
+    paddingLeft: "0 !important",
+    paddingRight: 0
   },
   paper: {
     width: "100%",
-    marginBottom: "calc(20vh)",
+    marginBottom: "calc(20vh)"
   },
   icon: {
     height: 24,
-    width: 24,
+    width: 24
   },
   block: {
     display: "block !important"
-  },
+  }
 });
 
 class RolesList extends Component {
@@ -48,7 +48,7 @@ class RolesList extends Component {
       accessRoles,
 
       onChangeSelectedRole,
-      addRole,
+      addRole
     } = this.props;
     return (
       <React.Fragment>
@@ -67,35 +67,33 @@ class RolesList extends Component {
               </IconButton>
             </Col>
           </Row>
-          <Scrollbars
-            className="rct-scroll"
-            autoHeight
-            autoHeightMin={'90vh'}
-          >
-            <List
-              component="nav"
-              className={classes.root}
-            >
-              {accessRoles.map(accessRole => (
+          <Scrollbars className="rct-scroll" autoHeight autoHeightMin={"90vh"}>
+            <List component="nav" className={classes.root}>
+              {accessRoles.map((accessRole, key) => (
                 <ListItem
-                  key={accessRole.id}
+                  key={key}
                   button
-                  selected={selectedRole ? selectedRole.id == accessRole.id : false}
+                  selected={
+                    selectedRole ? selectedRole.id == accessRole.id : false
+                  }
                   onClick={() => onChangeSelectedRole(accessRole)}
                 >
-                  <ListItemText primary={accessRole.name} className={classes.listItem} />
+                  <ListItemText
+                    primary={accessRole.name}
+                    className={classes.listItem}
+                  />
                 </ListItem>
               ))}
             </List>
           </Scrollbars>
         </div>
       </React.Fragment>
-    )
+    );
   }
 }
 
 RolesList.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 const mapStateToProps = ({ rolesState }) => {

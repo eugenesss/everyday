@@ -179,10 +179,8 @@ export default (state = INIT_STATE, action) => {
      */
     case CHANGE_SELECTED_ROLE:  // Change selected role in Role List (RolesList.js)
       let selectedRole = action.payload
-      let selectedRights = state.roleRights.find(right => {
-        return right.roleId == action.payload.id
-      }).rights
-      selectedRole.id = action.payload.id
+      let selectedRights = selectedRole.rights !== undefined ? [...selectedRole.rights] : [];
+      //selectedRole.id = action.payload.id
 
       return {
         ...state,
@@ -198,7 +196,7 @@ export default (state = INIT_STATE, action) => {
         selectedAccessRightsCategory: selectedAccessRightsCategory
       }
     case CHANGE_SELECTED_GROUP_ROLE:  // Change list of roles assigned and not assign to group in Groups List (GroupsList.js)
-      var selectedGroupRoles = Object.assign([], action.payload);      
+      var selectedGroupRoles = Object.assign([], action.payload);
       var allRoles = Object.assign([], state.accessRoles);
       var selectedRoles = allRoles.filter(role => { return selectedGroupRoles.findIndex(groupRole => { return groupRole.roleId == role.id }) >= 0 });
       var unselectedRoles = allRoles.filter(role => { return selectedGroupRoles.findIndex(groupRole => { return groupRole.roleId == role.id }) < 0 });

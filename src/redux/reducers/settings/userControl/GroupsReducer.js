@@ -22,6 +22,7 @@ import {
   GET_GROUP_FAILURE,
 
   CHANGE_SELECTED_GROUP,
+  CHANGE_TIER_NUM
 } from "Types";
 
 const INIT_STATE = {
@@ -106,12 +107,28 @@ export default (state = INIT_STATE, action) => {
         groupsLoading: true
       }
     case UPDATE_GROUP_SUCCESS:
-      var accessGroups = updateAccessGroupState(action.payload)
+      var accessGroups = action.payload;
+      var selectedGroup = state.selectedGroup;
+      var newSelected = accessGroups.find(group => { return group.id == selectedGroup.id });
+
       NotificationManager.success("Group Updated")
+
+      var selectedGroupRoles = newSelected.roles;
+      var allRoles = Object.assign([], state.accessRoles);
+      var selectedRoles = allRoles.filter(role => { return selectedGroupRoles.findIndex(groupRole => { return groupRole.roleId == role.id }) >= 0 });
+      var unselectedRoles = allRoles.filter(role => { return selectedGroupRoles.findIndex(groupRole => { return groupRole.roleId == role.id }) < 0 });
+      var removedRoleName = ""
+      var addedRoleName = "";
       return {
         ...state,
         groupsLoading: false,
-        accessGroups: accessGroups
+        accessGroups: accessGroups,
+        removedRoleName: removedRoleName,
+        addedRoleName: addedRoleName,
+        selectedGroup: selectedGroup,
+        selectedGroupRoles: selectedGroupRoles,
+        selectedRoleGroups: selectedRoles,
+        unselectedRoleGroups: unselectedRoles
       }
     case UPDATE_GROUP_FAILURE:
       NotificationManager.warning("Error in updating Group Name")
@@ -158,12 +175,24 @@ export default (state = INIT_STATE, action) => {
       );
       */
       var selectedGroupRoles = action.payload.roles;
-      console.log("here");
       return {
         ...state,
         selectedGroup: action.payload,
         selectedGroupRoles: selectedGroupRoles
       };
+    case CHANGE_TIER_NUM:
+      var selectedVals = action.payload.split("-");
+      var selectedGroupRoles = [...state.selectedGroupRoles];
+      for (const i in selectedGroupRoles) {
+        if (selectedGroupRoles[i].id == selectedVals[0]) {
+          selectedGroupRoles[i].tier = parseInt(selectedVals[1]);
+          break;
+        }
+      }
+      return {
+        ...state,
+        selectedGroupRoles: selectedGroupRoles
+      }
 
     default:
       return { ...state };

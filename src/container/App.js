@@ -49,7 +49,6 @@ class App extends Component {
       <RctThemeProvider>
         <NotificationContainer />
         <SystemDialogs />
-
         <Switch>
           <InitialPath
             path={`${match.url}app`}

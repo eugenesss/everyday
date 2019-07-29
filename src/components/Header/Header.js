@@ -40,7 +40,6 @@ class Header extends Component {
             <Link to="/" className="logo-mini">
               <img
                 src={require("Assets/img/appLogo_yellow.png")}
-                //className="mr-15"
                 alt="site logo"
                 width="120"
               />
@@ -48,7 +47,7 @@ class Header extends Component {
           </div>
           <ul className="navbar-right list-inline mb-0">
             <QuickAdd />
-            <Notifications classes={classes} />
+            {/* <Notifications classes={classes} /> */}
             <MiniCalendar classes={classes} />
             <li className="list-inline-item">
               <Tooltip title="Settings" placement="bottom">

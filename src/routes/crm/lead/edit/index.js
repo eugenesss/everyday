@@ -12,7 +12,7 @@ import LeadForm from "Components/Form/Lead/LeadForm";
 import { editLead, getSingleLead } from "Actions";
 
 class crm_edit_lead extends Component {
-  componentWillMount() {
+  componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleLead(id);
   }

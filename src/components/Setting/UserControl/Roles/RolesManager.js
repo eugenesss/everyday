@@ -79,11 +79,11 @@ class RoleManager extends Component {
       else return false;
     } else return false;
   }
-  handleChange(selectedRight) {
+  handleChange(selectedRight, checked) {
     var selectedRoleRights = this.props.selectedRoleRights.slice();
     if (selectedRoleRights.find(right => right.id == selectedRight.id)) {
       let i = selectedRoleRights
-        .map(function (e) {
+        .map(function(e) {
           return e.id;
         })
         .indexOf(selectedRight.id);
@@ -134,10 +134,10 @@ class RoleManager extends Component {
           </Row>
           <Row>
             <Col className={classes.root}>
-              {accessRights.map(category => {
+              {accessRights.map((category, key) => {
                 return (
                   <ExpansionPanel
-                    key={category[0][0].categoryName}
+                    key={key}
                     expanded={
                       selectedAccessRightsCategory == category[0][0].name
                     }
@@ -167,19 +167,17 @@ class RoleManager extends Component {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {category.map(model => {
+                          {category.map((model, key) => {
                             var data = [];
-                            if (model.length >= 4 &&
+                            if (
+                              model.length >= 4 &&
                               model[0].method == "create" &&
                               model[1].method == "read" &&
                               model[2].method == "update" &&
                               model[3].method == "delete"
                             ) {
                               data.push(
-                                <TableRow
-                                  className={classes.row}
-                                  key={model[0].name}
-                                >
+                                <TableRow className={classes.row} key={key}>
                                   <TableCell component="th" scope="row">
                                     <div className={classes.heading}>
                                       {model[0].name}
@@ -191,10 +189,7 @@ class RoleManager extends Component {
                                   {model.map((md, index) => {
                                     if (index < 4) {
                                       return (
-                                        <TableCell
-                                          align="center"
-                                          key={md.method}
-                                        >
+                                        <TableCell align="center" key={index}>
                                           <Checkbox
                                             color="primary"
                                             checked={
@@ -206,64 +201,60 @@ class RoleManager extends Component {
                                               !md.editable
                                             }
                                             value={`${md.id}`}
-                                            onChange={() =>
-                                              this.handleChange(md)
+                                            onChange={(evt, checked) =>
+                                              this.handleChange(md, checked)
                                             }
                                           />
                                         </TableCell>
-                                      )
+                                      );
                                     }
                                   })}
                                 </TableRow>
                               );
                             }
                             if (model.length >= 5 || model.length < 4) {
-                              data.push(model.map((md, index) => {
-                                if (index >= 4 || model.length < 4) {
-                                  return (
-                                    <TableRow
-                                      className={classes.row}
-                                      key={md.name}
-                                    >
+                              for (var i = 0; i < model.length; i++) {
+                                if (model.length < 4 || i >= 4) {
+                                  data.push(
+                                    <TableRow className={classes.row} key={i}>
                                       <TableCell component="th" scope="row">
                                         <div className={classes.heading}>
-                                          {md.name}
+                                          {model[i].name}
                                         </div>
-                                        <div className={classes.secondaryHeading}>
-                                          {md.method}-{md.description}
+                                        <div
+                                          className={classes.secondaryHeading}
+                                        >
+                                          {model[i].method}-
+                                          {model[i].description}
                                         </div>
                                       </TableCell>
                                       <TableCell />
                                       <TableCell />
-                                      <TableCell
-                                        align="center"
-                                        key={md.method}
-                                      >
+                                      <TableCell align="center" /* key={i} */>
                                         <Switch
                                           color="primary"
                                           checked={
-                                            this.checked(md.id) ||
-                                            md.editable == false
+                                            this.checked(model[i].id) ||
+                                            model[i].editable == false
                                           }
                                           disabled={
-                                            this.disabled(md.method) ||
-                                            !md.editable
+                                            this.disabled(model[i].method) ||
+                                            !model[i].editable
                                           }
-                                          value={`${md.id}`}
-                                          onChange={() =>
-                                            this.handleChange(md)
+                                          value={`${model[i].id}`}
+                                          onChange={(evt, checked) =>
+                                            this.handleChange(model[i], checked)
                                           }
                                         />
                                       </TableCell>
                                       <TableCell />
                                     </TableRow>
-                                  )
+                                  );
                                 }
-                              }))
+                              }
                             }
-                            return data
-                          })
-                          }
+                            return data;
+                          })}
                         </TableBody>
                       </Table>
                     </ExpansionPanelDetails>

@@ -26,7 +26,7 @@ class ProfileLayout extends Component {
     super(props);
   }
 
-  componentWillMount() { 
+  componentDidMount() { 
     this.props.getAllUsers() //AuthUser
   }
 

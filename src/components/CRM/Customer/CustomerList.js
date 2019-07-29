@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
 import { listOptions } from "Helpers/helpers";
 import { singleCustomer, singleAccount } from "Helpers/url/crm";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 // import IconButton from "@material-ui/core/IconButton";
 // import Tooltip from "@material-ui/core/Tooltip";
@@ -33,10 +32,10 @@ const CustomerList = ({ tableData, loading, title, action }) => {
       name: "accountInfo",
       options: {
         customBodyRender: value => {
-          return (
-            value != null && (
-              <NavLink to={singleAccount(value.id)}>{value.name}</NavLink>
-            )
+          return value ? (
+            <NavLink to={singleAccount(value.id)}>{value.name}</NavLink>
+          ) : (
+            ""
           );
         }
       }
@@ -133,7 +132,7 @@ const CustomerList = ({ tableData, loading, title, action }) => {
     null;
 
   return (
-    <RctCollapsibleCard fullBlock>
+    <div className="rct-block">
       <MUIDataTable
         title={title}
         columns={columns}
@@ -141,7 +140,7 @@ const CustomerList = ({ tableData, loading, title, action }) => {
         options={listOptions}
       />
       {loading && <RctSectionLoader />}
-    </RctCollapsibleCard>
+    </div>
   );
 };
 

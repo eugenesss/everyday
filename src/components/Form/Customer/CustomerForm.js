@@ -15,7 +15,21 @@ import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetBu
 // Actions
 import { getCustomerFormFields } from "Actions";
 
-const initialState = { customer: { baseContact: { _address: {} } } };
+const initialState = {
+  customer: {
+    baseContact: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      mobile: "",
+      fax: "",
+      phone: "",
+      website: "",
+      title: "",
+      _address: { address_1: "", address_2: "", city: "", zip: "" }
+    }
+  }
+};
 
 class CustomerForm extends Component {
   constructor(props) {
@@ -24,8 +38,9 @@ class CustomerForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.checkDisabled = this.checkDisabled.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onSaveNew = this.onSaveNew.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.getCustomerFormFields();
     if (this.props.edit) this.setState({ customer: this.props.edit });
   }
@@ -68,14 +83,17 @@ class CustomerForm extends Component {
   }
 
   onSubmit() {
-    this.props.handleSubmit(this.state.customer);
+    this.props.handleSubmit(this.state.customer, true);
+  }
+
+  onSaveNew() {
+    this.props.handleSubmit(this.state.customer, false);
+    this.setState(initialState);
   }
 
   checkDisabled() {
     const disabled =
-      this.state.customer.baseContact.firstName &&
-      this.state.customer.baseContact.lastName &&
-      this.state.customer.userId;
+      this.state.customer.baseContact.lastName && this.state.customer.userId;
     return disabled;
   }
 
@@ -89,6 +107,7 @@ class CustomerForm extends Component {
         {loading && <RctSectionLoader />}
         <FormSubmitResetButtons
           onSubmit={this.onSubmit}
+          onSaveNew={this.onSaveNew}
           disabled={this.checkDisabled()}
         />
         <FormTable>
@@ -99,7 +118,6 @@ class CustomerForm extends Component {
               handleChange={this.handleChange}
               target="firstName"
               targetType="baseContact"
-              required
             />
             {!edit && (
               <FormBlock
@@ -174,9 +192,9 @@ class CustomerForm extends Component {
           <TableRow>
             <FormBlock
               label="Office"
-              value={customer.baseContact.office}
+              value={customer.baseContact.phone}
               handleChange={this.handleChange}
-              target="office"
+              target="phone"
               targetType="baseContact"
             />
             <FormBlock

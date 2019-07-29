@@ -64,9 +64,9 @@ export const clearSingleCustomer = () => ({
  * New Customer
  */
 
-export const newCustomer = form => ({
+export const newCustomer = (form, redirect) => ({
   type: types.NEW_CUSTOMER,
-  payload: form
+  payload: { form, redirect }
 });
 
 export const newCustomerSuccess = data => ({

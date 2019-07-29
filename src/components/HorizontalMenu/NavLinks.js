@@ -35,12 +35,12 @@ export default {
       menu_title: "sidebar.deals",
       menu_icon: "zmdi zmdi-case text-primary",
       path: dealListPage
-    },
-    {
-      menu_title: "sidebar.teams",
-      menu_icon: "zmdi zmdi-accounts-alt text-primary",
-      path: teamListPage
     }
+    // {
+    //   menu_title: "sidebar.teams",
+    //   menu_icon: "zmdi zmdi-accounts-alt text-primary",
+    //   path: teamListPage
+    // }
   ],
   account: [
     {

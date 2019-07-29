@@ -3,22 +3,22 @@ import { connect } from "react-redux";
 
 import { getUserProfile } from "Actions";
 
-import ProfileLayout from "Components/Setting/General/Profile/ProfileLayout"
+import ProfileLayout from "Components/Setting/General/Profile/ProfileLayout";
 
 class UserProfileView extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
 
-  componentWillMount() {
-    this.props.getUserProfile(this.props.match.params.id)
+  componentDidMount() {
+    this.props.getUserProfile(this.props.match.params.id);
   }
 
   render() {
-    const { userProfile } = this.props
+    const { userProfile } = this.props;
     return (
       <React.Fragment>
-        <ProfileLayout userView={userProfile}/>
+        <ProfileLayout userView={userProfile} />
       </React.Fragment>
     );
   }

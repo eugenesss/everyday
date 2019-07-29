@@ -107,12 +107,16 @@ export default (state = INIT_STATE, action) => {
         dealList: { ...state.dealList, loading: true }
       };
     case types.GET_DEAL_SUCCESS:
+      // sort by createdAt
+      var defaultSort = action.payload.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
       return {
         ...state,
         dealList: {
           ...state.dealList,
           loading: false,
-          tableData: action.payload
+          tableData: defaultSort
         }
       };
 

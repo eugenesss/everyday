@@ -30,6 +30,7 @@ import hierarchiesReducer from "./settings/userControl/HierarchiesReducer";
 import authUserReducer from "./system/AuthUserReducer";
 import reportReducer from "./system/ReportReducer";
 import calendarReducer from "./calendar/CalendarReducer";
+import WidgetReducer from "./system/WidgetReducer";
 
 // upload file
 import uploadFileReducer from "./upload/uploadFileReducer";
@@ -54,6 +55,7 @@ const reducers = combineReducers({
     creditNoteState: CreditNoteReducer,
     paymentState: PaymentState
   }),
+  widgetState: WidgetReducer,
   reportState: reportReducer,
   calendarState: calendarReducer,
   usersState: usersReducer,

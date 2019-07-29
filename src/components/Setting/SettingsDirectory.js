@@ -59,7 +59,6 @@ class SettingsDirectory extends Component {
       <Paper className={classes.paper}>
         <Scrollbars className="rct-scroll" autoHeight autoHeightMin={"100vh"}>
           <List component="nav" className={classes.root}>
-            
             <ListItem button onClick={() => this.handleClick("general")}>
               <ListItemText
                 inset
@@ -86,17 +85,20 @@ class SettingsDirectory extends Component {
                   button
                   className={classes.nested}
                   onClick={() =>
-                    this.handleClickItem("/app/settings/general/company-details")
+                    this.handleClickItem(
+                      "/app/settings/general/company-details"
+                    )
                   }
                   selected={
-                    location.pathname === "/app/settings/general/company-details"
+                    location.pathname ===
+                    "/app/settings/general/company-details"
                   }
                 >
                   <ListItemText inset secondary={"Company Details"} />
                 </ListItem>
               </List>
             </Collapse>
-            {accessControlHelper(["AccessSetting:viewall"], null) ?
+            {accessControlHelper(["AccessSetting:viewall"], null) ? (
               <React.Fragment>
                 <ListItem button onClick={() => this.handleClick("user")}>
                   <ListItemText
@@ -155,8 +157,11 @@ class SettingsDirectory extends Component {
                     </ListItem>
                   </List>
                 </Collapse>
-              </React.Fragment> : ""}
-            <ListItem button onClick={() => this.handleClick("crm")}>
+              </React.Fragment>
+            ) : (
+              ""
+            )}
+            {/* <ListItem button onClick={() => this.handleClick("crm")}>
               <ListItemText
                 inset
                 primary={"CRM"}
@@ -175,9 +180,9 @@ class SettingsDirectory extends Component {
                   <ListItemText inset secondary={"Team"} />
                 </ListItem>
               </List>
-            </Collapse>
+            </Collapse> */}
 
-            <ListItem button onClick={() => this.handleClick("accounting")}>
+            {/* <ListItem button onClick={() => this.handleClick("accounting")}>
               <ListItemText
                 inset
                 primary={"Accounting"}
@@ -236,9 +241,9 @@ class SettingsDirectory extends Component {
                   <ListItemText inset secondary={"Credit Note"} />
                 </ListItem>
               </List>
-            </Collapse>
+            </Collapse> */}
 
-            <ListItem button onClick={() => this.handleClick("reminder")}>
+            {/* <ListItem button onClick={() => this.handleClick("reminder")}>
               <ListItemText
                 inset
                 primary={"Reminders"}
@@ -279,8 +284,7 @@ class SettingsDirectory extends Component {
                   <ListItemText inset secondary={"Quotation Reminders"} />
                 </ListItem>
               </List>
-            </Collapse>
-         
+            </Collapse> */}
           </List>
         </Scrollbars>
       </Paper>

@@ -48,6 +48,7 @@ const updateGroupNameRequest = async (groupName, groupId) => {
 }
 
 const updateGroupRolesRequest = async (groupId, roles) => {
+
   const result = await api.post("/accessgroups/saveRoles", {
     "id": groupId,
     "roles": roles
@@ -82,23 +83,25 @@ function* addGroupToDB() {
 }
 function* updateGroupToDB() {
   const getGroup = state => state.groupsState.selectedGroup;
-  const groupData = yield select(getGroup);
+  const theGroup = yield select(getGroup);
+  const getGroupRoles = state => state.groupsState.selectedGroupRoles;
+  const groupData = yield select(getGroupRoles);
   const getRolesArray = state => state.rolesState.selectedRoleGroups;
   const rolesArray = yield select(getRolesArray);
   var allroles = [];
-  if(rolesArray !== undefined){
-    for(const selected of rolesArray){
-      let dataObj = {id: selected.id, tier: 1};
-      let currentRole = groupData.roles.find( role => { return role.roleId == selected.id});
-      if(currentRole !== undefined){
+  if (rolesArray !== undefined) {
+    for (const selected of rolesArray) {
+      let dataObj = { id: selected.id, tier: 1 };
+      let currentRole = groupData.find(role => { return role.roleId == selected.id });
+      if (currentRole !== undefined) {
         dataObj.tier = currentRole.tier;
       }
       allroles.push(dataObj);
     }
   }
   try {
-    yield call(updateGroupNameRequest, groupData.name, groupData.id);
-    yield call(updateGroupRolesRequest, groupData.id, allroles);
+    yield call(updateGroupNameRequest, theGroup.name, theGroup.id);
+    var data = yield call(updateGroupRolesRequest, theGroup.id, allroles);
     yield delay(500);
     yield put(updateGroupSuccess(data));
   } catch (err) {

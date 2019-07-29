@@ -6,8 +6,7 @@ import UsersList from "Components/Setting/UserControl/Users/UsersList";
 import { getAllUsers } from "Actions";
 
 class UsersLayout extends Component {
-
-  componentWillMount() {
+  componentDidMount() {
     this.props.getAllUsers();
   }
 
@@ -21,7 +20,7 @@ class UsersLayout extends Component {
           <UsersList />
         </AccessControl>
       </React.Fragment>
-    )
+    );
   }
 }
 

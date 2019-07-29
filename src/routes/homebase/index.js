@@ -4,10 +4,8 @@ import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import CalendarLayout from "Components/Widgets/Calendar/CalendarLayout";
-
-
-
-
+import CrmSummary from "Components/Widgets/CrmSummary";
+import UntouchedLeadsTable from "Components/Widgets/UntouchedLeadsTable";
 
 export default class Homebase extends Component {
   render() {
@@ -20,32 +18,16 @@ export default class Homebase extends Component {
         </Helmet>
         <PageTitleBar title="Homebase" match={match} />
 
-        <div style={{padding: 21}}>
+        <div style={{ padding: 21 }}>
+          <CrmSummary />
           <div className="row">
-            <div className="col-3">
-              <div className="rct-block">rct-block</div>
+            <div className="col-8">
+              <UntouchedLeadsTable />
             </div>
-            <div className="col-3">
-              <div className="rct-block">rct-block</div>
-            </div>
-            <div className="col-3">
-              <div className="rct-block">rct-block</div>
-            </div>
-            <div className="col-3">
-              <div className="rct-block">rct-block</div>
+            <div className="col-4">
+              <CalendarLayout />
             </div>
           </div>
-          <div className="row">
-          <div className="col-8">
-            <div className="rct-block">Untouched Leads</div>
-          </div>
-          <div className="col-4">
-
-
-            <CalendarLayout/>
-
-          </div>
-        </div>
         </div>
       </div>
     );
