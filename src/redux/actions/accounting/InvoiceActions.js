@@ -1,46 +1,30 @@
-import {
-  INVOICE_LIST_DROPDOWN,
-  CHANGE_INVOICE_LIST_VIEW,
-  TOGGLE_INVOICE_SUMMARY,
-  GET_INVOICE_FAILURE,
-  GET_ALL_INVOICE,
-  GET_MY_INVOICE,
-  GET_OPEN_INVOICE,
-  GET_CLOSED_INVOICE,
-  GET_INVOICE_SUCCESS,
-  GET_SINGLE_INVOICE,
-  GET_SINGLE_INVOICE_SUCCESS,
-  CLEAR_SINGLE_INVOICE,
-  GET_INVOICE_SUMMARY,
-  GET_INVOICE_SUMMARY_SUCCESS,
-  GET_INVOICE_SUMMARY_FAILURE
-} from "Types";
+import * as types from 'Types'
 
 /**
  * Change List View
  */
 export const changeInvoiceView = newValue => ({
-  type: CHANGE_INVOICE_LIST_VIEW,
+  type: types.CHANGE_INVOICE_LIST_VIEW,
   payload: newValue
 });
 /**
  * Toggle DropDown
  */
 export const toggleInvoiceDropDown = () => ({
-  type: INVOICE_LIST_DROPDOWN
+  type: types.INVOICE_LIST_DROPDOWN
 });
 /**
  * Toggle Summary List
  */
 export const toggleInvoiceSummary = () => ({
-  type: TOGGLE_INVOICE_SUMMARY
+  type: types.TOGGLE_INVOICE_SUMMARY
 });
 
 /**
  * Get Invoice Failure
  */
 export const getInvoiceFailure = error => ({
-  type: GET_INVOICE_FAILURE,
+  type: types.GET_INVOICE_FAILURE,
   payload: error
 });
 
@@ -48,7 +32,7 @@ export const getInvoiceFailure = error => ({
  * Get Invoice Success
  */
 export const getInvoiceSuccess = data => ({
-  type: GET_INVOICE_SUCCESS,
+  type: types.GET_INVOICE_SUCCESS,
   payload: data
 });
 
@@ -56,56 +40,99 @@ export const getInvoiceSuccess = data => ({
  * Get All Invoice
  */
 export const getAllInvoice = () => ({
-  type: GET_ALL_INVOICE
+  type: types.GET_ALL_INVOICE
 });
 
 /**
  * Get My Invoice
  */
 export const getMyInvoice = () => ({
-  type: GET_MY_INVOICE
+  type: types.GET_MY_INVOICE
 });
 
 /**
  * Get Open Invoice
  */
 export const getOpenInvoice = () => ({
-  type: GET_OPEN_INVOICE
+  type: types.GET_OPEN_INVOICE
 });
 
 /**
  * Get Closed Invoice
  */
 export const getClosedInvoice = () => ({
-  type: GET_CLOSED_INVOICE
+  type: types.GET_CLOSED_INVOICE
 });
 
 /**
  * Get Single Invoice
  */
 export const getSingleInvoice = invID => ({
-  type: GET_SINGLE_INVOICE,
+  type: types.GET_SINGLE_INVOICE,
   payload: invID
 });
 export const getSingleInvoiceSuccess = data => ({
-  type: GET_SINGLE_INVOICE_SUCCESS,
+  type: types.GET_SINGLE_INVOICE_SUCCESS,
   payload: data
 });
 export const clearSingleInvoice = () => ({
-  type: CLEAR_SINGLE_INVOICE
+  type: types.CLEAR_SINGLE_INVOICE
 });
 
 /**
  * Get Invoice Summary
  */
 export const getInvoiceSummary = () => ({
-  type: GET_INVOICE_SUMMARY
+  type: types.GET_INVOICE_SUMMARY
 });
 export const getInvoiceSummarySuccess = data => ({
-  type: GET_INVOICE_SUMMARY_SUCCESS,
+  type: types.GET_INVOICE_SUMMARY_SUCCESS,
   payload: data
 });
 export const getInvoiceSummaryFailure = error => ({
-  type: GET_INVOICE_SUMMARY_FAILURE,
+  type: types.GET_INVOICE_SUMMARY_FAILURE,
   payload: error
 });
+
+
+/**
+ * Delete Quotation in DB
+ */
+export const deleteSingleInvoice = (item) => ({
+  type: types.DELETE_INVOICE,
+  payload: item
+});
+
+export const deleteSingleInvoiceSuccess = (item) => ({
+  type: types.DELETE_INVOICE_SUCCESS,
+  payload: item
+});
+
+export const deleteSingleInvoiceFailure = (item) => ({
+  type: types.DELETE_INVOICE_FAILURE,
+  payload: item
+});
+
+
+export const InvoiceHandleStateUpdate = (id, value) => ({
+  type: types.INVOICE_HANDLE_STATE_UPDATE,
+  payload: { id, value }
+});
+
+export const InvoiceHandleStateUpdateSuccess = (data) => ({
+  type: types.INVOICE_HANDLE_STATE_UPDATE_SUCCESS,
+  payload: data
+});
+
+export const InvoiceHandleStateUpdateFailure = (field, value) => ({
+  type: types.INVOICE_HANDLE_STATE_UPDATE_FAILURE,
+  payload: { field, value }
+});
+
+export const InvoiceHandleStateCreateNewVersion = (id, value) => ({
+  type: types.INVOICE_HANDLE_STATE_CREATE_NEW_VERSION,
+  payload: { id, value }
+});
+
+
+

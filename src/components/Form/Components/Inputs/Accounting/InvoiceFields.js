@@ -178,6 +178,18 @@ const InvoiceFields = ({currencyTable, handleChange, quotation, handleAttnTo, in
      
       <div className="col-md-6">
 
+        <div style={{display:'flex', flexDirection:'row'}}>
+          <FormBlock
+              label="Owner"
+              target={"owner"}
+              value={quotation.owner}
+              selectValues={users}
+              handleChange ={(e, value, target) => handleChange(e, value, target)}
+              required
+              accounting={true}
+              style={{width: '100%', borderBottom : '0px solid black'}}
+            />
+        </div>
 
         <div style={{display:'flex', flexDirection:'row'}}>
           <Label for="Select-1" className="fs-13 text-center" sm={2}>
@@ -221,19 +233,7 @@ const InvoiceFields = ({currencyTable, handleChange, quotation, handleAttnTo, in
             </TableRow>
          </FormGroup> */}
 
-        <FormTable>
-          <TableRow>
-          <FormBlock
-              label="Owner"
-              target={"owner"}
-              value={quotation.owner}
-              selectValues={users}
-              handleChange ={(e, value, target) => handleChange(e, value, target)}
-              required
-              accounting={true}
-            />
-          </TableRow>
-        </FormTable>
+     
 
 {/* 
         <AddressFormInput 

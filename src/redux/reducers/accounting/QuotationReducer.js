@@ -534,8 +534,12 @@ export default (state = INIT_STATE, action) => {
 
     case types.SUBMIT_QUOTATION_SUCCESS:
 
-      if (action.edit) {
-        NotificationManager.success("Your quotation has been successfully edited")
+    if (action.edit) {
+        if(action.types == "invoice"){
+          NotificationManager.success("Your invoice has been successfully edited")
+        } else{
+          NotificationManager.success("Your quotation has been successfully edited")
+        }
 
         return {
           ...state,
@@ -548,7 +552,7 @@ export default (state = INIT_STATE, action) => {
         };
 
       } else {
-        NotificationManager.success("New quotation submitted")
+        NotificationManager.success(action.payload)
         let initialItem = INIT_STATE.quotationForm.quotation
         return {
           ...state,
@@ -690,7 +694,9 @@ export default (state = INIT_STATE, action) => {
         };
     
     case types.HANDLE_STATE_UPDATE_SUCCESS:
+
         NotificationManager.success("Quotation has been converted successfully");
+
         return {
           ...state,
           quotationToView: { quotation: action.payload, loading: false }

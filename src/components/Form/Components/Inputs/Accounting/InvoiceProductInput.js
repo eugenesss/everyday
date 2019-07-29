@@ -23,7 +23,6 @@ const InvoiceProductInput = ({
   taxTable,
   disabled
 }) => {
-
   
   return (
     <React.Fragment>
@@ -197,7 +196,7 @@ const InvoiceProductInput = ({
              
 
 
-                <TableCell>{ccyFormat(row.amount)}</TableCell>
+                <TableCell>{row.amount? ccyFormat(row.amount) : 0 }</TableCell>
 
 
                 {!disabled && 

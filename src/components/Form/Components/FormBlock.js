@@ -14,7 +14,8 @@ const FormBlock = ({
   customTextField,
   required,
   empty,
-  accounting
+  accounting,
+  style
 }) => {
 
 
@@ -24,7 +25,7 @@ const FormBlock = ({
         {label}
         {required && <sup style={{ color: "red" }}>*</sup>}
       </TableCell>
-      <TableCell style={{ borderBottom: "none", width: "35%" }}>
+      <TableCell style={style? style :{borderBottom: "none", width: "35%" }}>
         {!empty &&
           (customTextField ? (
             customTextField

@@ -68,9 +68,9 @@ export const getClosedQuotation = () => ({
 /**
  * Get Single Quote
  */
-export const getSingleQuotation = (quoteID, edit) => ({
+export const getSingleQuotation = (quoteID, edit, type) => ({
   type: types.GET_SINGLE_QUOTATION,
-  payload: quoteID,
+  payload: {quoteID, type},
   edit: edit
 });
 export const getSingleQuotationSuccess = quoteData => ({
@@ -119,17 +119,18 @@ export const addNoteQuotationFailure = error => ({
 /**
  * New Quote
  */
-export const submitNewQuote = (item, products, edit) => ({
+export const submitNewQuote = (item, products, edit, type) => ({
   type: types.SUBMIT_QUOTATION,
-  payload: {item: item, products: products, edit: edit}
+  payload: {item: item, products: products, edit: edit, type: type}
   // payload: item
 
 });
 
-export const submitNewQuoteSuccess = (item, edit) => ({
+export const submitNewQuoteSuccess = (item, edit, type) => ({
   type: types.SUBMIT_QUOTATION_SUCCESS,
   payload: item,
-  edit: edit
+  edit: edit,
+  types : type
 });
 
 export const submitNewQuoteFailure = (item) => ({
@@ -200,9 +201,9 @@ export const handleDisTaxQuote = (field, value) => ({
 /**
  * Update State Control
  */
-export const HandleStateUpdate = (id, value) => ({
+export const HandleStateUpdate = (id, value, type) => ({
   type: types.HANDLE_STATE_UPDATE,
-  payload: { id, value }
+  payload: { id, value, type }
 });
 
 export const HandleStateUpdateSuccess = (data) => ({

@@ -14,6 +14,7 @@ import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSumma
 
 // List
 import InvoiceList from "Components/Accounting/Invoice/InvoiceList";
+import { newInvoice } from "Helpers/url/accounting";
 
 // Actions
 import {
@@ -25,12 +26,15 @@ import {
 } from "Actions";
 
 class acct_invoice extends Component {
+
   componentDidMount() {
     this.props.getAllInvoice();
     this.props.getInvoiceSummary();
   }
 
+
   render() {
+  
     const {
       dropdownOpen,
       options,
@@ -39,6 +43,8 @@ class acct_invoice extends Component {
       tableData,
       loading
     } = this.props.invoiceState.invoiceList;
+
+
     const { showSummary, summary } = this.props.invoiceState.invoiceSummary;
     return (
       <React.Fragment>
@@ -59,7 +65,7 @@ class acct_invoice extends Component {
               <ShowListSummaryButton action={this.props.toggleInvoiceSummary} />
             </div>
           }
-          createLink="/acct/new/invoice"
+          createLink={newInvoice}
         />
         {showSummary && <ListSummary summary={summary} />}
         <InvoiceList

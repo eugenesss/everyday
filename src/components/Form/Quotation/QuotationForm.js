@@ -62,7 +62,7 @@ class QuotationForm extends Component {
               Save Draft
             </Button> */}
             <Button onClick={() => {
-                this.props.submitNewQuote(quotation, products)
+                this.props.submitNewQuote(quotation, products, '', this.props.type)
               }} variant="contained" color="primary"  className="mr-10">
               Save
             </Button>

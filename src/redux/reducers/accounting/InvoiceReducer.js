@@ -1,21 +1,5 @@
 import { NotificationManager } from "react-notifications";
-import {
-  INVOICE_LIST_DROPDOWN,
-  CHANGE_INVOICE_LIST_VIEW,
-  TOGGLE_INVOICE_SUMMARY,
-  GET_INVOICE_FAILURE,
-  GET_INVOICE_SUCCESS,
-  GET_ALL_INVOICE,
-  GET_MY_INVOICE,
-  GET_OPEN_INVOICE,
-  GET_CLOSED_INVOICE,
-  GET_SINGLE_INVOICE,
-  GET_SINGLE_INVOICE_SUCCESS,
-  CLEAR_SINGLE_INVOICE,
-  GET_INVOICE_SUMMARY,
-  GET_INVOICE_SUMMARY_SUCCESS,
-  GET_INVOICE_SUMMARY_FAILURE
-} from "Types";
+import * as types from "Types";
 
 const INIT_STATE = {
   invoiceList: {
@@ -41,7 +25,7 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    case INVOICE_LIST_DROPDOWN:
+    case types.INVOICE_LIST_DROPDOWN:
       return {
         ...state,
         invoiceList: {
@@ -49,7 +33,7 @@ export default (state = INIT_STATE, action) => {
           dropdownOpen: !state.invoiceList.dropdownOpen
         }
       };
-    case CHANGE_INVOICE_LIST_VIEW:
+    case types.CHANGE_INVOICE_LIST_VIEW:
       if (action.payload == "My Invoices") {
         return {
           ...state,
@@ -75,7 +59,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Invoice Summary
      */
-    case TOGGLE_INVOICE_SUMMARY:
+    case types.TOGGLE_INVOICE_SUMMARY:
       return {
         ...state,
         invoiceSummary: {
@@ -83,7 +67,7 @@ export default (state = INIT_STATE, action) => {
           showSummary: !state.invoiceSummary.showSummary
         }
       };
-    case GET_INVOICE_SUMMARY:
+    case types.GET_INVOICE_SUMMARY:
       return {
         ...state,
         invoiceSummary: {
@@ -91,7 +75,7 @@ export default (state = INIT_STATE, action) => {
           loading: true
         }
       };
-    case GET_INVOICE_SUMMARY_SUCCESS:
+    case types.GET_INVOICE_SUMMARY_SUCCESS:
       return {
         ...state,
         invoiceSummary: {
@@ -100,7 +84,7 @@ export default (state = INIT_STATE, action) => {
           loading: false
         }
       };
-    case GET_INVOICE_SUMMARY_FAILURE:
+    case types.GET_INVOICE_SUMMARY_FAILURE:
       NotificationManager.warning("Error in fetching Invoice Summary");
       console.log(action.payload);
       return { ...state, invoiceSummary: INIT_STATE.invoiceSummary };
@@ -108,19 +92,19 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Quotes
      */
-    case GET_INVOICE_FAILURE:
+    case types.GET_INVOICE_FAILURE:
       NotificationManager.warning("Error in fetching Invoice Data");
       console.log(action.payload);
       return INIT_STATE;
-    case GET_ALL_INVOICE:
-    case GET_MY_INVOICE:
-    case GET_OPEN_INVOICE:
-    case GET_CLOSED_INVOICE:
+    case types.GET_ALL_INVOICE:
+    case types.GET_MY_INVOICE:
+    case types.GET_OPEN_INVOICE:
+    case types.GET_CLOSED_INVOICE:
       return {
         ...state,
         invoiceList: { ...state.invoiceList, loading: true }
       };
-    case GET_INVOICE_SUCCESS:
+    case types.GET_INVOICE_SUCCESS:
       return {
         ...state,
         invoiceList: {
@@ -133,12 +117,12 @@ export default (state = INIT_STATE, action) => {
     /**
      * Get Single Invoice
      */
-    case GET_SINGLE_INVOICE:
+    case types.GET_SINGLE_INVOICE:
       return {
         ...state,
         invoiceToView: { ...state.invoiceToView, loading: true }
       };
-    case GET_SINGLE_INVOICE_SUCCESS:
+    case types.GET_SINGLE_INVOICE_SUCCESS:
       return {
         ...state,
         invoiceToView: {
@@ -147,11 +131,67 @@ export default (state = INIT_STATE, action) => {
           invoice: action.payload
         }
       };
-    case CLEAR_SINGLE_INVOICE:
+    case types.CLEAR_SINGLE_INVOICE:
       return {
         ...state,
         invoiceToView: INIT_STATE.invoiceToView
       };
+
+
+
+    case types.DELETE_INVOICE:
+      // console.log(action.payload)
+      // NotificationManager.warning("Unable to submit quotation, please try again")
+      return {
+        ...state,
+        invoiceList: {
+          ...state.invoiceList,
+        }
+        
+      };
+
+    case types.DELETE_INVOICE_SUCCESS:
+      // console.log(action.payload)
+      NotificationManager.success("Invoice successfully deleted")
+      return {
+        ...state,
+        invoiceList: {
+          ...state.invoiceList,
+          deleted: true
+        },
+        invoiceToView: { loading: false, invoice: null }
+      };
+
+    case types.DELETE_INVOICE_FAILURE:
+      NotificationManager.error(action.payload)
+      return {
+        ...state,
+        invoiceList: {
+          ...state.invoiceList,
+        }
+      };
+
+    case types.INVOICE_HANDLE_STATE_UPDATE:
+      return {
+        ...state,
+        invoiceToView: { ...state.invoiceToView, loading: true }
+      };
+
+    case types.INVOICE_HANDLE_STATE_UPDATE_SUCCESS:
+      NotificationManager.success('Invoice state successfully confirmed')
+      return {
+        ...state,
+        invoiceToView: { invoice: action.payload, loading: false }
+      };
+
+    case types.INVOICE_HANDLE_STATE_UPDATE_FAILURE:
+      NotificationManager.error('Unable to convert the invoice')
+      return {
+        ...state,
+        invoiceToView: { ...state.invoiceToView, loading: false }
+      };
+
+
 
     default:
       return { ...state };

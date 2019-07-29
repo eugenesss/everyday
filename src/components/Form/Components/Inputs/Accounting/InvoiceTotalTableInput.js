@@ -9,19 +9,20 @@ function ccyFormat(num) {
 }
 
 const InvoiceTotalTableInput = ({ invoice }) => {
+
   return (
     <Table>
       <TableBody>
         <TableRow>
           <TableCell rowSpan={4} />
           <TableCell colSpan={2}>Subtotal</TableCell>
-          <TableCell align="right">{ccyFormat(invoice.subtotal)}</TableCell>
+          <TableCell align="right">{invoice.subtotal? ccyFormat(invoice.subtotal) : 0}</TableCell>
         </TableRow>
        
         <TableRow>
           <TableCell>Tax</TableCell>
           <TableCell align="right"></TableCell>
-          <TableCell align="right">{ccyFormat(invoice.tax_amount)}</TableCell>
+          <TableCell align="right">{invoice.tax_amount? ccyFormat(invoice.tax_amount):0}</TableCell>
         </TableRow>
 
   
@@ -36,7 +37,7 @@ const InvoiceTotalTableInput = ({ invoice }) => {
 
         <TableRow>
           <TableCell colSpan={2}>Total</TableCell>
-          <TableCell align="right">{ccyFormat(invoice.totalAmt)}</TableCell>
+          <TableCell align="right">{invoice.totalAmt? ccyFormat(invoice.totalAmt) : 0}</TableCell>
         </TableRow>
 
         {/* <TableRow>

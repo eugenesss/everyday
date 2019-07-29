@@ -2,11 +2,9 @@ import React, {Component} from 'react'
 import { connect } from "react-redux";
 import { getAllEvents } from "Actions";
 
-
 import Calendar from 'react-calendar'
 import DisplayEvents from './DisplayEvents'
 import Moment from 'moment';
-
 
 const numberOfDays = 6
 
@@ -18,9 +16,6 @@ class CalendarLayout extends Component {
 
 
     render() {
-      // console.log(new Date().toTimeString())
-      // console.log(new Date().toISOString())
-      // console.log(new Date().toISOString())
 
         return (
             <div style={{display:'flex', flexDirection:'column'}}>

@@ -17,16 +17,12 @@ function acctSwitcher() {
 
 
         {/* ------- /Invoice ------- */}
-        <Route
-          exact
-          path={url.invoicePage}
-          component={async.acct_invoice_component}
-        />
-        <Route
-          path={url.newInvoice}
-          component={async.acct_new_invoice_component}
-        />
-        <Route path={`${url.invoicePage}/:id`} component={async.view_invoice} />
+        <Route exact path={url.invoicePage} component={async.acct_invoice_component}/>
+        <Route path={url.newInvoice} component={async.acct_new_invoice_component}/>
+        <Route exact path={`${url.invoicePage}/:id`} component={async.view_invoice} />
+        <Route path={`${url.invoicePage}/:id/edit`} component={async.acct_edit_invoice}/>
+
+
 
         {/* ------- /Credit_Note ------- */}
         <Route

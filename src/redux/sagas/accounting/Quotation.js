@@ -66,7 +66,14 @@ const submitquoteSummaryRequest = async(item) => {
 
   }
 
-  const result = await api.post("/quotations", {data: quotationData});
+  console.log(item.payload.type)
+
+  let result = null
+  if(item.payload.type == "invoice"){
+    result = await api.post("/invoices", {data: quotationData});
+  } else {
+    result = await api.post("/quotations", {data: quotationData});
+  }
   return result.data;
 }
 
@@ -84,10 +91,15 @@ const submitEditQuoteSummaryRequest = async(item) => {
   quotationData.quotationline = quotationLine
   quotationData.duedate = duedate
   
-  const result = await api.patch(`/quotations/${quotationData.id}`, quotationData);
-  return result.data;
+  if(item.type == "invoice") {
+    const result = await api.patch(`/invoices/${quotationData.id}`, quotationData);
+    return result.data;
+  } else {
+    const result = await api.patch(`/quotations/${quotationData.id}`, quotationData);
+    return result.data;
+  }
+ 
 }
-
 
 
 const deleteQuotationfromDBRequest = async(item) => {
@@ -103,11 +115,9 @@ const addNoteQuotationRequest = async (id, note) => {
 
 
 const patchStateQuotationRequest = async (payload) => {
-  const result = await api.patch(`/quotations/${payload.id}`, {state:payload.value});
+  const result = await api.post(`/quotations/updateStatus/`, {data: payload});
   return result.data;
 };
-
-
 
 const createNewVersionStateQuotationRequest = async (payload) => {
   const result = await api.post(`/quotations/convert`, {data: payload});
@@ -119,7 +129,17 @@ const revertPreviousVersionStateQuotationRequest = async (payload) => {
   return result.data;
 };
 
+const getQuoteRequest = async (quoteID) => {
 
+  if(quoteID.type == "invoice"){
+    const result = await api.get(`/invoices/${quoteID.quoteID}`);
+    return result.data;
+  } else {
+    const result = await api.get(`/quotations/${quoteID.quoteID}`);
+    return result.data;
+  }
+  
+};
 
 
 
@@ -140,10 +160,7 @@ const getClosedQuoteRequest = async () => {
   const result = quoteList;
   return result;
 };
-const getQuoteRequest = async (quoteID) => {
-  const result = await api.get(`/quotations/${quoteID}`);
-  return result.data;
-};
+
 const getQuoteSummaryRequest = async () => {
   const result = leadSummary;
   return result;
@@ -213,7 +230,7 @@ function* getQuoteSummaryFromDB() {
 
 function* submitQuoteSummarytoDB(item) {
 
-
+  console.log(item)
   if(item.payload.edit) {
 
     try {
@@ -223,7 +240,7 @@ function* submitQuoteSummarytoDB(item) {
       yield put(Actions.submitNewQuoteFailure(error));
     }
   
-  } else{
+  } else {
 
     try {
       const data = yield call(submitquoteSummaryRequest, item);
@@ -231,9 +248,24 @@ function* submitQuoteSummarytoDB(item) {
         var error = new Error();
         throw error
       }
-      yield put(Actions.submitNewQuoteSuccess(data[1]));
+
+      let message = ''
+      if(item.payload.type == "invoice"){
+        message = "New invoice has been successfully created"
+      } else {
+        message = "New quotation has been successfully created"
+      }
+      yield put(Actions.submitNewQuoteSuccess(message));
     } catch (error) {
-      yield put(Actions.submitNewQuoteFailure(error));
+
+      let message = ''
+      if(item.payload.type == "invoice"){
+        message = "Unable to create new invoice, please try again"
+      } else {
+        message = "Unable to create new quotation, please try again"
+      }
+
+      yield put(Actions.submitNewQuoteFailure(message));
     }
 
   }
@@ -273,7 +305,7 @@ function* addQuotationNoteToDB({ payload }) {
 function* patchStateQuotation({ payload }) {
   try {
     const data = yield call(patchStateQuotationRequest, payload);
-    yield put(Actions.HandleStateUpdateSuccess(data));
+    yield put(Actions.HandleStateUpdateSuccess(data.data));
   } catch (error) {
     yield put(Actions.HandleStateUpdateFailure(error));
   }
