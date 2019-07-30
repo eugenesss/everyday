@@ -9,6 +9,15 @@ import AppConfig from "Constants/AppConfig";
 import RegisterSteps from "./Components/RegisterSteps";
 
 class RegisterPage extends Component {
+
+
+  routeChange = () => {
+    let path = `/login`;
+    this.props.history.push(path);
+  }
+
+
+
   render() {
     const { loading } = this.props;
     return (
@@ -35,7 +44,9 @@ class RegisterPage extends Component {
 
                 <div className="register_module">
                   <div style={{overflow:'auto', width: '100%'}}>
-                    <RegisterSteps />
+                    <RegisterSteps
+                      history={this.routeChange}
+                    />
                   </div>
                 </div>
 

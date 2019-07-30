@@ -32,7 +32,7 @@ const RegisterForm = props => {
         <FormGroup row className="has-wrapper" style={{display:'flex', justifyContent:'center', marginBottom: '1rem'}}>
 
           <div>
-            <Label for="firstName" className="fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
+            <Label for="firstName" className="mb-0 text-black fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
               First name
             </Label>
             <Col sm={12} >
@@ -41,7 +41,7 @@ const RegisterForm = props => {
                 value={firstName}
                 name="firstName"
                 id="firstName"
-                className="has-input input-md"
+                className="has-input input-md mb-0 text-black"
                 placeholder="Your first name"
                 bsSize="sm"
                 onChange={e =>
@@ -55,7 +55,7 @@ const RegisterForm = props => {
           </div>
 
           <div>
-            <Label for="lastName" className="fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
+            <Label for="lastName" className=" mb-0 text-black fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
               Last name
             </Label>
             <Col sm={12}>
@@ -64,7 +64,7 @@ const RegisterForm = props => {
                 value={lastName}
                 name="lastName"
                 id="lastName"
-                className="has-input input-md"
+                className="has-input input-md mb-0 text-black"
                 placeholder="Your last name"
                 bsSize="sm"
                 onChange={e =>{
@@ -83,7 +83,7 @@ const RegisterForm = props => {
         <FormGroup row className="has-wrapper" style={{display:'flex', justifyContent:'center', marginBottom: '1rem'}}>
 
           <div>
-            <Label for="lastName" className="fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
+            <Label for="lastName" className="mb-0 text-black  fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
               Email
             </Label>
             <Col sm={12}>
@@ -93,7 +93,7 @@ const RegisterForm = props => {
                 value={email}
                 name="email"
                 id="email"
-                className="has-input input-md"
+                className="has-input input-md mb-0 text-black"
                 placeholder="Email address"
                 bsSize="sm"
                 onChange={e => {
@@ -113,7 +113,7 @@ const RegisterForm = props => {
           </div>
 
           <div>
-            <Label for="lastName" className="fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
+            <Label for="lastName" className="mb-0 text-black fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
               Company name
             </Label>
             <Col sm={12}>
@@ -122,7 +122,7 @@ const RegisterForm = props => {
                 value={name}
                 name="companyName"
                 id="companyName"
-                className="has-input input-md"
+                className="has-input input-md mb-0 text-black"
                 placeholder="Who do you work with?"
                 bsSize="sm"
                 onChange={e =>
@@ -141,7 +141,7 @@ const RegisterForm = props => {
         <FormGroup row className="has-wrapper" style={{display:'flex', justifyContent:'center', marginBottom: '1rem'}}>
 
           <div>
-            <Label for="lastName" className="fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
+            <Label for="lastName" className="mb-0 text-black fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
               Password
             </Label>
             <Col sm={12}>
@@ -151,7 +151,7 @@ const RegisterForm = props => {
                 value={password}
                 name="password"
                 id="password"
-                className="has-input input-md"
+                className="has-input input-md mb-0 text-black"
                 placeholder="Password"
                 bsSize="sm"
                 onChange={e => {
@@ -166,7 +166,7 @@ const RegisterForm = props => {
           </div>
 
           <div>
-            <Label for="lastName" className="fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
+            <Label for="lastName" className="mb-0 text-black fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
               Retype password
             </Label>
             <Col sm={12} style={{}}>
@@ -176,7 +176,7 @@ const RegisterForm = props => {
                 defaultValue={repassword}
                 name="repassword"
                 id="rePassword"
-                className="has-input input-md"
+                className="has-input input-md mb-0 text-black"
                 placeholder="Retype password"
                 bsSize="sm"
                 onChange={e => {

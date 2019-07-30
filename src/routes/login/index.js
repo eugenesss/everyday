@@ -81,14 +81,13 @@ class Signin extends Component {
           
                        
               <div className="login_module">
-                <div className="session-body text-center" style={{paddingLeft: 50, paddingRight: 50}} >
+                <div className="session-body text-center" style={{paddingLeft: 40, paddingRight: 40, width: '100%', overflow: 'auto'}} >
 
-      
                     {/* <h2 className="font-weight-bold text-white">
                       Sign in to {AppConfig.brandName}
                     </h2> */}
                     <p className="mb-0 text-black" style={{textAlign:'left', paddingBottom: 10, fontSize: 20}}>
-                      Get your free Everyday account now.
+                      Get your free<br/>Everyday account now.
                     </p>
                     <p className="session-head mb-0 text-black" style={{textAlign:'left', fontWeight: "300", paddingBottom: 20, fontSize: 12, color: 'rgba(0,0,0,0.4)'}}>
                       Try Everyday Business free for 30 days.<br/>Everyday basic free for unlimited time
@@ -301,12 +300,35 @@ class Signin extends Component {
                     src='https://ak5.picdn.net/shutterstock/videos/1015322305/preview/stock-footage-creative-business-team-having-meeting-at-the-office-successful-deal-business-partners-concluding.mp4'
                     loop="true" autoplay="true" type="video/mp4"
                     style={{
-                      height: '100%',
+                      minHeight: '100%',
+                      minWidth: '100%',
                       position: "absolute",
                       top: 0,
                       bottom: 0,
+                      overflow:'hidden'
+                     
                     }}
                   />
+
+                  <div style={{position:'relative', height: '100%', width:'100%', backgroundColor: 'rgba(0,0,0,0.5)', display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
+
+                    <div style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
+                      <h1 className="mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
+                        Make your life easier
+                      </h1>
+                      <h1 className=" mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
+                        No more papers
+                      </h1>
+
+                      <h1 className="mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
+                        Digitise your workflow
+                      </h1>
+                      <h1 className=" mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
+                        Goodbye to papers
+                      </h1>
+                    </div>
+
+                  </div>
               </div>
 
 

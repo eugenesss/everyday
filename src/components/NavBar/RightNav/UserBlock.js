@@ -12,7 +12,6 @@ import { Person } from "@material-ui/icons";
 // import Moment from "moment";
 // import UserAvatar from "Components/User/UserAvatar";
 import { RctCard } from "Components/RctCard";
-import Auth from '../../Auth/Auth'
 
 import { logoutUser } from "Actions";
 
