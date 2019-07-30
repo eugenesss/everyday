@@ -10,11 +10,17 @@ const theme = createMuiTheme({
       main: AppConfig.themeColors.primary
     },
     secondary: {
-      main: AppConfig.themeColors.warning
+      main: AppConfig.themeColors.secondary
     }
   },
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
+    fontFamily: "Lato"
+  },
+  MuiPaper: {
+    rounded: {
+      borderRadius: "15px"
+    }
   }
 });
 

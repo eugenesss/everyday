@@ -5,9 +5,7 @@ import React, { Component } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 
 // Components
-import Header from "Components/Header/Header";
-import Footer from "Components/Footer/Footer";
-import HorizontalMenu from "Components/HorizontalMenu/HorizontalMenu";
+import NavBar from "Components/NavBar";
 
 class RctHorizontalLayout extends Component {
   renderPage() {
@@ -34,12 +32,9 @@ class RctHorizontalLayout extends Component {
           <div className="rct-page-wrapper">
             <div className="rct-app-content">
               <div className="app-header">
-                <Header />
+                <NavBar />
               </div>
-              <div className="rct-page">
-                <HorizontalMenu />
-                {this.renderPage()}
-              </div>
+              <div className="rct-page">{this.renderPage()}</div>
             </div>
           </div>
         </div>

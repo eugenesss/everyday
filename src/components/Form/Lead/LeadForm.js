@@ -112,6 +112,7 @@ class LeadForm extends Component {
             onSubmit={this.onSubmit}
             onSaveNew={this.onSaveNew}
             disabled={this.checkDisabled()}
+            edit={edit}
           />
           <FormTable>
             <TableRow>

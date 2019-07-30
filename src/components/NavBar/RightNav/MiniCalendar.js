@@ -36,7 +36,7 @@ class MiniCalendar extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    //const { classes } = this.props;
     return (
       <UncontrolledDropdown
         nav
@@ -44,8 +44,8 @@ class MiniCalendar extends Component {
       >
         <DropdownToggle nav className="p-0">
           <Tooltip title="Calendar" placement="bottom">
-            <IconButton className="text-white" aria-label="calendar">
-              <i className={"zmdi zmdi-calendar " + classes.icon} />
+            <IconButton aria-label="calendar">
+              <i className={"zmdi zmdi-calendar "} />
             </IconButton>
           </Tooltip>
         </DropdownToggle>
@@ -60,7 +60,7 @@ class MiniCalendar extends Component {
               </span>
             </div>
             <ReactCalendar
-              className={classes.calendar}
+              //className={classes.calendar}
               value={this.state.selectedDate}
               onClickDay={e => {
                 this.handleOnClickDay(e);
@@ -73,9 +73,9 @@ class MiniCalendar extends Component {
   }
 }
 
-MiniCalendar.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+// MiniCalendar.propTypes = {
+//   classes: PropTypes.object.isRequired
+// };
 
 export default withRouter(
   connect(
