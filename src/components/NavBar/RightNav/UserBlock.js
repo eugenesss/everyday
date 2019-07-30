@@ -7,6 +7,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+import { Person } from "@material-ui/icons";
 
 // import Moment from "moment";
 // import UserAvatar from "Components/User/UserAvatar";
@@ -14,7 +15,7 @@ import { RctCard } from "Components/RctCard";
 
 import { logoutUser } from "Actions";
 
-import Auth from '../../Auth/Auth'
+import Auth from "../../../Auth/Auth";
 
 class UserBlock extends Component {
   state = {
@@ -26,14 +27,14 @@ class UserBlock extends Component {
   }
 
   render() {
-    const { location, user, classes } = this.props;
+    const { user } = this.props;
     const { buttonLoading } = this.state;
     return (
       <UncontrolledDropdown nav className="list-inline-item cart-dropdown">
         <DropdownToggle nav className="p-0">
           <Tooltip title="User" placement="bottom">
-            <IconButton className="text-white" aria-label="user">
-              <i className={"zmdi zmdi-face " + classes.icon} />
+            <IconButton aria-label="user">
+              <Person style={{ fontSize: "20px" }} />
             </IconButton>
           </Tooltip>
         </DropdownToggle>
@@ -82,9 +83,10 @@ class UserBlock extends Component {
                               className="btn bg-danger text-white"
                               disabled={buttonLoading}
                               onClick={() => {
-                                const token = new Auth().retrieveAccessToken()
+                                const token = new Auth().retrieveAccessToken();
                                 this.props.logoutUser(token);
-                              }}>
+                              }}
+                            >
                               Logout
                               {buttonLoading && (
                                 <CircularProgress
@@ -117,9 +119,6 @@ const mapStateToProps = ({ settings, authUser }) => {
 export default withRouter(
   connect(
     mapStateToProps,
-    {logoutUser}
+    { logoutUser }
   )(UserBlock)
 );
-
-
-

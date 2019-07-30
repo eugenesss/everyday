@@ -24,8 +24,7 @@
 }
 .rct-block {
   background-color: $block-bg;
-  // border-radius: $block-border-radius;
-  border-radius: 0;
+  border-radius: $block-border-radius;
   box-shadow: $block-shadow;
   border: $block-border;
   transition: $block-transition;

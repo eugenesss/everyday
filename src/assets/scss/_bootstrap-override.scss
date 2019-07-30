@@ -36,19 +36,17 @@ $grays: map-merge(
   $grays
 );
 
-$blue: #1482af !default; //Manage Primary Color
-$teal: #fac257 !default; // Manage Secondary Color
-$cyan: #125b96 !default; //Manage Info Color
-$green: #61ce61 !default; //Manage Success Color
-$yellow: #e5aa4a !default; //Manage Warning Color
-$red: #d15d5d !default; //Manage Danger Color
+$blue: #1e4e94 !default;
+$teal: #fac257 !default;
+$cyan: #125b96 !default;
+$green: #22ad83 !default;
+$yellow: #e5aa4a !default;
+$red: #d15d5d !default;
 
 $purple: #564fc1 !default;
-$orange: #d46b08 !default; // Manage Orange Color
+$orange: #ff952e !default;
 $indigo: #174176 !default;
 $pink: #ff2b72 !default;
-$everydayDefault: #e46464 !default;
-$everydaySecondary: #fac257 !default;
 
 $colors: () !default;
 $colors: map-merge(
@@ -70,23 +68,21 @@ $colors: map-merge(
   $colors
 );
 
-$primary: $blue !default;
-$secondary: $teal !default;
+$primary: $orange !default;
+$secondary: $blue !default;
 $success: $green !default;
 $info: $cyan !default;
 $warning: $yellow !default;
 $danger: $red !default;
 $light: $gray-100 !default;
 $dark: $gray-900 !default;
-$orange: $orange !default;
+$teal: $teal !default;
 $purple: $purple !default;
-$everyday: $everydayDefault !default;
-$everydaySec: $everydaySecondary !default;
 
 $theme-colors: () !default;
 $theme-colors: map-merge(
   (
-    "primary": $primary,
+    "primary": $orange,
     "secondary": $secondary,
     "success": $success,
     "info": $info,
@@ -94,10 +90,8 @@ $theme-colors: map-merge(
     "danger": $danger,
     "light": $light,
     "dark": $dark,
-    "orange": $orange,
-    "purple": $purple,
-    "everyday": $everyday,
-    "everyday-sec": $everydaySec
+    "teal": $teal,
+    "purple": $purple
   ),
   $theme-colors
 );
@@ -271,11 +265,10 @@ $transition-collapse: height 0.35s ease !default;
 // Font, line-height, and color for body text, headings, and more.
 
 // stylelint-disable value-keyword-case
-$font-family-custom: "Roboto", sans-serif !default;
 $font-family-sans-serif: "Heebo", sans-serif;
 $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   "Liberation Mono", "Courier New", monospace !default;
-$font-family-base: $font-family-custom !default;
+$font-family-base: "Lato", sans-serif !default;
 // stylelint-enable value-keyword-case
 
 $font-size-base: 1rem !default; // Assumes the browser default, typically `16px`

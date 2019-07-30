@@ -1,13 +1,13 @@
 import React from "react";
 import MatButton from "@material-ui/core/Button";
 
-const FormSubmitResetButtons = ({ onSubmit, onSaveNew, disabled }) => {
+const FormSubmitResetButtons = ({ onSubmit, onSaveNew, disabled, edit }) => {
   return (
     <div className="row mb-30">
       <div className="col-md-10" />
       <div className="col-md-2 text-right">
         <div className="d-block">
-          {onSaveNew && (
+          {!edit && onSaveNew && (
             <MatButton
               variant="contained"
               onClick={() => onSaveNew()}

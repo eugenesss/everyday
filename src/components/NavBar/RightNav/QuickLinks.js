@@ -20,7 +20,7 @@ const QuickLinks = ({ location }) => (
     <DropdownToggle nav className="p-0">
       <Tooltip title="Quick Links" placement="bottom">
         <IconButton aria-label="bell">
-          <i className="zmdi zmdi-apps text-white" />
+          <i className="zmdi zmdi-apps" />
         </IconButton>
       </Tooltip>
     </DropdownToggle>
