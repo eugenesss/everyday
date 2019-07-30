@@ -304,35 +304,35 @@ class RegisterSteps extends React.Component {
               </div>
 
               <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
-              <Fab
-                variant="extended"
-                className="text-white"
-                size="medium"
-                style={{
-                  backgroundColor: AppConfig.themeColors.primary,
-                  marginBottom: "1.5rem",
-                  marginRight: 15,
-                }}
-                type="submit"
-                onClick={this.handleBack}
-              >
-                <span style={{width: 80, }}>Back</span>
-              </Fab>
+                  <Fab
+                    variant="extended"
+                    className="text-white"
+                    size="medium"
+                    style={{
+                      backgroundColor: AppConfig.themeColors.primary,
+                      marginBottom: "1.5rem",
+                      marginRight: 15,
+                    }}
+                    type="submit"
+                    onClick={this.handleBack}
+                  >
+                    <span style={{width: 80, }}>Back</span>
+                  </Fab>
 
-              <Fab
-                variant="extended"
-                className="text-white"
-                size="medium"
-                style={{
-                  backgroundColor: AppConfig.themeColors.primary,
-                  marginBottom: "1.5rem",
-                  marginLeft: 15
-                }}
-                type="submit"
-                onClick={this.handleNext}
-              >
-                <span style={{width: 80, }}>Next</span>
-              </Fab>
+                  <Fab
+                    variant="extended"
+                    className="text-white"
+                    size="medium"
+                    style={{
+                      backgroundColor: AppConfig.themeColors.primary,
+                      marginBottom: "1.5rem",
+                      marginLeft: 15
+                    }}
+                    type="submit"
+                    onClick={this.handleNext}
+                  >
+                    <span style={{width: 80, }}>Next</span>
+                  </Fab>
               </div>
           </div>
         )
