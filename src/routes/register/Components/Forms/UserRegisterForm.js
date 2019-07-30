@@ -29,135 +29,155 @@ const RegisterForm = props => {
   return (
     <React.Fragment>
       <Form>
-        <FormGroup row className="has-wrapper">
-          <Label for="firstName" className="fs-13 text-right" sm={2}>
-            First Name
-          </Label>
-          <Col sm={4}>
-            <Input
-              value={firstName}
-              name="firstName"
-              id="firstName"
-              className="has-input input-md"
-              placeholder="Your Good Name"
-              bsSize="sm"
-              onChange={e =>
-                props.handleRegForm("firstName", e.target.value, "userInfo")
-              }
-            />
-            <span className="has-icon" style={{ top: "8px" }}>
-              <i className="ti-user" />
-            </span>
-          </Col>
-          <Label for="lastName" className="fs-13 text-right" sm={2}>
-            Last Name
-          </Label>
-          <Col sm={4}>
-            <Input
-              value={lastName}
-              name="lastName"
-              id="lastName"
-              className="has-input input-md"
-              placeholder="Your Last Name"
-              bsSize="sm"
-              onChange={e =>{
-                props.handleRegForm("lastName", e.target.value, "userInfo")
-              }}
-            />
-            <span className="has-icon" style={{ top: "8px" }}>
-              <i className="ti-user" />
-            </span>
-          </Col>
-          <Col sm={1} />
-        </FormGroup>
-        <FormGroup row className="has-wrapper">
-          <Label for="lastName" className="fs-13 text-right" sm={2}>
-            Email
-          </Label>
-          <Col sm={4}>
-            <Input
-              type="email"
-              value={email}
-              name="email"
-              id="email"
-              className="has-input input-md"
-              placeholder="Email Address"
-              bsSize="sm"
-              onChange={e => {
-                props.handleRegForm("email", e.target.value)
-              }}
-              onBlur={() => validateEmail(email)}
-              valid={ emailState === 'has-success' }
-              invalid={ emailState === 'has-danger' }
-            />
-            <span className="has-icon" style={{ top: "8px" }}>
-              <i className="ti-email" />
-            </span>
-  
-            <FormFeedback >Oh noes! You need to input a valid email addresss!</FormFeedback>
-            <FormFeedback valid>Sweet! Great email you have there!</FormFeedback>
-    
-          </Col>
-         
+        <FormGroup row className="has-wrapper" style={{display:'flex', justifyContent:'center', marginBottom: '1rem'}}>
 
-          <Label for="lastName" className="fs-13 text-right" sm={2}>
-            Company Name
-          </Label>
-          <Col sm={4}>
-            <Input
-              value={name}
-              name="companyName"
-              id="companyName"
-              className="has-input input-md"
-              placeholder="Who do you work for?"
-              bsSize="sm"
-              onChange={e =>
-                props.handleRegForm("name", e.target.value, "companyInfo")
-              }
-            />
-            <span className="has-icon" style={{ top: "8px" }}>
-              <i className="ti-briefcase" />
-            </span>
-            {/* <FormText>Example help text that remains unchanged.</FormText> */}
-          </Col>
-        </FormGroup>
-
-        <FormGroup row className="has-wrapper">
-          <Label for="lastName" className="fs-13 text-right" sm={2}>
-            Password
-          </Label>
-          <Col sm={4}>
-            <Input
-              type="password"
-              value={password}
-              name="password"
-              id="password"
-              className="has-input input-md"
-              placeholder="Password"
-              bsSize="sm"
-              onChange={e => {
-                props.handleRegForm("password", e.target.value)
-                validatePassword(e.target.value, repassword)
-              }}
-            />
-            <span className="has-icon" style={{ top: "8px" }}>
-              <i className="ti-lock" />
-            </span>
-          </Col>
-        </FormGroup>
-        {password && (
-          <FormGroup row className="has-wrapper">
-            <Label for="lastName" className="fs-13 text-right" sm={2}>
-              Re Enter Password
+          <div>
+            <Label for="firstName" className="fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
+              First name
             </Label>
-            <Col sm={4}>
+            <Col sm={12} >
               <Input
+                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10}}
+                value={firstName}
+                name="firstName"
+                id="firstName"
+                className="has-input input-md"
+                placeholder="Your first name"
+                bsSize="sm"
+                onChange={e =>
+                  props.handleRegForm("firstName", e.target.value, "userInfo")
+                }
+              />
+              <span className="has-icon" style={{ top: "8px" }}>
+                <i className="ti-user" />
+              </span>
+            </Col>
+          </div>
+
+          <div>
+            <Label for="lastName" className="fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
+              Last name
+            </Label>
+            <Col sm={12}>
+              <Input
+                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10}}
+                value={lastName}
+                name="lastName"
+                id="lastName"
+                className="has-input input-md"
+                placeholder="Your last name"
+                bsSize="sm"
+                onChange={e =>{
+                  props.handleRegForm("lastName", e.target.value, "userInfo")
+                }}
+              />
+              <span className="has-icon" style={{ top: "8px" }}>
+                <i className="ti-user" />
+              </span>
+            </Col>
+          </div>
+
+
+        </FormGroup>
+        
+        <FormGroup row className="has-wrapper" style={{display:'flex', justifyContent:'center', marginBottom: '1rem'}}>
+
+          <div>
+            <Label for="lastName" className="fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
+              Email
+            </Label>
+            <Col sm={12}>
+              <Input
+                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10}}
+                type="email"
+                value={email}
+                name="email"
+                id="email"
+                className="has-input input-md"
+                placeholder="Email address"
+                bsSize="sm"
+                onChange={e => {
+                  props.handleRegForm("email", e.target.value)
+                }}
+                onBlur={() => validateEmail(email)}
+                valid={ emailState === 'has-success' }
+                invalid={ emailState === 'has-danger' }
+              />
+              <span className="has-icon" style={{ top: "8px" }}>
+                <i className="ti-email" />
+              </span>
+    
+              <FormFeedback>Need a valid email addresss!</FormFeedback>
+              <FormFeedback valid>Tasty email you have there!</FormFeedback>
+            </Col>
+          </div>
+
+          <div>
+            <Label for="lastName" className="fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
+              Company name
+            </Label>
+            <Col sm={12}>
+              <Input
+                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10}}
+                value={name}
+                name="companyName"
+                id="companyName"
+                className="has-input input-md"
+                placeholder="Who do you work with?"
+                bsSize="sm"
+                onChange={e =>
+                  props.handleRegForm("name", e.target.value, "companyInfo")
+                }
+              />
+              <span className="has-icon" style={{ top: "8px" }}>
+                <i className="ti-briefcase" />
+              </span>
+              {/* <FormText>Example help text that remains unchanged.</FormText> */}
+            </Col>
+          </div>
+        </FormGroup>
+
+
+        <FormGroup row className="has-wrapper" style={{display:'flex', justifyContent:'center', marginBottom: '1rem'}}>
+
+          <div>
+            <Label for="lastName" className="fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
+              Password
+            </Label>
+            <Col sm={12}>
+              <Input
+                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10}}
+                type="password"
+                value={password}
+                name="password"
+                id="password"
+                className="has-input input-md"
+                placeholder="Password"
+                bsSize="sm"
+                onChange={e => {
+                  props.handleRegForm("password", e.target.value)
+                  validatePassword(e.target.value, repassword)
+                }}
+              />
+              <span className="has-icon" style={{ top: "8px" }}>
+                <i className="ti-lock" />
+              </span>
+            </Col>
+          </div>
+
+          <div>
+            <Label for="lastName" className="fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
+              Retype password
+            </Label>
+            <Col sm={12} style={{}}>
+              <Input
+                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10}}
                 type="password"
                 defaultValue={repassword}
                 name="repassword"
                 id="rePassword"
                 className="has-input input-md"
-                placeholder="Re-enter Password"
+                placeholder="Retype password"
                 bsSize="sm"
                 onChange={e => {
                   props.handleRegForm("repassword", e.target.value)
@@ -172,8 +192,12 @@ const RegisterForm = props => {
               <FormFeedback >Oh noes! The password needs to match</FormFeedback>
               <FormFeedback valid>Sweet! The password match!</FormFeedback>
             </Col>
-          </FormGroup>
-        )}
+          </div>
+          
+        </FormGroup>
+
+       
+
       </Form>
     </React.Fragment>
   );

@@ -1246,3 +1246,103 @@ figure.img-wrapper {
     }
   }
 }
+
+
+
+
+.login_index {
+  height: 100%;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  flex: 1;
+  background-color: white;
+}
+
+.plan_card {
+  border :1px solid rgba(0, 0, 0, 0.02); 
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+@media (max-width: 767px) {
+  
+  .login_module{
+    flex: 1;
+    flex-direction: column;
+    height: 100%;
+    border-right-width: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 6px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .login_placeholder{
+    display: none;
+  }
+
+  .register_placeholder{
+    display: none;
+  }
+
+  .register_module{
+    flex:1;
+    flex-direction: column;
+    height: 100%;
+    border-right-width: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 6px 20px rgba(0, 0, 0, 0.08);
+
+  }
+
+}
+
+@media (min-width: 768px){
+  .login_module{
+    flex: 0.4;
+    flex-direction: column;
+    height: 100%;
+    border-right-width: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 6px 20px rgba(0, 0, 0, 0.08);
+    background-color: white;
+    z-index: 1;
+  }
+
+  .login_placeholder{
+    flex: 0.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%
+  }
+
+
+  .register_placeholder{
+    flex: 0.4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%
+  }
+
+  .register_module{
+    flex:0.6;
+    flex-direction: column;
+    height: 100%;
+    border-right-width: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 6px 20px rgba(0, 0, 0, 0.08);
+    background-color: white;
+    z-index: 1;
+  }
+}

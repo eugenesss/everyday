@@ -113,10 +113,10 @@ class RctCollapsibleCard extends Component {
           )}
           <Collapse isOpen={collapse}>
             <div
-              className={classnames(
-                contentCustomClasses ? contentCustomClasses : "",
-                { "rct-block-content": !fullBlock, "rct-full-block": fullBlock }
-              )}
+              // className={classnames(
+              //   contentCustomClasses ? contentCustomClasses : "",
+              //   { "rct-block-content": !fullBlock, "rct-full-block": fullBlock }
+              // )}
             >
               {children}
             </div>
