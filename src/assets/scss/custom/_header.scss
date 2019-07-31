@@ -7,9 +7,14 @@
     box-shadow: 0px 1px 10px -1px rgba(0, 0, 0, 0.1) !important;
     .site-logo {
       padding: 0.75rem 2rem 0.75rem 0;
+      width: $navbar-icon-width;
     }
     .navbar-left {
       margin-left: 0.85rem;
+    }
+    .app-bar-right {
+      text-align: right;
+      min-width: $navbar-icon-width;
     }
     .cart-icon {
       .dropdown-menu {

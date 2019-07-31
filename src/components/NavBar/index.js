@@ -15,8 +15,8 @@ import UserBlock from "./RightNav/UserBlock";
 import MiniCalendar from "./RightNav/MiniCalendar";
 
 // Menu
-import MainMenu from "./Menu/MainNav";
-import SubNav from "./Menu/SubNav";
+import MainMenu from "./Menu/MainMenu";
+import SubMenu from "./Menu/SubMenu";
 
 function NavBar(props) {
   function getChildRoute() {
@@ -40,7 +40,7 @@ function NavBar(props) {
             </Link>
           </div>
           <MainMenu location={location} navLinks={navLinks} />
-          <ul className="navbar-right list-inline mb-0">
+          <ul className="navbar-right app-bar-right list-inline mb-0">
             {/* <QuickAdd />
             <MiniCalendar /> */}
             <li className="list-inline-item">
@@ -56,7 +56,7 @@ function NavBar(props) {
           </ul>
         </Toolbar>
       </AppBar>
-      <SubNav childRoutes={getChildRoute()} />
+      <SubMenu childRoutes={getChildRoute()} />
     </React.Fragment>
   );
 }

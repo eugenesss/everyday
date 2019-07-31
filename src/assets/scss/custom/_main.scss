@@ -99,6 +99,7 @@
 /*========== Page Breadcrumb ============*/
 .page-title {
   margin-bottom: 1rem;
+  //padding: 0px 24px;
   .breadcrumb {
     margin-bottom: 0;
   }
@@ -123,15 +124,3 @@
     }
   }
 }
-
-// .row-calander-container{
-// 	display: flex;
-// 	flex-direction: row !important;
-// }
-
-// @media (max-width: 1544px) {
-// 	.row-calander-container{
-// 		display: flex;
-// 		flex-direction: column !important;
-// 	}
-// }

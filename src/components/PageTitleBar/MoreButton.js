@@ -4,7 +4,7 @@ import { Fab } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
-function SimpleMenu(props) {
+function MoreButton(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   function handleClick(event) {
@@ -56,4 +56,4 @@ function SimpleMenu(props) {
   );
 }
 
-export default SimpleMenu;
+export default MoreButton;

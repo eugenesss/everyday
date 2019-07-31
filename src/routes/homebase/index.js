@@ -11,25 +11,23 @@ export default class Homebase extends Component {
   render() {
     const { match } = this.props;
     return (
-      <div className="saas-dashboard">
+      <React.Fragment>
         <Helmet>
           <title>Everyday | Homebase</title>
           <meta name="description" content="Everyday System" />
         </Helmet>
         <PageTitleBar title="Homebase" match={match} />
 
-        <div style={{ padding: 21 }}>
-          <CrmSummary />
-          <div className="row">
-            <div className="col-8">
-              <UntouchedLeadsTable />
-            </div>
-            <div className="col-4">
-              <CalendarLayout />
-            </div>
+        <CrmSummary />
+        <div className="row">
+          <div className="col-8">
+            <UntouchedLeadsTable />
+          </div>
+          <div className="col-4">
+            <CalendarLayout />
           </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-function MainNav(props) {
+function MainMenu(props) {
   const { location, navLinks } = props;
   return (
     <div className="horizontal-menu">
@@ -24,4 +24,4 @@ function MainNav(props) {
   );
 }
 
-export default MainNav;
+export default MainMenu;

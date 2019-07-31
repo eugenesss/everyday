@@ -84,5 +84,3 @@ export default [
     child_routes: []
   }
 ];
-
-export const actionbar = [];
