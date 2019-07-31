@@ -2,25 +2,21 @@ import React, {Component} from 'react'
 import { connect } from "react-redux";
 import { getAllEvents } from "Actions";
 
-
 import Calendar from 'react-calendar'
 import DisplayEvents from './DisplayEvents'
 import Moment from 'moment';
-
 
 const numberOfDays = 6
 
 class CalendarLayout extends Component {
 
     componentDidMount() {
-        this.props.getAllEvents(true, new Date().toISOString(), Moment(new Date()).add(numberOfDays, 'day').toISOString());
+        const userId = localStorage.getItem('user_id');
+        this.props.getAllEvents(true, new Date().toISOString(), Moment(new Date()).add(numberOfDays, 'day').toISOString(), userId);
     }
 
 
     render() {
-      // console.log(new Date().toTimeString())
-      // console.log(new Date().toISOString())
-      // console.log(new Date().toISOString())
 
         return (
             <div style={{display:'flex', flexDirection:'column'}}>
@@ -41,9 +37,7 @@ class CalendarLayout extends Component {
 
 // map state to props
 const mapStateToProps = ({ calendarState }) => {
-    const {
-      myEvents
-    } = calendarState;
+    const { myEvents } = calendarState;
     return {
       myEvents
     };

@@ -75,42 +75,24 @@ class Signin extends Component {
     const { loading, error } = this.props;
 
     return (
-      <QueueAnim type="bottom" duration={2000}>
-        <div className="rct-session-wrapper">
-          {loading && <LinearProgress />}
-          <div className="session-inner-wrapper" style={{ marginTop: "5%" }}>
-            <div className="container">
-              <div className="row row-eq-height">
-                <div className="col-sm-3 col-md-3 col-lg-3" />
-                <div className="col-sm-4 col-md-6 col-lg-6">
-                  <div className="session-head mb-30 text-center">
-                    <h1 className="mb-20">
-                      <Link to="/">
-                        <img
-                          src={AppConfig.appLogo}
-                          alt="session-logo"
-                          className="img-fluid"
-                          width="180"
-                          // height="35"
-                        />
-                      </Link>
-                    </h1>
-                    <h2 className="font-weight-bold text-white">
-                      Sign in to {AppConfig.brandName}
-                    </h2>
-                    <p className="mb-0 text-white">
-                      Most powerful CRM in SG, some say Batam
-                    </p>
-                  </div>
+        <div className="login_index">
 
-                  <div
-                    className="session-body text-center"
-                    style={{
-                      borderRadius: 15,
-                      paddingLeft: "3rem",
-                      paddingRight: "3rem"
-                    }}
-                  >
+          {loading && <LinearProgress />}
+          
+                       
+              <div className="login_module">
+                <div className="session-body text-center" style={{paddingLeft: 40, paddingRight: 40, width: '100%', overflow: 'auto'}} >
+
+                    {/* <h2 className="font-weight-bold text-white">
+                      Sign in to {AppConfig.brandName}
+                    </h2> */}
+                    <p className="mb-0 text-black" style={{textAlign:'left', paddingBottom: 10, fontSize: 20}}>
+                      Get your free<br/>Everyday account now.
+                    </p>
+                    <p className="session-head mb-0 text-black" style={{textAlign:'left', fontWeight: "300", paddingBottom: 20, fontSize: 12, color: 'rgba(0,0,0,0.4)'}}>
+                      Try Everyday Business free for 30 days.<br/>Everyday basic free for unlimited time
+                    </p>
+
                     <Form onSubmit={this.onUserLogin}>
                       <FormGroup className="has-wrapper">
                         <Input
@@ -135,7 +117,7 @@ class Signin extends Component {
                           style={{
                             display: "flex",
                             flexDirection: "column",
-                            marginBottom: "6rem"
+                            marginBottom: "3rem"
                           }}
                         >
                           <FormGroup
@@ -156,7 +138,7 @@ class Signin extends Component {
                               // style={{caretColor:'black', }}
                             />
 
-                            <span className="has-icon">
+                            <span className="has-icon" style={{top: 6}}>
                               <i className="ti-eye" />
                             </span>
                           </FormGroup>
@@ -165,9 +147,10 @@ class Signin extends Component {
                             onClick={() => this.routeChange("forget")}
                             style={{
                               textAlign: "right",
-                              color: AppConfig.themeColors.danger,
-                              fontSize: 14,
-                              fontWeight: "500"
+                              // color: AppConfig.themeColors.danger,
+                              color: 'rgba(0,0,0,0.4)',
+                              fontSize: 12,
+                              fontWeight: "300",
                             }}
                           >
                             Forget Password?
@@ -178,16 +161,31 @@ class Signin extends Component {
                       {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && (
                         <FormGroup className="mb-15">
                           <Fab
+                            variant="extended"
                             className="text-white"
-                            size="large"
+                            size="medium"
                             style={{
                               backgroundColor: AppConfig.themeColors.primary,
                               marginBottom: "1.5rem"
                             }}
                             type="submit"
                           >
-                            <Icon>trending_flat</Icon>
+                            <span style={{width: 120}}>Sign in</span>
                           </Fab>
+
+                          {/* <Fab
+                            variant="extended"
+                            className="text-white"
+                            size="large"
+                            style={{
+                              backgroundColor: AppConfig.themeColors.primary,
+                              marginBottom: "1.5rem",
+                              marginTop: "2rem"
+                            }}
+                            onClick={() => this.resentVerificationEmail()}
+                          >
+                            <Icon>trending_flat</Icon>
+                          </Fab> */}
 
                           <div
                             onClick={() => this.routeChange("register")}
@@ -200,17 +198,17 @@ class Signin extends Component {
                           >
                             <div
                               style={{
-                                color: "rgba(0,0,0,0.5)",
-                                fontWeight: 300,
-                                fontSize: 14
+                                color: "rgba(0,0,0,0.4)",
+                                fontWeight: "300",
+                                fontSize: 12
                               }}
                             >
                               Not signed up yet?
                             </div>
                             <div
                               style={{
-                                color: "black",
-                                fontSize: 14,
+                                color: "rgba(0,0,0,0.4)",
+                                fontSize: 12,
                                 fontWeight: "500",
                                 marginLeft: 5
                               }}
@@ -224,6 +222,7 @@ class Signin extends Component {
                       {error == "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && (
                         <FormGroup className="mb-15">
                           <Fab
+                            variant="extended"
                             className="text-white"
                             size="large"
                             style={{
@@ -235,6 +234,21 @@ class Signin extends Component {
                           >
                             <Icon>trending_flat</Icon>
                           </Fab>
+
+                          {/* <Fab
+                            variant="extended"
+                            size="medium"
+                            color="primary"
+                            aria-label="Add"
+                            className={classes.margin}
+                          >
+                            <NavigationIcon className={classes.extendedIcon} />
+                            Extended
+                          </Fab> */}
+
+
+
+
 
                           <div
                             onClick={() => this.routeChange("register")}
@@ -277,14 +291,48 @@ class Signin extends Component {
                         </FormGroup>
                       )}
                     </Form>
-                  </div>
+               
                 </div>
-                <div className="col-sm-3 col-md-3 col-lg-3" />
               </div>
-            </div>
-          </div>
+
+              <div className="login_placeholder">
+                  <video 
+                    src='https://ak5.picdn.net/shutterstock/videos/1015322305/preview/stock-footage-creative-business-team-having-meeting-at-the-office-successful-deal-business-partners-concluding.mp4'
+                    loop="true" autoplay="true" type="video/mp4"
+                    style={{
+                      minHeight: '100%',
+                      minWidth: '100%',
+                      position: "absolute",
+                      top: 0,
+                      bottom: 0,
+                      overflow:'hidden'
+                     
+                    }}
+                  />
+
+                  <div style={{position:'relative', height: '100%', width:'100%', backgroundColor: 'rgba(0,0,0,0.5)', display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
+
+                    <div style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
+                      <h1 className="mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
+                        Make your life easier
+                      </h1>
+                      <h1 className=" mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
+                        No more papers
+                      </h1>
+
+                      <h1 className="mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
+                        Digitise your workflow
+                      </h1>
+                      <h1 className=" mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
+                        Goodbye to papers
+                      </h1>
+                    </div>
+
+                  </div>
+              </div>
+
+
         </div>
-      </QueueAnim>
     );
   }
 } // map state to props
@@ -319,9 +367,10 @@ const emptyField = {
   borderLeft: "none",
   borderRight: "none",
   fontWeight: "300",
-  fontSize: "16px",
+  fontSize: "12px",
   color: "#ebedf2",
-  caretColor: "black"
+  caretColor: "black",
+  height: 35,
 };
 
 const PasswordStyle = {
@@ -332,11 +381,13 @@ const PasswordStyle = {
   borderTop: "none",
   borderLeft: "none",
   borderRight: "none",
-  fontWeight: "500",
-  fontSize: "18px",
+  fontWeight: "400",
+  fontSize: "14px",
   color: "black",
   letterSpacing: "8px",
-  caretColor: "black"
+  caretColor: "black",
+  height: 35,
+
 };
 
 const EmailStyle = {
@@ -347,8 +398,18 @@ const EmailStyle = {
   borderTop: "none",
   borderLeft: "none",
   borderRight: "none",
-  fontWeight: "500",
-  fontSize: "18px",
+  fontWeight: "400",
+  fontSize: "14px",
   color: "black",
-  caretColor: "black"
+  caretColor: "black",
+  height: 35,
+
 };
+
+
+
+
+// ipad size for width 768px
+// mini 768px for sign up and placeholder
+
+// less than or equal to 767px display only sign up

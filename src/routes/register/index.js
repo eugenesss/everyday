@@ -6,50 +6,51 @@ import QueueAnim from "rc-queue-anim";
 
 // app config
 import AppConfig from "Constants/AppConfig";
-
 import RegisterSteps from "./Components/RegisterSteps";
 
 class RegisterPage extends Component {
+
+
+  routeChange = () => {
+    let path = `/login`;
+    this.props.history.push(path);
+  }
+
+
+
   render() {
     const { loading } = this.props;
     return (
-      <QueueAnim type="bottom" duration={2000}>
-        <div className="rct-session-wrapper">
-          {loading && <LinearProgress />}
-          <div className="session-inner-wrapper">
-            <div className="container">
-              <div className="row row-eq-height">
-                <div className="col-sm-12 col-md-12 col-lg-12">
-                  <div className="session-head mb-30 text-center">
-                    <h1 className="mb-20">
-                      <Link to="/">
-                        <img
-                          src={AppConfig.appLogo}
-                          alt="session-logo"
-                          className="img-fluid"
-                          width="180"
-                        />
-                      </Link>
-                    </h1>
-                    <h2 className="font-weight-bold text-white">
-                      Get Started with{" "}
-                      <span className="text-everyday-sec">
-                        {AppConfig.brandName}
-                      </span>
-                    </h2>
-                    <p className="mb-0 text-white">
-                      Most powerful CRM in SG, some say Batam
-                    </p>
-                  </div>
-                  <div className="session-body" style={{ padding: "2% 4%" }}>
-                    <RegisterSteps />
+
+        <div className="login_index">
+
+            {loading && <LinearProgress />}
+
+                <div className="register_placeholder">
+                  {/* Placeholder Image */}
+                  {/* <video src={VideoSource} width="600" height="300" controls="controls" autoplay="true" type="video/mp4"/> */}
+                  <video 
+                    src='https://ak5.picdn.net/shutterstock/videos/1015322305/preview/stock-footage-creative-business-team-having-meeting-at-the-office-successful-deal-business-partners-concluding.mp4'
+                    loop="true" autoplay="true" type="video/mp4"
+                    style={{
+                      height: '100%',
+                      position: "absolute",
+                      top: 0,
+                      bottom: 0,
+                    }}
+                  />
+
+                </div>
+
+                <div className="register_module">
+                  <div style={{overflow:'auto', width: '100%'}}>
+                    <RegisterSteps
+                      history={this.routeChange}
+                    />
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
+
         </div>
-      </QueueAnim>
     );
   }
 }
@@ -62,3 +63,17 @@ const mapStateToProps = ({ authUser }) => {
 };
 
 export default connect(mapStateToProps)(RegisterPage);
+
+  {/* <div className="session-body" style={{ padding: "2% 4%" }}>
+  </div> */}
+
+  // <h1 className="mb-20">
+  //                     <Link to="/">
+  //                       <img
+  //                         src={AppConfig.appLogo}
+  //                         alt="session-logo"
+  //                         className="img-fluid"
+  //                         width="180"
+  //                       />
+  //                     </Link>
+  //                   </h1>

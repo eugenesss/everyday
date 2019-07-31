@@ -15,6 +15,8 @@ const AccountingDetails = ({
   currency
 }) => {
   
+  console.log(owner)
+
   const bgColor =
     (type == "quotation" && "#7fb38b") ||
     (type == "invoice" && "#7f8cb3") ||

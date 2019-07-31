@@ -21,7 +21,6 @@ import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
 import { newQuote, editQuote, singleQuote } from "Helpers/url/accounting";
-import { editLead, leadPage, newLead } from "Helpers/url/crm";
 
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 
@@ -79,6 +78,8 @@ class acct_view_quotation extends Component {
 
   render() {
     const {loading, quotation} = this.props.quotationToView;
+    
+
     
     let buttonCollection = null
     let moreButtons = null
@@ -178,7 +179,7 @@ class acct_view_quotation extends Component {
                       this.props.HandleStateCreateNewVersion(quotation.id, 'Quotation')
                   }}
                 >
-                  Create New Quotation Version
+                  Create New Version
                 </MatButton>
                 <MatButton
                   variant="contained"

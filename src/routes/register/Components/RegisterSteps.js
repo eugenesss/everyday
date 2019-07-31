@@ -9,6 +9,8 @@ import Paper from "@material-ui/core/Paper";
 import LoadingButton from "Components/Everyday/LoadingButton/LoadingButton";
 import StepButton from '@material-ui/core/StepButton';
 
+import Fab from "@material-ui/core/Fab";
+import AppConfig from "Constants/AppConfig";
 
 // Form Components
 import RegisterForm from "./Forms/UserRegisterForm";
@@ -64,6 +66,7 @@ class RegisterSteps extends React.Component {
     let state = {...this.state}
     
     if (next) {
+      
       switch (state.activeStep) {
 
         case 0:
@@ -143,7 +146,7 @@ class RegisterSteps extends React.Component {
     });
   };
 
-
+ 
   /**
    * Validation of Email | Password before submitting
    */
@@ -153,7 +156,9 @@ class RegisterSteps extends React.Component {
   /**
    * Validation of Plan before submitting
    */
-  validatePlate = (e) => {this.setState({planState: e})}
+  validatePlate = (e) => {
+    this.setState({planState: e})
+  }
 
   /**
    * Validation of Credit Cards
@@ -176,10 +181,12 @@ class RegisterSteps extends React.Component {
 
 
   render() {
+
     const steps = getSteps();
     const { activeStep } = this.state;
     const { loading, success } = this.props;
     let StepperPage = null
+
     switch (this.state.activeStep) {
       case 0:
      
@@ -193,14 +200,33 @@ class RegisterSteps extends React.Component {
                 passwordState={this.state.passwordState}
                 {...this.props}
               />
-              <Button
+
+
+              {/* <Button
                 variant="contained"
                 color="primary"
                 className="text-white mr-10 mb-10"
                 onClick={this.handleNext}
               >
                 Next
-              </Button>
+              </Button> */}
+
+             
+              <Fab
+                variant="extended"
+                className="text-white"
+                size="medium"
+                style={{
+                  backgroundColor: AppConfig.themeColors.primary,
+                  marginBottom: "1.5rem",
+                  marginTop: '1rem'
+                }}
+                type="submit"
+                onClick={this.handleNext}
+              >
+                <span style={{width: 80}}>Next</span>
+              </Fab>
+
           </div>
         )
           break
@@ -208,12 +234,14 @@ class RegisterSteps extends React.Component {
         StepperPage = (
           <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
             <SelectPlanForm
-              validatePlate={(e) => this.validatePlate(e)}
+              validatePlate={(e) => {
+                this.validatePlate(e)
+              }}
               {...this.props}
             />
 
             <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
-              <Button
+              {/* <Button
                   variant="contained"
                   className="btn-danger text-white mr-10 mb-10"
                   disabled={activeStep === 0}
@@ -228,7 +256,38 @@ class RegisterSteps extends React.Component {
                 onClick={this.handleNext}
               >
                 Next
-              </Button>
+              </Button> */}
+
+              <Fab
+                variant="extended"
+                className="text-white"
+                size="medium"
+                style={{
+                  backgroundColor: AppConfig.themeColors.primary,
+                  marginBottom: "1.5rem",
+                  marginRight: 15,
+                }}
+                type="submit"
+                onClick={this.handleBack}
+              >
+                <span style={{width: 80, }}>Back</span>
+              </Fab>
+
+              <Fab
+                variant="extended"
+                className="text-white"
+                size="medium"
+                style={{
+                  backgroundColor: AppConfig.themeColors.primary,
+                  marginBottom: "1.5rem",
+                  marginLeft: 15
+                }}
+                type="submit"
+                onClick={this.handleNext}
+              >
+                <span style={{width: 80, }}>Next</span>
+              </Fab>
+
             </div>
 
           </div>
@@ -247,22 +306,35 @@ class RegisterSteps extends React.Component {
               </div>
 
               <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
-                <Button
-                    variant="contained"
-                    className="btn-danger text-white mr-10 mb-10"
-                    disabled={activeStep === 0}
+                  <Fab
+                    variant="extended"
+                    className="text-white"
+                    size="medium"
+                    style={{
+                      backgroundColor: AppConfig.themeColors.primary,
+                      marginBottom: "1.5rem",
+                      marginRight: 15,
+                    }}
+                    type="submit"
                     onClick={this.handleBack}
                   >
-                    Back
-                  </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className="text-white mr-10 mb-10"
-                  onClick={this.handleNext}
-                >
-                  Next
-                </Button>
+                    <span style={{width: 80, }}>Back</span>
+                  </Fab>
+
+                  <Fab
+                    variant="extended"
+                    className="text-white"
+                    size="medium"
+                    style={{
+                      backgroundColor: AppConfig.themeColors.primary,
+                      marginBottom: "1.5rem",
+                      marginLeft: 15
+                    }}
+                    type="submit"
+                    onClick={this.handleNext}
+                  >
+                    <span style={{width: 80, }}>Next</span>
+                  </Fab>
               </div>
           </div>
         )
@@ -274,11 +346,11 @@ class RegisterSteps extends React.Component {
 
     // change success to normal for development
     return (
-      <div>
+      <div style={{}}>
         {!success ? (
 
-          <div>
-              <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+          <div style={{}}>
+            <Stepper alternativeLabel nonLinear activeStep={activeStep}>
               {steps.map((label, index) => {
                 const stepProps = {};
                 const buttonProps = {};
@@ -292,7 +364,7 @@ class RegisterSteps extends React.Component {
                       // completed={isStepComplete(index)}
                       // {...buttonProps}
                     >
-                      {label}
+                      <p className="mb-0 text-black">{label}</p>
                     </StepButton>
                   </Step>
                 );
@@ -302,12 +374,9 @@ class RegisterSteps extends React.Component {
             <div style={{display:'flex', width: '100%', justifyContent:'center', alignItems:'center'}}>
               {StepperPage}
             </div>
-
             
           </div>
-          
-          
-        
+            
           // <Stepper nonLinear activeStep={activeStep}>
           //   {steps.map((label, index) => {
           //     return (
@@ -369,11 +438,26 @@ class RegisterSteps extends React.Component {
 
 
         ) : (
-          <Paper square elevation={0} className="pl-40">
+          <Paper square elevation={0}>
 
-            <div style={{display:'flex', flex: 1, justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
-              <h1>A verification link has been sent to your email account</h1>
-              <p>Please click on the link that has just been sent to your email account to verify your email and continue the registeration process.</p>
+            <div style={{display:'flex', flex: 1, justifyContent:'center', alignItems:'center', flexDirection:'column', paddingLeft: 21, paddingRight: 21}}>
+              <h1 style={{textAlign:'center'}}>A verification link has been sent to your email account</h1>
+              <p style={{textAlign:'center'}}>Please click on the link that has just been sent to your email account to verify your email and continue the registeration process.</p>
+              
+              <Fab
+                    variant="extended"
+                    className="text-white"
+                    size="medium"
+                    style={{
+                      backgroundColor: AppConfig.themeColors.primary,
+                      marginBottom: "1.5rem",
+                      marginLeft: 15
+                    }}
+                    type="submit"
+                    onClick={this.props.history}
+                  >
+                    <span style={{width: 80, }}>Login</span>
+              </Fab>
               {/* <p>Registration Complete - Login <Link to="/login">here</Link></p> */}
             </div>
        

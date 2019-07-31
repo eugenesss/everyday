@@ -12,7 +12,7 @@ const UserBlock = ({ user, uploadFile }) => {
           <div style={{position:'relative'}}>
               <img src={require('Assets/avatars/user-37.jpg')} alt="user profile" className="rounded-circle bordered" width="150" height="150" />
               
-              <input  
+              {/* <input  
                 // className="rounded-circle bordered" 
                 style={{
                   border: '1px solid black', position:'absolute',
@@ -20,7 +20,7 @@ const UserBlock = ({ user, uploadFile }) => {
                 }}
                 type="file"
                 onChange={(e)=> uploadFile(e)}
-              />
+              /> */}
             
           </div>
           
