@@ -7,6 +7,7 @@ import { UncontrolledDropdown, DropdownToggle, DropdownMenu } from "reactstrap";
 import { Badge } from "reactstrap";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+import NotificationIcon from "@material-ui/icons/Notifications";
 
 import SingleNotification from "Components/Everyday/Notification/SingleNotification";
 import NoNotificationMessage from "Components/Everyday/Notification/NoNotificationMessage";
@@ -23,7 +24,6 @@ class Notifications extends Component {
   }
 
   render() {
-    const { classes } = this.props;
     const { notifications, newNotifications, shake } = this.state;
     return (
       <UncontrolledDropdown
@@ -33,11 +33,7 @@ class Notifications extends Component {
         <DropdownToggle nav className="p-0">
           <Tooltip title="Notifications" placement="bottom">
             <IconButton className={shake && "shake"} aria-label="bell">
-              <i
-                className={
-                  "zmdi zmdi-notifications-active text-white " + classes.icon
-                }
-              />
+              <NotificationIcon style={{ fontSize: "20px" }} />
               {newNotifications > 0 && (
                 <Badge
                   color="danger"
