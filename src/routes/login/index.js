@@ -298,7 +298,7 @@ class Signin extends Component {
               <div className="login_placeholder">
                   <video 
                     src='https://ak5.picdn.net/shutterstock/videos/1015322305/preview/stock-footage-creative-business-team-having-meeting-at-the-office-successful-deal-business-partners-concluding.mp4'
-                    loop="true" autoplay="true" type="video/mp4"
+                    loop={true} autoPlay type="video/mp4"
                     style={{
                       minHeight: '100%',
                       minWidth: '100%',
@@ -324,7 +324,7 @@ class Signin extends Component {
                         Digitise your workflow
                       </h1>
                       <h1 className=" mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
-                        Goodbye to papers
+                        Say goodbye to papers
                       </h1>
                     </div>
 
