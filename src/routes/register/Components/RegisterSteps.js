@@ -223,7 +223,7 @@ class RegisterSteps extends React.Component {
                   // type="submit"
                   onClick={this.props.history}
                 >
-                  <span style={{width: 100}}>BACK TO LOGIN</span>
+                  <span style={{minWidth: 100}}>BACK TO LOGIN</span>
                 </Fab>
 
                 <Fab
@@ -238,7 +238,7 @@ class RegisterSteps extends React.Component {
                   type="submit"
                   onClick={this.handleNext}
                 >
-                  <span style={{width: 100}}>Next</span>
+                  <span style={{minWidth: 100}}>Next</span>
                 </Fab>
               </div>
 

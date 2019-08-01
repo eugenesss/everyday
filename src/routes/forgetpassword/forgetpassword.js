@@ -203,7 +203,7 @@ class forgetpassword extends Component {
           <div className="login_placeholder">
                   <video 
                     src='https://ak5.picdn.net/shutterstock/videos/1015322305/preview/stock-footage-creative-business-team-having-meeting-at-the-office-successful-deal-business-partners-concluding.mp4'
-                    loop="true" autoplay="true" type="video/mp4"
+                    loop autoPlay type="video/mp4"
                     style={{
                       minHeight: '100%',
                       minWidth: '100%',
