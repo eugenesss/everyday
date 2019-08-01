@@ -11,7 +11,8 @@ const styles = theme => ({
   drawerPaper: {
     zIndex: 90,
     position: "relative",
-    height: "100%"
+    height: "100%",
+    borderRadius: "15px"
   },
   root: {
     width: "100%",

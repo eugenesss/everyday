@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 //Page req
 // import IconButton from "@material-ui/core/IconButton";
 // import Tooltip from "@material-ui/core/Tooltip";
-import MUIDataTable from "mui-datatables";
+import RecordsList from "Components/Everyday/RecordsList";
 import { listOptions } from "Helpers/helpers";
 import { singleLead } from "Helpers/url/crm";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
@@ -167,7 +167,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
     null;
   return (
     <div className="rct-block">
-      <MUIDataTable
+      <RecordsList
         title={title}
         columns={columns}
         data={tableData}

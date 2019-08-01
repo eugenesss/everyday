@@ -41,7 +41,7 @@ const PageTitleBar = ({
             );
           })}
 
-        {/* {createLink && (
+        {createLink && (
           <Link to={createLink}>
             <Tooltip title="Add New" placement="bottom">
               <Fab
@@ -56,7 +56,7 @@ const PageTitleBar = ({
             </Tooltip>
           </Link>
         )}
-        {moreButton && moreButton} */}
+        {moreButton && moreButton}
         <Button
           variant="contained"
           size="small"

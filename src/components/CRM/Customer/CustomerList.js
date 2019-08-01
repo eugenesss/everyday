@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import MUIDataTable from "mui-datatables";
+import RecordsList from "Components/Everyday/RecordsList";
 import { listOptions } from "Helpers/helpers";
 import { singleCustomer, singleAccount } from "Helpers/url/crm";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
@@ -133,7 +133,7 @@ const CustomerList = ({ tableData, loading, title, action }) => {
 
   return (
     <div className="rct-block">
-      <MUIDataTable
+      <RecordsList
         title={title}
         columns={columns}
         data={tableData}

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
-import MUIDataTable from "mui-datatables";
+import RecordsList from "Components/Everyday/RecordsList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 
@@ -199,7 +199,7 @@ class UsersList extends Component {
     };
     return (
       <RctCollapsibleCard fullBlock>
-        <MUIDataTable
+        <RecordsList
           title={"Users"}
           columns={columns}
           data={data}

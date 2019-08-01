@@ -1,7 +1,7 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import MUIDataTable from "mui-datatables";
+import RecordsList from "Components/Everyday/RecordsList";
 
 const EventsTable = ({ tableData, action }) => {
   const columns = [
@@ -59,7 +59,7 @@ const EventsTable = ({ tableData, action }) => {
     });
   }
 
-  return <MUIDataTable columns={columns} data={tableData} options={options} />;
+  return <RecordsList columns={columns} data={tableData} options={options} />;
 };
 
 export default EventsTable;
