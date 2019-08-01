@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import MUIDataTable from "mui-datatables";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 
@@ -12,6 +13,14 @@ import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 
 import moment from "moment";
 import { getUntouchedLeads } from "Actions";
+
+const myTheme = createMuiTheme({
+  overrides: {
+    MuiPaper: {
+      rounded: { borderRadius: "15px" }
+    }
+  }
+});
 
 const columns = [
   {
@@ -107,12 +116,14 @@ class UntouchedLeadsTable extends Component {
     const { loading, data } = this.props.untouchedLeads;
     return (
       <div className="rct-block">
-        <MUIDataTable
-          title="Leads without activity for more than 7 days"
-          columns={columns}
-          data={data}
-          options={listOptions}
-        />
+        <MuiThemeProvider theme={myTheme}>
+          <MUIDataTable
+            title="Leads without activity for more than 7 days"
+            columns={columns}
+            data={data}
+            options={listOptions}
+          />
+        </MuiThemeProvider>
         {loading && <RctSectionLoader />}
       </div>
     );
