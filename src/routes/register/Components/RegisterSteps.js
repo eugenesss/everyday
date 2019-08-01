@@ -210,22 +210,37 @@ class RegisterSteps extends React.Component {
               >
                 Next
               </Button> */}
+              <div style={{width: '100%', marginTop: 10, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-evenly', display: 'flex'}}>
+                <Fab
+                  variant="extended"
+                  className="text-white"
+                  size="medium"
+                  style={{
+                    backgroundColor: AppConfig.themeColors.primary,
+                    marginBottom: "1.5rem",
+                    marginTop: '1rem'
+                  }}
+                  // type="submit"
+                  onClick={this.props.history}
+                >
+                  <span style={{width: 100}}>BACK TO LOGIN</span>
+                </Fab>
 
-             
-              <Fab
-                variant="extended"
-                className="text-white"
-                size="medium"
-                style={{
-                  backgroundColor: AppConfig.themeColors.primary,
-                  marginBottom: "1.5rem",
-                  marginTop: '1rem'
-                }}
-                type="submit"
-                onClick={this.handleNext}
-              >
-                <span style={{width: 80}}>Next</span>
-              </Fab>
+                <Fab
+                  variant="extended"
+                  className="text-white"
+                  size="medium"
+                  style={{
+                    backgroundColor: AppConfig.themeColors.primary,
+                    marginBottom: "1.5rem",
+                    marginTop: '1rem'
+                  }}
+                  type="submit"
+                  onClick={this.handleNext}
+                >
+                  <span style={{width: 100}}>Next</span>
+                </Fab>
+              </div>
 
           </div>
         )
@@ -270,7 +285,7 @@ class RegisterSteps extends React.Component {
                 type="submit"
                 onClick={this.handleBack}
               >
-                <span style={{width: 80, }}>Back</span>
+                <span style={{width: 100, }}>Back</span>
               </Fab>
 
               <Fab
@@ -285,7 +300,7 @@ class RegisterSteps extends React.Component {
                 type="submit"
                 onClick={this.handleNext}
               >
-                <span style={{width: 80, }}>Next</span>
+                <span style={{width: 100, }}>Next</span>
               </Fab>
 
             </div>
@@ -318,7 +333,7 @@ class RegisterSteps extends React.Component {
                     type="submit"
                     onClick={this.handleBack}
                   >
-                    <span style={{width: 80, }}>Back</span>
+                    <span style={{width: 100, }}>Back</span>
                   </Fab>
 
                   <Fab
@@ -333,7 +348,7 @@ class RegisterSteps extends React.Component {
                     type="submit"
                     onClick={this.handleNext}
                   >
-                    <span style={{width: 80, }}>Next</span>
+                    <span style={{width: 100, }}>Next</span>
                   </Fab>
               </div>
           </div>

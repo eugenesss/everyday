@@ -17,6 +17,7 @@ import Icon from '@material-ui/core/Icon';
 // app config
 import AppConfig from "Constants/AppConfig";
 
+
 // redux action
 import { userResetPassword, handleRegErrorForm } from "Actions";
 import {EmailValidator} from '../register/Components/Validation/Validation'
@@ -44,10 +45,12 @@ class forgetpassword extends Component {
   render() {
     const { emailAddress } = this.state;
     const { loading } = this.props;
+
     return (
-      <QueueAnim type="bottom" duration={2000}>
-        <div className="rct-session-wrapper">
+      <div className="login_index">
           {loading && <LinearProgress />}
+      
+      {/*  
           <div className="session-inner-wrapper" style={{ marginTop: "5%" }}>
             <div className="container">
               <div className="row row-eq-height">
@@ -92,9 +95,9 @@ class forgetpassword extends Component {
                           valid={ this.state.emailValidated === 'has-success' }
                           invalid={ this.state.emailValidated === 'has-danger' }
                         />
-                        {/* <span className="has-icon">
-                          <i className="ti-email" />
-                        </span> */}
+                        // {/* <span className="has-icon">
+                        //   <i className="ti-email" />
+                        // </span> *
                         <FormFeedback >Oh noes! You need to input a valid email addresss!</FormFeedback>
                         <FormFeedback valid>We will look for your delicious email!</FormFeedback>
                       </FormGroup>
@@ -119,8 +122,122 @@ class forgetpassword extends Component {
               </div>
             </div>
           </div>
+      
+        */}        
+
+          <div className="login_module">
+            <div className="session-body text-center" style={{paddingLeft: 40, paddingRight: 40, width: '100%', overflow: 'auto'}} >
+
+                {/* <h2 className="font-weight-bold text-white">
+                  Sign in to {AppConfig.brandName}
+                </h2> */}
+                <p className="mb-0 text-black" style={{textAlign:'left', paddingBottom: 10, fontSize: 20}}>
+                  Lost your account?<br/>We've got you covered
+                </p>
+                <p className="session-head mb-0 text-black" style={{textAlign:'left', fontWeight: "300", paddingBottom: 20, fontSize: 12, color: 'rgba(0,0,0,0.4)'}}>
+                  Enter your email address<br/>and you will receive a reset password link
+                </p>
+
+                <FormGroup className="has-wrapper">
+                    <Input
+                      type="email"
+                      value={emailAddress}
+                      name="emailAddress"
+                      id="emailAddress"
+                      style={emailAddress? EmailStyle : emptyField}
+                      className="has-input input-lg"
+                      placeholder="Enter Email Address"
+                      onChange={event => {
+                        this.setState({ emailAddress: event.target.value })
+                        this.setState({emailValidated: EmailValidator(event.target.value)})
+                      }}
+                      valid={ this.state.emailValidated === 'has-success' }
+                      invalid={ this.state.emailValidated === 'has-danger' }
+                    />
+                    <span className="has-icon">
+                      <i className="ti-email" />
+                    </span>
+                    <FormFeedback >Oh noes! You need to input a valid email addresss!</FormFeedback>
+                    <FormFeedback valid>We will look for your delicious email!</FormFeedback>
+                </FormGroup>
+            
+                <div style={{flex: 1, marginTop: 10, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-evenly', display: 'flex'}}>
+              
+                  <Fab
+                    variant="extended"
+                    className="text-white"
+                    size="medium"
+                    style={{
+                      backgroundColor: AppConfig.themeColors.primary,
+                      marginBottom: "1.5rem",
+                    }}
+                    // type="submit"
+                    onClick={()=> {
+                      let path = `/login`;
+                      this.props.history.push(path);
+                    }}
+                  >
+                    <span style={{width: 100,}}>Back to login</span>
+                  </Fab>
+
+                  <Fab
+                    variant="extended"
+                    className="text-white"
+                    size="medium"
+                    style={{
+                      backgroundColor: AppConfig.themeColors.primary,
+                      marginBottom: "1.5rem",
+                    }}
+                    // type="submit"
+                    // onClick={()=> console.log('recover email')}
+                    onClick={()=> this.resetPassword()}
+                  >
+                    <span style={{width: 100,}}>Recover email</span>
+                  </Fab>
+  
+                </div>
+
+            </div>
+          </div>
+
+          <div className="login_placeholder">
+                  <video 
+                    src='https://ak5.picdn.net/shutterstock/videos/1015322305/preview/stock-footage-creative-business-team-having-meeting-at-the-office-successful-deal-business-partners-concluding.mp4'
+                    loop="true" autoplay="true" type="video/mp4"
+                    style={{
+                      minHeight: '100%',
+                      minWidth: '100%',
+                      position: "absolute",
+                      top: 0,
+                      bottom: 0,
+                      overflow:'hidden'
+                     
+                    }}
+                  />
+
+                  <div style={{position:'relative', height: '100%', width:'100%', backgroundColor: 'rgba(0,0,0,0.5)', display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
+
+                    <div style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
+                      <h1 className="mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
+                        Make your life easier
+                      </h1>
+                      <h1 className=" mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
+                        No more papers
+                      </h1>
+
+                      <h1 className="mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
+                        Digitise your workflow
+                      </h1>
+                      <h1 className=" mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
+                        Goodbye to papers
+                      </h1>
+                    </div>
+
+                  </div>
+              </div>
+
+
         </div>
-      </QueueAnim>
     );
   }
 } // map state to props
