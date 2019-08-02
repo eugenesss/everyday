@@ -11,6 +11,9 @@
       display: none;
     }
   }
+  .menu-title {
+    font-size: 1rem;
+  }
 }
 
 .horizontal-menu {
@@ -34,7 +37,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: $hoz-nav-link-width;
         font-weight: 600;
         &:hover {
           color: $hoz-nav-link-hover-bg;
@@ -48,7 +50,7 @@
 }
 .sub-menu {
   display: flex;
-  background-color: $navbar-bg;
+  background-color: #f8f8f8;
   height: $sub-menu-height;
   left: 0;
   right: 0;

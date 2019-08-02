@@ -26,23 +26,27 @@ function Header(props) {
     <React.Fragment>
       <AppBar position="static" className="rct-header">
         <Toolbar className="d-flex justify-content-between w-100">
-          <div className="site-logo">
-            <Link to="/" className="logo-mini">
-              <img
-                src={require("Assets/img/appLogo_yellow.png")}
-                alt="site logo"
-                width="120"
-              />
-            </Link>
+          <div className="d-flex">
+            <div className="site-logo">
+              <Link to="/" className="logo-mini">
+                <img
+                  src={require("Assets/img/appLogo_yellow.png")}
+                  alt="site logo"
+                  width="120"
+                />
+              </Link>
+            </div>
+            <MainMenu location={location} navLinks={navLinks} />
           </div>
-          <MainMenu location={location} navLinks={navLinks} />
           <ul className="navbar-right app-bar-right list-inline mb-0">
             <Notifications />
             <UserDrawer />
           </ul>
         </Toolbar>
       </AppBar>
-      <SubMenu childRoutes={getChildRoute(location)} />
+      {getChildRoute(location).length > 0 && (
+        <SubMenu childRoutes={getChildRoute(location)} />
+      )}
     </React.Fragment>
   );
 }

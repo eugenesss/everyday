@@ -3,7 +3,6 @@
  */
 import React from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import { connect } from "react-redux";
 import { IntlProvider } from "react-intl";
 
 // App locale
@@ -13,8 +12,9 @@ import AppLocale from "../lang";
 import primaryTheme from "./themes/primaryTheme";
 
 function RctThemeProvider(props) {
-  const { locale, children } = props;
-  const currentAppLocale = AppLocale[locale.locale];
+  const { children } = props;
+
+  const currentAppLocale = AppLocale["en"];
   return (
     <MuiThemeProvider theme={primaryTheme}>
       <IntlProvider
@@ -27,9 +27,4 @@ function RctThemeProvider(props) {
   );
 }
 
-// map state to props
-const mapStateToProps = ({ settings }) => {
-  return settings;
-};
-
-export default connect(mapStateToProps)(RctThemeProvider);
+export default RctThemeProvider;

@@ -22,6 +22,11 @@ const theme = createMuiTheme({
       rounded: {
         borderRadius: "15px"
       }
+    },
+    MuiStepIcon: {
+      text: {
+        fill: "#fff"
+      }
     }
   }
 });

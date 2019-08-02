@@ -198,7 +198,7 @@ class UsersList extends Component {
       }
     };
     return (
-      <RctCollapsibleCard fullBlock>
+      <div className="rct-block">
         <RecordsList
           title={"Users"}
           columns={columns}
@@ -211,7 +211,7 @@ class UsersList extends Component {
           handleClose={hideUserControls}
         />
         {usersLoading && <RctSectionLoader />}
-      </RctCollapsibleCard>
+      </div>
     );
   }
 }

@@ -1,42 +1,48 @@
-import React from 'react';
+import React from "react";
 import { Col, Row } from "reactstrap";
 
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
-
-const CompanyBlock = ({company}) => {
+const CompanyBlock = ({ company }) => {
   return (
-    <React.Fragment> 
-      <RctCollapsibleCard>
+    <div className="rct-block">
+      <div className="rct-block-content">
         <Row className={"align-items-center pl-20 pb-20 border-bottom"}>
-          <img src={require('Assets/img/logo-1.jpg')} alt="user profile" className="rounded-circle bordered" width="150" height="150" />
+          <img
+            src={require("Assets/img/logo-1.jpg")}
+            alt="user profile"
+            className="rounded-circle bordered"
+            width="150"
+            height="150"
+          />
           <div className={"ml-20"}>
-              <h1>{company.name}</h1>
-              <div>{company.email}</div>
+            <h1>{company.name}</h1>
+            <div>{company.email}</div>
           </div>
         </Row>
         <Row className={"pl-20 pr-20 pt-30 pb-20 border-bottom"}>
           <Col>
             <h2>About</h2>
-            <div>
-              {company.description}
-            </div>
+            <div>{company.description}</div>
           </Col>
         </Row>
         <Row className={"pl-20 pr-20 pt-30 pb-10"}>
           <Col md={3}>Contact</Col>
           <Col md={9}>
-            <div className="text-right"><b>{company.contact}</b></div>
+            <div className="text-right">
+              <b>{company.contact}</b>
+            </div>
           </Col>
         </Row>
         <Row className={"pl-20 pr-20 pt-10 pb-10"}>
           <Col md={3}>Website</Col>
           <Col md={9}>
-            <div className="text-right"><b>{company.website}</b></div>
+            <div className="text-right">
+              <b>{company.website}</b>
+            </div>
           </Col>
         </Row>
-      </RctCollapsibleCard>
-    </React.Fragment>
+      </div>
+    </div>
   );
-}
+};
 
 export default CompanyBlock;

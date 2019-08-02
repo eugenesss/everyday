@@ -7,17 +7,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
-// helpers
-import { getAppLayout } from "Helpers/helpers";
-
-const PageTitleBar = ({
-  title,
-  createLink,
-  editLink,
-  location,
-  moreButton,
-  extraButtons
-}) => {
+const PageTitleBar = ({ title, createLink, moreButton, extraButtons }) => {
   return (
     <div className="page-title d-flex justify-content-between align-items-center">
       {title && (
