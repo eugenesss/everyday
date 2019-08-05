@@ -14,6 +14,7 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import QuotationForm from "Components/Form/Quotation/QuotationForm";
 
 import InvoiceFields from "Components/Form/Components/Inputs/Accounting/InvoiceFields";
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
@@ -23,7 +24,16 @@ import Button from '@material-ui/core/Button';
 
 
 // Actions
-import { getSingleQuotation, clearSingleQuotation, deleteSingleQuote, addNewProdQuote, removeProdQuote, handleProdQuote, handleChangeQuote, submitNewQuote } from "Actions";
+import { 
+  getSingleQuotation, 
+  clearSingleQuotation, 
+  deleteSingleQuote, 
+  addNewProdQuote, 
+  removeProdQuote, 
+  handleProdQuote, 
+  handleChangeQuote, 
+  submitNewQuote
+} from "Actions";
 // import { clearSingleQuotation, addNewProdQuote, removeProdQuote, handleProdQuote,  handleChangeQuote, getAllAccount, getAllUsers, submitNewQuote} from "Actions";
 
 // addNoteToQuotation(acctID), onNoteChange, clearNote
@@ -34,7 +44,6 @@ class acct_edit_quotation extends Component {
 
 
   componentWillMount() {
-    console.log('edit for invoice')
     var id = this.props.match.params.id;
     this.props.getSingleQuotation(id, true, 'invoice');
   }
@@ -43,53 +52,44 @@ class acct_edit_quotation extends Component {
     this.props.clearSingleQuotation();
   }
 
+
+  _quotationParent = (element, item) =>{
+    console.log('invoice edit')
+    console.log(element, item)
+    this.props.submitNewQuote(element, item)
+  }
+
+
   render() {
     const {loading} = this.props.quotationToView;
     const {currencyTable, taxTable, discountTable} = this.props.quotationList
     const {products, quotation} = this.props.quotationForm 
 
-
     return loading ? (
       <RctPageLoader />
-    ) : quotation.accountId ? (
+    ) : quotation ? (
         
       <React.Fragment>
-    
-          <InvoiceFields 
-              handleChange  = {(e, value, target) => this.props.handleChangeQuote(e, value, target)}
-              tableData={[quotation.accountId]}
-              currencyTable={currencyTable}
-              discountTable={discountTable}
-              quotation={quotation}
-              users={[quotation.owner]}
-              attn_to_array={[quotation.attn_toId]}
-          />
-
-
-          <div style={{marginTop: 20, marginBottom: 20}}>
-            <InvoiceProductInput
-              products={products}
-              taxTable={taxTable}
-              invoice={quotation}
-              handleChange={this.props.handleProdQuote}
-              handleAdd={this.props.addNewProdQuote}
-              handleRemove={this.props.removeProdQuote}
+      <Helmet>
+        <title>Everyday | Edit Quotation</title>
+        <meta name="description" content="Everyday Quotations Creation" />
+      </Helmet>
+      <RctCollapsibleCard
+        heading={<IntlMessages id="Edit Quotation" />}
+      >
+        <div className="row">
+          <div className="col-md-1" />
+          <div className="col-md-10">
+            <QuotationForm
+              accountPage={'Invoice'}
+              quotationForm={this.props.quotationForm}
+              _quotationParent={this._quotationParent}
             />
           </div>
-
-          <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop: 20}}>
-              {/* <Button variant="contained" color="secondary" className="mr-10" style={{color:'white'}}>
-                Save Draft
-              </Button> */}
-              <Button onClick={() => {
-                  this.props.submitNewQuote(quotation, products, true, 'invoice')
-                }} variant="contained" color="primary"  className="mr-10">
-                Save Edit
-              </Button>
-          </div>
-
-      </React.Fragment>
-
+          <div className="col-md-1" />
+        </div>
+      </RctCollapsibleCard>
+    </React.Fragment>
       
     ) : (
       <PageErrorMessage

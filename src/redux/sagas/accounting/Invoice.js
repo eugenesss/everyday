@@ -31,7 +31,9 @@ const getInvoiceRequest = async invoiceID => {
 };
 
 const deleteInvoicefromDBRequest = async(item) => {
+  console.log(item)
   const result = await api.delete(`/invoices/${item.payload}`);
+  console.log(result)
   return result.data;
 }
 
@@ -46,7 +48,6 @@ const patchStateInvoiceRequest = async (payload) => {
 
 const createNewVersionStateInvoiceRequest = async (payload) => {
   const result = await api.post(`/invoices/convert`, {data: payload});
-  console.log(result.data)
   return result.data;
 };
 
@@ -140,6 +141,7 @@ function* deleteInvoicefromDB(item) {
       var error = new Error();
       throw error
     }
+    console.log('send sagas result to reducer')
     yield put(actions.deleteSingleInvoiceSuccess(data));
   } catch (error) {
     yield put(actions.deleteSingleInvoiceFailure('Unable to delete the record'));
@@ -159,7 +161,6 @@ function* patchStateInvoice({ payload }) {
 function* createNewVersionStateInvoice({ payload }) {
   try {
     const data = yield call(createNewVersionStateInvoiceRequest, payload);
-    console.log(data)
     yield put(actions.InvoiceHandleStateUpdateSuccess(data.data));
   } catch (error) {
     yield put(actions.InvoiceHandleStateUpdateFailure(error));
@@ -195,7 +196,6 @@ export function* patchStateInvoiceWatcher() {
 export function* createNewVersionInvoiceWatcher() {
   yield takeEvery(types.INVOICE_HANDLE_STATE_CREATE_NEW_VERSION, createNewVersionStateInvoice);
 }
-
 export function* revertPreviousVersionQuotationWatcher() {
   yield takeEvery(Types.HANDLE_STATE_REVERT_PREVIOUS_VERSION, revertPreviousVersionStateQuotation);
 }

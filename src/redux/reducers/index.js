@@ -10,6 +10,7 @@ import QuotationReducer from "./accounting/QuotationReducer";
 import InvoiceReducer from "./accounting/InvoiceReducer";
 import CreditNoteReducer from "./accounting/CreditNoteReducer";
 import PaymentState from "./accounting/PaymentReducer";
+import AccountingReducer from "./accounting/AccountingReducer";
 
 // crm
 import LeadReducer from "./crm/LeadReducer";
@@ -53,7 +54,8 @@ const reducers = combineReducers({
     quotationState: QuotationReducer,
     invoiceState: InvoiceReducer,
     creditNoteState: CreditNoteReducer,
-    paymentState: PaymentState
+    paymentState: PaymentState,
+    accountState: AccountingReducer
   }),
   widgetState: WidgetReducer,
   reportState: reportReducer,

@@ -15,7 +15,6 @@ class CalendarLayout extends Component {
         this.props.getAllEvents(true, new Date().toISOString(), Moment(new Date()).add(numberOfDays, 'day').toISOString(), userId);
     }
 
-
     render() {
 
         return (

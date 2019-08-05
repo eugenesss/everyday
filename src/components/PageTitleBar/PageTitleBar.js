@@ -41,7 +41,7 @@ const PageTitleBar = ({
             );
           })}
 
-        {/* {createLink && (
+        {createLink && (
           <Link to={createLink}>
             <Tooltip title="Add New" placement="bottom">
               <Fab
@@ -56,7 +56,9 @@ const PageTitleBar = ({
             </Tooltip>
           </Link>
         )}
-        {moreButton && moreButton} */}
+        
+        {moreButton && moreButton}
+
         <Button
           variant="contained"
           size="small"
@@ -67,9 +69,11 @@ const PageTitleBar = ({
         </Button>
 
         <ButtonGroup variant="contained" /* size="small" */ className="ml-15">
+
           <Button /* onClick={button.handleOnClick} */>label</Button>
           <Button /* onClick={button.handleOnClick} */>label</Button>
           <Button /* onClick={button.handleOnClick} */>label</Button>
+
         </ButtonGroup>
       </div>
     </div>

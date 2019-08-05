@@ -10,6 +10,7 @@ import {
   GET_TOP_SPENDER_CUSTOMER,
   GET_INDIVIDUAL_REPORT
 } from "Types";
+
 import {
   getReportFailure,
   getDealsByOwnerSuccess,

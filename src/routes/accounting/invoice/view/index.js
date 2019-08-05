@@ -44,6 +44,7 @@ class acct_view_invoice extends Component {
   }
 
   componentWillUnmount() {
+    console.log('clear Single Invoice')
     this.props.clearSingleInvoice();
   }
 
@@ -56,10 +57,7 @@ class acct_view_invoice extends Component {
   }
 
   Redirect=()=> {
-    const {deleted} = this.props.invoiceList
-    if(deleted){
-      return(<Redirect to="/app/acct/invoices"/>)
-    }
+    return(<Redirect to="/app/acct/invoices"/>)
   }
 
 
@@ -69,8 +67,6 @@ class acct_view_invoice extends Component {
     let buttonCollection = null
     let moreButtons = null
     
-    console.log(invoice)
-
     if(invoice){
       
       switch(invoice.state) {
@@ -109,13 +105,13 @@ class acct_view_invoice extends Component {
                 >
                   Confirm Invoice
                 </MatButton>
-                <MatButton
+                {/* <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
                   onClick={()=> console.log('To Pdf Print')}
                 >
                   To PDF &amp; Print
-                </MatButton>
+                </MatButton> */}
               </div>
             )
 
@@ -124,13 +120,13 @@ class acct_view_invoice extends Component {
         case "Current":
               buttonCollection = (
                 <div className="rct-block p-10 mb-10">
-                  <MatButton
+                  {/* <MatButton
                     variant="contained"
                     className="btn-primary mr-10 text-white"
                     onClick={()=> console.log('To Pdf Print')}
                   >
                     To PDF &amp; Print
-                  </MatButton>
+                  </MatButton> */}
                   <MatButton
                     variant="contained"
                     className="btn-primary mr-10 text-white"
@@ -191,12 +187,18 @@ class acct_view_invoice extends Component {
       }
     }
  
+    console.log('view renders')
+    console.log(this.props.invoiceToView.invoice)
+    console.log(this.props.invoiceList.deleted)
+  
+    if(this.props.invoiceList.deleted){
+      return(<Redirect to="/app/acct/invoices"/>)
+    }
 
     return loading ? (
       <RctPageLoader />
     ) : invoice ? (
       <React.Fragment>
-        {this.Redirect()}
         <Helmet>
           <title>Everyday | View Invoice</title>
         </Helmet>
