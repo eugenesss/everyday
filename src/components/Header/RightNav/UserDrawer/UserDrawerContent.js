@@ -70,7 +70,7 @@ function UserDrawerContent(props) {
           <div className="media">
             <div className="media-left mr-25">
               <img
-                src={require("Assets/avatars/user-8.jpg")}
+                src={require("Assets/avatars/user-1.jpg")}
                 className="img-fluid rounded-circle"
                 alt="user profile"
                 width="70"

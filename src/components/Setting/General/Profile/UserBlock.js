@@ -11,7 +11,7 @@ const UserBlock = ({ user, uploadFile }) => {
         >
           <div style={{ position: "relative" }}>
             <img
-              src={require("Assets/avatars/user-37.jpg")}
+              src={require("Assets/avatars/user-1.jpg")}
               alt="user profile"
               className="rounded-circle bordered"
               width="150"

@@ -7,11 +7,18 @@ const myTheme = createMuiTheme({
       rounded: { borderRadius: "15px" }
     },
     MuiTableCell: {
-      root: { fontFamily: "Lato" }
+      root: { fontFamily: "Lato", borderBottom: "none" }
     },
     MuiTypography: {
       root: {
         fontFamily: "Lato!important"
+      }
+    },
+    MUIDataTableBodyRow: {
+      root: {
+        "&:nth-child(odd)": {
+          backgroundColor: "#f8f8f8a1"
+        }
       }
     }
   }
