@@ -31,9 +31,7 @@ const getInvoiceRequest = async invoiceID => {
 };
 
 const deleteInvoicefromDBRequest = async(item) => {
-  console.log(item)
   const result = await api.delete(`/invoices/${item.payload}`);
-  console.log(result)
   return result.data;
 }
 
@@ -141,7 +139,6 @@ function* deleteInvoicefromDB(item) {
       var error = new Error();
       throw error
     }
-    console.log('send sagas result to reducer')
     yield put(actions.deleteSingleInvoiceSuccess(data));
   } catch (error) {
     yield put(actions.deleteSingleInvoiceFailure('Unable to delete the record'));

@@ -14,15 +14,6 @@ import QuotationForm from "Components/Form/Quotation/QuotationForm";
 
 // Actions
 import { 
-  clearSingleQuotation, 
-  addNewProdQuote, 
-  removeProdQuote, 
-  handleProdQuote,  
-  handleChangeQuote, 
-  getAllAccount, 
-  getAllUsers, 
-  submitNewQuote,
-
   submitAccountQuotationInvoice
 } from "Actions";
 
@@ -31,7 +22,6 @@ class acct_new_quote extends Component {
 
 
   _quotationParent = (element, item) =>{
-    console.log('quotation new')
     this.props.submitAccountQuotationInvoice(element, item)
   }
 

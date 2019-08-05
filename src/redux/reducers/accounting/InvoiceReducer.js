@@ -154,7 +154,6 @@ export default (state = INIT_STATE, action) => {
     case types.DELETE_INVOICE_SUCCESS:
 
       NotificationManager.success("Invoice successfully deleted")
-      console.log('should update delete invoice success')
       return {
         ...state,
         invoiceList: {

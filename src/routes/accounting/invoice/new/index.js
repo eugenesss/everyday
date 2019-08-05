@@ -21,7 +21,6 @@ class acct_new_invoice extends Component {
   state = {};
 
   _quotationParent = (element, item) =>{
-    console.log('quotation new')
     this.props.submitAccountQuotationInvoice(element, item)
   }
 

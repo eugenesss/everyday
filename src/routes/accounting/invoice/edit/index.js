@@ -54,8 +54,6 @@ class acct_edit_quotation extends Component {
 
 
   _quotationParent = (element, item) =>{
-    console.log('invoice edit')
-    console.log(element, item)
     this.props.submitNewQuote(element, item)
   }
 

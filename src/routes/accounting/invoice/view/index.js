@@ -44,7 +44,6 @@ class acct_view_invoice extends Component {
   }
 
   componentWillUnmount() {
-    console.log('clear Single Invoice')
     this.props.clearSingleInvoice();
   }
 
@@ -187,10 +186,8 @@ class acct_view_invoice extends Component {
       }
     }
  
-    console.log('view renders')
-    console.log(this.props.invoiceToView.invoice)
-    console.log(this.props.invoiceList.deleted)
-  
+
+
     if(this.props.invoiceList.deleted){
       return(<Redirect to="/app/acct/invoices"/>)
     }

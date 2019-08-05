@@ -43,11 +43,7 @@ class acct_edit_quotation extends Component {
     this.props.clearSingleQuotation();
   }
 
-
-
   _quotationParent = (element, item) =>{
-    console.log('quotation edit')
-    console.log(element, item)
     this.props.submitNewQuote(element, item)
   }
 

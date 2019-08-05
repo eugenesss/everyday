@@ -188,7 +188,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.GET_QUOTE_SUMMARY_FAILURE:
       NotificationManager.warning("Error in fetching Quotation Summary");
-      console.log(action.payload);
       return { ...state, quotationSummary: INIT_STATE.quotationSummary };
 
     /**
@@ -196,7 +195,6 @@ export default (state = INIT_STATE, action) => {
      */
     case types.GET_QUOTATION_FAILURE:
       NotificationManager.warning("Error in fetching Quotation Data");
-      console.log(action.payload);
       return INIT_STATE;
     case types.GET_ALL_QUOTATION:
     case types.GET_MY_QUOTATION:
@@ -386,7 +384,6 @@ export default (state = INIT_STATE, action) => {
         var productTotal = getSubTotal(changeArr, "amount");
         var tax = getTax(changeArr)
 
-        console.log(changeArr[action.payload.key].tax_rate)
         if (changeArr[action.payload.key].tax_rate != 0){
           changeArr[action.payload.key].tax_amount = (((changeArr[action.payload.key].tax_rate)/100) * (changeArr[action.payload.key].price * changeArr[action.payload.key].quantity))        
           tax = getTax(changeArr)

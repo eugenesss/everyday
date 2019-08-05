@@ -202,7 +202,6 @@ class QuotationForm extends Component {
   }
 
   _submitFormFieldsDB = () =>{
-    console.log('attempt to send to databse')
 
     var today = new Date();
     var duedate = new Date();

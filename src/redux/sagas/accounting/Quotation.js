@@ -73,7 +73,6 @@ const submitquoteSummaryRequest = async(item) => {
 
 const submitEditQuoteSummaryRequest = async({payload}) => {
 
-  console.log(payload)
   const result = await api.patch(`/quotations/${payload.item.id}`, payload.item);
   return result.data;
  
@@ -111,7 +110,6 @@ const convertInvoiceQuotationRequest = async (payload) => {
 };
 
 const getQuoteRequest = async (quoteID) => {
-  console.log(quoteID)
   if(quoteID.type == "invoice"){
     const result = await api.get(`/invoices/${quoteID.quoteID}`);
     return result.data;
@@ -213,7 +211,6 @@ function* getQuoteSummaryFromDB() {
 }
 
 function* submitQuoteSummarytoDB(payload) {
-  console.log('sagas submitQuoteSummarytoDB', payload)
   try {
     const data = yield call(submitEditQuoteSummaryRequest, payload);
     yield put(Actions.submitNewQuoteSuccess(data));
