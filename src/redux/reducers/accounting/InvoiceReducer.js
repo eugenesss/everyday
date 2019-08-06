@@ -142,7 +142,31 @@ export default (state = INIT_STATE, action) => {
         invoiceToView: INIT_STATE.invoiceList
       };
 
+      case types.SUBMIT_INVOICE_SUCCESS:
+          NotificationManager.success("Your form has been successfully updated")
+    
+          return {
+            ...state,
+            invoiceToView: {
+              ...state.invoiceToView,
+              loading: false,
+              invoice: action.payload
+            }
 
+          };
+    
+    
+        case types.SUBMIT_INVOICE_FAILURE:
+          NotificationManager.warning("Unable to submit quotation, please try again")
+    
+          return {
+            ...state,
+            invoiceToView: {
+              ...state.invoiceToView,
+              loading: false,
+            }
+          };
+    
 
     case types.DELETE_INVOICE:
       // console.log(action.payload)

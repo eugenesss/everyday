@@ -26,6 +26,7 @@ const getAllInvoiceRequest = async () => {
 };
 
 const getInvoiceRequest = async invoiceID => {
+  console.log('getInvoiceRequest')
   const result = await api.get(`/invoices/${invoiceID}`);
   return result.data;
 };
@@ -35,12 +36,15 @@ const deleteInvoicefromDBRequest = async(item) => {
   return result.data;
 }
 
+const patchInvoiceRequest = async({payload}) => {
+  const result = await api.patch(`/invoices/${payload.id}`, payload);
+  return result.data;
+}
 
-const patchStateInvoiceRequest = async (payload) => {
 
+const updateStatusStateInvoiceRequest = async (payload) => {
   const result = await api.post(`/invoices/updateStatus/`, {data: payload});
     return result.data;
-
 };
 
 
@@ -50,60 +54,69 @@ const createNewVersionStateInvoiceRequest = async (payload) => {
 };
 
 
-
-const getMyInvoiceRequest = async () => {
-  const result = invoiceList;
-  return result;
-};
-const getOpenInvoiceRequest = async () => {
-  const result = invoiceList;
-  return result;
-};
-const getClosedInvoiceRequest = async () => {
-  const result = invoiceList;
-  return result;
-};
-
-const getInvoiceSummaryRequest = async () => {
-  const result = custSummary;
-  return result;
-};
+// const getMyInvoiceRequest = async () => {
+//   const result = invoiceList;
+//   return result;
+// };
+// const getOpenInvoiceRequest = async () => {
+//   const result = invoiceList;
+//   return result;
+// };
+// const getClosedInvoiceRequest = async () => {
+//   const result = invoiceList;
+//   return result;
+// };
+// const getInvoiceSummaryRequest = async () => {
+//   const result = custSummary;
+//   return result;
+// };
 
 //=========================
 // CALL(GENERATOR) ACTIONS
 //=========================
-function* changeInvoiceList({ payload }) {
-  let data;
-  try {
-    if (payload == "All Invoices") {
-      // All Invoices
-      yield delay(500);
-      data = yield call(getAllInvoiceRequest);
-      yield put(actions.getInvoiceSuccess(data));
-    } else if (payload == "My Invoices") {
-      // My Invoices
-      data = yield call(getMyInvoiceRequest);
-      yield delay(500);
-      yield put(actions.getInvoiceSuccess(data));
-    } else if (payload == "Open Invoices") {
-      // Open Invoices
-      data = yield call(getOpenInvoiceRequest);
-      yield delay(500);
-      yield put(actions.getInvoiceSuccess(data));
-    } else if (payload == "Closed Invoices") {
-      // Closed Invoices
-      data = yield call(getClosedInvoiceRequest);
-      yield delay(500);
-      yield put(actions.getInvoiceSuccess(data));
-    } else {
-      yield delay(500);
-      data = yield call(getAllInvoiceRequest);
-      yield put(actions.getInvoiceSuccess(data));
-    }
-  } catch (error) {
-    yield put(actions.getInvoiceFailure(error));
-  }
-}
+// function* changeInvoiceList({ payload }) {
+//   let data;
+//   try {
+//     if (payload == "All Invoices") {
+//       // All Invoices
+//       yield delay(500);
+//       data = yield call(getAllInvoiceRequest);
+//       yield put(actions.getInvoiceSuccess(data));
+//     } else if (payload == "My Invoices") {
+//       // My Invoices
+//       data = yield call(getMyInvoiceRequest);
+//       yield delay(500);
+//       yield put(actions.getInvoiceSuccess(data));
+//     } else if (payload == "Open Invoices") {
+//       // Open Invoices
+//       data = yield call(getOpenInvoiceRequest);
+//       yield delay(500);
+//       yield put(actions.getInvoiceSuccess(data));
+//     } else if (payload == "Closed Invoices") {
+//       // Closed Invoices
+//       data = yield call(getClosedInvoiceRequest);
+//       yield delay(500);
+//       yield put(actions.getInvoiceSuccess(data));
+//     } else {
+//       yield delay(500);
+//       data = yield call(getAllInvoiceRequest);
+//       yield put(actions.getInvoiceSuccess(data));
+//     }
+//   } catch (error) {
+//     yield put(actions.getInvoiceFailure(error));
+//   }
+// }
+
+// function* getInvoiceSummaryFromDB() {
+//   try {
+//     const data = yield call(getInvoiceSummaryRequest);
+//     yield put(actions.getInvoiceSummarySuccess(data));
+//   } catch (error) {
+//     yield put(actions.getInvoiceSummaryFailure(error));
+//   }
+// }
+
+
 function* getAllInvoiceFromDB() {
   try {
     const data = yield call(getAllInvoiceRequest);
@@ -122,15 +135,6 @@ function* getInvoiceFromDB({ payload }) {
     yield put(actions.getInvoiceFailure(error));
   }
 }
-function* getInvoiceSummaryFromDB() {
-  try {
-    const data = yield call(getInvoiceSummaryRequest);
-    yield put(actions.getInvoiceSummarySuccess(data));
-  } catch (error) {
-    yield put(actions.getInvoiceSummaryFailure(error));
-  }
-}
-
 
 function* deleteInvoicefromDB(item) {
   try {
@@ -145,15 +149,24 @@ function* deleteInvoicefromDB(item) {
   }
 }
 
-
-function* patchStateInvoice({ payload }) {
+function* updateStatusStateInvoice({ payload }) {
   try {
-    const data = yield call(patchStateInvoiceRequest, payload);
+    const data = yield call(updateStatusStateInvoiceRequest, payload);
     yield put(actions.InvoiceHandleStateUpdateSuccess(data.data));
   } catch (error) {
     yield put(actions.InvoiceHandleStateUpdateFailure(error));
   }
 }
+
+function* patchInvoiceRequestFromDB(payload) {
+  try {
+    const data = yield call(patchInvoiceRequest, payload);
+    yield put(actions.submitInvoiceSuccess(data));
+  } catch (error) {
+    yield put(actions.submitInvoiceFailure(error));
+  }
+}
+
 
 function* createNewVersionStateInvoice({ payload }) {
   try {
@@ -166,51 +179,49 @@ function* createNewVersionStateInvoice({ payload }) {
 
 
 
-
-
-
 //=======================
 // WATCHER FUNCTIONS
 //=======================
-export function* changeViewWatcher() {
-  yield takeEvery(types.CHANGE_INVOICE_LIST_VIEW, changeInvoiceList);
-}
+// export function* changeViewWatcher() {
+//   yield takeEvery(types.CHANGE_INVOICE_LIST_VIEW, changeInvoiceList);
+// }
+// export function* getInvoiceSummaryWatcher() {
+//   yield takeEvery(types.GET_INVOICE_SUMMARY, getInvoiceSummaryFromDB);
+// }
 export function* getAllInvoiceWatcher() {
   yield takeEvery(types.GET_ALL_INVOICE, getAllInvoiceFromDB);
 }
 export function* getSingleInvoiceWatcher() {
   yield takeEvery(types.GET_SINGLE_INVOICE, getInvoiceFromDB);
 }
-export function* getInvoiceSummaryWatcher() {
-  yield takeEvery(types.GET_INVOICE_SUMMARY, getInvoiceSummaryFromDB);
-}
 export function* deleteInvoiceSummaryWatcher() {
   yield takeEvery(types.DELETE_INVOICE, deleteInvoicefromDB);
 }
-export function* patchStateInvoiceWatcher() {
-  yield takeEvery(types.INVOICE_HANDLE_STATE_UPDATE, patchStateInvoice);
+export function* updateStatusStateInvoiceWatcher() {
+  yield takeEvery(types.INVOICE_HANDLE_STATE_UPDATE, updateStatusStateInvoice);
 }
 export function* createNewVersionInvoiceWatcher() {
   yield takeEvery(types.INVOICE_HANDLE_STATE_CREATE_NEW_VERSION, createNewVersionStateInvoice);
 }
 export function* revertPreviousVersionQuotationWatcher() {
-  yield takeEvery(Types.HANDLE_STATE_REVERT_PREVIOUS_VERSION, revertPreviousVersionStateQuotation);
+  yield takeEvery(types.HANDLE_STATE_REVERT_PREVIOUS_VERSION, revertPreviousVersionStateQuotation);
 }
-
-
-
+export function* patchInvoiceRequestInvoiceWatcher() {
+  yield takeEvery(types.SUBMIT_INVOICE, patchInvoiceRequestFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
 //=======================
 export default function* rootSaga() {
   yield all([
-    fork(changeViewWatcher),
+    // fork(changeViewWatcher),
+    // fork(getInvoiceSummaryWatcher),
     fork(getAllInvoiceWatcher),
     fork(getSingleInvoiceWatcher),
-    fork(getInvoiceSummaryWatcher),
     fork(deleteInvoiceSummaryWatcher),
-    fork(patchStateInvoiceWatcher),
+    fork(updateStatusStateInvoiceWatcher),
     fork(createNewVersionInvoiceWatcher),
+    fork(patchInvoiceRequestInvoiceWatcher)
   ]);
 }

@@ -71,6 +71,7 @@ export default class DisplayEvent extends Component {
                             </div>
                      
                         </div>
+                    
                     </div>
                 )
             })
@@ -100,9 +101,10 @@ export default class DisplayEvent extends Component {
                     {/* <span style={{fontSize: 18}}>{Moment(new Date()).format('D')} - {Moment(Moment(new Date()).add(7, 'day')).format('D')} {Moment(Moment(new Date()).add(7, 'day')).format('MMMM')}</span> */}
                 </div>
                 
-
-                {EventList}
-                
+                <div style={{}}>
+                    {EventList}
+                </div>
+               
             </div>
         )
     }

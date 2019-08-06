@@ -39,7 +39,6 @@ const FormSelectField = ({
         label={label}
         value={value ? value : ""}
         onChange={e => handleChange(target, e.target.value, targetType)}
-        // onChange={e => console.log(e.target.value)}
         margin="dense"
       >
         {selectValues &&
@@ -47,7 +46,8 @@ const FormSelectField = ({
             <MenuItem key={key} value={select}>
               {select.name}
             </MenuItem>
-          ))}
+          ))
+        }
       </TextField>
     )
   }

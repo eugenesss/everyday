@@ -19,6 +19,7 @@ import {
     getAllUsers, 
     submitNewQuote,
 
+    accountingClearState,
     submitAccountQuotationInvoice
 } from "Actions";
 
@@ -33,18 +34,15 @@ class QuotationForm extends Component {
   constructor(props) {
     super(props);
     // Don't call this.setState() here!
-
-    // this.state = { 
-    // };
     
-    const {quotation, products} =this.props.quotationForm
+    if(this.props.quotationForm){
 
-    if(quotation){
       this.state = {
-        formFields: quotation,
-        formFieldsProducts: products,
+        formFields: this.props.quotationForm,
+        formFieldsProducts: this.props.quotationForm.quotationline,
         attn_to_array : []
       };
+
     } else {
       this.state = {
         formFields: {
@@ -97,10 +95,79 @@ class QuotationForm extends Component {
 
   }
 
-  // quotationForm
+  componentWillUnmount(){
+    this.props.accountingClearState()
+  }
 
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+
+      if(prevProps.status){
+        if(prevProps.status.success != this.props.status.success){
+          return true
+        }
+      }
+
+      return null
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+   
+      if(snapshot){
+        // restart state
+        console.log('snapshot')
+        this.setState({
+          formFields: {
+            date: new Date(),
+            currency: "",
+            currency_rate: "",
+            version: "",
+      
+            subtotal: 0,
+            tax_amount: 0,
+            discount_total: 0,
+            totalAmt: 0,
+            discount: "",
+            discount_rate: 0,
+      
+            description: "",
+            owner: "",
+            accountId:"",
+            attn_toId:"",
+            details: '',
+            address_1:"",
+            address_2:"",
+            city: "",
+            state: "",
+            zip: "",
+            sent_date: "",
+            tnc: "",
+            quoteID: "",
+            account: null,
+            state: "Draft",
+            sentOn: new Date(),
+            dueDate: new Date(),
+          },
+          formFieldsProducts: [
+            {
+              description: "",
+              quantity: 0,
+              price: 0,
+              discount: 0,
+              tax_id: { name: "GST", rate: 0 },
+              tax_rate: 0,
+              tax_amount: 0,
+              amount: 0
+            }
+          ],
+          attn_to_array : []
+        });
+      }
+  }
+
+
+  // quotationForm
   componentDidMount() {
-    this.props.clearSingleQuotation();
+    // this.props.clearSingleQuotation();
     this.props.getAllAccount()
     this.props.getAllUsers();
   }
@@ -113,7 +180,6 @@ class QuotationForm extends Component {
         case "accountId":
                 formFields[e] = value
                 formFields.details = value.baseContact._address.address_1 + `\n` + value.baseContact._address.address_1 + `\n` + value.baseContact._address.city + `\n` + value.baseContact._address.zip
-
             return this.setState({formFields: formFields, attn_to_array: value.customers})
 
         case "currency":
@@ -239,7 +305,7 @@ class QuotationForm extends Component {
 
   render() {
 
-    const { products, quotation, attn_to_array } = this.props.quotationForm;
+    // const { products, quotation, attn_to_array } = this.props.quotationForm;
     const {currencyTable, taxTable, discountTable} = this.props.quotationList
 
     const tableData = this.props.tableData
@@ -247,18 +313,18 @@ class QuotationForm extends Component {
     
     return (
       <React.Fragment>
-        <InvoiceFields 
-          // handleChange  = {(e, value, target) => this.props.handleChangeQuote(e, value, target)}
-          handleChange  = {this._handleChangeFormField}
-          tableData={tableData}
-          currencyTable={currencyTable}
-          discountTable={discountTable}
-          quotation={this.state.formFields}
-          attn_to_array={this.state.attn_to_array}
-          users={users}
-          invoice 
-          handleAttnTo
-        />
+          <InvoiceFields 
+            // handleChange  = {(e, value, target) => this.props.handleChangeQuote(e, value, target)}
+            handleChange  = {this._handleChangeFormField}
+            edit={this.props.edit}
+            tableData={tableData}
+            currencyTable={currencyTable}
+            discountTable={discountTable}
+            quotation={this.state.formFields}
+            attn_to_array={this.state.attn_to_array}
+            users={users}
+
+          />
 
         <div style={{marginTop: 20, marginBottom: 20}}>
           <InvoiceProductInput
@@ -269,7 +335,6 @@ class QuotationForm extends Component {
             handleRemove={this._removeProdQuote}
           />
 
-        
           <div className="row">
             <div className="col-md-6"/>
             <div className="col-md-6">
@@ -305,10 +370,10 @@ class QuotationForm extends Component {
 const mapStateToProps = ({ accountingState, crmState, usersState }) => {
   const { tableData, } = crmState.accountState.accountList 
   const { quotationState, accountState} = accountingState;
-  const { quotationForm, quotationList } = quotationState;
+  const { quotationList } = quotationState;
   const { users } = usersState;
 
-  return { quotationForm, tableData, users, quotationList};
+  return { tableData, users, quotationList};
 };
 
 export default connect(
@@ -323,6 +388,7 @@ export default connect(
     getAllUsers, 
     submitNewQuote,
 
+    accountingClearState,
     submitAccountQuotationInvoice
   }
 )(QuotationForm);

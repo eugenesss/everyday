@@ -27,7 +27,7 @@ class acct_new_quote extends Component {
 
 
   render() {
-    
+
     return (
       <React.Fragment>
         <Helmet>
@@ -42,6 +42,7 @@ class acct_new_quote extends Component {
             <div className="col-md-10">
               <QuotationForm
                 accountPage={'Quotation'}
+                status={this.props.accountingState.accountState}
                 _quotationParent={this._quotationParent}
               />
             </div>
@@ -54,8 +55,8 @@ class acct_new_quote extends Component {
 }
 
 
-const mapStateToProps = ({}) => {
-  return {};
+const mapStateToProps = ({accountingState}) => {
+  return {accountingState};
 };
 
 export default connect(

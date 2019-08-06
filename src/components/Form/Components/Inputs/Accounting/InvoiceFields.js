@@ -19,13 +19,12 @@ class InvoiceFields extends Component {
   
    
     render () {
-      const {currencyTable, handleChange, quotation, discountTable, tableData, attn_to_array , users} = this.props
+      const {currencyTable, edit, handleChange, quotation, discountTable, tableData, attn_to_array , users} = this.props
 
       // currencyTable
       // discountTable
       // attn_to_array
       // users
-
       return (
         <div className="row">
 
@@ -35,10 +34,7 @@ class InvoiceFields extends Component {
                   Date
                 </Label>
                 <Col sm={10}>
-                  {/* <FormTextField
-                    value={Moment(quotation.date).format('LL')}
-                    disabled={true}
-                  /> */}
+                  
                   <KeyboardDatePicker
                     margin="normal"
                     style={{marginTop:0}}
@@ -70,22 +66,48 @@ class InvoiceFields extends Component {
           <div className="col-md-6">
             <Form>
         
-              <FormGroup row>
-                <Label for="Select-1" className="fs-13 text-right" sm={2}>
-                  Account
-                </Label>
-                <Col sm={10}>
-                  <FormSelectField
-                    value={quotation.accountId}
-                    target={"accountId"}
-                    handleChange ={handleChange}
-                    selectValues={tableData}
-                    accounting={true}
+            <div style={{display:'flex', flexDirection:'row'}}>
+                
+                {/* <FormBlock
+                  label="Account"
+                  target={"accountId"}
+                  value={quotation.accountId}
+                  selectValues={tableData}
+                  handleChange ={handleChange}
+                  required
+                  accounting={true}
+                  style={{width: '100%', borderBottom : '0px solid black'}}
+                /> */}
+                {edit && 
+                  <FormBlock
+                    label="Account"
+                    value={quotation.accountId.name}
+                    target="accountId"
+                    targetType="baseContact"
+                    style={{width: '100%', borderBottom : '0px solid black'}}
                   />
-                </Col>
-              </FormGroup>
+                }
+
+                {!edit && 
+                  <FormGroup row>
+                    <Label for="Select-1" className="fs-13 text-right" sm={2}>
+                      Account
+                    </Label> 
+                    <Col sm={12}>
+                      <FormSelectField
+                        value={quotation.accountId}
+                        target={"accountId"}
+                        handleChange ={handleChange}
+                        selectValues={tableData}
+                        accounting={true}
+                      />
+                    </Col> 
+                  </FormGroup>
+                }
+              </div>
+
               <FormGroup row>
-                <Label for="Select-1" className="fs-13 text-right" sm={2}>
+                {/* <Label for="Select-1" className="fs-13 text-right" sm={2}>
                   Attn To
                 </Label>
                 <Col sm={10}>
@@ -96,7 +118,30 @@ class InvoiceFields extends Component {
                     handleChange ={handleChange}
                     accounting={true}
                   />
-                </Col>
+                </Col> */}
+
+                {edit && 
+                  <FormBlock
+                    label="Attention To"
+                    target={"attn_toId"}
+                    value={quotation.attn_toId.name}
+                    accounting={true}
+                    style={{width: '100%', borderBottom : '0px solid black'}}
+                  />
+                }
+
+                {!edit && 
+                  <FormBlock
+                    label="Attention To"
+                    target={"attn_toId"}
+                    value={quotation.attn_toId}
+                    selectValues={attn_to_array}
+                    handleChange ={handleChange}
+                    required
+                    accounting={true}
+                    style={{width: '100%', borderBottom : '0px solid black'}}
+                  />
+                }
               </FormGroup>
 
               {/* <FormGroup row>
@@ -169,21 +214,35 @@ class InvoiceFields extends Component {
           <div className="col-md-6">
 
             <div style={{display:'flex', flexDirection:'row'}}>
-              <FormBlock
-                  label="Owner"
-                  target={"owner"}
-                  value={quotation.owner}
-                  selectValues={users}
-                  handleChange ={handleChange}
-                  required
-                  accounting={true}
-                  style={{width: '100%', borderBottom : '0px solid black'}}
-                />
+              
+
+                {edit && 
+                  <FormBlock
+                    label="Owner"
+                    target={"owner"}
+                    value={quotation.owner.name}
+                    accounting={true}
+                    style={{width: '100%', borderBottom : '0px solid black'}}
+                  />
+                }
+
+                {!edit && 
+                  <FormBlock
+                    label="Owner"
+                    target={"owner"}
+                    value={quotation.owner}
+                    selectValues={users}
+                    handleChange ={handleChange}
+                    required
+                    accounting={true}
+                    style={{width: '100%', borderBottom : '0px solid black'}}
+                  />
+                }
             </div>
 
             <div style={{display:'flex', flexDirection:'row'}}>
               <Label for="Select-1" className="fs-13 text-center" sm={2}>
-                Attention To
+                Details
               </Label>
               <Col sm={10}>
                   <TextField
@@ -199,6 +258,7 @@ class InvoiceFields extends Component {
                     variant="outlined"
                   />
               </Col>
+
             </div>
 
           </div>

@@ -26,7 +26,7 @@ const INIT_STATE = {
     loading: false,
     summary: []
   },
-  quotationToView: { loading: false,quotation: null},
+  quotationToView: { loading: false, quotation: null},
   quotationForm: {
     loading: false,
     attn_to_array: [],
@@ -54,10 +54,6 @@ const INIT_STATE = {
       city: "",
       state: "",
       zip: "",
-      // email: "",
-      // mobile:"",
-      // office: "",
-      // fax: "",
       sent_date: "",
       tnc: "",
     
@@ -516,11 +512,7 @@ export default (state = INIT_STATE, action) => {
       };
 
 
-
-
-
     case types.SUBMIT_QUOTATION_SUCCESS:
-
       NotificationManager.success("Your form has been successfully updated")
 
       return {

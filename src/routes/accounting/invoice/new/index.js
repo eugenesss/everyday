@@ -25,6 +25,7 @@ class acct_new_invoice extends Component {
   }
 
   render() {
+
     return (
       <React.Fragment>
         <Helmet>
@@ -39,6 +40,8 @@ class acct_new_invoice extends Component {
             <div className="col-md-10">
               <QuotationForm
                 accountPage={'Invoice'}
+                quotationForm={null}
+                status={this.props.accountingState.accountState}
                 _quotationParent={this._quotationParent}
               />
             </div>
@@ -51,8 +54,10 @@ class acct_new_invoice extends Component {
 }
 
 
-const mapStateToProps = ({}) => {
-  return {};
+const mapStateToProps = ({accountingState}) => {
+  return {
+    accountingState
+  };
 };
 
 export default connect(

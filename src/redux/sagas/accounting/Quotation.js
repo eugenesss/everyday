@@ -27,57 +27,54 @@ const getAllQuoteRequest = async () => {
   return result.data;
 };
 
-const submitquoteSummaryRequest = async(item) => {
+// const submitquoteSummaryRequest = async(item) => {
 
-  var today = new Date();
-  var duedate = new Date();
-  duedate.setDate(today.getDate()+3);
+//   var today = new Date();
+//   var duedate = new Date();
+//   duedate.setDate(today.getDate()+3);
 
-  // payload: {item: item, products: products}
-  let quotationLine = [...item.payload.products]
-  let postData = {...item.payload.item}
+//   // payload: {item: item, products: products}
+//   let quotationLine = [...item.payload.products]
+//   let postData = {...item.payload.item}
 
-  let quotationData = {
-    date : postData.date.toString(),
-    sent_date : postData.date.toString(),
-    attn_toId : {id: postData.attn_toId.id, name: postData.attn_toId.name},
-    accountId : {id: postData.accountId.id, name: postData.accountId.name},
-    owner: {companyId: postData.owner.companyId, id: postData.owner.id, name: postData.owner.name},
-    currency : postData.currency,
-    currency_rate : postData.currency_rate,
-    due_date : duedate.toDateString(),
+//   let quotationData = {
+//     date : postData.date.toString(),
+//     sent_date : postData.date.toString(),
+//     attn_toId : {id: postData.attn_toId.id, name: postData.attn_toId.name},
+//     accountId : {id: postData.accountId.id, name: postData.accountId.name},
+//     owner: {companyId: postData.owner.companyId, id: postData.owner.id, name: postData.owner.name},
+//     currency : postData.currency,
+//     currency_rate : postData.currency_rate,
+//     due_date : duedate.toDateString(),
 
-    totalAmt : postData.totalAmt,
-    subtotal : postData.subtotal,
-    tax_amount : postData.tax_amount,
+//     totalAmt : postData.totalAmt,
+//     subtotal : postData.subtotal,
+//     tax_amount : postData.tax_amount,
 
-    discount_rate: postData.discount_rate,
+//     discount_rate: postData.discount_rate,
 
-    description: postData.description,
-    details: postData.details,
+//     description: postData.description,
+//     details: postData.details,
 
-    quotationline: quotationLine,
+//     quotationline: quotationLine,
 
-    userId : postData.owner.id
+//     userId : postData.owner.id
 
-  }
+//   }
 
-  let result = null
-  if(item.payload.type == "invoice"){
-    result = await api.post("/invoices", {data: quotationData});
-  } else {
-    result = await api.post("/quotations", {data: quotationData});
-  }
-  return result.data;
-}
+//   let result = null
+//   if(item.payload.type == "invoice"){
+//     result = await api.post("/invoices", {data: quotationData});
+//   } else {
+//     result = await api.post("/quotations", {data: quotationData});
+//   }
+//   return result.data;
+// }
 
 const submitEditQuoteSummaryRequest = async({payload}) => {
-
   const result = await api.patch(`/quotations/${payload.item.id}`, payload.item);
   return result.data;
- 
 }
-
 
 const deleteQuotationfromDBRequest = async(item) => {
   const result = await api.delete(`/quotations/${item.payload}`);
@@ -110,6 +107,7 @@ const convertInvoiceQuotationRequest = async (payload) => {
 };
 
 const getQuoteRequest = async (quoteID) => {
+  
   if(quoteID.type == "invoice"){
     const result = await api.get(`/invoices/${quoteID.quoteID}`);
     return result.data;
@@ -126,24 +124,22 @@ const getQuoteRequest = async (quoteID) => {
 //   const result = quoteList;
 //   return result;
 // };
-
-const getMyQuoteRequest = async () => {
-  const result = quoteList;
-  return result;
-};
-const getOpenQuoteRequest = async () => {
-  const result = quoteList;
-  return result;
-};
-const getClosedQuoteRequest = async () => {
-  const result = quoteList;
-  return result;
-};
-
-const getQuoteSummaryRequest = async () => {
-  const result = leadSummary;
-  return result;
-};
+// const getMyQuoteRequest = async () => {
+//   const result = quoteList;
+//   return result;
+// };
+// const getOpenQuoteRequest = async () => {
+//   const result = quoteList;
+//   return result;
+// };
+// const getClosedQuoteRequest = async () => {
+//   const result = quoteList;
+//   return result;
+// };
+// const getQuoteSummaryRequest = async () => {
+//   const result = leadSummary;
+//   return result;
+// };
 
 
 
@@ -151,34 +147,43 @@ const getQuoteSummaryRequest = async () => {
 //=========================
 // CALL(GENERATOR) Actions
 //=========================
-function* changeQuoteList({ payload }) {
-  let data;
-  try {
-    if (payload == "All Quotations") {
-      yield delay(500);
-      data = yield call(getAllQuoteRequest);
-      yield put(Actions.getQuotationSuccess(data));
-    } else if (payload == "My Quotations") {
-      data = yield call(getMyQuoteRequest);
-      yield delay(500);
-      yield put(Actions.getQuotationSuccess(data));
-    } else if (payload == "Open Quotations") {
-      data = yield call(getOpenQuoteRequest);
-      yield delay(500);
-      yield put(Actions.getQuotationSuccess(data));
-    } else if (payload == "Closed Quotations") {
-      data = yield call(getClosedQuoteRequest);
-      yield delay(500);
-      yield put(Actions.getQuotationSuccess(data));
-    } else {
-      yield delay(500);
-      data = yield call(getAllQuoteRequest);
-      yield put(Actions.getQuotationSuccess(data));
-    }
-  } catch (error) {
-    yield put(Actions.getQuotationFailure(error));
-  }
-}
+// function* changeQuoteList({ payload }) {
+//   let data;
+//   try {
+//     if (payload == "All Quotations") {
+//       yield delay(500);
+//       data = yield call(getAllQuoteRequest);
+//       yield put(Actions.getQuotationSuccess(data));
+//     } else if (payload == "My Quotations") {
+//       data = yield call(getMyQuoteRequest);
+//       yield delay(500);
+//       yield put(Actions.getQuotationSuccess(data));
+//     } else if (payload == "Open Quotations") {
+//       data = yield call(getOpenQuoteRequest);
+//       yield delay(500);
+//       yield put(Actions.getQuotationSuccess(data));
+//     } else if (payload == "Closed Quotations") {
+//       data = yield call(getClosedQuoteRequest);
+//       yield delay(500);
+//       yield put(Actions.getQuotationSuccess(data));
+//     } else {
+//       yield delay(500);
+//       data = yield call(getAllQuoteRequest);
+//       yield put(Actions.getQuotationSuccess(data));
+//     }
+//   } catch (error) {
+//     yield put(Actions.getQuotationFailure(error));
+//   }
+// }
+// function* getQuoteSummaryFromDB() {
+//   try {
+//     const data = yield call(getQuoteSummaryRequest);
+//     yield put(Actions.getQuotationSummarySuccess(data));
+//   } catch (error) {
+//     yield put(Actions.getQuotationSummaryFailure(error));
+//   }
+// }
+
 
 function* getAllQuoteFromDB() {
   try {
@@ -201,15 +206,6 @@ function* getQuoteFromDB({ payload }) {
   }
 }
 
-function* getQuoteSummaryFromDB() {
-  try {
-    const data = yield call(getQuoteSummaryRequest);
-    yield put(Actions.getQuotationSummarySuccess(data));
-  } catch (error) {
-    yield put(Actions.getQuotationSummaryFailure(error));
-  }
-}
-
 function* submitQuoteSummarytoDB(payload) {
   try {
     const data = yield call(submitEditQuoteSummaryRequest, payload);
@@ -217,7 +213,6 @@ function* submitQuoteSummarytoDB(payload) {
   } catch (error) {
     yield put(Actions.submitNewQuoteFailure(error));
   }
-  
 }
 
 function* deleteQuotationfromDB(item) {
@@ -282,17 +277,17 @@ function* convertInvoiceQuotation({ payload }) {
 //=======================
 // WATCHER FUNCTIONS
 //=======================
-export function* changeViewWatcher() {
-  yield takeEvery(Types.CHANGE_QUOTATION_LIST_VIEW, changeQuoteList);
-}
+// export function* changeViewWatcher() {
+//   yield takeEvery(Types.CHANGE_QUOTATION_LIST_VIEW, changeQuoteList);
+// }
+// export function* getQuoteSummaryWatcher() {
+//   yield takeEvery(Types.GET_QUOTE_SUMMARY, getQuoteSummaryFromDB);
+// }
 export function* getAllQuoteWatcher() {
   yield takeEvery(Types.GET_ALL_QUOTATION, getAllQuoteFromDB);
 }
 export function* getSingleQuotationWatcher() {
   yield takeEvery(Types.GET_SINGLE_QUOTATION, getQuoteFromDB);
-}
-export function* getQuoteSummaryWatcher() {
-  yield takeEvery(Types.GET_QUOTE_SUMMARY, getQuoteSummaryFromDB);
 }
 export function* submitQuoteSummaryWatcher() {
   yield takeEvery(Types.SUBMIT_QUOTATION, submitQuoteSummarytoDB);
@@ -323,10 +318,10 @@ export function* convertInvoiceQuotationWatcher() {
 //=======================
 export default function* rootSaga() {
   yield all([
-    fork(changeViewWatcher),
+    // fork(changeViewWatcher),
+    // fork(getQuoteSummaryWatcher),
     fork(getAllQuoteWatcher),
     fork(getSingleQuotationWatcher),
-    fork(getQuoteSummaryWatcher),
     fork(submitQuoteSummaryWatcher),
     fork(deleteQuoteSummaryWatcher),
     fork(addNoteQuotationWatcher),

@@ -155,9 +155,9 @@ class acct_view_invoice extends Component {
                 <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
-                  onClick={()=> console.log('Invoice Paid')}
+                  onClick={()=> console.log('Pay Invoice')}
                 >
-                  Invoice Paid
+                  Pay Invoice
                 </MatButton>
                 <MatButton
                   variant="contained"
@@ -186,8 +186,6 @@ class acct_view_invoice extends Component {
       }
     }
  
-
-
     if(this.props.invoiceList.deleted){
       return(<Redirect to="/app/acct/invoices"/>)
     }
@@ -201,20 +199,6 @@ class acct_view_invoice extends Component {
         </Helmet>
         <PageTitleBar
           title="View Invoice"
-          // extraButtons={[
-          //   {
-          //     color: "primary",
-          //     label: "Convert to invoice"
-          //   },
-          //   {
-          //     color: "primary",
-          //     label: "Send by email"
-          //   },
-          //   {
-          //     color: "primary",
-          //     label: "To PDF & Print"
-          //   }
-          // ]}
           createLink={newInvoice}
           moreButton={moreButtons}
         />

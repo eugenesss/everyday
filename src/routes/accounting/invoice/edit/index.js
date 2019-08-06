@@ -32,7 +32,10 @@ import {
   removeProdQuote, 
   handleProdQuote, 
   handleChangeQuote, 
-  submitNewQuote
+  submitNewQuote,
+
+  submitInvoice,
+  getSingleInvoice
 } from "Actions";
 // import { clearSingleQuotation, addNewProdQuote, removeProdQuote, handleProdQuote,  handleChangeQuote, getAllAccount, getAllUsers, submitNewQuote} from "Actions";
 
@@ -45,42 +48,45 @@ class acct_edit_quotation extends Component {
 
   componentWillMount() {
     var id = this.props.match.params.id;
-    this.props.getSingleQuotation(id, true, 'invoice');
+    this.props.getSingleInvoice(id);
   }
 
   componentWillUnmount() {
     this.props.clearSingleQuotation();
   }
 
-
   _quotationParent = (element, item) =>{
-    this.props.submitNewQuote(element, item)
+    // console.log(element)
+    this.props.submitInvoice(item)
   }
 
-
   render() {
-    const {loading} = this.props.quotationToView;
-    const {currencyTable, taxTable, discountTable} = this.props.quotationList
-    const {products, quotation} = this.props.quotationForm 
+
+    // const {currencyTable, taxTable, discountTable} = this.props.quotationList
+    // const {products, quotation} = this.props.quotationForm 
+    const { loading, invoice } = this.props.invoiceToView
+
+    console.log(invoice)
 
     return loading ? (
       <RctPageLoader />
-    ) : quotation ? (
-        
+    ) : invoice ? (
+      
       <React.Fragment>
       <Helmet>
-        <title>Everyday | Edit Quotation</title>
-        <meta name="description" content="Everyday Quotations Creation" />
+        <title>Everyday | Edit Invoice</title>
+        <meta name="description" content="Everyday Invoice Creation" />
       </Helmet>
       <RctCollapsibleCard
-        heading={<IntlMessages id="Edit Quotation" />}
+        heading={<IntlMessages id="Edit Invoice" />}
       >
         <div className="row">
           <div className="col-md-1" />
           <div className="col-md-10">
             <QuotationForm
               accountPage={'Invoice'}
-              quotationForm={this.props.quotationForm}
+              edit={true}
+              quotationForm={invoice}
               _quotationParent={this._quotationParent}
             />
           </div>
@@ -109,18 +115,17 @@ class acct_edit_quotation extends Component {
 // )(acct_edit_quotation);
 
 
-const mapStateToProps = ({ accountingState, crmState, usersState }) => {
-  const { quotationState } = accountingState;
-  const { quotationToView, quotationList, quotationForm } = quotationState;
-
-  return { quotationToView, quotationList, quotationForm };
+const mapStateToProps = ({ accountingState }) => {
+  const { invoiceState } = accountingState;
+  const { invoiceToView , invoiceList} = invoiceState;
+  return { invoiceToView , invoiceList};
 };
 
 // deleted
 
 export default connect(
   mapStateToProps,
-  { getSingleQuotation, clearSingleQuotation, deleteSingleQuote, addNewProdQuote, removeProdQuote, handleProdQuote, handleChangeQuote, submitNewQuote }
+  { getSingleInvoice, submitInvoice, getSingleQuotation, clearSingleQuotation, deleteSingleQuote, addNewProdQuote, removeProdQuote, handleProdQuote, handleChangeQuote, submitNewQuote }
 )(acct_edit_quotation);
 
 

@@ -49,9 +49,12 @@ class acct_edit_quotation extends Component {
 
 
   render() {
-    const {loading} = this.props.quotationToView;
     const {currencyTable, taxTable, discountTable} = this.props.quotationList
-    const {products, quotation} = this.props.quotationForm 
+    // const {products, quotation} = this.props.quotationForm 
+    const {loading, quotation} = this.props.quotationToView;
+
+    console.log('edit index')
+    console.log(quotation)
 
     return loading ? (
       <RctPageLoader />
@@ -69,7 +72,8 @@ class acct_edit_quotation extends Component {
             <div className="col-md-10">
               <QuotationForm
                 accountPage={'Quotation'}
-                quotationForm={this.props.quotationForm}
+                edit={true}
+                quotationForm={quotation}
                 _quotationParent={this._quotationParent}
               />
             </div>
