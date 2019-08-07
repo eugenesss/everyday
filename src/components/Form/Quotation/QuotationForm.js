@@ -100,13 +100,11 @@ class QuotationForm extends Component {
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
-
       if(prevProps.status){
         if(prevProps.status.success != this.props.status.success){
           return true
         }
       }
-
       return null
   }
 

@@ -38,13 +38,13 @@ class InvoiceFields extends Component {
                   <KeyboardDatePicker
                     margin="normal"
                     style={{marginTop:0}}
-                    // id="mui-pickers-date"
                     value={Moment(quotation.date).format('LLL')}
                     onChange={e => handleChange('date', e._d)}
                     KeyboardButtonProps={{
                       'aria-label': 'change date',
                     }}
                   />
+
                 </Col>
             </div>
           </div>
@@ -125,6 +125,8 @@ class InvoiceFields extends Component {
                     label="Attention To"
                     target={"attn_toId"}
                     value={quotation.attn_toId.name}
+                    selectValues={attn_to_array}
+                    handleChange ={handleChange}
                     accounting={true}
                     style={{width: '100%', borderBottom : '0px solid black'}}
                   />

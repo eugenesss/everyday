@@ -15,7 +15,7 @@ import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
-
+import MakePayment from 'Components/Form/Payment/Payment'
 // Invoice Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
@@ -24,12 +24,12 @@ import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
 // Notes Tab
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
+import DialogRoot from "Components/Dialog/DialogRoot";
 
 // import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
 import { newInvoice, editInvoice } from "Helpers/url/accounting";
-
 import { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion  } from "Actions";
 
 
@@ -38,6 +38,11 @@ import { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandl
 // Delete Quotation, Edit Quotation, Transfer Quotation
 
 class acct_view_invoice extends Component {
+
+  state=({
+    makePayment: false
+  })
+
   componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleInvoice(id);
@@ -59,6 +64,9 @@ class acct_view_invoice extends Component {
     return(<Redirect to="/app/acct/invoices"/>)
   }
 
+  makePayment = () =>{
+    this.setState({makePayment: !this.state.makePayment})
+  }
 
   render() {
     const { loading, invoice } = this.props.invoiceToView;
@@ -66,8 +74,7 @@ class acct_view_invoice extends Component {
     let buttonCollection = null
     let moreButtons = null
     
-    if(invoice){
-      
+    if(invoice){  
       switch(invoice.state) {
         case "Draft":
             // console.log('Draft Mode')
@@ -119,13 +126,14 @@ class acct_view_invoice extends Component {
         case "Current":
               buttonCollection = (
                 <div className="rct-block p-10 mb-10">
-                  {/* <MatButton
+                
+                  <MatButton
                     variant="contained"
                     className="btn-primary mr-10 text-white"
-                    onClick={()=> console.log('To Pdf Print')}
+                    onClick={() => this.edit(invoice)}
                   >
-                    To PDF &amp; Print
-                  </MatButton> */}
+                    Edit Invoice
+                  </MatButton>
                   <MatButton
                     variant="contained"
                     className="btn-primary mr-10 text-white"
@@ -155,7 +163,7 @@ class acct_view_invoice extends Component {
                 <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
-                  onClick={()=> console.log('Pay Invoice')}
+                  onClick={this.makePayment}
                 >
                   Pay Invoice
                 </MatButton>
@@ -190,6 +198,8 @@ class acct_view_invoice extends Component {
       return(<Redirect to="/app/acct/invoices"/>)
     }
 
+    
+
     return loading ? (
       <RctPageLoader />
     ) : invoice ? (
@@ -202,6 +212,7 @@ class acct_view_invoice extends Component {
           createLink={newInvoice}
           moreButton={moreButtons}
         />
+    
         <div className="row">
           <div className="col-md-3">
             <RctCollapsibleCard>
@@ -242,6 +253,27 @@ class acct_view_invoice extends Component {
             </TabsWrapper>
           </div>
         </div>
+
+        {this.state.makePayment &&
+          <DialogRoot
+            title="Pay Invoice"
+            size="sm"
+            show={this.state.makePayment}
+            handleHide={this.makePayment}
+            dialogActionLabel="Transfer"
+            dialogAction={this.onSubmit}
+          >
+            <div className="row">
+              <div className="col">
+                <MakePayment
+                  invoice={invoice}
+                  handleHide={this.makePayment}
+                />
+              </div>           
+            </div>
+          </DialogRoot>
+         
+        }
       </React.Fragment>
     ) : (
       <PageErrorMessage
