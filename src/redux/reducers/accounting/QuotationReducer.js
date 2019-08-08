@@ -20,17 +20,13 @@ const INIT_STATE = {
     currencyTable:[{name: 'SGD', rate: 1},{name: 'USD', rate: 1.3},{name: 'EU', rate: 1.5}],
     discountTable:[{name: 'Entry', rate: 0}, {name: 'Amateur', rate: 10},{name: 'Intermediate', rate: 15},{name: 'Pro', rate: 20}],
     taxTable:[{name: 'GST 7%', rate: 7},{name: 'GST Inclusive', rate: 0}]
-
   },
   quotationSummary: {
     showSummary: false,
     loading: false,
     summary: []
   },
-  quotationToView: {
-    loading: false,
-    quotation: null
-  },
+  quotationToView: { loading: false, quotation: null},
   quotationForm: {
     loading: false,
     attn_to_array: [],
@@ -58,10 +54,6 @@ const INIT_STATE = {
       city: "",
       state: "",
       zip: "",
-      // email: "",
-      // mobile:"",
-      // office: "",
-      // fax: "",
       sent_date: "",
       tnc: "",
     
@@ -192,7 +184,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.GET_QUOTE_SUMMARY_FAILURE:
       NotificationManager.warning("Error in fetching Quotation Summary");
-      console.log(action.payload);
       return { ...state, quotationSummary: INIT_STATE.quotationSummary };
 
     /**
@@ -200,7 +191,6 @@ export default (state = INIT_STATE, action) => {
      */
     case types.GET_QUOTATION_FAILURE:
       NotificationManager.warning("Error in fetching Quotation Data");
-      console.log(action.payload);
       return INIT_STATE;
     case types.GET_ALL_QUOTATION:
     case types.GET_MY_QUOTATION:
@@ -390,7 +380,6 @@ export default (state = INIT_STATE, action) => {
         var productTotal = getSubTotal(changeArr, "amount");
         var tax = getTax(changeArr)
 
-        console.log(changeArr[action.payload.key].tax_rate)
         if (changeArr[action.payload.key].tax_rate != 0){
           changeArr[action.payload.key].tax_amount = (((changeArr[action.payload.key].tax_rate)/100) * (changeArr[action.payload.key].price * changeArr[action.payload.key].quantity))        
           tax = getTax(changeArr)
@@ -448,13 +437,7 @@ export default (state = INIT_STATE, action) => {
               [action.payload.field]: action.payload.value,
 
               details: action.payload.value.baseContact._address.address_1 + `\n` + action.payload.value.baseContact._address.address_1 + `\n` + action.payload.value.baseContact._address.city + `\n` + action.payload.value.baseContact._address.zip,
-              // address_1: action.payload.value.baseContact._address.address_1,
-              // address_2: action.payload.value.baseContact._address.address_2,
-              // city: action.payload.value.baseContact._address.city,
-              // zip: action.payload.value.baseContact._address.zip,
-              // mobile: action.payload.value.baseContact.mobile,
-              // office: action.payload.value.baseContact.office,
-              // fax: action.payload.value.baseContact.fax,
+            
             }
           }
         };
@@ -529,51 +512,19 @@ export default (state = INIT_STATE, action) => {
       };
 
 
-
-
-
     case types.SUBMIT_QUOTATION_SUCCESS:
+      NotificationManager.success("Your form has been successfully updated")
 
-    if (action.edit) {
-        if(action.types == "invoice"){
-          NotificationManager.success("Your invoice has been successfully edited")
-        } else{
-          NotificationManager.success("Your quotation has been successfully edited")
-        }
-
-        return {
-          ...state,
-          quotationForm: {
-            ...state.quotationForm,
-            quotation: {
-              ...state.quotationForm.quotation,
-            }
-          }
-        };
-
-      } else {
-        NotificationManager.success(action.payload)
-        let initialItem = INIT_STATE.quotationForm.quotation
-        return {
-          ...state,
-          quotationForm: {
-            quotation : initialItem,
-            products: [
-              {
-                description: "",
-                quantity: "",
-                price: "",
-                discount: "",
-                tax_id:"",
-                tax_rate: 0,
-                tax_amount: 0,
-                amount: 0
-              }
-            ]
+      return {
+        ...state,
+        quotationForm: {
+          ...state.quotationForm,
+          quotation: {
+            ...state.quotationForm.quotation,
           }
         }
-      }
-      
+      };
+
       
 
     case types.SUBMIT_QUOTATION_FAILURE:

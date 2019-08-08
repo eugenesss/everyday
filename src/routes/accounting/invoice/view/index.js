@@ -56,10 +56,7 @@ class acct_view_invoice extends Component {
   }
 
   Redirect=()=> {
-    const {deleted} = this.props.invoiceList
-    if(deleted){
-      return(<Redirect to="/app/acct/invoices"/>)
-    }
+    return(<Redirect to="/app/acct/invoices"/>)
   }
 
 
@@ -69,8 +66,6 @@ class acct_view_invoice extends Component {
     let buttonCollection = null
     let moreButtons = null
     
-    console.log(invoice)
-
     if(invoice){
       
       switch(invoice.state) {
@@ -109,13 +104,13 @@ class acct_view_invoice extends Component {
                 >
                   Confirm Invoice
                 </MatButton>
-                <MatButton
+                {/* <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
                   onClick={()=> console.log('To Pdf Print')}
                 >
                   To PDF &amp; Print
-                </MatButton>
+                </MatButton> */}
               </div>
             )
 
@@ -124,13 +119,13 @@ class acct_view_invoice extends Component {
         case "Current":
               buttonCollection = (
                 <div className="rct-block p-10 mb-10">
-                  <MatButton
+                  {/* <MatButton
                     variant="contained"
                     className="btn-primary mr-10 text-white"
                     onClick={()=> console.log('To Pdf Print')}
                   >
                     To PDF &amp; Print
-                  </MatButton>
+                  </MatButton> */}
                   <MatButton
                     variant="contained"
                     className="btn-primary mr-10 text-white"
@@ -160,9 +155,9 @@ class acct_view_invoice extends Component {
                 <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
-                  onClick={()=> console.log('Invoice Paid')}
+                  onClick={()=> console.log('Pay Invoice')}
                 >
-                  Invoice Paid
+                  Pay Invoice
                 </MatButton>
                 <MatButton
                   variant="contained"
@@ -191,31 +186,19 @@ class acct_view_invoice extends Component {
       }
     }
  
+    if(this.props.invoiceList.deleted){
+      return(<Redirect to="/app/acct/invoices"/>)
+    }
 
     return loading ? (
       <RctPageLoader />
     ) : invoice ? (
       <React.Fragment>
-        {this.Redirect()}
         <Helmet>
           <title>Everyday | View Invoice</title>
         </Helmet>
         <PageTitleBar
           title="View Invoice"
-          // extraButtons={[
-          //   {
-          //     color: "primary",
-          //     label: "Convert to invoice"
-          //   },
-          //   {
-          //     color: "primary",
-          //     label: "Send by email"
-          //   },
-          //   {
-          //     color: "primary",
-          //     label: "To PDF & Print"
-          //   }
-          // ]}
           createLink={newInvoice}
           moreButton={moreButtons}
         />

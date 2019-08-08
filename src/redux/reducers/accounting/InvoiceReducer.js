@@ -13,6 +13,7 @@ const INIT_STATE = {
     ],
     action: false,
     loading: false,
+    deleted: false,
     tableData: []
   },
   invoiceSummary: {
@@ -86,7 +87,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.GET_INVOICE_SUMMARY_FAILURE:
       NotificationManager.warning("Error in fetching Invoice Summary");
-      console.log(action.payload);
       return { ...state, invoiceSummary: INIT_STATE.invoiceSummary };
 
     /**
@@ -94,7 +94,6 @@ export default (state = INIT_STATE, action) => {
      */
     case types.GET_INVOICE_FAILURE:
       NotificationManager.warning("Error in fetching Invoice Data");
-      console.log(action.payload);
       return INIT_STATE;
     case types.GET_ALL_INVOICE:
     case types.GET_MY_INVOICE:
@@ -122,6 +121,7 @@ export default (state = INIT_STATE, action) => {
         ...state,
         invoiceToView: { ...state.invoiceToView, loading: true }
       };
+
     case types.GET_SINGLE_INVOICE_SUCCESS:
       return {
         ...state,
@@ -131,27 +131,52 @@ export default (state = INIT_STATE, action) => {
           invoice: action.payload
         }
       };
+
     case types.CLEAR_SINGLE_INVOICE:
-      return {
-        ...state,
-        invoiceToView: INIT_STATE.invoiceToView
-      };
-
-
-
-    case types.DELETE_INVOICE:
-      // console.log(action.payload)
-      // NotificationManager.warning("Unable to submit quotation, please try again")
       return {
         ...state,
         invoiceList: {
           ...state.invoiceList,
-        }
-        
+          deleted: false
+        },
+        invoiceToView: INIT_STATE.invoiceList
+      };
+
+      case types.SUBMIT_INVOICE_SUCCESS:
+          NotificationManager.success("Your form has been successfully updated")
+    
+          return {
+            ...state,
+            invoiceToView: {
+              ...state.invoiceToView,
+              loading: false,
+              invoice: action.payload
+            }
+
+          };
+    
+    
+        case types.SUBMIT_INVOICE_FAILURE:
+          NotificationManager.warning("Unable to submit quotation, please try again")
+    
+          return {
+            ...state,
+            invoiceToView: {
+              ...state.invoiceToView,
+              loading: false,
+            }
+          };
+    
+
+    case types.DELETE_INVOICE:
+      // console.log(action.payload)
+      // NotificationManager.warning("Unable to , please try again")
+      return {
+        ...state
       };
 
     case types.DELETE_INVOICE_SUCCESS:
-      // console.log(action.payload)
+
       NotificationManager.success("Invoice successfully deleted")
       return {
         ...state,
@@ -159,9 +184,10 @@ export default (state = INIT_STATE, action) => {
           ...state.invoiceList,
           deleted: true
         },
-        invoiceToView: { loading: false, invoice: null }
+        invoiceToView: { loading: false, invoice: null },
       };
-
+      
+    
     case types.DELETE_INVOICE_FAILURE:
       NotificationManager.error(action.payload)
       return {

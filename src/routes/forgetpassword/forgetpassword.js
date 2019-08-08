@@ -229,7 +229,7 @@ class forgetpassword extends Component {
                         Digitise your workflow
                       </h1>
                       <h1 className=" mb-0 text-black" style={{fontSize: 32, color: 'white'}}>
-                        Goodbye to papers
+                        Say goodbye to papers
                       </h1>
                     </div>
 

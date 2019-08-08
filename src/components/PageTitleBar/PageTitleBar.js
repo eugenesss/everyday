@@ -46,7 +46,13 @@ const PageTitleBar = ({ title, createLink, moreButton, extraButtons }) => {
             </Tooltip>
           </Link>
         )}
+<<<<<<< HEAD
         {moreButton && moreButton}
+=======
+        
+        {moreButton && moreButton}
+
+>>>>>>> 0251baf287c2d3993eec33f9c8f71397add61447
         <Button
           variant="contained"
           size="small"
@@ -57,9 +63,11 @@ const PageTitleBar = ({ title, createLink, moreButton, extraButtons }) => {
         </Button>
 
         <ButtonGroup variant="contained" /* size="small" */ className="ml-15">
+
           <Button /* onClick={button.handleOnClick} */>label</Button>
           <Button /* onClick={button.handleOnClick} */>label</Button>
           <Button /* onClick={button.handleOnClick} */>label</Button>
+
         </ButtonGroup>
       </div>
     </div>

@@ -33,7 +33,16 @@ import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 // import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
-import { getSingleQuotation, clearSingleQuotation, deleteSingleQuote, addNoteQuotation, HandleStateUpdate, HandleStateCreateNewVersion, HandleStateRevertPreviousVersion } from "Actions";
+import { 
+  getSingleQuotation, 
+  clearSingleQuotation, 
+  deleteSingleQuote, 
+  addNoteQuotation, 
+  HandleStateUpdate,
+  HandleStateCreateNewVersion,
+  HandleStateRevertPreviousVersion,
+  HandleConvertInvoiceQuotation 
+} from "Actions";
 // addNoteToQuotation(acctID), onNoteChange, clearNote
 // Add events dialog
 // Delete Quotation, Edit Quotation, Transfer Quotation
@@ -47,14 +56,6 @@ class acct_view_quotation extends Component {
 
   componentWillUnmount() {
     this.props.clearSingleQuotation();
-  }
-
- 
-  Redirect=()=> {
-    const {deleted} = this.props.quotationList
-    if(deleted){
-      return(<Redirect to="/app/acct/quotations"/>)
-    }
   }
 
   edit(quotation) {
@@ -78,13 +79,10 @@ class acct_view_quotation extends Component {
 
   render() {
     const {loading, quotation} = this.props.quotationToView;
-    
-
-    
+        
     let buttonCollection = null
     let moreButtons = null
     if(quotation){
-      
       switch(quotation.state) {
         case "Draft":
             // console.log('Draft Mode')
@@ -116,30 +114,23 @@ class acct_view_quotation extends Component {
                 <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
+                  onClick={()=> {
+                    this.props.HandleConvertInvoiceQuotation(quotation.id)
+                  }}
+                >
+                  Convert to invoice
+                </MatButton>
+                {/* <MatButton
+                  variant="contained"
+                  className="btn-primary mr-10 text-white"
                   onClick={()=> console.log('To Pdf Print')}
                 >
                   To PDF &amp; Print
-                </MatButton>
+                </MatButton> */}
               </div>
             )
 
-            // moreButtons = 
-            //   <MoreButton > 
-            //   {{
-            //     label: "Edit", handleOnClick: () => this.edit(quotation)
-            //   }}
-            //   {{ 
-            //     label: "Delete", handleOnClick: (() => {
-            //       this.props.deleteSingleQuote(this.props.match.params.id)
-            //     })
-            //   }}
-            //   {{
-            //     label: "Clone", handleOnClick: ()=> console.log('Clone item')
-            //   }}
-            //   {{
-            //     label: "New Version",handleOnClick: ()=> console.log('Create new version of the quotation')
-            //   }}
-            //   </MoreButton>
+
             break
 
         case "Open":
@@ -184,7 +175,9 @@ class acct_view_quotation extends Component {
                 <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
-                  onClick={()=> console.log('Convert to Invoice')}
+                  onClick={()=> {
+                    this.props.HandleConvertInvoiceQuotation(quotation.id)
+                  }}
                 >
                   Convert to invoice
                 </MatButton>
@@ -195,13 +188,13 @@ class acct_view_quotation extends Component {
                 >
                   Email Client
                 </MatButton>
-                <MatButton
+                {/* <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
                   onClick={()=> console.log('To Pdf Print')}
                 >
                   Save to PDF &amp; Print
-                </MatButton>
+                </MatButton> */}
               </div>
             )
 
@@ -247,13 +240,14 @@ class acct_view_quotation extends Component {
     }
  
 
+    if(this.props.quotationList.deleted){
+      return(<Redirect to="/app/acct/quotations"/>)
+    }
 
     return loading ? (
       <RctPageLoader />
     ) : quotation ? (
-        
       <React.Fragment>
-        {this.Redirect()}
         <Helmet>
           <title>Everyday | View Quotation</title>
         </Helmet>
@@ -337,5 +331,14 @@ const mapStateToProps = ({ accountingState }) => {
 
 export default connect(
   mapStateToProps,
-  { getSingleQuotation, clearSingleQuotation, deleteSingleQuote, addNoteQuotation, HandleStateUpdate, HandleStateCreateNewVersion, HandleStateRevertPreviousVersion }
+  { 
+    getSingleQuotation, 
+    clearSingleQuotation, 
+    deleteSingleQuote, 
+    addNoteQuotation, 
+    HandleStateUpdate, 
+    HandleStateCreateNewVersion, 
+    HandleStateRevertPreviousVersion,
+    HandleConvertInvoiceQuotation,
+  }
 )(acct_view_quotation);

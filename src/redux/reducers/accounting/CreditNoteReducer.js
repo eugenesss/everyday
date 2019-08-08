@@ -68,7 +68,6 @@ export default (state = INIT_STATE, action) => {
      */
     case GET_CREDIT_NOTE_FAILURE:
       NotificationManager.warning("Error in fetching Credit Note Data");
-      console.log(action.payload);
       return INIT_STATE;
     case GET_ALL_CREDIT_NOTE:
     case GET_MY_CREDIT_NOTE:

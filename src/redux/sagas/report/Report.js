@@ -11,6 +11,7 @@ import {
   GET_INDIVIDUAL_REPORT,
   GET_CLOSED_BY_OWNER
 } from "Types";
+
 import {
   getReportFailure,
   getDealsByOwnerSuccess,

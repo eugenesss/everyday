@@ -12,10 +12,20 @@ import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import QuotationForm from "Components/Form/Quotation/QuotationForm";
 
+import { 
+  submitAccountQuotationInvoice
+} from "Actions";
+
+
 class acct_new_invoice extends Component {
   state = {};
 
+  _quotationParent = (element, item) =>{
+    this.props.submitAccountQuotationInvoice(element, item)
+  }
+
   render() {
+
     return (
       <React.Fragment>
         <Helmet>
@@ -29,7 +39,10 @@ class acct_new_invoice extends Component {
             <div className="col-md-1" />
             <div className="col-md-10">
               <QuotationForm
-                type={'invoice'}
+                accountPage={'Invoice'}
+                quotationForm={null}
+                status={this.props.accountingState.accountState}
+                _quotationParent={this._quotationParent}
               />
             </div>
             <div className="col-md-1" />
@@ -40,4 +53,17 @@ class acct_new_invoice extends Component {
   }
 }
 
-export default acct_new_invoice;
+
+const mapStateToProps = ({accountingState}) => {
+  return {
+    accountingState
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { 
+    submitAccountQuotationInvoice
+  }
+)(acct_new_invoice);
+

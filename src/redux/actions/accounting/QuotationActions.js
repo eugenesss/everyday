@@ -115,22 +115,18 @@ export const addNoteQuotationFailure = error => ({
 });
 
 
-
 /**
  * New Quote
  */
-export const submitNewQuote = (item, products, edit, type) => ({
+export const submitNewQuote = (accountPage, item) => ({
   type: types.SUBMIT_QUOTATION,
-  payload: {item: item, products: products, edit: edit, type: type}
+  payload: {accountPage: accountPage, item: item}
   // payload: item
-
 });
 
-export const submitNewQuoteSuccess = (item, edit, type) => ({
+export const submitNewQuoteSuccess = (item) => ({
   type: types.SUBMIT_QUOTATION_SUCCESS,
   payload: item,
-  edit: edit,
-  types : type
 });
 
 export const submitNewQuoteFailure = (item) => ({
@@ -223,6 +219,11 @@ export const HandleStateCreateNewVersion = (id, value) => ({
 
 export const HandleStateRevertPreviousVersion = (id, value) => ({
   type: types.HANDLE_STATE_REVERT_PREVIOUS_VERSION,
+  payload: { id, value }
+});
+
+export const HandleConvertInvoiceQuotation = (id, value) => ({
+  type: types.HANDLE_STATE_CONVERT_INVOICE_QUOTATION,
   payload: { id, value }
 });
 

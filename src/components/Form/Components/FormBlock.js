@@ -21,11 +21,11 @@ const FormBlock = ({
 
   return (
     <React.Fragment>
-      <TableCell style={{ borderBottom: "none", width: "15%" }} align="right">
+      <div style={{ borderBottom: "none", width: "15%" }} align="right">
         {label}
         {required && <sup style={{ color: "red" }}>*</sup>}
-      </TableCell>
-      <TableCell style={style? style :{borderBottom: "none", width: "35%" }}>
+      </div>
+      <div style={style? style :{borderBottom: "none", width: "35%" }}>
         {!empty &&
           (customTextField ? (
             customTextField
@@ -46,7 +46,7 @@ const FormBlock = ({
               targetType={targetType}
             />
           ))}
-      </TableCell>
+      </div>
     </React.Fragment>
   );
 };
