@@ -34,7 +34,6 @@ export default class DisplayEvent extends Component {
     
                         <div style={{height: 20, minWidth: 20, marginTop:5, backgroundColor: Color[index] ? Color[index] : '#F5F5F5', borderRadius: 10}}></div>
     
-    
                         <div style={{display:'flex', flexDirection:'column', marginLeft: 21, width: '100%'}}>
     
                             <span style={{fontSize: 16, fontWeight: '500'}}>{item.title}</span>

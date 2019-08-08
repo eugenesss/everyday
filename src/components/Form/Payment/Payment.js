@@ -7,20 +7,19 @@ import NumberFormatCustom from "Components/Form/Components/NumberFormatCustom";
 import {KeyboardDatePicker} from '@material-ui/pickers';
 import Moment from 'moment'
 
-const paymentOption =  [{name:'Paypal', value: 'Paypal'}, {name:'Stripe', value: 'Stripe'}, {name:'FAST', value: 'FAST'}]
+const paymentOption =  [{name:'Paypal', value: 'Paypal'}, {name:'Stripe', value: 'Stripe'}, {name:'Bank FAST', value: 'Bank FAST'}]
 const paymentDifferenceOptions =  [{name:'Keep Open', value: 'Keep Open'}, {name:'Fully Reconcile', value: 'Fully Reconcile'}]
 
 
 export default class Payment extends Component {
 
     state=({
-        customer: '',
+        customer: this.props.invoice.accountId.id,
         paidAmount : 0,
         paymentMethod: '',
         date: new Date(),
         paymentRef: '',
         memo : '',
-        differenceAmount: '',
         paymentDifference: []
     })
 
@@ -28,7 +27,11 @@ export default class Payment extends Component {
         this.setState({[a]: b})
     }
 
+    _handleSubmitPayment = () => {
+        this.props.makePayment(this.state)
+    }
 
+    
     render(){
 
         const {invoice} = this.props
@@ -107,6 +110,7 @@ export default class Payment extends Component {
                     <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}>
                         <div style={{paddingRight: 10}}>Payment Ref: </div>
                         <FormTextField
+                            placeholder={"e.g. 003/10"}
                             value={this.state.paymentRef}
                             handleChange={this.handleChange}
                             target={'paymentRef'}
@@ -117,6 +121,7 @@ export default class Payment extends Component {
                     <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}>
                         <div style={{paddingRight: 10}}>Memo: </div>
                         <FormTextField
+                            placeholder={"e.g. Invoice SAS/003"}
                             value={this.state.memo}
                             handleChange={this.handleChange}
                             target={'memo'}
@@ -127,8 +132,8 @@ export default class Payment extends Component {
                 </div>
 
                 <div style={{marginTop: 25, display: 'flex'}} className="col-md-12">
-                    <div onClick={this.props.handleHide} style={{marginRight: 25}}>Register Payment</div>
-                    <div onClick={this.props.handleHide}>Cancel</div>
+                    <div onClick={this._handleSubmitPayment} style={{marginRight: 25}}>Register Payment</div>
+                    <div onClick={this._handleSubmitPayment}>Cancel</div>
                 </div>
             
             </div>

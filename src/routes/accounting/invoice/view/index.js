@@ -64,9 +64,17 @@ class acct_view_invoice extends Component {
     return(<Redirect to="/app/acct/invoices"/>)
   }
 
-  makePayment = () =>{
+  launchMakePaymentDialog = () => {
     this.setState({makePayment: !this.state.makePayment})
   }
+
+
+  makePayment = (item) =>  {
+    console.log('make Payment')
+    console.log(item)
+  }
+
+
 
   render() {
     const { loading, invoice } = this.props.invoiceToView;
@@ -146,6 +154,13 @@ class acct_view_invoice extends Component {
                   <MatButton
                     variant="contained"
                     className="btn-primary mr-10 text-white"
+                    onClick={()=> this.props.InvoiceHandleStateUpdate(invoice.id, 'Confirmed')}
+                  >
+                    Confirm Invoice
+                  </MatButton>
+                  <MatButton
+                    variant="contained"
+                    className="btn-primary mr-10 text-white"
                     onClick={()=> {
                       this.props.deleteSingleInvoice(this.props.match.params.id)
                     }}
@@ -163,7 +178,7 @@ class acct_view_invoice extends Component {
                 <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
-                  onClick={this.makePayment}
+                  onClick={this.launchMakePaymentDialog}
                 >
                   Pay Invoice
                 </MatButton>
@@ -198,7 +213,7 @@ class acct_view_invoice extends Component {
       return(<Redirect to="/app/acct/invoices"/>)
     }
 
-    
+  
 
     return loading ? (
       <RctPageLoader />
@@ -259,7 +274,7 @@ class acct_view_invoice extends Component {
             title="Pay Invoice"
             size="sm"
             show={this.state.makePayment}
-            handleHide={this.makePayment}
+            handleHide={this.launchMakePaymentDialog}
             dialogActionLabel="Transfer"
             dialogAction={this.onSubmit}
           >
@@ -267,7 +282,8 @@ class acct_view_invoice extends Component {
               <div className="col">
                 <MakePayment
                   invoice={invoice}
-                  handleHide={this.makePayment}
+                  handleHide={this.launchMakePaymentDialog}
+                  makePayment={this.makePayment}
                 />
               </div>           
             </div>

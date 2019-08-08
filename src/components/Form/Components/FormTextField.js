@@ -9,7 +9,8 @@ export default class FormTextField extends PureComponent {
       handleChange,
       target,
       targetType,
-      disabled
+      disabled,
+      placeholder,
     } = this.props
 
     return (
@@ -17,6 +18,7 @@ export default class FormTextField extends PureComponent {
         value={value}
         onChange={e => handleChange(target, e.target.value, targetType)}
         fullWidth
+        placeholder={placeholder}
         margin="dense"
         // variant="outlined"
         disabled={disabled}
