@@ -16,7 +16,10 @@ const INIT_STATE = {
     topSpenderAccount: { loading: false, data: null },
     topSpenderCustomer: { loading: false, data: null }
   },
-  individualReport: { loading: false, data: null }
+  individualReport: { loading: false, data: null },
+  closedDealsReport: {
+    wonByOwner: { loading: false, data: null }
+  }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -224,6 +227,35 @@ export default (state = INIT_STATE, action) => {
           ...state.individualReport,
           loading: false,
           data: action.payload
+        }
+      };
+
+    //=====================
+    // Closed Deal Reports
+    //=====================
+
+    //Closed By Owner
+    case types.GET_CLOSED_BY_OWNER:
+      return {
+        ...state,
+        closedDealsReport: {
+          ...state.closedDealsReport,
+          wonByOwner: {
+            ...state.closedDealsReport.wonByOwner,
+            loading: true
+          }
+        }
+      };
+    case types.GET_CLOSED_BY_OWNER_SUCCESS:
+      return {
+        ...state,
+        closedDealsReport: {
+          ...state.closedDealsReport,
+          wonByOwner: {
+            ...state.closedDealsReport.wonByOwner,
+            loading: false,
+            data: action.payload
+          }
         }
       };
 

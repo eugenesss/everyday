@@ -49,7 +49,6 @@ function TopSpenderAccountChart(props) {
                 <th>Account Name</th>
                 <th>Deal Name</th>
                 <th>Stage</th>
-                <th>Chance</th>
                 <th>Closed On</th>
                 <th>Amount</th>
               </tr>
@@ -62,13 +61,12 @@ function TopSpenderAccountChart(props) {
                       {key == 0 && (
                         <td rowSpan={acct.deals.length}>
                           <strong>
-                            {`${acct.name} (${acct.deals.length} deals)`}
+                            {`${acct.name} ( ${acct.deals.length} deal )`}
                           </strong>
                         </td>
                       )}
                       <td>{deal.name}</td>
                       <td>{deal.stage}</td>
-                      <td>{deal.chance}</td>
                       <td>{getTheDate(deal.closingDate)}</td>
                       <td>
                         <NumberFormat

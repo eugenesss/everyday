@@ -39,7 +39,7 @@ const ReportDrawer = ({
         subheader={<ListSubheader>Reports List</ListSubheader>}
       >
         <DrawerListCollapsible
-          title="Deals"
+          title="Open Deals"
           state={nestedView.deals}
           openNested={() => openNestedView("deals")}
         >
@@ -60,6 +60,18 @@ const ReportDrawer = ({
             title="Deals Pipeline"
             secondary
             selected={activeView == "dealsPipeline"}
+          />
+        </DrawerListCollapsible>
+        <DrawerListCollapsible
+          title="Closed Deals"
+          state={nestedView.closedDeals}
+          openNested={() => openNestedView("closedDeals")}
+        >
+          <DrawerListItem
+            onClickListItem={() => changeReportView("closedDealsByOwner")}
+            title="Closed Deals By Owner"
+            secondary
+            selected={activeView == "closedDealsByOwner"}
           />
         </DrawerListCollapsible>
         <DrawerListCollapsible

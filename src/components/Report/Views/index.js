@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  ReportDefaultMessage,
-  ReportMaintenanceMessage
-} from "Components/Report/Components/DefaultMessages";
+import { ReportDefaultMessage } from "Components/Report/Components/DefaultMessages";
 
 // Report Components
 
@@ -10,6 +7,9 @@ import {
 import DealsByOwnerReport from "./DealReports/DealsByOwnerReport";
 import DealsByTypeReport from "./DealReports/DealsByTypeReport";
 import DealsPipelineReport from "./DealReports/DealsPipelineReport";
+
+// Closed Deal Reports
+import WonByOwnerReport from "./ClosedDealReports/WonByOwnerReport";
 
 // Lead Reports
 import LeadsByStatusReport from "./LeadReports/LeadsByStatusReport";
@@ -26,7 +26,7 @@ import IndividualReport from "./IndividualReport";
 const ReportRender = ({ componentToRender }) => {
   switch (componentToRender) {
     //===================
-    // Deal Reports
+    // Open Deal Reports
     //===================
     case "dealsByOwner":
       return <DealsByOwnerReport />;
@@ -34,6 +34,15 @@ const ReportRender = ({ componentToRender }) => {
       return <DealsByTypeReport />;
     case "dealsPipeline":
       return <DealsPipelineReport />;
+
+    //===================
+    // Closed Deal Reports
+    //===================
+    case "wonByOwner":
+      return <WonByOwnerReport />;
+    case "lostDealsReason":
+      return <ReportDefaultMessage />;
+
     //===================
     // Lead Reports
     //===================
@@ -43,6 +52,7 @@ const ReportRender = ({ componentToRender }) => {
       return <LeadsByOwnerReport />;
     case "leadsBySource":
       return <LeadsBySourceReport />;
+
     //===================
     // Acct Cust Reports
     //===================
@@ -50,15 +60,7 @@ const ReportRender = ({ componentToRender }) => {
       return <TopSpenderAccountReport />;
     case "topSpenderCustomer":
       return <TopSpenderCustomerReport />;
-    //===================
-    // Sale Reports
-    //===================
-    case "proposalReport":
-      return <ReportMaintenanceMessage />;
-    case "invoiceReport":
-      return <ReportMaintenanceMessage />;
-    case "customerValue":
-      return <ReportMaintenanceMessage />;
+
     //===================
     // Individual Reports
     //===================

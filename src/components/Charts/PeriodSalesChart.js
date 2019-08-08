@@ -24,7 +24,7 @@ const options = {
         display: true,
         scaleLabel: {
           display: true,
-          labelString: "Deal Amount"
+          labelString: "Deal Amount ($)"
         }
       }
     ]
@@ -51,7 +51,7 @@ function PeriodSalesChart(props) {
 
   return (
     <div className="p-10">
-      <h4>Sales Chart of Set Period</h4>
+      <h4>Sales Chart in Set Period</h4>
       <Line data={chartData} options={options} />
     </div>
   );

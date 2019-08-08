@@ -1,26 +1,68 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import IntlMessages from "Util/IntlMessages";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import AppConfig from "Constants/AppConfig";
 
-export default function SubMenu(props) {
-  const { childRoutes } = props;
+const StyledTabs = withStyles(theme => ({
+  indicator: {
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+    "& > div": {
+      maxWidth: 30,
+      width: "100%",
+      backgroundColor: AppConfig.themeColors.primary
+    }
+  }
+}))(props => <Tabs {...props} TabIndicatorProps={{ children: <div /> }} />);
+
+const StyledTab = withStyles(theme => ({
+  root: {
+    color: "#a7a7a7",
+    fontSize: theme.typography.pxToRem(14),
+    "&:focus": {
+      opacity: 1
+    },
+    "&$selected": {
+      color: AppConfig.themeColors.primary
+    }
+  },
+  selected: {}
+}))(props => <Tab disableRipple disableFocusRipple {...props} />);
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: "#f8f8f8",
+    boxShadow: "0 2px 0px 0 rgba(0, 0, 0, 0.09)"
+  },
+  typography: {
+    padding: theme.spacing(3)
+  }
+}));
+
+function SubMenu(props) {
+  const classes = useStyles();
+  const { childRoutes, history, subMenuKey, handleChange } = props;
+
   return (
-    <div className="sub-menu justify-content-between">
-      <ul className="list-unstyled nav">
+    <AppBar className={classes.root} position="static">
+      <StyledTabs value={subMenuKey} onChange={handleChange}>
         {childRoutes.length > 0 &&
-          childRoutes.map((link, key) => (
-            <li className="nav-item" key={key}>
-              <NavLink
-                to={link.path}
-                className="nav-link no-arrow"
-                activeClassName="active"
-              >
-                <IntlMessages id={link.title} />
-              </NavLink>
-            </li>
+          childRoutes.map((link, index) => (
+            <StyledTab
+              key={index}
+              label={<IntlMessages id={link.title} />}
+              onClick={() => history.push(link.path)}
+            />
           ))}
-      </ul>
-      <div className="action-bar list-inline mb-0" />
-    </div>
+      </StyledTabs>
+    </AppBar>
   );
 }
+
+export default withRouter(SubMenu);

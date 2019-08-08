@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import ReportContainer from "Components/Report/Components/ReportContainer";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
@@ -15,7 +15,7 @@ import LeadsByStatusChart from "Components/Charts/LeadsByStatusChart";
 // Actions
 import { getIndividualReport, getAllUsers } from "Actions";
 
-class IndividualReport extends Component {
+class IndividualReport extends PureComponent {
   constructor(props) {
     super(props);
     this.state = { selected: "" };
@@ -83,7 +83,7 @@ class IndividualReport extends Component {
                         <h2>{data.accountsToDeals}</h2>
                       </li>
                       <li>
-                        <h4 className="heading mb-10">Total Deal Amount</h4>
+                        <h4 className="heading mb-10">Open Deals Amount</h4>
                         <h2>
                           <NumberFormat
                             value={data.totalDealsAmount}
@@ -100,13 +100,27 @@ class IndividualReport extends Component {
                     </ul>
                   </div>
                   <div className="col-md-8 vertical-self-center">
-                    <div className="p-20">
-                      <PeriodSalesChart
-                        data={data.salesData}
-                        startDate={data.startDate}
-                        endDate={data.endDate}
-                      />
+                    <div className="p-10">
+                      <h4 className="heading mb-10">
+                        Total Amount Closed in Set Period
+                      </h4>
+                      <h2
+                        className="text-primary ml-30 fw-700"
+                        style={{ fontSize: "2rem" }}
+                      >
+                        <NumberFormat
+                          value={data.totalClosedAmount}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          prefix={"$"}
+                        />
+                      </h2>
                     </div>
+                    <PeriodSalesChart
+                      data={data.salesData}
+                      startDate={data.startDate}
+                      endDate={data.endDate}
+                    />
                   </div>
                 </div>
                 <hr />

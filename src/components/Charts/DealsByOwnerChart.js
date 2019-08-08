@@ -60,9 +60,9 @@ function DealsByOwnerChart(props) {
                     <tr key={key}>
                       {key == 0 && (
                         <td rowSpan={owner.totalDeals}>
-                          <strong>{`${owner.name} (${
+                          <strong>{`${owner.name} ( ${
                             owner.totalDeals
-                          })`}</strong>
+                          } deal )`}</strong>
                         </td>
                       )}
                       <td>{deal.name}</td>

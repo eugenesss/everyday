@@ -19,9 +19,25 @@ function getChildRoute(location) {
   );
   return currentRoute ? currentRoute.child_routes : [];
 }
+function getActiveSubMenuKey(currentLocation, childRoutes) {
+  for (let i = 0; i < childRoutes.length; i++) {
+    if (childRoutes[i].path == currentLocation) return i;
+  }
+}
 
 function Header(props) {
   const { location } = props;
+  const childRoutes = getChildRoute(location);
+  const activeSubMenuKey = getActiveSubMenuKey(location.pathname, childRoutes);
+  const [subMenuKey, setSubMenuKey] = React.useState(activeSubMenuKey);
+
+  function handleChange(e, newValue) {
+    setSubMenuKey(newValue);
+  }
+  function changeMainLink() {
+    setSubMenuKey(0);
+  }
+
   return (
     <React.Fragment>
       <AppBar position="static" className="rct-header">
@@ -36,7 +52,11 @@ function Header(props) {
                 />
               </Link>
             </div>
-            <MainMenu location={location} navLinks={navLinks} />
+            <MainMenu
+              resetSubLink={changeMainLink}
+              location={location}
+              navLinks={navLinks}
+            />
           </div>
           <ul className="navbar-right app-bar-right list-inline mb-0">
             <Notifications />
@@ -44,8 +64,13 @@ function Header(props) {
           </ul>
         </Toolbar>
       </AppBar>
-      {getChildRoute(location).length > 0 && (
-        <SubMenu childRoutes={getChildRoute(location)} />
+      {childRoutes.length > 0 && (
+        <SubMenu
+          subMenuKey={subMenuKey}
+          handleChange={handleChange}
+          childRoutes={childRoutes}
+          active={activeSubMenuKey}
+        />
       )}
     </React.Fragment>
   );

@@ -4,13 +4,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
 import List from "@material-ui/core/List";
 
-const DrawerListCollapsible = ({
-  icon,
-  title,
-  state,
-  openNested,
-  children
-}) => {
+const DrawerListCollapsible = ({ title, state, openNested, children }) => {
   return (
     <React.Fragment>
       <ListItem button onClick={openNested}>
