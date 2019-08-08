@@ -14,14 +14,13 @@ export default class DisplayEvent extends Component {
 
         return (
           <BgCard key={index}>
-            <span>{Moment(item.end).format("ddd, D MMM HH.mm")}</span>
+            {/* <span>{Moment(item.end).format("ddd, D MMM HH.mm")}</span>
             <span>{Moment(item.start).format("ddd, D MMM h.mm a")}</span>
             <span>{Moment(item.end).format("ddd, D MMM h.mm a")}</span>
             <span>
               {Moment(item.start).format("ddd, D MMM HH.mm")} -{" "}
               {Moment(item.end).format("HH.mm")}
-            </span>{" "}
-            */}
+            </span>{" "} */}
             <div
               style={{
                 height: 20,

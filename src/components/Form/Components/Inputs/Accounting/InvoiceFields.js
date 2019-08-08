@@ -38,13 +38,13 @@ class InvoiceFields extends Component {
                   <KeyboardDatePicker
                     margin="normal"
                     style={{marginTop:0}}
-                    // id="mui-pickers-date"
                     value={Moment(quotation.date).format('LLL')}
                     onChange={e => handleChange('date', e._d)}
                     KeyboardButtonProps={{
                       'aria-label': 'change date',
                     }}
                   />
+
                 </Col>
             </div>
           </div>
@@ -67,7 +67,6 @@ class InvoiceFields extends Component {
             <Form>
         
             <div style={{display:'flex', flexDirection:'row'}}>
-                
                 {/* <FormBlock
                   label="Account"
                   target={"accountId"}
@@ -79,30 +78,41 @@ class InvoiceFields extends Component {
                   style={{width: '100%', borderBottom : '0px solid black'}}
                 /> */}
                 {edit && 
-                  <FormBlock
-                    label="Account"
-                    value={quotation.accountId.name}
-                    target="accountId"
-                    targetType="baseContact"
-                    style={{width: '100%', borderBottom : '0px solid black'}}
-                  />
+                  <FormGroup row>
+                    <FormBlock
+                      label="Account"
+                      value={quotation.accountId.name}
+                      target="accountId"
+                      targetType="baseContact"
+                      style={{ borderBottom : '0px solid black'}}
+                    />
+                  </FormGroup>
                 }
 
                 {!edit && 
-                  <FormGroup row>
-                    <Label for="Select-1" className="fs-13 text-right" sm={2}>
-                      Account
-                    </Label> 
-                    <Col sm={12}>
-                      <FormSelectField
-                        value={quotation.accountId}
-                        target={"accountId"}
-                        handleChange ={handleChange}
-                        selectValues={tableData}
-                        accounting={true}
-                      />
-                    </Col> 
-                  </FormGroup>
+                    // <Label for="Select-1" className="fs-13 text-right" sm={2}>
+                    //   Account
+                    // </Label> 
+                    // <Col sm={12}>
+                    //   <FormSelectField
+                    //     value={quotation.accountId}
+                    //     target={"accountId"}
+                    //     handleChange ={handleChange}
+                    //     selectValues={tableData}
+                    //     accounting={true}
+                    //   />
+                    // </Col> 
+
+                    <FormBlock
+                      label="Account"
+                      target={"accountId"}
+                      value={quotation.accountId}
+                      selectValues={tableData}
+                      handleChange ={handleChange}
+                      required
+                      accounting={true}
+                      style={{borderBottom : '0px solid black'}}
+                    />
                 }
               </div>
 
@@ -125,21 +135,23 @@ class InvoiceFields extends Component {
                     label="Attention To"
                     target={"attn_toId"}
                     value={quotation.attn_toId.name}
+                    selectValues={attn_to_array}
+                    handleChange ={handleChange}
                     accounting={true}
-                    style={{width: '100%', borderBottom : '0px solid black'}}
+                    style={{borderBottom : '0px solid black'}}
                   />
                 }
 
                 {!edit && 
                   <FormBlock
-                    label="Attention To"
+                    label="Att To"
                     target={"attn_toId"}
                     value={quotation.attn_toId}
                     selectValues={attn_to_array}
                     handleChange ={handleChange}
                     required
                     accounting={true}
-                    style={{width: '100%', borderBottom : '0px solid black'}}
+                    style={{borderBottom : '0px solid black'}}
                   />
                 }
               </FormGroup>

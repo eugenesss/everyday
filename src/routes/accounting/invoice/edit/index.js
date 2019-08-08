@@ -66,8 +66,6 @@ class acct_edit_quotation extends Component {
     // const {products, quotation} = this.props.quotationForm 
     const { loading, invoice } = this.props.invoiceToView
 
-    console.log(invoice)
-
     return loading ? (
       <RctPageLoader />
     ) : invoice ? (
