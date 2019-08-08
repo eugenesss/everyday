@@ -7,13 +7,12 @@ import { listOptions } from "Helpers/helpers";
 
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
-import Moment from 'moment'
+import Moment from "moment";
 
-const QuotationList = ({loading, title, action, tableData }) => {
-
+const QuotationList = ({ loading, title, action, tableData }) => {
   const columns = [
     {
       name: "id",
@@ -39,33 +38,41 @@ const QuotationList = ({loading, title, action, tableData }) => {
         }
       }
     },
-    { label: "Amount", name: "totalAmt",
-      options: {
-        customBodyRender: (value,) => {
-          return value.toFixed(2)
-        }
-      }
-    },
-    { label: "Date Sent", name: "sent_date",
-      options: {
-        customBodyRender: (value, tableMeta) => {
-          return Moment(new Date(value)).format('LL')
-        }
-      }
-    },
-    { label: "Due Date", name: "due_date",
+    {
+      label: "Amount",
+      name: "totalAmt",
       options: {
         customBodyRender: value => {
-          return Moment(new Date(value)).format('LL')
+          return value.toFixed(2);
         }
       }
     },
-    { label: "Version", name: "version",
-    options: {
-      customBodyRender: value => {
-        return value
+    {
+      label: "Date Sent",
+      name: "sent_date",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+          return Moment(new Date(value)).format("LL");
+        }
       }
-    }
+    },
+    {
+      label: "Due Date",
+      name: "due_date",
+      options: {
+        customBodyRender: value => {
+          return Moment(new Date(value)).format("LL");
+        }
+      }
+    },
+    {
+      label: "Version",
+      name: "version",
+      options: {
+        customBodyRender: value => {
+          return value;
+        }
+      }
     },
     {
       label: "Status",
@@ -114,7 +121,7 @@ const QuotationList = ({loading, title, action, tableData }) => {
     null;
 
   return (
-    <RctCollapsibleCard fullBlock>
+    <BgCard fullBlock>
       <MUIDataTable
         title={title}
         columns={columns}
@@ -122,7 +129,7 @@ const QuotationList = ({loading, title, action, tableData }) => {
         options={listOptions}
       />
       {loading && <RctSectionLoader />}
-    </RctCollapsibleCard>
+    </BgCard>
   );
 };
 

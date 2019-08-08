@@ -7,7 +7,7 @@ import DialogRoot from "Components/Dialog/DialogRoot";
 
 // Components
 import ConvertedBlock from "./Components/ConvertedBlock";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import NumberFormat from "react-number-format";
 import { leadListPage } from "Helpers/url/crm";
 // Actions
@@ -36,28 +36,28 @@ class ConvertSuccessModal extends Component {
         <div className="row">
           <div className="col-md-1" />
           <div className="col">
-            <RctCollapsibleCard fullBlock>
+            <BgCard fullBlock>
               <ConvertedBlock
                 bgColor="success"
                 name={newCust.name}
                 smallText={newCust.baseContact && newCust.baseContact.title}
                 heading="New Customer"
               />
-            </RctCollapsibleCard>
+            </BgCard>
           </div>
           <div className="col">
-            <RctCollapsibleCard fullBlock>
+            <BgCard fullBlock>
               <ConvertedBlock
                 bgColor="secondary"
                 name={newAcct.name}
                 smallText={newAcct.industry && newAcct.industry.name}
                 heading="New Account"
               />
-            </RctCollapsibleCard>
+            </BgCard>
           </div>
           {newDeal && (
             <div className="col">
-              <RctCollapsibleCard fullBlock>
+              <BgCard fullBlock>
                 <ConvertedBlock
                   bgColor="info"
                   name={newDeal.name}
@@ -71,7 +71,7 @@ class ConvertSuccessModal extends Component {
                   }
                   heading="New Deal"
                 />
-              </RctCollapsibleCard>
+              </BgCard>
             </div>
           )}
           <div className="col-md-1" />

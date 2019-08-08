@@ -10,7 +10,7 @@ import MoreButton from "Components/PageTitleBar/MoreButton";
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 // Deal Card
 import DealCard from "Components/CRM/Deal/DealCard";
 // Vertical Tabs
@@ -134,7 +134,7 @@ class crm_view_deal extends Component {
                 </MoreButton>
               }
             />
-            <RctCollapsibleCard fullBlock>
+            <BgCard fullBlock>
               <div className="row no-gutters">
                 <div className="col-md-3 align-self-center">
                   <DealCard
@@ -151,7 +151,7 @@ class crm_view_deal extends Component {
                   <SelectDealStage deal={deal} />
                 </div>
               </div>
-            </RctCollapsibleCard>
+            </BgCard>
             <div className="row">
               <div className="col-3">
                 <VerticalTab

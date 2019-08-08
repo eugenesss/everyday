@@ -1,7 +1,7 @@
 import React from "react";
 import SwipeableViews from "react-swipeable-views";
 import Typography from "@material-ui/core/Typography";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 function TabContainer(props) {
@@ -23,7 +23,7 @@ const VerticalContainer = ({
   loading
 }) => {
   return (
-    <RctCollapsibleCard fullBlock={fullBlock}>
+    <BgCard fullBlock={fullBlock}>
       {loading && <RctSectionLoader />}
       <SwipeableViews
         animateHeight
@@ -39,7 +39,7 @@ const VerticalContainer = ({
           );
         })}
       </SwipeableViews>
-    </RctCollapsibleCard>
+    </BgCard>
   );
 };
 

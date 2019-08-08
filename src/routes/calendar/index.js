@@ -198,7 +198,7 @@ class Calendar extends Component {
 
               {/* Week View */}
               {/* <TabContainer classes={classes}>
-                <RctCollapsibleCard>
+                <BgCard>
                   <BigCalendar
                     selectable
                     events={showEvents}
@@ -232,7 +232,7 @@ class Calendar extends Component {
                       toolbar: CustomToolbar
                     }}
                   />
-                </RctCollapsibleCard>
+                </BgCard>
               </TabContainer> */}
             </div>
           </div>

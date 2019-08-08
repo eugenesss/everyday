@@ -1,6 +1,6 @@
 import React from "react";
 
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import QuotationSettingsForm from "Components/Form/Setting/Accounting/Quotation/QuotationSettingsForm";
 
 import AccessControl from "Components/AccessControl";
@@ -10,9 +10,9 @@ const QuotationLayout = () => {
   return (
     <React.Fragment>
       <AccessControl action={["AccQuotationSet:update"]} noAccessComponent={<NoAccessComponent/>}>
-        <RctCollapsibleCard heading={"Quotation Settings"}>
+        <BgCard heading={"Quotation Settings"}>
           <QuotationSettingsForm/>
-        </RctCollapsibleCard>
+        </BgCard>
       </AccessControl>
     </React.Fragment>
   );

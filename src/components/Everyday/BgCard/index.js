@@ -7,9 +7,9 @@ function BgCard(props) {
     heading,
     fullBlock,
     customClasses,
+    actionButtons,
     headingCustomClasses,
-    contentCustomClasses,
-    actionButton
+    contentCustomClasses
   } = props;
   return (
     <div className="d-block">
@@ -21,10 +21,8 @@ function BgCard(props) {
             }`}
           >
             <h4>{heading}</h4>
-            {(collapsible || reloadable || closeable || editable) && (
-              <div className="contextual-link">
-                {actionButton && actionButton}
-              </div>
+            {actionButtons && (
+              <div className="contextual-link">{actionButtons}</div>
             )}
           </div>
         )}

@@ -1,6 +1,6 @@
 import React from "react";
 
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import QuotationReminderSettingsForm from "Components/Form/Setting/Reminders/Quotation/QuotationReminderSettingsForm";
 
 import AccessControl from "Components/AccessControl";
@@ -13,9 +13,9 @@ const setting_rem_quotation = () => {
         action={["RemQuotationSet:update"]}
         noAccessComponent={<NoAccessComponent />}
       >
-        <RctCollapsibleCard heading={"Quotation Reminders Settings"}>
+        <BgCard heading={"Quotation Reminders Settings"}>
           <QuotationReminderSettingsForm />
-        </RctCollapsibleCard>
+        </BgCard>
       </AccessControl>
     </React.Fragment>
   );

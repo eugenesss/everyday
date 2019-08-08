@@ -1,9 +1,6 @@
 import React from "react";
 import { Button } from "reactstrap";
 
-// component
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
-
 const PricingBlock = ({
   planType,
   type,
@@ -15,9 +12,7 @@ const PricingBlock = ({
   buttonText,
   radioButton
 }) => (
-
-  
-  <RctCollapsibleCard customClasses="text-center" colClasses="col" style={{padding: 0}}>
+  <div className="col text-center d-block">
     <div className="plan_card">
       {/* <div className="pricing-icon mb-40">
         <img
@@ -56,7 +51,7 @@ const PricingBlock = ({
       )}
       {radioButton && radioButton}
     </div>
-  </RctCollapsibleCard>
+  </div>
 );
 
 export default PricingBlock;

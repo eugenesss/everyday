@@ -9,7 +9,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 
 // Credit Note Tab
@@ -50,7 +50,7 @@ class acct_view_payment extends Component {
         <PageTitleBar title="View Payment" createLink="/acct/new/payment" />
         <div className="row">
           <div className="col-md-4">
-            <RctCollapsibleCard>
+            <BgCard>
               <AccountingDetails
                 type="payment"
                 accountID={payment.creditID}
@@ -59,7 +59,7 @@ class acct_view_payment extends Component {
                 sentDate={payment.sentOn}
                 owner={payment.owner.name}
               />
-            </RctCollapsibleCard>
+            </BgCard>
           </div>
           <div className="col-md-8">
             <TabsWrapper>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import SwipeableViews from "react-swipeable-views";
@@ -20,7 +20,7 @@ function TabsWrapper(props) {
 
   const { children } = props;
   return (
-    <RctCollapsibleCard
+    <BgCard
       heading={
         <Tabs
           value={activeIndex}
@@ -63,7 +63,7 @@ function TabsWrapper(props) {
           </TabContainer>
         )}
       </SwipeableViews>
-    </RctCollapsibleCard>
+    </BgCard>
   );
 }
 

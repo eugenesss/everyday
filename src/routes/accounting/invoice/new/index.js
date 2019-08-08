@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet";
 import IntlMessages from "Util/IntlMessages";
 
 // Page Components
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import QuotationForm from "Components/Form/Quotation/QuotationForm";
 
@@ -32,7 +32,7 @@ class acct_new_invoice extends Component {
           <title>Everyday | New Invoice</title>
           <meta name="description" content="Everyday Invoices Creation" />
         </Helmet>
-        <RctCollapsibleCard
+        <BgCard
           heading={<IntlMessages id="sidebar.newInvoice" />}
         >
           <div className="row">
@@ -47,7 +47,7 @@ class acct_new_invoice extends Component {
             </div>
             <div className="col-md-1" />
           </div>
-        </RctCollapsibleCard>
+        </BgCard>
       </React.Fragment>
     );
   }

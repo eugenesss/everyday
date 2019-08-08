@@ -5,7 +5,7 @@ import IntlMessages from "Util/IntlMessages";
 // Page Components
 import { Helmet } from "react-helmet";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import LeadForm from "Components/Form/Lead/LeadForm";
 
 // Actions
@@ -29,11 +29,11 @@ class crm_edit_lead extends Component {
         ) : (
           <div className="row">
             <div className="col-md-10 offset-md-1">
-              <RctCollapsibleCard
+              <BgCard
                 heading={<IntlMessages id="sidebar.editLead" />}
               >
                 <LeadForm edit={lead} handleSubmit={this.props.editLead} />
-              </RctCollapsibleCard>
+              </BgCard>
             </div>
           </div>
         )}

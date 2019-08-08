@@ -9,7 +9,7 @@ const SelectPlanForm = props => {
   const { priceplan, handleRegForm } = props;
   return (
     <div className="price-list mb-0">
-      <div className="row row-eq-height">
+      <div className="row row-eq-height mb-30">
         <PricingBlock
           planType="free"
           type="Basic"
@@ -26,10 +26,9 @@ const SelectPlanForm = props => {
             <Radio
               checked={priceplan == "free"}
               onChange={() => {
-                handleRegForm("priceplan", "free")
-                props.validatePlate('free')
-              }
-            }
+                handleRegForm("priceplan", "free");
+                props.validatePlate("free");
+              }}
               value="d"
               color="primary"
               name="radio-button-demo"
@@ -53,8 +52,8 @@ const SelectPlanForm = props => {
             <Radio
               checked={priceplan == "pro"}
               onChange={() => {
-                handleRegForm("priceplan", "pro")
-                props.validatePlate('pro')
+                handleRegForm("priceplan", "pro");
+                props.validatePlate("pro");
               }}
               value="d"
               color="secondary"
@@ -78,4 +77,4 @@ const SelectPlanForm = props => {
 //   { handleRegForm }
 // )(SelectPlanForm);
 
-export default SelectPlanForm
+export default SelectPlanForm;

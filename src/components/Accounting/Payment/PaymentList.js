@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 // import DataList from "Components/Everyday/DataList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 const PaymentList = ({ tableData, loading, title, action }) => {
@@ -76,10 +76,10 @@ const PaymentList = ({ tableData, loading, title, action }) => {
   }
 
   return (
-    <RctCollapsibleCard fullBlock>
+    <BgCard fullBlock>
       {/* <DataList title={title} columns={columns} tableData={tableData} /> */}
       {loading && <RctSectionLoader />}
-    </RctCollapsibleCard>
+    </BgCard>
   );
 };
 

@@ -6,7 +6,7 @@ import BigCalendar from "react-big-calendar";
 import SwipeableViews from "react-swipeable-views";
 import moment from "moment";
 
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import CustomToolbar from "Components/Calendar/CustomToolbar";
 import CalendarAgenda from "Components/Calendar/CalendarAgenda";
 import SelectSlotDialog from "Components/Calendar/SelectSlotDialog";
@@ -212,7 +212,7 @@ class CalendarLayout extends Component {
                 style={{ borderRadius: 0 }}
               >
                 <TabContainer classes={classes}>
-                  <RctCollapsibleCard>
+                  <BgCard>
                     <BigCalendar
                       selectable
                       events={showEvents}
@@ -246,10 +246,10 @@ class CalendarLayout extends Component {
                         toolbar: CustomToolbar
                       }}
                     />
-                  </RctCollapsibleCard>
+                  </BgCard>
                 </TabContainer>
                 <TabContainer classes={classes}>
-                  <RctCollapsibleCard>
+                  <BgCard>
                     <BigCalendar
                       selectable
                       events={showEvents}
@@ -283,7 +283,7 @@ class CalendarLayout extends Component {
                         toolbar: CustomToolbar
                       }}
                     />
-                  </RctCollapsibleCard>
+                  </BgCard>
                 </TabContainer>
               </SwipeableViews>
             </Col>
