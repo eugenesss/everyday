@@ -8,11 +8,11 @@ import DealList from "Components/CRM/Deal/DealList";
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
-import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
+// import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
-// List Summary
-import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
+// // List Summary
+// import ListSummary from "Components/Everyday/ListSummary/ListSummary";
+// import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // Actions
 import { changeDealView, getAllDeal, getDealSummary } from "Actions";
@@ -62,7 +62,7 @@ class crm_deal extends Component {
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeDealView}
               /> */}
-              <ShowListSummaryButton action={() => this.toggleSummary()} />
+              {/* <ShowListSummaryButton action={() => this.toggleSummary()} /> */}
             </div>
           }
           createLink={dealNewPage}
@@ -76,7 +76,7 @@ class crm_deal extends Component {
             </MoreButton>
           }
         />
-        {this.state.showSummary && <ListSummary summary={summary} />}
+        {/* {this.state.showSummary && <ListSummary summary={summary} />} */}
         <DealList
           title={nowShowing}
           action={action}

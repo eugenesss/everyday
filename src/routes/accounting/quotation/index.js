@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-
 // page req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // List View
-import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
+// import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // ListSummary
-import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
+// import ListSummary from "Components/Everyday/ListSummary/ListSummary";
+// import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // List
 import QuotationList from "Components/Accounting/Quotation/QuotationList";
@@ -23,7 +22,7 @@ import {
   toggleQuotationDropDown,
   toggleQuotationSummary,
   getAllQuotation,
-  getQuotationSummary,
+  getQuotationSummary
 } from "Actions";
 
 class acct_quotation extends Component {
@@ -52,7 +51,7 @@ class acct_quotation extends Component {
         <PageTitleBar
           title={
             <div className="d-flex">
-              <ListViewSelector
+              {/* <ListViewSelector
                 dropdownOpen={dropdownOpen}
                 toggle={this.props.toggleQuotationDropDown}
                 options={options}
@@ -61,12 +60,12 @@ class acct_quotation extends Component {
               />
               <ShowListSummaryButton
                 action={this.props.toggleQuotationSummary}
-              />
+              /> */}
             </div>
           }
           createLink={newQuote}
         />
-        {showSummary && <ListSummary summary={summary} />}
+        {/* showSummary && <ListSummary summary={summary} /> */}
         <QuotationList
           // edit
           title={nowShowing}
@@ -91,6 +90,6 @@ export default connect(
     toggleQuotationDropDown,
     toggleQuotationSummary,
     getAllQuotation,
-    getQuotationSummary,
+    getQuotationSummary
   }
 )(acct_quotation);

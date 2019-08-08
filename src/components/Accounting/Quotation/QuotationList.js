@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 //Page req
-import MUIDataTable from "mui-datatables";
+import RecordsList from "Components/Everyday/RecordsList";
 import { listOptions } from "Helpers/helpers";
 
 import IconButton from "@material-ui/core/IconButton";
@@ -122,7 +122,7 @@ const QuotationList = ({ loading, title, action, tableData }) => {
 
   return (
     <BgCard fullBlock>
-      <MUIDataTable
+      <RecordsList
         title={title}
         columns={columns}
         data={tableData}

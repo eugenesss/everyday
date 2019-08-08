@@ -6,11 +6,11 @@ import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // List View
-import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
+// import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
-// ListSummary
-import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
+// // ListSummary
+// import ListSummary from "Components/Everyday/ListSummary/ListSummary";
+// import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // List
 import InvoiceList from "Components/Accounting/Invoice/InvoiceList";
@@ -26,15 +26,12 @@ import {
 } from "Actions";
 
 class acct_invoice extends Component {
-
   componentDidMount() {
     this.props.getAllInvoice();
     this.props.getInvoiceSummary();
   }
 
-
   render() {
-  
     const {
       dropdownOpen,
       options,
@@ -43,7 +40,6 @@ class acct_invoice extends Component {
       tableData,
       loading
     } = this.props.invoiceState.invoiceList;
-
 
     const { showSummary, summary } = this.props.invoiceState.invoiceSummary;
     return (
@@ -55,19 +51,19 @@ class acct_invoice extends Component {
         <PageTitleBar
           title={
             <div className="d-flex">
-              <ListViewSelector
+              {/* <ListViewSelector
                 dropdownOpen={dropdownOpen}
                 toggle={this.props.toggleInvoiceDropDown}
                 options={options}
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeInvoiceView}
               />
-              <ShowListSummaryButton action={this.props.toggleInvoiceSummary} />
+              <ShowListSummaryButton action={this.props.toggleInvoiceSummary} /> */}
             </div>
           }
           createLink={newInvoice}
         />
-        {showSummary && <ListSummary summary={summary} />}
+        {/* {showSummary && <ListSummary summary={summary} />} */}
         <InvoiceList
           title={nowShowing}
           action={action}
