@@ -4,7 +4,7 @@
   .rct-header {
     background: $navbar-bg;
     z-index: -9 !important;
-    box-shadow: 0px 1px 10px -1px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: $hoz-sub-menu-box-shadow;
     .site-logo {
       padding: 0.75rem 2rem 0.75rem 0;
       width: $navbar-icon-width;
