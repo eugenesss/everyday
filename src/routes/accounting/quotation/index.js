@@ -14,7 +14,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // List
 import QuotationList from "Components/Accounting/Quotation/QuotationList";
-import { newQuote } from "Helpers/url/accounting";
+import { quoteNewPage } from "Helpers/url/accounting";
 
 // Actions
 import {
@@ -63,7 +63,7 @@ class acct_quotation extends Component {
               /> */}
             </div>
           }
-          createLink={newQuote}
+          createLink={quoteNewPage}
         />
         {/* showSummary && <ListSummary summary={summary} /> */}
         <QuotationList

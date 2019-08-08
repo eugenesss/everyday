@@ -14,7 +14,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // List
 import InvoiceList from "Components/Accounting/Invoice/InvoiceList";
-import { newInvoice } from "Helpers/url/accounting";
+import { invoiceNewPage } from "Helpers/url/accounting";
 
 // Actions
 import {
@@ -61,7 +61,7 @@ class acct_invoice extends Component {
               <ShowListSummaryButton action={this.props.toggleInvoiceSummary} /> */}
             </div>
           }
-          createLink={newInvoice}
+          createLink={invoiceNewPage}
         />
         {/* {showSummary && <ListSummary summary={summary} />} */}
         <InvoiceList

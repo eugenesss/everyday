@@ -10,32 +10,57 @@ function acctSwitcher() {
     <div className="saas-dashboard">
       <Switch>
         {/* ------- /Quotations ------- */}
-        <Route exact path={url.quotePage} component={async.acct_quotation_component} />
-        <Route path={url.newQuote} component={async.acct_new_quotation_component} />
-        <Route exact path={`${url.quotePage}/:id`} component={async.view_quotation}/>
-        <Route path={`${url.quotePage}/:id/edit`} component={async.acct_edit_quotation}/>
-
+        <Route
+          exact
+          path={url.quoteListPage}
+          component={async.acct_quotation_component}
+        />
+        <Route
+          path={url.quoteNewPage}
+          component={async.acct_new_quotation_component}
+        />
+        <Route
+          exact
+          path={`${url.quoteListPage}/:id`}
+          component={async.view_quotation}
+        />
+        <Route
+          path={`${url.quoteListPage}/:id/edit`}
+          component={async.acct_edit_quotation}
+        />
 
         {/* ------- /Invoice ------- */}
-        <Route exact path={url.invoicePage} component={async.acct_invoice_component}/>
-        <Route path={url.newInvoice} component={async.acct_new_invoice_component}/>
-        <Route exact path={`${url.invoicePage}/:id`} component={async.view_invoice} />
-        <Route path={`${url.invoicePage}/:id/edit`} component={async.acct_edit_invoice}/>
-
-
+        <Route
+          exact
+          path={url.invoiceListPage}
+          component={async.acct_invoice_component}
+        />
+        <Route
+          path={url.invoiceNewPage}
+          component={async.acct_new_invoice_component}
+        />
+        <Route
+          exact
+          path={`${url.invoiceListPage}/:id`}
+          component={async.view_invoice}
+        />
+        <Route
+          path={`${url.invoiceListPage}/:id/edit`}
+          component={async.acct_edit_invoice}
+        />
 
         {/* ------- /Credit_Note ------- */}
         <Route
           exact
-          path={url.crednotePage}
+          path={url.crednoteListPage}
           component={async.acct_credit_note_component}
         />
         <Route
-          path={url.newCredNote}
+          path={url.crednoteNewPage}
           component={async.acct_new_credit_note_component}
         />
         <Route
-          path={`${url.crednotePage}/:id`}
+          path={`${url.crednoteListPage}/:id`}
           component={async.view_credit_note}
         />
 

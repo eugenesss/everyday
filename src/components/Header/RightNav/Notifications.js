@@ -1,6 +1,3 @@
-/**
- * Notification Component
- */
 import React, { Component } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu } from "reactstrap";
@@ -47,7 +44,7 @@ class Notifications extends Component {
         </DropdownToggle>
         <DropdownMenu right>
           <div className="dropdown-content">
-            <div className="dropdown-top d-flex justify-content-between rounded-top bg-primary">
+            <div className="dropdown-top d-flex justify-content-between rounded-top bg-secondary">
               <span className="text-white font-weight-bold">Notifications</span>
               {newNotifications > 0 && (
                 <Badge color="warning">{newNotifications} NEW</Badge>

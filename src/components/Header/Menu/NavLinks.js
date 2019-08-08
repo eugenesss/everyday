@@ -8,9 +8,9 @@ import {
 } from "Helpers/url/crm";
 // acct routes
 import {
-  quotePage,
-  invoicePage,
-  crednotePage,
+  quoteListPage,
+  invoiceListPage,
+  crednoteListPage,
   paymentPage
 } from "Helpers/url/accounting";
 
@@ -61,11 +61,11 @@ export default [
     child_routes: [
       {
         title: "sidebar.quotations",
-        path: quotePage
+        path: quoteListPage
       },
       {
         title: "sidebar.invoices",
-        path: invoicePage
+        path: invoiceListPage
       },
       {
         title: "sidebar.payment",
@@ -73,7 +73,7 @@ export default [
       },
       {
         title: "sidebar.credit_note",
-        path: crednotePage
+        path: crednoteListPage
       }
     ]
   },
