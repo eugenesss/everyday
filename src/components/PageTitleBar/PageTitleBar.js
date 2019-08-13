@@ -1,22 +1,29 @@
 import React from "react";
-import { Fab } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { withRouter } from "react-router-dom";
+import { Fab, Button, ButtonGroup, IconButton } from "@material-ui/core";
+import { Link, withRouter } from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
+import { ArrowBack } from "@material-ui/icons";
 
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-
-const PageTitleBar = ({ title, createLink, moreButton, extraButtons }) => {
+const PageTitleBar = ({
+  title,
+  createLink,
+  moreButton,
+  extraButtons,
+  allowBack,
+  history
+}) => {
   return (
     <div className="page-title d-flex justify-content-between align-items-center">
-      {title && (
-        <div className="page-title-wrap">
-          <h2 className="">{title}</h2>
-        </div>
-      )}
+      <div className="page-title-wrap">
+        {allowBack && (
+          <IconButton onClick={() => history.goBack()} aria-label="back">
+            <ArrowBack style={{ fontSize: "20px" }} />
+          </IconButton>
+        )}
+        <h2 className="">{title && title}</h2>
+      </div>
       <div className="d-flex">
-        {extraButtons &&
+        {/* {extraButtons &&
           extraButtons.map((button, key) => {
             return (
               <Button
@@ -24,14 +31,14 @@ const PageTitleBar = ({ title, createLink, moreButton, extraButtons }) => {
                 key={key}
                 variant="outlined"
                 onClick={button.handleOnClick}
-                color={button.color}
+                //  color={button.color}
               >
                 {button.label}
               </Button>
             );
-          })}
+          })} */}
 
-        {createLink && (
+        {/* {createLink && (
           <Link to={createLink}>
             <Tooltip title="Add New" placement="bottom">
               <Fab
@@ -45,12 +52,12 @@ const PageTitleBar = ({ title, createLink, moreButton, extraButtons }) => {
               </Fab>
             </Tooltip>
           </Link>
-        )}
+        )} */}
 
         {moreButton && moreButton}
 
         <Button
-          variant="contained"
+          variant="outlined"
           size="small"
           className={`ml-20 ${`button.extraClasses`}`}
           /* onClick={button.handleOnClick} */

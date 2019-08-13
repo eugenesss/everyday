@@ -16,7 +16,7 @@ export default class Homebase extends Component {
           <title>Everyday | Homebase</title>
           <meta name="description" content="Everyday System" />
         </Helmet>
-        <PageTitleBar title="Homebase" match={match} />
+        {/* <PageTitleBar title="Homebase" match={match} /> */}
 
         <CrmSummary />
         <div className="row">
