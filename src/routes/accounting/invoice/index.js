@@ -22,13 +22,11 @@ import {
   toggleInvoiceDropDown,
   toggleInvoiceSummary,
   getAllInvoice,
-  // getInvoiceSummary
 } from "Actions";
 
 class acct_invoice extends Component {
   componentDidMount() {
     this.props.getAllInvoice();
-    // this.props.getInvoiceSummary();
   }
 
   render() {
@@ -86,6 +84,5 @@ export default connect(
     toggleInvoiceDropDown,
     toggleInvoiceSummary,
     getAllInvoice,
-    // getInvoiceSummary
   }
 )(acct_invoice);
