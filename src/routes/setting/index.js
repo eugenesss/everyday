@@ -1,146 +1,107 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { Col, Row, Form } from "reactstrap";
 
 import { withRouter } from "react-router-dom";
 
 import { Helmet } from "react-helmet";
 // async components
-import {
-  Async_setting_gen_myProfile_component,
-  Async_setting_gen_companyDetails_component,
-  Async_setting_user_users_component,
-  Async_setting_user_rolesPermissions_component,
-  Async_setting_user_groups_component,
-  Async_setting_crm_team_component,
-  Async_setting_acc_creditNote_component,
-  Async_setting_acc_general_component,
-  Async_setting_acc_invoice_component,
-  Async_setting_acc_quotation_component,
-  Async_setting_cron_leadReminders_component,
-  Async_setting_cron_quotationReminders_component
-} from "Components/AsyncComponent/AsyncComponent";
+import * as async from "Components/AsyncComponent/Settings";
 import SettingsDirectory from "Components/Setting/SettingsDirectory";
 
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-
-const styles = () => ({
-  displayBlock: {
-    display: "block"
-  }
-});
-
 class Settings extends Component {
-  componentDidMount() {
-    //this.props.getAllUsers();
-    //this.props.getAllRoles();
-    //this.props.getAllGroups();
-  }
-
   render() {
-    const { match, classes, location } = this.props;
+    const { match, location } = this.props;
     if (location.pathname === "/app/settings") {
       return <Redirect to={"/app/settings/general/my-profile"} />;
     }
     return (
-      <div className="saas-dashboard">
+      <React.Fragment>
         <Helmet>
           <title>Everyday | System Settings</title>
           <meta name="description" content="Everyday System" />
         </Helmet>
-        <Row>
-          <Col md={2} className={classes.displayBlock}>
+        <div className="row">
+          <div className="col-2">
             <SettingsDirectory />
-          </Col>
-          <Col md={10} className={classes.displayBlock}>
+          </div>
+          <div className="col-10">
             <Switch>
               {/* ------- General ------- */}
               <Route
                 exact
                 path={`${match.url}/general/my-profile`}
-                component={Async_setting_gen_myProfile_component}
+                component={async.gen_myProfile}
               />
               <Route
                 exact
                 path={`${match.url}/general/company-details`}
-                component={Async_setting_gen_companyDetails_component}
+                component={async.gen_companyDetails}
               />
               {/* ------- Users and Controls ------- */}
 
               <Route
                 exact
                 path={`${match.url}/users-and-controls/users`}
-                component={Async_setting_user_users_component}
+                component={async.user_usersList}
               />
               <Route
                 exact
                 path={`${match.url}/users-and-controls/roles-and-permissions`}
-                component={Async_setting_user_rolesPermissions_component}
+                component={async.user_rolesPermissions}
               />
               <Route
                 exact
                 path={`${match.url}/users-and-controls/groups`}
-                component={Async_setting_user_groups_component}
+                component={async.user_groups}
               />
               {/* ------- CRM ------- */}
               <Route
                 exact
                 path={`${match.url}/crm/team`}
-                component={Async_setting_crm_team_component}
+                component={async.crm_team}
               />
 
               {/* ------- Accounting ------- */}
               <Route
                 exact
                 path={`${match.url}/accounting/credit-note`}
-                component={Async_setting_acc_creditNote_component}
+                component={async.acc_creditNote}
               />
               <Route
                 exact
                 path={`${match.url}/accounting/general`}
-                component={Async_setting_acc_general_component}
+                component={async.acc_general}
               />
               <Route
                 exact
                 path={`${match.url}/accounting/invoice`}
-                component={Async_setting_acc_invoice_component}
+                component={async.acc_invoice}
               />
               <Route
                 exact
                 path={`${match.url}/accounting/quotation`}
-                component={Async_setting_acc_quotation_component}
+                component={async.acc_quotation}
               />
 
               {/* ------- Reminders ------- */}
               <Route
                 exact
                 path={`${match.url}/reminders/lead-reminders`}
-                component={Async_setting_cron_leadReminders_component}
+                component={async.cron_leadReminders}
               />
               <Route
                 exact
                 path={`${match.url}/reminders/quotation-reminders`}
-                component={Async_setting_cron_quotationReminders_component}
+                component={async.cron_quotationReminders}
               />
               {/* ------- /404 ------- */}
               <Redirect to="/404" />
             </Switch>
-          </Col>
-        </Row>
-      </div>
+          </div>
+        </div>
+      </React.Fragment>
     );
   }
 }
 
-Settings.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withRouter(
-  connect(
-    null,
-    {}
-  )(withStyles(styles)(Settings))
-);
+export default withRouter(Settings);

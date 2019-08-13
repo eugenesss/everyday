@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 
+import BgCard from "Components/Everyday/BgCard";
 import RecordsList from "Components/Everyday/RecordsList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -23,13 +22,6 @@ import {
   showUserControls,
   hideUserControls
 } from "Actions";
-
-const styles = () => ({
-  icon: {
-    height: 24,
-    width: 24
-  }
-});
 
 class UsersList extends Component {
   constructor(props) {
@@ -70,8 +62,6 @@ class UsersList extends Component {
 
   render() {
     const {
-      classes,
-
       users,
       usersLoading,
       isAddUser,
@@ -199,7 +189,7 @@ class UsersList extends Component {
     };
     return (
       <React.Fragment>
-        <div className="rct-block">
+        <BgCard fullBlock>
           <RecordsList
             title={"Users"}
             columns={columns}
@@ -207,7 +197,7 @@ class UsersList extends Component {
             options={options}
           />
           {usersLoading && <RctSectionLoader />}
-        </div>
+        </BgCard>
         <AddUserDialog open={isAddUser} handleClose={hideAddUser} />
         <UserControlDialog
           open={isUserControl}
@@ -218,10 +208,6 @@ class UsersList extends Component {
   }
 }
 
-UsersList.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
 const mapStateToProps = ({ usersState }) => {
   const { users, usersLoading, isAddUser, isUserControl } = usersState;
   return { users, usersLoading, isAddUser, isUserControl };
@@ -230,4 +216,4 @@ const mapStateToProps = ({ usersState }) => {
 export default connect(
   mapStateToProps,
   { getAllUsers, showAddUser, hideAddUser, showUserControls, hideUserControls }
-)(withStyles(styles)(UsersList));
+)(UsersList);
