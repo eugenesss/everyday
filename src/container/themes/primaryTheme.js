@@ -17,9 +17,16 @@ const theme = createMuiTheme({
     useNextVariants: true,
     fontFamily: "Lato"
   },
-  MuiPaper: {
-    rounded: {
-      borderRadius: "15px"
+  overrides: {
+    MuiPaper: {
+      rounded: {
+        borderRadius: "15px"
+      }
+    },
+    MuiStepIcon: {
+      text: {
+        fill: "#fff"
+      }
     }
   }
 });

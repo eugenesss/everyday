@@ -9,7 +9,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
 
 // Credit Note Tab
@@ -53,7 +53,7 @@ class acct_view_credit_note extends Component {
         />
         <div className="row">
           <div className="col-md-4">
-            <RctCollapsibleCard>
+            <BgCard>
               <AccountingDetails
                 type="credit_note"
                 accountID={creditNote.creditID}
@@ -62,7 +62,7 @@ class acct_view_credit_note extends Component {
                 sentDate={creditNote.sentOn}
                 owner={creditNote.owner.name}
               />
-            </RctCollapsibleCard>
+            </BgCard>
           </div>
           <div className="col-md-8">
             <TabsWrapper>

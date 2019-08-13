@@ -6,7 +6,7 @@ import { withRouter } from "react-router";
 import DialogRoot from "Components/Dialog/DialogRoot";
 
 // Components
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 
 const EditTeamModal = props => {
   return (

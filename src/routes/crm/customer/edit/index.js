@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet";
 import IntlMessages from "Util/IntlMessages";
 
 // Page Components
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import CustomerForm from "Components/Form/Customer/CustomerForm";
 
@@ -32,14 +32,14 @@ class crm_edit_customer extends Component {
         ) : (
           <div className="row">
             <div className="col-md-11">
-              <RctCollapsibleCard
+              <BgCard
                 heading={<IntlMessages id="sidebar.editCustomer" />}
               >
                 <CustomerForm
                   edit={customer}
                   handleSubmit={this.props.editCustomer}
                 />
-              </RctCollapsibleCard>
+              </BgCard>
             </div>
           </div>
         )}

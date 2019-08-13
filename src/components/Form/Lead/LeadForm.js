@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
@@ -31,7 +31,7 @@ const initialState = {
   }
 };
 
-class LeadForm extends Component {
+class LeadForm extends PureComponent {
   constructor(props) {
     super(props);
     this.state = initialState;

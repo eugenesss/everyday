@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-import MUIDataTable from "mui-datatables";
+import BgCard from "Components/Everyday/BgCard";
+import RecordsList from "Components/Everyday/RecordsList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+import { Refresh } from "@material-ui/icons";
 
 import { singleLead } from "Helpers/url/crm";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
@@ -98,7 +100,7 @@ class UntouchedLeadsTable extends Component {
                 this.refresh();
               }}
             >
-              <i className={"zmdi zmdi-refresh"} />
+              <Refresh />
             </IconButton>
           </Tooltip>
         );
@@ -106,15 +108,15 @@ class UntouchedLeadsTable extends Component {
     };
     const { loading, data } = this.props.untouchedLeads;
     return (
-      <div className="rct-block">
-        <MUIDataTable
+      <BgCard fullBlock>
+        <RecordsList
           title="Leads without activity for more than 7 days"
           columns={columns}
           data={data}
           options={listOptions}
         />
         {loading && <RctSectionLoader />}
-      </div>
+      </BgCard>
     );
   }
 }

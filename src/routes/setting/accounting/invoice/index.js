@@ -1,6 +1,6 @@
 import React from "react";
 
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import InvoiceSettingsForm from "Components/Form/Setting/Accounting/Invoice/InvoiceSettingsForm";
 
 import AccessControl from "Components/AccessControl";
@@ -13,9 +13,9 @@ const setting_acct_invoice = () => {
         action={["AccInvoiceSet:update"]}
         noAccessComponent={<NoAccessComponent />}
       >
-        <RctCollapsibleCard heading={"Invoice Settings"}>
+        <BgCard heading={"Invoice Settings"}>
           <InvoiceSettingsForm />
-        </RctCollapsibleCard>
+        </BgCard>
       </AccessControl>
     </React.Fragment>
   );

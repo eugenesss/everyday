@@ -2,7 +2,7 @@ import React from "react";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { withStyles } from "@material-ui/core/styles";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import AppConfig from "Constants/AppConfig";
 
 const VerticalTabs = withStyles(theme => ({
@@ -33,7 +33,7 @@ const MyTab = withStyles({
 
 const VerticalTab = props => {
   return (
-    <RctCollapsibleCard fullBlock>
+    <BgCard fullBlock>
       <VerticalTabs
         value={props.activeIndex}
         onChange={props.handleChange}
@@ -50,7 +50,7 @@ const VerticalTab = props => {
           );
         })}
       </VerticalTabs>
-    </RctCollapsibleCard>
+    </BgCard>
   );
 };
 

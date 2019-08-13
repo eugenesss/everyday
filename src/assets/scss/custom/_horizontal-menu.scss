@@ -11,6 +11,9 @@
       display: none;
     }
   }
+  .menu-title {
+    font-size: 1rem;
+  }
 }
 
 .horizontal-menu {
@@ -34,23 +37,20 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: $hoz-nav-link-width;
         font-weight: 600;
-        border-bottom: 2px solid transparent;
         &:hover {
           color: $hoz-nav-link-hover-bg;
         }
       }
       .active {
         color: $hoz-nav-link-active-bg;
-        border-bottom: 2px solid $hoz-nav-link-active-bg;
       }
     }
   }
 }
 .sub-menu {
   display: flex;
-  background-color: $navbar-bg;
+  background-color: #f8f8f8;
   height: $sub-menu-height;
   left: 0;
   right: 0;
@@ -74,12 +74,14 @@
         justify-content: center;
         width: $sub-nav-link-width;
         font-weight: 500;
+        border-bottom: 3px solid transparent;
         &:hover {
           color: $sub-nav-link-hover-bg;
         }
       }
       .active {
         color: $sub-nav-link-active-bg;
+        border-bottom: 2px solid $hoz-nav-link-active-bg;
       }
     }
   }

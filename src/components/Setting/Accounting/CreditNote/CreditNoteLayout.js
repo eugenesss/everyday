@@ -1,6 +1,6 @@
 import React from "react";
 
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import CreditNoteSettingsForm from "Components/Form/Setting/Accounting/CreditNote/CreditNoteSettingsForm"
 
 import AccessControl from "Components/AccessControl"
@@ -10,9 +10,9 @@ const CreditNoteLayout = () => {
   return (
     <React.Fragment>
       <AccessControl action={["AccCreditNoteSet:update"]} noAccessComponent={<NoAccessComponent/>}>
-        <RctCollapsibleCard heading={"Credit Note Settings"}>
+        <BgCard heading={"Credit Note Settings"}>
           <CreditNoteSettingsForm/>
-        </RctCollapsibleCard>
+        </BgCard>
       </AccessControl>
     </React.Fragment>
   );

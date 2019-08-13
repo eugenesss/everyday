@@ -49,7 +49,6 @@ function TopSpenderCustomerChart(props) {
                 <th>Customer Name</th>
                 <th>Deal Name</th>
                 <th>Stage</th>
-                <th>Chance</th>
                 <th>Closed On</th>
                 <th>Amount</th>
               </tr>
@@ -62,13 +61,12 @@ function TopSpenderCustomerChart(props) {
                       {key == 0 && (
                         <td rowSpan={cust.deals.length}>
                           <strong>
-                            {`${cust.name} (${cust.deals.length} deals)`}
+                            {`${cust.name} ( ${cust.deals.length} deal )`}
                           </strong>
                         </td>
                       )}
                       <td>{deal.name}</td>
                       <td>{deal.stage}</td>
-                      <td>{deal.chance}</td>
                       <td>{getTheDate(deal.closingDate)}</td>
                       <td>
                         <NumberFormat

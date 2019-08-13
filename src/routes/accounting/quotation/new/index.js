@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet";
 import IntlMessages from "Util/IntlMessages";
 
 // Page Components
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import QuotationForm from "Components/Form/Quotation/QuotationForm";
 
@@ -34,7 +34,7 @@ class acct_new_quote extends Component {
           <title>Everyday | New Quotation</title>
           <meta name="description" content="Everyday Quotations Creation" />
         </Helmet>
-        <RctCollapsibleCard
+        <BgCard
           heading={<IntlMessages id="sidebar.newQuotation" />}
         >
           <div className="row">
@@ -48,7 +48,7 @@ class acct_new_quote extends Component {
             </div>
             <div className="col-md-1" />
           </div>
-        </RctCollapsibleCard>
+        </BgCard>
       </React.Fragment>
     );
   }

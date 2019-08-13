@@ -56,4 +56,3 @@ export default withRouter(
     }
   )(RctHorizontalApp)
 );
-//export default withRouter(RctHorizontalApp);

@@ -7,7 +7,7 @@ import { listOptions } from "Helpers/helpers";
 //Page req
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import Moment from 'moment'
@@ -117,7 +117,7 @@ const InvoiceList = ({ tableData, loading, title, action }) => {
 
 
   return (
-    <RctCollapsibleCard fullBlock>
+    <BgCard fullBlock>
       <MUIDataTable
         title={title}
         columns={columns}
@@ -125,7 +125,7 @@ const InvoiceList = ({ tableData, loading, title, action }) => {
         options={listOptions}
       />
       {loading && <RctSectionLoader />}
-    </RctCollapsibleCard>
+    </BgCard>
   );
 };
 

@@ -111,3 +111,17 @@ export const getIndividualReportSuccess = data => ({
   type: types.GET_INDIVIDUAL_REPORT_SUCCESS,
   payload: data
 });
+
+//=====================
+// Closed Deal Reports
+//=====================
+
+// Closed by Owner
+export const getWonByOwner = (start, end) => ({
+  type: types.GET_CLOSED_BY_OWNER,
+  payload: { start, end }
+});
+export const getWonByOwnerSuccess = data => ({
+  type: types.GET_CLOSED_BY_OWNER_SUCCESS,
+  payload: data
+});

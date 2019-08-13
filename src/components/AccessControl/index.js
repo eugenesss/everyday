@@ -1,39 +1,32 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 
-class AccessControl extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const { children, action, user, access, match, noAccessComponent } = this.props;
-    if (user) {
-
-      for (let i = 0; i < action.length; i++) {
-        var act = action[i];
-        if (act == "me") {
-          if (user.id == match.params.id)
-            return children
-        } else if (act == "global") {
-          return children
+function AccessControl(props) {
+  const { children, action, user, access, match, noAccessComponent } = props;
+  if (user) {
+    for (let i = 0; i < action.length; i++) {
+      var act = action[i];
+      if (act == "me") {
+        if (user.id == match.params.id) return children;
+      } else if (act == "global") {
+        return children;
+      } else {
+        if (user.isSuperAdmin) {
+          return children;
         } else {
-          if (user.isSuperAdmin) {
-            return children
-          } else {
-            if (access.find(acc => { return `${acc.model}:${acc.method}` == action[i] })) {
-              return children
-            }
-
+          if (
+            access.find(acc => {
+              return `${acc.model}:${acc.method}` == action[i];
+            })
+          ) {
+            return children;
           }
         }
       }
     }
-    if (noAccessComponent)
-      return noAccessComponent
-    else
-      return null
   }
+  if (noAccessComponent) return noAccessComponent;
+  else return null;
 }
 
 const mapStateToProps = ({ authUser }) => {
@@ -41,8 +34,4 @@ const mapStateToProps = ({ authUser }) => {
   return { user, access };
 };
 
-export default connect(
-  mapStateToProps,
-)(AccessControl);
-
-
+export default connect(mapStateToProps)(AccessControl);

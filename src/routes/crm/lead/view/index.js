@@ -129,7 +129,7 @@ class crm_view_lead extends Component {
           <RctPageLoader />
         ) : lead ? (
           <React.Fragment>
-            {/* <PageTitleBar
+            <PageTitleBar
               title="View Lead"
               createLink={leadNewPage}
               extraButtons={[
@@ -152,7 +152,7 @@ class crm_view_lead extends Component {
                   }}
                 </MoreButton>
               }
-            /> */}
+            />
             <div className="row">
               <div className="col-md-3">
                 <div>

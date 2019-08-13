@@ -13,7 +13,7 @@ import MatButton from "@material-ui/core/Button";
 // Components
 import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 
@@ -272,7 +272,7 @@ class acct_view_quotation extends Component {
         />
         <div className="row">
           <div className="col-md-3">
-            <RctCollapsibleCard>
+            <BgCard>
               <AccountingDetails
                 type="quotation"
                 accountID={quotation.quoteID}
@@ -286,7 +286,7 @@ class acct_view_quotation extends Component {
                 version={quotation.version}
                 currency={quotation.currency.name}
               />
-            </RctCollapsibleCard>
+            </BgCard>
           </div>
           <div className="col-md-9">
             {buttonCollection}

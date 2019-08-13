@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
-import MUIDataTable from "mui-datatables";
+import RecordsList from "Components/Everyday/RecordsList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+import { Refresh, PersonAdd, Delete, Edit } from "@material-ui/icons";
 
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import AccessControl from "Components/AccessControl";
 
@@ -133,7 +133,7 @@ class UsersList extends Component {
                       this.onClickDelete(value);
                     }}
                   >
-                    <i className={"zmdi zmdi-delete " + classes.icon} />
+                    <Delete />
                   </IconButton>
                 </Tooltip>
                 {/* </AccessControl> */}
@@ -146,7 +146,7 @@ class UsersList extends Component {
                       showUserControls(value);
                     }}
                   >
-                    <i className={"zmdi zmdi-edit " + classes.icon} />
+                    <Edit />
                   </IconButton>
                 </Tooltip>
                 {/* </AccessControl> */}
@@ -165,31 +165,31 @@ class UsersList extends Component {
       download: false,
       viewColumns: false,
       selectableRows: false,
+      elevation: 0,
       textLabels: { body: { noMatch: "No Users to display" } },
       customToolbar: () => {
         return (
           <React.Fragment>
             <Tooltip id="tooltip-icon" title="Refresh">
               <IconButton
-                className="text-secondary"
                 aria-label="Refresh List"
                 onClick={() => {
                   this.onClickReload();
                 }}
               >
-                <i className={"zmdi zmdi-refresh " + classes.icon} />
+                <Refresh />
               </IconButton>
             </Tooltip>
             <AccessControl action={["BaseUser:create"]}>
               <Tooltip id="tooltip-icon" title="Add User">
                 <IconButton
-                  className="text-secondary mr-2"
+                  className="mr-2"
                   aria-label="Add User"
                   onClick={() => {
                     showAddUser();
                   }}
                 >
-                  <i className={"zmdi zmdi-account-add " + classes.icon} />
+                  <PersonAdd />
                 </IconButton>
               </Tooltip>
             </AccessControl>
@@ -198,20 +198,22 @@ class UsersList extends Component {
       }
     };
     return (
-      <RctCollapsibleCard fullBlock>
-        <MUIDataTable
-          title={"Users"}
-          columns={columns}
-          data={data}
-          options={options}
-        />
+      <React.Fragment>
+        <div className="rct-block">
+          <RecordsList
+            title={"Users"}
+            columns={columns}
+            data={data}
+            options={options}
+          />
+          {usersLoading && <RctSectionLoader />}
+        </div>
         <AddUserDialog open={isAddUser} handleClose={hideAddUser} />
         <UserControlDialog
           open={isUserControl}
           handleClose={hideUserControls}
         />
-        {usersLoading && <RctSectionLoader />}
-      </RctCollapsibleCard>
+      </React.Fragment>
     );
   }
 }

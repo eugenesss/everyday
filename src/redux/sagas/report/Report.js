@@ -8,7 +8,8 @@ import {
   GET_LEADS_BY_SOURCE,
   GET_TOP_SPENDER_ACCOUNT,
   GET_TOP_SPENDER_CUSTOMER,
-  GET_INDIVIDUAL_REPORT
+  GET_INDIVIDUAL_REPORT,
+  GET_CLOSED_BY_OWNER
 } from "Types";
 
 import {
@@ -21,7 +22,8 @@ import {
   getLeadsBySourceSuccess,
   getTopSpenderAccountSuccess,
   getTopSpenderCustomerSuccess,
-  getIndividualReportSuccess
+  getIndividualReportSuccess,
+  getWonByOwnerSuccess
 } from "Actions";
 
 import api from "Api";
@@ -90,6 +92,13 @@ const getIndividualReportRequest = async (startDate, endDate, userId) => {
     startDate,
     endDate,
     userId
+  });
+  return result.data.data;
+};
+const getWonByOwnerRequest = async (startDate, endDate) => {
+  const result = await api.post("/reports/closedbyowner", {
+    startDate,
+    endDate
   });
   return result.data.data;
 };
@@ -187,6 +196,16 @@ function* getIndividualReport({ payload }) {
     yield put(getReportFailure(error));
   }
 }
+function* getWonByOwner({ payload }) {
+  const { start, end } = payload;
+  try {
+    const data = yield call(getWonByOwnerRequest, start, end);
+    yield delay(500);
+    yield put(getWonByOwnerSuccess(data));
+  } catch (error) {
+    yield put(getReportFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -218,6 +237,10 @@ export function* getTopSpenderCustomerWatcher() {
 export function* getIndividualReportWatcher() {
   yield takeEvery(GET_INDIVIDUAL_REPORT, getIndividualReport);
 }
+export function* getWonByOwnerWatcher() {
+  yield takeEvery(GET_CLOSED_BY_OWNER, getWonByOwner);
+}
+
 //=======================
 // FORK SAGAS TO STORE
 //=======================
@@ -231,6 +254,7 @@ export default function* rootSaga() {
     fork(getLeadsBySourceWatcher),
     fork(getTopSpenderAccountWatcher),
     fork(getTopSpenderCustomerWatcher),
-    fork(getIndividualReportWatcher)
+    fork(getIndividualReportWatcher),
+    fork(getWonByOwnerWatcher)
   ]);
 }

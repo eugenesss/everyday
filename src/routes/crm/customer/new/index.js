@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet";
 import IntlMessages from "Util/IntlMessages";
 
 // Page Components
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import CustomerForm from "Components/Form/Customer/CustomerForm";
 
 // Action
@@ -24,11 +24,11 @@ class crm_new_customer extends Component {
         </Helmet>
         <div className="row">
           <div className="col-md-10 offset-md-1">
-            <RctCollapsibleCard
+            <BgCard
               heading={<IntlMessages id="sidebar.newCustomer" />}
             >
               <CustomerForm handleSubmit={this.props.newCustomer} />
-            </RctCollapsibleCard>
+            </BgCard>
           </div>
         </div>
       </React.Fragment>

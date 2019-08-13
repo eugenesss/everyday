@@ -20,10 +20,10 @@ export default class Homebase extends Component {
 
         <CrmSummary />
         <div className="row">
-          <div className="col-8">
+          <div className="col-md-8">
             <UntouchedLeadsTable />
           </div>
-          <div className="col-4">
+          <div className="col-md-4">
             <CalendarLayout />
           </div>
         </div>

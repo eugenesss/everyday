@@ -3,12 +3,12 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { Progress } from "reactstrap";
 import Avatar from "Components/Everyday/Avatar";
 
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import { RctCardContent } from "Components/RctCard";
 
 const TeamBlock = props => {
   return (
-    <RctCollapsibleCard
+    <BgCard
       customClasses=""
       colClasses=" client-post col-sm-12 col-md-6 col-lg-3 w-xs-full"
       heading="heading"
@@ -54,7 +54,7 @@ const TeamBlock = props => {
           <Progress color="primary" className="my-15 progress-xs" value={30} />
         </div>
       </RctCardContent>
-    </RctCollapsibleCard>
+    </BgCard>
   );
 };
 

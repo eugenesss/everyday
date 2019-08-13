@@ -4,7 +4,7 @@ import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
 import UpdatePasswordForm from "Components/Form/Setting/General/UpdatePasswordForm";
 import UpdateUserDetailsForm from "Components/Form/Setting/General/UpdateUserDetailsForm"
 
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 
 const SettingsTab = () => {
   return (

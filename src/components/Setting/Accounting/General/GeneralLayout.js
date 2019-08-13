@@ -1,6 +1,6 @@
 import React from "react";
 
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import GeneralAccountingSettingsForm from "Components/Form/Setting/Accounting/General/GeneralAccountingSettingsForm";
 
 import AccessControl from "Components/AccessControl";
@@ -10,9 +10,9 @@ const AccountingGeneralLayout = () => {
   return (
     <React.Fragment>
       <AccessControl action={["AccGeneralSet:update"]} noAccessComponent={<NoAccessComponent/>}>
-        <RctCollapsibleCard heading={"General Accounting Settings"}>
+        <BgCard heading={"General Accounting Settings"}>
           <GeneralAccountingSettingsForm/>
-        </RctCollapsibleCard>
+        </BgCard>
       </AccessControl>
     </React.Fragment>
   );

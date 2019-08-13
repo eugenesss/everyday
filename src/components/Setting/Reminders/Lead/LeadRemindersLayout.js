@@ -1,6 +1,6 @@
 import React from "react";
 
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import LeadReminderSettingsForm from "Components/Form/Setting/Reminders/Lead/LeadReminderSettingsForm";
 
 import AccessControl from "Components/AccessControl";
@@ -10,9 +10,9 @@ const LeadRemindersLayout = () => {
   return (
     <React.Fragment>
       <AccessControl action={["RemLeadSet:update"]} noAccessComponent={<NoAccessComponent/>}>
-        <RctCollapsibleCard heading={"Lead Reminders Settings"}>
+        <BgCard heading={"Lead Reminders Settings"}>
           <LeadReminderSettingsForm/>
-        </RctCollapsibleCard>
+        </BgCard>
       </AccessControl>
     </React.Fragment>
   );

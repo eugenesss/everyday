@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+import BgCard from "Components/Everyday/BgCard";
 import { Table } from "reactstrap";
 import Button from "@material-ui/core/Button";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
@@ -41,7 +41,7 @@ class ImportRecords extends Component {
 
     return (
       <React.Fragment>
-        <RctCollapsibleCard heading={`Import ${importType} Records`}>
+        <BgCard heading={`Import ${importType} Records`}>
           {loading && <RctSectionLoader />}
           <div className="mb-20">
             <p>
@@ -108,7 +108,7 @@ class ImportRecords extends Component {
               </Button>
             </div>
           </div>
-        </RctCollapsibleCard>
+        </BgCard>
       </React.Fragment>
     );
   }

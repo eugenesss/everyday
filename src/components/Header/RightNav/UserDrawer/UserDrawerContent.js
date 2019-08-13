@@ -10,7 +10,7 @@ import { ExitToApp, Close, Settings } from "@material-ui/icons";
 // Logout
 import { logoutUser } from "Actions";
 import Auth from "../../../../Auth/Auth";
-import Calendar from '../../../Widgets/Calendar/CalendarLayout'
+import Calendar from "../../../Widgets/Calendar/CalendarLayout";
 const useStyles = makeStyles({
   list: {
     padding: "20px 40px"
@@ -70,7 +70,7 @@ function UserDrawerContent(props) {
           <div className="media">
             <div className="media-left mr-25">
               <img
-                src={require("Assets/avatars/user-8.jpg")}
+                src={require("Assets/avatars/user-1.jpg")}
                 className="img-fluid rounded-circle"
                 alt="user profile"
                 width="70"
@@ -85,26 +85,11 @@ function UserDrawerContent(props) {
           </div>
         </div>
       </div>
-
+      <hr />
 
       <div className="row mt-30">
-        {/* <div className="col-12">
-          <p className="text-muted fw-300">Your Calendar</p>
-        </div> */}
-
-        <Calendar/>
+        <Calendar />
       </div>
-      {/* <div className="row mt-30">
-        <div className="col-12">
-          <p className="text-muted fw-300">Your Upcoming Events</p>
-
-
-
-        </div>
-      </div> */}
-
-
-
     </div>
   );
 }
