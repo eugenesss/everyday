@@ -20,8 +20,11 @@ import { custSummary } from "../../../components/DummyData";
 //=========================
 // REQUESTS
 //=========================
+// 5d2fd3d1456a441037b9c1f9
+// filter[where][userId]=${id}
 const getAllInvoiceRequest = async () => {
-  const result = await api.get("/invoices");
+  const id = localStorage.getItem('user_id');
+  const result = await api.get(`/invoices?filter[where][userId]=${id}&`);
   return result.data;
 };
 

@@ -23,7 +23,8 @@ import { leadSummary } from "../../../components/DummyData";
 //=========================
 
 const getAllQuoteRequest = async () => {
-  const result = await api.get("/quotations");
+  const id = localStorage.getItem('user_id');
+  const result = await api.get(`/quotations?filter[where][userId]=${id}&`);
   return result.data;
 };
 
