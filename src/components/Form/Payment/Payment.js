@@ -15,6 +15,7 @@ export default class Payment extends Component {
 
     state=({
         customer: this.props.invoice.accountId.id,
+        invoiceId: this.props.invoice.id,
         paidAmount : 0,
         paymentMethod: '',
         date: new Date(),
@@ -28,6 +29,7 @@ export default class Payment extends Component {
     }
 
     _handleSubmitPayment = () => {
+
         this.props.makePayment(this.state)
     }
 
@@ -42,10 +44,10 @@ export default class Payment extends Component {
                 
                 <div className="col-md-6">
 
-                    <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}>
+                    {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}>
                         <div style={{paddingRight: 10}}>Total Amount:</div>
                         <div>${invoice.totalAmt}</div>
-                    </div>
+                    </div> */}
 
                     <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}>
                         <div style={{paddingRight: 10}}>Paid Amount: </div>
