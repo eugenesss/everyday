@@ -1,36 +1,12 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Scrollbars } from "react-custom-scrollbars";
-
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
-import Paper from "@material-ui/core/Paper";
-
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 
-import { accessControlHelper } from "../../helpers/accessControlHelper";
+// Side Drawer
+import SideDrawer from "Components/Everyday/SideDrawer";
+import DrawerListCollapsible from "Components/Everyday/SideDrawer/DrawerListCollapsible";
+import DrawerListItem from "Components/Everyday/SideDrawer/DrawerListItem";
 
-const styles = theme => ({
-  root: {
-    width: "100%",
-    padding: 10
-  },
-  nested: {
-    paddingLeft: "0 !important"
-  },
-  listItem: {
-    paddingLeft: "0 !important",
-    paddingRight: 0
-  },
-  paper: {
-    marginBottom: 24
-  }
-});
+import { accessControlHelper } from "Helpers/accessControlHelper";
 
 class SettingsDirectory extends Component {
   constructor(props) {
@@ -43,6 +19,7 @@ class SettingsDirectory extends Component {
       reminder: true
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleClickItem = this.handleClickItem.bind(this);
   }
 
   handleClick = item => {
@@ -54,114 +31,78 @@ class SettingsDirectory extends Component {
   }
 
   render() {
-    const { classes, location } = this.props;
+    const { location } = this.props;
+    const { general, user, crm, accounting, reminder } = this.state;
     return (
-      <Paper className={classes.paper}>
-        <Scrollbars className="rct-scroll" autoHeight autoHeightMin={"100vh"}>
-          <List component="nav" className={classes.root}>
-            <ListItem button onClick={() => this.handleClick("general")}>
-              <ListItemText
-                inset
-                primary={"General"}
-                className={classes.listItem}
-              />
-              {this.state.general ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={this.state.general} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItem
-                  button
-                  className={classes.nested}
-                  onClick={() =>
-                    this.handleClickItem("/app/settings/general/my-profile")
-                  }
-                  selected={
-                    location.pathname === "/app/settings/general/my-profile"
-                  }
-                >
-                  <ListItemText inset secondary={"My Profile"} />
-                </ListItem>
-                <ListItem
-                  button
-                  className={classes.nested}
-                  onClick={() =>
-                    this.handleClickItem(
-                      "/app/settings/general/company-details"
-                    )
-                  }
-                  selected={
-                    location.pathname ===
-                    "/app/settings/general/company-details"
-                  }
-                >
-                  <ListItemText inset secondary={"Company Details"} />
-                </ListItem>
-              </List>
-            </Collapse>
-            {accessControlHelper(["AccessSetting:viewall"], null) ? (
-              <React.Fragment>
-                <ListItem button onClick={() => this.handleClick("user")}>
-                  <ListItemText
-                    inset
-                    primary={"User & Controls"}
-                    className={classes.listItem}
-                  />
-                  {this.state.user ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse in={this.state.user} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItem
-                      button
-                      className={classes.nested}
-                      onClick={() =>
-                        this.handleClickItem(
-                          "/app/settings/users-and-controls/users"
-                        )
-                      }
-                      selected={
-                        location.pathname ===
-                        "/app/settings/users-and-controls/users"
-                      }
-                    >
-                      <ListItemText inset secondary={"Users"} />
-                    </ListItem>
-                    <ListItem
-                      button
-                      className={classes.nested}
-                      onClick={() =>
-                        this.handleClickItem(
-                          "/app/settings/users-and-controls/roles-and-permissions"
-                        )
-                      }
-                      selected={
-                        location.pathname ===
-                        "/app/settings/users-and-controls/roles-and-permissions"
-                      }
-                    >
-                      <ListItemText inset secondary={"Roles & Permissions"} />
-                    </ListItem>
-                    <ListItem
-                      button
-                      className={classes.nested}
-                      onClick={() =>
-                        this.handleClickItem(
-                          "/app/settings/users-and-controls/groups"
-                        )
-                      }
-                      selected={
-                        location.pathname ===
-                        "/app/settings/users-and-controls/groups"
-                      }
-                    >
-                      <ListItemText inset secondary={"Groups"} />
-                    </ListItem>
-                  </List>
-                </Collapse>
-              </React.Fragment>
-            ) : (
-              ""
-            )}
-            {/* <ListItem button onClick={() => this.handleClick("crm")}>
+      <SideDrawer listHeader="Settings">
+        <DrawerListCollapsible
+          title="General"
+          state={general}
+          openNested={() => this.handleClick("general")}
+        >
+          <DrawerListItem
+            onClickListItem={() =>
+              this.handleClickItem("/app/settings/general/my-profile")
+            }
+            title="My Profile"
+            secondary
+            selected={location.pathname === "/app/settings/general/my-profile"}
+          />
+          <DrawerListItem
+            onClickListItem={() =>
+              this.handleClickItem("/app/settings/general/company-details")
+            }
+            title="Company Details"
+            secondary
+            selected={
+              location.pathname === "/app/settings/general/company-details"
+            }
+          />
+        </DrawerListCollapsible>
+
+        {accessControlHelper(["AccessSetting:viewall"], null) && (
+          <DrawerListCollapsible
+            title={"User & Control"}
+            state={user}
+            openNested={() => this.handleClick("user")}
+          >
+            <DrawerListItem
+              onClickListItem={() =>
+                this.handleClickItem("/app/settings/users-and-controls/users")
+              }
+              title="Users"
+              secondary
+              selected={
+                location.pathname === "/app/settings/users-and-controls/users"
+              }
+            />
+            <DrawerListItem
+              onClickListItem={() =>
+                this.handleClickItem(
+                  "/app/settings/users-and-controls/roles-and-permissions"
+                )
+              }
+              title={"Roles & Permissions"}
+              secondary
+              selected={
+                location.pathname ===
+                "/app/settings/users-and-controls/roles-and-permissions"
+              }
+            />
+            <DrawerListItem
+              onClickListItem={() =>
+                this.handleClickItem("/app/settings/users-and-controls/groups")
+              }
+              title={"Groups"}
+              secondary
+              selected={
+                location.pathname === "/app/settings/users-and-controls/groups"
+              }
+            />
+          </DrawerListCollapsible>
+        )}
+
+        {/* <ListItem button onClick={() => this.handleClick("crm")}>
               <ListItemText
                 inset
                 primary={"CRM"}
@@ -182,7 +123,7 @@ class SettingsDirectory extends Component {
               </List>
             </Collapse> */}
 
-            {/* <ListItem button onClick={() => this.handleClick("accounting")}>
+        {/* <ListItem button onClick={() => this.handleClick("accounting")}>
               <ListItemText
                 inset
                 primary={"Accounting"}
@@ -243,7 +184,7 @@ class SettingsDirectory extends Component {
               </List>
             </Collapse> */}
 
-            {/* <ListItem button onClick={() => this.handleClick("reminder")}>
+        {/* <ListItem button onClick={() => this.handleClick("reminder")}>
               <ListItemText
                 inset
                 primary={"Reminders"}
@@ -285,15 +226,9 @@ class SettingsDirectory extends Component {
                 </ListItem>
               </List>
             </Collapse> */}
-          </List>
-        </Scrollbars>
-      </Paper>
+      </SideDrawer>
     );
   }
 }
 
-SettingsDirectory.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withRouter(connect(null)(withStyles(styles)(SettingsDirectory)));
+export default withRouter(SettingsDirectory);

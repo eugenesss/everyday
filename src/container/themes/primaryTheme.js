@@ -28,6 +28,9 @@ const theme = createMuiTheme({
         fill: "#fff"
       }
     }
+  },
+  custom: {
+    sideDrawerPaperHeight: "calc(100vh - 160px)"
   }
 });
 
