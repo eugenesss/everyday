@@ -38,6 +38,11 @@ const getUserAccessRightsRequest = async () => {
   return result.data.data;
 };
 
+const getUserProfileRequest = async userID => {
+  const result = await api.get(`/users/${userID}`, userID);
+  return result.data;
+};
+
 function* signInUserWithEmailPassword({ payload }) {
   const { emailAddress, password } = payload.user;
   const { history } = payload;
@@ -53,9 +58,9 @@ function* signInUserWithEmailPassword({ payload }) {
       localStorage.setItem("user_id", signInUser.userId);
       localStorage.setItem("accessKey", signInUser.id);
       const userRights = yield call(getUserAccessRightsRequest);
-
+      const userInfo = yield call(getUserProfileRequest, signInUser.userId);
       new Auth().setSession(signInUser);
-      yield put(signinUserSuccess(signInUser, userRights));
+      yield put(signinUserSuccess(signInUser, userRights, userInfo));
       history.push("/");
       //Get User Access Rights
     } else {
@@ -80,7 +85,7 @@ const logoutUserWithAccessToken = async () => {
   return result.data;
 };
 
-function* logoutUser({}) {
+function* logoutUser({ }) {
   try {
     yield call(logoutUserWithAccessToken);
     yield put(logoutUserSuccess());

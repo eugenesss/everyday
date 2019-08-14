@@ -94,11 +94,8 @@ function* updateUserToDB() {
 }
 function* getUserProfileFromDB({ payload }) {
   try {
-    var userId = payload;
-    if (payload.userId != undefined) {
-      userId = payload.userId;
-    }
-    const data = yield call(getUserProfileRequest, userId);
+
+    const data = yield call(getUserProfileRequest, payload);
     yield put(getUserProfileSuccess(data));
   } catch (err) {
     yield put(getUserFailure(err));
