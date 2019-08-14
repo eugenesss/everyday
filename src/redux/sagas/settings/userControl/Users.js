@@ -45,7 +45,7 @@ const getUserProfileRequest = async userID => {
 };
 
 const updateUserRights = async (userId, rights) => {
-  const result = await api.post("/accesssettings/saveUserRights", {saveUserId: userId, rights: rights});
+  const result = await api.post("/accesssettings/saveUserRights", { saveUserId: userId, rights: rights });
   return result.data;
 }
 
@@ -66,17 +66,17 @@ function* getAllUsersFromDB() {
 function* addUserToDB() {
   const getNewUser = state => state.usersState.userAdd;
   const newUser = yield select(getNewUser);
-  newUser.name = newUser.firstName +" "+newUser.lastName;
+  newUser.name = newUser.firstName + " " + newUser.lastName;
 
   try {
-    var userdata= {roles: []};
-    for(const role of newUser.role){
-      userdata.roles.push({id: role});
-    } 
+    var userdata = { roles: [] };
+    for (const role of newUser.role) {
+      userdata.roles.push({ id: role });
+    }
     newUser.role = [];
-    const data = yield call(addUserRequest, newUser);    
-    
-    const data2 = yield call(updateUserRights, data.id, [userdata]);    
+    const data = yield call(addUserRequest, newUser);
+
+    const data2 = yield call(updateUserRights, data.id, [userdata]);
     yield put(addUserSuccess(data));
   } catch (err) {
     yield put(addUserFailure(err));
@@ -94,7 +94,11 @@ function* updateUserToDB() {
 }
 function* getUserProfileFromDB({ payload }) {
   try {
-    const data = yield call(getUserProfileRequest, payload);
+    var userId = payload;
+    if (payload.userId != undefined) {
+      userId = payload.userId;
+    }
+    const data = yield call(getUserProfileRequest, userId);
     yield put(getUserProfileSuccess(data));
   } catch (err) {
     yield put(getUserFailure(err));
@@ -102,7 +106,7 @@ function* getUserProfileFromDB({ payload }) {
 }
 function* updateUserRightsToDB() {
   const getUserSettings = state => state.usersState.userSettings;
-  const user = yield select(getUserSettings);  
+  const user = yield select(getUserSettings);
   try {
     const data = yield call(updateUserRights, user.userid, user.groups);
     yield put(updateUserRightsSuccess(data));
