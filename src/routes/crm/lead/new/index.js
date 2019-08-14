@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 // Sub components
 import { Helmet } from "react-helmet";
+import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // intl messages
 import IntlMessages from "Util/IntlMessages";
@@ -22,13 +23,14 @@ class crm_new_lead extends Component {
           <title>Everyday | New Lead</title>
           <meta name="description" content="Everyday Leads Creation" />
         </Helmet>
-        <div className="row">
-          <div className="col-md-10 offset-md-1">
-            <BgCard heading={<IntlMessages id="sidebar.newLead" />}>
+        <PageTitleBar title={<IntlMessages id="sidebar.newLead" />} allowBack />
+        <BgCard>
+          <div className="row">
+            <div className="col-md-10 offset-md-1">
               <LeadForm handleSubmit={this.props.newLead} />
-            </BgCard>
+            </div>
           </div>
-        </div>
+        </BgCard>
       </React.Fragment>
     );
   }

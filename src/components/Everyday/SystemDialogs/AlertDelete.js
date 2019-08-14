@@ -13,17 +13,16 @@ const AlertDelete = props => {
       danger
       btnSize="sm"
       show={show}
-      showCancel
       confirmBtnText="Yes, delete it!"
-      confirmBtnBsStyle="danger"
-      cancelBtnBsStyle="primary"
+      confirmBtnBsStyle="default"
+      confirmBtnCssClass="text-danger"
       title="Are you sure?"
       onConfirm={() => handleDelete()}
       onCancel={() => handleHide()}
     >
       <p>
-        Delete the record {`"${name}" ? `}You will not be able to recover this
-        record!
+        You are about to delete the record {`"${name}". `}You will not be able
+        to recover this record.
       </p>
     </SweetAlert>
   );

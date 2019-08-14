@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import MUIDataTable from "mui-datatables";
+import RecordsList from "Components/Everyday/RecordsList";
 import { listOptions } from "Helpers/helpers";
 
 //Page req
@@ -10,10 +10,9 @@ import Tooltip from "@material-ui/core/Tooltip";
 import BgCard from "Components/Everyday/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
-import Moment from 'moment'
+import Moment from "moment";
 
 const InvoiceList = ({ tableData, loading, title, action }) => {
-  
   const columns = [
     {
       name: "id",
@@ -39,33 +38,41 @@ const InvoiceList = ({ tableData, loading, title, action }) => {
         }
       }
     },
-    { label: "Amount", name: "totalAmt",
-      options: {
-        customBodyRender: (value,) => {
-          return value.toFixed(2)
-        }
-      }
-    },
-    { label: "Date Sent", name: "sent_date",
-      options: {
-        customBodyRender: (value, tableMeta) => {
-          return Moment(new Date(value)).format('LL')
-        }
-      }
-    },
-    { label: "Due Date", name: "due_date",
+    {
+      label: "Amount",
+      name: "totalAmt",
       options: {
         customBodyRender: value => {
-          return Moment(new Date(value)).format('LL')
+          return value.toFixed(2);
         }
       }
     },
-    { label: "Version", name: "version",
-    options: {
-      customBodyRender: value => {
-        return value
+    {
+      label: "Date Sent",
+      name: "sent_date",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+          return Moment(new Date(value)).format("LL");
+        }
       }
-    }
+    },
+    {
+      label: "Due Date",
+      name: "due_date",
+      options: {
+        customBodyRender: value => {
+          return Moment(new Date(value)).format("LL");
+        }
+      }
+    },
+    {
+      label: "Version",
+      name: "version",
+      options: {
+        customBodyRender: value => {
+          return value;
+        }
+      }
     },
     {
       label: "Status",
@@ -77,7 +84,6 @@ const InvoiceList = ({ tableData, loading, title, action }) => {
       }
     }
   ];
-
 
   if (action == true) {
     columns.push({
@@ -106,7 +112,6 @@ const InvoiceList = ({ tableData, loading, title, action }) => {
     });
   }
 
-
   listOptions.customToolbarSelect = (
     selectedRows,
     displayData,
@@ -115,10 +120,9 @@ const InvoiceList = ({ tableData, loading, title, action }) => {
     // delete multiple function
     null;
 
-
   return (
     <BgCard fullBlock>
-      <MUIDataTable
+      <RecordsList
         title={title}
         columns={columns}
         data={tableData}

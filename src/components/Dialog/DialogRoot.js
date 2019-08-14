@@ -35,12 +35,7 @@ const DialogRoot = ({
             </Button>
           ) : null}
           {dialogAction && (
-            <Button
-              onClick={dialogAction}
-              className="mr-10 text-white"
-              color="primary"
-              variant="contained"
-            >
+            <Button onClick={dialogAction} className="mr-10" color="primary">
               {dialogActionLabel}
             </Button>
           )}

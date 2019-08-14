@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
-import { Route, Redirect } from 'react-router'
+import { Route, Redirect } from "react-router";
 //buttons
 import MatButton from "@material-ui/core/Button";
 
@@ -20,10 +20,13 @@ import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 // Quotation Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
-import { newQuote, editQuote, singleQuote } from "Helpers/url/accounting";
+import {
+  quoteNewPage,
+  quoteEditPage,
+  singleQuote
+} from "Helpers/url/accounting";
 
 import NotesLayout from "Components/Everyday/Notes/NotesLayout";
-
 
 // Activity Log Tab
 // import ActivityLog from "Components/Everyday/ActivityLog";
@@ -33,22 +36,21 @@ import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 // import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
-import { 
-  getSingleQuotation, 
-  clearSingleQuotation, 
-  deleteSingleQuote, 
-  addNoteQuotation, 
+import {
+  getSingleQuotation,
+  clearSingleQuotation,
+  deleteSingleQuote,
+  addNoteQuotation,
   HandleStateUpdate,
   HandleStateCreateNewVersion,
   HandleStateRevertPreviousVersion,
-  HandleConvertInvoiceQuotation 
+  HandleConvertInvoiceQuotation
 } from "Actions";
 // addNoteToQuotation(acctID), onNoteChange, clearNote
 // Add events dialog
 // Delete Quotation, Edit Quotation, Transfer Quotation
 
 class acct_view_quotation extends Component {
-
   componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleQuotation(id);
@@ -59,189 +61,195 @@ class acct_view_quotation extends Component {
   }
 
   edit(quotation) {
-    this.props.history.push(editQuote(quotation.id));
+    this.props.history.push(quoteEditPage(quotation.id));
   }
 
-  addNote = (quotation) => {
+  addNote = quotation => {
     this.props.addNoteQuotation(this.props.match.params.id, quotation);
-  }
+  };
 
   componentDidUpdate() {
     if (this.props.quotationToView.quotation) {
       var id = this.props.match.params.id;
-      var newId = this.props.quotationToView.quotation.id
-      if(id != newId){
-        this.props.history.push(singleQuote(newId))
+      var newId = this.props.quotationToView.quotation.id;
+      if (id != newId) {
+        this.props.history.push(singleQuote(newId));
       }
-    }   
+    }
   }
 
-
   render() {
-    const {loading, quotation} = this.props.quotationToView;
-        
-    let buttonCollection = null
-    let moreButtons = null
-    if(quotation){
-      switch(quotation.state) {
+    const { loading, quotation } = this.props.quotationToView;
+
+    let buttonCollection = null;
+    let moreButtons = null;
+    if (quotation) {
+      switch (quotation.state) {
         case "Draft":
-            // console.log('Draft Mode')
-            buttonCollection = (
-              <div className="rct-block p-10 mb-10">
-                <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={()=> this.props.HandleStateUpdate(quotation.id, 'Open')}
-                >
-                  Open Quotation
-                </MatButton>
-                <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={() => this.edit(quotation)}
-                >
-                  Edit Quotation
-                </MatButton>
-                <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={()=> {
-                    this.props.deleteSingleQuote(this.props.match.params.id)
-                  }}
-                  >
-                  Delete Quotation
-                </MatButton>
-                <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={()=> {
-                    this.props.HandleConvertInvoiceQuotation(quotation.id)
-                  }}
-                >
-                  Convert to invoice
-                </MatButton>
-                {/* <MatButton
+          // console.log('Draft Mode')
+          buttonCollection = (
+            <div className="rct-block p-10 mb-10">
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+                onClick={() =>
+                  this.props.HandleStateUpdate(quotation.id, "Open")
+                }
+              >
+                Open Quotation
+              </MatButton>
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+                onClick={() => this.edit(quotation)}
+              >
+                Edit Quotation
+              </MatButton>
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+                onClick={() => {
+                  this.props.deleteSingleQuote(this.props.match.params.id);
+                }}
+              >
+                Delete Quotation
+              </MatButton>
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+                onClick={() => {
+                  this.props.HandleConvertInvoiceQuotation(quotation.id);
+                }}
+              >
+                Convert to invoice
+              </MatButton>
+              {/* <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
                   onClick={()=> console.log('To Pdf Print')}
                 >
                   To PDF &amp; Print
                 </MatButton> */}
-              </div>
-            )
+            </div>
+          );
 
-
-            break
+          break;
 
         case "Open":
-            buttonCollection = (
-              <div className="rct-block p-10 mb-10">
-                {/* <MatButton
+          buttonCollection = (
+            <div className="rct-block p-10 mb-10">
+              {/* <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
                   onClick={()=> this.props.HandleStateUpdate(quotation.id, 'Draft')}
                 >
                   Convert to draft
-                </MatButton> */}  
-                <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={() => this.edit(quotation)}
-                >
-                  Edit Quotation
-                </MatButton>
-                <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={()=> {
-                      if(quotation.version == 1){
-                        this.props.deleteSingleQuote(this.props.match.params.id)
-                      } else {
-                        this.props.HandleStateRevertPreviousVersion(quotation.id, 'Quotation')
-                      }
-                    }}
-                  >
-                    Delete Quotation
-                </MatButton>
-                <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={()=> {
-                      this.props.HandleStateCreateNewVersion(quotation.id, 'Quotation')
-                  }}
-                >
-                  Create New Version
-                </MatButton>
-                <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={()=> {
-                    this.props.HandleConvertInvoiceQuotation(quotation.id)
-                  }}
-                >
-                  Convert to invoice
-                </MatButton>
-                <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={()=> console.log('Email Client')}
-                >
-                  Email Client
-                </MatButton>
-                {/* <MatButton
+                </MatButton> */}
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+                onClick={() => this.edit(quotation)}
+              >
+                Edit Quotation
+              </MatButton>
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+                onClick={() => {
+                  if (quotation.version == 1) {
+                    this.props.deleteSingleQuote(this.props.match.params.id);
+                  } else {
+                    this.props.HandleStateRevertPreviousVersion(
+                      quotation.id,
+                      "Quotation"
+                    );
+                  }
+                }}
+              >
+                Delete Quotation
+              </MatButton>
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+                onClick={() => {
+                  this.props.HandleStateCreateNewVersion(
+                    quotation.id,
+                    "Quotation"
+                  );
+                }}
+              >
+                Create New Version
+              </MatButton>
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+                onClick={() => {
+                  this.props.HandleConvertInvoiceQuotation(quotation.id);
+                }}
+              >
+                Convert to invoice
+              </MatButton>
+              <MatButton
+                variant="contained"
+                className="btn-primary mr-10 text-white"
+                onClick={() => console.log("Email Client")}
+              >
+                Email Client
+              </MatButton>
+              {/* <MatButton
                   variant="contained"
                   className="btn-primary mr-10 text-white"
                   onClick={()=> console.log('To Pdf Print')}
                 >
                   Save to PDF &amp; Print
                 </MatButton> */}
-              </div>
-            )
+            </div>
+          );
 
-            // moreButtons = 
-            //   <MoreButton > 
-            //   {{
-            //     label: "Edit", handleOnClick: () => this.edit(quotation)
-            //   }}
-            //   {{ 
-            //     label: "Delete", handleOnClick: (() => {
-            //       this.props.deleteSingleQuote(this.props.match.params.id)
-            //     })
-            //   }}
-            //   {{
-            //     label: "Clone", handleOnClick: ()=> console.log('Clone item')
-            //   }}
-            //   {{
-            //     label: "New Version",handleOnClick: ()=> console.log('Create new version of the quotation')
-            //   }}
-            //   </MoreButton>
-            break
+          // moreButtons =
+          //   <MoreButton >
+          //   {{
+          //     label: "Edit", handleOnClick: () => this.edit(quotation)
+          //   }}
+          //   {{
+          //     label: "Delete", handleOnClick: (() => {
+          //       this.props.deleteSingleQuote(this.props.match.params.id)
+          //     })
+          //   }}
+          //   {{
+          //     label: "Clone", handleOnClick: ()=> console.log('Clone item')
+          //   }}
+          //   {{
+          //     label: "New Version",handleOnClick: ()=> console.log('Create new version of the quotation')
+          //   }}
+          //   </MoreButton>
+          break;
 
         case "Closed":
-            // buttonCollection = (
-            //   <div className="rct-block p-10 mb-10">
-            //     <MatButton
-            //       variant="contained"
-            //       className="btn-primary mr-10 text-white"
-            //       onClick={()=> this.props.HandleStateUpdate(quotation.id, 'Open')}
-            //     >
-                  
-            //     </MatButton>
-            //   </div>
-            // )
-            break
-            
-        case "Converted":
-            console.log('Converted Mode')
-            break
+          // buttonCollection = (
+          //   <div className="rct-block p-10 mb-10">
+          //     <MatButton
+          //       variant="contained"
+          //       className="btn-primary mr-10 text-white"
+          //       onClick={()=> this.props.HandleStateUpdate(quotation.id, 'Open')}
+          //     >
 
-        default:break
+          //     </MatButton>
+          //   </div>
+          // )
+          break;
+
+        case "Converted":
+          console.log("Converted Mode");
+          break;
+
+        default:
+          break;
       }
     }
- 
 
-    if(this.props.quotationList.deleted){
-      return(<Redirect to="/app/acct/quotations"/>)
+    if (this.props.quotationList.deleted) {
+      return <Redirect to="/app/acct/quotations" />;
     }
 
     return loading ? (
@@ -267,7 +275,7 @@ class acct_view_quotation extends Component {
           //     label: "To PDF & Print"
           //   }
           // ]}
-          createLink={newQuote}
+          createLink={quoteNewPage}
           moreButton={moreButtons}
         />
         <div className="row">
@@ -292,7 +300,11 @@ class acct_view_quotation extends Component {
             {buttonCollection}
             <TabsWrapper>
               <div icon="zmdi-shopping-basket text-success" label="QUOTATION">
-                <ViewTemplate order={quotation} id={quotation.quoteID} disabled={true}/>
+                <ViewTemplate
+                  order={quotation}
+                  id={quotation.quoteID}
+                  disabled={true}
+                />
               </div>
               {/*  <div icon="zmdi-pizza text-warning" label="ACTIVITY LOG">
                 <ActivityLog />
@@ -311,7 +323,6 @@ class acct_view_quotation extends Component {
           </div>
         </div>
       </React.Fragment>
-  
     ) : (
       <PageErrorMessage
         heading="Not Found"
@@ -331,14 +342,14 @@ const mapStateToProps = ({ accountingState }) => {
 
 export default connect(
   mapStateToProps,
-  { 
-    getSingleQuotation, 
-    clearSingleQuotation, 
-    deleteSingleQuote, 
-    addNoteQuotation, 
-    HandleStateUpdate, 
-    HandleStateCreateNewVersion, 
+  {
+    getSingleQuotation,
+    clearSingleQuotation,
+    deleteSingleQuote,
+    addNoteQuotation,
+    HandleStateUpdate,
+    HandleStateCreateNewVersion,
     HandleStateRevertPreviousVersion,
-    HandleConvertInvoiceQuotation,
+    HandleConvertInvoiceQuotation
   }
 )(acct_view_quotation);

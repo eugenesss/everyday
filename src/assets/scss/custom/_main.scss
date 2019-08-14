@@ -99,28 +99,16 @@
 /*========== Page Breadcrumb ============*/
 .page-title {
   margin-bottom: 1rem;
-  //padding: 0px 24px;
-  .breadcrumb {
-    margin-bottom: 0;
-  }
-  .page-title-wrap > i {
+  .page-title-wrap > button {
     color: $breadcrumb-font-color;
-    vertical-align: 3px;
-    margin-right: 10px;
+    margin-right: 0.5rem;
   }
   h2 {
     font-size: $breadcrumb-font-size;
     color: $breadcrumb-font-color;
+    vertical-align: -3px;
     display: inline-block;
     text-transform: capitalize;
     margin: 0;
-  }
-  .rct-creadcrumb {
-    color: $breadcrumb-font-color;
-    font-size: 14px;
-    i {
-      font-size: 12px;
-      margin: 0 5px;
-    }
   }
 }

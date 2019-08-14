@@ -16,4 +16,31 @@ api.interceptors.request.use(config => {
   return config;
 });
 
+api.interceptors.response.use(
+  response => {
+    return response;
+  },
+  error => {
+    if (error.message === "Network Error") {
+      // The user doesn't have internet
+      return Promise.reject(error);
+    }
+    switch (error.response.status) {
+      case 400:
+        break;
+      case 401:
+        window.location.replace("/login");
+        break;
+      case 404:
+        break;
+      case 500:
+        break;
+      default:
+        // Unknown Error
+        break;
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;

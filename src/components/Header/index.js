@@ -6,8 +6,7 @@ import { Link, withRouter } from "react-router-dom";
 import navLinks from "./Menu/NavLinks";
 
 // Right Nav
-import Notifications from "Components/Header/RightNav/Notifications";
-import UserDrawer from "Components/Header/RightNav/UserDrawer";
+import RightNav from "./RightNav";
 
 // Menu
 import MainMenu from "./Menu/MainMenu";
@@ -21,7 +20,7 @@ function getChildRoute(location) {
 }
 function getActiveSubMenuKey(currentLocation, childRoutes) {
   for (let i = 0; i < childRoutes.length; i++) {
-    if (childRoutes[i].path == currentLocation) return i;
+    if (currentLocation.includes(childRoutes[i].path)) return i;
   }
 }
 
@@ -30,6 +29,10 @@ function Header(props) {
   const childRoutes = getChildRoute(location);
   const activeSubMenuKey = getActiveSubMenuKey(location.pathname, childRoutes);
   const [subMenuKey, setSubMenuKey] = React.useState(activeSubMenuKey);
+
+  React.useEffect(() => {
+    setSubMenuKey(activeSubMenuKey);
+  }, [activeSubMenuKey]);
 
   function handleChange(e, newValue) {
     setSubMenuKey(newValue);
@@ -58,10 +61,7 @@ function Header(props) {
               navLinks={navLinks}
             />
           </div>
-          <ul className="navbar-right app-bar-right list-inline mb-0">
-            <Notifications />
-            <UserDrawer />
-          </ul>
+          <RightNav />
         </Toolbar>
       </AppBar>
       {childRoutes.length > 0 && (

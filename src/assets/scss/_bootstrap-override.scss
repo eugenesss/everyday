@@ -247,7 +247,7 @@ $line-height-sm: 1.5 !default;
 $border-width: 1px !default;
 $border-color: $gray-300 !default;
 
-$border-radius: 0.25rem !default;
+$border-radius: 15px !default;
 $border-radius-lg: 0.3rem !default;
 $border-radius-sm: 0.2rem !default;
 
@@ -595,7 +595,7 @@ $form-feedback-invalid-color: theme-color("danger") !default;
 //
 // Dropdown menu container and contents.
 
-$dropdown-min-width: 10rem !default;
+$dropdown-min-width: 8rem !default;
 $dropdown-padding-y: 0.5rem !default;
 $dropdown-spacer: 0.125rem !default;
 $dropdown-bg: $white !default;

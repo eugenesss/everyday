@@ -17,19 +17,17 @@ const FormBlock = ({
   accounting,
   style
 }) => {
-
-
   return (
     <React.Fragment>
-      <div style={{ borderBottom: "none", width: "15%" }} align="right">
+      <TableCell style={{ borderBottom: "none", width: "15%" }} align="right">
         {label}
         {required && <sup style={{ color: "red" }}>*</sup>}
-      </div>
-      <div style={style? style :{borderBottom: "none", width: "35%" }}>
+      </TableCell>
+      <TableCell style={style ? style : { borderBottom: "none", width: "35%" }}>
         {!empty &&
           (customTextField ? (
             customTextField
-          ) : selectValues ? 
+          ) : selectValues ? (
             <FormSelectField
               value={value}
               handleChange={handleChange}
@@ -38,15 +36,17 @@ const FormBlock = ({
               selectValues={selectValues}
               accounting={accounting}
             />
-          : (
+          ) : (
             <FormTextField
               value={value}
-              handleChange ={(e, value, target) => handleChange(e, value, target)}
+              handleChange={(e, value, target) =>
+                handleChange(e, value, target)
+              }
               target={target}
               targetType={targetType}
             />
           ))}
-      </div>
+      </TableCell>
     </React.Fragment>
   );
 };
