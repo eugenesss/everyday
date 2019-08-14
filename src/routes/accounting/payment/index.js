@@ -30,6 +30,7 @@ class acct_payment extends Component {
       tableData,
       loading
     } = this.props.paymentState.paymentList;
+    
     return (
       <React.Fragment>
         <Helmet>

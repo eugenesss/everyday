@@ -30,7 +30,7 @@ import DialogRoot from "Components/Dialog/DialogRoot";
 
 // Actions
 import { newInvoice, editInvoice } from "Helpers/url/accounting";
-import { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion  } from "Actions";
+import { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion, makePayment  } from "Actions";
 
 
 // addNoteToQuotation(acctID), onNoteChange, clearNote
@@ -72,6 +72,27 @@ class acct_view_invoice extends Component {
   makePayment = (item) =>  {
     console.log('make Payment')
     console.log(item)
+
+    let paidAmount
+    if(item.paidAmount != 0){
+      paidAmount = parseInt(item.paidAmount.split('$')[1]) 
+    } else {
+      paidAmount = 0
+    }
+    
+    if(paidAmount == 0) {
+      return
+    }
+    if(item.paymentRef == ""){
+      return
+    } 
+    if(item.paymentMethod == "" ){
+      return
+    }
+    
+    this.props.makePayment(item)
+    this.launchMakePaymentDialog()
+  
   }
 
 
@@ -307,7 +328,7 @@ const mapStateToProps = ({ accountingState }) => {
 
 export default connect(
   mapStateToProps,
-  { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion }
+  { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion, makePayment }
 )(acct_view_invoice);
 
 
