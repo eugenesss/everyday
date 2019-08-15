@@ -1,40 +1,32 @@
-/**
- * Company Picker in form
- *
- * Requires: handleChange function / value of state / field to target change
- *
- * handleChange func
- * value: state
- * target: string
- */
-
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import Autosuggest from "react-autosuggest";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
-import MenuItem from "@material-ui/core/MenuItem";
+
+// Form Component
+import BaseInput from "Components/Form/Components/BaseInput";
 import { withStyles } from "@material-ui/core/styles";
+import {
+  Paper,
+  InputLabel,
+  FormControl,
+  FormHelperText,
+  MenuItem
+} from "@material-ui/core";
 
 import { getAllAccount } from "Actions";
 
 function renderInput(inputProps) {
-  const { classes, ref, ...other } = inputProps;
-
+  const { value, classes, ref, ...other } = inputProps;
   return (
-    <TextField
-      fullWidth
-      inputRef={ref}
-      InputProps={{
-        classes: {
-          input: classes.input
-        },
-        ...other
-      }}
-    />
+    <FormControl className={classes.inputRoot}>
+      <InputLabel className="fw-bold" shrink>
+        Company Name
+      </InputLabel>
+      <BaseInput ref={ref} value={value} {...other} />
+      {value == "" && <FormHelperText error>* Required Field</FormHelperText>}
+    </FormControl>
   );
 }
 
@@ -63,9 +55,16 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
 
 function renderSuggestionsContainer(options) {
   const { containerProps, children } = options;
-
   return (
-    <Paper {...containerProps} square>
+    <Paper
+      style={{
+        position: "absolute",
+        zIndex: "1",
+        minWidth: "300px",
+        marginLeft: "8px"
+      }}
+      {...containerProps}
+    >
       {children}
     </Paper>
   );
@@ -76,11 +75,12 @@ function getSuggestionValue(suggestion) {
 }
 
 const styles = theme => ({
+  inputRoot: {
+    margin: theme.spacing(1),
+    width: "100%"
+  },
   suggestionsContainerOpen: {
     marginTop: theme.spacing(1)
-  },
-  suggestion: {
-    // display: "block"
   },
   suggestionsList: {
     margin: 0,
@@ -89,9 +89,8 @@ const styles = theme => ({
   }
 });
 
-class CompanyPicker extends Component {
+class CompanyPicker extends PureComponent {
   state = {
-    value: "",
     suggestions: []
   };
 
@@ -112,9 +111,6 @@ class CompanyPicker extends Component {
   };
 
   handleChange = (event, { newValue }) => {
-    this.setState({
-      value: newValue
-    });
     this.props.handleChange(this.props.target, newValue);
   };
 
@@ -134,6 +130,11 @@ class CompanyPicker extends Component {
           return keep;
         });
   }
+  storeAutosuggestReference = autosuggest => {
+    if (autosuggest !== null) {
+      this.input = autosuggest.input;
+    }
+  };
 
   render() {
     const { classes, value } = this.props;
@@ -151,19 +152,17 @@ class CompanyPicker extends Component {
         renderSuggestionsContainer={renderSuggestionsContainer}
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
+        ref={this.storeAutosuggestReference}
         inputProps={{
           classes,
           value: value,
-          onChange: this.handleChange
+          onChange: (e, { newValue }) =>
+            this.props.handleChange(this.props.target, newValue)
         }}
       />
     );
   }
 }
-
-CompanyPicker.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 const mapStateToProps = ({ crmState }) => {
   const { accountState } = crmState;

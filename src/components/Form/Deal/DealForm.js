@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
-//Form Components
-import TableRow from "@material-ui/core/TableRow";
-import FormBlock from "Components/Form/Components/FormBlock";
-import FormTable from "Components/Form/Components/FormTable";
+// Form Layout
+import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
+import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
 
 // Input Components
-import DescriptionFormInput from "Components/Form/Components/Inputs/DescriptionFormInput";
-import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetButtons";
+import FormInput from "Components/Form/Components/FormInput";
 import AmountInput from "Components/Form/Components/Inputs/AmountInput";
 import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
 
@@ -18,6 +16,7 @@ import { getDealFormFields } from "Actions";
 
 const initialState = {
   deal: {
+    userId: localStorage.getItem("user_id"),
     name: "",
     amount: "",
     closingDate: "",
@@ -25,7 +24,8 @@ const initialState = {
     customerId: "",
     stageId: "",
     sourceId: "",
-    typeId: ""
+    typeId: "",
+    info: ""
   }
 };
 
@@ -80,118 +80,124 @@ class DealForm extends Component {
       dealStage,
       dealType
     } = fields;
-    const { edit } = this.props;
+    const { edit, title } = this.props;
     return (
-      <React.Fragment>
+      <FormWrapper
+        onSave={this.onSubmit}
+        onSaveNew={this.onSaveNew}
+        disabled={this.checkDisabled()}
+        edit={edit}
+        title={title}
+      >
         {loading && <RctSectionLoader />}
-        <FormSubmitResetButtons
-          onReset={this.props.clearDealForm}
-          onSubmit={this.onSubmit}
-          onSaveNew={this.onSaveNew}
-          disabled={this.checkDisabled()}
-          edit={edit}
-        />
-        <FormTable>
-          <TableRow>
-            <FormBlock
-              label="Name"
-              value={deal.name}
-              handleChange={this.handleChange}
-              target="name"
-              required
-            />
-            {!edit && (
-              <FormBlock
-                required
-                label="Owner"
-                value={deal.userId ? deal.userId : ""}
-                handleChange={this.handleChange}
-                target="userId"
-                selectValues={users}
-              />
-            )}
-          </TableRow>
-          <TableRow>
-            <FormBlock
-              required
-              label="Amount"
-              customTextField={
+        <form autoComplete="off">
+          <FormInputLayout
+            title="Key Information"
+            desc="The key fields to get you started with a new Deal record."
+          >
+            <div className="row">
+              <div className="col-5 d-block">
+                <FormInput
+                  label="Name"
+                  value={deal.name}
+                  handleChange={e => this.handleChange("name", e.target.value)}
+                />
                 <AmountInput
+                  label="Amount"
                   value={deal.amount}
+                  required={!deal.amount}
                   onChange={e => this.handleChange("amount", e.target.value)}
                 />
-              }
-            />
-            {!edit && (
-              <FormBlock
-                required
-                label="Stage"
-                value={deal.stageId}
-                handleChange={this.handleChange}
-                target="stageId"
-                selectValues={dealStage}
-              />
-            )}
-          </TableRow>
-          <TableRow>
-            <FormBlock
-              required
-              label="Closing Date"
-              customTextField={
                 <DatePickerInput
+                  label="Closing Date"
                   value={deal.closingDate ? deal.closingDate : null}
+                  required={!deal.closingDate}
                   onChange={date =>
                     this.handleChange("closingDate", date.format("YYYY-MM-DD"))
                   }
                 />
-              }
-            />
-            <FormBlock
-              required
-              label="Account"
-              value={deal.accountId}
-              handleChange={this.handleChange}
-              target="accountId"
-              selectValues={accounts}
-            />
-          </TableRow>
-          <TableRow>
-            <FormBlock
-              label="Customer"
-              value={deal.customerId}
-              handleChange={this.handleChange}
-              target="customerId"
-              selectValues={customers}
-            />
-          </TableRow>
-          {/**
-           * Type + Source
-           */}
-          <TableRow>
-            <FormBlock
-              label="Type"
-              value={deal.typeId}
-              handleChange={this.handleChange}
-              target="typeId"
-              selectValues={dealType}
-            />
-          </TableRow>
-          <TableRow>
-            <FormBlock
-              label="Source"
-              value={deal.sourceId}
-              handleChange={this.handleChange}
-              target="sourceId"
-              selectValues={leadSource}
-            />
-          </TableRow>
-        </FormTable>
-        <hr />
-        <DescriptionFormInput
-          handleChange={this.handleChange}
-          description={deal.description}
-        />
-      </React.Fragment>
+              </div>
+              <div className="col-5 d-block offset-md-1">
+                {!edit && (
+                  <FormInput
+                    label="Owner"
+                    value={deal.userId}
+                    required={!deal.userId}
+                    selectValues={users}
+                    handleChange={e =>
+                      this.handleChange("userId", e.target.value)
+                    }
+                  />
+                )}
+                <FormInput
+                  label="Account"
+                  value={deal.accountId}
+                  selectValues={accounts}
+                  required={!deal.accountId}
+                  handleChange={e =>
+                    this.handleChange("accountId", e.target.value)
+                  }
+                />
+                <FormInput
+                  label="Stage"
+                  value={deal.stageId}
+                  selectValues={dealStage}
+                  required={!deal.stageId}
+                  handleChange={e =>
+                    this.handleChange("stageId", e.target.value)
+                  }
+                />
+              </div>
+            </div>
+          </FormInputLayout>
+          <FormInputLayout
+            title="Deal Information"
+            desc="The key fields to get you started with a new Deal record."
+          >
+            <div className="row">
+              <div className="col-5 d-block">
+                <FormInput
+                  label="Source"
+                  value={deal.sourceId}
+                  selectValues={leadSource}
+                  handleChange={e =>
+                    this.handleChange("sourceId", e.target.value)
+                  }
+                />
+                <FormInput
+                  label="Customer"
+                  value={deal.customerId}
+                  selectValues={customers}
+                  handleChange={e =>
+                    this.handleChange("customerId", e.target.value)
+                  }
+                />
+              </div>
+              <div className="col-5 d-block offset-md-1">
+                <FormInput
+                  label="Type"
+                  value={deal.typeId}
+                  selectValues={dealType}
+                  handleChange={e =>
+                    this.handleChange("typeId", e.target.value)
+                  }
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-11">
+                <FormInput
+                  multiline
+                  rows={4}
+                  label="Description"
+                  value={deal.info}
+                  handleChange={e => this.handleChange("info", e.target.value)}
+                />
+              </div>
+            </div>
+          </FormInputLayout>
+        </form>
+      </FormWrapper>
     );
   }
 }

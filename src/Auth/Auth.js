@@ -29,8 +29,8 @@ export default class Auth {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
-        localStorage.setItem("user_id", "user-id");
-        console.log(configureStore)
+        //localStorage.setItem("user_id", "user-id");
+        //console.log(configureStore)
         let store = configureStore();
         store.dispatch({ type: 'LOGIN_USER_SUCCESS', payload: authResult })
         window.location.replace('/')

@@ -16,40 +16,41 @@ const styles = theme => ({
   }
 });
 
-class FormTextField extends PureComponent {
+class FormInput extends PureComponent {
   render() {
     const {
       classes,
       value,
       handleChange,
-      target,
-      targetType,
+      placeholder,
       disabled,
       required,
       label,
-      selectValues
+      selectValues,
+      ...others
     } = this.props;
 
     return (
       <FormControl className={classes.root}>
-        <InputLabel className="fw-bold" shrink htmlFor="bootstrap-input">
-          {"label"}
+        <InputLabel className="fw-bold" shrink>
+          {label}
         </InputLabel>
         {selectValues ? (
-          <Select value={10} onChange={handleChange} input={<BaseInput />}>
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+          <Select value={value} onChange={handleChange} input={<BaseInput />}>
+            {selectValues &&
+              selectValues.map((select, key) => (
+                <MenuItem key={key} value={select.value}>
+                  {select.name}
+                </MenuItem>
+              ))}
           </Select>
         ) : (
           <BaseInput
             value={value}
-            onChange={e => handleChange(target, e.target.value, targetType)}
-            placeholder={"placeholder"}
+            onChange={handleChange}
+            placeholder={placeholder}
             disabled={disabled}
+            {...others}
           />
         )}
         {required && <FormHelperText error>* Required Field</FormHelperText>}
@@ -58,4 +59,4 @@ class FormTextField extends PureComponent {
   }
 }
 
-export default withStyles(styles)(FormTextField);
+export default withStyles(styles)(FormInput);

@@ -2,22 +2,22 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
-//Form Components
-import TableRow from "@material-ui/core/TableRow";
-import FormBlock from "Components/Form/Components/FormBlock";
-import FormTable from "Components/Form/Components/FormTable";
+// Form Layout
+import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
+import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
 
 // Input Components
-import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
-import DescriptionFormInput from "Components/Form/Components/Inputs/DescriptionFormInput";
+import FormInput from "Components/Form/Components/FormInput";
 import CompanyPicker from "Components/Form/Components/Pickers/CompanyPicker";
-import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetButtons";
+import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
 
 // Actions
 import { getLeadFormFields } from "Actions";
 
 const initialState = {
   lead: {
+    userId: localStorage.getItem("user_id"),
+    companyName: "",
     baseContact: {
       firstName: "",
       lastName: "",
@@ -35,7 +35,9 @@ class LeadForm extends PureComponent {
   constructor(props) {
     super(props);
     this.state = initialState;
-    this.handleChange = this.handleChange.bind(this);
+    this.handleLead = this.handleLead.bind(this);
+    this.handleContact = this.handleContact.bind(this);
+    this.handleAddress = this.handleAddress.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onSaveNew = this.onSaveNew.bind(this);
   }
@@ -45,41 +47,43 @@ class LeadForm extends PureComponent {
     if (this.props.edit) this.setState({ lead: this.props.edit });
   }
 
-  handleChange(field, value, type) {
-    if (type == "baseContact") {
-      this.setState({
-        ...this.state,
-        lead: {
-          ...this.state.lead,
-          baseContact: {
-            ...this.state.lead.baseContact,
+  handleContact(field, value) {
+    this.setState(prevState => ({
+      ...prevState,
+      lead: {
+        ...prevState.lead,
+        baseContact: {
+          ...prevState.lead.baseContact,
+          [field]: value
+        }
+      }
+    }));
+  }
+
+  handleLead(field, value) {
+    this.setState(prevState => ({
+      ...prevState,
+      lead: {
+        ...prevState.lead,
+        [field]: value
+      }
+    }));
+  }
+
+  handleAddress(field, value) {
+    this.setState(prevState => ({
+      ...prevState,
+      lead: {
+        ...prevState.lead,
+        baseContact: {
+          ...prevState.lead.baseContact,
+          _address: {
+            ...prevState.lead.baseContact._address,
             [field]: value
           }
         }
-      });
-    } else if (type == "address") {
-      this.setState({
-        ...this.state,
-        lead: {
-          ...this.state.lead,
-          baseContact: {
-            ...this.state.lead.baseContact,
-            _address: {
-              ...this.state.lead.baseContact._address,
-              [field]: value
-            }
-          }
-        }
-      });
-    } else {
-      this.setState({
-        ...this.state,
-        lead: {
-          ...this.state.lead,
-          [field]: value
-        }
-      });
-    }
+      }
+    }));
   }
 
   onSubmit() {
@@ -95,6 +99,7 @@ class LeadForm extends PureComponent {
     const disabled =
       this.state.lead.baseContact.lastName &&
       this.state.lead.companyName &&
+      this.state.lead.userId &&
       this.state.lead.statusId;
     return disabled;
   }
@@ -102,173 +107,176 @@ class LeadForm extends PureComponent {
   render() {
     const { loading, fields } = this.props.leadForm;
     const { leadSource, leadStatus, industry, leadInterest, users } = fields;
-    const { edit } = this.props;
+    const { edit, title } = this.props;
     const { lead } = this.state;
     return (
-      <React.Fragment>
+      <FormWrapper
+        onSave={this.onSubmit}
+        onSaveNew={this.onSaveNew}
+        disabled={this.checkDisabled()}
+        edit={edit}
+        title={title}
+      >
         {loading && <RctSectionLoader />}
         <form autoComplete="off">
-          <FormSubmitResetButtons
-            onSubmit={this.onSubmit}
-            onSaveNew={this.onSaveNew}
-            disabled={this.checkDisabled()}
-            edit={edit}
-          />
-          <FormTable>
-            <TableRow>
-              <FormBlock
-                label="First Name"
-                value={lead.baseContact.firstName}
-                handleChange={this.handleChange}
-                target="firstName"
-                targetType="baseContact"
-              />
-              {!edit && (
-                <FormBlock
-                  required
-                  label="Owner"
-                  value={lead.userId ? lead.userId : ""}
-                  selectValues={users}
-                  handleChange={this.handleChange}
-                  target="userId"
+          <FormInputLayout
+            title="Key Information"
+            desc="The key fields to get you started with a new Lead record."
+          >
+            <div className="row">
+              <div className="col-5 d-block">
+                <FormInput
+                  label="First Name"
+                  value={lead.baseContact.firstName}
+                  handleChange={e =>
+                    this.handleContact("firstName", e.target.value)
+                  }
                 />
-              )}
-            </TableRow>
-            <TableRow>
-              <FormBlock
-                required
-                label="Last Name"
-                value={lead.baseContact.lastName}
-                handleChange={this.handleChange}
-                target="lastName"
-                targetType="baseContact"
-              />
-              <FormBlock
-                required
-                label="Status"
-                value={lead.statusId}
-                handleChange={this.handleChange}
-                target="statusId"
-                selectValues={leadStatus}
-              />
-            </TableRow>
-            <TableRow>
-              <FormBlock
-                required
-                label="Company Name"
-                customTextField={
-                  <CompanyPicker
-                    value={lead.companyName ? lead.companyName : ""}
-                    handleChange={this.handleChange}
-                    target="companyName"
+                <FormInput
+                  label="Last Name"
+                  value={lead.baseContact.lastName}
+                  required={!lead.baseContact.lastName}
+                  handleChange={e =>
+                    this.handleContact("lastName", e.target.value)
+                  }
+                />
+              </div>
+              <div className="col-5 d-block offset-md-1">
+                {!edit && (
+                  <FormInput
+                    label="Owner"
+                    value={lead.userId ? lead.userId : ""}
+                    required={!lead.userId}
+                    selectValues={users}
+                    handleChange={e =>
+                      this.handleLead("userId", e.target.value)
+                    }
                   />
-                }
-              />
-            </TableRow>
-            <TableRow />
-            {/**
-             * Job Title + Source
-             */}
-            <TableRow>
-              <FormBlock
-                label="Job Title"
-                value={lead.baseContact.title}
-                handleChange={this.handleChange}
-                target="title"
-                targetType="baseContact"
-              />
-              <FormBlock
-                label="Source"
-                value={lead.sourceId}
-                handleChange={this.handleChange}
-                target="sourceId"
-                selectValues={leadSource}
-              />
-            </TableRow>
-            {/**
-             * Industry + Interest
-             */}
-            <TableRow>
-              <FormBlock
-                label="Industry"
-                value={lead.industryId}
-                handleChange={this.handleChange}
-                target="industryId"
-                selectValues={industry}
-              />
-              <FormBlock
-                label="Interest"
-                value={lead.interest ? lead.interest : ""}
-                handleChange={this.handleChange}
-                target="interest"
-                selectValues={leadInterest}
-              />
-            </TableRow>
-            {/**
-             * Email + Mobile
-             */}
-            <TableRow>
-              <FormBlock
-                label="Email"
-                value={lead.baseContact.email}
-                handleChange={this.handleChange}
-                target="email"
-                targetType="baseContact"
-              />
-              <FormBlock
-                label="Mobile"
-                value={lead.baseContact.mobile}
-                handleChange={this.handleChange}
-                target="mobile"
-                targetType="baseContact"
-              />
-            </TableRow>
-            {/**
-             * Office + Fax
-             */}
-            <TableRow>
-              <FormBlock
-                label="Office"
-                value={lead.baseContact.phone}
-                handleChange={this.handleChange}
-                target="phone"
-                targetType="baseContact"
-              />
-              <FormBlock
-                label="Fax"
-                value={lead.baseContact.fax}
-                handleChange={this.handleChange}
-                target="fax"
-                targetType="baseContact"
-              />
-            </TableRow>
-
-            <TableRow>
-              <FormBlock
-                label="Website"
-                value={lead.baseContact.website}
-                handleChange={this.handleChange}
-                target="website"
-                targetType="baseContact"
-              />
-            </TableRow>
-          </FormTable>
+                )}
+                <CompanyPicker
+                  value={lead.companyName}
+                  handleChange={this.handleLead}
+                  target="companyName"
+                />
+                <FormInput
+                  label="Status"
+                  value={lead.statusId ? lead.statusId : ""}
+                  selectValues={leadStatus}
+                  required={!lead.statusId}
+                  handleChange={e =>
+                    this.handleLead("statusId", e.target.value)
+                  }
+                />
+              </div>
+            </div>
+          </FormInputLayout>
+          <FormInputLayout
+            title="Lead Information"
+            desc="This information is used to contact leads and will be transferred to Customer on successful conversion."
+          >
+            <div className="row">
+              <div className="col-5 d-block">
+                <FormInput
+                  label="Email"
+                  value={lead.baseContact.email}
+                  handleChange={e =>
+                    this.handleContact("email", e.target.value)
+                  }
+                />
+                <FormInput
+                  label="Job Title"
+                  value={lead.baseContact.title}
+                  handleChange={e =>
+                    this.handleContact("title", e.target.value)
+                  }
+                />
+                <FormInput
+                  label="Lead Interest"
+                  value={lead.interest ? lead.interest : ""}
+                  selectValues={leadInterest}
+                  handleChange={e =>
+                    this.handleLead("interest", e.target.value)
+                  }
+                />
+              </div>
+              <div className="col-5 d-block offset-md-1">
+                <FormInput
+                  label="Mobile"
+                  value={lead.baseContact.mobile}
+                  handleChange={e =>
+                    this.handleContact("mobile", e.target.value)
+                  }
+                />
+                <FormInput
+                  label="Source"
+                  value={lead.sourceId ? lead.sourceId : ""}
+                  selectValues={leadSource}
+                  handleChange={e =>
+                    this.handleLead("sourceId", e.target.value)
+                  }
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-11">
+                <FormInput
+                  multiline
+                  rows={4}
+                  label="Description"
+                  value={lead.baseContact.info}
+                  handleChange={e => this.handleContact("info", e.target.value)}
+                />
+              </div>
+            </div>
+          </FormInputLayout>
+          <FormInputLayout
+            title="Company Information"
+            desc="Keeping details of Lead's company can go a long way. This information will be used for Accounts on successful conversion."
+          >
+            <div className="row">
+              <div className="col-5">
+                <FormInput
+                  label="Industry"
+                  value={lead.industryId ? lead.industryId : ""}
+                  selectValues={industry}
+                  handleChange={e =>
+                    this.handleLead("industryId", e.target.value)
+                  }
+                />
+                <FormInput
+                  label="Website"
+                  value={lead.baseContact.website}
+                  handleChange={e =>
+                    this.handleContact("website", e.target.value)
+                  }
+                />
+              </div>
+              <div className="col-5 offset-md-1">
+                <FormInput
+                  label="Office"
+                  value={lead.baseContact.phone}
+                  handleChange={e =>
+                    this.handleContact("phone", e.target.value)
+                  }
+                />
+                <FormInput
+                  label="Fax"
+                  value={lead.baseContact.fax}
+                  handleChange={e => this.handleContact("fax", e.target.value)}
+                />
+              </div>
+            </div>
+            <AddressFormInput
+              address_1={lead.baseContact._address.address_1}
+              address_2={lead.baseContact._address.address_2}
+              city={lead.baseContact._address.city}
+              zip={lead.baseContact._address.zip}
+              handleChange={this.handleAddress}
+            />
+          </FormInputLayout>
           <hr />
-          <AddressFormInput
-            handleChange={this.handleChange}
-            address_1={lead.baseContact._address.address_1}
-            address_2={lead.baseContact._address.address_2}
-            city={lead.baseContact._address.city}
-            state={lead.baseContact._address.state}
-            zip={lead.baseContact._address.zip}
-          />
-          <hr />
-          <DescriptionFormInput
-            handleChange={this.handleChange}
-            description={lead.baseContact.info}
-          />
         </form>
-      </React.Fragment>
+      </FormWrapper>
     );
   }
 }
