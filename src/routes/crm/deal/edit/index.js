@@ -4,11 +4,7 @@ import { connect } from "react-redux";
 // Sub components
 import { Helmet } from "react-helmet";
 
-// intl messages
-import IntlMessages from "Util/IntlMessages";
-
 // Page Components
-import BgCard from "Components/Everyday/BgCard";
 import DealForm from "Components/Form/Deal/DealForm";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 
@@ -32,15 +28,11 @@ class crm_edit_deal extends Component {
         {loading ? (
           <RctPageLoader />
         ) : (
-          <div className="row">
-            <div className="col-md-10 offset-md-1">
-              <BgCard
-                heading={<IntlMessages id="sidebar.newDeal" />}
-              >
-                <DealForm edit={deal} handleSubmit={this.props.editDeal} />
-              </BgCard>
-            </div>
-          </div>
+          <DealForm
+            title="sidebar.editDeal"
+            edit={deal}
+            handleSubmit={this.props.editDeal}
+          />
         )}
       </React.Fragment>
     );

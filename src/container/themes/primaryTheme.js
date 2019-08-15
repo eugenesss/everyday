@@ -1,7 +1,7 @@
 /**
  * App Light Theme
  */
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createMuiTheme, fade } from "@material-ui/core/styles";
 import AppConfig from "Constants/AppConfig";
 
 const theme = createMuiTheme({

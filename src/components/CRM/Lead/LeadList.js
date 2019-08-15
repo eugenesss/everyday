@@ -165,6 +165,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
   ) =>
     // delete multiple function
     null;
+
   return (
     <div className="rct-block">
       <RecordsList

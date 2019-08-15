@@ -4,11 +4,7 @@ import { connect } from "react-redux";
 // Sub components
 import { Helmet } from "react-helmet";
 
-// intl messages
-import IntlMessages from "Util/IntlMessages";
-
 // Page Components
-import BgCard from "Components/Everyday/BgCard";
 import AccountForm from "Components/Form/Account/AccountForm";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 
@@ -30,18 +26,11 @@ class crm_new_account extends Component {
         {loading ? (
           <RctPageLoader />
         ) : (
-          <div className="row">
-            <div className="col-md-10 offset-md-1">
-              <BgCard
-                heading={<IntlMessages id="sidebar.editAccount" />}
-              >
-                <AccountForm
-                  edit={account}
-                  handleSubmit={this.props.editAccount}
-                />
-              </BgCard>
-            </div>
-          </div>
+          <AccountForm
+            title="sidebar.editAccount"
+            edit={account}
+            handleSubmit={this.props.editAccount}
+          />
         )}
       </React.Fragment>
     );

@@ -9,6 +9,8 @@ const PageTitleBar = ({
   createLink,
   moreButton,
   extraButtons,
+  actionButton,
+  actionGroup,
   allowBack,
   history
 }) => {
@@ -56,20 +58,15 @@ const PageTitleBar = ({
 
         {moreButton && moreButton}
 
-        <Button
-          variant="outlined"
-          size="small"
-          className={`ml-20 ${`button.extraClasses`}`}
-          /* onClick={button.handleOnClick} */
-        >
-          label
-        </Button>
+        {actionButton && actionButton}
 
-        <ButtonGroup variant="contained" /* size="small" */ className="ml-15">
-          <Button /* onClick={button.handleOnClick} */>label</Button>
-          <Button /* onClick={button.handleOnClick} */>label</Button>
-          <Button /* onClick={button.handleOnClick} */>label</Button>
-        </ButtonGroup>
+        {actionGroup && (
+          <ButtonGroup variant="contained" /* size="small" */ className="ml-15">
+            <Button /* onClick={button.handleOnClick} */>label</Button>
+            <Button /* onClick={button.handleOnClick} */>label</Button>
+            <Button /* onClick={button.handleOnClick} */>label</Button>
+          </ButtonGroup>
+        )}
       </div>
     </div>
   );

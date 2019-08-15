@@ -2,21 +2,21 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
-//Form Components
-import TableRow from "@material-ui/core/TableRow";
-import FormBlock from "Components/Form/Components/FormBlock";
-import FormTable from "Components/Form/Components/FormTable";
+// Form Layout
+import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
+import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
 
 // Input Components
+import FormInput from "Components/Form/Components/FormInput";
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
-import DescriptionFormInput from "Components/Form/Components/Inputs/DescriptionFormInput";
-import FormSubmitResetButtons from "Components/Form/Components/FormSubmitResetButtons";
 
 // Actions
 import { getCustomerFormFields } from "Actions";
 
 const initialState = {
   customer: {
+    userId: localStorage.getItem("user_id"),
+    sourceId: "",
     baseContact: {
       firstName: "",
       lastName: "",
@@ -35,7 +35,9 @@ class CustomerForm extends Component {
   constructor(props) {
     super(props);
     this.state = initialState;
-    this.handleChange = this.handleChange.bind(this);
+    this.handleContact = this.handleContact.bind(this);
+    this.handleCust = this.handleCust.bind(this);
+    this.handleAddress = this.handleAddress.bind(this);
     this.checkDisabled = this.checkDisabled.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onSaveNew = this.onSaveNew.bind(this);
@@ -45,41 +47,43 @@ class CustomerForm extends Component {
     if (this.props.edit) this.setState({ customer: this.props.edit });
   }
 
-  handleChange(field, value, type) {
-    if (type == "baseContact") {
-      this.setState({
-        ...this.state,
-        customer: {
-          ...this.state.customer,
-          baseContact: {
-            ...this.state.customer.baseContact,
+  handleContact(field, value) {
+    this.setState(prevState => ({
+      ...prevState,
+      customer: {
+        ...prevState.customer,
+        baseContact: {
+          ...prevState.customer.baseContact,
+          [field]: value
+        }
+      }
+    }));
+  }
+
+  handleCust(field, value) {
+    this.setState(prevState => ({
+      ...prevState,
+      customer: {
+        ...prevState.customer,
+        [field]: value
+      }
+    }));
+  }
+
+  handleAddress(field, value) {
+    this.setState(prevState => ({
+      ...prevState,
+      customer: {
+        ...prevState.customer,
+        baseContact: {
+          ...prevState.customer.baseContact,
+          _address: {
+            ...prevState.customer.baseContact._address,
             [field]: value
           }
         }
-      });
-    } else if (type == "address") {
-      this.setState({
-        ...this.state,
-        customer: {
-          ...this.state.customer,
-          baseContact: {
-            ...this.state.customer.baseContact,
-            _address: {
-              ...this.state.customer.baseContact._address,
-              [field]: value
-            }
-          }
-        }
-      });
-    } else {
-      this.setState({
-        ...this.state,
-        customer: {
-          ...this.state.customer,
-          [field]: value
-        }
-      });
-    }
+      }
+    }));
   }
 
   onSubmit() {
@@ -101,127 +105,135 @@ class CustomerForm extends Component {
     const { customer } = this.state;
     const { loading, fields } = this.props.customerForm;
     const { leadSource, accounts, users } = fields;
-    const { edit } = this.props;
+    const { edit, title } = this.props;
     return (
-      <React.Fragment>
+      <FormWrapper
+        onSave={this.onSubmit}
+        onSaveNew={this.onSaveNew}
+        disabled={this.checkDisabled()}
+        edit={edit}
+        title={title}
+      >
         {loading && <RctSectionLoader />}
-        <FormSubmitResetButtons
-          onSubmit={this.onSubmit}
-          onSaveNew={this.onSaveNew}
-          disabled={this.checkDisabled()}
-          edit={edit}
-        />
-        <FormTable>
-          <TableRow>
-            <FormBlock
-              label="First Name"
-              value={customer.baseContact.firstName}
+        <form autoComplete="off">
+          <FormInputLayout
+            title="Key Information"
+            desc="The key fields to get you started with a new Customer record."
+          >
+            <div className="row">
+              <div className="col-5 d-block">
+                <FormInput
+                  label="First Name"
+                  value={customer.baseContact.firstName}
+                  handleChange={e =>
+                    this.handleContact("firstName", e.target.value)
+                  }
+                />
+                <FormInput
+                  label="Last Name"
+                  value={customer.baseContact.lastName}
+                  required={!customer.baseContact.lastName}
+                  handleChange={e =>
+                    this.handleContact("lastName", e.target.value)
+                  }
+                />
+              </div>
+              <div className="col-5 d-block offset-md-1">
+                {!edit && (
+                  <FormInput
+                    label="Owner"
+                    value={customer.userId ? customer.userId : ""}
+                    required={!customer.userId}
+                    selectValues={users}
+                    handleChange={e =>
+                      this.handleCust("userId", e.target.value)
+                    }
+                  />
+                )}
+                <FormInput
+                  label="Related Account"
+                  selectValues={accounts}
+                  value={customer.accountId ? customer.accountId : ""}
+                  handleChange={e =>
+                    this.handleCust("accountId", e.target.value)
+                  }
+                />
+              </div>
+            </div>
+          </FormInputLayout>
+          <FormInputLayout
+            title="Personal Information"
+            desc="Storing information of the Customer to better understand them."
+          >
+            <div className="row">
+              <div className="col-5 d-block">
+                <FormInput
+                  label="Email"
+                  value={customer.baseContact.email}
+                  handleChange={e =>
+                    this.handleContact("email", e.target.value)
+                  }
+                />
+                <FormInput
+                  label="Mobile"
+                  value={customer.baseContact.mobile}
+                  handleChange={e =>
+                    this.handleContact("mobile", e.target.value)
+                  }
+                />
+                <FormInput
+                  label="Job Title"
+                  value={customer.baseContact.title}
+                  handleChange={e =>
+                    this.handleContact("title", e.target.value)
+                  }
+                />
+              </div>
+              <div className="col-5 offset-md-1">
+                <FormInput
+                  label="Source"
+                  value={customer.sourceId ? customer.sourceId : ""}
+                  selectValues={leadSource}
+                  handleChange={e =>
+                    this.handleCust("sourceId", e.target.value)
+                  }
+                />
+                <FormInput
+                  label="Office"
+                  value={customer.baseContact.phone}
+                  handleChange={e =>
+                    this.handleContact("phone", e.target.value)
+                  }
+                />
+                <FormInput
+                  label="Fax"
+                  value={customer.baseContact.fax}
+                  handleChange={e => this.handleContact("fax", e.target.value)}
+                />
+              </div>
+            </div>
+            <AddressFormInput
               handleChange={this.handleChange}
-              target="firstName"
-              targetType="baseContact"
+              address_1={customer.baseContact._address.address_1}
+              address_2={customer.baseContact._address.address_2}
+              city={customer.baseContact._address.city}
+              state={customer.baseContact._address.state}
+              zip={customer.baseContact._address.zip}
             />
-            {!edit && (
-              <FormBlock
-                required
-                label="Owner"
-                value={customer.userId ? customer.userId : ""}
-                handleChange={this.handleChange}
-                target="userId"
-                selectValues={users}
-              />
-            )}
-          </TableRow>
-          <TableRow>
-            <FormBlock
-              label="Last Name"
-              value={customer.baseContact.lastName}
-              handleChange={this.handleChange}
-              target="lastName"
-              targetType="baseContact"
-              required
-            />
-            <FormBlock
-              label="Account"
-              value={customer.accountId}
-              handleChange={this.handleChange}
-              target="accountId"
-              selectValues={accounts}
-            />
-          </TableRow>
-          <TableRow />
-          {/**
-           * Job Title + Source
-           */}
-          <TableRow>
-            <FormBlock
-              label="Job Title"
-              value={customer.baseContact.title}
-              handleChange={this.handleChange}
-              target="title"
-              targetType="baseContact"
-            />
-            <FormBlock
-              label="Source"
-              value={customer.sourceId}
-              handleChange={this.handleChange}
-              target="sourceId"
-              selectValues={leadSource}
-            />
-          </TableRow>
-          {/**
-           * Email + Mobile
-           */}
-          <TableRow>
-            <FormBlock
-              label="Email"
-              value={customer.baseContact.email}
-              handleChange={this.handleChange}
-              target="email"
-              targetType="baseContact"
-            />
-            <FormBlock
-              label="Mobile"
-              value={customer.baseContact.mobile}
-              handleChange={this.handleChange}
-              target="mobile"
-              targetType="baseContact"
-            />
-          </TableRow>
-          {/**
-           * Office + Fax
-           */}
-          <TableRow>
-            <FormBlock
-              label="Office"
-              value={customer.baseContact.phone}
-              handleChange={this.handleChange}
-              target="phone"
-              targetType="baseContact"
-            />
-            <FormBlock
-              label="Fax"
-              value={customer.baseContact.fax}
-              handleChange={this.handleChange}
-              target="fax"
-              targetType="baseContact"
-            />
-          </TableRow>
-        </FormTable>
-        <hr />
-        <AddressFormInput
-          handleChange={this.handleChange}
-          address_1={customer.baseContact._address.address_1}
-          address_2={customer.baseContact._address.address_2}
-          city={customer.baseContact._address.city}
-          state={customer.baseContact._address.state}
-          zip={customer.baseContact._address.zip}
-        />
-        <hr />
-        <DescriptionFormInput
-          handleChange={this.handleChange}
-          description={customer.baseContact.description}
-        />
-      </React.Fragment>
+            <div className="row">
+              <div className="col-11">
+                <FormInput
+                  multiline
+                  rows={4}
+                  label="Description"
+                  value={customer.baseContact.info}
+                  handleChange={e => this.handleContact("info", e.target.value)}
+                />
+              </div>
+            </div>
+          </FormInputLayout>
+        </form>
+      </FormWrapper>
     );
   }
 }
