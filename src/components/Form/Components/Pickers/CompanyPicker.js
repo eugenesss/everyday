@@ -35,27 +35,21 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
   const parts = parse(suggestion.name, matches);
 
   return (
-    <React.Fragment>
-      <div className="p-10">
-        <p className="m-5 text-muted">Suggested Company</p>
-        <hr className="m-0" />
+    <MenuItem selected={isHighlighted} component="div">
+      <div>
+        {parts.map((part, index) => {
+          return part.highlight ? (
+            <span key={String(index)} style={{ fontWeight: 300 }}>
+              {part.text}
+            </span>
+          ) : (
+            <strong key={String(index)} style={{ fontWeight: 500 }}>
+              {part.text}
+            </strong>
+          );
+        })}
       </div>
-      <MenuItem selected={isHighlighted} component="div">
-        <div>
-          {parts.map((part, index) => {
-            return part.highlight ? (
-              <span key={String(index)} style={{ fontWeight: 300 }}>
-                {part.text}
-              </span>
-            ) : (
-              <strong key={String(index)} style={{ fontWeight: 500 }}>
-                {part.text}
-              </strong>
-            );
-          })}
-        </div>
-      </MenuItem>
-    </React.Fragment>
+    </MenuItem>
   );
 }
 
