@@ -90,3 +90,41 @@ export const makePaymentSuccess = data => ({
 export const makePaymentFailure = () => ({
   type: types.MAKE_PAYMENT_FAILURE
 });
+
+export const makePaymentIncompleteFields = (field) => ({
+  type: types.MAKE_PAYMENT_INCOMPLETE_FAILURE,
+  payload: field
+});
+
+
+export const fetchAllPayment = data => ({
+  type: types.FETCH_ALL_PAYMENT,
+  payload: data
+});
+
+export const fetchAllPaymentSuccess = data => ({
+  type: types.FETCH_ALL_PAYMENT_SUCCESS,
+  payload: data
+});
+
+export const fetchAllPaymentFailure = data => ({
+  type: types.FETCH_ALL_PAYMENT_FAILURE,
+  payload: data
+});
+
+
+export const getSingleCompanyPayment = data => ({
+  type: types.GET_SINGLE_COMPANY_PAYMENT,
+  payload: data
+});
+
+export const getSingleCompanyPaymentSuccess = data => ({
+  type: types.GET_SINGLE_COMPANY_PAYMENT_SUCCESS,
+  payload: data
+});
+
+export const getSingleCompanyPaymentFailure = data => ({
+  type: types.GET_SINGLE_COMPANY_PAYMENT_FAILURE,
+  payload: data
+});
+

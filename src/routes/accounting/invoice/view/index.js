@@ -28,9 +28,10 @@ import DialogRoot from "Components/Dialog/DialogRoot";
 
 // import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
+
 // Actions
-import { newInvoice, editInvoice } from "Helpers/url/accounting";
-import { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion, makePayment  } from "Actions";
+import { newInvoice, editInvoice, invoiceNewPage } from "Helpers/url/accounting";
+import { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion, makePayment, makePaymentIncompleteFields  } from "Actions";
 
 
 // addNoteToQuotation(acctID), onNoteChange, clearNote
@@ -68,23 +69,28 @@ class acct_view_invoice extends Component {
   }
 
   makePayment = (item) =>  {
-    console.log('make Payment')
-    console.log(item)
 
     let paidAmount
     if(item.paidAmount != 0){
-      paidAmount = parseInt(item.paidAmount.split('$')[1]) 
+    
+      const splitValue = item.paidAmount.split('$')[1]
+      const joinValue = splitValue.replace(/,/g, '')
+      item.paidAmount = parseInt(joinValue)
+    
     } else {
       paidAmount = 0
     }
     
     if(paidAmount == 0) {
+      this.props.makePaymentIncompleteFields('paid amount')
       return
     }
     if(item.paymentRef == ""){
+      this.props.makePaymentIncompleteFields('payment reference')
       return
     } 
     if(item.paymentMethod == "" ){
+      this.props.makePaymentIncompleteFields('payment method')
       return
     }
     
@@ -94,10 +100,7 @@ class acct_view_invoice extends Component {
   }
 
 
-  makePayment = item => {
-    console.log("make Payment");
-    console.log(item);
-  };
+
 
   render() {
     const { loading, invoice } = this.props.invoiceToView;
@@ -334,7 +337,7 @@ const mapStateToProps = ({ accountingState }) => {
 
 export default connect(
   mapStateToProps,
-  { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion, makePayment }
+  { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion, makePayment, makePaymentIncompleteFields }
 )(acct_view_invoice);
 
 /// current invoice v1  - create new version - takes in same invoice but different version (Current)
