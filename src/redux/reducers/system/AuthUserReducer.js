@@ -68,8 +68,9 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         loading: false,
-        user: action.payload.user,
-        access: action.payload.accessRights
+        user: action.payload.user.userId,
+        access: action.payload.accessRights,
+        userInfo: action.payload.userInfo
       };
     case USER_RIGHTS_SUCCESS:
       return {
