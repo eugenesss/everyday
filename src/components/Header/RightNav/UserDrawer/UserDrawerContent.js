@@ -1,71 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { withRouter } from "react-router-dom";
 
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-import { ExitToApp, Close, Settings } from "@material-ui/icons";
+import Button from "@material-ui/core/Button";
+import { ExitToApp, Settings } from "@material-ui/icons";
 
 // Logout
 import { logoutUser } from "Actions";
 import Auth from "../../../../Auth/Auth";
 import Calendar from "../../../Widgets/Calendar/CalendarLayout";
-const useStyles = makeStyles({
-  list: {
-    padding: "20px 40px"
-  }
-});
 
 function UserDrawerContent(props) {
-  const classes = useStyles();
   const toggleDrawer = props.toggleDrawer;
-  const { user } = props;
+  const { user, history } = props;
+  function toSettingPage() {
+    history.push("/app/settings");
+  }
   return (
-    <div
-      className={classes.list}
-      role="presentation"
-      onKeyDown={toggleDrawer()}
-    >
-      <div className="row">
-        <div className="col-12 text-right">
-          <div>
-            <Tooltip title="Logout" placement="bottom">
-              <IconButton
-                aria-label="logout"
-                className="ml-10"
-                onClick={() => {
-                  const token = new Auth().retrieveAccessToken();
-                  props.logoutUser(token);
-                }}
-              >
-                <ExitToApp style={{ fontSize: "20px" }} />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Settings" placement="bottom">
-              <Link to="/app/settings">
-                <IconButton
-                  aria-label="settings"
-                  className="ml-10"
-                  onClick={toggleDrawer()}
-                >
-                  <Settings style={{ fontSize: "20px" }} />
-                </IconButton>
-              </Link>
-            </Tooltip>
-            <Tooltip title="Close" placement="bottom">
-              <IconButton
-                aria-label="close"
-                className="ml-10"
-                onClick={toggleDrawer()}
-              >
-                <Close style={{ fontSize: "20px" }} />
-              </IconButton>
-            </Tooltip>
-          </div>
-        </div>
-      </div>
-      <div className="row mt-30">
+    <div className="user-drawer" role="presentation" onKeyDown={toggleDrawer()}>
+      <div className="row top-drawer">
         <div className="col-12">
           <div className="media">
             <div className="media-left mr-25">
@@ -87,8 +40,32 @@ function UserDrawerContent(props) {
       </div>
       <hr />
 
-      <div className="row mt-30">
+      <div className="row user-drawer-content">
         <Calendar />
+      </div>
+
+      <div className="drawer-footer">
+        <hr />
+        <div className="drawer-actions">
+          <Button
+            variant="text"
+            aria-label="settings"
+            onClick={() => toSettingPage()}
+          >
+            <Settings />
+            Settings
+          </Button>
+          <Button
+            aria-label="logout"
+            onClick={() => {
+              const token = new Auth().retrieveAccessToken();
+              props.logoutUser(token);
+            }}
+          >
+            <ExitToApp />
+            Logout
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -100,7 +77,9 @@ const mapStateToProps = ({ authUser }) => {
   return { user };
 };
 
-export default connect(
-  mapStateToProps,
-  { logoutUser }
-)(UserDrawerContent);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { logoutUser }
+  )(UserDrawerContent)
+);
