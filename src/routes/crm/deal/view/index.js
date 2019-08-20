@@ -5,29 +5,12 @@ import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-import MoreButton from "Components/PageTitleBar/MoreButton";
-
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
-import BgCard from "Components/Everyday/BgCard";
-// Deal Card
+// Layout
 import DealCard from "Components/CRM/Deal/DealCard";
-// Vertical Tabs
-import VerticalTab from "Components/Everyday/VerticalTabs//VerticalTab";
-import VerticalContainer from "Components/Everyday/VerticalTabs//VerticalContainer";
-// Deal Stage Component
-import SelectDealStage from "Components/CRM/Deal/SelectDealStage";
-// Details Tab
-import DealDetails from "Components/CRM/Deal/DealDetails";
-import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
-// History Tab
-import DealHistory from "Components/CRM/Deal/DealHistory";
-// Events Tab
-import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
-import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
-// Notes Tab
-import NotesLayout from "Components/Everyday/Notes/NotesLayout";
+import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
 // routes
 import { dealEditPage, dealListPage, dealNewPage } from "Helpers/url/crm";
 // Actions
@@ -43,7 +26,6 @@ import {
 class crm_view_deal extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeIndex: 0 };
     this.addNote = this.addNote.bind(this);
     this.transfer = this.transfer.bind(this);
   }
@@ -54,9 +36,6 @@ class crm_view_deal extends Component {
   componentWillUnmount() {
     this.props.clearSingleDeal();
   }
-  // Change view tab state
-  changeTabView = (_, activeIndex) => this.setState({ activeIndex });
-
   /**
    * Transfer Record
    */
@@ -107,7 +86,6 @@ class crm_view_deal extends Component {
 
   render() {
     const { loading, deal, sectionLoading } = this.props.dealToView;
-    const { activeIndex } = this.state;
     return (
       <React.Fragment>
         {loading ? (
@@ -117,91 +95,18 @@ class crm_view_deal extends Component {
             <Helmet>
               <title>Everyday | View Deal</title>
             </Helmet>
-            <PageTitleBar
-              title="View Deal"
-              createLink={dealNewPage}
-              moreButton={
-                <MoreButton>
-                  {{ handleOnClick: () => this.edit(deal), label: "Edit" }}
-                  {{
-                    handleOnClick: () => this.transfer(deal),
-                    label: "Transfer"
-                  }}
-                  {{
-                    handleOnClick: () => this.delete(deal),
-                    label: "Delete"
-                  }}
-                </MoreButton>
-              }
-            />
-            <BgCard fullBlock>
-              <div className="row no-gutters">
-                <div className="col-md-3 align-self-center">
-                  <DealCard
-                    name={deal.name}
-                    stage={deal.stageInfo}
-                    type={deal.typeInfo && deal.typeInfo.name}
-                    ownerName={deal.userInfo && deal.userInfo.name}
-                    amount={deal.amount}
-                    account={deal.accountInfo}
-                    customer={deal.customerInfo}
-                  />
-                </div>
-                <div className="col-md-9 border-left px-20 py-30">
-                  <SelectDealStage deal={deal} />
-                </div>
-              </div>
-            </BgCard>
+            <PageTitleBar title="View Deal" />
+
             <div className="row">
               <div className="col-3">
-                <VerticalTab
-                  activeIndex={activeIndex}
-                  handleChange={this.changeTabView}
-                  selectedcolor="crm"
-                >
-                  {{
-                    icon: "zmdi-info-outline",
-                    label: "DETAILS"
-                  }}
-                  {{
-                    icon: "zmdi-book",
-                    label: "HISTORY"
-                  }}
-                  {{
-                    icon: "zmdi-calendar",
-                    label: "EVENTS"
-                  }}
-                  {{
-                    icon: "zmdi-comment-text",
-                    label: "NOTES"
-                  }}
-                </VerticalTab>
+                <DealCard deal={deal} />
               </div>
               <div className="col-9">
-                <VerticalContainer
-                  activeIndex={activeIndex}
-                  handleChange={this.changeTabView}
-                  fullBlock
-                  loading={sectionLoading}
-                >
-                  <div>
-                    <DealDetails deal={deal} />
-                    <DescriptionDetails desc={deal.info} />
-                  </div>
-                  <div>
-                    <DealHistory history={deal.history} />
-                  </div>
-                  <div>
-                    <UpcomingEvents events={deal.upcomingEvents} />
-                    <ClosedEvents events={deal.closedEvents} />
-                  </div>
-                  <div>
-                    <NotesLayout
-                      allNotes={deal.notes}
-                      handleAddNote={this.addNote}
-                    />
-                  </div>
-                </VerticalContainer>
+                <ProfileTabs loading={sectionLoading}>
+                  <div label="Overview">Stage, related, deal history</div>
+                  <div label="Events">Stage, related, deal history</div>
+                  <div label="Details">Stage, related, deal history</div>
+                </ProfileTabs>
               </div>
             </div>
           </React.Fragment>

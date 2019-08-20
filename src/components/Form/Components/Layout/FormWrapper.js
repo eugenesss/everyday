@@ -8,7 +8,6 @@ const FormWrapper = props => (
   <React.Fragment>
     <PageTitleBar
       title={<IntlMessages id={props.title} />}
-      allowBack
       actionButton={
         <FormSubmitButtons
           onSave={props.onSave}

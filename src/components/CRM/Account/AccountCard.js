@@ -1,37 +1,41 @@
 import React from "react";
 import {
-  ViewCardLayout,
-  ViewCardTitle,
-  ViewCardDetails
-} from "Components/CRM/View/Layout/ViewCard";
+  Wrapper,
+  Contact,
+  KeyDetails
+} from "Components/Everyday/Layout/View/ProfileCard";
 import ActiveStatusBadge from "Components/Everyday/StatusBadge/ActiveStatusBadge";
 
-const AccountCard = ({
-  name,
-  industry,
-  ownerName,
-  phone,
-  fullAddress,
-  isActive,
-  website
-}) => {
+function AccountCard(props) {
+  const { acct } = props;
   return (
-    <ViewCardLayout>
-      <ViewCardTitle
-        name={name}
-        subHeading={[
-          industry && industry.name,
-          <ActiveStatusBadge isActive={isActive} />
+    <Wrapper>
+      <Contact
+        name={acct.name}
+        subHeading={acct.industryInfo}
+        call={acct.baseContact.phone}
+        email={acct.baseContact.email}
+        website={acct.baseContact.website}
+      />
+      <div className="profile-card-section">
+        <div>
+          <h4 className="mb-20 text-muted">Upcoming Events</h4>
+        </div>
+      </div>
+      <KeyDetails
+        keyDetails={[
+          {
+            label: "Status",
+            value: <ActiveStatusBadge isActive={acct.isActive} />
+          },
+          {
+            label: "Owner",
+            value: acct.userInfo && acct.userInfo.name
+          }
         ]}
       />
-      <ViewCardDetails>
-        {{ title: "Owner", icon: "zmdi-account", detail: ownerName }}
-        {{ title: "Office", icon: "zmdi-phone", detail: phone }}
-        {{ title: "Website", icon: "zmdi-desktop-mac", detail: website }}
-        {{ title: "Address", icon: "zmdi-pin", detail: fullAddress }}
-      </ViewCardDetails>
-    </ViewCardLayout>
+    </Wrapper>
   );
-};
+}
 
 export default AccountCard;

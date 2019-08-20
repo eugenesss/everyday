@@ -52,16 +52,7 @@ class crm_lead extends Component {
           <meta name="description" content="Everyday Leads Generation" />
         </Helmet>
         <PageTitleBar
-          title={
-            <div className="d-flex">
-              {/* <ListViewSelector
-                options={options}
-                nowShowing={nowShowing}
-                onChangeValue={this.props.changeLeadView}
-              /> */}
-              {/* <ShowListSummaryButton action={() => this.toggleSummary()} /> */}
-            </div>
-          }
+          title={nowShowing}
           createLink={leadNewPage}
           moreButton={
             <MoreButton>
@@ -73,9 +64,17 @@ class crm_lead extends Component {
             </MoreButton>
           }
         />
+        {/* <div className="d-flex">
+          <ListViewSelector
+            options={options}
+            nowShowing={nowShowing}
+            onChangeValue={this.props.changeLeadView}
+          />
+          <ShowListSummaryButton action={() => this.toggleSummary()} />
+        </div> */}
         {this.state.showSummary && <ListSummary summary={summary} />}
         <LeadList
-          title={nowShowing}
+          // title={nowShowing}
           action={action}
           tableData={tableData}
           loading={loading}

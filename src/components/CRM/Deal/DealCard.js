@@ -1,62 +1,53 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import {
-  ViewCardLayout,
-  ViewCardTitle,
-  ViewCardDetails
-} from "Components/CRM/View/Layout/ViewCard";
+  Wrapper,
+  Contact,
+  KeyDetails
+} from "Components/Everyday/Layout/View/ProfileCard";
 import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 import NumberFormat from "react-number-format";
-
 import { singleAccount, singleCustomer } from "Helpers/url/crm";
 
-const DealCard = ({
-  name,
-  stage,
-  type,
-  ownerName,
-  amount,
-  account,
-  customer
-}) => {
+function DealCard(props) {
+  const { deal } = props;
   return (
-    <ViewCardLayout>
-      <ViewCardTitle
+    <Wrapper>
+      <Contact
         noAvatar
-        name={name}
-        subHeading={[
+        name={deal.name}
+        subHeading={
           <NumberFormat
-            value={amount}
+            value={deal.amount}
             displayType={"text"}
             thousandSeparator={true}
             prefix={"$"}
-          />,
-          <StatusBadge
-            name={`${stage.name} - ${stage.chance}%`}
-            color={stage.color}
-          />,
-          type
+          />
+        }
+      />
+      <div className="profile-card-section">
+        <div>
+          <h4 className="mb-20 text-muted">Related Parties</h4>
+        </div>
+      </div>
+      <KeyDetails
+        keyDetails={[
+          {
+            label: "Status",
+            value: deal.stageInfo.name
+          },
+          {
+            label: "Chance",
+            value: deal.stageInfo.chance
+          },
+          {
+            label: "Owner",
+            value: deal.userInfo && deal.userInfo.name
+          }
         ]}
       />
-      <ViewCardDetails>
-        {{ title: "Owner", icon: "zmdi-account", detail: ownerName }}
-        {{
-          title: "Account",
-          icon: "zmdi-city-alt",
-          detail: account && (
-            <NavLink to={singleAccount(account.id)}>{account.name}</NavLink>
-          )
-        }}
-        {{
-          title: "Customer",
-          icon: "zmdi-accounts-outline",
-          detail: customer && (
-            <NavLink to={singleCustomer(customer.id)}>{customer.name}</NavLink>
-          )
-        }}
-      </ViewCardDetails>
-    </ViewCardLayout>
+    </Wrapper>
   );
-};
+}
 
 export default DealCard;

@@ -11,17 +11,14 @@ const PageTitleBar = ({
   extraButtons,
   actionButton,
   actionGroup,
-  allowBack,
   history
 }) => {
   return (
     <div className="page-title d-flex justify-content-between align-items-center">
       <div className="page-title-wrap">
-        {allowBack && (
-          <IconButton onClick={() => history.goBack()} aria-label="back">
-            <ArrowBack style={{ fontSize: "20px" }} />
-          </IconButton>
-        )}
+        <IconButton onClick={() => history.goBack()} aria-label="back">
+          <ArrowBack style={{ fontSize: "20px" }} />
+        </IconButton>
         <h2 className="">{title && title}</h2>
       </div>
       <div className="d-flex">

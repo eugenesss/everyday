@@ -5,24 +5,16 @@ import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-import MoreButton from "Components/PageTitleBar/MoreButton";
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
-// Card
+// Layout
 import LeadCard from "Components/CRM/Lead/LeadCard";
-// Vertical Tabs
-import VerticalTab from "Components/Everyday/VerticalTabs//VerticalTab";
-import VerticalContainer from "Components/Everyday/VerticalTabs//VerticalContainer";
-// Details Tab
-import LeadDetails from "Components/CRM/Lead/LeadDetails";
-import AddressDetails from "Components/CRM/View/Details/AddressDetails";
-import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
-// Events Tab
-import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
-import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
-// Notes Tab
-import NotesLayout from "Components/Everyday/Notes/NotesLayout";
+import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
+// Tabs
+import LeadOverviewTab from "./tabs/Overview";
+import LeadDetailsTab from "./tabs/Details";
+import LeadEventsTab from "./tabs/Events";
 // Convert Lead Modal
 import ConvertLeadModal from "Components/CRM/Lead/Convert/ConvertLeadModal";
 import ConvertSuccessModal from "Components/CRM/Lead/Convert/ConvertSuccessModal";
@@ -43,7 +35,6 @@ import {
 class crm_view_lead extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeIndex: 0 };
     this.startConvert = this.startConvert.bind(this);
     this.edit = this.edit.bind(this);
     this.addNote = this.addNote.bind(this);
@@ -57,9 +48,6 @@ class crm_view_lead extends Component {
   componentWillUnmount() {
     this.props.clearSingleLead();
   }
-
-  // Change view tab state
-  changeTabView = (_, activeIndex) => this.setState({ activeIndex });
 
   /**
    * Transfer Record
@@ -118,7 +106,6 @@ class crm_view_lead extends Component {
 
   render() {
     const { lead, loading, sectionLoading } = this.props.leadToView;
-    const { activeIndex } = this.state;
 
     return (
       <React.Fragment>
@@ -129,93 +116,26 @@ class crm_view_lead extends Component {
           <RctPageLoader />
         ) : lead ? (
           <React.Fragment>
-            <PageTitleBar
-              title="View Lead"
-              createLink={leadNewPage}
-              extraButtons={[
-                {
-                  color: "success",
-                  label: "Convert",
-                  handleOnClick: () => this.startConvert(lead.companyName)
-                }
-              ]}
-              moreButton={
-                <MoreButton>
-                  {{ handleOnClick: () => this.edit(lead), label: "Edit" }}
-                  {{
-                    handleOnClick: () => this.transfer(lead),
-                    label: "Transfer"
-                  }}
-                  {{
-                    handleOnClick: () => this.delete(lead),
-                    label: "Delete"
-                  }}
-                </MoreButton>
-              }
-            />
+            <PageTitleBar title="View Lead" />
             <div className="row">
               <div className="col-md-3">
-                <div>
-                  <LeadCard
-                    name={lead.name}
-                    companyName={lead.companyName}
-                    status={lead.statusInfo && lead.statusInfo}
-                    ownerName={lead.userInfo && lead.userInfo.name}
-                    mobile={lead.baseContact.mobile}
-                    phone={lead.baseContact.phone}
-                    email={lead.baseContact.email}
-                    interest={lead.interest}
-                  />
-                  <VerticalTab
-                    activeIndex={activeIndex}
-                    handleChange={this.changeTabView}
-                    selectedcolor="crm"
-                  >
-                    {{
-                      icon: "zmdi-info-outline",
-                      label: "DETAILS"
-                    }}
-                    {{
-                      icon: "zmdi-calendar",
-                      label: "EVENTS"
-                    }}
-                    {{
-                      icon: "zmdi-comment-text",
-                      label: "NOTES"
-                    }}
-                  </VerticalTab>
-                </div>
+                <LeadCard lead={lead} />
               </div>
               <div className="col-md-9">
-                <VerticalContainer
-                  activeIndex={activeIndex}
-                  handleChange={this.changeTabView}
-                  fullBlock
-                  loading={sectionLoading}
-                >
-                  <div>
-                    <LeadDetails lead={lead} />
-                    <AddressDetails
-                      addressDetails={lead.baseContact._address}
-                    />
-                    <DescriptionDetails desc={lead.baseContact.info} />
+                <ProfileTabs loading={sectionLoading}>
+                  <div label="Overview">
+                    <LeadOverviewTab lead={lead} />
                   </div>
-                  <div>
-                    <UpcomingEvents
-                      events={lead.upcomingEvents}
-                      handleNewEvent={this.newEvent}
-                    />
-                    <ClosedEvents events={lead.pastEvents} />
+                  <div label="Events">
+                    <LeadEventsTab />
                   </div>
-                  <div>
-                    <NotesLayout
-                      allNotes={lead.notes}
-                      handleAddNote={this.addNote}
-                    />
+                  <div label="Details">
+                    <LeadDetailsTab lead={lead} />
                   </div>
-                </VerticalContainer>
+                </ProfileTabs>
               </div>
             </div>
+
             <ConvertLeadModal />
             <ConvertSuccessModal />
           </React.Fragment>
@@ -248,3 +168,45 @@ export default withRouter(
     }
   )(crm_view_lead)
 );
+
+// import MoreButton from "Components/PageTitleBar/MoreButton";
+// // Vertical Tabs
+// import VerticalTab from "Components/Everyday/VerticalTabs//VerticalTab";
+// import VerticalContainer from "Components/Everyday/VerticalTabs//VerticalContainer";
+// // Details Tab
+// import LeadDetails from "Components/CRM/Lead/LeadDetails";
+// import AddressDetails from "Components/CRM/View/Details/AddressDetails";
+// import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
+// // Events Tab
+// import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
+// import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
+// // Notes Tab
+// import NotesLayout from "Components/Everyday/Notes/NotesLayout";
+
+//  <VerticalContainer
+//                   activeIndex={activeIndex}
+//                   handleChange={this.changeTabView}
+//                   fullBlock
+//                   loading={sectionLoading}
+//                 >
+//                   <div>
+//                     <LeadDetails lead={lead} />
+//                     <AddressDetails
+//                       addressDetails={lead.baseContact._address}
+//                     />
+//                     <DescriptionDetails desc={lead.baseContact.info} />
+//                   </div>
+//                   <div>
+//                     <UpcomingEvents
+//                       events={lead.upcomingEvents}
+//                       handleNewEvent={this.newEvent}
+//                     />
+//                     <ClosedEvents events={lead.pastEvents} />
+//                   </div>
+//                   <div>
+//                     <NotesLayout
+//                       allNotes={lead.notes}
+//                       handleAddNote={this.addNote}
+//                     />
+//                   </div>
+//                 </VerticalContainer>

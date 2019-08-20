@@ -5,26 +5,17 @@ import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-import MoreButton from "Components/PageTitleBar/MoreButton";
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
-// Card
+// Layout
 import CustomerCard from "Components/CRM/Customer/CustomerCard";
-// Vertical Tabs
-import VerticalTab from "Components/Everyday/VerticalTabs//VerticalTab";
-import VerticalContainer from "Components/Everyday/VerticalTabs//VerticalContainer";
-// Details Tab
-import CustomerDetails from "Components/CRM/Customer/CustomerDetails";
-import AddressDetails from "Components/CRM/View/Details/AddressDetails";
-import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
-// Related Tab
-import RelatedDeals from "Components/CRM/View/Related/RelatedDeals";
-// Events Tab
-import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
-import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
-// Notes Tab
-import NotesLayout from "Components/Everyday/Notes/NotesLayout";
+import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
+// Tabs
+import OverviewTab from "./tabs/Overview";
+import DetailsTab from "./tabs/Details";
+import RelatedTab from "./tabs/Related";
+import EventsTab from "./tabs/Events";
 // routes
 import {
   customerListPage,
@@ -45,7 +36,6 @@ import {
 class crm_view_customer extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeIndex: 0 };
     this.edit = this.edit.bind(this);
     this.addNote = this.addNote.bind(this);
     this.trasnfer = this.transfer.bind(this);
@@ -57,8 +47,6 @@ class crm_view_customer extends Component {
   componentWillUnmount() {
     this.props.clearSingleCustomer();
   }
-  // Change view tab state
-  changeTabView = (_, activeIndex) => this.setState({ activeIndex });
 
   /**
    * Edit
@@ -113,7 +101,6 @@ class crm_view_customer extends Component {
 
   render() {
     const { loading, customer, sectionLoading } = this.props.customerToView;
-    const { activeIndex } = this.state;
     return (
       <React.Fragment>
         {loading ? (
@@ -123,103 +110,18 @@ class crm_view_customer extends Component {
             <Helmet>
               <title>Everyday | View Customer</title>
             </Helmet>
-            <PageTitleBar
-              title="View Customer"
-              createLink={customerNewPage}
-              extraButtons={[
-                customer.isActive
-                  ? {
-                      color: "danger",
-                      label: "Set Inactive",
-                      handleOnClick: () => this.setInactive(customer)
-                    }
-                  : {
-                      color: "success",
-                      label: "Set Active",
-                      handleOnClick: () => this.setInactive(customer)
-                    }
-              ]}
-              moreButton={
-                <MoreButton>
-                  {{ handleOnClick: () => this.edit(customer), label: "Edit" }}
-                  {{
-                    handleOnClick: () => this.transfer(customer),
-                    label: "Transfer"
-                  }}
-                  {{
-                    handleOnClick: () => this.delete(customer),
-                    label: "Delete"
-                  }}
-                </MoreButton>
-              }
-            />
+            <PageTitleBar title="View Customer" />
             <div className="row">
               <div className="col-md-3">
-                <div>
-                  <CustomerCard
-                    name={customer.name}
-                    account={customer.accountInfo}
-                    ownerName={customer.userInfo && customer.userInfo.name}
-                    mobile={customer.baseContact.mobile}
-                    phone={customer.baseContact.phone}
-                    email={customer.baseContact.email}
-                    isActive={customer.isActive}
-                  />
-                  <VerticalTab
-                    activeIndex={activeIndex}
-                    handleChange={this.changeTabView}
-                    selectedcolor="crm"
-                  >
-                    {{
-                      icon: "zmdi-info-outline",
-                      label: "DETAILS"
-                    }}
-                    {{
-                      icon: "zmdi-link",
-                      label: "RELATED"
-                    }}
-                    {{
-                      icon: "zmdi-calendar",
-                      label: "EVENTS"
-                    }}
-                    {{
-                      icon: "zmdi-comment-text",
-                      label: "NOTES"
-                    }}
-                  </VerticalTab>
-                </div>
+                <CustomerCard cust={customer} />
               </div>
               <div className="col-md-9">
-                <VerticalContainer
-                  activeIndex={activeIndex}
-                  handleChange={this.changeTabView}
-                  fullBlock
-                  loading={sectionLoading}
-                >
-                  <div>
-                    <CustomerDetails customer={customer} />
-                    <AddressDetails
-                      addressDetails={customer.baseContact._address}
-                    />
-                    <DescriptionDetails desc={customer.baseContact.info} />
-                  </div>
-                  <div>
-                    <RelatedDeals deals={customer.deals} />
-                  </div>
-                  <div>
-                    <UpcomingEvents
-                      events={customer.upcomingEvents}
-                      handleNewEvent={this.newEvent}
-                    />
-                    <ClosedEvents events={customer.closedEvents} />
-                  </div>
-                  <div>
-                    <NotesLayout
-                      allNotes={customer.notes}
-                      handleAddNote={this.addNote}
-                    />
-                  </div>
-                </VerticalContainer>
+                <ProfileTabs loading={sectionLoading}>
+                  <div label="Overview">overview</div>
+                  <div label="Related">related</div>
+                  <div label="Events">events</div>
+                  <div label="Details">details</div>
+                </ProfileTabs>
               </div>
             </div>
           </React.Fragment>

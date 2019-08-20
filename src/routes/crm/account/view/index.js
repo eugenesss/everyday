@@ -5,27 +5,13 @@ import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-import MoreButton from "Components/PageTitleBar/MoreButton";
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
-// Account Card
+// Layout
 import AccountCard from "Components/CRM/Account/AccountCard";
-// Vertical Tabs
-import VerticalTab from "Components/Everyday/VerticalTabs//VerticalTab";
-import VerticalContainer from "Components/Everyday/VerticalTabs//VerticalContainer";
-// // Details Tab
-import AccountDetails from "Components/CRM/Account/AccountDetails";
-import AddressDetails from "Components/CRM/View/Details/AddressDetails";
-import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
-// Related Tab
-import RelatedDeals from "Components/CRM/View/Related/RelatedDeals";
-import RelatedCustomers from "Components/CRM/View/Related/RelatedCustomers";
-// Events Tab
-import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
-import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
-// Notes Tab
-import NotesLayout from "Components/Everyday/Notes/NotesLayout";
+import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
+
 // Routes
 import {
   accountEditPage,
@@ -47,7 +33,6 @@ import {
 class crm_view_account extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeIndex: 0 };
     this.edit = this.edit.bind(this);
     this.handleNewDeal = this.handleNewDeal.bind(this);
     this.addNote = this.addNote.bind(this);
@@ -59,9 +44,6 @@ class crm_view_account extends Component {
   componentWillUnmount() {
     this.props.clearSingleAccount();
   }
-  // Change view tab state
-  changeTabView = (_, activeIndex) => this.setState({ activeIndex });
-
   /**
    * Edit
    */
@@ -117,7 +99,6 @@ class crm_view_account extends Component {
 
   render() {
     const { loading, account, sectionLoading } = this.props.accountToView;
-    const { activeIndex } = this.state;
     return loading ? (
       <RctPageLoader />
     ) : account ? (
@@ -125,99 +106,17 @@ class crm_view_account extends Component {
         <Helmet>
           <title>Everyday | View Account</title>
         </Helmet>
-        <PageTitleBar
-          title="View Account"
-          createLink={accountNewPage}
-          extraButtons={[
-            account.isActive
-              ? {
-                  color: "danger",
-                  label: "Set Inactive",
-                  handleOnClick: () => this.setInactive(account)
-                }
-              : {
-                  color: "success",
-                  label: "Set Active",
-                  handleOnClick: () => this.setInactive(account)
-                }
-          ]}
-          moreButton={
-            <MoreButton>
-              {{ handleOnClick: () => this.edit(account), label: "Edit" }}
-              {{
-                handleOnClick: () => this.transfer(account),
-                label: "Transfer"
-              }}
-              {{ handleOnClick: () => this.delete(account), label: "Delete" }}
-            </MoreButton>
-          }
-        />
+        <PageTitleBar title="View Account" />
         <div className="row">
           <div className="col-md-3">
-            <div>
-              <AccountCard
-                name={account.name}
-                ownerName={account.userInfo && account.userInfo.name}
-                phone={account.baseContact.phone}
-                isActive={account.isActive}
-                industry={account.industry}
-                fullAddress={account.fullAddress}
-                website={account.baseContact.website}
-              />
-              <VerticalTab
-                activeIndex={activeIndex}
-                handleChange={this.changeTabView}
-                selectedcolor="crm"
-              >
-                {{
-                  icon: "zmdi-info-outline",
-                  label: "DETAILS"
-                }}
-                {{
-                  icon: "zmdi-link",
-                  label: "RELATED"
-                }}
-                {{
-                  icon: "zmdi-calendar",
-                  label: "EVENTS"
-                }}
-                {{
-                  icon: "zmdi-comment-text",
-                  label: "NOTES"
-                }}
-              </VerticalTab>
-            </div>
+            <AccountCard acct={account} />
           </div>
           <div className="col-md-9">
-            <VerticalContainer
-              activeIndex={activeIndex}
-              handleChange={this.changeTabView}
-              fullBlock
-              loading={sectionLoading}
-            >
-              <div>
-                <AccountDetails account={account} />
-                <AddressDetails addressDetails={account.baseContact._address} />
-                <DescriptionDetails desc={account.baseContact.info} />
-              </div>
-              <div>
-                <RelatedDeals
-                  deals={account.deals}
-                  handleNewDeal={this.handleNewDeal}
-                />
-                <RelatedCustomers customers={account.customers} />
-              </div>
-              <div>
-                <UpcomingEvents events={account.upcomingEvents} />
-                <ClosedEvents events={account.closedEvents} />
-              </div>
-              <div>
-                <NotesLayout
-                  allNotes={account.notes}
-                  handleAddNote={this.addNote}
-                />
-              </div>
-            </VerticalContainer>
+            <ProfileTabs loading={sectionLoading}>
+              <div label="Overview">Overview</div>
+              <div label="Overview">Overview</div>
+              <div label="Overview">Overview</div>
+            </ProfileTabs>
           </div>
         </div>
       </React.Fragment>
