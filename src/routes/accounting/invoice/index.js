@@ -40,6 +40,7 @@ class acct_invoice extends Component {
     } = this.props.invoiceState.invoiceList;
 
     const { showSummary, summary } = this.props.invoiceState.invoiceSummary;
+
     return (
       <React.Fragment>
         <Helmet>

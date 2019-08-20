@@ -26,20 +26,23 @@ import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices"
 // import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
-import { getSinglePayment, clearSinglePayment } from "Actions";
+import { getSingleCompanyPayment, clearSinglePayment } from "Actions";
 
 class acct_view_payment extends Component {
   componentDidMount() {
     var id = this.props.match.params.id;
-    this.props.getSinglePayment(id);
+    this.props.getSingleCompanyPayment(id);
   }
 
   componentWillUnmount() {
-    this.props.clearSinglePayment();
+    // this.props.clearSinglePayment();
   }
 
   render() {
     const { loading, payment } = this.props.paymentToView;
+
+    console.log(payment)
+
     return loading ? (
       <RctPageLoader />
     ) : payment ? (
@@ -51,14 +54,15 @@ class acct_view_payment extends Component {
         <div className="row">
           <div className="col-md-4">
             <BgCard>
-              <AccountingDetails
-                type="payment"
-                accountID={payment.creditID}
-                status={payment.status.name}
-                account={payment.account && payment.account.name}
-                sentDate={payment.sentOn}
-                owner={payment.owner.name}
-              />
+              {/* <AccountingDetails
+                // type="payment"
+                // accountID={payment.creditID}
+                // status={payment.status.name}
+                // account={payment.account && payment.account.name}
+                // sentDate={payment.sentOn}
+                // owner={payment.owner.name}
+
+              /> */}
             </BgCard>
           </div>
           <div className="col-md-8">
@@ -75,10 +79,10 @@ class acct_view_payment extends Component {
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div className="col-md-5">
-                    <NewNote /* onAddNote="function" */ />
+                   
                   </div>
                   <div className="col-md-7">
-                    <DisplayAllNotes notes={payment.notes} />
+                    {/* <DisplayAllNotes notes={payment.notes} /> */}
                   </div>
                 </div>
               </div>
@@ -103,5 +107,5 @@ const mapStateToProps = ({ accountingState }) => {
 
 export default connect(
   mapStateToProps,
-  { getSinglePayment, clearSinglePayment }
+  { getSingleCompanyPayment, clearSinglePayment }
 )(acct_view_payment);

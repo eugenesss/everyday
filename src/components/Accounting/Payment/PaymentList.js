@@ -1,51 +1,83 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+
+import RecordsList from "Components/Everyday/RecordsList";
+import { listOptions } from "Helpers/helpers";
+
 //Page req
-// import DataList from "Components/Everyday/DataList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import BgCard from "Components/Everyday/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
+import Moment from "moment";
+
 const PaymentList = ({ tableData, loading, title, action }) => {
   const columns = [
     {
-      name: "id",
-      options: { display: "excluded", filter: false, sort: false }
-    },
-    {
-      label: "Payment #",
-      name: "creditID",
-      options: {
+      label: "Company",
+      name: "companyName",
+      options: { 
         customBodyRender: (value, tableMeta) => {
           return (
-            <NavLink to={`credit_note/${tableMeta.rowData[0]}`}>
-              {value}
-            </NavLink>
+            <NavLink to={`payments/${value.id}`}>{value.companyName}</NavLink>
           );
         }
-      }
+      },
     },
-    { label: "Date Sent", name: "sentOn" },
-    {
-      label: "Account",
-      name: "account",
-      options: {
-        customBodyRender: value => {
-          return value ? value.name : "";
-        }
-      }
-    },
-    {
-      label: "Status",
-      name: "status",
-      options: {
-        customBodyRender: value => {
-          return value.name;
-        }
-      }
-    },
-    { label: "Amount", name: "amt" }
+    // {
+    //   label: "Invoice #",
+    //   name: "quoteID",
+    //   options: {
+    //     customBodyRender: (value, tableMeta) => {
+    //       return (
+    //         <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
+    //       );
+    //     }
+    //   }
+    // },
+    
+    // {
+    //   label: "Total Invoices",
+    //   name: "totalInvoices",
+    //   options: {
+    //     customBodyRender: value => {
+    //       return value
+    //     }
+    //   }
+    // },
+    // {
+    //   label: "Total Debit",
+    //   name: "invoiceTotalAmt",
+    //   options: {
+    //     customBodyRender: (value, tableMeta) => {
+    //       return `$${value.toLocaleString()}`
+
+    //     }
+    //   }
+    // },
+    // {
+    //   label: "Total Paid",
+    //   name: "invoiceTotalAmtPaid",
+    //   options: {
+    //     customBodyRender: value => {
+    //       return `$${value.toLocaleString()}`
+    //     }
+    //   }
+    // },
+    // {
+    //   label: "Remaining Amount ",
+    //   name: "duePayment",
+    //   options: {
+    //     customBodyRender: value => {
+    //       return `$${value.toLocaleString()}`
+    //     }
+    //   }
+    // },
+    
+    
+
+
   ];
 
   if (action == true) {
@@ -75,9 +107,22 @@ const PaymentList = ({ tableData, loading, title, action }) => {
     });
   }
 
+  listOptions.customToolbarSelect = (
+    selectedRows,
+    displayData,
+    setSelectRows
+  ) =>
+    // delete multiple function
+    null;
+
   return (
     <BgCard fullBlock>
-      {/* <DataList title={title} columns={columns} tableData={tableData} /> */}
+      <RecordsList
+        title={title}
+        columns={columns}
+        data={tableData}
+        options={listOptions}
+      />
       {loading && <RctSectionLoader />}
     </BgCard>
   );

@@ -11,7 +11,7 @@ const INIT_STATE = {
     tableData: []
   },
 
-  paymentToView: { loading: false, payment: null }
+  paymentToView: { loading: false, payment: [] }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -21,10 +21,72 @@ export default (state = INIT_STATE, action) => {
         ...state,
       };
     
+    case types.FETCH_ALL_PAYMENT:
+          return {
+            ...state,
+          };
+
+    case types.FETCH_ALL_PAYMENT_FAILURE:
+        return {
+          ...state,
+          paymentList: {
+            ...state.paymentList,
+            loading: true,
+          }
+        };
+
+    case types.FETCH_ALL_PAYMENT_SUCCESS:
+        return {
+          ...state,
+          paymentList: {
+            ...state.paymentList,
+            tableData: action.payload,
+            loading: false,
+          }
+        };
+        
+    case types.MAKE_PAYMENT_INCOMPLETE_FAILURE:
+      NotificationManager.error(`Please fill up the ${action.payload}`);
+      return {
+        ...state,
+      };
+      
     case types.MAKE_PAYMENT :
         return {
           ...state,
         };
+
+
+    case types.GET_SINGLE_COMPANY_PAYMENT:
+        return {
+          ...state,
+          paymentToView: {
+            ...state.paymentToView,
+            loading: true,
+          }
+        };
+
+    case types.GET_SINGLE_COMPANY_PAYMENT_SUCCESS:
+        
+        return {
+          ...state,
+          paymentToView: {
+            ...state.paymentToView,
+            loading: false,
+            payment : action.payload
+          }
+        };
+
+    case types.GET_SINGLE_COMPANY_PAYMENT_FAILURE:
+
+        return {
+          ...state,
+          paymentToView: {
+            ...state.paymentToView,
+            loading: false,
+          }
+        };
+            
       
     default:
       return { ...state };
