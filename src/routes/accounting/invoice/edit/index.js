@@ -46,7 +46,7 @@ import {
 class acct_edit_quotation extends Component {
 
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     var id = this.props.match.params.id;
     this.props.getSingleInvoice(id);
   }

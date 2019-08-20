@@ -23,15 +23,22 @@ import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 // import ActivityLog from "Components/Everyday/ActivityLog";
 
 // Notes Tab
-import NotesLayout from "Components/Everyday/Notes/NotesLayout";
+// import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 import DialogRoot from "Components/Dialog/DialogRoot";
 
 // import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // Actions
 import { newInvoice, editInvoice } from "Helpers/url/accounting";
-import { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion, makePayment  } from "Actions";
-
+import {
+  getSingleInvoice,
+  clearSingleInvoice,
+  deleteSingleInvoice,
+  InvoiceHandleStateUpdate,
+  InvoiceHandleStateCreateNewVersion,
+  InvoiceHandleStateRevertPreviousVersion,
+  makePayment
+} from "Actions";
 
 // addNoteToQuotation(acctID), onNoteChange, clearNote
 // Add events dialog
@@ -64,35 +71,33 @@ class acct_view_invoice extends Component {
   };
 
   launchMakePaymentDialog = () => {
-    this.setState({makePayment: !this.state.makePayment})
-  }
+    this.setState({ makePayment: !this.state.makePayment });
+  };
 
-  makePayment = (item) =>  {
-    console.log('make Payment')
-    console.log(item)
+  makePayment = item => {
+    console.log("make Payment");
+    console.log(item);
 
-    let paidAmount
-    if(item.paidAmount != 0){
-      paidAmount = parseInt(item.paidAmount.split('$')[1]) 
+    let paidAmount;
+    if (item.paidAmount != 0) {
+      paidAmount = parseInt(item.paidAmount.split("$")[1]);
     } else {
-      paidAmount = 0
+      paidAmount = 0;
     }
-    
-    if(paidAmount == 0) {
-      return
-    }
-    if(item.paymentRef == ""){
-      return
-    } 
-    if(item.paymentMethod == "" ){
-      return
-    }
-    
-    this.props.makePayment(item)
-    this.launchMakePaymentDialog()
-  
-  }
 
+    if (paidAmount == 0) {
+      return;
+    }
+    if (item.paymentRef == "") {
+      return;
+    }
+    if (item.paymentMethod == "") {
+      return;
+    }
+
+    this.props.makePayment(item);
+    this.launchMakePaymentDialog();
+  };
 
   makePayment = item => {
     console.log("make Payment");
@@ -286,10 +291,10 @@ class acct_view_invoice extends Component {
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div>
-                    <NotesLayout
+                    {/* <NotesLayout
                       allNotes={invoice.notes}
                       handleAddNote={this.addNote}
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>
@@ -334,7 +339,15 @@ const mapStateToProps = ({ accountingState }) => {
 
 export default connect(
   mapStateToProps,
-  { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion, makePayment }
+  {
+    getSingleInvoice,
+    clearSingleInvoice,
+    deleteSingleInvoice,
+    InvoiceHandleStateUpdate,
+    InvoiceHandleStateCreateNewVersion,
+    InvoiceHandleStateRevertPreviousVersion,
+    makePayment
+  }
 )(acct_view_invoice);
 
 /// current invoice v1  - create new version - takes in same invoice but different version (Current)
