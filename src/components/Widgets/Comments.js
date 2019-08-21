@@ -70,19 +70,22 @@ export default class Comments extends PureComponent {
                       <div className="meta-info d-flex text-muted mt-10">
                         <p className="mr-15 mb-0 d-inline-block">
                           <CalendarToday
-                            style={{ fontSize: "12px", marginRight: "5px" }}
+                            fontSize="inherit"
+                            style={{ marginRight: "5px" }}
                           />
                           {getTheDate(comment.createdAt)}
                         </p>
                         <p className="mr-15 mb-0 d-inline-block">
                           <AccessTime
-                            style={{ fontSize: "12px", marginRight: "5px" }}
+                            fontSize="inherit"
+                            style={{ marginRight: "5px" }}
                           />
                           {getTheTime(comment.createdAt)}
                         </p>
                         <p className="mr-15 mb-0 d-inline-block">
                           <PersonOutline
-                            style={{ fontSize: "12px", marginRight: "5px" }}
+                            fontSize="inherit"
+                            style={{ marginRight: "5px" }}
                           />
                           {comment.creatorInfo && comment.creatorInfo.name}
                         </p>
@@ -115,8 +118,8 @@ export default class Comments extends PureComponent {
           />
           <Button
             variant="outlined"
-            color="primary"
             onClick={() => addComment(this.state)}
+            disabled={!this.state.content}
             className="ml-20 btn-xs"
           >
             Post

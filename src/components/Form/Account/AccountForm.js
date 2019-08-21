@@ -99,7 +99,6 @@ class AccountForm extends Component {
 
   render() {
     const { loading, fields } = this.props.accountForm;
-    const { industry, users } = fields;
     const { edit, title } = this.props;
     const { account } = this.state;
     return (
@@ -122,15 +121,15 @@ class AccountForm extends Component {
                   label="Name"
                   value={account.baseContact.name}
                   required={!account.baseContact.name}
-                  handleChange={e => this.handleContact("name", e.target.value)}
+                  target="name"
+                  handleChange={this.handleContact}
                 />
                 <FormInput
                   label="Industry"
                   value={account.industryId ? account.industryId : ""}
-                  selectValues={industry}
-                  handleChange={e =>
-                    this.handleAccount("industryId", e.target.value)
-                  }
+                  selectValues={fields.industry}
+                  target="industryId"
+                  handleChange={this.handleAccount}
                 />
               </div>
               <div className="col-5 d-block offset-md-1">
@@ -139,10 +138,9 @@ class AccountForm extends Component {
                     label="Owner"
                     value={account.userId ? account.userId : ""}
                     required={!account.userId}
-                    selectValues={users}
-                    handleChange={e =>
-                      this.handleAccount("userId", e.target.value)
-                    }
+                    selectValues={fields.users}
+                    target="userId"
+                    handleChange={this.handleAccount}
                   />
                 )}
               </div>
@@ -157,23 +155,22 @@ class AccountForm extends Component {
                 <FormInput
                   label="Office"
                   value={account.baseContact.phone}
-                  handleChange={e =>
-                    this.handleContact("phone", e.target.value)
-                  }
+                  target="phone"
+                  handleChange={this.handleContact}
                 />
                 <FormInput
                   label="Website"
                   value={account.baseContact.website}
-                  handleChange={e =>
-                    this.handleContact("website", e.target.value)
-                  }
+                  target="website"
+                  handleChange={this.handleContact}
                 />
               </div>
               <div className="col-5 d-block offset-md-1">
                 <FormInput
                   label="Fax"
                   value={account.baseContact.fax}
-                  handleChange={e => this.handleContact("fax", e.target.value)}
+                  target="fax"
+                  handleChange={this.handleContact}
                 />
               </div>
             </div>
@@ -184,7 +181,8 @@ class AccountForm extends Component {
                   rows={4}
                   label="Description"
                   value={account.baseContact.info}
-                  handleChange={e => this.handleContact("info", e.target.value)}
+                  target="info"
+                  handleChange={this.handleContact}
                 />
               </div>
             </div>

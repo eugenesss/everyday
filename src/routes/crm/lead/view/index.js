@@ -127,7 +127,7 @@ class crm_view_lead extends Component {
                     <LeadOverviewTab lead={lead} />
                   </div>
                   <div label="Events">
-                    <LeadEventsTab />
+                    <LeadEventsTab lead={lead} />
                   </div>
                   <div label="Details">
                     <LeadDetailsTab lead={lead} />

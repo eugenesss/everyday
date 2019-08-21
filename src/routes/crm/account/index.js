@@ -45,17 +45,7 @@ class crm_account extends Component {
           <meta name="description" content="Everyday Accounts Management" />
         </Helmet>
         <PageTitleBar
-          title={
-            <div className="d-flex">
-              {/* <ListViewSelector
-                dropdownOpen={dropdownOpen}
-                toggle={this.props.toggleAccountDropDown}
-                options={options}
-                nowShowing={nowShowing}
-                onChangeValue={this.props.changeAccountView}
-              /> */}
-            </div>
-          }
+          title={nowShowing}
           createLink={accountNewPage}
           moreButton={
             <MoreButton>
@@ -67,12 +57,17 @@ class crm_account extends Component {
             </MoreButton>
           }
         />
-        <AccountList
-          title={nowShowing}
-          action={action}
-          tableData={tableData}
-          loading={loading}
-        />
+        {/*
+            <div className="d-flex">
+               <ListViewSelector
+                dropdownOpen={dropdownOpen}
+                toggle={this.props.toggleAccountDropDown}
+                options={options}
+                nowShowing={nowShowing}
+                onChangeValue={this.props.changeAccountView}
+              /> 
+              </div> */}
+        <AccountList action={action} tableData={tableData} loading={loading} />
       </React.Fragment>
     );
   }

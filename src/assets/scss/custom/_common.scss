@@ -117,6 +117,9 @@ a {
 .pull-right {
   float: right;
 }
+hr {
+  border-top: 1px solid $gray-300;
+}
 sup {
   top: -0.9em;
 }

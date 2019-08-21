@@ -100,21 +100,22 @@ class DealForm extends Component {
                 <FormInput
                   label="Name"
                   value={deal.name}
-                  handleChange={e => this.handleChange("name", e.target.value)}
+                  target="name"
+                  handleChange={this.handleChange}
                 />
                 <AmountInput
                   label="Amount"
                   value={deal.amount}
                   required={!deal.amount}
-                  onChange={e => this.handleChange("amount", e.target.value)}
+                  target="amount"
+                  handleChange={this.handleChange}
                 />
                 <DatePickerInput
                   label="Closing Date"
                   value={deal.closingDate ? deal.closingDate : null}
                   required={!deal.closingDate}
-                  onChange={date =>
-                    this.handleChange("closingDate", date.format("YYYY-MM-DD"))
-                  }
+                  target="closingDate"
+                  handleChange={this.handleChange}
                 />
               </div>
               <div className="col-5 d-block offset-md-1">
@@ -124,9 +125,8 @@ class DealForm extends Component {
                     value={deal.userId}
                     required={!deal.userId}
                     selectValues={users}
-                    handleChange={e =>
-                      this.handleChange("userId", e.target.value)
-                    }
+                    target="userId"
+                    handleChange={this.handleChange}
                   />
                 )}
                 <FormInput
@@ -134,18 +134,16 @@ class DealForm extends Component {
                   value={deal.accountId}
                   selectValues={accounts}
                   required={!deal.accountId}
-                  handleChange={e =>
-                    this.handleChange("accountId", e.target.value)
-                  }
+                  target="accountId"
+                  handleChange={this.handleChange}
                 />
                 <FormInput
                   label="Stage"
                   value={deal.stageId}
                   selectValues={dealStage}
                   required={!deal.stageId}
-                  handleChange={e =>
-                    this.handleChange("stageId", e.target.value)
-                  }
+                  target="stageId"
+                  handleChange={this.handleChange}
                 />
               </div>
             </div>
@@ -160,17 +158,15 @@ class DealForm extends Component {
                   label="Source"
                   value={deal.sourceId}
                   selectValues={leadSource}
-                  handleChange={e =>
-                    this.handleChange("sourceId", e.target.value)
-                  }
+                  target="sourceId"
+                  handleChange={this.handleChange}
                 />
                 <FormInput
                   label="Customer"
                   value={deal.customerId}
                   selectValues={customers}
-                  handleChange={e =>
-                    this.handleChange("customerId", e.target.value)
-                  }
+                  target="customerId"
+                  handleChange={this.handleChange}
                 />
               </div>
               <div className="col-5 d-block offset-md-1">
@@ -178,9 +174,8 @@ class DealForm extends Component {
                   label="Type"
                   value={deal.typeId}
                   selectValues={dealType}
-                  handleChange={e =>
-                    this.handleChange("typeId", e.target.value)
-                  }
+                  target="typeId"
+                  handleChange={this.handleChange}
                 />
               </div>
             </div>
@@ -191,7 +186,8 @@ class DealForm extends Component {
                   rows={4}
                   label="Description"
                   value={deal.info}
-                  handleChange={e => this.handleChange("info", e.target.value)}
+                  target="info"
+                  handleChange={this.handleChange}
                 />
               </div>
             </div>

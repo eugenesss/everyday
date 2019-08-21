@@ -12,7 +12,8 @@ const myTheme = createMuiTheme({
     MuiTypography: {
       root: {
         fontFamily: "Lato!important"
-      }
+      },
+      h6: { fontSize: "1rem" }
     },
     MUIDataTableBodyRow: {
       root: {

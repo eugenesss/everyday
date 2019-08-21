@@ -55,16 +55,7 @@ class crm_deal extends Component {
           <meta name="description" content="Everyday Deals Management" />
         </Helmet>
         <PageTitleBar
-          title={
-            <div className="d-flex">
-              {/* <ListViewSelector
-                options={options}
-                nowShowing={nowShowing}
-                onChangeValue={this.props.changeDealView}
-              /> */}
-              {/* <ShowListSummaryButton action={() => this.toggleSummary()} /> */}
-            </div>
-          }
+          title={nowShowing}
           createLink={dealNewPage}
           moreButton={
             <MoreButton>
@@ -76,13 +67,15 @@ class crm_deal extends Component {
             </MoreButton>
           }
         />
+        {/* <div className="d-flex">
+               <ListViewSelector
+                options={options}
+                nowShowing={nowShowing}
+                onChangeValue={this.props.changeDealView}
+              />  <ShowListSummaryButton action={() => this.toggleSummary()} /> 
+              </div> */}
         {/* {this.state.showSummary && <ListSummary summary={summary} />} */}
-        <DealList
-          title={nowShowing}
-          action={action}
-          tableData={tableData}
-          loading={loading}
-        />
+        <DealList action={action} tableData={tableData} loading={loading} />
       </React.Fragment>
     );
   }

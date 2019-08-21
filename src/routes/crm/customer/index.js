@@ -41,15 +41,7 @@ class crm_customer extends Component {
           <meta name="description" content="Everyday Customers Retention" />
         </Helmet>
         <PageTitleBar
-          title={
-            <div className="d-flex">
-              {/* <ListViewSelector
-                options={options}
-                nowShowing={nowShowing}
-                onChangeValue={this.props.changeCustomerView}
-              /> */}
-            </div>
-          }
+          title={nowShowing}
           createLink={customerNewPage}
           moreButton={
             <MoreButton>
@@ -61,12 +53,14 @@ class crm_customer extends Component {
             </MoreButton>
           }
         />
-        <CustomerList
-          title={nowShowing}
-          action={action}
-          tableData={tableData}
-          loading={loading}
-        />
+        {/* <div className="d-flex">
+           <ListViewSelector
+                options={options}
+                nowShowing={nowShowing}
+                onChangeValue={this.props.changeCustomerView}
+              />
+        </div> */}
+        <CustomerList action={action} tableData={tableData} loading={loading} />
       </React.Fragment>
     );
   }

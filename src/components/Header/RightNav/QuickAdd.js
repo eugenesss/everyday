@@ -36,7 +36,7 @@ const QuickLinks = () => (
     <DropdownToggle nav className="p-0">
       <Tooltip title="Add" placement="bottom">
         <IconButton aria-label="plus">
-          <Add style={{ fontSize: "20px" }} />
+          <Add fontSize="small" />
         </IconButton>
       </Tooltip>
     </DropdownToggle>

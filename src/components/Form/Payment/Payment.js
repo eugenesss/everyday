@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import { Form, FormGroup, Label, Col } from "reactstrap";
-import FormSelectField from "Components/Form/Components/FormSelectField";
-import FormTextField from "Components/Form/Components/FormTextField";
+// import FormSelectField from "Components/Form/Components/FormSelectField";
+// import FormTextField from "Components/Form/Components/FormTextField";
 import TextField from '@material-ui/core/TextField';
-import NumberFormatCustom from "Components/Form/Components/NumberFormatCustom";
+// import NumberFormatCustom from "Components/Form/Components/NumberFormatCustom";
 import {KeyboardDatePicker} from '@material-ui/pickers';
 import Moment from 'moment'
 

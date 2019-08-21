@@ -30,7 +30,7 @@ class Notifications extends Component {
         <DropdownToggle nav className="p-0">
           <Tooltip title="Notifications" placement="bottom">
             <IconButton className={shake && "shake"} aria-label="bell">
-              <NotificationIcon style={{ fontSize: "20px" }} />
+              <NotificationIcon fontSize="small" />
               {newNotifications > 0 && (
                 <Badge
                   color="danger"

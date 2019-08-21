@@ -27,16 +27,20 @@ class FormInput extends PureComponent {
       required,
       label,
       selectValues,
+      target,
       ...others
     } = this.props;
-
     return (
       <FormControl className={classes.root}>
         <InputLabel className="fw-bold" shrink>
           {label}
         </InputLabel>
         {selectValues ? (
-          <Select value={value} onChange={handleChange} input={<BaseInput />}>
+          <Select
+            value={value}
+            onChange={e => handleChange(target, e.target.value)}
+            input={<BaseInput />}
+          >
             {selectValues &&
               selectValues.map((select, key) => (
                 <MenuItem key={key} value={select.value}>
@@ -47,7 +51,7 @@ class FormInput extends PureComponent {
         ) : (
           <BaseInput
             value={value}
-            onChange={handleChange}
+            onChange={e => handleChange(target, e.target.value)}
             placeholder={placeholder}
             disabled={disabled}
             {...others}

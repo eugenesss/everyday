@@ -8,9 +8,6 @@ const useStyles = makeStyles({
   fab: {
     boxShadow: "none",
     marginRight: "1.5rem"
-  },
-  icon: {
-    fontSize: "1rem"
   }
 });
 
@@ -22,7 +19,7 @@ function Contact(props) {
       <div className="media">
         {!noAvatar && (
           <div className="media-left mr-25">
-            <Avatar name={name} size={100} customClasses="d-inline-block" />
+            <Avatar name={name} size={60} customClasses="d-inline-block" />
           </div>
         )}
         <div className="profile-title media-body my-auto">
@@ -39,7 +36,7 @@ function Contact(props) {
               size="small"
               href={`tel:${call}`}
             >
-              <Call className={classes.icon} />
+              <Call fontSize="inherit" />
             </Fab>
           </Tooltip>
         )}
@@ -51,7 +48,7 @@ function Contact(props) {
               size="small"
               href={`mailto:${email}`}
             >
-              <Email className={classes.icon} />
+              <Email fontSize="inherit" />
             </Fab>
           </Tooltip>
         )}
@@ -64,7 +61,7 @@ function Contact(props) {
               href={`http://${website}`}
               target="_blank"
             >
-              <Language className={classes.icon} />
+              <Language fontSize="inherit" />
             </Fab>
           </Tooltip>
         )}

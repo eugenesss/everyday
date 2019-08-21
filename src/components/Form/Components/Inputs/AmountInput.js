@@ -34,6 +34,7 @@ const AmountInput = props => {
       label={props.label}
       inputComponent={NumberFormatCustom}
       startAdornment={<InputAdornment position="start">$</InputAdornment>}
+      onChange={e => props.handleChange(props.target, e.target.value)}
       {...props}
     />
   );

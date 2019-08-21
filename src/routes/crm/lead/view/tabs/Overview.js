@@ -24,7 +24,7 @@ function LeadOverviewTab(props) {
           <Comments comments={lead.notes} addComment={addNote} />
         </div>
         <div className="col-6">
-          <BgCard>Number of follow ups</BgCard>
+          <BgCard>Last Touch base</BgCard>
         </div>
       </div>
       <div className="row">
