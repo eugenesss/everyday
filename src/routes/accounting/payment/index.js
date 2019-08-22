@@ -19,8 +19,6 @@ import {
 
 import { newPayment } from "Helpers/url/accounting";
 
-
-
 const data = [{
   accountId:  { id: "5d2fd4b4456a441037b9c352", name: "Shaking Company" },
   attn_toId:  { id: "5d2fd536456a441037b9c353", name: "Quacking James Johnson" },
@@ -69,9 +67,7 @@ class acct_payment extends Component {
       loading
     } = this.props.paymentState.paymentList;
     
-
     return (
-    
       <React.Fragment>
        <Helmet>
          <title>Everyday | Payment</title>

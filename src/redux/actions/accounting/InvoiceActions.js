@@ -153,3 +153,23 @@ export const submitInvoiceFailure = (item) => ({
 });
 
 
+export const submitNewInvoice = (item) => ({
+  type: types.SUBMIT_NEW_INVOICE,
+  payload: item
+  // payload: item
+});
+
+export const submitNewInvoiceSuccess = (item) => ({
+  type: types.SUBMIT_NEW_INVOICE_SUCCESS,
+  payload: item,
+});
+
+export const submitNewInvoiceFailure = (item) => ({
+  type: types.SUBMIT_NEW_INVOICE_FAILURE,
+  payload: item
+});
+
+
+export const restartUploadStatus = () => ({
+  type: types.RESTART_UPLOAD_STATUS,
+});

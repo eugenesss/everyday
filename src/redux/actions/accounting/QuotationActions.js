@@ -229,3 +229,36 @@ export const HandleConvertInvoiceQuotation = (id, value) => ({
 
 
 
+export const HandleQuotationAccounts = data => ({
+  type: types.HANDLE_QUOTATION_ACCOUNTS,
+  payload: data
+});
+
+export const HandleQuotationAccountsSuccess = data => ({
+  type: types.HANDLE_QUOTATION_ACCOUNTS_SUCCESS,
+  payload: data
+});
+
+export const HandleQuotationAccountsFailure = data => ({
+  type: types.HANDLE_QUOTATION_ACCOUNTS_FAILTURE,
+  payload: data
+});
+
+
+export const submitNewQuotation = (formFields) => ({
+  type: types.SUBMIT_NEW_QUOTATION,
+  payload: formFields
+});
+
+export const submitNewQuotationSuccess = () => ({
+  type: types.SUBMIT_NEW_QUOTATION_SUCCESS
+});
+
+export const submitNewQuotationFailure = () => ({
+  type: types.SUBMIT_NEW_QUOTATION_FAILURE
+});
+
+export const restartUploadQuotationStatus = () => ({
+  type: types.RESTART_QUOTATION_UPLOAD_STATUS,
+});
+

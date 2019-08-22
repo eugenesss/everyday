@@ -27,6 +27,7 @@ const BootstrapInput = withStyles(theme => ({
 );
 
 const BaseInput = React.forwardRef((props, ref) => (
+  
   <BootstrapInput ref={ref} {...props} />
 ));
 

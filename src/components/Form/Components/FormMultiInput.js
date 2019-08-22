@@ -16,8 +16,7 @@ const styles = theme => ({
   }
 });
 
-class FormInput extends PureComponent {
-  
+class FormMultiInput extends PureComponent {
   render() {
     const {
       classes,
@@ -32,7 +31,7 @@ class FormInput extends PureComponent {
       keys,
       ...others
     } = this.props;
-    
+        
     return (
       <FormControl className={classes.root}>
         <InputLabel className="fw-bold" shrink>
@@ -42,7 +41,7 @@ class FormInput extends PureComponent {
           <Select value={value} onChange={e=> handleChange(target, e.target.value, keys)} input={<BaseInput />}>
             {selectValues &&
               selectValues.map((select, key) => (
-                <MenuItem key={key} value={select.value}>
+                <MenuItem key={key} value={select}>
                   {select.name}
                 </MenuItem>
               ))}
@@ -51,7 +50,6 @@ class FormInput extends PureComponent {
           <BaseInput
             value={value}
             onChange={e=> handleChange(target, e.target.value, keys )}
-            // onChange={e=> console.log(e.target.value)}
             placeholder={placeholder}
             disabled={disabled}
             {...others}
@@ -63,4 +61,4 @@ class FormInput extends PureComponent {
   }
 }
 
-export default withStyles(styles)(FormInput);
+export default withStyles(styles)(FormMultiInput);

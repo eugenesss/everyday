@@ -10,25 +10,26 @@ import IntlMessages from "Util/IntlMessages";
 // Page Components
 import BgCard from "Components/Everyday/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
-import QuotationForm from "Components/Form/Quotation/QuotationForm";
+import InvoiceForm from "Components/Form/Invoice/InvoiceForm";
 
 import { 
-  submitAccountQuotationInvoice
+  submitNewInvoice
 } from "Actions";
 
 
 class acct_new_invoice extends Component {
+
   state = {};
 
-  _quotationParent = (element, item) =>{
-    this.props.submitAccountQuotationInvoice(element, item)
+  _invoiceParent = (item) =>{
+    this.props.submitNewInvoice(item)
   }
 
   render() {
 
     return (
       <React.Fragment>
-        <Helmet>
+        {/* <Helmet>
           <title>Everyday | New Invoice</title>
           <meta name="description" content="Everyday Invoices Creation" />
         </Helmet>
@@ -47,12 +48,17 @@ class acct_new_invoice extends Component {
             </div>
             <div className="col-md-1" />
           </div>
-        </BgCard>
+        </BgCard> */}
+        <Helmet>
+            <title>Everyday | New Invoice</title>
+            <meta name="description" content="Everyday Invoices Creation" />
+        </Helmet>
+        <InvoiceForm title="sidebar.newQuotation" handleSubmit={this._invoiceParent} />
       </React.Fragment>
     );
   }
 }
-
+// 
 
 const mapStateToProps = ({accountingState}) => {
   return {
@@ -63,7 +69,7 @@ const mapStateToProps = ({accountingState}) => {
 export default connect(
   mapStateToProps,
   { 
-    submitAccountQuotationInvoice
+    submitNewInvoice
   }
 )(acct_new_invoice);
 

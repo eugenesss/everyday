@@ -11,12 +11,20 @@ function NumberFormatCustom(props) {
       {...other}
       getInputRef={inputRef}
       onValueChange={values => {
-        onChange({
+        handleChange({
           target: {
             value: values.value
           }
         });
       }}
+      // onValueChange={values => {
+      //   handleChange({
+      //     target: {
+      //       value: values.value
+      //     }
+      //   });
+      // }}
+      // onChange={e=> handleChange(target, e.target.value, keys )}
       thousandSeparator
     />
   );
@@ -24,16 +32,18 @@ function NumberFormatCustom(props) {
 
 NumberFormatCustom.propTypes = {
   inputRef: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired
+  handleChange: PropTypes.func.isRequired
 };
-
+// noDollar
 const AmountInput = props => {
   return (
     <FormInput
       value={props.value}
       label={props.label}
-      inputComponent={NumberFormatCustom}
-      startAdornment={<InputAdornment position="start">$</InputAdornment>}
+      disabled={props.disabled}
+      handleChange={props.handleChange}
+      // inputComponent={NumberFormatCustom}
+      startAdornment={props.noDollar? "" : <InputAdornment position="start">$</InputAdornment>}
       {...props}
     />
   );

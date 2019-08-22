@@ -12,59 +12,79 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import Moment from "moment";
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const PaymentList = ({ tableData, loading, title, action }) => {
   const columns = [
     {
       label: "Company",
-      name: "companyName",
+      name: "setup",
       options: { 
         customBodyRender: (value, tableMeta) => {
           return (
-            <NavLink to={`payments/${value.id}`}>{value.companyName}</NavLink>
+            <NavLink to={`payments/${value.id}`}>{value.name}</NavLink>
           );
         }
       },
     },
-    // {
-    //   label: "Invoice #",
-    //   name: "quoteID",
-    //   options: {
-    //     customBodyRender: (value, tableMeta) => {
-    //       return (
-    //         <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
-    //       );
-    //     }
-    //   }
-    // },
+    {
+      label: "# Invoice",
+      name: "invoiceQuote",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+          return value
+        }
+      }
+    },
+    {
+      label: "Payment Method",
+      name: "paymentMethod",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+          return value
+        }
+      }
+    },
     
     // {
-    //   label: "Total Invoices",
-    //   name: "totalInvoices",
+    //   label: "Customer",
+    //   name: "customerName",
     //   options: {
     //     customBodyRender: value => {
     //       return value
     //     }
     //   }
     // },
-    // {
-    //   label: "Total Debit",
-    //   name: "invoiceTotalAmt",
-    //   options: {
-    //     customBodyRender: (value, tableMeta) => {
-    //       return `$${value.toLocaleString()}`
-
-    //     }
-    //   }
-    // },
-    // {
-    //   label: "Total Paid",
-    //   name: "invoiceTotalAmtPaid",
-    //   options: {
-    //     customBodyRender: value => {
-    //       return `$${value.toLocaleString()}`
-    //     }
-    //   }
-    // },
+    {
+      label: "Paid Amount",
+      name: "paidAmount",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+          return `$${numberWithCommas(value)}`
+        }
+      }
+    },
+    {
+      label: "Payment Ref",
+      name: "paymentRef",
+      options: {
+        customBodyRender: value => {
+          return value
+        }
+      }
+    },
+    {
+      label: "Payment Made",
+      name: "createdAt",
+      options: {
+        customBodyRender: value => {
+          return Moment(new Date(value)).format("LL");
+        }
+      }
+    },
+    
     // {
     //   label: "Remaining Amount ",
     //   name: "duePayment",

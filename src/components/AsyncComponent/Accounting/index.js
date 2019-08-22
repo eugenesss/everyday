@@ -17,7 +17,6 @@ export const acct_payment_component = Loadable({
 
 // accounting management view
 
-
 export const view_credit_note = Loadable({
   loader: () => import("Routes/accounting/credit_note/view"),
   loading: () => <RctPageLoader />

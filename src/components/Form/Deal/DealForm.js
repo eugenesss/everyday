@@ -150,6 +150,7 @@ class DealForm extends Component {
               </div>
             </div>
           </FormInputLayout>
+        
           <FormInputLayout
             title="Deal Information"
             desc="The key fields to get you started with a new Deal record."

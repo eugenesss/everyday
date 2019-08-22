@@ -83,6 +83,7 @@ class acct_view_quotation extends Component {
 
     let buttonCollection = null;
     let moreButtons = null;
+    
     if (quotation) {
       switch (quotation.state) {
         case "Draft":
