@@ -11,6 +11,11 @@ import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
 // Layout
 import AccountCard from "Components/CRM/Account/AccountCard";
 import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
+// Tabs
+import OverviewTab from "./tabs/Overview";
+import DetailsTab from "./tabs/Details";
+import DealsTab from "./tabs/Deals";
+import EventsTab from "Components/CRM/View/Events/EventTab";
 
 // Routes
 import {
@@ -113,9 +118,21 @@ class crm_view_account extends Component {
           </div>
           <div className="col-md-9">
             <ProfileTabs loading={sectionLoading}>
-              <div label="Overview">Overview</div>
-              <div label="Overview">Overview</div>
-              <div label="Overview">Overview</div>
+              <div label="Overview">
+                <OverviewTab acct={account} />
+              </div>
+              <div label="Deals">
+                <DealsTab deals={account.deals} />
+              </div>
+              <div label="Events">
+                <EventsTab
+                  pastEvents={account.pastEvents}
+                  upcomingEvents={account.upcomingEvents}
+                />
+              </div>
+              <div label="Details">
+                <DetailsTab acct={account} />
+              </div>
             </ProfileTabs>
           </div>
         </div>

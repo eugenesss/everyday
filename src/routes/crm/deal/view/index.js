@@ -13,6 +13,10 @@ import DealCard from "Components/CRM/Deal/DealCard";
 import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
 // routes
 import { dealEditPage, dealListPage, dealNewPage } from "Helpers/url/crm";
+// Tabs
+import OverviewTab from "./tabs/Overview";
+import DetailsTab from "./tabs/Details";
+import EventsTab from "Components/CRM/View/Events/EventTab";
 // Actions
 import {
   getSingleDeal,
@@ -103,9 +107,18 @@ class crm_view_deal extends Component {
               </div>
               <div className="col-9">
                 <ProfileTabs loading={sectionLoading}>
-                  <div label="Overview">Stage, related, deal history</div>
-                  <div label="Events">Stage, related, deal history</div>
-                  <div label="Details">Stage, related, deal history</div>
+                  <div label="Overview">
+                    <OverviewTab deal={deal} />
+                  </div>
+                  <div label="Events">
+                    <EventsTab
+                      pastEvents={deal.pastEvents}
+                      upcomingEvents={deal.upcomingEvents}
+                    />
+                  </div>
+                  <div label="Details">
+                    <DetailsTab deal={deal} />
+                  </div>
                 </ProfileTabs>
               </div>
             </div>

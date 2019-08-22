@@ -15,7 +15,8 @@ import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
 import OverviewTab from "./tabs/Overview";
 import DetailsTab from "./tabs/Details";
 import DealsTab from "./tabs/Deals";
-import EventsTab from "./tabs/Events";
+import EventsTab from "Components/CRM/View/Events/EventTab";
+
 // routes
 import {
   customerListPage,
@@ -123,8 +124,15 @@ class crm_view_customer extends Component {
                   <div label="Deals">
                     <DealsTab deals={customer.deals} />
                   </div>
-                  <div label="Events">events</div>
-                  <div label="Details">details</div>
+                  <div label="Events">
+                    <EventsTab
+                      pastEvents={customer.pastEvents}
+                      upcomingEvents={customer.upcomingEvents}
+                    />
+                  </div>
+                  <div label="Details">
+                    <DetailsTab cust={customer} />
+                  </div>
                 </ProfileTabs>
               </div>
             </div>

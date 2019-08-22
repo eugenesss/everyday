@@ -1,7 +1,7 @@
 import React from "react";
 import DealList from "Components/CRM/Deal/DealList";
 
-function CustomerDealsTab(props) {
+function AccountDealsTab(props) {
   const { deals } = props;
 
   return (
@@ -13,4 +13,4 @@ function CustomerDealsTab(props) {
   );
 }
 
-export default CustomerDealsTab;
+export default AccountDealsTab;

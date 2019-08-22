@@ -1,6 +1,13 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { InputLabel, FormControl, InputBase } from "@material-ui/core";
+import {
+  InputLabel,
+  FormControl,
+  InputBase,
+  InputAdornment
+} from "@material-ui/core";
+
+import NumberFormat from "react-number-format";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,15 +25,41 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+function NumberFormatCustom(props) {
+  const { inputRef, onChange, ...other } = props;
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={values => {
+        onChange({
+          target: {
+            value: values.value
+          }
+        });
+      }}
+      thousandSeparator
+    />
+  );
+}
+
 const EditableInput = props => {
   const classes = useStyles();
-  const { label, value } = props;
+  const { label, value, amount } = props;
   return (
     <FormControl className={classes.root}>
       <InputLabel shrink className={classes.label}>
         {label}
       </InputLabel>
-      <InputBase className={classes.input} value={value} readOnly />
+      <InputBase
+        inputComponent={amount && NumberFormatCustom}
+        startAdornment={
+          amount && <InputAdornment position="start">$</InputAdornment>
+        }
+        className={classes.input}
+        value={value}
+        readOnly
+      />
     </FormControl>
   );
 };

@@ -5,7 +5,7 @@ import Comments from "Components/Widgets/Comments";
 
 import { addNoteCustomer } from "Actions";
 
-function OverviewTab(props) {
+function CustomerOverviewTab(props) {
   const { cust } = props;
   function addNote(note) {
     props.addNoteCustomer(cust.id, note);
@@ -32,4 +32,4 @@ function OverviewTab(props) {
 export default connect(
   null,
   { addNoteCustomer }
-)(OverviewTab);
+)(CustomerOverviewTab);

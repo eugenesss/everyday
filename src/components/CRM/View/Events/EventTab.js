@@ -2,9 +2,8 @@ import React from "react";
 import BgCard from "Components/Everyday/BgCard";
 import EventsTable from "Components/CRM/View/Events/EventsTable";
 
-function LeadEventsTab(props) {
-  const { lead } = props;
-  const { pastEvents, upcomingEvents } = lead;
+function crm_events_tab(props) {
+  const { pastEvents, upcomingEvents } = props;
   return (
     <React.Fragment>
       <div className="row">
@@ -25,4 +24,4 @@ function LeadEventsTab(props) {
   );
 }
 
-export default LeadEventsTab;
+export default crm_events_tab;
