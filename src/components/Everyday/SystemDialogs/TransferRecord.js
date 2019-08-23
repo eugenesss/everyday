@@ -4,7 +4,6 @@ import { connectModal } from "redux-modal";
 import DialogRoot from "Components/Dialog/DialogRoot";
 import FormInput from "Components/Form/Components/FormInput";
 
-
 // Actions
 import { getAllUsers } from "Actions";
 
@@ -44,10 +43,7 @@ class TransferRecordModal extends Component {
             </p>
           </div>
         </div>
-        <div className="row">
-          <div className="col-2 offset-md-1 align-self-center">
-            <p className="mb-0">New Owner</p>
-          </div>
+        <div className="row justify-content-center">
           <div className="col-8 align-self-center">
             <FormInput
               label="New Owner"

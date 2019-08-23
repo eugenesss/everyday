@@ -8,7 +8,7 @@ const FormWrapper = props => (
   <React.Fragment>
     <PageTitleBar
       title={<IntlMessages id={props.title} />}
-      actionButton={
+      customButton={
         <FormSubmitButtons
           onSave={props.onSave}
           onSaveNew={props.onSaveNew}

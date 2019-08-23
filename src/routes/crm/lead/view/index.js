@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
@@ -35,6 +34,7 @@ import {
 class crm_view_lead extends Component {
   constructor(props) {
     super(props);
+    this.newLead = this.newLead.bind(this);
     this.startConvert = this.startConvert.bind(this);
     this.edit = this.edit.bind(this);
     this.addNote = this.addNote.bind(this);
@@ -47,6 +47,20 @@ class crm_view_lead extends Component {
   }
   componentWillUnmount() {
     this.props.clearSingleLead();
+  }
+
+  /**
+   * New Lead
+   */
+  newLead() {
+    this.props.history.push(leadNewPage);
+  }
+
+  /**
+   * Refresh
+   */
+  refresh(id) {
+    this.props.getSingleLead(id);
   }
 
   /**
@@ -65,8 +79,8 @@ class crm_view_lead extends Component {
   /**
    * Edit
    */
-  edit(lead) {
-    this.props.history.push(leadEditPage(lead.id));
+  edit(id) {
+    this.props.history.push(leadEditPage(id));
   }
 
   /**
@@ -116,7 +130,28 @@ class crm_view_lead extends Component {
           <RctPageLoader />
         ) : lead ? (
           <React.Fragment>
-            <PageTitleBar title="View Lead" />
+            <PageTitleBar
+              title="View Lead"
+              actionButton={[
+                {
+                  label: "Convert",
+                  onClick: () => this.startConvert(lead.companyName),
+                  classes: "bg-success text-white"
+                }
+              ]}
+              actionGroup={{
+                add: { onClick: this.newLead },
+                mid: { label: "Edit", onClick: () => this.edit(lead.id) },
+                more: [
+                  { label: "Refresh", onClick: () => this.refresh(lead.id) },
+                  {
+                    label: "Transfer Record",
+                    onClick: () => this.transfer(lead)
+                  },
+                  { label: "Delete", onClick: () => this.delete(lead) }
+                ]
+              }}
+            />
             <div className="row">
               <div className="col-md-3">
                 <LeadCard lead={lead} />
@@ -156,60 +191,16 @@ const mapStateToProps = ({ crmState }) => {
   return { leadToView };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    {
-      getSingleLead,
-      clearSingleLead,
-      handleConvertModal,
-      show,
-      deleteLead,
-      addNoteLead,
-      checkAccountExist,
-      transferLead
-    }
-  )(crm_view_lead)
-);
-
-// import MoreButton from "Components/PageTitleBar/MoreButton";
-// // Vertical Tabs
-// import VerticalTab from "Components/Everyday/VerticalTabs//VerticalTab";
-// import VerticalContainer from "Components/Everyday/VerticalTabs//VerticalContainer";
-// // Details Tab
-// import LeadDetails from "Components/CRM/Lead/LeadDetails";
-// import AddressDetails from "Components/CRM/View/Details/AddressDetails";
-// import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
-// // Events Tab
-// import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
-// import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
-// // Notes Tab
-// import NotesLayout from "Components/Everyday/Notes/NotesLayout";
-
-//  <VerticalContainer
-//                   activeIndex={activeIndex}
-//                   handleChange={this.changeTabView}
-//                   fullBlock
-//                   loading={sectionLoading}
-//                 >
-//                   <div>
-//                     <LeadDetails lead={lead} />
-//                     <AddressDetails
-//                       addressDetails={lead.baseContact._address}
-//                     />
-//                     <DescriptionDetails desc={lead.baseContact.info} />
-//                   </div>
-//                   <div>
-//                     <UpcomingEvents
-//                       events={lead.upcomingEvents}
-//                       handleNewEvent={this.newEvent}
-//                     />
-//                     <ClosedEvents events={lead.pastEvents} />
-//                   </div>
-//                   <div>
-//                     <NotesLayout
-//                       allNotes={lead.notes}
-//                       handleAddNote={this.addNote}
-//                     />
-//                   </div>
-//                 </VerticalContainer>
+export default connect(
+  mapStateToProps,
+  {
+    getSingleLead,
+    clearSingleLead,
+    handleConvertModal,
+    show,
+    deleteLead,
+    addNoteLead,
+    checkAccountExist,
+    transferLead
+  }
+)(crm_view_lead);

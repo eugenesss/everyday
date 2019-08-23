@@ -7,27 +7,36 @@ import CustomerList from "Components/CRM/Customer/CustomerList";
 // page req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-import MoreButton from "Components/PageTitleBar/MoreButton";
-import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
+// import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 import { changeCustomerView, getAllCustomer } from "Actions";
 import { customerNewPage } from "Helpers/url/crm";
 
 class crm_customer extends Component {
+  constructor(props) {
+    super(props);
+    this.refresh = this.refresh.bind(this);
+    this.importCust = this.importCust.bind(this);
+    this.newCust = this.newCust.bind(this);
+  }
   componentDidMount() {
     this.props.getAllCustomer();
   }
 
-  reload() {
-    console.log("reload");
+  newCust() {
+    this.props.history.push(customerNewPage);
   }
-  massImportCust() {
-    console.log("massImportCust");
+
+  refresh() {
+    this.props.getAllCustomer();
+  }
+  importCust() {
+    console.log("importCust");
   }
 
   render() {
     const {
-      options,
+      // options,
       nowShowing,
       action,
       tableData,
@@ -42,16 +51,11 @@ class crm_customer extends Component {
         </Helmet>
         <PageTitleBar
           title={nowShowing}
-          createLink={customerNewPage}
-          moreButton={
-            <MoreButton>
-              {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
-              {{
-                handleOnClick: this.massImportCust.bind(this),
-                label: "Mass Import Customers (csv)"
-              }}
-            </MoreButton>
-          }
+          actionGroup={{
+            add: { onClick: this.newCust },
+            mid: { label: "Import", onClick: this.importCust },
+            more: [{ label: "Refresh List", onClick: this.refresh }]
+          }}
         />
         {/* <div className="d-flex">
            <ListViewSelector

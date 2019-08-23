@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
@@ -32,6 +31,8 @@ class crm_view_deal extends Component {
     super(props);
     this.addNote = this.addNote.bind(this);
     this.transfer = this.transfer.bind(this);
+    this.newDeal = this.newDeal.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
   componentDidMount() {
     var id = this.props.match.params.id;
@@ -40,6 +41,19 @@ class crm_view_deal extends Component {
   componentWillUnmount() {
     this.props.clearSingleDeal();
   }
+  /**
+   * New
+   */
+  newDeal() {
+    this.props.history.push(dealNewPage);
+  }
+  /**
+   * Refresh
+   */
+  refresh(id) {
+    this.props.getSingleDeal(id);
+  }
+
   /**
    * Transfer Record
    */
@@ -56,16 +70,15 @@ class crm_view_deal extends Component {
   /**
    * Edit
    */
-  edit(deal) {
-    this.props.history.push(dealEditPage(deal.id));
+  edit(id) {
+    this.props.history.push(dealEditPage(id));
   }
 
   /**
    * DELETE RECORD
    */
-  handleDelete(dealId) {
-    this.props.deleteDeal(dealId);
-    //console.log(dealId);
+  handleDelete(id) {
+    this.props.deleteDeal(id);
     setTimeout(() => {
       this.props.history.push(dealListPage);
     }, 500);
@@ -99,7 +112,21 @@ class crm_view_deal extends Component {
             <Helmet>
               <title>Everyday | View Deal</title>
             </Helmet>
-            <PageTitleBar title="View Deal" />
+            <PageTitleBar
+              title="View Deal"
+              actionGroup={{
+                add: { onClick: this.newDeal },
+                mid: { label: "Edit", onClick: () => this.edit(deal.id) },
+                more: [
+                  { label: "Refresh", onClick: () => this.refresh(deal.id) },
+                  {
+                    label: "Transfer Record",
+                    onClick: () => this.transfer(deal)
+                  },
+                  { label: "Delete", onClick: () => this.delete(deal) }
+                ]
+              }}
+            />
 
             <div className="row">
               <div className="col-3">
@@ -138,16 +165,14 @@ const mapStateToProps = ({ crmState }) => {
   return { dealToView };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    {
-      getSingleDeal,
-      clearSingleDeal,
-      show,
-      addNoteDeal,
-      deleteDeal,
-      transferDeal
-    }
-  )(crm_view_deal)
-);
+export default connect(
+  mapStateToProps,
+  {
+    getSingleDeal,
+    clearSingleDeal,
+    show,
+    addNoteDeal,
+    deleteDeal,
+    transferDeal
+  }
+)(crm_view_deal);

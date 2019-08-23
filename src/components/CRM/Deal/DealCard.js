@@ -1,11 +1,12 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { PeopleOutline } from "@material-ui/icons";
 import {
   Wrapper,
   Contact,
+  Info,
   KeyDetails
 } from "Components/Everyday/Layout/View/ProfileCard";
-import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 import NumberFormat from "react-number-format";
 import { singleAccount, singleCustomer } from "Helpers/url/crm";
 
@@ -27,7 +28,26 @@ function DealCard(props) {
       />
       <div className="profile-card-section">
         <div>
-          <h4 className="mb-20 text-muted">Related Parties</h4>
+          <div className="profile-heading">
+            <PeopleOutline />
+            Related Contacts
+          </div>
+          <Info
+            title={deal.accountInfo.name}
+            subtitle="Account"
+            onClick={() =>
+              props.history.push(singleAccount(deal.accountInfo.id))
+            }
+          />
+          {deal.customerInfo && (
+            <Info
+              title={deal.customerInfo.name}
+              subtitle="Customer"
+              onClick={() =>
+                props.history.push(singleCustomer(deal.customerInfo.id))
+              }
+            />
+          )}
         </div>
       </div>
       <KeyDetails
@@ -50,4 +70,4 @@ function DealCard(props) {
   );
 }
 
-export default DealCard;
+export default withRouter(DealCard);

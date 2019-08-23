@@ -44,7 +44,7 @@ export default class Comments extends PureComponent {
           className="rct-scroll blog-list-wrap"
           autoHeight
           autoHeightMin={100}
-          autoHeightMax={424}
+          autoHeightMax={400}
           autoHide
         >
           <List className="aqua-ripple p-0">
@@ -113,7 +113,7 @@ export default class Comments extends PureComponent {
           <BaseInput
             value={content}
             onChange={e => this.onChange(e.target.value)}
-            placeholder="Write your comments here"
+            placeholder="Write your notes here"
             rows={4}
           />
           <Button

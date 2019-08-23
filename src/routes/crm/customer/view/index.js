@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
@@ -40,6 +39,8 @@ class crm_view_customer extends Component {
     this.edit = this.edit.bind(this);
     this.addNote = this.addNote.bind(this);
     this.trasnfer = this.transfer.bind(this);
+    this.refresh = this.refresh.bind(this);
+    this.newCust = this.newCust.bind(this);
   }
   componentDidMount() {
     var id = this.props.match.params.id;
@@ -50,10 +51,24 @@ class crm_view_customer extends Component {
   }
 
   /**
+   * New
+   */
+  newCust() {
+    this.props.history.push(customerNewPage);
+  }
+
+  /**
+   * Refresh
+   */
+  refresh(id) {
+    this.props.getSingleCustomer(id);
+  }
+
+  /**
    * Edit
    */
-  edit(cust) {
-    this.props.history.push(customerEditPage(cust.id));
+  edit(id) {
+    this.props.history.push(customerEditPage(id));
   }
 
   /**
@@ -111,7 +126,28 @@ class crm_view_customer extends Component {
             <Helmet>
               <title>Everyday | View Customer</title>
             </Helmet>
-            <PageTitleBar title="View Customer" />
+            <PageTitleBar
+              title="View Customer"
+              actionGroup={{
+                add: { onClick: this.newCust },
+                mid: { label: "Edit", onClick: () => this.edit(customer.id) },
+                more: [
+                  {
+                    label: "Refresh",
+                    onClick: () => this.refresh(customer.id)
+                  },
+                  {
+                    label: "Transfer Record",
+                    onClick: () => this.transfer(customer)
+                  },
+                  {
+                    label: "Change Active Status",
+                    onClick: () => this.setInactive(customer)
+                  },
+                  { label: "Delete", onClick: () => this.delete(customer) }
+                ]
+              }}
+            />
             <div className="row">
               <div className="col-md-3">
                 <CustomerCard cust={customer} />
@@ -151,17 +187,15 @@ const mapStateToProps = ({ crmState }) => {
   return { customerToView };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    {
-      show,
-      getSingleCustomer,
-      clearSingleCustomer,
-      deleteCustomer,
-      addNoteCustomer,
-      setCustomerActive,
-      transferCustomer
-    }
-  )(crm_view_customer)
-);
+export default connect(
+  mapStateToProps,
+  {
+    show,
+    getSingleCustomer,
+    clearSingleCustomer,
+    deleteCustomer,
+    addNoteCustomer,
+    setCustomerActive,
+    transferCustomer
+  }
+)(crm_view_customer);

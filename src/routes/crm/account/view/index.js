@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
@@ -41,7 +40,10 @@ class crm_view_account extends Component {
     this.edit = this.edit.bind(this);
     this.handleNewDeal = this.handleNewDeal.bind(this);
     this.addNote = this.addNote.bind(this);
+    this.newAcct = this.newAcct.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
+
   componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleAccount(id);
@@ -49,11 +51,26 @@ class crm_view_account extends Component {
   componentWillUnmount() {
     this.props.clearSingleAccount();
   }
+
+  /**
+   * New
+   */
+  newAcct() {
+    this.props.history.push(accountNewPage);
+  }
+
   /**
    * Edit
    */
-  edit(acct) {
-    this.props.history.push(accountEditPage(acct.id));
+  edit(id) {
+    this.props.history.push(accountEditPage(id));
+  }
+
+  /**
+   * Refresh
+   */
+  refresh(id) {
+    this.props.getSingleAccount(id);
   }
 
   /**
@@ -111,7 +128,28 @@ class crm_view_account extends Component {
         <Helmet>
           <title>Everyday | View Account</title>
         </Helmet>
-        <PageTitleBar title="View Account" />
+        <PageTitleBar
+          title="View Account"
+          actionGroup={{
+            add: { onClick: this.newAcct },
+            mid: { label: "Edit", onClick: () => this.edit(account.id) },
+            more: [
+              {
+                label: "Refresh",
+                onClick: () => this.refresh(account.id)
+              },
+              {
+                label: "Transfer Record",
+                onClick: () => this.transfer(account)
+              },
+              {
+                label: "Change Active Status",
+                onClick: () => this.setInactive(account)
+              },
+              { label: "Delete", onClick: () => this.delete(account) }
+            ]
+          }}
+        />
         <div className="row">
           <div className="col-md-3">
             <AccountCard acct={account} />
@@ -148,17 +186,15 @@ const mapStateToProps = ({ crmState }) => {
   return { accountToView };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    {
-      show,
-      getSingleAccount,
-      clearSingleAccount,
-      addNoteAccount,
-      setAccountActive,
-      deleteAccount,
-      transferAccount
-    }
-  )(crm_view_account)
-);
+export default connect(
+  mapStateToProps,
+  {
+    show,
+    getSingleAccount,
+    clearSingleAccount,
+    addNoteAccount,
+    setAccountActive,
+    deleteAccount,
+    transferAccount
+  }
+)(crm_view_account);
