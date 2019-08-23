@@ -17,9 +17,13 @@ const INIT_STATE = {
     loading: false,
     deleted: false,
     tableData: [],
-    currencyTable:[{name: 'SGD', rate: 1},{name: 'USD', rate: 1.3},{name: 'EU', rate: 1.5}],
-    discountTable:[{name: 'Entry', rate: 0}, {name: 'Amateur', rate: 10},{name: 'Intermediate', rate: 15},{name: 'Pro', rate: 20}],
-    taxTable:[{name: 'GST 7%', rate: 7},{name: 'GST Inclusive', rate: 0}]
+    currencyTable:[{name: 'SGD', value: 1},{name: 'USD', value: 1.3},{name: 'EU', value: 1.5}],
+    discountTable:[{name: 'Entry', value: 0}, {name: 'Amateur', value: 10},{name: 'Intermediate', value: 15},{name: 'Pro', value: 20}],
+    taxTable:[{name: 'GST 7%', value: 7},{name: 'GST Inclusive', value: 0}],
+    accountsList : [],
+    owner:[],
+    complete: false,
+    uploaded: false,
   },
   quotationSummary: {
     showSummary: false,
@@ -660,9 +664,73 @@ export default (state = INIT_STATE, action) => {
           quotationToView: { ...state.quotationToView, loading: false }
         };
 
+    case types.HANDLE_QUOTATION_ACCOUNTS:
+        // console.log('HANDLE_QUOTATION_ACCOUNTS')
+        return {
+          ...state,
+          quotationList :{
+            ...state.quotationList,
+          }          
+        };
+
+    case types.HANDLE_QUOTATION_ACCOUNTS_SUCCESS:
+      // console.log('HANDLE_QUOTATION_ACCOUNTS_SUCCESS')
+
+      return {
+          ...state,
+          quotationList :{
+            ...state.quotationList,
+            accountsList : action.payload.fields[0],
+            owner: action.payload.fields[1]
+          }  
+        };
+
+    case types.HANDLE_QUOTATION_ACCOUNTS_FAILTURE:
+        return {
+          ...state,
+          quotationList :{
+            ...state.quotationList,
+            accountsList : []
+          }  
+        };
+
+    case types.SUBMIT_NEW_QUOTATION:
+        return {
+          ...state,
+          quotationList :{
+            ...state.quotationList,
+          }  
+        };
+
+    case types.SUBMIT_NEW_QUOTATION_SUCCESS:
+        return {
+          ...state,
+          quotationList :{
+            ...state.quotationList,
+            uploaded: true,
+          }  
+        };
 
 
+    case types.SUBMIT_NEW_QUOTATION_FAILURE:
+        return {
+          ...state,
+          quotationList :{
+            ...state.quotationList,
+            uploaded: false,
+          }  
+        };
 
+    case types.RESTART_QUOTATION_UPLOAD_STATUS:
+          return {
+            ...state,
+            quotationList :{
+              ...state.quotationList,
+              uploaded: false,
+            }  
+          };
+        
+        
     default:
       return { ...state };
   }

@@ -25,6 +25,15 @@ import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices"
 // import NewNote from "Components/Form/Note/NewNote";
 // import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
+// InvoicePaymentList
+import InvoicePaymentList from "Components/Accounting/Payment/InvoicePaymentList";
+import PaymentList from "Components/Form/Payment/PaymentList"
+
+import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
+import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
+
+
+
 // Actions
 import { getSingleCompanyPayment, clearSinglePayment } from "Actions";
 
@@ -38,57 +47,112 @@ class acct_view_payment extends Component {
     // this.props.clearSinglePayment();
   }
 
-  render() {
-    const { loading, payment } = this.props.paymentToView;
+  _submitPayment() {
+    console.log('submit payment')
+  }
 
-    console.log(payment)
+  state=({
+    payment: {},
+    paymentData : []
+  })
+
+  preparePayment(item) {
+    this.setState({payment: item})
+  }
+
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+
+    if (prevState.paymentData.length != this.props.paymentToView.payment.length) {
+      return this.props.paymentToView.payment
+    }
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (snapshot !== null) {
+      this.setState({paymentData: snapshot})
+    }
+  }
+
+
+
+  onCheckList = (rowIndex, value) => {
+    let data = this.state.paymentData
+    data[rowIndex].reconcile.reconcile = value
+    this.setState({paymentData: data})
+  }
+
+
+
+  render() {
+    const { loading, company } = this.props.paymentToView;
 
     return loading ? (
       <RctPageLoader />
-    ) : payment ? (
-      <React.Fragment>
-        <Helmet>
-          <title>Everyday | View Payment</title>
-        </Helmet>
-        <PageTitleBar title="View Payment" createLink="/acct/new/payment" />
-        <div className="row">
-          <div className="col-md-4">
-            <BgCard>
-              {/* <AccountingDetails
-                // type="payment"
-                // accountID={payment.creditID}
-                // status={payment.status.name}
-                // account={payment.account && payment.account.name}
-                // sentDate={payment.sentOn}
-                // owner={payment.owner.name}
+    ) : company ? (
 
-              /> */}
-            </BgCard>
+      <React.Fragment>
+      {/* <Helmet>
+        <title>Everyday | New Invoice</title>
+        <meta name="description" content="Everyday Invoices Creation" />
+      </Helmet>
+      <BgCard
+        heading={<IntlMessages id="sidebar.newInvoice" />}
+      >
+        <div className="row">
+          <div className="col-md-1" />
+          <div className="col-md-10">
+            <QuotationForm
+              accountPage={'Invoice'}
+              quotationForm={null}
+              status={this.props.accountingState.accountState}
+              _quotationParent={this._quotationParent}
+            />
           </div>
-          <div className="col-md-8">
-            <TabsWrapper>
-              <div icon="zmdi-shopping-cart-plus text-success" label="PAYMENT">
-                {/* <ViewTemplate /> */}
-              </div>
-              <div icon="zmdi-shopping-cart text-warning" label="INVOICE PAID">
-                <CreditedInvoices />
-              </div>
-              {/* <div icon="zmdi-pizza text-info" label="ACTIVITY LOG">
-                <ActivityLog />
-              </div> */}
-              <div icon="zmdi-assignment text-danger" label="NOTES">
-                <div className="row">
-                  <div className="col-md-5">
-                   
-                  </div>
-                  <div className="col-md-7">
-                    {/* <DisplayAllNotes notes={payment.notes} /> */}
-                  </div>
-                </div>
-              </div>
-            </TabsWrapper>
-          </div>
+          <div className="col-md-1" />
         </div>
+      </BgCard> */}
+      <Helmet>
+          <title>Everyday | View Payment</title>
+      </Helmet>
+
+      <FormWrapper
+        onSave={this._submitPayment}
+        // disabled={false}
+        title={`Payment for ${company.name}`}
+      >
+      
+        {/* {loading && <RctSectionLoader />} */}
+
+        <form autoComplete="off">
+          <FormInputLayout
+            title="Key Information"
+            desc="The key fields to get you started with quotation"
+          >
+              <PaymentList
+                invoice={company}
+                preparePayment={this.preparePayment}
+              />
+              
+          </FormInputLayout>
+
+          <div className="row border-top py-30 px-30 justify-content-md-center">
+            <div className="col-11">
+              <InvoicePaymentList
+                  // title={nowShowing}
+                  // action={action}
+                  tableData={this.state.paymentData}
+                  loading={loading}
+                  onCheckList={this.onCheckList}
+              />
+            </div>
+          </div>
+
+        </form>
+      </FormWrapper>
+             
+             
       </React.Fragment>
     ) : (
       <PageErrorMessage
@@ -109,3 +173,30 @@ export default connect(
   mapStateToProps,
   { getSingleCompanyPayment, clearSinglePayment }
 )(acct_view_payment);
+
+
+
+/*
+<div className="col-md-8">
+  <TabsWrapper>
+    <div icon="zmdi-shopping-cart-plus text-success" label="PAYMENT">
+      <ViewTemplate />
+    </div>
+    <div icon="zmdi-shopping-cart text-warning" label="INVOICE PAID">
+      <CreditedInvoices />
+    </div>
+    <div icon="zmdi-pizza text-info" label="ACTIVITY LOG">
+      <ActivityLog />
+    </div> 
+    <div icon="zmdi-assignment text-danger" label="NOTES">
+      <div className="row">
+        <div className="col-md-5">
+        </div>
+        <div className="col-md-7">
+          {/* <DisplayAllNotes notes={payment.notes} />
+        </div>
+      </div>
+    </div>
+  </TabsWrapper>
+</div>
+*/

@@ -14,7 +14,8 @@ const INIT_STATE = {
     action: false,
     loading: false,
     deleted: false,
-    tableData: []
+    tableData: [],
+    uploaded: false,
   },
   invoiceSummary: {
     showSummary: false,
@@ -217,8 +218,48 @@ export default (state = INIT_STATE, action) => {
         invoiceToView: { ...state.invoiceToView, loading: false }
       };
 
+    case types.SUBMIT_NEW_INVOICE:
+          return {
+            ...state,
+            invoiceList: {
+              ...state.invoiceList,
+              uploaded: false
+            },
+          };
+  
+    case types.SUBMIT_NEW_INVOICE_SUCCESS:
+        console.log('SUBMIT_NEW_INVOICE_SUCCESS')
+          return {
+            ...state,
+            invoiceList: {
+              ...state.invoiceList,
+              uploaded: true
+            },
+            
+          };
+  
+    case types.SUBMIT_NEW_INVOICE_FAILURE:
+          console.log('SUBMIT_NEW_INVOICE_FAILURE')
+          return {
+            ...state, 
+            invoiceList: {
+              ...state.invoiceList,
+              uploaded: false
+            },
+          };
+  
+    case types.RESTART_UPLOAD_STATUS:
+          console.log('SUBMIT_NEW_INVOICE_FAILURE')
+          return {
+            ...state, 
+            invoiceList: {
+              ...state.invoiceList,
+              uploaded: false
+            },
+          };
 
 
+      
     default:
       return { ...state };
   }

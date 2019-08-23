@@ -24,6 +24,10 @@ export default (state = INIT_STATE, action) => {
     case types.FETCH_ALL_PAYMENT:
           return {
             ...state,
+            paymentList: {
+              ...state.paymentList,
+              loading: true,
+            }
           };
 
     case types.FETCH_ALL_PAYMENT_FAILURE:
@@ -31,7 +35,7 @@ export default (state = INIT_STATE, action) => {
           ...state,
           paymentList: {
             ...state.paymentList,
-            loading: true,
+            loading: false,
           }
         };
 
@@ -56,7 +60,6 @@ export default (state = INIT_STATE, action) => {
           ...state,
         };
 
-
     case types.GET_SINGLE_COMPANY_PAYMENT:
         return {
           ...state,
@@ -67,13 +70,13 @@ export default (state = INIT_STATE, action) => {
         };
 
     case types.GET_SINGLE_COMPANY_PAYMENT_SUCCESS:
-        
         return {
           ...state,
           paymentToView: {
             ...state.paymentToView,
             loading: false,
-            payment : action.payload
+            payment : action.payload.data,
+            company: action.payload.company
           }
         };
 

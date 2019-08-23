@@ -23,8 +23,11 @@ import { leadSummary } from "../../../components/DummyData";
 //=========================
 
 const getAllQuoteRequest = async () => {
-  const id = localStorage.getItem('user_id');
-  const result = await api.get(`/quotations?filter[where][userId]=${id}&`);
+  // const id = localStorage.getItem('user_id');
+  // const result = await api.get(`/quotations?filter[where][userId]=${id}&`);
+  // return result.data;
+
+  const result = await api.get(`/quotations/getAllQuotations`);
   return result.data;
 };
 
@@ -119,6 +122,16 @@ const getQuoteRequest = async (quoteID) => {
 
 };
 
+const handleQuotationAccountsRequest = async () => {
+  const result = await api.get(`/quotations/formFields`);
+  return result.data;
+};
+
+const submitNewQuotationRequest = async payload => {
+  const result = await api.post("/quotations/submitQuotations", {data: payload}); 
+  return result.data;
+};
+
 
 
 // const getAllQuoteRequest = async () => {
@@ -190,7 +203,8 @@ function* getAllQuoteFromDB() {
   try {
     const data = yield call(getAllQuoteRequest);
     yield delay(500);
-    yield put(Actions.getQuotationSuccess(data));
+    console.log(data.fields)
+    yield put(Actions.getQuotationSuccess(data.fields));
   } catch (error) {
     yield put(Actions.getQuotationFailure(error));
   }
@@ -275,6 +289,27 @@ function* convertInvoiceQuotation({ payload }) {
   }
 }
 
+function* handleQuotationAccounts({ payload }) {
+  try {
+    const data = yield call(handleQuotationAccountsRequest, payload);
+    yield put(Actions.HandleQuotationAccountsSuccess(data));
+  } catch (error) {
+    yield put(Actions.HandleQuotationAccountsFailure('Unable to retrieve account records'));
+  }
+}
+
+
+function* submitNewQuotation({ payload }) {
+  try {
+    const data = yield call(submitNewQuotationRequest, payload);
+    yield put(Actions.submitNewQuotationSuccess(data));
+  } catch (error) {
+    yield put(Actions.submitNewQuotationFailure('Unable to create new quotation'));
+  }
+}
+
+
+
 //=======================
 // WATCHER FUNCTIONS
 //=======================
@@ -311,6 +346,12 @@ export function* revertPreviousVersionQuotationWatcher() {
 export function* convertInvoiceQuotationWatcher() {
   yield takeEvery(Types.HANDLE_STATE_CONVERT_INVOICE_QUOTATION, convertInvoiceQuotation);
 }
+export function* handleAccountsWatcher() {
+  yield takeEvery(Types.HANDLE_QUOTATION_ACCOUNTS, handleQuotationAccounts);
+}
+export function* submitNewQuotationWatcher() {
+  yield takeEvery(Types.SUBMIT_NEW_QUOTATION, submitNewQuotation);
+}
 
 
 
@@ -330,6 +371,8 @@ export default function* rootSaga() {
     fork(createNewVersionQuotationWatcher),
     fork(revertPreviousVersionQuotationWatcher),
     fork(convertInvoiceQuotationWatcher),
+    fork(handleAccountsWatcher),
+    fork(submitNewQuotationWatcher),
 
   
   ]);

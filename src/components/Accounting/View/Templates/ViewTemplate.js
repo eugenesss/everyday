@@ -78,14 +78,17 @@ const ViewTemplate = ({ order, id, disabled }) => {
                 </tr>
               ))} */}
 
-          <InvoiceProductInput
+              <div>
+                show invoice/quotations items
+              </div>
+          {/* <InvoiceProductInput
             products={order.quotationline}
             invoice={order}
             disabled={disabled}
-            // handleChange={this.props.handleProdQuote}
-            // handleAdd={this.props.addNewProdQuote}
-            // handleRemove={this.props.removeProdQuote}
-          />
+            handleChange={this.props.handleProdQuote}
+            handleAdd={this.props.addNewProdQuote}
+            handleRemove={this.props.removeProdQuote}
+          /> */}
 
             {/* <tr>
               <td colSpan="5">&nbsp;</td>

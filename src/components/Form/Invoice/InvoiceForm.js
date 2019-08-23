@@ -34,13 +34,13 @@ import {
     accountingClearState,
     submitAccountQuotationInvoice,
     HandleQuotationAccounts,
-    restartUploadQuotationStatus
+    restartUploadStatus
 } from "Actions";
 
 const formFieldsProducts =  {
   description: "",
   quantity: 0,
-  price: "",
+  price: 0,
   discount: 0,
   tax_id: "",
   tax_rate: 0,
@@ -63,8 +63,8 @@ const formFields = {
   owner: "",
   accountId:"",
   attn_toId:"",
-  shipping: '',
-  billing:'',
+  billing: '',
+  shipping:'',
   sent_date: "",
   quoteID: "",
   state: "Draft",
@@ -75,16 +75,14 @@ const formFields = {
 
 
 
-class QuotationForm extends Component {
+class InvoiceForm extends Component {
   
   constructor(props) {
     super(props);
     // Don't call this.setState() here!
     this.state = {
       formFields: {...formFields},
-      formFieldsProducts: [
-        {...formFieldsProducts}
-      ],
+      formFieldsProducts: [{...formFieldsProducts}],
       attn_to_array : []
     };
 
@@ -94,38 +92,63 @@ class QuotationForm extends Component {
     this.props.accountingClearState()
   }
 
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+      if(prevProps.uploaded != this.props.uploaded){
+        if(this.props.uploaded){
+          return true
+        }
+      }
+      return null
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+
+
+      if(snapshot){
+        this.setState({
+          formFields: {...formFields},
+          formFieldsProducts: [{...formFieldsProducts}],
+          attn_to_array : []
+        });
+        this.props.restartUploadStatus()
+      }
+  }
+
+  // quotationForm
+  
   componentDidMount() {
     this.props.HandleQuotationAccounts()
   }
 
   _handleChangeFormField = (e, value) => {
 
-    let formFields = {...this.state.formFields}
+    let StateformFields = {...this.state.formFields}
 
     switch(e){
         case "accountId":
-              formFields[e] = value
-              formFields.shipping = value.address
-              formFields.billing = value.address
-            return this.setState({formFields: formFields, attn_to_array: value.customer})
+          
+              StateformFields[e] = value
+              StateformFields.billing = value.address
+              StateformFields.shipping = value.address
+           
+            return this.setState({formFields: StateformFields, attn_to_array: value.customer})
 
         case "currency":
-                formFields.currency_rate = value.rate
+              StateformFields.currency_rate = value.rate
             break
 
         case "discount":
-
-                formFields.discount_rate = value.rate
+              StateformFields.discount_rate = value.rate
             break
 
         default :
-                formFields[e] = value
+              StateformFields[e] = value
             break 
 
     }
 
-    this.setState({formFields: formFields})
-    this._tabluteTaxDiscountTotal(formFields)
+    this.setState({formFields: StateformFields})
+    this._tabluteTaxDiscountTotal(StateformFields)
   }
 
   _handleProdQuote =(element, value, key) => {
@@ -133,7 +156,9 @@ class QuotationForm extends Component {
     let StateformFieldsProducts = [...this.state.formFieldsProducts]
     let formFields = {...this.state.formFields}
 
+    // calculate tax
     switch(element){
+
         case "tax_id":
             StateformFieldsProducts[key].tax_id = value   
             StateformFieldsProducts[key].tax_rate = value.value
@@ -180,6 +205,7 @@ class QuotationForm extends Component {
     thisFormFields.totalAmt = productTotal
 
     this.setState({formFields: thisFormFields})
+
   }
 
   _submitFormFieldsDB = () =>{
@@ -192,6 +218,7 @@ class QuotationForm extends Component {
     const postData = {...this.state.formFields}
     const quotationLine = [...this.state.formFieldsProducts]
 
+    
     let modifiedPostData = {...postData}
     delete modifiedPostData.accountId.customer
     delete modifiedPostData.accountId.address
@@ -200,8 +227,12 @@ class QuotationForm extends Component {
     modifiedPostData.due_date = postData.duedate,
     modifiedPostData.companyName = postData.accountId.name,
 
+    //   attn_toId : {id: postData.attn_toId.id, name: postData.attn_toId.name},
+    //   accountId : {id: postData.accountId.id, name: postData.accountId.name},
+
     // let formFields = {
     //   ...this.state.formFields,
+
     //   date : postData.date,
     //   sent_date : postData.date,
     //   attn_toId : {id: postData.attn_toId.id, name: postData.attn_toId.name},
@@ -231,32 +262,8 @@ class QuotationForm extends Component {
     //   ],
     //   attn_to_array : []
     // })
+
   }
-
-
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-      if(prevProps.quotationList.uploaded != this.props.quotationList.uploaded){
-        if(this.props.quotationList.uploaded){
-          return true
-        }
-      }
-      return null
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-
-      if(snapshot){
-        this.setState({
-          formFields: {...formFields},
-          formFieldsProducts: [{...formFieldsProducts}],
-          attn_to_array : []
-        });
-        this.props.restartUploadQuotationStatus()
-      }
-  }
-
-  // 
-
 
 
   // checkDisabled() {
@@ -276,17 +283,17 @@ class QuotationForm extends Component {
   render() {
 
     // const { products, quotation, attn_to_array } = this.props.quotationForm;
-    const {currencyTable, taxTable, discountTable, accountsList, owner, uploaded} = this.props.quotationList
+    const {currencyTable, taxTable, discountTable, accountsList, owner} = this.props.quotationList
 
-    const { formFields } = this.state;
-
+    const {formFields} = this.state;
+    
     return (
 
       <FormWrapper
         onSave={this._submitFormFieldsDB}
         disabled={true}
         // edit={edit}
-        title={'New Quotation'}
+        title={'New Inovice'}
       >
       
         {/* {loading && <RctSectionLoader />} */}
@@ -318,6 +325,7 @@ class QuotationForm extends Component {
                 />
 
               </div>
+
               <div className="col-5 d-block offset-md-1">
               
                 <DatePickerInput
@@ -333,7 +341,7 @@ class QuotationForm extends Component {
                   target="owner"
                   handleChange={this._handleChangeFormField}
                 />
-              
+
               </div>
             </div>
           </FormInputLayout>
@@ -342,14 +350,14 @@ class QuotationForm extends Component {
             title="Key Information"
             desc="Billing address with additional notes if required"
           >
-            <div className="row">
+              <div className="row">
                 <div className="col-5 d-block">
                   <FormInput
                     multiline
                     rows={4}
                     label="Billing Address"
-                    target="billing"
                     value={formFields.billing}
+                    target="billing"
                     handleChange={this._handleChangeFormField}
                   />
                 </div>
@@ -359,31 +367,33 @@ class QuotationForm extends Component {
                     multiline
                     rows={4}
                     label="Shipping Address"
-                    target="shipping"
                     value={formFields.shipping}
+                    target="shipping"
                     handleChange={this._handleChangeFormField}
                   />
                 </div>  
             </div>
-            
+
+
             <div className="row">
                 <div className="col-11">
                   <FormInput
                     multiline
                     rows={4}
-                    label="Description"
-                    target="description"
+                    label="Additional notes"
                     value={formFields.description}
+                    target="description"
                     handleChange={this._handleChangeFormField}
                   />
                 </div>
             </div>
 
+
           </FormInputLayout>
       
       
           <FormInputLayout
-            title="Quotation List"
+            title="Invoice List"
             desc="Please state down the description, unit, price and tax option clearly"
           >
        
@@ -422,12 +432,12 @@ class QuotationForm extends Component {
 }
 
 const mapStateToProps = ({ accountingState, crmState, usersState }) => {
-  const { tableData, } = crmState.accountState.accountList 
-  const { quotationState} = accountingState;
+  const { quotationState, invoiceState} = accountingState;
   const { quotationList } = quotationState;
+  const { uploaded } = invoiceState.invoiceList
   const { users } = usersState;
 
-  return { tableData, users, quotationList};
+  return { users, quotationList, uploaded};
 };
 
 export default connect(
@@ -445,9 +455,9 @@ export default connect(
     accountingClearState,
     submitAccountQuotationInvoice,
     HandleQuotationAccounts,
-    restartUploadQuotationStatus
+    restartUploadStatus
   }
-)(QuotationForm);
+)(InvoiceForm);
 
 
 

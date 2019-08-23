@@ -17,6 +17,14 @@ function NumberFormatCustom(props) {
           }
         });
       }}
+      // onValueChange={values => {
+      //   handleChange({
+      //     target: {
+      //       value: values.value
+      //     }
+      //   });
+      // }}
+      // onChange={e=> handleChange(target, e.target.value, keys )}
       thousandSeparator
     />
   );
@@ -28,14 +36,15 @@ NumberFormatCustom.propTypes = {
 };
 
 const AmountInput = props => {
+  const { nodollar, ...others } = props;
   return (
     <FormInput
-      value={props.value}
-      label={props.label}
+      disabled={props.disabled}
       inputComponent={NumberFormatCustom}
-      startAdornment={<InputAdornment position="start">$</InputAdornment>}
-      onChange={e => props.handleChange(props.target, e.target.value)}
-      {...props}
+      startAdornment={
+        !nodollar && <InputAdornment position="start">$</InputAdornment>
+      }
+      {...others}
     />
   );
 };

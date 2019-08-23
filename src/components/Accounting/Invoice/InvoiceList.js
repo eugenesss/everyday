@@ -30,11 +30,11 @@ const InvoiceList = ({ tableData, loading, title, action }) => {
       }
     },
     {
-      label: "Related",
-      name: "attn_toId",
+      label: "Company",
+      name: "companyName",
       options: {
         customBodyRender: value => {
-          return value ? value.name : "";
+          return value
         }
       }
     },
@@ -58,7 +58,7 @@ const InvoiceList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Due Date",
-      name: "due_date",
+      name: "dueDate",
       options: {
         customBodyRender: value => {
           return Moment(new Date(value)).format("LL");

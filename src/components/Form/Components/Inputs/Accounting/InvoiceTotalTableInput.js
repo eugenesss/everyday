@@ -4,6 +4,13 @@ import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 
+import FormInput from "Components/Form/Components/FormInput";
+import FormMultiInput from "Components/Form/Components/FormMultiInput";
+import AmountInput from "Components/Form/Components/Inputs/AmountInput";
+import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
+
+
+
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
 }
@@ -11,8 +18,30 @@ function ccyFormat(num) {
 const InvoiceTotalTableInput = ({ invoice }) => {
 
   return (
-    <Table>
-      <TableBody>
+    <React.Fragment>
+
+
+        <FormInput
+          label="Subtotal"
+          value={invoice.subtotal? ccyFormat(invoice.subtotal) : 0}
+        />
+
+        <FormInput
+          label="Tax"
+          value={invoice.tax_amount? ccyFormat(invoice.tax_amount):0}
+        />
+
+        <FormInput
+          label="Discount"
+          value={invoice.discount_rate? `${invoice.discount_rate}%`: `0%`}
+        />
+
+        <FormInput
+          label="Total Amount"
+          value={invoice.totalAmt? ccyFormat(invoice.totalAmt) : 0}
+        />
+
+      {/* <TableBody>
         <TableRow>
           <TableCell rowSpan={4} />
           <TableCell colSpan={2}>Subtotal</TableCell>
@@ -46,8 +75,7 @@ const InvoiceTotalTableInput = ({ invoice }) => {
           <TableCell align="right">{ccyFormat(invoice.totalAmt)}</TableCell>
         </TableRow> */}
 
-      </TableBody>
-    </Table>
+    </React.Fragment>
   );
 };
 

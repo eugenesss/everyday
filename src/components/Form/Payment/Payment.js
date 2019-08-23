@@ -9,19 +9,24 @@ import Moment from 'moment'
 
 const paymentOption =  [{name:'Paypal', value: 'Paypal'}, {name:'Stripe', value: 'Stripe'}, {name:'Bank FAST', value: 'Bank FAST'}]
 const paymentDifferenceOptions =  [{name:'Keep Open', value: 'Keep Open'}, {name:'Fully Reconcile', value: 'Fully Reconcile'}]
+import FormInput from "Components/Form/Components/FormInput";
 
 
 export default class Payment extends Component {
+    
 
     state=({
-        customer: this.props.invoice.accountId.id,
+        customer: this.props.invoice.accountId.value,
+        customerName: this.props.invoice.accountId.name,
         invoiceId: this.props.invoice.id,
+        invoiceQuote: this.props.invoice.quoteID,
         paidAmount : 0,
         paymentMethod: '',
         date: new Date(),
         paymentRef: '',
         memo : '',
-        paymentDifference: []
+        paymentDifference: [],
+        userId : localStorage.getItem('user_id'),
     })
 
     handleChange = (a, b) => {
@@ -29,7 +34,6 @@ export default class Payment extends Component {
     }
 
     _handleSubmitPayment = () => {
-
         this.props.makePayment(this.state)
     }
 

@@ -14,15 +14,15 @@ import QuotationForm from "Components/Form/Quotation/QuotationForm";
 
 // Actions
 import { 
-  submitAccountQuotationInvoice
+  submitNewQuotation
 } from "Actions";
 
 class acct_new_quote extends Component {
   state = {};
 
 
-  _quotationParent = (element, item) =>{
-    this.props.submitAccountQuotationInvoice(element, item)
+  _quotationParent = (item) =>{
+    this.props.submitNewQuotation(item)
   }
 
 
@@ -32,23 +32,9 @@ class acct_new_quote extends Component {
       <React.Fragment>
         <Helmet>
           <title>Everyday | New Quotation</title>
-          <meta name="description" content="Everyday Quotations Creation" />
+          <meta name="description" content="Everyday Quotation Creation" />
         </Helmet>
-        <BgCard
-          heading={<IntlMessages id="sidebar.newQuotation" />}
-        >
-          <div className="row">
-            <div className="col-md-1" />
-            <div className="col-md-10">
-              <QuotationForm
-                accountPage={'Quotation'}
-                status={this.props.accountingState.accountState}
-                _quotationParent={this._quotationParent}
-              />
-            </div>
-            <div className="col-md-1" />
-          </div>
-        </BgCard>
+        <QuotationForm title="sidebar.newQuotation" handleSubmit={this._quotationParent} />
       </React.Fragment>
     );
   }
@@ -62,7 +48,30 @@ const mapStateToProps = ({accountingState}) => {
 export default connect(
   mapStateToProps,
   { 
-    submitAccountQuotationInvoice
+    submitNewQuotation
   }
 )(acct_new_quote);
 
+
+
+/* <React.Fragment>
+<Helmet>
+  <title>Everyday | New Quotation</title>
+  <meta name="description" content="Everyday Quotations Creation" />
+</Helmet>
+<BgCard
+  heading={<IntlMessages id="sidebar.newQuotation" />}
+>
+  <div className="row">
+    <div className="col-md-1" />
+    <div className="col-md-10">
+      <QuotationForm
+        accountPage={'Quotation'}
+        status={this.props.accountingState.accountState}
+        _quotationParent={this._quotationParent}
+      />
+    </div>
+    <div className="col-md-1" />
+  </div>
+</BgCard>
+</React.Fragment> */

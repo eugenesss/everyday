@@ -22,9 +22,15 @@ import { custSummary } from "../../../components/DummyData";
 //=========================
 // 5d2fd3d1456a441037b9c1f9
 // filter[where][userId]=${id}
+// const getAllInvoiceRequest = async () => {
+//   const id = localStorage.getItem('user_id');
+//   const result = await api.get(`/invoices?filter[where][userId]=${id}&`);
+//   return result.data;
+// };
+
 const getAllInvoiceRequest = async () => {
-  const id = localStorage.getItem('user_id');
-  const result = await api.get(`/invoices?filter[where][userId]=${id}&`);
+  // const id = localStorage.getItem('user_id');
+  const result = await api.get(`/invoices/getAllInvoices`);
   return result.data;
 };
 
@@ -53,6 +59,11 @@ const updateStatusStateInvoiceRequest = async (payload) => {
 
 const createNewVersionStateInvoiceRequest = async (payload) => {
   const result = await api.post(`/invoices/convert`, {data: payload});
+  return result.data;
+};
+
+const submitNewInvoiceFromDBRequest = async (payload) => {
+  const result = await api.post("/invoices", {data: payload});
   return result.data;
 };
 
@@ -124,7 +135,7 @@ function* getAllInvoiceFromDB() {
   try {
     const data = yield call(getAllInvoiceRequest);
     yield delay(500);
-    yield put(actions.getInvoiceSuccess(data));
+    yield put(actions.getInvoiceSuccess(data.fields));
   } catch (error) {
     yield put(actions.getInvoiceFailure(error));
   }
@@ -181,6 +192,15 @@ function* createNewVersionStateInvoice({ payload }) {
 }
 
 
+function* submitNewInvoiceFromDB({ payload }) {
+  try {
+    const data = yield call(submitNewInvoiceFromDBRequest, payload);
+    yield put(actions.submitNewInvoiceSuccess(data));
+  } catch (error) {
+    yield put(actions.submitNewInvoiceFailure(error));
+  }
+}
+
 
 //=======================
 // WATCHER FUNCTIONS
@@ -212,7 +232,9 @@ export function* revertPreviousVersionQuotationWatcher() {
 export function* patchInvoiceRequestInvoiceWatcher() {
   yield takeEvery(types.SUBMIT_INVOICE, patchInvoiceRequestFromDB);
 }
-
+export function* submitNewInvoiceWatcher() {
+  yield takeEvery(types.SUBMIT_NEW_INVOICE, submitNewInvoiceFromDB);
+}
 //=======================
 // FORK SAGAS TO STORE
 //=======================
@@ -225,6 +247,8 @@ export default function* rootSaga() {
     fork(deleteInvoiceSummaryWatcher),
     fork(updateStatusStateInvoiceWatcher),
     fork(createNewVersionInvoiceWatcher),
-    fork(patchInvoiceRequestInvoiceWatcher)
+    fork(patchInvoiceRequestInvoiceWatcher),
+    fork(submitNewInvoiceWatcher)
+
   ]);
 }
