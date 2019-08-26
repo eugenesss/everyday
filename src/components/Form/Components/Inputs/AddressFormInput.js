@@ -12,34 +12,46 @@ const AddressFormInput = ({
   return (
     <React.Fragment>
       <div className="row">
-        <div className="col-11">
+        <div className="col-12">
           <FormInput
             label="Address 1"
             value={address_1}
-            handleChange={e => handleChange("address_1", e.target.value)}
+            target="address_1"
+            handleChange={handleChange}
           />
         </div>
-        <div className="col-11">
+        <div className="col-12">
           <FormInput
             label="Address 2"
             value={address_2}
-            handleChange={e => handleChange("address_2", e.target.value)}
+            target="address_2"
+            handleChange={handleChange}
           />
         </div>
       </div>
       <div className="row">
-        <div className="col-5">
+        <div className="col ">
+          <FormInput
+            label="State"
+            value={state}
+            target="state"
+            handleChange={handleChange}
+          />
+        </div>
+        <div className="col">
           <FormInput
             label="City"
             value={city}
-            handleChange={e => handleChange("city", e.target.value)}
+            target="city"
+            handleChange={handleChange}
           />
         </div>
-        <div className="col-5 offset-md-1">
+        <div className="col">
           <FormInput
             label="Zip"
             value={zip}
-            handleChange={e => handleChange("zip", e.target.value)}
+            target="zip"
+            handleChange={handleChange}
           />
         </div>
       </div>

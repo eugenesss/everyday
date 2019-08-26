@@ -4,7 +4,11 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 // Form Layout
 import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
-import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
+import {
+  KeyInformation,
+  AccountInformation,
+  ShippingInformation
+} from "./Layout";
 
 // Input Components
 import FormInput from "Components/Form/Components/FormInput";
@@ -99,7 +103,6 @@ class AccountForm extends Component {
 
   render() {
     const { loading, fields } = this.props.accountForm;
-    const { industry, users } = fields;
     const { edit, title } = this.props;
     const { account } = this.state;
     return (
@@ -111,97 +114,91 @@ class AccountForm extends Component {
         title={title}
       >
         {loading && <RctSectionLoader />}
+        <hr />
         <form autoComplete="off">
-          <FormInputLayout
-            title="Key Information"
-            desc="The key fields to get you started with a new Account record."
-          >
-            <div className="row">
-              <div className="col-5 d-block">
+          <KeyInformation
+            name={
+              <FormInput
+                label="Name"
+                value={account.baseContact.name}
+                required={!account.baseContact.name}
+                target="name"
+                handleChange={this.handleContact}
+              />
+            }
+            industry={
+              <FormInput
+                label="Industry"
+                value={account.industryId ? account.industryId : ""}
+                selectValues={fields.industry}
+                target="industryId"
+                handleChange={this.handleAccount}
+              />
+            }
+            owner={
+              !edit && (
                 <FormInput
-                  label="Name"
-                  value={account.baseContact.name}
-                  required={!account.baseContact.name}
-                  handleChange={e => this.handleContact("name", e.target.value)}
+                  label="Owner"
+                  value={account.userId ? account.userId : ""}
+                  required={!account.userId}
+                  selectValues={fields.users}
+                  target="userId"
+                  handleChange={this.handleAccount}
                 />
-                <FormInput
-                  label="Industry"
-                  value={account.industryId ? account.industryId : ""}
-                  selectValues={industry}
-                  handleChange={e =>
-                    this.handleAccount("industryId", e.target.value)
-                  }
-                />
-              </div>
-              <div className="col-5 d-block offset-md-1">
-                {!edit && (
-                  <FormInput
-                    label="Owner"
-                    value={account.userId ? account.userId : ""}
-                    required={!account.userId}
-                    selectValues={users}
-                    handleChange={e =>
-                      this.handleAccount("userId", e.target.value)
-                    }
-                  />
-                )}
-              </div>
-            </div>
-          </FormInputLayout>
-          <FormInputLayout
-            title="Account Information"
-            desc="The key fields to get you started with a new Account record."
-          >
-            <div className="row">
-              <div className="col-5 d-block">
-                <FormInput
-                  label="Office"
-                  value={account.baseContact.phone}
-                  handleChange={e =>
-                    this.handleContact("phone", e.target.value)
-                  }
-                />
-                <FormInput
-                  label="Website"
-                  value={account.baseContact.website}
-                  handleChange={e =>
-                    this.handleContact("website", e.target.value)
-                  }
-                />
-              </div>
-              <div className="col-5 d-block offset-md-1">
-                <FormInput
-                  label="Fax"
-                  value={account.baseContact.fax}
-                  handleChange={e => this.handleContact("fax", e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-11">
-                <FormInput
-                  multiline
-                  rows={4}
-                  label="Description"
-                  value={account.baseContact.info}
-                  handleChange={e => this.handleContact("info", e.target.value)}
-                />
-              </div>
-            </div>
-          </FormInputLayout>
-          <FormInputLayout
-            title="Shipping Information"
-            desc="The key fields to get you started with a new Account record."
-          >
-            <AddressFormInput
-              handleChange={this.handleAddress}
-              address_1={account.baseContact._address.address_1}
-              address_2={account.baseContact._address.address_2}
-              city={account.baseContact._address.city}
-              state={account.baseContact._address.state}
-              zip={account.baseContact._address.zip}
-            />
-          </FormInputLayout>
+              )
+            }
+          />
+          <hr />
+          <AccountInformation
+            office={
+              <FormInput
+                label="Office"
+                value={account.baseContact.phone}
+                target="phone"
+                handleChange={this.handleContact}
+              />
+            }
+            website={
+              <FormInput
+                label="Website"
+                value={account.baseContact.website}
+                target="website"
+                handleChange={this.handleContact}
+              />
+            }
+            fax={
+              <FormInput
+                label="Fax"
+                value={account.baseContact.fax}
+                target="fax"
+                handleChange={this.handleContact}
+              />
+            }
+            description={
+              <FormInput
+                multiline
+                rows={4}
+                label="Description"
+                value={account.baseContact.info}
+                target="info"
+                handleChange={this.handleContact}
+              />
+            }
+          />
+          <hr />
+          <ShippingInformation
+            address={
+              <AddressFormInput
+                handleChange={this.handleAddress}
+                address_1={account.baseContact._address.address_1}
+                address_2={account.baseContact._address.address_2}
+                city={account.baseContact._address.city}
+                state={account.baseContact._address.state}
+                zip={account.baseContact._address.zip}
+              />
+            }
+          />
+          <hr />
         </form>
       </FormWrapper>
     );

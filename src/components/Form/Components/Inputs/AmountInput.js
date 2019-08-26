@@ -11,7 +11,7 @@ function NumberFormatCustom(props) {
       {...other}
       getInputRef={inputRef}
       onValueChange={values => {
-        handleChange({
+        onChange({
           target: {
             value: values.value
           }
@@ -32,19 +32,19 @@ function NumberFormatCustom(props) {
 
 NumberFormatCustom.propTypes = {
   inputRef: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired
 };
-// noDollar
+
 const AmountInput = props => {
+  const { nodollar, ...others } = props;
   return (
     <FormInput
-      value={props.value}
-      label={props.label}
       disabled={props.disabled}
-      handleChange={props.handleChange}
-      // inputComponent={NumberFormatCustom}
-      startAdornment={props.nodollar? "" : <InputAdornment position="start">$</InputAdornment>}
-      {...props}
+      inputComponent={NumberFormatCustom}
+      startAdornment={
+        !nodollar && <InputAdornment position="start">$</InputAdornment>
+      }
+      {...others}
     />
   );
 };

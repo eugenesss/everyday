@@ -156,7 +156,7 @@ export function convertDay(d) {
 
 export const listOptions = {
   filterType: "multiselect",
-  responsive: "stacked",
+  responsive: "scroll",
   download: false,
   print: false,
   selectableRows: "none",

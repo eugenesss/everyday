@@ -5,46 +5,54 @@ import LeadList from "Components/CRM/Lead/LeadList";
 //Page Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-import MoreButton from "Components/PageTitleBar/MoreButton";
 // List View
-import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
+// import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 // ListSummary
-import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
+// import ListSummary from "Components/Everyday/ListSummary/ListSummary";
+// import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 // Actions
 import { changeLeadView, getAllLead, getLeadSummary } from "Actions";
 import { leadNewPage, leadImportPage } from "Helpers/url/crm";
 
 class crm_lead extends Component {
-  state = {
-    showSummary: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      showSummary: false
+    };
+    this.importLead = this.importLead.bind(this);
+    this.newLead = this.newLead.bind(this);
+    this.refresh = this.refresh.bind(this);
+  }
 
   componentDidMount() {
     this.props.getAllLead();
-    this.props.getLeadSummary();
+    //this.props.getLeadSummary();
   }
 
   toggleSummary() {
     this.setState({ showSummary: !this.state.showSummary });
   }
 
-  reload() {
-    console.log("reload");
+  refresh() {
+    this.props.getAllLead();
   }
   importLead() {
     this.props.history.push(leadImportPage);
   }
+  newLead() {
+    this.props.history.push(leadNewPage);
+  }
 
   render() {
     const {
-      options,
+      //options,
       nowShowing,
       action,
       tableData,
       loading
     } = this.props.leadList;
-    const { summary } = this.props.leadSummary;
+    // const { summary } = this.props.leadSummary;
     return (
       <React.Fragment>
         <Helmet>
@@ -52,30 +60,24 @@ class crm_lead extends Component {
           <meta name="description" content="Everyday Leads Generation" />
         </Helmet>
         <PageTitleBar
-          title={
-            <div className="d-flex">
-              {/* <ListViewSelector
-                options={options}
-                nowShowing={nowShowing}
-                onChangeValue={this.props.changeLeadView}
-              /> */}
-              {/* <ShowListSummaryButton action={() => this.toggleSummary()} /> */}
-            </div>
-          }
-          createLink={leadNewPage}
-          moreButton={
-            <MoreButton>
-              {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
-              {{
-                handleOnClick: this.importLead.bind(this),
-                label: "Import"
-              }}
-            </MoreButton>
-          }
-        />
-        {this.state.showSummary && <ListSummary summary={summary} />}
-        <LeadList
           title={nowShowing}
+          actionGroup={{
+            add: { onClick: this.newLead },
+            mid: { label: "Import", onClick: this.importLead },
+            more: [{ label: "Refresh List", onClick: this.refresh }]
+          }}
+        />
+        {/* <div className="d-flex">
+          <ListViewSelector
+            options={options}
+            nowShowing={nowShowing}
+            onChangeValue={this.props.changeLeadView}
+          />
+          <ShowListSummaryButton action={() => this.toggleSummary()} />
+        </div> 
+        this.state.showSummary && <ListSummary summary={summary} /> */}
+        <LeadList
+          // title={nowShowing}
           action={action}
           tableData={tableData}
           loading={loading}

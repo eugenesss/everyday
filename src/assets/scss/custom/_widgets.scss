@@ -342,6 +342,9 @@
       .post-img {
         width: 4rem;
       }
+      .meta-info p {
+        font-size: 0.7rem;
+      }
       &:hover {
         .hover-action {
           opacity: 1;
@@ -1167,7 +1170,7 @@ React-Calender
   background-color: #e6e6e6;
 }
 .react-calendar__tile--hasActive {
-  background:#6889FB ;
+  background: #6889fb;
   color: white !important;
 }
 .react-calendar__tile--hasActive:enabled:hover,

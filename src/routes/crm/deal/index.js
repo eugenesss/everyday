@@ -19,6 +19,12 @@ import { changeDealView, getAllDeal, getDealSummary } from "Actions";
 import { dealNewPage } from "Helpers/url/crm";
 
 class crm_deal extends Component {
+  constructor(props) {
+    super(props);
+    this.newDeal = this.newDeal.bind(this);
+    this.refresh = this.refresh.bind(this);
+    this.importDeal = this.importDeal.bind(this);
+  }
   state = {
     showSummary: false
   };
@@ -32,22 +38,26 @@ class crm_deal extends Component {
     this.setState({ showSummary: !this.state.showSummary });
   }
 
-  reload() {
-    console.log("reload");
+  newDeal() {
+    this.props.history.push(dealNewPage);
   }
-  massImportDeals() {
+
+  refresh() {
+    this.props.getAllDeal();
+  }
+  importDeal() {
     console.log("massImportDeals");
   }
 
   render() {
     const {
-      options,
+      // options,
       nowShowing,
       action,
       tableData,
       loading
     } = this.props.dealState.dealList;
-    const { summary } = this.props.dealState.dealSummary;
+    // const { summary } = this.props.dealState.dealSummary;
     return (
       <React.Fragment>
         <Helmet>
@@ -55,34 +65,22 @@ class crm_deal extends Component {
           <meta name="description" content="Everyday Deals Management" />
         </Helmet>
         <PageTitleBar
-          title={
-            <div className="d-flex">
-              {/* <ListViewSelector
+          title={nowShowing}
+          actionGroup={{
+            add: { onClick: this.newDeal },
+            mid: { label: "Import", onClick: this.importDeal },
+            more: [{ label: "Refresh List", onClick: this.refresh }]
+          }}
+        />
+        {/* <div className="d-flex">
+               <ListViewSelector
                 options={options}
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeDealView}
-              /> */}
-              {/* <ShowListSummaryButton action={() => this.toggleSummary()} /> */}
-            </div>
-          }
-          createLink={dealNewPage}
-          moreButton={
-            <MoreButton>
-              {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
-              {{
-                handleOnClick: this.massImportDeals.bind(this),
-                label: "Mass Import Deals (csv)"
-              }}
-            </MoreButton>
-          }
-        />
+              />  <ShowListSummaryButton action={() => this.toggleSummary()} /> 
+              </div> */}
         {/* {this.state.showSummary && <ListSummary summary={summary} />} */}
-        <DealList
-          title={nowShowing}
-          action={action}
-          tableData={tableData}
-          loading={loading}
-        />
+        <DealList action={action} tableData={tableData} loading={loading} />
       </React.Fragment>
     );
   }

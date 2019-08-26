@@ -7,7 +7,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import AppConfig from "Constants/AppConfig";
 
-const StyledTabs = withStyles(theme => ({
+const StyledTabs = withStyles({
   indicator: {
     display: "flex",
     justifyContent: "center",
@@ -18,7 +18,7 @@ const StyledTabs = withStyles(theme => ({
       backgroundColor: AppConfig.themeColors.primary
     }
   }
-}))(props => <Tabs {...props} TabIndicatorProps={{ children: <div /> }} />);
+})(props => <Tabs {...props} TabIndicatorProps={{ children: <div /> }} />);
 
 const StyledTab = withStyles(theme => ({
   root: {

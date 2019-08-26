@@ -19,7 +19,7 @@ const styles = makeStyles(theme => ({
 
 const DatePickerInput = props => {
   const classes = styles();
-  const { label, required } = props;
+  const { label, required, target, handleChange, ...others } = props;
   return (
     <FormControl className={classes.root}>
       <InputLabel className="fw-bold" shrink>
@@ -33,7 +33,8 @@ const DatePickerInput = props => {
         showTodayButton
         autoOk
         format="DD MMM YYYY"
-        {...props}
+        onChange={date => handleChange(target, date.format("YYYY-MM-DD"))}
+        {...others}
       />
       {required && <FormHelperText error>* Required Field</FormHelperText>}
     </FormControl>

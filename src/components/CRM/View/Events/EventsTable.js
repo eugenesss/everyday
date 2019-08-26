@@ -3,7 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import RecordsList from "Components/Everyday/RecordsList";
 
-const EventsTable = ({ tableData, action }) => {
+const EventsTable = ({ tableData, title, action }) => {
   const columns = [
     {
       name: "id",
@@ -29,9 +29,9 @@ const EventsTable = ({ tableData, action }) => {
     search: false,
     filter: false,
     viewColumns: false,
-    title: false,
+    // title: false,
     elevation: 0,
-    selectableRows: true,
+    selectableRows: false,
     rowsPerPage: 10,
     rowsPerPageOptions: [10, 30, 60, 100],
     textLabels: { body: { noMatch: "No Events" } }
@@ -59,7 +59,14 @@ const EventsTable = ({ tableData, action }) => {
     });
   }
 
-  return <RecordsList columns={columns} data={tableData} options={options} />;
+  return (
+    <RecordsList
+      title={title}
+      columns={columns}
+      data={tableData}
+      options={options}
+    />
+  );
 };
 
 export default EventsTable;

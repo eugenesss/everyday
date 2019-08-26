@@ -27,10 +27,16 @@ const theme = createMuiTheme({
       text: {
         fill: "#fff"
       }
+    },
+    MuiButton: {
+      contained: {
+        backgroundColor: "#ececec"
+      }
     }
   },
   custom: {
-    sideDrawerPaperHeight: "calc(100vh - 160px)"
+    sideDrawerPaperHeight: "calc(100vh - 160px)",
+    boxShadow: "0 1px 15px 1px rgba(69, 65, 78, 0.08)"
   }
 });
 

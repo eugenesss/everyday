@@ -45,6 +45,9 @@ export const acct_new_payment_component = Loadable({
 });
 
 
+
+
+
 // invoice
 export const view_invoice = Loadable({
   loader: () => import("Routes/accounting/invoice/view"),

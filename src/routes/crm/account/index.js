@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 // page req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-import MoreButton from "Components/PageTitleBar/MoreButton";
-import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
+// import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 import { accountNewPage } from "Helpers/url/crm";
 //sub components
 import AccountList from "Components/CRM/Account/AccountList";
@@ -18,21 +17,30 @@ import {
 } from "Actions";
 
 class crm_account extends Component {
+  constructor(props) {
+    super(props);
+    this.newAcct = this.newAcct.bind(this);
+    this.refresh = this.refresh.bind(this);
+    this.importAccount = this.importAccount.bind(this);
+  }
   componentDidMount() {
     this.props.getAllAccount();
   }
 
-  reload() {
-    console.log("reload");
+  newAcct() {
+    this.props.history.push(accountNewPage);
   }
-  massImportAccount() {
-    console.log("massImportAccount");
+
+  refresh() {
+    this.props.getAllAccount();
+  }
+  importAccount() {
+    console.log("importAccount");
   }
 
   render() {
     const {
-      dropdownOpen,
-      options,
+      // options,
       nowShowing,
       action,
       tableData,
@@ -45,34 +53,24 @@ class crm_account extends Component {
           <meta name="description" content="Everyday Accounts Management" />
         </Helmet>
         <PageTitleBar
-          title={
+          title={nowShowing}
+          actionGroup={{
+            add: { onClick: this.newAcct },
+            mid: { label: "Import", onClick: this.importAccount },
+            more: [{ label: "Refresh List", onClick: this.refresh }]
+          }}
+        />
+        {/*
             <div className="d-flex">
-              {/* <ListViewSelector
+               <ListViewSelector
                 dropdownOpen={dropdownOpen}
                 toggle={this.props.toggleAccountDropDown}
                 options={options}
                 nowShowing={nowShowing}
                 onChangeValue={this.props.changeAccountView}
-              /> */}
-            </div>
-          }
-          createLink={accountNewPage}
-          moreButton={
-            <MoreButton>
-              {{ handleOnClick: this.reload.bind(this), label: "Reload" }}
-              {{
-                handleOnClick: this.massImportAccount.bind(this),
-                label: "Mass Import Accounts (csv)"
-              }}
-            </MoreButton>
-          }
-        />
-        <AccountList
-          title={nowShowing}
-          action={action}
-          tableData={tableData}
-          loading={loading}
-        />
+              /> 
+              </div> */}
+        <AccountList action={action} tableData={tableData} loading={loading} />
       </React.Fragment>
     );
   }

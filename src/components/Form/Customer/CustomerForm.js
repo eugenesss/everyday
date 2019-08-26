@@ -4,7 +4,7 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 // Form Layout
 import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
-import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
+import { KeyInformation, PersonalInformation } from "./Layout";
 
 // Input Components
 import FormInput from "Components/Form/Components/FormInput";
@@ -104,7 +104,6 @@ class CustomerForm extends Component {
   render() {
     const { customer } = this.state;
     const { loading, fields } = this.props.customerForm;
-    const { leadSource, accounts, users } = fields;
     const { edit, title } = this.props;
     return (
       <FormWrapper
@@ -115,123 +114,121 @@ class CustomerForm extends Component {
         title={title}
       >
         {loading && <RctSectionLoader />}
+        <hr />
         <form autoComplete="off">
-          <FormInputLayout
-            title="Key Information"
-            desc="The key fields to get you started with a new Customer record."
-          >
-            <div className="row">
-              <div className="col-5 d-block">
+          <KeyInformation
+            firstName={
+              <FormInput
+                label="First Name"
+                value={customer.baseContact.firstName}
+                target="firstName"
+                handleChange={this.handleContact}
+              />
+            }
+            lastName={
+              <FormInput
+                label="Last Name"
+                value={customer.baseContact.lastName}
+                required={!customer.baseContact.lastName}
+                target="lastName"
+                handleChange={this.handleContact}
+              />
+            }
+            owner={
+              !edit && (
                 <FormInput
-                  label="First Name"
-                  value={customer.baseContact.firstName}
-                  handleChange={e =>
-                    this.handleContact("firstName", e.target.value)
-                  }
+                  label="Owner"
+                  value={customer.userId ? customer.userId : ""}
+                  required={!customer.userId}
+                  selectValues={fields.users}
+                  target="userId"
+                  handleChange={this.handleCust}
                 />
-                <FormInput
-                  label="Last Name"
-                  value={customer.baseContact.lastName}
-                  required={!customer.baseContact.lastName}
-                  handleChange={e =>
-                    this.handleContact("lastName", e.target.value)
-                  }
-                />
-              </div>
-              <div className="col-5 d-block offset-md-1">
-                {!edit && (
-                  <FormInput
-                    label="Owner"
-                    value={customer.userId ? customer.userId : ""}
-                    required={!customer.userId}
-                    selectValues={users}
-                    handleChange={e =>
-                      this.handleCust("userId", e.target.value)
-                    }
-                  />
-                )}
-                <FormInput
-                  label="Related Account"
-                  selectValues={accounts}
-                  value={customer.accountId ? customer.accountId : ""}
-                  handleChange={e =>
-                    this.handleCust("accountId", e.target.value)
-                  }
-                />
-              </div>
-            </div>
-          </FormInputLayout>
-          <FormInputLayout
-            title="Personal Information"
-            desc="Storing information of the Customer to better understand them."
-          >
-            <div className="row">
-              <div className="col-5 d-block">
-                <FormInput
-                  label="Email"
-                  value={customer.baseContact.email}
-                  handleChange={e =>
-                    this.handleContact("email", e.target.value)
-                  }
-                />
-                <FormInput
-                  label="Mobile"
-                  value={customer.baseContact.mobile}
-                  handleChange={e =>
-                    this.handleContact("mobile", e.target.value)
-                  }
-                />
-                <FormInput
-                  label="Job Title"
-                  value={customer.baseContact.title}
-                  handleChange={e =>
-                    this.handleContact("title", e.target.value)
-                  }
-                />
-              </div>
-              <div className="col-5 offset-md-1">
-                <FormInput
-                  label="Source"
-                  value={customer.sourceId ? customer.sourceId : ""}
-                  selectValues={leadSource}
-                  handleChange={e =>
-                    this.handleCust("sourceId", e.target.value)
-                  }
-                />
-                <FormInput
-                  label="Office"
-                  value={customer.baseContact.phone}
-                  handleChange={e =>
-                    this.handleContact("phone", e.target.value)
-                  }
-                />
-                <FormInput
-                  label="Fax"
-                  value={customer.baseContact.fax}
-                  handleChange={e => this.handleContact("fax", e.target.value)}
-                />
-              </div>
-            </div>
-            <AddressFormInput
-              handleChange={this.handleChange}
-              address_1={customer.baseContact._address.address_1}
-              address_2={customer.baseContact._address.address_2}
-              city={customer.baseContact._address.city}
-              state={customer.baseContact._address.state}
-              zip={customer.baseContact._address.zip}
-            />
-            <div className="row">
-              <div className="col-11">
-                <FormInput
-                  multiline
-                  rows={4}
-                  label="Description"
-                  value={customer.baseContact.info}
-                  handleChange={e => this.handleContact("info", e.target.value)}
-                />
-              </div>
-            </div>
-          </FormInputLayout>
+              )
+            }
+            account={
+              <FormInput
+                label="Related Account"
+                selectValues={fields.accounts}
+                value={customer.accountId ? customer.accountId : ""}
+                target="accountId"
+                handleChange={this.handleCust}
+              />
+            }
+          />
+          <hr />
+          <PersonalInformation
+            email={
+              <FormInput
+                label="Email"
+                value={customer.baseContact.email}
+                target="email"
+                handleChange={this.handleContact}
+              />
+            }
+            mobile={
+              <FormInput
+                label="Mobile"
+                value={customer.baseContact.mobile}
+                target="mobile"
+                handleChange={this.handleContact}
+              />
+            }
+            title={
+              <FormInput
+                label="Job Title"
+                value={customer.baseContact.title}
+                target="title"
+                handleChange={this.handleContact}
+              />
+            }
+            source={
+              <FormInput
+                label="Source"
+                value={customer.sourceId ? customer.sourceId : ""}
+                selectValues={fields.leadSource}
+                target="sourceId"
+                handleChange={this.handleCust}
+              />
+            }
+            office={
+              <FormInput
+                label="Office"
+                value={customer.baseContact.phone}
+                target="phone"
+                handleChange={this.handleContact}
+              />
+            }
+            fax={
+              <FormInput
+                label="Fax"
+                value={customer.baseContact.fax}
+                target="fax"
+                handleChange={this.handleContact}
+              />
+            }
+            address={
+              <AddressFormInput
+                handleChange={this.handleAddress}
+                address_1={customer.baseContact._address.address_1}
+                address_2={customer.baseContact._address.address_2}
+                city={customer.baseContact._address.city}
+                state={customer.baseContact._address.state}
+                zip={customer.baseContact._address.zip}
+              />
+            }
+            description={
+              <FormInput
+                multiline
+                rows={4}
+                label="Description"
+                target="info"
+                value={customer.baseContact.info}
+                handleChange={this.handleContact}
+              />
+            }
+          />
+          <hr />
         </form>
       </FormWrapper>
     );

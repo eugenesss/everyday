@@ -23,7 +23,7 @@ import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 // import ActivityLog from "Components/Everyday/ActivityLog";
 
 // Notes Tab
-import NotesLayout from "Components/Everyday/Notes/NotesLayout";
+// import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 import DialogRoot from "Components/Dialog/DialogRoot";
 
 // import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
@@ -64,8 +64,8 @@ class acct_view_invoice extends Component {
   };
 
   launchMakePaymentDialog = () => {
-    this.setState({makePayment: !this.state.makePayment})
-  }
+    this.setState({ makePayment: !this.state.makePayment });
+  };
 
   makePayment = (item) =>  {
 
@@ -74,7 +74,7 @@ class acct_view_invoice extends Component {
     if(item.paidAmount != 0){
       item.paidAmount = parseInt(item.paidAmount)
     } else {
-      paidAmount = 0
+      paidAmount = 0;
     }
     
     if(paidAmount == 0) {
@@ -89,12 +89,10 @@ class acct_view_invoice extends Component {
       this.props.makePaymentIncompleteFields('payment method')
       return
     }
-    
-    this.props.makePayment(item)
-    this.launchMakePaymentDialog()
-  
-  }
 
+    this.props.makePayment(item);
+    this.launchMakePaymentDialog();
+  };
 
 
 
@@ -285,10 +283,10 @@ class acct_view_invoice extends Component {
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div>
-                    <NotesLayout
+                    {/* <NotesLayout
                       allNotes={invoice.notes}
                       handleAddNote={this.addNote}
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>

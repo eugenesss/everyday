@@ -26,7 +26,7 @@ import {
   singleQuote
 } from "Helpers/url/accounting";
 
-import NotesLayout from "Components/Everyday/Notes/NotesLayout";
+// import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 
 // Activity Log Tab
 // import ActivityLog from "Components/Everyday/ActivityLog";
@@ -313,10 +313,10 @@ class acct_view_quotation extends Component {
               <div icon="zmdi-assignment text-danger" label="NOTES">
                 <div className="row">
                   <div>
-                    <NotesLayout
+                    {/* <NotesLayout
                       allNotes={quotation.notes}
                       handleAddNote={this.addNote}
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>

@@ -1,39 +1,49 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  ViewCardLayout,
-  ViewCardTitle,
-  ViewCardDetails
-} from "Components/CRM/View/Layout/ViewCard";
+  Wrapper,
+  Contact,
+  KeyDetails
+} from "Components/Everyday/Layout/View/ProfileCard";
 import ActiveStatusBadge from "Components/Everyday/StatusBadge/ActiveStatusBadge";
 import { singleAccount } from "Helpers/url/crm";
 
-const CustomerCard = ({
-  name,
-  account,
-  ownerName,
-  mobile,
-  phone,
-  email,
-  isActive
-}) => {
+function CustomerCard(props) {
+  const { cust } = props;
   return (
-    <ViewCardLayout>
-      <ViewCardTitle
-        name={name}
-        subHeading={[
-          account && <Link to={singleAccount(account.id)}>{account.name}</Link>,
-          <ActiveStatusBadge isActive={isActive} />
+    <Wrapper>
+      <Contact
+        name={cust.name}
+        subHeading={
+          cust.accountId && (
+            <Link to={singleAccount(cust.accountInfo.id)}>
+              {cust.accountInfo.name}
+            </Link>
+          )
+        }
+        call={cust.baseContact.mobile}
+        email={cust.baseContact.email}
+        website={cust.baseContact.website}
+      />
+      <div className="profile-card-section">
+        <div>
+          <h4 className="mb-20 text-muted">Upcoming Events</h4>
+        </div>
+      </div>
+      <KeyDetails
+        keyDetails={[
+          {
+            label: "Status",
+            value: <ActiveStatusBadge isActive={cust.isActive} />
+          },
+          {
+            label: "Owner",
+            value: cust.userInfo && cust.userInfo.name
+          }
         ]}
       />
-      <ViewCardDetails>
-        {{ title: "Owner", icon: "zmdi-account", detail: ownerName }}
-        {{ title: "Email", icon: "zmdi-email", detail: email }}
-        {{ title: "Mobile", icon: "zmdi-smartphone", detail: mobile }}
-        {{ title: "Office", icon: "zmdi-phone", detail: phone }}
-      </ViewCardDetails>
-    </ViewCardLayout>
+    </Wrapper>
   );
-};
+}
 
 export default CustomerCard;

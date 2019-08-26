@@ -1,35 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import { show } from "redux-modal";
 // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-import MoreButton from "Components/PageTitleBar/MoreButton";
-
 //Page Components
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
-import BgCard from "Components/Everyday/BgCard";
-// Deal Card
+// Layout
 import DealCard from "Components/CRM/Deal/DealCard";
-// Vertical Tabs
-import VerticalTab from "Components/Everyday/VerticalTabs//VerticalTab";
-import VerticalContainer from "Components/Everyday/VerticalTabs//VerticalContainer";
-// Deal Stage Component
-import SelectDealStage from "Components/CRM/Deal/SelectDealStage";
-// Details Tab
-import DealDetails from "Components/CRM/Deal/DealDetails";
-import DescriptionDetails from "Components/CRM/View/Details/DescriptionDetails";
-// History Tab
-import DealHistory from "Components/CRM/Deal/DealHistory";
-// Events Tab
-import UpcomingEvents from "Components/CRM/View/Events/UpcomingEvents";
-import ClosedEvents from "Components/CRM/View/Events/ClosedEvents";
-// Notes Tab
-import NotesLayout from "Components/Everyday/Notes/NotesLayout";
+import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
 // routes
 import { dealEditPage, dealListPage, dealNewPage } from "Helpers/url/crm";
+// Tabs
+import OverviewTab from "./tabs/Overview";
+import DetailsTab from "./tabs/Details";
+import EventsTab from "Components/CRM/View/Events/EventTab";
 // Actions
 import {
   getSingleDeal,
@@ -43,9 +29,10 @@ import {
 class crm_view_deal extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeIndex: 0 };
     this.addNote = this.addNote.bind(this);
     this.transfer = this.transfer.bind(this);
+    this.newDeal = this.newDeal.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
   componentDidMount() {
     var id = this.props.match.params.id;
@@ -54,8 +41,18 @@ class crm_view_deal extends Component {
   componentWillUnmount() {
     this.props.clearSingleDeal();
   }
-  // Change view tab state
-  changeTabView = (_, activeIndex) => this.setState({ activeIndex });
+  /**
+   * New
+   */
+  newDeal() {
+    this.props.history.push(dealNewPage);
+  }
+  /**
+   * Refresh
+   */
+  refresh(id) {
+    this.props.getSingleDeal(id);
+  }
 
   /**
    * Transfer Record
@@ -73,16 +70,15 @@ class crm_view_deal extends Component {
   /**
    * Edit
    */
-  edit(deal) {
-    this.props.history.push(dealEditPage(deal.id));
+  edit(id) {
+    this.props.history.push(dealEditPage(id));
   }
 
   /**
    * DELETE RECORD
    */
-  handleDelete(dealId) {
-    this.props.deleteDeal(dealId);
-    //console.log(dealId);
+  handleDelete(id) {
+    this.props.deleteDeal(id);
     setTimeout(() => {
       this.props.history.push(dealListPage);
     }, 500);
@@ -107,7 +103,6 @@ class crm_view_deal extends Component {
 
   render() {
     const { loading, deal, sectionLoading } = this.props.dealToView;
-    const { activeIndex } = this.state;
     return (
       <React.Fragment>
         {loading ? (
@@ -119,89 +114,39 @@ class crm_view_deal extends Component {
             </Helmet>
             <PageTitleBar
               title="View Deal"
-              createLink={dealNewPage}
-              moreButton={
-                <MoreButton>
-                  {{ handleOnClick: () => this.edit(deal), label: "Edit" }}
-                  {{
-                    handleOnClick: () => this.transfer(deal),
-                    label: "Transfer"
-                  }}
-                  {{
-                    handleOnClick: () => this.delete(deal),
-                    label: "Delete"
-                  }}
-                </MoreButton>
-              }
+              actionGroup={{
+                add: { onClick: this.newDeal },
+                mid: { label: "Edit", onClick: () => this.edit(deal.id) },
+                more: [
+                  { label: "Refresh", onClick: () => this.refresh(deal.id) },
+                  {
+                    label: "Transfer Record",
+                    onClick: () => this.transfer(deal)
+                  },
+                  { label: "Delete", onClick: () => this.delete(deal) }
+                ]
+              }}
             />
-            <BgCard fullBlock>
-              <div className="row no-gutters">
-                <div className="col-md-3 align-self-center">
-                  <DealCard
-                    name={deal.name}
-                    stage={deal.stageInfo}
-                    type={deal.typeInfo && deal.typeInfo.name}
-                    ownerName={deal.userInfo && deal.userInfo.name}
-                    amount={deal.amount}
-                    account={deal.accountInfo}
-                    customer={deal.customerInfo}
-                  />
-                </div>
-                <div className="col-md-9 border-left px-20 py-30">
-                  <SelectDealStage deal={deal} />
-                </div>
-              </div>
-            </BgCard>
+
             <div className="row">
               <div className="col-3">
-                <VerticalTab
-                  activeIndex={activeIndex}
-                  handleChange={this.changeTabView}
-                  selectedcolor="crm"
-                >
-                  {{
-                    icon: "zmdi-info-outline",
-                    label: "DETAILS"
-                  }}
-                  {{
-                    icon: "zmdi-book",
-                    label: "HISTORY"
-                  }}
-                  {{
-                    icon: "zmdi-calendar",
-                    label: "EVENTS"
-                  }}
-                  {{
-                    icon: "zmdi-comment-text",
-                    label: "NOTES"
-                  }}
-                </VerticalTab>
+                <DealCard deal={deal} />
               </div>
               <div className="col-9">
-                <VerticalContainer
-                  activeIndex={activeIndex}
-                  handleChange={this.changeTabView}
-                  fullBlock
-                  loading={sectionLoading}
-                >
-                  <div>
-                    <DealDetails deal={deal} />
-                    <DescriptionDetails desc={deal.info} />
+                <ProfileTabs loading={sectionLoading}>
+                  <div label="Overview">
+                    <OverviewTab deal={deal} />
                   </div>
-                  <div>
-                    <DealHistory history={deal.history} />
-                  </div>
-                  <div>
-                    <UpcomingEvents events={deal.upcomingEvents} />
-                    <ClosedEvents events={deal.closedEvents} />
-                  </div>
-                  <div>
-                    <NotesLayout
-                      allNotes={deal.notes}
-                      handleAddNote={this.addNote}
+                  <div label="Events">
+                    <EventsTab
+                      pastEvents={deal.pastEvents}
+                      upcomingEvents={deal.upcomingEvents}
                     />
                   </div>
-                </VerticalContainer>
+                  <div label="Details">
+                    <DetailsTab deal={deal} />
+                  </div>
+                </ProfileTabs>
               </div>
             </div>
           </React.Fragment>
@@ -220,16 +165,14 @@ const mapStateToProps = ({ crmState }) => {
   return { dealToView };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    {
-      getSingleDeal,
-      clearSingleDeal,
-      show,
-      addNoteDeal,
-      deleteDeal,
-      transferDeal
-    }
-  )(crm_view_deal)
-);
+export default connect(
+  mapStateToProps,
+  {
+    getSingleDeal,
+    clearSingleDeal,
+    show,
+    addNoteDeal,
+    deleteDeal,
+    transferDeal
+  }
+)(crm_view_deal);

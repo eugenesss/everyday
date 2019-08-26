@@ -1,49 +1,43 @@
 import React from "react";
 import {
-  ViewCardLayout,
-  ViewCardTitle,
-  ViewCardDetails
-} from "Components/CRM/View/Layout/ViewCard";
-import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
+  Wrapper,
+  Contact,
+  KeyDetails
+} from "Components/Everyday/Layout/View/ProfileCard";
+
 import LeadInterestLevel from "Components/CRM/Lead/LeadInterestLevel";
 
-const LeadCard = ({
-  name,
-  companyName,
-  status,
-  ownerName,
-  mobile,
-  phone,
-  email,
-  interest
-}) => {
+function LeadCard(props) {
+  const { lead } = props;
   return (
-    <ViewCardLayout statusColor={status.color}>
-      <ViewCardTitle
-        name={name}
-        subHeading={[
-          companyName,
-          <StatusBadge name={status.name} color={status.color} />
-        ]}
+    <Wrapper>
+      <Contact
+        name={lead.name}
+        subHeading={lead.companyName}
+        call={lead.baseContact.mobile}
+        email={lead.baseContact.email}
+        website={lead.baseContact.website}
       />
-      <div className="row px-20">
-        <div className="col-sm-3 text-right">
-          <p className="fs-12">
-            <i>Interest</i>
-          </p>
-        </div>
-        <div className="col-sm-8 text-left">
-          <LeadInterestLevel interest={interest} />
+      <div className="profile-card-section">
+        <div>
+          <h4 className="mb-20 text-muted">Lead Interest</h4>
+          <LeadInterestLevel interest={lead.interest} />
         </div>
       </div>
-      <ViewCardDetails>
-        {{ title: "Owner", icon: "zmdi-account", detail: ownerName }}
-        {{ title: "Email", icon: "zmdi-email", detail: email }}
-        {{ title: "Mobile", icon: "zmdi-smartphone", detail: mobile }}
-        {{ title: "Office", icon: "zmdi-phone", detail: phone }}
-      </ViewCardDetails>
-    </ViewCardLayout>
+      <KeyDetails
+        keyDetails={[
+          {
+            label: "Status",
+            value: lead.statusInfo && lead.statusInfo.name
+          },
+          {
+            label: "Owner",
+            value: lead.userInfo && lead.userInfo.name
+          }
+        ]}
+      />
+    </Wrapper>
   );
-};
+}
 
 export default LeadCard;

@@ -27,7 +27,7 @@ export default function UserDrawer() {
       <li className="list-inline-item">
         <Tooltip title="User" placement="bottom">
           <IconButton aria-label="user" onClick={toggleDrawer()}>
-            <Person style={{ fontSize: "20px" }} />
+            <Person fontSize="small" />
           </IconButton>
         </Tooltip>
       </li>
