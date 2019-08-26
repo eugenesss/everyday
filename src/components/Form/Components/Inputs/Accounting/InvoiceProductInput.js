@@ -75,7 +75,7 @@ export default class InvoiceProductInput extends PureComponent {
                       label="Quantity"
                       value={row.quantity}
                       required={!row.quantity}
-                      noDollar={true}
+                      nodollar={"true"}
                       target="quantity"
                       keys={key}
                       handleChange={handleChange}

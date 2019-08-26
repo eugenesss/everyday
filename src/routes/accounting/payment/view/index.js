@@ -128,7 +128,7 @@ class acct_view_payment extends Component {
         <form autoComplete="off">
           <FormInputLayout
             title="Key Information"
-            desc="The key fields to get you started with quotation"
+            desc="Payment information"
           >
               <PaymentList
                 invoice={company}

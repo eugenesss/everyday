@@ -76,7 +76,7 @@ const getAllQuoteRequest = async () => {
 // }
 
 const submitEditQuoteSummaryRequest = async({payload}) => {
-  const result = await api.patch(`/quotations/${payload.item.id}`, payload.item);
+  const result = await api.patch(`/quotations/${payload.id}`, payload);
   return result.data;
 }
 

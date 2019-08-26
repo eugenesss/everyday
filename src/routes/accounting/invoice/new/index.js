@@ -29,26 +29,6 @@ class acct_new_invoice extends Component {
 
     return (
       <React.Fragment>
-        {/* <Helmet>
-          <title>Everyday | New Invoice</title>
-          <meta name="description" content="Everyday Invoices Creation" />
-        </Helmet>
-        <BgCard
-          heading={<IntlMessages id="sidebar.newInvoice" />}
-        >
-          <div className="row">
-            <div className="col-md-1" />
-            <div className="col-md-10">
-              <QuotationForm
-                accountPage={'Invoice'}
-                quotationForm={null}
-                status={this.props.accountingState.accountState}
-                _quotationParent={this._quotationParent}
-              />
-            </div>
-            <div className="col-md-1" />
-          </div>
-        </BgCard> */}
         <Helmet>
             <title>Everyday | New Invoice</title>
             <meta name="description" content="Everyday Invoices Creation" />

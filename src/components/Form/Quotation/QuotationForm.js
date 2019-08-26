@@ -80,13 +80,27 @@ class QuotationForm extends Component {
   constructor(props) {
     super(props);
     // Don't call this.setState() here!
-    this.state = {
-      formFields: {...formFields},
-      formFieldsProducts: [
-        {...formFieldsProducts}
-      ],
-      attn_to_array : []
-    };
+
+    if (this.props.edit){
+      this.state = {
+        formFields: {...this.props.quotationData},
+        formFieldsProducts: [...this.props.quotationData.quotationLine],
+        attn_to_array : []
+      };
+      this.edit = this.props.edit
+    } else {
+      this.state = {
+        formFields: {...formFields},
+        formFieldsProducts: [
+          {...formFieldsProducts}
+        ],
+        attn_to_array : []
+      };
+    }
+  
+
+    
+    console.log(this.props.quotationData)
 
   }
 
@@ -99,7 +113,7 @@ class QuotationForm extends Component {
   }
 
   _handleChangeFormField = (e, value) => {
-
+    
     let formFields = {...this.state.formFields}
 
     switch(e){
@@ -114,10 +128,11 @@ class QuotationForm extends Component {
             break
 
         case "discount":
-
                 formFields.discount_rate = value.rate
             break
-
+        case "attn_toId":
+                formFields[e] = value
+            break
         default :
                 formFields[e] = value
             break 
@@ -182,55 +197,27 @@ class QuotationForm extends Component {
     this.setState({formFields: thisFormFields})
   }
 
-  _submitFormFieldsDB = () =>{
+  _submitFormFieldsDB = () => {
 
     var today = new Date();
     var duedate = new Date();
     duedate.setDate(today.getDate()+3);
 
-    // payload: {item: item, products: products}
     const postData = {...this.state.formFields}
     const quotationLine = [...this.state.formFieldsProducts]
 
     let modifiedPostData = {...postData}
-    delete modifiedPostData.accountId.customer
-    delete modifiedPostData.accountId.address
     modifiedPostData.quotationLine = quotationLine
     modifiedPostData.sent_date = postData.date,
     modifiedPostData.due_date = postData.duedate,
     modifiedPostData.companyName = postData.accountId.name,
-
-    // let formFields = {
-    //   ...this.state.formFields,
-    //   date : postData.date,
-    //   sent_date : postData.date,
-    //   attn_toId : {id: postData.attn_toId.id, name: postData.attn_toId.name},
-    //   accountId : {id: postData.accountId.id, name: postData.accountId.name},
-    //   companyId: postData.owner.companyId,
-    //   owner: {
-    //     id: postData.owner.id, 
-    //     name: postData.owner.name
-    //   },
-    //   currency : postData.currency,
-    //   currency_rate : postData.currency_rate,
-    //   due_date : duedate,
-    //   totalAmt : postData.totalAmt,
-    //   subtotal : postData.subtotal,
-    //   tax_amount : postData.tax_amount,
-    //   discount_rate: postData.discount_rate,
-    //   description: postData.description,
-    //   details: postData.details,
-    //   quotationline: quotationLine,
-    // }
+    modifiedPostData.accountId = {
+      name: modifiedPostData.accountId.name,
+      value: modifiedPostData.accountId.value
+    }
 
     this.props.handleSubmit(modifiedPostData)
-    // this.setState({
-    //   formFields: {...formFields},
-    //   formFieldsProducts: [
-    //     {...formFieldsProducts}
-    //   ],
-    //   attn_to_array : []
-    // })
+  
   }
 
 
@@ -245,13 +232,16 @@ class QuotationForm extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
 
+
       if(snapshot){
-        this.setState({
-          formFields: {...formFields},
-          formFieldsProducts: [{...formFieldsProducts}],
-          attn_to_array : []
-        });
-        this.props.restartUploadQuotationStatus()
+        if(!this.edit){
+          this.setState({
+            formFields: {...formFields},
+            formFieldsProducts: [{...formFieldsProducts}],
+            attn_to_array : []
+          });
+          this.props.restartUploadQuotationStatus()
+        }
       }
   }
 
@@ -286,7 +276,7 @@ class QuotationForm extends Component {
         onSave={this._submitFormFieldsDB}
         disabled={true}
         // edit={edit}
-        title={'New Quotation'}
+        title={this.edit? 'Edit Quotation' : 'New Quotation'}
       >
       
         {/* {loading && <RctSectionLoader />} */}
@@ -299,24 +289,47 @@ class QuotationForm extends Component {
             <div className="row">
               <div className="col-5 d-block">
                 
-                <FormMultiInput
-                  label="Company"
-                  value={formFields.accountId}
-                  required={!formFields.accountId}
-                  selectValues={accountsList}
-                  target="accountId"
-                  handleChange={this._handleChangeFormField}
-                />
+                {this.edit && 
+                  <FormInput
+                    label="Company"
+                    value={formFields.accountId.name}
+                    target="accountId"
+                    disabled={true}
+                  />
+                }
 
-                <FormInput
-                  label="Attention to"
-                  value={formFields.attn_toId}
-                  required={!formFields.attn_toId}
-                  selectValues={this.state.attn_to_array}
-                  target="attn_toId"
-                  handleChange={this._handleChangeFormField}
-                />
+                {!this.edit && 
+                  <FormMultiInput
+                    label="Company"
+                    value={formFields.accountId}
+                    required={!formFields.accountId}
+                    selectValues={accountsList}
+                    target="accountId"
+                    handleChange={this._handleChangeFormField}
+                  />
+                }
+          
+                {this.edit && 
+                  <FormMultiInput
+                    label="Attention to"
+                    value={formFields.attn_toId.name}
+                    target="attn_toId"
+                    disabled={true}
+                  />
+                }
 
+                {!this.edit && 
+                  <FormMultiInput
+                    label="Attention to"
+                    value={formFields.attn_toId}
+                    required={!formFields.attn_toId}
+                    selectValues={this.state.attn_to_array}
+                    target="attn_toId"
+                    handleChange={this._handleChangeFormField}
+                  />
+                }
+               
+               
               </div>
               <div className="col-5 d-block offset-md-1">
               

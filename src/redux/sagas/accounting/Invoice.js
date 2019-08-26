@@ -46,6 +46,8 @@ const deleteInvoicefromDBRequest = async(item) => {
 }
 
 const patchInvoiceRequest = async({payload}) => {
+  console.log('patchInvoiceRequest')
+  console.log(payload)
   const result = await api.patch(`/invoices/${payload.id}`, payload);
   return result.data;
 }

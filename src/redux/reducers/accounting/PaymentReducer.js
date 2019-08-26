@@ -60,6 +60,17 @@ export default (state = INIT_STATE, action) => {
           ...state,
         };
 
+    case types.MAKE_PAYMENT_SUCCESS:
+        NotificationManager.success("Payment made successfully")
+        return {
+          ...state,
+        };
+    case types.MAKE_PAYMENT_FAILURE:
+        NotificationManager.error("Unable to make payment, try again")
+        return {
+          ...state,
+        };
+
     case types.GET_SINGLE_COMPANY_PAYMENT:
         return {
           ...state,

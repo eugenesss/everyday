@@ -139,7 +139,6 @@ export const InvoiceHandleStateCreateNewVersion = (id, value) => ({
 export const submitInvoice = (item) => ({
   type: types.SUBMIT_INVOICE,
   payload: item
-  // payload: item
 });
 
 export const submitInvoiceSuccess = (item) => ({

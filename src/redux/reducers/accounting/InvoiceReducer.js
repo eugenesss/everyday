@@ -144,7 +144,7 @@ export default (state = INIT_STATE, action) => {
       };
 
       case types.SUBMIT_INVOICE_SUCCESS:
-          NotificationManager.success("Your form has been successfully updated")
+          NotificationManager.success("Invoice form saved successfully")
     
           return {
             ...state,
@@ -228,7 +228,7 @@ export default (state = INIT_STATE, action) => {
           };
   
     case types.SUBMIT_NEW_INVOICE_SUCCESS:
-        console.log('SUBMIT_NEW_INVOICE_SUCCESS')
+        NotificationManager.success("Invoice form saved succesfully")
           return {
             ...state,
             invoiceList: {
@@ -249,7 +249,7 @@ export default (state = INIT_STATE, action) => {
           };
   
     case types.RESTART_UPLOAD_STATUS:
-          console.log('SUBMIT_NEW_INVOICE_FAILURE')
+          console.log('RESTART_UPLOAD_STATUS')
           return {
             ...state, 
             invoiceList: {

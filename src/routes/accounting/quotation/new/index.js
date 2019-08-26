@@ -34,7 +34,11 @@ class acct_new_quote extends Component {
           <title>Everyday | New Quotation</title>
           <meta name="description" content="Everyday Quotation Creation" />
         </Helmet>
-        <QuotationForm title="sidebar.newQuotation" handleSubmit={this._quotationParent} />
+        <QuotationForm 
+          title="sidebar.newQuotation"
+          handleSubmit={this._quotationParent}
+          edit={false}
+        />
       </React.Fragment>
     );
   }

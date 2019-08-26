@@ -43,7 +43,7 @@ const AmountInput = props => {
       disabled={props.disabled}
       handleChange={props.handleChange}
       // inputComponent={NumberFormatCustom}
-      startAdornment={props.noDollar? "" : <InputAdornment position="start">$</InputAdornment>}
+      startAdornment={props.nodollar? "" : <InputAdornment position="start">$</InputAdornment>}
       {...props}
     />
   );

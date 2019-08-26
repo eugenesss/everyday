@@ -70,12 +70,9 @@ class acct_view_invoice extends Component {
   makePayment = (item) =>  {
 
     let paidAmount
+
     if(item.paidAmount != 0){
-    
-      const splitValue = item.paidAmount.split('$')[1]
-      const joinValue = splitValue.replace(/,/g, '')
-      item.paidAmount = parseInt(joinValue)
-    
+      item.paidAmount = parseInt(item.paidAmount)
     } else {
       paidAmount = 0
     }

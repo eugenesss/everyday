@@ -14,13 +14,13 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-import QuotationForm from "Components/Form/Quotation/QuotationForm";
 
 import InvoiceFields from "Components/Form/Components/Inputs/Accounting/InvoiceFields";
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
 import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/InvoiceProductInput";
 import Button from '@material-ui/core/Button';
 
+import InvoiceForm from "Components/Form/Invoice/InvoiceForm";
 
 
 // Actions
@@ -55,8 +55,7 @@ class acct_edit_quotation extends Component {
     this.props.clearSingleQuotation();
   }
 
-  _quotationParent = (element, item) =>{
-    // console.log(element)
+  _quotationParent = (item) =>{
     this.props.submitInvoice(item)
   }
 
@@ -66,32 +65,23 @@ class acct_edit_quotation extends Component {
     // const {products, quotation} = this.props.quotationForm 
     const { loading, invoice } = this.props.invoiceToView
 
+
     return loading ? (
       <RctPageLoader />
     ) : invoice ? (
       
       <React.Fragment>
-      <Helmet>
-        <title>Everyday | Edit Invoice</title>
-        <meta name="description" content="Everyday Invoice Creation" />
-      </Helmet>
-      <BgCard
-        heading={<IntlMessages id="Edit Invoice" />}
-      >
-        <div className="row">
-          <div className="col-md-1" />
-          <div className="col-md-10">
-            <QuotationForm
-              accountPage={'Invoice'}
-              edit={true}
-              quotationForm={invoice}
-              _quotationParent={this._quotationParent}
-            />
-          </div>
-          <div className="col-md-1" />
-        </div>
-      </BgCard>
-    </React.Fragment>
+        <Helmet>
+            <title>Everyday | New Invoice</title>
+            <meta name="description" content="Everyday Invoices Creation" />
+        </Helmet>
+        <InvoiceForm 
+          title="sidebar.newQuotation"
+          handleSubmit={this._quotationParent}
+          edit={true}
+          invoiceData={invoice}
+        />
+      </React.Fragment>
       
     ) : (
       <PageErrorMessage

@@ -703,6 +703,7 @@ export default (state = INIT_STATE, action) => {
         };
 
     case types.SUBMIT_NEW_QUOTATION_SUCCESS:
+        NotificationManager.success("Quotation form saved succesfully")
         return {
           ...state,
           quotationList :{
@@ -713,6 +714,7 @@ export default (state = INIT_STATE, action) => {
 
 
     case types.SUBMIT_NEW_QUOTATION_FAILURE:
+        NotificationManager.error("Unable to create new quotation form")
         return {
           ...state,
           quotationList :{
