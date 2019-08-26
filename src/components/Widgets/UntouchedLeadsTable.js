@@ -80,7 +80,7 @@ class UntouchedLeadsTable extends Component {
   render() {
     const listOptions = {
       filterType: "multiselect",
-      responsive: "stacked",
+      responsive: "scroll",
       download: false,
       print: false,
       viewColumns: false,

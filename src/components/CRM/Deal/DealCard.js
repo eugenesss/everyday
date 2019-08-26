@@ -25,37 +25,30 @@ function DealCard(props) {
             prefix={"$"}
           />
         }
+        indicator={deal.stageInfo}
       />
       <div className="profile-card-section">
-        <div>
-          <div className="profile-heading">
-            <PeopleOutline />
-            Related Contacts
-          </div>
+        <div className="profile-heading">
+          <PeopleOutline />
+          Related Contacts
+        </div>
+        <Info
+          title={deal.accountInfo.name}
+          subtitle="Account"
+          onClick={() => props.history.push(singleAccount(deal.accountInfo.id))}
+        />
+        {deal.customerInfo && (
           <Info
-            title={deal.accountInfo.name}
-            subtitle="Account"
+            title={deal.customerInfo.name}
+            subtitle="Customer"
             onClick={() =>
-              props.history.push(singleAccount(deal.accountInfo.id))
+              props.history.push(singleCustomer(deal.customerInfo.id))
             }
           />
-          {deal.customerInfo && (
-            <Info
-              title={deal.customerInfo.name}
-              subtitle="Customer"
-              onClick={() =>
-                props.history.push(singleCustomer(deal.customerInfo.id))
-              }
-            />
-          )}
-        </div>
+        )}
       </div>
       <KeyDetails
         keyDetails={[
-          {
-            label: "Status",
-            value: deal.stageInfo.name
-          },
           {
             label: "Chance",
             value: deal.stageInfo.chance

@@ -1,8 +1,5 @@
 /*=========== Session Style =========*/
 .session-wrapper {
-  // background-image: url("../../assets/img/rct-session-banner.jpg");
-  // background-repeat: no-repeat;
-  // background-size: cover;
   background: $everyday;
   left: 0;
   position: fixed;
@@ -81,7 +78,6 @@
   }
   .session-inner-wrapper {
     .session-body {
-      //background-color: $everydaySecondary;
       background-color: $white;
       border-radius: $block-border-radius;
       padding: 2rem 6.25rem; //30px 100px;

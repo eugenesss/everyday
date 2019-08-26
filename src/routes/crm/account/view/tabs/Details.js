@@ -13,12 +13,14 @@ function AccountDetailsTab(props) {
   return (
     <BgCard fullBlock>
       <KeyInformation
+        fullWidth
         name={<EditableInput label="Name" value={acct.baseContact.name} />}
         owner={<EditableInput label="Owner" value={acct.userInfo.name} />}
         industry={<EditableInput label="Industry" value={acct.industryInfo && acct.industryInfo.name} />}
       />
       <hr />
       <AccountInformation
+        fullWidth
         office={<EditableInput label="Office" value={acct.baseContact.phone} />}
         website={<EditableInput label="Website" value={acct.baseContact.website} />}
         fax={<EditableInput label="Fax" value={acct.baseContact.fax} />}
@@ -26,6 +28,7 @@ function AccountDetailsTab(props) {
       />
       <hr />
       <ShippingInformation
+        fullWidth
         address={<EditableInput label="Address" value={acct.fullAddress} />}
       />
     </BgCard>

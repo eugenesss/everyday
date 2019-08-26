@@ -137,12 +137,7 @@ class ConvertLeadModal extends Component {
                   style={{ justifyContent: "flex-start" }}
                   className="mx-0 mt-30 p-0"
                 >
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={this.props.handleConvertModal}
-                    className="text-white"
-                  >
+                  <Button onClick={this.props.handleConvertModal}>
                     Cancel
                   </Button>
                   <Button

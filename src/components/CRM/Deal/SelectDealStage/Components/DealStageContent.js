@@ -1,16 +1,13 @@
 import React from "react";
-import { Card, CardTitle } from "reactstrap";
 
 const DealStageContent = ({ activeStep, dealStage }) => {
   return (
-    <Card body color="primary" className="text-white align-self-center">
-      <CardTitle className="p-10">
-        <strong>Key Notes</strong>
-      </CardTitle>
-      <div className="p-10">
+    <div>
+      <h4 className="pb-10 text-muted">Key Notes</h4>
+      <p className="fs-14" style={{ minHeight: "3rem" }}>
         {dealStage[activeStep] && dealStage[activeStep].description}
-      </div>
-    </Card>
+      </p>
+    </div>
   );
 };
 

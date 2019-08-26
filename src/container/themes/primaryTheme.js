@@ -1,7 +1,7 @@
 /**
  * App Light Theme
  */
-import { createMuiTheme, fade } from "@material-ui/core/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
 import AppConfig from "Constants/AppConfig";
 
 const theme = createMuiTheme({
@@ -31,6 +31,11 @@ const theme = createMuiTheme({
     MuiButton: {
       contained: {
         backgroundColor: "#ececec"
+      }
+    },
+    MuiTableCell: {
+      root: {
+        borderBottom: "none"
       }
     }
   },
