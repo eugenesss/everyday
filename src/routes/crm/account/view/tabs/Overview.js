@@ -4,6 +4,7 @@ import BgCard from "Components/Everyday/BgCard";
 
 // Widgets
 import Comments from "Components/Widgets/Comments";
+import RelatedCustomer from "Components/CRM/Account/RelatedCustomer";
 
 import { addNoteAccount } from "Actions";
 
@@ -12,7 +13,7 @@ function AccountOverviewTab(props) {
   function addNote(note) {
     props.addNoteAccount(acct.id, note);
   }
-
+  console.log(acct);
   return (
     <React.Fragment>
       <div className="row">
@@ -33,7 +34,7 @@ function AccountOverviewTab(props) {
       </div>
       <div className="row">
         <div className="col-12">
-          <BgCard>Related customers</BgCard>
+          <RelatedCustomer customers={acct.customers} />
         </div>
       </div>
     </React.Fragment>

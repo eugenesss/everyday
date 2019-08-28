@@ -1,15 +1,17 @@
 import React from "react";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import ViewSectionLayout from "Components/CRM/View/Layout/ViewSectionLayout";
+import BgCard from "Components/Everyday/BgCard";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
+} from "@material-ui/core";
 import { getTheDate } from "Helpers/helpers";
 
 const DealHistory = ({ history }) => {
   return (
-    <ViewSectionLayout title="Deal History" bgColorClass="bg-secondary">
+    <BgCard fullBlock heading="Deal History">
       <Table>
         <TableHead>
           <TableRow>
@@ -23,23 +25,30 @@ const DealHistory = ({ history }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {history &&
+          {history.length > 0 ? (
             history.map((his, key) => {
               return (
-                <TableRow key={key} hover>
+                <TableRow className="border-bottom-0" key={key} hover>
                   <TableCell>{his.stageName}</TableCell>
                   <TableCell>{his.amount}</TableCell>
                   <TableCell>{his.chance}</TableCell>
                   <TableCell>{getTheDate(his.closingDate)}</TableCell>
                   <TableCell>{his.duration}</TableCell>
                   <TableCell>{getTheDate(his.createdAt)}</TableCell>
-                  <TableCell>{his.createdBy && his.createdBy.name}</TableCell>
+                  <TableCell>{his.userInfo && his.userInfo.name}</TableCell>
                 </TableRow>
               );
-            })}
+            })
+          ) : (
+            <TableRow>
+              <TableCell className="border-bottom-0 text-center" colSpan={7}>
+                No Data
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
-    </ViewSectionLayout>
+    </BgCard>
   );
 };
 

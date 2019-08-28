@@ -1,11 +1,14 @@
 import React from "react";
-import { Badge } from "reactstrap";
+import { Chip } from "@material-ui/core";
 
 const StatusBadge = ({ name, color }) => {
   return (
-    <Badge style={{ backgroundColor: color }} pill>
-      {name}
-    </Badge>
+    <Chip
+      style={{ borderColor: color, color: color, fontSize: "12px" }}
+      label={name}
+      size="small"
+      variant="outlined"
+    />
   );
 };
 

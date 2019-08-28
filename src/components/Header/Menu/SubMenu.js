@@ -37,7 +37,7 @@ const StyledTab = withStyles(theme => ({
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: AppConfig.themeColors.white,
     boxShadow: "0 2px 0px 0 rgba(0, 0, 0, 0.09)"
   },
   typography: {

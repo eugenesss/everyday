@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import DealStageStepper from "./Components/DealStageStepper";
+import BgCard from "Components/Everyday/BgCard";
 
 //Page Req
 import DealStageContent from "./Components/DealStageContent";
@@ -20,12 +21,13 @@ import {
 class SelectDealStage extends Component {
   componentDidMount() {
     this.props.getDealStage();
-    this.props.setCurrentStep(this.props.deal.stageInfo.step);
+    this.props.setCurrentStep(this.props.currentDeal.stageInfo.step);
   }
 
   isCurrentStep() {
     if (
-      this.props.deal.stageInfo.step == this.props.dealStageStepper.activeStep
+      this.props.currentDeal.stageInfo.step ==
+      this.props.dealStageStepper.activeStep
     ) {
       return true;
     } else {
@@ -43,7 +45,7 @@ class SelectDealStage extends Component {
   handleComplete = () => {
     const step = this.props.dealStageStepper.activeStep;
     this.props.onChangeStepState();
-    this.props.submitNewStage(this.props.deal.id, this.getStageID(step));
+    this.props.submitNewStage(this.props.currentDeal.id, this.getStageID(step));
   };
 
   isStepComplete(step) {
@@ -54,7 +56,7 @@ class SelectDealStage extends Component {
     const { activeStep, loading } = this.props.dealStageStepper;
     const { dealStage } = this.props;
     return (
-      <div>
+      <BgCard customClasses="p-10" fullBlock>
         {loading && <RctSectionLoader />}
         <DealStageStepper
           dealStage={dealStage}
@@ -62,31 +64,24 @@ class SelectDealStage extends Component {
           isStepComplete={this.isStepComplete.bind(this)}
           onClickStep={this.props.onClickStep}
         />
-        <div>
-          <div className="row" style={{ padding: "0% 2%" }}>
-            <div className="col-md-6">
-              <div
-                className="py-10 px-20"
-                style={{ maxWidth: "60%", marginLeft: "30px" }}
-              >
-                {/* <UpdateDealStageForm /> */}
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className="text-white mb-10 mr-20"
-                  disabled={this.isCurrentStep()}
-                  onClick={this.handleComplete}
-                >
-                  Update Stage
-                </Button>
-              </div>
-            </div>
-            <div className="col-md-6 ">
-              <DealStageContent activeStep={activeStep} dealStage={dealStage} />
-            </div>
+        <div className="row justify-content-center align-items-stretch py-20">
+          <div className="col-6">
+            <DealStageContent activeStep={activeStep} dealStage={dealStage} />
+          </div>
+          <div className="col-3 justify-content-center align-self-center">
+            {/* <div className="text-center"> */}
+            <Button
+              variant="outlined"
+              color="primary"
+              disabled={this.isCurrentStep()}
+              onClick={this.handleComplete}
+            >
+              Update
+            </Button>
+            {/* </div> */}
           </div>
         </div>
-      </div>
+      </BgCard>
     );
   }
 }

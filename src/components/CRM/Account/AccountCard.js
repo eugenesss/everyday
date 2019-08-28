@@ -2,9 +2,10 @@ import React from "react";
 import {
   Wrapper,
   Contact,
-  KeyDetails
+  KeyDetails,
+  Info
 } from "Components/Everyday/Layout/View/ProfileCard";
-import ActiveStatusBadge from "Components/Everyday/StatusBadge/ActiveStatusBadge";
+import { EventOutlined, CalendarToday } from "@material-ui/icons";
 
 function AccountCard(props) {
   const { acct } = props;
@@ -12,22 +13,37 @@ function AccountCard(props) {
     <Wrapper>
       <Contact
         name={acct.name}
-        subHeading={acct.industryInfo}
         call={acct.baseContact.phone}
         email={acct.baseContact.email}
         website={acct.baseContact.website}
+        indicator={
+          acct.isActive
+            ? { classes: "border-success text-success", name: "Active" }
+            : { classes: "border-danger text-danger", name: "Inactive" }
+        }
       />
       <div className="profile-card-section">
-        <div>
-          <h4 className="mb-20 text-muted">Upcoming Events</h4>
+        <div className="profile-heading">
+          <EventOutlined />
+          Upcoming Events
         </div>
+        {acct.upcomingEvents.length > 0 ? (
+          acct.upcomingEvents.map((event, key) => (
+            <Info
+              key={key}
+              icon={<CalendarToday fontSize="small" />}
+              title={"event"}
+              subtitle="date"
+              onClick={() => console.log("clicked")}
+            />
+          ))
+        ) : (
+          <p className="text-center text-muted">No events upcoming</p>
+        )}
       </div>
       <KeyDetails
         keyDetails={[
-          {
-            label: "Status",
-            value: <ActiveStatusBadge isActive={acct.isActive} />
-          },
+          { label: "Industry", value: acct.industryInfo },
           {
             label: "Owner",
             value: acct.userInfo && acct.userInfo.name

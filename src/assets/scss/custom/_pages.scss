@@ -4,8 +4,10 @@
 .profile-card {
   padding: 2rem 3rem;
   .profile-card-header {
-    margin-top: 1rem;
     margin-bottom: 4rem;
+  }
+  .profile-card-indicator {
+    margin-bottom: 2.5rem;
   }
   .profile-card-section {
     margin-top: 2rem;
@@ -34,7 +36,8 @@
     margin-bottom: 10px;
     svg {
       margin-right: 10px;
-      vertical-align: bottom;
+      vertical-align: text-bottom;
+      font-size: inherit;
     }
   }
 
@@ -985,20 +988,19 @@
 
 @media (min-width: 768px) {
   .login_module {
-    flex: 0.3;
+    flex: 0.4;
     flex-direction: column;
     height: 100%;
     border-right-width: 1px solid black;
     display: flex;
     justify-content: center;
-    align-items: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 6px 20px rgba(0, 0, 0, 0.08);
     background-color: white;
     z-index: 1;
   }
 
   .login_placeholder {
-    flex: 0.7;
+    flex: 0.6;
     display: flex;
     justify-content: center;
     align-items: center;

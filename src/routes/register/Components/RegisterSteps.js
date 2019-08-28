@@ -2,12 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import StepContent from "@material-ui/core/StepContent";
-import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
-import LoadingButton from "Components/Everyday/LoadingButton/LoadingButton";
-import StepButton from '@material-ui/core/StepButton';
+import StepButton from "@material-ui/core/StepButton";
 
 import Fab from "@material-ui/core/Fab";
 import AppConfig from "Constants/AppConfig";
@@ -16,122 +12,113 @@ import AppConfig from "Constants/AppConfig";
 import RegisterForm from "./Forms/UserRegisterForm";
 import SelectPlanForm from "./Forms/SelectPlanForm";
 import PaymentDetailForm from "./Forms/PaymentDetailForm";
-import { Link } from "react-router-dom";
 
 // Actions
-import { registerUser, handleRegForm, handleRegErrorForm, resetSuccess} from "Actions";
+import {
+  registerUser,
+  handleRegForm,
+  handleRegErrorForm,
+  resetSuccess
+} from "Actions";
 
+import {
+  EmailValidator,
+  PasswordValidator,
+  StepperZeroValidator,
+  CheckCreditCard
+} from "./Validation/Validation";
 
-import {EmailValidator, PasswordValidator, StepperZeroValidator, CheckCreditCard} from "./Validation/Validation"
-
-function getSteps() { return ["Enter Your Details", "Select a Plan", "Payment Details"]}
-
-
-
-// function getStepForm(step) {
-//   switch (step) {
-//     case 0:
-//       return <RegisterForm />;
-//     case 1:
-//       return <SelectPlanForm />;
-//     case 2:
-//       return <PaymentDetailForm />;
-//     default:
-//       return "Unknown step";
-//   }
-// }
-
-
+function getSteps() {
+  return ["Enter Your Details", "Select a Plan", "Payment Details"];
+}
 
 class RegisterSteps extends React.Component {
-
   // Set up state for validation
   state = {
     activeStep: 0,
-    emailState: '',
-    passwordState: '',
-    planState: '',
+    emailState: "",
+    passwordState: "",
+    planState: "",
     creditState: {
-      payment_name: '',
-      payment_no: '',
-      payment_expiry: '',
-      payment_code : ''
+      payment_name: "",
+      payment_no: "",
+      payment_expiry: "",
+      payment_code: ""
     }
   };
 
-
-
-  handleNext = (next) => {
-
-    let state = {...this.state}
-    
+  handleNext = next => {
+    let state = { ...this.state };
     if (next) {
-      
       switch (state.activeStep) {
-
         case 0:
-            const [result, info] = StepperZeroValidator(this.props, state.emailState, state.passwordState) 
-          
-            if (result) {
-              this.setState({activeStep: state.activeStep + 1})
-            } else {
-              this.props.handleRegErrorForm(info)
-            }
-          
-          break
-        
+          const [result, info] = StepperZeroValidator(
+            this.props,
+            state.emailState,
+            state.passwordState
+          );
+
+          if (result) {
+            this.setState({ activeStep: state.activeStep + 1 });
+          } else {
+            this.props.handleRegErrorForm(info);
+          }
+
+          break;
+
         case 1:
-            state.planState !== "" ? this.setState({ activeStep: this.state.activeStep + 1}) : (
-              this.props.handleRegErrorForm('Please tick the one of the plans')
-            )
-          break
+          state.planState !== ""
+            ? this.setState({ activeStep: this.state.activeStep + 1 })
+            : this.props.handleRegErrorForm("Please tick the one of the plans");
+          break;
 
         case 2:
-            this.validateCard()
-          break
+          this.validateCard();
+          break;
 
-
-        default:break
+        default:
+          break;
       }
-
     } else {
-      
       switch (next) {
-
         case 0:
-            this.setState({activeStep: 0})
-          break
-        
+          this.setState({ activeStep: 0 });
+          break;
+
         case 1:
-            const [result, info] = StepperZeroValidator(this.props, state.emailState, state.passwordState) 
-          
-            if (result) {
-              this.setState({activeStep: 1})
-            } else {
-              this.props.handleRegErrorForm(info)
-            }
-          break
+          const [result, info] = StepperZeroValidator(
+            this.props,
+            state.emailState,
+            state.passwordState
+          );
+
+          if (result) {
+            this.setState({ activeStep: 1 });
+          } else {
+            this.props.handleRegErrorForm(info);
+          }
+          break;
         case 2:
+          const [results, infos] = StepperZeroValidator(
+            this.props,
+            state.emailState,
+            state.passwordState
+          );
 
-            const [results, infos] = StepperZeroValidator(this.props, state.emailState, state.passwordState) 
-          
-            if (results) {
-              state.planState !== "" ? this.setState({ activeStep: 2}) : (
-                this.props.handleRegErrorForm('Please tick one of the plans')
-              )
+          if (results) {
+            state.planState !== ""
+              ? this.setState({ activeStep: 2 })
+              : this.props.handleRegErrorForm("Please tick one of the plans");
+          } else {
+            this.props.handleRegErrorForm(infos);
+          }
 
-            } else {
-              this.props.handleRegErrorForm(infos)
-            }
-          
-          break
-        default:break
+          break;
+        default:
+          break;
       }
-
     }
-
   };
-
 
   handleBack = () => {
     this.setState({
@@ -139,140 +126,118 @@ class RegisterSteps extends React.Component {
     });
   };
 
-  
   handleReset = () => {
     this.setState({
       activeStep: 0
     });
   };
 
- 
   /**
    * Validation of Email | Password before submitting
    */
-  validateEmail= (e) =>{ this.setState({ emailState:  EmailValidator(e)})}
-  validatePassword = (password, repassword) => { this.setState({ passwordState:  PasswordValidator(password, repassword)})} 
+  validateEmail = e => {
+    this.setState({ emailState: EmailValidator(e) });
+  };
+  validatePassword = (password, repassword) => {
+    this.setState({ passwordState: PasswordValidator(password, repassword) });
+  };
 
   /**
    * Validation of Plan before submitting
    */
-  validatePlate = (e) => {
-    this.setState({planState: e})
-  }
+  validatePlate = e => {
+    this.setState({ planState: e });
+  };
 
   /**
    * Validation of Credit Cards
    */
   validateCard = () => {
-    const [result, info] = CheckCreditCard(this.props.paymentInfo)
+    const [result, info] = CheckCreditCard(this.props.paymentInfo);
     if (result) {
-      this.props.registerUser()
+      this.props.registerUser();
     } else {
-      this.props.handleRegErrorForm(info)
+      this.props.handleRegErrorForm(info);
     }
-  } 
-
+  };
 
   componentWillUnmount() {
-    this.props.resetSuccess()
+    this.props.resetSuccess();
   }
 
-
-
-
   render() {
-
     const steps = getSteps();
     const { activeStep } = this.state;
     const { loading, success } = this.props;
-    let StepperPage = null
+    let StepperPage = null;
 
     switch (this.state.activeStep) {
       case 0:
-     
         // Implement Email | Password Validation
         StepperPage = (
-          <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
-              <RegisterForm
-                validateEmail = {(e) => this.validateEmail(e)}
-                emailState={this.state.emailState}
-                validatePassword = {(password, repassword) => this.validatePassword(password, repassword)}
-                passwordState={this.state.passwordState}
-                {...this.props}
-              />
-
-
-              {/* <Button
-                variant="contained"
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+          >
+            <RegisterForm
+              validateEmail={e => this.validateEmail(e)}
+              emailState={this.state.emailState}
+              validatePassword={(password, repassword) =>
+                this.validatePassword(password, repassword)
+              }
+              passwordState={this.state.passwordState}
+              {...this.props}
+            />
+            <div className="text-center">
+              <Fab
+                variant="extended"
+                className="text-white my-20"
+                size="medium"
                 color="primary"
-                className="text-white mr-10 mb-10"
+                type="submit"
                 onClick={this.handleNext}
               >
-                Next
-              </Button> */}
-              <div style={{width: '100%', marginTop: 10, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-evenly', display: 'flex'}}>
-                <Fab
-                  variant="extended"
-                  className="text-white"
-                  size="medium"
-                  style={{
-                    backgroundColor: AppConfig.themeColors.primary,
-                    marginBottom: "1.5rem",
-                    marginTop: '1rem'
-                  }}
-                  // type="submit"
-                  onClick={this.props.history}
-                >
-                  <span style={{minWidth: 100}}>BACK TO LOGIN</span>
-                </Fab>
-
-                <Fab
-                  variant="extended"
-                  className="text-white"
-                  size="medium"
-                  style={{
-                    backgroundColor: AppConfig.themeColors.primary,
-                    marginBottom: "1.5rem",
-                    marginTop: '1rem'
-                  }}
-                  type="submit"
-                  onClick={this.handleNext}
-                >
-                  <span style={{minWidth: 100}}>Next</span>
-                </Fab>
-              </div>
-
+                <span style={{ minWidth: 100 }}>Next</span>
+              </Fab>
+              <p
+                className="fs-12 fw-light"
+                style={{ color: "rgba(0,0,0,0.4)" }}
+              >
+                Back to
+                <a className="fw-semi-bold ml-5" onClick={this.props.history}>
+                  Login
+                </a>
+              </p>
+            </div>
           </div>
-        )
-          break
+        );
+        break;
       case 1:
         StepperPage = (
-          <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+          >
             <SelectPlanForm
-              validatePlate={(e) => {
-                this.validatePlate(e)
+              validatePlate={e => {
+                this.validatePlate(e);
               }}
               {...this.props}
             />
 
-            <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
-              {/* <Button
-                  variant="contained"
-                  className="btn-danger text-white mr-10 mb-10"
-                  disabled={activeStep === 0}
-                  onClick={this.handleBack}
-                >
-                  Back
-                </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="text-white mr-10 mb-10"
-                onClick={this.handleNext}
-              >
-                Next
-              </Button> */}
-
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center"
+              }}
+            >
               <Fab
                 variant="extended"
                 className="text-white"
@@ -280,12 +245,12 @@ class RegisterSteps extends React.Component {
                 style={{
                   backgroundColor: AppConfig.themeColors.primary,
                   marginBottom: "1.5rem",
-                  marginRight: 15,
+                  marginRight: 15
                 }}
                 type="submit"
                 onClick={this.handleBack}
               >
-                <span style={{width: 100, }}>Back</span>
+                <span style={{ width: 100 }}>Back</span>
               </Fab>
 
               <Fab
@@ -300,182 +265,138 @@ class RegisterSteps extends React.Component {
                 type="submit"
                 onClick={this.handleNext}
               >
-                <span style={{width: 100, }}>Next</span>
+                <span style={{ width: 100 }}>Next</span>
               </Fab>
-
             </div>
-
           </div>
-         
-        )
-          break
+        );
+        break;
       case 2:
         StepperPage = (
-          <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
-              <PaymentDetailForm 
-                {...this.props}
-              />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+          >
+            <PaymentDetailForm {...this.props} />
 
-              <div style={{marginBottom: 15, marginTop: 15}}>
-                  By signing up, you agree to Everday's Term of Service*  
-              </div>
+            <div style={{ marginBottom: 15, marginTop: 15 }}>
+              By signing up, you agree to Everday's Term of Service*
+            </div>
 
-              <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
-                  <Fab
-                    variant="extended"
-                    className="text-white"
-                    size="medium"
-                    style={{
-                      backgroundColor: AppConfig.themeColors.primary,
-                      marginBottom: "1.5rem",
-                      marginRight: 15,
-                    }}
-                    type="submit"
-                    onClick={this.handleBack}
-                  >
-                    <span style={{width: 100, }}>Back</span>
-                  </Fab>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center"
+              }}
+            >
+              <Fab
+                variant="extended"
+                className="text-white"
+                size="medium"
+                style={{
+                  backgroundColor: AppConfig.themeColors.primary,
+                  marginBottom: "1.5rem",
+                  marginRight: 15
+                }}
+                type="submit"
+                onClick={this.handleBack}
+              >
+                <span style={{ width: 100 }}>Back</span>
+              </Fab>
 
-                  <Fab
-                    variant="extended"
-                    className="text-white"
-                    size="medium"
-                    style={{
-                      backgroundColor: AppConfig.themeColors.primary,
-                      marginBottom: "1.5rem",
-                      marginLeft: 15
-                    }}
-                    type="submit"
-                    onClick={this.handleNext}
-                  >
-                    <span style={{width: 100, }}>Next</span>
-                  </Fab>
-              </div>
+              <Fab
+                variant="extended"
+                className="text-white"
+                size="medium"
+                style={{
+                  backgroundColor: AppConfig.themeColors.primary,
+                  marginBottom: "1.5rem",
+                  marginLeft: 15
+                }}
+                type="submit"
+                onClick={this.handleNext}
+              >
+                <span style={{ width: 100 }}>Next</span>
+              </Fab>
+            </div>
           </div>
-        )
-          break
+        );
+        break;
       default:
-          "Unknown step";
-        break 
+        "Unknown step";
+        break;
     }
 
     // change success to normal for development
     return (
       <div style={{}}>
         {!success ? (
-
           <div style={{}}>
-            <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+            <Stepper alternativeLabel activeStep={activeStep}>
               {steps.map((label, index) => {
                 const stepProps = {};
-                const buttonProps = {};
-              
                 return (
                   <Step key={label} {...stepProps}>
-                    <StepButton
-                      onClick={() => this.handleNext(index)}
-                      // onClick={() => console.log(index)}
-
-                      // completed={isStepComplete(index)}
-                      // {...buttonProps}
-                    >
+                    <StepButton onClick={() => this.handleNext(index)}>
                       <p className="mb-0 text-black">{label}</p>
                     </StepButton>
                   </Step>
                 );
               })}
             </Stepper>
-          
-            <div style={{display:'flex', width: '100%', justifyContent:'center', alignItems:'center'}}>
+
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
               {StepperPage}
             </div>
-            
           </div>
-            
-          // <Stepper nonLinear activeStep={activeStep}>
-          //   {steps.map((label, index) => {
-          //     return (
-          //       <Step key={label}>
-          //         <StepLabel>{label}</StepLabel>
-          //         <StepContent>
-                    
-          //           {/* <div className="px-20 py-40">{getStepForm(index)}</div> */}
-                  
-          //           <div className="px-20 py-40">{StepperPage}</div>
-                    
-          //           <div>
-          //             {activeStep === steps.length - 1 && (
-          //               <React.Fragment>
-          //                 <p className="text-muted">
-          //                   By signing up you agree to Everyday
-          //                   <sup style={{ fontSize: "8px" }}>TM</sup>
-          //                 </p>
-          //                 <p>
-          //                   <Link to="/terms-condition" className="text-muted">
-          //                     Terms of Service
-          //                   </Link>
-          //                 </p>
-          //               </React.Fragment>
-          //             )}
-          //             <Button
-          //               variant="contained"
-          //               className="btn-danger text-white mr-10 mb-10"
-          //               disabled={activeStep === 0}
-          //               onClick={this.handleBack}
-          //             >
-          //               Back
-          //             </Button>
-          //             {activeStep === steps.length - 1 ? (
-          //               <LoadingButton
-          //                 onClickFunc={() => this.validateCard()}
-          //                 loading={loading}
-          //                 color="success"
-          //                 label="Finish"
-          //               />
-          //             ) : (
-
-          //               <Button
-          //                 variant="contained"
-          //                 color="primary"
-          //                 className="text-white mr-10 mb-10"
-          //                 onClick={this.handleNext}
-          //               >
-          //                 Next
-          //               </Button>
-
-          //             )}
-          //           </div>
-          //         </StepContent>
-          //       </Step>
-          //     );
-          //   })}
-          // </Stepper>
-
-
         ) : (
           <Paper square elevation={0}>
+            <div
+              style={{
+                display: "flex",
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+                paddingLeft: 21,
+                paddingRight: 21
+              }}
+            >
+              <h1 style={{ textAlign: "center" }}>
+                A verification link has been sent to your email account
+              </h1>
+              <p style={{ textAlign: "center" }}>
+                Please click on the link that has just been sent to your email
+                account to verify your email and continue the registeration
+                process.
+              </p>
 
-            <div style={{display:'flex', flex: 1, justifyContent:'center', alignItems:'center', flexDirection:'column', paddingLeft: 21, paddingRight: 21}}>
-              <h1 style={{textAlign:'center'}}>A verification link has been sent to your email account</h1>
-              <p style={{textAlign:'center'}}>Please click on the link that has just been sent to your email account to verify your email and continue the registeration process.</p>
-              
               <Fab
-                    variant="extended"
-                    className="text-white"
-                    size="medium"
-                    style={{
-                      backgroundColor: AppConfig.themeColors.primary,
-                      marginBottom: "1.5rem",
-                      marginLeft: 15
-                    }}
-                    type="submit"
-                    onClick={this.props.history}
-                  >
-                    <span style={{width: 80, }}>Login</span>
+                variant="extended"
+                className="text-white"
+                size="medium"
+                style={{
+                  backgroundColor: AppConfig.themeColors.primary,
+                  marginBottom: "1.5rem",
+                  marginLeft: 15
+                }}
+                type="submit"
+                onClick={this.props.history}
+              >
+                <span style={{ width: 80 }}>Login</span>
               </Fab>
-              {/* <p>Registration Complete - Login <Link to="/login">here</Link></p> */}
             </div>
-       
           </Paper>
         )}
       </div>
@@ -485,32 +406,42 @@ class RegisterSteps extends React.Component {
 const mapStateToProps = ({ authUser }) => {
   const { register } = authUser;
   const { loading, success } = register;
-  // return { loading, success };
+  const {
+    userInfo,
+    companyInfo,
+    email,
+    password,
+    repassword,
+    priceplan,
+    paymentInfo
+  } = register.form;
 
-  const { userInfo, companyInfo, email, password, repassword, priceplan, paymentInfo} = register.form;
-
-  return { 
+  return {
     /*
-    * Validating Sign up Process
-    */
-    loading, success,
+     * Validating Sign up Process
+     */
+    loading,
+    success,
     /*
-    * User Register Form
-    */
-    userInfo, companyInfo, email, password, repassword,
+     * User Register Form
+     */
+    userInfo,
+    companyInfo,
+    email,
+    password,
+    repassword,
     /*
-    * Select Plan Form
-    */
+     * Select Plan Form
+     */
     priceplan,
     /*
-    * Payment Detail Form
-    */
+     * Payment Detail Form
+     */
     paymentInfo
   };
 };
 
 export default connect(
   mapStateToProps,
-  { registerUser, handleRegForm, handleRegErrorForm, resetSuccess}
+  { registerUser, handleRegForm, handleRegErrorForm, resetSuccess }
 )(RegisterSteps);
-

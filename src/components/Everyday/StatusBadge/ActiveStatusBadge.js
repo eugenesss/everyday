@@ -1,11 +1,16 @@
 import React from "react";
-import { Badge } from "reactstrap";
+import { Chip } from "@material-ui/core";
 
 const ActiveStatusBadge = ({ isActive }) => {
   return (
-    <Badge className={isActive ? "bg-success" : "bg-danger"}>
-      {isActive ? "Active" : "Inactive"}
-    </Badge>
+    <Chip
+      variant="outlined"
+      size="small"
+      label={isActive ? "Active" : "Inactive"}
+      className={
+        isActive ? "text-success border-success" : "text-danger border-danger"
+      }
+    />
   );
 };
 

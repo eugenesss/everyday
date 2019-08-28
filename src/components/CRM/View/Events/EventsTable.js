@@ -23,7 +23,7 @@ const EventsTable = ({ tableData, title, action }) => {
 
   const options = {
     filterType: "dropdown",
-    responsive: "stacked",
+    responsive: "scroll",
     download: false,
     print: false,
     search: false,

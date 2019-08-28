@@ -113,7 +113,7 @@ export default class Comments extends PureComponent {
           <BaseInput
             value={content}
             onChange={e => this.onChange(e.target.value)}
-            placeholder="Write your notes here"
+            placeholder="Enter your notes here"
             rows={4}
           />
           <Button

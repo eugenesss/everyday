@@ -13,22 +13,22 @@ function LeadCard(props) {
     <Wrapper>
       <Contact
         name={lead.name}
-        subHeading={lead.companyName}
         call={lead.baseContact.mobile}
         email={lead.baseContact.email}
         website={lead.baseContact.website}
+        indicator={lead.statusInfo}
       />
       <div className="profile-card-section">
         <div>
-          <h4 className="mb-20 text-muted">Lead Interest</h4>
+          <h4 className="text-muted">Lead Interest</h4>
           <LeadInterestLevel interest={lead.interest} />
         </div>
       </div>
       <KeyDetails
         keyDetails={[
           {
-            label: "Status",
-            value: lead.statusInfo && lead.statusInfo.name
+            label: "Company",
+            value: lead.companyName
           },
           {
             label: "Owner",
