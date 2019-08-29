@@ -35,9 +35,9 @@ export const getUserRights = () => ({
   type: USER_RIGHTS
 });
 
-export const userRightsSuccess = accessRights => ({
+export const userRightsSuccess = (accessRights, userInfo) => ({
   type: USER_RIGHTS_SUCCESS,
-  payload: { accessRights }
+  payload: { accessRights, userInfo }
 });
 
 export const userRightsFailure = error => ({
