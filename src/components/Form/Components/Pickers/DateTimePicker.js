@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { DatePicker } from "@material-ui/pickers";
+import { DateTimePicker as DTPicker } from "@material-ui/pickers";
 import BaseInput from "Components/Form/Components/BaseInput";
 import { InputLabel, FormControl, FormHelperText } from "@material-ui/core";
 
@@ -16,21 +16,21 @@ const styles = makeStyles(theme => ({
   }
 }));
 
-const DatePickerInput = props => {
+const DateTimePicker = props => {
+  const { label, required, target, handleChange, format, ...others } = props;
   const classes = styles();
-  const { label, required, target, handleChange, ...others } = props;
   return (
     <FormControl className={classes.root}>
       <InputLabel className="fw-bold" shrink>
         {label}
       </InputLabel>
-      <DatePicker
+      <DTPicker
         TextFieldComponent={OverrideInput}
-        animateYearScrolling={false}
-        showTodayButton
-        autoOk
-        format="DD MMM YYYY"
-        onChange={date => handleChange(target, date.format("YYYY-MM-DD"))}
+        id="mui-pickers-time"
+        format={format ? format : "DD MMM YYYY hh:mm a"}
+        onChange={date => {
+          handleChange(target, date.format("YYYY-MM-DD HH:mm:ss"));
+        }}
         {...others}
       />
       {required && <FormHelperText error>* Required Field</FormHelperText>}
@@ -38,4 +38,4 @@ const DatePickerInput = props => {
   );
 };
 
-export default DatePickerInput;
+export default DateTimePicker;

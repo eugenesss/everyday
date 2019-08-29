@@ -167,9 +167,6 @@
     display: block;
     .toolbar-container {
       padding-bottom: 10px;
-      .MuiButton-containedPrimary {
-        color: $white;
-      }
     }
     .rbc-month-view {
       border-radius: $block-border-radius;
@@ -183,8 +180,11 @@
 }
 
 .rbc-event {
-  background-color: $blue;
+  background-color: #76baff;
   border-radius: 5px;
+}
+.rbc-selected {
+  background-color: #629ad4 !important;
 }
 
 .rbc-toolbar button.rbc-active,

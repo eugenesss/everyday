@@ -1,4 +1,5 @@
 import React from "react";
+import classnames from "classnames";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -13,7 +14,8 @@ const DialogRoot = ({
   size,
   close,
   dialogAction,
-  dialogActionLabel
+  dialogActionLabel,
+  fullBlock
 }) => {
   return (
     <React.Fragment>
@@ -27,13 +29,11 @@ const DialogRoot = ({
         {title && (
           <DialogTitle id="max-width-dialog-title">{title}</DialogTitle>
         )}
-        <DialogContent>{children}</DialogContent>
+        <DialogContent className={classnames({ "p-0": fullBlock })}>
+          {children}
+        </DialogContent>
         <DialogActions>
-          {close ? (
-            <Button onClick={handleHide} color="danger" variant="contained">
-              Close
-            </Button>
-          ) : null}
+          {close ? <Button onClick={handleHide}>Close</Button> : null}
           {dialogAction && (
             <Button onClick={dialogAction} className="mr-10" color="primary">
               {dialogActionLabel}

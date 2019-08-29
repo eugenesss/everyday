@@ -8,7 +8,9 @@ import { ExitToApp, Settings } from "@material-ui/icons";
 // Logout
 import { logoutUser } from "Actions";
 import Auth from "../../../../Auth/Auth";
-import Calendar from "../../../Widgets/Calendar/CalendarLayout";
+
+// Calendar widget
+import Calendar from "Components/Widgets/Calendar/CalendarLayout";
 
 function UserDrawerContent(props) {
   const toggleDrawer = props.toggleDrawer;

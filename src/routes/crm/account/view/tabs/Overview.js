@@ -13,7 +13,6 @@ function AccountOverviewTab(props) {
   function addNote(note) {
     props.addNoteAccount(acct.id, note);
   }
-  console.log(acct);
   return (
     <React.Fragment>
       <div className="row">

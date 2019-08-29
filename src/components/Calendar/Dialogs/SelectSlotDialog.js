@@ -7,6 +7,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Fab from "@material-ui/core/Fab";
 
+import { Event } from "@material-ui/icons";
+
 import DialogRoot from "Components/Dialog/DialogRoot";
 
 const SelectSlotDialog = ({
@@ -35,10 +37,10 @@ const SelectSlotDialog = ({
     >
       <List>
         <ListItem button onClick={showCreateEvent}>
-          <Fab color="primary" variant="extended" aria-label="Add Event">
-            <i className="zmdi zmdi-calendar-note" />
+          <Fab color="primary" aria-label="Add Event">
+            <Event className="text-white" />
           </Fab>
-          <ListItemText style={{ paddingLeft: 20 }} primary={"Add Event"} />
+          <ListItemText className="ml-20" primary={"Add Event"} />
         </ListItem>
       </List>
     </DialogRoot>

@@ -19,14 +19,12 @@ const FullScreenDialog = ({ children, show, handleHide, title }) => {
       onClose={handleHide}
       TransitionComponent={Transition}
     >
-      <AppBar style={{ position: "relative" }}>
-        <Toolbar>
+      <AppBar position="relative" color="secondary">
+        <Toolbar variant="dense">
           <IconButton color="inherit" onClick={handleHide} aria-label="Close">
-            <CloseIcon />
+            <CloseIcon className="text-white" fontSize="small" />
           </IconButton>
-          <Typography variant="h5" className="ml-10" color="inherit">
-            {title}
-          </Typography>
+          <h2 className="ml-10 mb-0 text-white">{title}</h2>
         </Toolbar>
       </AppBar>
       <div>{children}</div>

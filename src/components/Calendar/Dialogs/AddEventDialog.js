@@ -1,25 +1,14 @@
 import React from "react";
-import { Col, Row } from "reactstrap";
+import { connectModal } from "redux-modal";
+import DialogRoot from "Components/Dialog/DialogRoot";
+import NewEventForm from "Components/Form/Calendar/NewEventForm";
 
-import DialogRoot from "Components/Dialog/DialogRoot"
-import AddEventForm from "Components/Form/Setting/AddEventForm"
-
-import { convertMonth, convertDay } from "Helpers/helpers";
-
-
-const AddEventDialog = ({ classes, handleClose, eventAdd, open, dayView, dispatch, ...other }) => {
+const AddEventDialog = ({ handleHide, show, dayView, addEvent }) => {
   return (
-    <DialogRoot
-      show={open}
-      handleHide={handleClose}
-      size="md"
-      title={<Col>Add Event</Col> }
-    >
-      <AddEventForm
-        dayView={dayView}
-      />
+    <DialogRoot show={show} handleHide={handleHide} size="sm" title="Add Event">
+      <NewEventForm dayView={dayView} addEvent={addEvent} />
     </DialogRoot>
   );
-}
+};
 
-export default AddEventDialog;
+export default connectModal({ name: "add_event" })(AddEventDialog);
