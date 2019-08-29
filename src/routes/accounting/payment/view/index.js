@@ -26,8 +26,8 @@ import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices"
 // import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // InvoicePaymentList
-import InvoicePaymentList from "Components/Accounting/Payment/InvoicePaymentList";
-import PaymentList from "Components/Form/Payment/PaymentList"
+import ViewInvoicePaymentList from "Components/Accounting/Payment/ViewInvoicePaymentList";
+import ViewPayment from "Components/Form/Payment/ViewPayment"
 
 import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
 import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
@@ -86,33 +86,17 @@ class acct_view_payment extends Component {
 
 
   render() {
-    const { loading, company } = this.props.paymentToView;
+    const { loading, company, payment } = this.props.paymentToView;
+
+    console.log('payment')
+    console.log(payment)
 
     return loading ? (
       <RctPageLoader />
     ) : company ? (
 
       <React.Fragment>
-      {/* <Helmet>
-        <title>Everyday | New Invoice</title>
-        <meta name="description" content="Everyday Invoices Creation" />
-      </Helmet>
-      <BgCard
-        heading={<IntlMessages id="sidebar.newInvoice" />}
-      >
-        <div className="row">
-          <div className="col-md-1" />
-          <div className="col-md-10">
-            <QuotationForm
-              accountPage={'Invoice'}
-              quotationForm={null}
-              status={this.props.accountingState.accountState}
-              _quotationParent={this._quotationParent}
-            />
-          </div>
-          <div className="col-md-1" />
-        </div>
-      </BgCard> */}
+    
       <Helmet>
           <title>Everyday | View Payment</title>
       </Helmet>
@@ -120,7 +104,7 @@ class acct_view_payment extends Component {
       <FormWrapper
         onSave={this._submitPayment}
         // disabled={false}
-        title={`Payment for ${company.name}`}
+        title={`Payment for ${company.customerName}`}
       >
       
         {/* {loading && <RctSectionLoader />} */}
@@ -128,9 +112,9 @@ class acct_view_payment extends Component {
         <form autoComplete="off">
           <FormInputLayout
             title="Key Information"
-            desc="The key fields to get you started with quotation"
+            desc="Payment information"
           >
-              <PaymentList
+              <ViewPayment
                 invoice={company}
                 preparePayment={this.preparePayment}
               />
@@ -139,7 +123,7 @@ class acct_view_payment extends Component {
 
           <div className="row border-top py-30 px-30 justify-content-md-center">
             <div className="col-11">
-              <InvoicePaymentList
+              <ViewInvoicePaymentList
                   // title={nowShowing}
                   // action={action}
                   tableData={this.state.paymentData}

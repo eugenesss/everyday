@@ -24,12 +24,7 @@ import Button from '@material-ui/core/Button';
 
 
 // Actions
-import { getSingleQuotation, clearSingleQuotation, deleteSingleQuote, addNewProdQuote, removeProdQuote, handleProdQuote, handleChangeQuote, submitNewQuote, submitAccountQuotationInvoice } from "Actions";
-// import { clearSingleQuotation, addNewProdQuote, removeProdQuote, handleProdQuote,  handleChangeQuote, getAllAccount, getAllUsers, submitNewQuote} from "Actions";
-
-// addNoteToQuotation(acctID), onNoteChange, clearNote
-// Add events dialog
-// Delete Quotation, Edit Quotation, Transfer Quotation
+import { getSingleQuotation, clearSingleQuotation, submitNewQuote } from "Actions";
 
 class acct_edit_quotation extends Component {
 
@@ -43,77 +38,41 @@ class acct_edit_quotation extends Component {
     this.props.clearSingleQuotation();
   }
 
-  _quotationParent = (element, item) =>{
-    this.props.submitNewQuote(element, item)
+  // _quotationParent = (element, item) =>{
+  //   this.props.submitNewQuote(element, item)
+  // }
+
+
+  _quotationParent = (item) =>{
+    console.log("_quotationParent")
+    console.log(item)
+    this.props.submitNewQuote(item)
   }
 
 
   render() {
     const {currencyTable, taxTable, discountTable} = this.props.quotationList
-    // const {products, quotation} = this.props.quotationForm 
-    const {loading, quotation} = this.props.quotationToView;
 
-    console.log('edit index')
-    console.log(quotation)
+    const {loading, quotation} = this.props.quotationToView;
 
     return loading ? (
       <RctPageLoader />
     ) : quotation ? (
       <React.Fragment>
-        <Helmet>
-          <title>Everyday | Edit Quotation</title>
-          <meta name="description" content="Everyday Quotations Creation" />
-        </Helmet>
-        <BgCard
-          heading={<IntlMessages id="Edit Quotation" />}
-        >
-          <div className="row">
-            <div className="col-md-1" />
-            <div className="col-md-10">
-              <QuotationForm
-                accountPage={'Quotation'}
-                edit={true}
-                quotationForm={quotation}
-                _quotationParent={this._quotationParent}
-              />
-            </div>
-            <div className="col-md-1" />
-          </div>
-        </BgCard>
-      </React.Fragment>
 
-      // <React.Fragment>
-      //     <InvoiceFields 
-      //         handleChange  = {(e, value, target) => this.props.handleChangeQuote(e, value, target)}
-      //         tableData={[quotation.accountId]}
-      //         currencyTable={currencyTable}
-      //         discountTable={discountTable}
-      //         quotation={quotation}
-      //         users={[quotation.owner]}
-      //         attn_to_array={[quotation.attn_toId]}
-      //     />
-      //     <div style={{marginTop: 20, marginBottom: 20}}>
-      //       <InvoiceProductInput
-      //         products={products}
-      //         taxTable={taxTable}
-      //         invoice={quotation}
-      //         handleChange={this.props.handleProdQuote}
-      //         handleAdd={this.props.addNewProdQuote}
-      //         handleRemove={this.props.removeProdQuote}
-      //       />
-      //     </div>
-      //     <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop: 20}}>
-      //         {/* <Button variant="contained" color="secondary" className="mr-10" style={{color:'white'}}>
-      //           Save Draft
-      //         </Button> */}
-      //         <Button onClick={() => {
-      //             this.props.submitNewQuote(quotation, products, true)
-      //           }} variant="contained" color="primary"  className="mr-10">
-      //           Save Edit
-      //         </Button>
-      //     </div>
-      // </React.Fragment>
-      
+        <Helmet>
+          <title>Everyday | New Quotation</title>
+          <meta name="description" content="Everyday Quotation Creation" />
+        </Helmet>
+        
+        <QuotationForm 
+          title="sidebar.newQuotation" 
+          handleSubmit={this._quotationParent}
+          edit={true}
+          quotationData={quotation}
+        />
+
+      </React.Fragment>
     ) : (
       <PageErrorMessage
         heading="Not Found"
@@ -145,20 +104,6 @@ const mapStateToProps = ({ accountingState, crmState, usersState }) => {
 
 export default connect(
   mapStateToProps,
-  { getSingleQuotation, clearSingleQuotation, deleteSingleQuote, addNewProdQuote, removeProdQuote, handleProdQuote, handleChangeQuote, submitNewQuote, submitAccountQuotationInvoice }
+  { getSingleQuotation, clearSingleQuotation ,submitNewQuote}
 )(acct_edit_quotation);
 
-
-
-// const mapStateToProps = ({ accountingState, crmState, usersState }) => {
-//   const {tableData, } = crmState.accountState.accountList 
-//   const { quotationState,} = accountingState;
-//   const { quotationForm, quotationList, quotationToView } = quotationState;
-//   const { users } = usersState;
-//   return { quotationForm, tableData, users, quotationList, quotationToView};
-// };
-
-// export default connect(
-//   mapStateToProps,
-//   { addNewProdQuote, removeProdQuote, handleProdQuote, handleChangeQuote, getAllAccount, getAllUsers, submitNewQuote, getSingleQuotation, clearSingleQuotation, deleteSingleQuote }
-// )(acct_edit_quotation);

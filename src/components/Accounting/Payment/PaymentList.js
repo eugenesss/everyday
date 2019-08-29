@@ -19,12 +19,17 @@ function numberWithCommas(x) {
 const PaymentList = ({ tableData, loading, title, action }) => {
   const columns = [
     {
+      name: "id",
+      options: { display: "excluded", filter: false, sort: false }
+    },
+    {
       label: "Company",
       name: "setup",
       options: { 
         customBodyRender: (value, tableMeta) => {
           return (
-            <NavLink to={`payments/${value.id}`}>{value.name}</NavLink>
+            // <NavLink to={`payments/${value.id}`}>{value.name}</NavLink>
+            <NavLink to={`payments/${tableMeta.rowData[0]}`}>{value.name}</NavLink>
           );
         }
       },

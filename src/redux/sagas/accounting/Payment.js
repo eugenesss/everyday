@@ -31,8 +31,14 @@ const fetchAllPaymentRequest = async data => {
 };
 
 
-const getAllCompanyPaymentRequest = async data => {
+const getSingleCompanyPaymentRequest = async data => {
   const result = await api.post("/accountreconciles/getSingleCompanyPayments", {data: data}); 
+  return result.data;
+};
+
+
+const getAllCompanyPaymentRequest = async data => {
+  const result = await api.post("/accountreconciles/getAllCompanyPayments"); 
   return result.data;
 };
 
@@ -68,9 +74,9 @@ function* fetchAllPaymentFromDB({ payload }) {
   }
 }
 
-function* getAllCompanyPaymentFromDB({ payload }) {
+function* getSingleCompanyPaymentFromDB({ payload }) {
   try {
-    const data = yield call(getAllCompanyPaymentRequest, payload);
+    const data = yield call(getSingleCompanyPaymentRequest, payload);
     yield delay(500);
 
     if(data.success != 1) {
@@ -84,7 +90,16 @@ function* getAllCompanyPaymentFromDB({ payload }) {
 }
 
 
-
+function* getAllCompanyPaymentFromDB({ payload }) {
+  try {
+    const data = yield call(getAllCompanyPaymentRequest, payload);
+    console.log('getAllCompanyPaymentFromDB')
+    yield delay(500);
+    yield put(actions.fetchAllCompaniesSuccess(data.fields));
+  } catch (error) {
+    yield put(actions.fetchAllCompaniesFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -99,11 +114,13 @@ export function* fetchPaymentWatcher() {
 }
 
 export function* getSingleCompanyPaymentWatcher() {
-  yield takeEvery(types.GET_SINGLE_COMPANY_PAYMENT, getAllCompanyPaymentFromDB);
+  yield takeEvery(types.GET_SINGLE_COMPANY_PAYMENT, getSingleCompanyPaymentFromDB);
 }
 
 
-
+export function* getAllCompanyPaymentWatcher() {
+  yield takeEvery(types.FETCH_ALL_COMPANINES, getAllCompanyPaymentFromDB);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -114,6 +131,8 @@ export default function* rootSaga() {
     fork(fetchPaymentWatcher),
 
     fork(getSingleCompanyPaymentWatcher),
+    fork(getAllCompanyPaymentWatcher),
+
 
   ]);
 }

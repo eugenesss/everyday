@@ -15,20 +15,23 @@ import AmountInput from "Components/Form/Components/Inputs/AmountInput";
 import FormInput from "Components/Form/Components/FormInput";
 import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
 
-export default class PaymentList extends Component {
+import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
+
+
+export default class ViewPayment extends Component {
   // constructor(props) {
   //     super(props)
   // }
 
   state = {
-    customer: this.props.invoice.name,
+    customer: this.props.invoice.customerName,
     invoiceId: this.props.invoice.id,
-    paidAmount: 0,
-    paymentMethod: "",
-    date: new Date(),
-    paymentRef: "",
-    memo: "",
-    paymentDifference: "Keep Open"
+    paidAmount: this.props.invoice.paidAmount,
+    paymentMethod: this.props.invoice.paymentMethod,
+    date: new Date(this.props.invoice.createdAt),
+    paymentRef: this.props.invoice.paymentRef,
+    memo: this.props.invoice.memo,
+    paymentDifference: this.props.invoice.paymentDifference
   };
 
   handleChange = (a, b) => {
@@ -41,81 +44,55 @@ export default class PaymentList extends Component {
   render() {
     const { invoice } = this.props;
 
+
     return (
       <div className="row">
         <div className="col-md-6" />
         <div className="col-md-6">
-          <DatePickerInput
-            label="Payment Date"
-            value={Moment(this.state.date).format("LLL")}
-            required={!this.state.date}
-            onChange={date => this.handleChange("date", e._d)}
-          />
+       
+          <EditableInput label="Payment Date" value={Moment(this.state.date).format("LLL")} />
+
         </div>
 
         <div className="col-md-6">
           {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
-          <FormInput label="Company" value={invoice.name} disabled={true} />
+          {/* <FormInput label="Company" value={this.state.customer} disabled={true} /> */}
+          <EditableInput label="Company" value={this.state.customer} />
           {/* </div> */}
 
           {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
 
-          <FormInput
-            label="Payment Method"
-            value={this.state.paymentMethod}
-            required={!this.state.paymentMethod}
-            selectValues={paymentOption}
-            target="paymentMethod"
-            handleChange={this.handleChange}
-          />
+         
+          <EditableInput label="Payment Method" value={this.state.paymentMethod} />
+
+          <EditableInput label="Payment Difference" value={this.state.paymentDifference} />
+
           {/* </div> */}
 
           {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
 
-          <FormInput
-            label="Payment Method"
-            value={this.state.paymentDifference}
-            required={!this.state.paymentDifference}
-            selectValues={paymentDifferenceOptions}
-            target="paymentDifference"
-            handleChange={this.handleChange}
-          />
+    
           {/* </div> */}
         </div>
 
         <div className="col-md-6">
           {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
-          <AmountInput
-            label="Paid Amount"
-            value={this.state.paidAmount}
-            required={!this.state.paidAmount}
-            target="paidAmount"
-            onChange={e => {
-              this.handleChange("paidAmount", e.target.value);
-            }}
-          />
-          {/* </div> */}
-
-          {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
-
-          <FormInput
-            label="Payment Ref"
-            value={this.state.paymentRef}
-            required={!this.state.paymentRef}
-            target="paymentRef"
-            handleChange={this.handleChange}
-          />
+          
+          <EditableInput label="Paid Amount" value={`$${this.state.paidAmount}`} />
 
           {/* </div> */}
 
           {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
 
-          <FormInput
-            label="Memo"
-            value={this.state.memo}
-            target="memo"
-            handleChange={this.handleChange}
-          />
+          <EditableInput label="Payment Refernece" value={this.state.paymentRef} />
+
+          {/* </div> */}
+
+          {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
+
+          <EditableInput label="Memo" value={this.state.memo} />
+
+    
           {/* </div> */}
         </div>
       </div>

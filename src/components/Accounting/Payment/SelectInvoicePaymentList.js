@@ -20,14 +20,20 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const InvoicePaymentList = ({ tableData, loading, title, action, onCheckList }) => {
+const SelectInvoicePaymentList = ({ tableData, loading, title, action, onCheckList }) => {
   const columns = [
+    {
+      name: "id",
+      options: { display: "excluded", filter: false, sort: false }
+    },
     {
         label: "Invoice",
         name: "invoiceId",
         options: { 
         customBodyRender: (value, tableMeta) => {
-            return value
+          return (
+            <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
+          );
         }
       },
     },
@@ -106,7 +112,7 @@ const InvoicePaymentList = ({ tableData, loading, title, action, onCheckList }) 
                 />
               )
             } else {
-              return ""
+              return "false"
             }
             
           },
@@ -114,18 +120,10 @@ const InvoicePaymentList = ({ tableData, loading, title, action, onCheckList }) 
     },
     {
       label: "Allocation",
-      name: "allocation",
+      name: "allocated",
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
-          return (
-            <AmountInput
-              // label="Quantity"
-              value={value}
-              handleChange={e =>
-                updateValue(e.target.value)
-              }
-            />
-          )
+          return `$${numberWithCommas(value)}`
         },
       }
   },
@@ -220,4 +218,4 @@ const InvoicePaymentList = ({ tableData, loading, title, action, onCheckList }) 
   );
 };
 
-export default InvoicePaymentList;
+export default SelectInvoicePaymentList;

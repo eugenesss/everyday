@@ -8,9 +8,9 @@ const INIT_STATE = {
     options: ["All Payment", "My Payment", "Open Payment", "Closed Payment"],
     action: false,
     loading: false,
-    tableData: []
+    tableData: [],
+    companyList: null
   },
-
   paymentToView: { loading: false, payment: [] }
 };
 
@@ -60,6 +60,17 @@ export default (state = INIT_STATE, action) => {
           ...state,
         };
 
+    case types.MAKE_PAYMENT_SUCCESS:
+        NotificationManager.success("Payment made successfully")
+        return {
+          ...state,
+        };
+    case types.MAKE_PAYMENT_FAILURE:
+        NotificationManager.error("Unable to make payment, try again")
+        return {
+          ...state,
+        };
+
     case types.GET_SINGLE_COMPANY_PAYMENT:
         return {
           ...state,
@@ -75,21 +86,48 @@ export default (state = INIT_STATE, action) => {
           paymentToView: {
             ...state.paymentToView,
             loading: false,
-            payment : action.payload.data,
-            company: action.payload.company
+            payment : action.payload.company,
+            company: action.payload.data
           }
         };
 
     case types.GET_SINGLE_COMPANY_PAYMENT_FAILURE:
 
+      return {
+        ...state,
+        paymentToView: {
+          ...state.paymentToView,
+          loading: false,
+        }
+      };
+
+    case types.FETCH_ALL_COMPANINES:
+      return {
+        ...state,
+        paymentList: {
+          ...state.paymentList,
+          loading: true,
+        },
+      }
+
+    case types.FETCH_ALL_COMPANINES_SUCCESS:
+      return {
+        ...state,
+        paymentList: {
+          ...state.paymentList,
+          companyList: action.payload,
+          loading: false
+        },
+      }
+
+    case types.FETCH_ALL_COMPANINES_FAILURE:
         return {
           ...state,
-          paymentToView: {
-            ...state.paymentToView,
-            loading: false,
-          }
-        };
-            
+          paymentList: {
+            ...state.paymentList,
+            loading: false
+          },
+        }   
       
     default:
       return { ...state };

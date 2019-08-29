@@ -128,3 +128,19 @@ export const getSingleCompanyPaymentFailure = data => ({
   payload: data
 });
 
+
+
+export const fetchAllCompanies = data => ({
+  type: types.FETCH_ALL_COMPANINES,
+  payload: data
+});
+
+export const fetchAllCompaniesSuccess = data => ({
+  type: types.FETCH_ALL_COMPANINES_SUCCESS,
+  payload: data
+});
+
+export const fetchAllCompaniesFailure = data => ({
+  type: types.FETCH_ALL_COMPANINES_FAILURE,
+  payload: data
+});

@@ -118,10 +118,9 @@ export const addNoteQuotationFailure = error => ({
 /**
  * New Quote
  */
-export const submitNewQuote = (accountPage, item) => ({
+export const submitNewQuote = (item) => ({
   type: types.SUBMIT_QUOTATION,
-  payload: {accountPage: accountPage, item: item}
-  // payload: item
+  payload: item
 });
 
 export const submitNewQuoteSuccess = (item) => ({
