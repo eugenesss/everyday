@@ -1,20 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Col, Row, Form, Input, FormFeedback, Text } from "reactstrap";
 
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import { DateTimePicker, KeyboardDateTimePicker } from "@material-ui/pickers";
-import Checkbox from "@material-ui/core/Checkbox";
+// form components
+import FormInput from "Components/Form/Components/FormInput";
+import DateTimePicker from "Components/Form/Components/Pickers/DateTimePicker";
+import DatePicker from "Components/Form/Components/Pickers/DatePicker";
+import { Button, Switch, FormControlLabel } from "@material-ui/core";
 
+import { getDateTime } from "Helpers/helpers";
 import { updateEvent } from "Actions";
 
 class EventInformation extends Component {
-  // console.log(information)
   constructor(props) {
     super(props);
-
-    // this.information = this.props.information
     this.state = {
       edit: false,
       info: { ...this.props.information }
@@ -27,334 +25,212 @@ class EventInformation extends Component {
     this.setState({ state: state });
   };
 
-  SetAllDay = () => {
-    let state = { ...this.state };
-    if (!state.info.allDay) {
-      var Start = new Date(state.info.start);
-      Start.setDate(Start.getDate());
-      Start.setHours(9);
-      Start.setMinutes(0);
-      Start.setMilliseconds(0);
-
-      var End = new Date(state.info.end);
-      End.setDate(End.getDate());
-      End.setHours(18);
-      End.setMinutes(0);
-      End.setMilliseconds(0);
-
-      state.info.allDay = true;
-      state.info.start = Start;
-      state.info.end = End;
-      this.setState({ state: state });
-    } else {
-      state.info.allDay = false;
-      (state.info.start = new Date(this.props.information.start)),
-        (state.info.end = new Date(this.props.information.end)),
-        this.setState({ state: state });
-    }
-  };
-
   renderNonEditField = info => {
+    const { title, desc, allDay, userInfo, start, end } = info;
+    const eventStart = allDay
+      ? getDateTime(start, "ddd, d MMM YY")
+      : getDateTime(start);
+    const eventEnd = allDay
+      ? getDateTime(end, "ddd, d MMM YY")
+      : getDateTime(end);
+    var isSameDay =
+      end.getDate() === start.getDate() &&
+      end.getMonth() === start.getMonth() &&
+      end.getFullYear() === start.getFullYear();
     return (
-      <div>
-        <Row form>
-          <Col
-            md={6}
-            style={{
-              marginTop: 0,
-              paddingLeft: 10,
-              paddingRight: 15,
-              position: "relative"
-            }}
-          >
-            <KeyboardDateTimePicker
-              margin="normal"
-              id="mui-pickers-time"
-              label="Time picker"
-              value={new Date(info.start)}
-              KeyboardButtonProps={{
-                "aria-label": "change time"
-              }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0
-              }}
-            />
-          </Col>
-
-          <Col
-            md={6}
-            style={{
-              marginTop: 0,
-              paddingLeft: 10,
-              paddingRight: 15,
-              position: "relative"
-            }}
-          >
-            <KeyboardDateTimePicker
-              margin="normal"
-              id="mui-pickers-time"
-              label="Time picker"
-              value={new Date(info.end)}
-              KeyboardButtonProps={{
-                "aria-label": "change time"
-              }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0
-              }}
-            />
-          </Col>
-        </Row>
-
-        {info.allDay && (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center"
-            }}
-          >
-            <Checkbox
-              checked={true}
-              value="all_day"
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-            <div>This is a all day event happening from 9am to 6pm</div>
+      <React.Fragment>
+        <div className="d-flex justify-content-between">
+          <div>
+            <h2 className="mb-0">{title}</h2>
+            <p className="fs-12 text-muted">
+              {userInfo && `by ${userInfo.name}`}
+            </p>
           </div>
-        )}
-
-        <Row form>
-          <TextField
-            style={{ marginTop: 15, width: "100%" }}
-            value={info.title}
-            required
-            contentEditable={false}
-            id="title"
-            label="Title"
-            margin="normal"
-            variant="outlined"
-          />
-        </Row>
-        <Row form>
-          <TextField
-            value={info.desc}
-            style={{ marginTop: 15, width: "100%" }}
-            id="description"
-            label="Description"
-            margin="normal"
-            variant="outlined"
-          />
-        </Row>
-      </div>
+          <p className="fs-14 text-muted text-right">
+            {allDay ? (
+              <React.Fragment>
+                {isSameDay ? (
+                  <span>{eventStart}</span>
+                ) : (
+                  <span>All Day from {eventStart}</span>
+                )}
+                <br />
+                {isSameDay ? <span>All Day</span> : <span>To {eventEnd}</span>}
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {isSameDay ? (
+                  <React.Fragment>
+                    <span>{getDateTime(start, "ddd, d MMM YY")}</span>
+                    <br />
+                    <span>
+                      {`From ${getDateTime(start, "h:mma")} to ${getDateTime(
+                        end,
+                        "hh:mma"
+                      )}`}
+                    </span>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <span>
+                      {`From ${getDateTime(start, "ddd, d MMM YY h:mma")}`}
+                      <br />
+                      {`to ${getDateTime(end, "ddd, d MMM YY h:mma")}`}
+                    </span>
+                  </React.Fragment>
+                )}
+              </React.Fragment>
+            )}
+          </p>
+        </div>
+        <hr className="my-10" />
+        <p>{desc}</p>
+      </React.Fragment>
     );
   };
 
   renderEditableField = info => {
+    const { start, end, title, desc, allDay } = info;
     return (
-      <div>
-        <Row form>
-          <Col
-            md={6}
-            style={{
-              marginTop: 0,
-              paddingLeft: 10,
-              paddingRight: 15,
-              backgroundColor: "rgba(0,0,0,0.1)",
-              borderRadius: 8
-            }}
-          >
-            <KeyboardDateTimePicker
-              margin="normal"
-              id="mui-pickers-time"
-              label="Time picker"
-              value={info.start}
-              onChange={e => {
-                this.editField("start", e._d);
-              }}
-              KeyboardButtonProps={{
-                "aria-label": "change time"
-              }}
-            />
-          </Col>
-
-          <Col
-            md={6}
-            style={{
-              marginTop: 0,
-              paddingLeft: 10,
-              paddingRight: 15,
-              backgroundColor: "rgba(0,0,0,0.1)",
-              borderRadius: 8
-            }}
-          >
-            <KeyboardDateTimePicker
-              margin="normal"
-              id="mui-pickers-time"
-              label="Time picker"
-              value={info.end}
-              onChange={e => {
-                this.editField("end", e._d);
-              }}
-              KeyboardButtonProps={{
-                "aria-label": "change time"
-              }}
-            />
-          </Col>
-        </Row>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center"
-          }}
-        >
-          <Checkbox
-            checked={info.all_day}
-            onChange={() => this.SetAllDay()}
-            value="all_day"
-            color="primary"
-            inputProps={{ "aria-label": "secondary checkbox" }}
-          />
-
-          {info.all_day ? (
-            <div>
-              All day event will automatically set the time from 9am to 6pm
+      <React.Fragment>
+        <form autoComplete="off">
+          <div className="row">
+            <div className="col">
+              {allDay ? (
+                <DatePicker
+                  label="Start"
+                  value={start}
+                  target="start"
+                  handleChange={this.editField}
+                  required={!start}
+                />
+              ) : (
+                <DateTimePicker
+                  label="Start"
+                  value={start}
+                  target="start"
+                  handleChange={this.editField}
+                  required={!start}
+                />
+              )}
             </div>
-          ) : (
-            <div style={{ color: "rgba(0,0,0,0.5)" }}>
-              All day event will automatically set the time from 9am to 6pm
+            <div className="col">
+              {allDay ? (
+                <DatePicker
+                  label="End"
+                  value={end}
+                  target="end"
+                  handleChange={this.editField}
+                  required={!end}
+                />
+              ) : (
+                <DateTimePicker
+                  label="End"
+                  value={end}
+                  target="end"
+                  handleChange={this.editField}
+                  required={!end}
+                />
+              )}
             </div>
-          )}
-        </div>
-
-        <Row form>
-          <TextField
-            style={{
-              marginTop: 15,
-              width: "100%",
-              backgroundColor: "rgba(0,0,0,0.1)",
-              borderRadius: 8
-            }}
-            value={info.title}
-            required
-            // className={classes.textField}
-            onChange={e => {
-              this.editField("title", e.target.value);
-            }}
-            placeholder={"Title *"}
-            id="title"
+          </div>
+          <div className="text-right text-muted">
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={allDay}
+                  onChange={() => this.editField("allDay", !allDay)}
+                  value="allDay"
+                  disableRipple
+                />
+              }
+              label="All day event"
+              labelPlacement="start"
+              className="mb-0"
+            />
+          </div>
+          <FormInput
             label="Title"
-            margin="normal"
-            variant="outlined"
+            value={title}
+            target="title"
+            handleChange={this.editField}
+            required={!title}
           />
-        </Row>
-        <Row form>
-          <TextField
-            value={info.desc}
-            style={{
-              marginTop: 15,
-              width: "100%",
-              backgroundColor: "rgba(0,0,0,0.1)",
-              borderRadius: 8
-            }}
-            placeholder={"Description *"}
-            // className={classes.textField}
-            onChange={e => {
-              this.editField("desc", e.target.value);
-            }}
-            id="description"
+          <FormInput
             label="Description"
-            margin="normal"
-            variant="outlined"
+            value={desc}
+            target="desc"
+            handleChange={this.editField}
+            multiline
+            rows={3}
           />
-        </Row>
-      </div>
+        </form>
+      </React.Fragment>
     );
   };
 
-  // state={
-  //   edit: false
-  // }
+  onEdit = () => {
+    window.alert("Update your event information?");
+    this.setState({ edit: false });
 
-  ToggleEdit = () => {
-    if (this.state.edit) {
-      console.log("Save mode");
-      window.alert("Update your event information?");
-      this.setState({ edit: false });
-
-      let state = { ...this.state.info };
-      // state.start = state.start.toString()
-      // state.end = state.end.toString()
-      this.props.updateEvent(state);
-    } else {
-      console.log("Edit mode");
-      this.setState({ edit: true });
-    }
+    let state = { ...this.state.info };
+    this.props.updateEvent(state);
   };
 
+  toggleEdit = () => this.setState({ edit: !this.state.edit });
+
   render() {
-    const { information, edit, deleteNow } = this.props;
-
-    let editTitle = "";
-    if (this.state.edit) {
-      editTitle = "Save";
-    } else {
-      editTitle = "Edit";
-    }
+    const { information, deleteNow } = this.props;
     return (
-      <Form>
-        {!this.state.edit && this.renderNonEditField(this.state.info)}
-
-        {this.state.edit && this.renderEditableField(this.state.info)}
-
-        <Row className={"justify-content-end "}>
-          <Button
-            variant="contained"
-            color="primary"
-            className="text-white mb-10 mt-20"
-            onClick={() => this.ToggleEdit()}
-            style={{ marginBottom: 50 }}
-          >
-            {editTitle}
-          </Button>
-
-          <Button
-            variant="contained"
-            color="secondary"
-            className="text-white mb-10 mt-20"
-            onClick={() => deleteNow(this.state.info.id)}
-            style={{ marginBottom: 50, marginLeft: 20 }}
-          >
-            Delete
-          </Button>
-        </Row>
-      </Form>
+      <React.Fragment>
+        {this.state.edit
+          ? this.renderEditableField(this.state.info)
+          : this.renderNonEditField(information)}
+        <div className="row justify-content-between">
+          <div>
+            {this.state.edit && (
+              <Button
+                className="text-danger"
+                disableRipple
+                onClick={() => deleteNow(this.state.info.id)}
+              >
+                Delete
+              </Button>
+            )}
+          </div>
+          <div>
+            {this.state.edit ? (
+              <React.Fragment>
+                <Button disableRipple onClick={() => this.toggleEdit()}>
+                  Cancel
+                </Button>
+                <Button
+                  variant="contained"
+                  disableRipple
+                  className="ml-20 text-white btn-success"
+                  onClick={() => this.onEdit()}
+                >
+                  Save
+                </Button>
+              </React.Fragment>
+            ) : (
+              <Button
+                disableRipple
+                color="primary"
+                onClick={() => this.toggleEdit()}
+              >
+                Edit
+              </Button>
+            )}
+          </div>
+        </div>
+      </React.Fragment>
     );
   }
 }
 
-// export default EventInformation
-
-// map state to props
-const mapStateToProps = ({}) => {
-  return {};
-};
-
 export default connect(
-  mapStateToProps,
+  null,
   {
     updateEvent
   }

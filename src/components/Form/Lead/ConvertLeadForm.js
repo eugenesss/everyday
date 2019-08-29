@@ -1,72 +1,55 @@
 import React from "react";
 
 // Form Components
-import TextField from "@material-ui/core/TextField";
 import AmountInput from "Components/Form/Components/Inputs/AmountInput";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
+import FormInput from "Components/Form/Components/FormInput";
+import BaseInput from "Components/Form/Components/BaseInput";
+
 const ConvertLeadForm = ({ dealStage, dealDetails, handleChange }) => {
   return (
     <div>
-      <div className="form-group">
-        <FormControl fullWidth>
-          <AmountInput
-            value={dealDetails.amount}
-            label="Deal Amount"
-            onChange={e => handleChange("amount", e.target.value)}
-          />
-        </FormControl>
-      </div>
-      <div className="form-group">
-        <FormControl fullWidth>
-          <TextField
-            InputLabelProps={{
-              shrink: true
-            }}
-            id="name"
-            defaultValue={dealDetails.name}
-            onChange={e => handleChange("name", e.target.value)}
-            fullWidth
-            label="Deal Name"
-          />
-        </FormControl>
-      </div>
-      <div className="form-group">
-        <FormControl fullWidth>
-          <TextField
-            id="date"
-            label="Closing Date"
-            type="date"
-            defaultValue={dealDetails.closingDate}
-            onChange={e => handleChange("closingDate", e.target.value)}
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
-        </FormControl>
-      </div>
-      <div className="form-group">
-        <FormControl fullWidth>
-          <InputLabel shrink htmlFor="stage">
+      <form autoComplete="off">
+        <FormInput
+          label="Name"
+          value={dealDetails.name}
+          target="name"
+          handleChange={handleChange}
+        />
+        <AmountInput
+          value={dealDetails.amount}
+          label="Deal Amount"
+          onChange={e => handleChange("amount", e.target.value)}
+        />
+        <FormInput
+          label="Closing Date"
+          value={dealDetails.closingDate}
+          target="closingDate"
+          handleChange={handleChange}
+          type="date"
+        />
+        <FormControl fullWidth style={{ margin: "8px" }}>
+          <InputLabel className="fw-bold" shrink htmlFor="stage">
             Stage
           </InputLabel>
           <Select
-            value={dealDetails.stageId ? dealDetails.stageId : ""}
+            value={dealDetails.stageId}
             onChange={e => handleChange("stageId", e.target.value)}
+            input={<BaseInput />}
           >
-            {dealStage.map((stage, key) => {
-              return (
+            {dealStage &&
+              dealStage.map((stage, key) => (
                 <MenuItem key={key} value={stage.id}>
                   {`${stage.name} - ${stage.chance}%`}
                 </MenuItem>
-              );
-            })}
+              ))}
           </Select>
         </FormControl>
-      </div>
+      </form>
     </div>
   );
 };

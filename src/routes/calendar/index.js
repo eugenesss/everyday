@@ -2,63 +2,20 @@ import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 
 import { connect } from "react-redux";
+import { show } from "redux-modal";
 
 import BigCalendar from "react-big-calendar";
 import moment from "moment";
 
 import CustomToolbar from "Components/Calendar/CustomToolbar";
-// import CalendarAgenda from "Components/Calendar/CalendarAgenda";
 import SelectSlotDialog from "Components/Calendar/Dialogs/SelectSlotDialog";
 import AddEventDialog from "Components/Calendar/Dialogs/AddEventDialog";
 import EventInfoDialog from "Components/Calendar/Dialogs/EventInfoDialog";
 
-// import MenuItem from "@material-ui/core/MenuItem";
-// import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-
-import { withStyles } from "@material-ui/core/styles";
-import { getAllEvents, deleteEvent } from "Actions";
-
-import {
-  onChangeEventView,
-  onChangeCalendarView,
-  onChangeDayView,
-  showSelectedSlot,
-  hideSelectedSlot,
-  showCreateEvent,
-  hideCreateEvent
-} from "Actions";
-
-function TabContainer({ children, classes }) {
-  return (
-    <Typography component="div" className={classes.tabs}>
-      {children}
-    </Typography>
-  );
-}
+import { getAllEvents, deleteEvent, addEvent } from "Actions";
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
-const styles = theme => ({
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: "auto"
-  },
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    width: 500
-  },
-  tabs: {
-    // marginLeft: 8
-  },
-  displayBlock: {
-    display: "block"
-  },
-  displayInlineTable: {
-    display: "inline-table"
-  }
-});
 class Calendar extends Component {
   constructor(props) {
     super(props);
@@ -69,8 +26,7 @@ class Calendar extends Component {
       slotSelected: null,
       showEventSelected: false,
       editNow: false,
-      calendarView: "month",
-      calendarSelection: ["month", "week"]
+      calendarView: "month"
     };
   }
 
@@ -78,36 +34,15 @@ class Calendar extends Component {
     this.props.getAllEvents();
   }
 
-  EditEventInformation = (element, value) => {
-    console.log(element, value);
-  };
+  openAddEvent() {
+    this.props.show("add_event", {
+      addEvent: this.props.addEvent,
+      dayView: this.state.slotSelected
+    });
+  }
 
   render() {
-    const {
-      match,
-      classes,
-
-      eventView,
-      eventViewOptions,
-      showEvents,
-      viewIndex,
-      dayView,
-      // isSlotSelected,
-      // slotSelected,
-      isAddEvent,
-      eventAdd,
-      myEvents,
-
-      onChangeEventView,
-      onChangeCalendarView,
-      onChangeDayView,
-
-      // showSelectedSlot,
-      // hideSelectedSlot,
-
-      // showCreateEvent,
-      hideCreateEvent
-    } = this.props;
+    const { showEvents } = this.props;
     return (
       <React.Fragment>
         <div className="calendar-wrapper">
@@ -117,61 +52,10 @@ class Calendar extends Component {
           </Helmet>
 
           <div className="row">
-            {/* <div className="col-md-3"> */}
-            {/* <TextField
-                value={eventView}
-                fullWidth
-                style={{
-                  width: "100%",
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0
-                }}
-                select
-                id="Calendar"
-                label="Calendar"
-                className={classes.textField}
-                InputLabelProps={{ shrink: true }}
-                onChange={e => onChangeEventView(e.target.value)}
-                SelectProps={{
-                  MenuProps: {
-                    className: classes.menu
-                  }
-                }}
-                margin="normal"
-                variant="outlined"
-              >
-                {eventViewOptions.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField> */}
-
-            {/* <div>
-                <h2 className={classes.textField + " mt-20"}>Events Today</h2>
-                <CalendarAgenda showEvents={showEvents} defaultDate={"today"} />
-                <h2 className={classes.textField + " mt-20"}>
-                  Events Tomorrow
-                </h2>
-                <CalendarAgenda
-                  showEvents={showEvents}
-                  defaultDate={"tomorrow"}
-                />
-                <h2 className={classes.textField + " mt-20"}>
-                  Events Day After Tomorrow
-                </h2>
-                <CalendarAgenda
-                  showEvents={showEvents}
-                  defaultDate={"dayAftTom"}
-                />
-              </div>
-            </div> */}
-
             <div className="col-md-12">
               {/* Month View */}
-              {/* <div className="rct-block"> */}
               <BigCalendar
+                style={{ position: "relative" }}
                 selectable
                 events={showEvents}
                 views={["month"]}
@@ -194,46 +78,6 @@ class Calendar extends Component {
                   toolbar: CustomToolbar
                 }}
               />
-              {/* </div> */}
-
-              {/* Week View */}
-              {/* <TabContainer classes={classes}>
-                <BgCard>
-                  <BigCalendar
-                    selectable
-                    events={showEvents}
-                    defaultView={"week"}
-                    views={["week"]}
-                    step={60}
-                    showMultiDayTimes
-                    onNavigate={e => {
-                      const filteredEvents = showEvents.filter(
-                        item => item.start.toDateString() === e.toDateString()
-                      );
-                      this.setState({
-                        eventInfoOpen: !this.state.eventInfoOpen,
-                        eventInfo: filteredEvents
-                      });
-                    }}
-                    onSelectEvent={e => {
-                      this.setState({
-                        eventInfoOpen: !this.state.eventInfoOpen,
-                        eventInfo: [e]
-                      });
-                    }}
-                    defaultDate={new Date()}
-                    onSelectSlot={e =>
-                      this.setState({
-                        isSlotSelected: !this.state.isSlotSelected,
-                        slotSelected: e
-                      })
-                    }
-                    components={{
-                      toolbar: CustomToolbar
-                    }}
-                  />
-                </BgCard>
-              </TabContainer> */}
             </div>
           </div>
 
@@ -263,20 +107,13 @@ class Calendar extends Component {
               handleClose={() => this.setState({ isSlotSelected: false })}
               slotSelected={this.state.slotSelected}
               showCreateEvent={() => {
-                this.props.showCreateEvent();
                 this.setState({ isSlotSelected: false });
+                this.openAddEvent();
               }}
             />
           )}
 
-          {isAddEvent && (
-            <AddEventDialog
-              open={isAddEvent}
-              handleClose={hideCreateEvent}
-              eventAdd={eventAdd}
-              dayView={this.state.slotSelected}
-            />
-          )}
+          <AddEventDialog />
         </div>
       </React.Fragment>
     );
@@ -285,44 +122,16 @@ class Calendar extends Component {
 
 // map state to props
 const mapStateToProps = ({ calendarState }) => {
-  const {
-    eventView,
-    eventViewOptions,
-    showEvents,
-    viewIndex,
-    dayView,
-    isSlotSelected,
-    slotSelected,
-    isAddEvent,
-    eventAdd,
-
-    myEvents
-  } = calendarState;
-  return {
-    eventView,
-    eventViewOptions,
-    showEvents,
-    viewIndex,
-    dayView,
-    isSlotSelected,
-    slotSelected,
-    isAddEvent,
-    eventAdd,
-    myEvents
-  };
+  const { showEvents } = calendarState;
+  return { showEvents };
 };
 
 export default connect(
   mapStateToProps,
   {
-    onChangeEventView,
-    onChangeCalendarView,
-    onChangeDayView,
-    showSelectedSlot,
-    hideSelectedSlot,
-    showCreateEvent,
-    hideCreateEvent,
     getAllEvents,
-    deleteEvent
+    deleteEvent,
+    addEvent,
+    show
   }
-)(withStyles(styles)(Calendar));
+)(Calendar);

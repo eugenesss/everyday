@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 // Components
-import Button from "@material-ui/core/Button";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
+import {
+  Button,
+  DialogActions,
+  DialogContent,
+  FormControlLabel,
+  Checkbox
+} from "@material-ui/core";
 import FullScreenDialog from "Components/Dialog/FullScreenDialog";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
@@ -25,7 +27,7 @@ class ConvertLeadModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dealDetails: {},
+      dealDetails: { name: "", closingDate: "", amount: "", stageId: "" },
       accountToLink: null,
       newDeal: false
     };
@@ -50,11 +52,8 @@ class ConvertLeadModal extends Component {
   }
 
   convertLead(id) {
-    this.props.convertLead(
-      id,
-      this.state.dealDetails,
-      this.state.accountToLink
-    );
+    const deal = this.state.newDeal ? this.state.dealDetails : {};
+    this.props.convertLead(id, deal, this.state.accountToLink);
   }
 
   handleAccountSelect(event) {
@@ -87,19 +86,12 @@ class ConvertLeadModal extends Component {
       <FullScreenDialog
         show={show}
         handleHide={this.props.handleConvertModal}
-        title={
-          <React.Fragment>
-            Convert Lead{" "}
-            <small className="fs-18">{`(${lead.name}, ${
-              lead.companyName
-            })`}</small>
-          </React.Fragment>
-        }
+        title={`Convert Lead (${lead.name}, ${lead.companyName})`}
       >
         {loading && <RctSectionLoader />}
         <DialogContent className="p-30">
-          <div className="row">
-            <div className="col-6 offset-md-3">
+          <div className="row justify-content-center">
+            <div className="col-4">
               <AccountSelection
                 name={lead.name}
                 companyName={lead.companyName}
@@ -109,7 +101,7 @@ class ConvertLeadModal extends Component {
                 accountToLink={this.state.accountToLink}
               />
 
-              <div style={{ maxWidth: "350px" }}>
+              <div className="mt-30">
                 <div className="mb-20">
                   <FormControlLabel
                     control={
@@ -124,19 +116,18 @@ class ConvertLeadModal extends Component {
                     label={<p className="mb-0">Create new deal</p>}
                   />
                   {this.state.newDeal && (
-                    <div className="my-10">
-                      <ConvertLeadForm
-                        handleChange={this.handleConvertForm}
-                        dealStage={dealStage}
-                        dealDetails={dealDetails}
-                      />
+                    <div className="row justify-content-center">
+                      <div className="col-7">
+                        <ConvertLeadForm
+                          handleChange={this.handleConvertForm}
+                          dealStage={dealStage}
+                          dealDetails={dealDetails}
+                        />
+                      </div>
                     </div>
                   )}
                 </div>
-                <DialogActions
-                  style={{ justifyContent: "flex-start" }}
-                  className="mx-0 mt-30 p-0"
-                >
+                <DialogActions className="mx-0 mt-30 p-0">
                   <Button onClick={this.props.handleConvertModal}>
                     Cancel
                   </Button>

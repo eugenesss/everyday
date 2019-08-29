@@ -4,7 +4,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
-
+import { InfoOutlined } from "@material-ui/icons";
 import Tooltip from "@material-ui/core/Tooltip";
 
 const AccountSelection = ({
@@ -18,7 +18,7 @@ const AccountSelection = ({
   return count > 0 ? (
     <div>
       <p>
-        There are {count} existing accounts similar to{" "}
+        There are {count} existing account(s) similar to{" "}
         <strong>{companyName}</strong>
       </p>
       <hr />
@@ -76,7 +76,10 @@ const AccountSelection = ({
                         }
                         placement="top"
                       >
-                        <i className="zmdi zmdi-info-outline ml-2" />
+                        <InfoOutlined
+                          fontSize="inherit"
+                          style={{ verticalAlign: "text-bottom" }}
+                        />
                       </Tooltip>
                     </span>
                   </p>
@@ -110,7 +113,6 @@ const AccountSelection = ({
       <p>
         Create New Customer: <strong>{`${name}`}</strong>
       </p>
-      <hr />
     </div>
   );
 };

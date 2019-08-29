@@ -31,7 +31,6 @@ class FormInput extends PureComponent {
       keys,
       ...others
     } = this.props;
-
     return (
       <FormControl className={classes.root}>
         <InputLabel className="fw-bold" shrink>

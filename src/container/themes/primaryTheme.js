@@ -37,6 +37,20 @@ const theme = createMuiTheme({
       root: {
         borderBottom: "none"
       }
+    },
+    // Mui Date time picker
+    MuiPickersToolbarText: {
+      toolbarBtnSelected: {
+        color: "white"
+      },
+      toolbarTxt: {
+        color: "rgba(255, 255, 255, 0.4)"
+      }
+    },
+    MuiPickersDay: {
+      daySelected: {
+        color: "white"
+      }
     }
   },
   custom: {
