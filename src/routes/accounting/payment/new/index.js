@@ -26,48 +26,90 @@ import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices"
 // import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // InvoicePaymentList
-import InvoicePaymentList from "Components/Accounting/Payment/InvoicePaymentList";
+import SelectInvoicePaymentList from "Components/Accounting/Payment/SelectInvoicePaymentList";
 import NewPayment from "Components/Form/Payment/NewPayment"
 
 import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
 import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
 
-
-
 // Actions
-import { getSingleCompanyPayment, clearSinglePayment } from "Actions";
+import { fetchAllCompanies} from "Actions";
 
 class acct_new_payment extends Component {
  
+  componentDidMount(){
+    this.props.fetchAllCompanies()
+  }
+
 
   render() {
 
-    return  (
+    const {loading, companyList} = this.props.paymentList
+
+    return loading ? (
+      <RctPageLoader />
+    ) : companyList ? (
+  
+      // companyList
         <React.Fragment>
             <Helmet>
             <title>Everyday | Payment</title>
             <meta name="description" content="Everyday Payment Management" />
             </Helmet>
             
-            
-            <NewPayment
-            
-            />
+            <FormWrapper
+              onSave={this._submitPayment}
+              // disabled={false}
+              title={`Create New Payment`}
+            >
+   
+              <form autoComplete="off">
+                <FormInputLayout
+                  title="Key Information"
+                  desc="Payment information"
+                >
+                    <NewPayment
+                      companyList={companyList}
+                    />
 
+                </FormInputLayout>
+
+
+                <div className="row border-top py-30 px-30 justify-content-md-center">
+                  <div className="col-11">
+                    {/* <SelectInvoicePaymentList
+                        // title={nowShowing}
+                        // action={action}
+                        tableData={this.state.paymentData}
+                        loading={loading}
+                        onCheckList={this.onCheckList}
+                    /> */}
+                  </div>
+                </div>
+
+
+              </form>
+
+            </FormWrapper>
         </React.Fragment>
-    )
+     ) : (
+      <PageErrorMessage
+        heading="Not Found"
+        message="This could be because of a network problem or the record might have been deleted"
+      />
+    );
   }
 }
 
 const mapStateToProps = ({ accountingState }) => {
   const { paymentState } = accountingState;
-  const { paymentToView } = paymentState;
-  return { paymentToView };
+  const { paymentToView, paymentList } = paymentState;
+  return { paymentToView, paymentList };
 };
 
 export default connect(
   mapStateToProps,
-  { getSingleCompanyPayment, clearSinglePayment }
+  { fetchAllCompanies}
 )(acct_new_payment);
 
 

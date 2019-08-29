@@ -80,7 +80,10 @@ export default class InvoiceProductInput extends PureComponent {
                 nodollar
                 target="quantity"
                 keys={key}
-                handleChange={handleChange}
+                // handleChange={handleChange}
+                onChange={e => {
+                  handleChange("quantity", e.target.value, key)
+                }}
               />
 
               <AmountInput
@@ -89,7 +92,10 @@ export default class InvoiceProductInput extends PureComponent {
                 required={!row.price}
                 target="price"
                 keys={key}
-                handleChange={handleChange}
+                onChange={e => {
+                  handleChange("price", e.target.value, key)
+                }}
+                // handleChange={handleChange}
               />
 
               <FormMultiInput
@@ -117,117 +123,7 @@ export default class InvoiceProductInput extends PureComponent {
               />
 
               <AmountInput label="Amount" disabled={true} value={row.amount} />
-              {/* <TableCell>{row.amount? ccyFormat(row.amount) : 0 }</TableCell> */}
-
-              {/* <TableCell style={{ padding: "4px 24px 4px 24px" }}>
-                        {!disabled && 
-                          <TextField
-                            value={row.quantity}
-                            onChange={e =>
-                              handleChange(key, "quantity", e.target.value)
-                            }
-                            fullWidth
-                            margin="dense"
-                            variant="outlined"
-                            type="number"
-                            step="1"
-                            disabled={disabled}
-                          />
-                        }
-                        {disabled && 
-                          <p>{row.quantity}</p>
-                        }
-                    </TableCell> */}
-
-              {/* <TableCell style={{ padding: "4px 24px 4px 24px" }}>
-
-                        {!disabled && 
-                          <TextField
-                            value={row.price}
-                            onChange={e => handleChange(key, "price", e.target.value)}
-                            fullWidth
-                            margin="dense"
-                            variant="outlined"
-                            type="number"
-                            step="1"
-                            disabled={disabled}
-                          />
-                        }
-                    
-                        {disabled && 
-                          <p>{row.price}</p>
-                        }
-                    </TableCell> */}
-              {/* <TableCell style={{ padding: "4px 24px 4px 24px" }}>
-                      <TextField
-                        value={row.discount}
-                        onChange={e =>
-                          handleChange(key, "discount", e.target.value)
-                        }
-                        fullWidth
-                        margin="dense"
-                        variant="outlined"
-                        type="number"
-                        step="1"
-                      />
-                    </TableCell> */}
-              {/* <TableCell style={{ padding: "4px 24px 4px 24px" }}>
-                      
-                        {!disabled && 
-                          <FormSelectField
-                            value={row.tax_id}
-                            selectValues={taxTable}
-                            target={"tax_id"}
-                            handleChange ={(target, e, targetType) => handleChange(key, "tax_id", e)}
-                            accounting={true}
-                          />
-                        }
-
-                        {disabled && 
-                          <p>{row.tax_id.name}</p>
-                        }
-                    </TableCell> */}
-
-              {/* <TableCell style={{ padding: "4px 24px 4px 24px" }}> */}
-              {/* <TextField
-                        value={row.tax_amount}
-                        // onChange={e =>
-                        //   handleChange(key, "tax_amount", e.target.value)
-                        // }
-                        fullWidths
-                        margin="dense"
-                        variant="outlined"
-                        type="number"
-                        step="1"
-                      /> */}
-              {/* {row.tax_rate == 0? <p>0%</p>: <p>{row.tax_rate}</p>} */}
-              {/* <p>{row.tax_rate?}</p> */}
-              {/* </TableCell> */}
-
-              {/* <TableCell>
-                      {!disabled && 
-                        <TextField
-                            value={row.discount? row.discount:0}
-                            onChange={e =>
-                              handleChange(key, "discount", e.target.value)
-                            }
-                            fullWidth
-                            type={"number"}
-                            margin="dense"
-                            variant="outlined"
-                            disabled={disabled}
-                        />
-                      }
-
-                      {disabled && 
-                        <p>{row.discount? row.discount:0}</p>
-                      }
-                    </TableCell> */}
-
-              {/* <TableCell>{row.amount? ccyFormat(row.amount) : 0 }</TableCell> */}
-
-              {/* "justify-content-end" */}
-
+          
               {key > 0 && (
                 <Button
                   variant="contained"

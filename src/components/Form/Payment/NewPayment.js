@@ -1,14 +1,13 @@
 import React, {Component} from 'react'
 import { Form, FormGroup, Label, Col } from "reactstrap";
-import FormSelectField from "Components/Form/Components/FormSelectField";
-import FormTextField from "Components/Form/Components/FormTextField";
 import TextField from '@material-ui/core/TextField';
-import NumberFormatCustom from "Components/Form/Components/NumberFormatCustom";
 import {KeyboardDatePicker} from '@material-ui/pickers';
 import Moment from 'moment'
 
 const paymentOption =  [{name:'Paypal', value: 'Paypal'}, {name:'Stripe', value: 'Stripe'}, {name:'Bank FAST', value: 'Bank FAST'}]
 const paymentDifferenceOptions =  [{name:'Keep Open', value: 'Keep Open'}, {name:'Fully Reconcile', value: 'Fully Reconcile'}]
+const paymentCompany = [ { name: 'Shaking Company', value: 'Shaking Company' }, { name: 'Dry Spices Ba Wang Kua', value: 'Dry Spices Ba Wang Kua' }]
+
 
 import AmountInput from "Components/Form/Components/Inputs/AmountInput";
 import FormInput from "Components/Form/Components/FormInput";
@@ -17,31 +16,38 @@ import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
 
 export default class PaymentList extends Component {
     
-    // constructor(props) {
-    //     super(props)    
-    // }
+    constructor(props) {
+        super(props)   
+        
+        this.companyList = this.props.companyList
 
-    state=({
-        customer: '',
-        invoiceId: '',
-        paidAmount : 0,
-        paymentMethod: '',
-        date: new Date(),
-        paymentRef: '',
-        memo : '',
-        paymentDifference: 'Keep Open'
-    })
+        this.state = (
+            {
+                customer: '',
+                invoiceId: '',
+                paidAmount : 0,
+                paymentMethod: '',
+                date: new Date(),
+                paymentRef: '',
+                memo : '',
+                paymentDifference: 'Keep Open'
+            }
+        )
+    }
+
+
 
     handleChange = (a, b) => {
-        
         this.setState({[a]: b})
-
         // if all items are filled, send to parent
         // this.props.preparePayment()
     }
   
 
+
     render(){
+
+        console.log(this.state.customer)
 
         return(
         
@@ -64,11 +70,13 @@ export default class PaymentList extends Component {
 
 
                     {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
-                        <FormInput
+                         <FormInput
                             label="Company"
-                            value={'hello world'}
-                            disabled={true}
-                        />      
+                            value={this.state.customer}
+                            selectValues={this.props.companyList}
+                            target="customer"
+                            handleChange={this.handleChange}
+                        /> 
                     {/* </div> */}
                 
                     {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}

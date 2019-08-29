@@ -144,7 +144,8 @@ class QuotationForm extends Component {
   }
 
   _handleProdQuote =(element, value, key) => {
-
+    console.log("_handleProdQuote")
+    console.log(element, value, key)
     let StateformFieldsProducts = [...this.state.formFieldsProducts]
     let formFields = {...this.state.formFields}
 
