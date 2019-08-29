@@ -25,11 +25,16 @@ class NewEventForm extends Component {
       allDay: false
     };
     this.editField = this.editField.bind(this);
+    this.showDesc = this.showDesc.bind(this);
   }
 
   editField = (element, value) => {
     this.setState({ [element]: value });
   };
+
+  showDesc() {
+    this.setState({ showDesc: !this.state.showDesc });
+  }
 
   OnBlurValidation = () => {
     let state = { ...this.state };
@@ -141,7 +146,6 @@ class NewEventForm extends Component {
           target="desc"
           handleChange={this.editField}
           multiline
-          rows={3}
         />
 
         <div className="d-flex justify-content-end">

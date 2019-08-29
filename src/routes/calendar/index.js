@@ -7,12 +7,16 @@ import { show } from "redux-modal";
 import BigCalendar from "react-big-calendar";
 import moment from "moment";
 
+// Calendar Components
 import CustomToolbar from "Components/Calendar/CustomToolbar";
+import CustomEvent from "Components/Calendar/CustomEvent";
+
+// Calendar Dialogs
 import SelectSlotDialog from "Components/Calendar/Dialogs/SelectSlotDialog";
 import AddEventDialog from "Components/Calendar/Dialogs/AddEventDialog";
 import EventInfoDialog from "Components/Calendar/Dialogs/EventInfoDialog";
 
-import { getAllEvents, deleteEvent, addEvent } from "Actions";
+import { getAllEvents, deleteEvent } from "Actions";
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
@@ -34,10 +38,9 @@ class Calendar extends Component {
     this.props.getAllEvents();
   }
 
-  openAddEvent() {
+  openAddEvent(e) {
     this.props.show("add_event", {
-      addEvent: this.props.addEvent,
-      dayView: this.state.slotSelected
+      dayView: e
     });
   }
 
@@ -55,12 +58,10 @@ class Calendar extends Component {
             <div className="col-md-12">
               {/* Month View */}
               <BigCalendar
-                style={{ position: "relative" }}
+                popup
                 selectable
                 events={showEvents}
                 views={["month"]}
-                step={60}
-                showMultiDayTimes
                 onSelectEvent={e => {
                   this.setState({
                     eventInfoOpen: !this.state.eventInfoOpen,
@@ -68,14 +69,12 @@ class Calendar extends Component {
                   });
                 }}
                 defaultDate={new Date()}
-                onSelectSlot={e =>
-                  this.setState({
-                    isSlotSelected: !this.state.isSlotSelected,
-                    slotSelected: e
-                  })
-                }
+                onSelectSlot={e => {
+                  this.openAddEvent(e);
+                }}
                 components={{
-                  toolbar: CustomToolbar
+                  toolbar: CustomToolbar,
+                  event: CustomEvent
                 }}
               />
             </div>
@@ -131,7 +130,6 @@ export default connect(
   {
     getAllEvents,
     deleteEvent,
-    addEvent,
     show
   }
 )(Calendar);
