@@ -11,7 +11,7 @@ import CustomToolbar from "Components/Calendar/CustomToolbar";
 import SelectSlotDialog from "Components/Calendar/Dialogs/SelectSlotDialog";
 import AddEventDialog from "Components/Calendar/Dialogs/AddEventDialog";
 import EventInfoDialog from "Components/Calendar/Dialogs/EventInfoDialog";
-
+import Popover from '@material-ui/core/Popover';
 import { getAllEvents, deleteEvent, addEvent } from "Actions";
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
@@ -26,7 +26,10 @@ class Calendar extends Component {
       slotSelected: null,
       showEventSelected: false,
       editNow: false,
-      calendarView: "month"
+      calendarView: "month",
+      showPop: false,
+      x: 0,
+      y: 0 ,
     };
   }
 
@@ -41,8 +44,24 @@ class Calendar extends Component {
     });
   }
 
+  onMouseDownCapture(e) {
+    this.setState({ x: e.screenX, y: e.screenY-100 });
+  }
+
+  handleClose = () => {
+    this.setState({ x: 0, y: 0, showPop: !this.state.showPop });
+  }
+
   render() {
     const { showEvents } = this.props;
+
+
+    // if(this.state.showPop){
+    //   console.log(this.state)
+    //   console.log(this.state.x, this.state.y, this.state.slotSelected )
+    // }
+    
+
     return (
       <React.Fragment>
         <div className="calendar-wrapper">
@@ -52,10 +71,10 @@ class Calendar extends Component {
           </Helmet>
 
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-12" onMouseDownCapture={this.onMouseDownCapture.bind(this)}>
               {/* Month View */}
               <BigCalendar
-                style={{ position: "relative" }}
+                style={{ position: "relative"}}
                 selectable
                 events={showEvents}
                 views={["month"]}
@@ -64,16 +83,22 @@ class Calendar extends Component {
                 onSelectEvent={e => {
                   this.setState({
                     eventInfoOpen: !this.state.eventInfoOpen,
-                    eventInfo: [e]
+                    eventInfo: [e],
+                    showPop: false
                   });
                 }}
                 defaultDate={new Date()}
-                onSelectSlot={e =>
+                onSelectSlot={ async(e) => {
+                  let item = await e
+                  // console.log(item)
+                  // console.log(this.state.x, this.state.y )
+                  // console.log('set state')
                   this.setState({
-                    isSlotSelected: !this.state.isSlotSelected,
-                    slotSelected: e
+                    // isSlotSelected: !this.state.isSlotSelected,
+                    slotSelected: item,
+                    showPop: true
                   })
-                }
+                }}
                 components={{
                   toolbar: CustomToolbar
                 }}
@@ -114,6 +139,40 @@ class Calendar extends Component {
           )}
 
           <AddEventDialog />
+
+          {this.state.showPop && (
+            // <div style={{
+            //   height:100, width:100, 
+            //   position:'absolute',
+            //   zIndex:1000,
+            //   left: this.state.x, 
+            //   top: this.state.y, 
+            //   backgroundColor:"red"}}>
+            // </div>
+            <Popover 
+              id={'simple-popover'}
+              open={this.state.showPop}
+              // anchorEl={anchorEl}
+              onClose={this.handleClose}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: this.state.y, left: this.state.x }}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+              <div style={{display:'flex', flexDirection:'column', width: 150}}>
+                {new Date(this.state.slotSelected.start).toDateString()}
+                {new Date(this.state.slotSelected.end).toDateString()}
+              </div>
+            </Popover>
+          
+          )}
+
         </div>
       </React.Fragment>
     );
