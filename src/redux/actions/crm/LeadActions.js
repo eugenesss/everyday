@@ -217,3 +217,11 @@ export const transferLeadFailure = error => ({
   type: types.TRANSFER_LEAD_FAILURE,
   payload: error
 });
+
+/**
+ * Events
+ */
+export const addLeadEvent = data => ({
+  type: types.ADD_LEAD_EVENT,
+  payload: data
+});

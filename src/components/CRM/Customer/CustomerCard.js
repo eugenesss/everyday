@@ -29,14 +29,14 @@ function CustomerCard(props) {
           <EventOutlined />
           Upcoming Events
         </div>
-        {cust.upcomingEvents.length > 0 ? (
-          cust.upcomingEvents.map((event, key) => (
+        {cust.events.length > 0 ? (
+          cust.events.map((event, key) => (
             <Info
               key={key}
               icon={<CalendarToday fontSize="small" />}
               title={"event"}
               subtitle="date"
-              onClick={() => console.log("clicked")}
+              // onClick={() => console.log("clicked")}
             />
           ))
         ) : (

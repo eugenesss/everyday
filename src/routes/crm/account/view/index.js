@@ -164,8 +164,9 @@ class crm_view_account extends Component {
               </div>
               <div label="Events">
                 <EventsTab
-                  pastEvents={account.pastEvents}
-                  upcomingEvents={account.upcomingEvents}
+                  events={account.events}
+                  eventableType="Account"
+                  eventableId={account.id}
                 />
               </div>
               <div label="Details">

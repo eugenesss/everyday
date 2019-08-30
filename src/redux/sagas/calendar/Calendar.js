@@ -1,5 +1,5 @@
-import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
-import * as Types from "Types";
+import { all, call, fork, put, takeEvery } from "redux-saga/effects";
+import * as Types from "Types/calendar/CalendarTypes";
 import * as Actions from "Actions";
 
 import api from "Api";
@@ -7,7 +7,6 @@ import api from "Api";
 //=========================
 // REQUESTS
 //=========================
-
 const getAllEventsRequestWithFilter = async (start, end, id) => {
   try {
     // const result = await api.get(`/events?filter[where][start][lt]=2019-07-18T02:38:03.197Z`);
@@ -26,10 +25,36 @@ const getAllEventsRequestWithFilter = async (start, end, id) => {
     return err;
   }
 };
-
 const getAllEventsRequest = async () => {
   try {
     const result = await api.get("/events");
+    return result.data;
+  } catch (err) {
+    return err;
+  }
+};
+const addEventRequest = async newEvent => {
+  try {
+    const result = await api.post("/events", newEvent);
+    // const result = newEvent;
+    return result.data;
+  } catch (err) {
+    return err;
+  }
+};
+const deleteEventRequest = async id => {
+  try {
+    const result = await api.delete(`/events/${id}`);
+    // const result = newEvent;
+    return result.data;
+  } catch (err) {
+    return err;
+  }
+};
+const updateEventRequest = async id => {
+  try {
+    const result = await api.patch(`/events/?id=${id.id}`, id);
+    // const result = newEvent;
     return result.data;
   } catch (err) {
     return err;
@@ -74,44 +99,28 @@ function* getAllEventsFromDB(item) {
   }
 }
 
-const addEventRequest = async newEvent => {
+function* addEventToDB({ payload }) {
+  const { item, type } = payload;
   try {
-    const result = await api.post("/events", newEvent);
-    // const result = newEvent;
-    return result.data;
+    const data = yield call(addEventRequest, item);
+    switch (type) {
+      case "Lead":
+        yield put(Actions.addLeadEvent(data));
+      case "Customer":
+        yield put(Actions.addCustomerEvent(data));
+      case "Account":
+        yield put(Actions.addAccountEvent(data));
+      case "Deal":
+        yield put(Actions.addDealEvent(data));
+      default:
+        yield put(Actions.addEventSuccess(data));
+    }
   } catch (err) {
-    return err;
-  }
-};
-
-function* addEventToDB(item) {
-  // const getNewEvent = state => state.calendarState.eventAdd;
-  // const newEvent = yield select(getNewEvent)
-  // console.log(item.payload)
-
-  try {
-    const data = yield call(addEventRequest, item.payload);
-    yield put(Actions.addEventSuccess(data));
-  } catch (err) {
-    console.log(err);
     yield put(Actions.addEventFailure(err));
   }
 }
 
-const deleteEventRequest = async id => {
-  try {
-    const result = await api.delete(`/events/${id}`);
-    // const result = newEvent;
-    return result.data;
-  } catch (err) {
-    return err;
-  }
-};
-
 function* deleteEventFromDB(item) {
-  // const getNewEvent = state => state.calendarState.eventAdd;
-  // const newEvent = yield select(getNewEvent)
-  // console.log(item.payload)
   try {
     const data = yield call(deleteEventRequest, item.payload);
     if (!data.count == 1) {
@@ -122,27 +131,11 @@ function* deleteEventFromDB(item) {
     yield put(Actions.deleteEventFailure(err));
   }
 }
-
-const updateEventRequest = async id => {
-  try {
-    const result = await api.patch(`/events/?id=${id.id}`, id);
-    // const result = newEvent;
-    return result.data;
-  } catch (err) {
-    return err;
-  }
-};
-
 function* updateEventFromDB(item) {
-  // const getNewEvent = state => state.calendarState.eventAdd;
-  // const newEvent = yield select(getNewEvent)
-
   try {
     const data = yield call(updateEventRequest, item.payload);
     yield put(Actions.updateEventSuccess(data));
   } catch (err) {
-    console.log("err");
-    console.log(err);
     yield put(Actions.updateEventFailure(err));
   }
 }

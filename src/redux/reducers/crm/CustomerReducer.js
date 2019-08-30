@@ -54,7 +54,6 @@ export default (state = INIT_STATE, action) => {
      */
     case types.GET_CUSTOMER_FAILURE:
       NotificationManager.warning("Error in fetching Customer Data");
-      console.log(action.payload);
       return {
         ...state,
         customerToView: INIT_STATE.customerToView,
@@ -118,7 +117,6 @@ export default (state = INIT_STATE, action) => {
       return { ...state, customerForm: INIT_STATE.customerForm };
     case types.NEW_CUSTOMER_FAILURE:
       NotificationManager.error("Error in POST API");
-      console.log(action.payload);
       return {
         ...state,
         customerForm: { ...state.customerForm, loading: false }
@@ -140,7 +138,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.EDIT_CUSTOMER_FAILURE:
       NotificationManager.error("Error in Edit");
-      console.log(action.payload);
       return {
         ...state,
         customerForm: { ...state.customerForm, loading: false }
@@ -156,7 +153,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.GET_CUSTOMER_FORM_FAILURE:
       NotificationManager.error("Error in fetching form fields");
-      console.log(action.payload);
       return { ...state };
 
     /**
@@ -186,7 +182,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.DELETE_CUSTOMER_FAILURE:
       NotificationManager.error("Error in Deleting Customer");
-      console.log(action.payload);
       return {
         ...state,
         customerToView: { ...state.customerToView, loading: false },
@@ -214,7 +209,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.ADD_NOTE_CUSTOMER_FAILURE:
       NotificationManager.error("Error in adding Note");
-      console.log(action.payload);
       return {
         ...state,
         customerToView: { ...state.customerToView, sectionLoading: false }
@@ -240,7 +234,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.SET_CUSTOMER_ACTIVE_FAILURE:
       NotificationManager.error("Error");
-      console.log(action.payload);
       return {
         ...state,
         customerToView: { ...state.customerToView, loading: false }
@@ -266,10 +259,23 @@ export default (state = INIT_STATE, action) => {
       };
     case types.TRANSFER_CUSTOMER_FAILURE:
       NotificationManager.error("Error in Transferring Record");
-      console.log(action.payload);
       return {
         ...state,
         customerToView: { ...state.customerToView, loading: false }
+      };
+
+    /**
+     * Event
+     */
+    case types.ADD_CUSTOMER_EVENT:
+      var newEvent = Object.assign([], state.customerToView.customer.events);
+      newEvent.push(action.payload);
+      return {
+        ...state,
+        customerToView: {
+          ...state.customerToView,
+          customer: { ...state.customerToView.customer, events: newEvent }
+        }
       };
 
     default:

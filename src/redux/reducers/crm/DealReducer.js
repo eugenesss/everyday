@@ -362,6 +362,20 @@ export default (state = INIT_STATE, action) => {
       console.log(action.payload);
       return { ...state, dealToView: { ...state.dealToView, loading: false } };
 
+    /**
+     * Event
+     */
+    case types.ADD_DEAL_EVENT:
+      var newEvent = Object.assign([], state.dealToView.deal.events);
+      newEvent.push(action.payload);
+      return {
+        ...state,
+        dealToView: {
+          ...state.dealToView,
+          deal: { ...state.dealToView.deal, events: newEvent }
+        }
+      };
+
     default:
       return { ...state };
   }

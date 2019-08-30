@@ -70,6 +70,10 @@ export function getTheTime(date, format) {
   return moment(date).format(formatDate);
 }
 
+export function isSameDay(start, end) {
+  return moment(start).isSame(end);
+}
+
 /**
  * Function to return current app layout
  */

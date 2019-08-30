@@ -27,8 +27,8 @@ function AccountCard(props) {
           <EventOutlined />
           Upcoming Events
         </div>
-        {acct.upcomingEvents.length > 0 ? (
-          acct.upcomingEvents.map((event, key) => (
+        {acct.events.length > 0 ? (
+          acct.events.map((event, key) => (
             <Info
               key={key}
               icon={<CalendarToday fontSize="small" />}

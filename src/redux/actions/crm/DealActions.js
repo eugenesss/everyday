@@ -211,3 +211,11 @@ export const transferDealFailure = error => ({
   type: types.TRANSFER_DEAL_FAILURE,
   payload: error
 });
+
+/**
+ * Event
+ */
+export const addDealEvent = data => ({
+  type: types.ADD_DEAL_EVENT,
+  payload: data
+});
