@@ -123,9 +123,15 @@
 
 .price-detail {
   margin-bottom: 2.188rem; //35px;
+  min-height: 18em;
   li {
     margin-bottom: 0.625rem; //10px;
     font-size: 0.875rem; //14px;
+  }
+  .checkicon {
+    padding-top:0.5em;
+    color: $success;
+    
   }
 }
 

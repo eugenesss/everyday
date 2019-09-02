@@ -14,13 +14,13 @@ const SelectPlanForm = props => {
           planType="free"
           type="Basic"
           color="primary"
-          description="Secure file sharing and collaboration. Ideal for small teams."
+          description="Start. Explore. Build. "
           price="Free"
           users={1}
           features={[
-            "100 GB secure storage",
-            "2 GB file upload",
-            "Minimum 3 users, max 10 users"
+            "Dashboards views provide critical info at a glance",
+            "Deal stages from Prospect to Closed",
+            "Calendar view for events, notifications and reminders"
           ]}
           radioButton={
             <Radio
@@ -40,13 +40,17 @@ const SelectPlanForm = props => {
           planType="premium"
           type="Pro"
           color="everyday-sec"
-          description="More power & personalization"
-          price={30}
+          description="Hunt. Lead. Conquer"
+          price={10}
           users={1}
           features={[
-            "Unlimited storage",
-            "5 GB file upload",
-            "Minimum 3 users, max 10 users"
+            "Dashboards views provide critical info at a glance",
+            "Deal stages from Prospect to Closed",
+            "Calendar view for events, notifications and reminders",
+            "Manage Sales teams",
+            "Precise access and security settings",
+            "Periodic customer, pipeline and sales reports",
+            "Create invoices and track payments"
           ]}
           radioButton={
             <Radio
