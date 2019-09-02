@@ -4,7 +4,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import RecordsList from "Components/Everyday/RecordsList";
 import { EventNote, Edit } from "@material-ui/icons";
 
-import { getDateTime } from "Helpers/helpers";
+import { getTheDate } from "Helpers/helpers";
 
 const EventsTable = ({ tableData, title, action, showNewEventDialog }) => {
   const columns = [
@@ -18,10 +18,13 @@ const EventsTable = ({ tableData, title, action, showNewEventDialog }) => {
       label: "From",
       name: "start",
       options: {
-        customBodyRender: (value, tableMeta) =>
-          tableMeta.rowData[0]
-            ? getDateTime(value, "ddd, d MMM YY")
-            : getDateTime(value, "ddd, d MMM YY hh:mma")
+        customBodyRender: (value, tableMeta) => {
+          console.log(value);
+          console.log(getTheDate(value, "ddd, d MMM YY"));
+          return tableMeta.rowData[0]
+            ? getTheDate(value, "ddd, d MMM YY")
+            : getTheDate(value, "ddd, d MMM YY hh:mma");
+        }
       }
     },
     {
@@ -30,8 +33,8 @@ const EventsTable = ({ tableData, title, action, showNewEventDialog }) => {
       options: {
         customBodyRender: (value, tableMeta) =>
           tableMeta.rowData[0]
-            ? getDateTime(value, "ddd, d MMM YY")
-            : getDateTime(value, "ddd, d MMM YY hh:mma")
+            ? getTheDate(value, "ddd, d MMM YY")
+            : getTheDate(value, "ddd, d MMM YY hh:mma")
       }
     },
     {

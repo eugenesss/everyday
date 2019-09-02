@@ -9,6 +9,31 @@ import {
 import { EventOutlined, CalendarToday } from "@material-ui/icons";
 import { singleAccount } from "Helpers/url/crm";
 
+import { getTheDate, getEventTime } from "Helpers/helpers";
+
+function showEvents(events) {
+  var showInfo =
+    events.length > 0 ? (
+      events
+        .slice(0, 3)
+        .map((event, key) => (
+          <Info
+            key={key}
+            icon={<CalendarToday fontSize="small" />}
+            title={event.title}
+            subtitle={`${getTheDate(event.start)} - ${getEventTime(
+              event.start,
+              event.allDay
+            )}`}
+          />
+        ))
+    ) : (
+      <p className="text-center text-muted">No events upcoming</p>
+    );
+
+  return showInfo;
+}
+
 function CustomerCard(props) {
   const { cust } = props;
   return (
@@ -29,19 +54,7 @@ function CustomerCard(props) {
           <EventOutlined />
           Upcoming Events
         </div>
-        {cust.events.length > 0 ? (
-          cust.events.map((event, key) => (
-            <Info
-              key={key}
-              icon={<CalendarToday fontSize="small" />}
-              title={"event"}
-              subtitle="date"
-              // onClick={() => console.log("clicked")}
-            />
-          ))
-        ) : (
-          <p className="text-center text-muted">No events upcoming</p>
-        )}
+        {showEvents(cust.events)}
       </div>
       <KeyDetails
         keyDetails={[

@@ -74,6 +74,14 @@ export function isSameDay(start, end) {
   return moment(start).isSame(end);
 }
 
+export function getEventTime(time, allDay) {
+  if (allDay) {
+    return "All Day";
+  } else {
+    return moment(time).format("hh:mma");
+  }
+}
+
 /**
  * Function to return current app layout
  */
