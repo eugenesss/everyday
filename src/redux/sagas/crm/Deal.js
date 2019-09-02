@@ -38,8 +38,6 @@ import { singleDeal } from "Helpers/url/crm";
 
 import api from "Api";
 
-import { leadSummary } from "Components/DummyData";
-
 //=========================
 // REQUESTS
 //=========================
@@ -64,7 +62,7 @@ const getDealRequest = async dealID => {
   return result.data;
 };
 const getDealSummaryRequest = async () => {
-  const result = leadSummary;
+  const result = [];
   return result;
 };
 const postDealRequest = async deal => {

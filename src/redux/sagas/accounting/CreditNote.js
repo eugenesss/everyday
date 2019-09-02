@@ -12,32 +12,30 @@ import {
 
 import api from "Api";
 
-import { creditNote, creditNoteList } from "Components/DummyData";
-
 //=========================
 // REQUESTS
 //=========================
-const getAllCreditNoteRequest = async () => {
-  const result = creditNoteList;
-  return result;
-};
-const getMyCreditNoteRequest = async () => {
-  const result = creditNoteList;
-  return result;
-};
-const getOpenCreditNoteRequest = async () => {
-  const result = creditNoteList;
-  return result;
-};
-const getClosedCreditNoteRequest = async () => {
-  const result = creditNoteList;
-  return result;
-};
-const getCreditNoteRequest = async credID => {
-  console.log(`fetching ${credID}`);
-  const result = creditNote;
-  return result;
-};
+// const getAllCreditNoteRequest = async () => {
+//   const result = creditNoteList;
+//   return result;
+// };
+// const getMyCreditNoteRequest = async () => {
+//   const result = creditNoteList;
+//   return result;
+// };
+// const getOpenCreditNoteRequest = async () => {
+//   const result = creditNoteList;
+//   return result;
+// };
+// const getClosedCreditNoteRequest = async () => {
+//   const result = creditNoteList;
+//   return result;
+// };
+// const getCreditNoteRequest = async credID => {
+//   console.log(`fetching ${credID}`);
+//   const result = creditNote;
+//   return result;
+// };
 
 //=========================
 // CALL(GENERATOR) ACTIONS

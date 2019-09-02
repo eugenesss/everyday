@@ -23,7 +23,6 @@ import companySagas from "./settings/general/Company";
 import profileSagas from "./settings/general/Profile";
 import roleSagas from "./settings/userControl/Roles";
 import groupSagas from "./settings/userControl/Groups";
-import hierarchySagas from "./settings/userControl/Hierarchies";
 
 //calendar
 import calendarSagas from "./calendar/Calendar";
@@ -49,7 +48,6 @@ export default function* rootSaga(getState) {
     calendarSagas(),
     roleSagas(),
     groupSagas(),
-    hierarchySagas(),
     userSagas(),
     companySagas(),
     profileSagas(),

@@ -1,16 +1,26 @@
-import { all, call, fork, put, takeEvery, select, delay } from "redux-saga/effects";
-import { 
-  GET_COMPANY,
-  UPDATE_COMPANY,
-} from "Types";
-import { 
+import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
+import { GET_COMPANY, UPDATE_COMPANY } from "Types";
+import {
   getCompanySuccess,
   getCompanyFailure,
   updateCompanySuccess,
   updateCompanyFailure
- } from "Actions";
+} from "Actions";
 //import api from "Api";
-import { company1 } from "Components/CompanyDummyData";
+const company1 = {
+  name: "Fish LLC",
+  contact: "98765432",
+  email: "flying@fish.com",
+  website: "flyingfish.com",
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque feugiat ac neque a bibendum. Phasellus tempus varius magna convallis volutpat. Sed justo elit, pellentesque id sem sit amet, ultrices ullamcorper risus. Vivamus dictum mi ante, non interdum libero commodo id. Nunc gravida congue sapien vitae rutrum.",
+  currency: "Singapore, SGD ($)",
+  timezone: "(GMT +08:00) Singapore Time (Asia/Singapore)",
+  location: "50 Tuas Avenue 11 #02-06 Tuas Lot, 639107, Singapore",
+  fiscalYear: "April",
+  openingHours: "09:00 - 18:00",
+  holidays: [{ id: 1, name: "Games Night", date: "14 June" }]
+};
 
 //=========================
 // REQUESTS
@@ -18,11 +28,11 @@ import { company1 } from "Components/CompanyDummyData";
 const getCompanyRequest = async () => {
   const result = company1;
   return result;
-}
-const updateCompanyRequest = async (company) => {
+};
+const updateCompanyRequest = async company => {
   const result = company1;
-  return result
-}
+  return result;
+};
 
 //=========================
 // CALL(GENERATOR) ACTIONS
@@ -30,9 +40,9 @@ const updateCompanyRequest = async (company) => {
 function* getCompanyFromDB() {
   try {
     const data = yield call(getCompanyRequest);
-    yield put(getCompanySuccess(data))
+    yield put(getCompanySuccess(data));
   } catch (err) {
-    yield put(getCompanyFailure(err))
+    yield put(getCompanyFailure(err));
   }
 }
 function* updateCompanyToDB() {
@@ -40,9 +50,9 @@ function* updateCompanyToDB() {
   const company = yield select(getCompany);
   try {
     const data = yield call(updateCompanyRequest, company);
-    yield put(updateCompanySuccess(data))
+    yield put(updateCompanySuccess(data));
   } catch (err) {
-    yield put(updateCompanyFailure(err))
+    yield put(updateCompanyFailure(err));
   }
 }
 
@@ -60,8 +70,5 @@ export function* updateCompanyWatcher() {
 // FORK SAGAS TO STORE
 //=======================
 export default function* rootSaga() {
-  yield all([,
-    fork(getCompanyWatcher),
-    fork(updateCompanyWatcher),
-  ]);
+  yield all([, fork(getCompanyWatcher), fork(updateCompanyWatcher)]);
 }

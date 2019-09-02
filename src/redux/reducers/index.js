@@ -25,7 +25,6 @@ import usersReducer from "./settings/userControl/UsersReducer";
 import companyReducer from "./settings/general/CompanyReducer";
 import groupsReducer from "./settings/userControl/GroupsReducer";
 import rolesReducer from "./settings/userControl/RolesReducer";
-import hierarchiesReducer from "./settings/userControl/HierarchiesReducer";
 
 // system
 import authUserReducer from "./system/AuthUserReducer";
@@ -63,7 +62,6 @@ const reducers = combineReducers({
   usersState: usersReducer,
   rolesState: rolesReducer,
   groupsState: groupsReducer,
-  hierarchiesState: hierarchiesReducer,
   companyState: companyReducer,
   modal
 });

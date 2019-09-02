@@ -8,14 +8,11 @@ import {
   delay
 } from "redux-saga/effects";
 
-import * as types from 'Types'
+import * as types from "Types";
 
-import * as actions from 'Actions'
+import * as actions from "Actions";
 
 import api from "Api";
-
-import { invoice, invoiceList } from "Components/DummyData";
-import { custSummary } from "../../../components/DummyData";
 
 //=========================
 // REQUESTS
@@ -35,40 +32,37 @@ const getAllInvoiceRequest = async () => {
 };
 
 const getInvoiceRequest = async invoiceID => {
-  console.log('getInvoiceRequest')
+  console.log("getInvoiceRequest");
   const result = await api.get(`/invoices/${invoiceID}`);
   return result.data;
 };
 
-const deleteInvoicefromDBRequest = async(item) => {
+const deleteInvoicefromDBRequest = async item => {
   const result = await api.delete(`/invoices/${item.payload}`);
   return result.data;
-}
+};
 
-const patchInvoiceRequest = async({payload}) => {
-  console.log('patchInvoiceRequest')
-  console.log(payload)
+const patchInvoiceRequest = async ({ payload }) => {
+  console.log("patchInvoiceRequest");
+  console.log(payload);
   const result = await api.patch(`/invoices/${payload.id}`, payload);
   return result.data;
-}
-
-
-const updateStatusStateInvoiceRequest = async (payload) => {
-  const result = await api.post(`/invoices/updateStatus/`, {data: payload});
-    return result.data;
 };
 
-
-const createNewVersionStateInvoiceRequest = async (payload) => {
-  const result = await api.post(`/invoices/convert`, {data: payload});
+const updateStatusStateInvoiceRequest = async payload => {
+  const result = await api.post(`/invoices/updateStatus/`, { data: payload });
   return result.data;
 };
 
-const submitNewInvoiceFromDBRequest = async (payload) => {
-  const result = await api.post("/invoices", {data: payload});
+const createNewVersionStateInvoiceRequest = async payload => {
+  const result = await api.post(`/invoices/convert`, { data: payload });
   return result.data;
 };
 
+const submitNewInvoiceFromDBRequest = async payload => {
+  const result = await api.post("/invoices", { data: payload });
+  return result.data;
+};
 
 // const getMyInvoiceRequest = async () => {
 //   const result = invoiceList;
@@ -132,7 +126,6 @@ const submitNewInvoiceFromDBRequest = async (payload) => {
 //   }
 // }
 
-
 function* getAllInvoiceFromDB() {
   try {
     const data = yield call(getAllInvoiceRequest);
@@ -155,13 +148,15 @@ function* getInvoiceFromDB({ payload }) {
 function* deleteInvoicefromDB(item) {
   try {
     const data = yield call(deleteInvoicefromDBRequest, item);
-    if(data.count == 0){
+    if (data.count == 0) {
       var error = new Error();
-      throw error
+      throw error;
     }
     yield put(actions.deleteSingleInvoiceSuccess(data));
   } catch (error) {
-    yield put(actions.deleteSingleInvoiceFailure('Unable to delete the record'));
+    yield put(
+      actions.deleteSingleInvoiceFailure("Unable to delete the record")
+    );
   }
 }
 
@@ -183,7 +178,6 @@ function* patchInvoiceRequestFromDB(payload) {
   }
 }
 
-
 function* createNewVersionStateInvoice({ payload }) {
   try {
     const data = yield call(createNewVersionStateInvoiceRequest, payload);
@@ -193,7 +187,6 @@ function* createNewVersionStateInvoice({ payload }) {
   }
 }
 
-
 function* submitNewInvoiceFromDB({ payload }) {
   try {
     const data = yield call(submitNewInvoiceFromDBRequest, payload);
@@ -202,7 +195,6 @@ function* submitNewInvoiceFromDB({ payload }) {
     yield put(actions.submitNewInvoiceFailure(error));
   }
 }
-
 
 //=======================
 // WATCHER FUNCTIONS
@@ -226,10 +218,16 @@ export function* updateStatusStateInvoiceWatcher() {
   yield takeEvery(types.INVOICE_HANDLE_STATE_UPDATE, updateStatusStateInvoice);
 }
 export function* createNewVersionInvoiceWatcher() {
-  yield takeEvery(types.INVOICE_HANDLE_STATE_CREATE_NEW_VERSION, createNewVersionStateInvoice);
+  yield takeEvery(
+    types.INVOICE_HANDLE_STATE_CREATE_NEW_VERSION,
+    createNewVersionStateInvoice
+  );
 }
 export function* revertPreviousVersionQuotationWatcher() {
-  yield takeEvery(types.HANDLE_STATE_REVERT_PREVIOUS_VERSION, revertPreviousVersionStateQuotation);
+  yield takeEvery(
+    types.HANDLE_STATE_REVERT_PREVIOUS_VERSION,
+    revertPreviousVersionStateQuotation
+  );
 }
 export function* patchInvoiceRequestInvoiceWatcher() {
   yield takeEvery(types.SUBMIT_INVOICE, patchInvoiceRequestFromDB);
@@ -251,6 +249,5 @@ export default function* rootSaga() {
     fork(createNewVersionInvoiceWatcher),
     fork(patchInvoiceRequestInvoiceWatcher),
     fork(submitNewInvoiceWatcher)
-
   ]);
 }

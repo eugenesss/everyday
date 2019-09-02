@@ -4,41 +4,35 @@ import * as actions from "Actions";
 
 import api from "Api";
 
-import { creditNote } from "Components/DummyData";
-
-const PaymentList = [];
-
 //=========================
 // REQUESTS
 //=========================
 
-
 const makePaymentRequest = async data => {
-  const result = await api.post("/accountreconciles/payment", {data: data});
+  const result = await api.post("/accountreconciles/payment", { data: data });
   return result.data;
 };
 
-
 // const fetchAllPaymentRequest = async data => {
 //   const userId = localStorage.getItem('user_id');
-//   const result = await api.post("/accountreconciles/getpaymentaccounts", {data: userId}); 
+//   const result = await api.post("/accountreconciles/getpaymentaccounts", {data: userId});
 //   return result.data;
 // };
 
 const fetchAllPaymentRequest = async data => {
-  const result = await api.get("/accountpayments/getAllPayments"); 
+  const result = await api.get("/accountpayments/getAllPayments");
   return result.data;
 };
-
 
 const getSingleCompanyPaymentRequest = async data => {
-  const result = await api.post("/accountreconciles/getSingleCompanyPayments", {data: data}); 
+  const result = await api.post("/accountreconciles/getSingleCompanyPayments", {
+    data: data
+  });
   return result.data;
 };
 
-
 const getAllCompanyPaymentRequest = async data => {
-  const result = await api.post("/accountreconciles/getAllCompanyPayments"); 
+  const result = await api.post("/accountreconciles/getAllCompanyPayments");
   return result.data;
 };
 
@@ -61,13 +55,13 @@ function* fetchAllPaymentFromDB({ payload }) {
     const data = yield call(fetchAllPaymentRequest, payload);
     yield delay(500);
 
-    console.log(data.fields)
-    
+    console.log(data.fields);
+
     // if(data.success != 1) {
     //   var error = new Error('Unable to fetch payment list');
     //   throw error
     // }
-    
+
     yield put(actions.fetchAllPaymentSuccess(data.fields));
   } catch (error) {
     yield put(actions.fetchAllPaymentFailure(error));
@@ -79,9 +73,9 @@ function* getSingleCompanyPaymentFromDB({ payload }) {
     const data = yield call(getSingleCompanyPaymentRequest, payload);
     yield delay(500);
 
-    if(data.success != 1) {
-      var error = new Error('Unable to fetch payment list');
-      throw error
+    if (data.success != 1) {
+      var error = new Error("Unable to fetch payment list");
+      throw error;
     }
     yield put(actions.getSingleCompanyPaymentSuccess(data));
   } catch (error) {
@@ -89,11 +83,10 @@ function* getSingleCompanyPaymentFromDB({ payload }) {
   }
 }
 
-
 function* getAllCompanyPaymentFromDB({ payload }) {
   try {
     const data = yield call(getAllCompanyPaymentRequest, payload);
-    console.log('getAllCompanyPaymentFromDB')
+    console.log("getAllCompanyPaymentFromDB");
     yield delay(500);
     yield put(actions.fetchAllCompaniesSuccess(data.fields));
   } catch (error) {
@@ -114,9 +107,11 @@ export function* fetchPaymentWatcher() {
 }
 
 export function* getSingleCompanyPaymentWatcher() {
-  yield takeEvery(types.GET_SINGLE_COMPANY_PAYMENT, getSingleCompanyPaymentFromDB);
+  yield takeEvery(
+    types.GET_SINGLE_COMPANY_PAYMENT,
+    getSingleCompanyPaymentFromDB
+  );
 }
-
 
 export function* getAllCompanyPaymentWatcher() {
   yield takeEvery(types.FETCH_ALL_COMPANINES, getAllCompanyPaymentFromDB);
@@ -131,8 +126,6 @@ export default function* rootSaga() {
     fork(fetchPaymentWatcher),
 
     fork(getSingleCompanyPaymentWatcher),
-    fork(getAllCompanyPaymentWatcher),
-
-
+    fork(getAllCompanyPaymentWatcher)
   ]);
 }
