@@ -9,8 +9,9 @@ import {
   HANDLE_RESET_SUCCESS
 } from "Types";
 
-export const registerUser = () => ({
-  type: SIGNUP_USER
+export const registerUser = (load) => ({
+  type: SIGNUP_USER,
+  payload: load
 });
 export const registerUserSuccess = (success, msg) => ({
   type: SIGNUP_USER_SUCCESS,

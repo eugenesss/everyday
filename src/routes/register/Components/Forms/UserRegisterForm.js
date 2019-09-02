@@ -81,7 +81,6 @@ const RegisterForm = props => {
         </FormGroup>
         
         <FormGroup row className="has-wrapper" style={{display:'flex', justifyContent:'center', marginBottom: '1rem'}}>
-
           <div>
             <Label for="lastName" className="mb-0 text-black  fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
               Email
@@ -139,7 +138,6 @@ const RegisterForm = props => {
 
 
         <FormGroup row className="has-wrapper" style={{display:'flex', justifyContent:'center', marginBottom: '1rem'}}>
-
           <div>
             <Label for="lastName" className="mb-0 text-black fs-13 text-left" sm={12} style={{color: 'rgba(0,0,0,0.6)'}}>
               Password
@@ -189,11 +187,10 @@ const RegisterForm = props => {
               <span className="has-icon" style={{ top: "8px" }}>
                 <i className="ti-lock" />
               </span>
-              <FormFeedback >Oh noes! The password needs to match</FormFeedback>
-              <FormFeedback valid>Great, the password match!</FormFeedback>
+              <FormFeedback >The two passwords need to match</FormFeedback>
+              <FormFeedback valid>Great, the passwords match!</FormFeedback>
             </Col>
           </div>
-          
         </FormGroup>
 
        

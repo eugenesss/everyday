@@ -79,8 +79,10 @@ export default (state = INIT_STATE, action) => {
         access: action.payload.accessRights
       };
     case LOGIN_USER_FAILURE:
+
       if (action.payload.message == "login failed") {
         NotificationManager.error(action.payload.message);
+
         return {
           ...state,
           loading: false,
@@ -89,6 +91,7 @@ export default (state = INIT_STATE, action) => {
         };
       } else {
         NotificationManager.error(action.payload.message);
+
         return {
           ...state,
           loading: false,
@@ -180,8 +183,11 @@ export default (state = INIT_STATE, action) => {
      * Register
      */
     case SIGNUP_USER:
+      console.log('SIGNUP_USER', true)
       return { ...state, register: { ...state.register, loading: true } };
+
     case SIGNUP_USER_SUCCESS:
+      console.log('SIGNUP_USER_SUCCESS', false)
       NotificationManager.success("Accout Created");
       return {
         ...state,

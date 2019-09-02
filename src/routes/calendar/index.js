@@ -45,7 +45,11 @@ class Calendar extends Component {
   }
 
   onMouseDownCapture(e) {
-    this.setState({ x: e.screenX, y: e.screenY-100 });
+    console.log(e.screenX, e.pageX)
+    console.log(e.screenY, e.pageY)
+
+  
+    this.setState({ x: e.pageX, y: e.pageY });
   }
 
   handleClose = () => {
@@ -71,7 +75,7 @@ class Calendar extends Component {
           </Helmet>
 
           <div className="row">
-            <div className="col-md-12" onMouseDownCapture={this.onMouseDownCapture.bind(this)}>
+            <div className="col-md-12" onTouchEnd={this.onMouseDownCapture.bind(this)} onMouseDown={this.onMouseDownCapture.bind(this)}>
               {/* Month View */}
               <BigCalendar
                 style={{ position: "relative"}}

@@ -78,10 +78,10 @@ class forgetpassword extends Component {
                     <i className="ti-email" />
                   </span>
                   <FormFeedback>
-                    Oh noes! You need to input a valid email addresss!
+                    You need to input a valid email addresss!
                   </FormFeedback>
                   <FormFeedback valid>
-                    We will look for your delicious email!
+                    The email address is valid!
                   </FormFeedback>
                 </FormGroup>
 

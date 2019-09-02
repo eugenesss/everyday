@@ -16,7 +16,7 @@ import {
   USER_RIGHTS_FAILURE
 } from "Types";
 
-export const signInUserWithEmailPassword = (user, history) => ({
+export const signInAccount = (user, history) => ({
   type: LOGIN_USER,
   payload: { user, history }
 });

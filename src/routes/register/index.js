@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+
 import QueueAnim from "rc-queue-anim";
 
 // app config
@@ -20,11 +22,14 @@ class RegisterPage extends Component {
 
   render() {
     const { loading } = this.props;
+
+    // const loading = true
+    console.log(loading)
     return (
 
         <div className="login_index">
 
-            {loading && <LinearProgress />}
+            {/* {loading && <RctPageLoader />} */}
 
                 <div className="register_placeholder">
                   {/* Placeholder Image */}
@@ -39,16 +44,25 @@ class RegisterPage extends Component {
                       bottom: 0,
                     }}
                   />
-
                 </div>
 
-                <div className="register_module">
-                  <div style={{overflow:'auto', width: '100%'}}>
-                    <RegisterSteps
-                      history={this.routeChange}
-                    />
+                {loading && 
+                  <div className="register_module">
+                      <div style={{overflow:'auto', width: '100%'}}>
+                        <RctPageLoader />
+                      </div>
                   </div>
-                </div>
+                }
+
+                {!loading && 
+                  <div className="register_module">
+                    <div style={{overflow:'auto', width: '100%'}}>
+                      <RegisterSteps
+                        history={this.routeChange}
+                      />
+                    </div>
+                  </div>
+                }
 
         </div>
     );

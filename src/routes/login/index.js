@@ -14,14 +14,14 @@ import AppConfig from "Constants/AppConfig";
 
 // redux action
 import {
-  signInUserWithEmailPassword,
+  signInAccount,
   userResentEmail,
   handleRegErrorForm
 } from "Actions";
 
 class Signin extends Component {
   constuctor() {
-    this.routeChange = this.routeChange.bind(this);
+    // this.routeChange = this.routeChange.bind(this);
   }
 
   state = {
@@ -32,15 +32,16 @@ class Signin extends Component {
   /**
    * On User Login
    */
-  onUserLogin = e => {
-    e.preventDefault();
+  onUserLogin = () => {
+   
     if (this.state.emailAddress !== "" && this.state.password !== "") {
-      this.props.signInUserWithEmailPassword(this.state, this.props.history);
+      this.props.signInAccount(this.state, this.props.history)
     } else {
       this.props.handleRegErrorForm(
         "Please type your email address and password"
       );
     }
+
   };
 
   routeChange(element) {
@@ -60,10 +61,10 @@ class Signin extends Component {
     }
   }
 
-  resentVerificationEmail = () => {
-    this.setState({ emailAddress: "", password: "" });
-    this.props.userResentEmail(this.props.user);
-  };
+  // resentVerificationEmail = () => {
+  //   this.setState({ emailAddress: "", password: "" });
+  //   this.props.userResentEmail(this.props.user);
+  // };
 
   render() {
     const { emailAddress, password } = this.state;
@@ -88,7 +89,8 @@ class Signin extends Component {
                   Everyday basic free for unlimited time
                 </p>
 
-                <Form onSubmit={this.onUserLogin}>
+                {/* onSubmit={this.onUserLogin} */}
+                <Form>
                   <FormGroup className="has-wrapper">
                     <Input
                       type="email"
@@ -104,7 +106,7 @@ class Signin extends Component {
                     />
                   </FormGroup>
 
-                  {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && (
+                  {/* {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && ( */}
                     <div className="mb-40">
                       <FormGroup
                         className="has-wrapper"
@@ -123,9 +125,9 @@ class Signin extends Component {
                           }
                         />
 
-                        <span className="has-icon" style={{ top: 6 }}>
+                        {/* <span className="has-icon" style={{ top: 6 }}>
                           <i className="ti-eye" />
-                        </span>
+                        </span> */}
                       </FormGroup>
                       <div className="text-right">
                         <a
@@ -139,9 +141,9 @@ class Signin extends Component {
                         </a>
                       </div>
                     </div>
-                  )}
+                  {/* )} */}
 
-                  {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && (
+                  {/* {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && ( */}
                     <FormGroup className="mb-20">
                       <Fab
                         variant="extended"
@@ -151,9 +153,8 @@ class Signin extends Component {
                         style={{
                           marginBottom: "1.5rem"
                         }}
-                        type="submit"
                       >
-                        <span style={{ width: 120 }}>Sign in</span>
+                        <span onClick={() => this.onUserLogin()} style={{ width: 120 }}>Sign in</span>
                       </Fab>
 
                       <div className="row d-flex justify-content-center align-items-center">
@@ -171,9 +172,9 @@ class Signin extends Component {
                         </p>
                       </div>
                     </FormGroup>
-                  )}
+                  
 
-                  {error == "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && (
+                  {/* {error == "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && (
                     <FormGroup className="mb-20">
                       <Fab
                         variant="extended"
@@ -218,7 +219,8 @@ class Signin extends Component {
                         </div>
                       </div>
                     </FormGroup>
-                  )}
+                  )} */}
+   
                 </Form>
               </div>
             </div>
@@ -289,6 +291,7 @@ class Signin extends Component {
             </div>
           </div>
         </div>
+      
       </div>
     );
   }
@@ -297,18 +300,12 @@ const mapStateToProps = ({ authUser }) => {
   const { user, loading, error } = authUser;
   return { user, loading, error };
 };
-/*
-export default withRouter(connect(null)(Signin));
-const mapStateToProps = ({ authUser }) => {
-	const { user, loading } = authUser;
-	return { user, loading }
-}
-*/
+
 export default withRouter(
   connect(
     mapStateToProps,
     {
-      signInUserWithEmailPassword,
+      signInAccount,
       userResentEmail,
       handleRegErrorForm
     }
