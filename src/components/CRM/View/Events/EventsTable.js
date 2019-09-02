@@ -4,7 +4,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import RecordsList from "Components/Everyday/RecordsList";
 import { EventNote, Edit } from "@material-ui/icons";
 
-import { getTheDate } from "Helpers/helpers";
+import { getTheDate, getTheTime } from "Helpers/helpers";
 
 const EventsTable = ({ tableData, title, action, showNewEventDialog }) => {
   const columns = [
@@ -15,26 +15,33 @@ const EventsTable = ({ tableData, title, action, showNewEventDialog }) => {
     { label: "Title", name: "title" },
     { label: "Description", name: "desc" },
     {
+      label: "Start",
+      name: "start",
+      options: {
+        customBodyRender: (value, tableMeta) =>
+          tableMeta.rowData[0] ? "" : getTheTime(value)
+      }
+    },
+    {
+      label: "End",
+      name: "end",
+      options: {
+        customBodyRender: (value, tableMeta) =>
+          tableMeta.rowData[0] ? "" : getTheTime(value)
+      }
+    },
+    {
       label: "From",
       name: "start",
       options: {
-        customBodyRender: (value, tableMeta) => {
-          console.log(value);
-          console.log(getTheDate(value, "ddd, d MMM YY"));
-          return tableMeta.rowData[0]
-            ? getTheDate(value, "ddd, d MMM YY")
-            : getTheDate(value, "ddd, d MMM YY hh:mma");
-        }
+        customBodyRender: value => getTheDate(value)
       }
     },
     {
       label: "To",
       name: "end",
       options: {
-        customBodyRender: (value, tableMeta) =>
-          tableMeta.rowData[0]
-            ? getTheDate(value, "ddd, d MMM YY")
-            : getTheDate(value, "ddd, d MMM YY hh:mma")
+        customBodyRender: value => getTheDate(value)
       }
     },
     {

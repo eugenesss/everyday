@@ -47,9 +47,9 @@ export function textTruncate(str, length, ending) {
  *
  * Takes in js dates
  */
-export function getTheDate(date, format) {
-  let formatDate = format ? format : "DD MMM YYYY";
-  return moment(date).format(formatDate);
+export function getTheDate(date) {
+  // let formatDate = format ? format : "DD MMM YYYY";
+  return moment(date).format("ddd, DD MMM YYYY");
 }
 /**
  * Get DateTime
@@ -65,9 +65,9 @@ export function getDateTime(date, format) {
  *
  * Takes in js dates
  */
-export function getTheTime(date, format) {
-  let formatDate = format ? format : "LT";
-  return moment(date).format(formatDate);
+export function getTheTime(date) {
+  // let formatDate = format ? format : "LT";
+  return moment(date).format("LT");
 }
 
 export function isSameDay(start, end) {
