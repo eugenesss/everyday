@@ -30,7 +30,7 @@ export * from "./crm/DealTypes";
 export * from "./crm/CrmFieldTypes";
 export * from "./crm/SalesTeamTypes";
 
-// Login
+// Auth
 export * from "./auth/LoginTypes";
 export * from "./auth/RegisterTypes";
 

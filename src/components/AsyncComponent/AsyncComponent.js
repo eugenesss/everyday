@@ -49,9 +49,3 @@ export const Async_chat_component = Loadable({
   loader: () => import("Routes/chat"),
   loading: () => <RctPageLoader />
 });
-
-//User Profile
-export const Async_user_profile_component = Loadable({
-  loader: () => import("Routes/userProfile/view"),
-  loading: () => <RctPageLoader />
-});

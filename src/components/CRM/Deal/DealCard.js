@@ -36,6 +36,7 @@ function DealCard(props) {
           title={deal.accountInfo.name}
           subtitle="Account"
           onClick={() => props.history.push(singleAccount(deal.accountInfo.id))}
+          button
         />
         {deal.customerInfo && (
           <Info
@@ -44,6 +45,7 @@ function DealCard(props) {
             onClick={() =>
               props.history.push(singleCustomer(deal.customerInfo.id))
             }
+            button
           />
         )}
       </div>

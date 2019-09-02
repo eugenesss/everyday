@@ -2,38 +2,13 @@
  * Auth User Reducers
  */
 import { NotificationManager } from "react-notifications";
-import {
-  LOGIN_USER,
-  LOGIN_USER_SUCCESS,
-  LOGIN_USER_FAILURE,
-  LOGOUT_USER,
-  LOGOUT_USER_SUCCESS,
-  LOGOUT_USER_FAILURE,
-  SIGNUP_USER,
-  SIGNUP_USER_SUCCESS,
-  SIGNUP_USER_FAILURE,
-  HANDLE_REGISTER_FORM,
-  HANDLE_REGISTER_ERROR,
-  HANDLE_RESET_SUCCESS,
-  LOGIN_USER_RESENT_EMAIL,
-  LOGIN_USER_RESENT_EMAIL_SUCCESS,
-  LOGIN_USER_RESENT_EMAIL_FAILURE,
-  LOGIN_USER_RESET_PASSWORD,
-  LOGIN_USER_RESET_PASSWORD_SUCCESS,
-  LOGIN_USER_RESET_PASSWORD_FAILURE,
-  USER_RIGHTS_SUCCESS,
-  USER_RIGHTS_FAILURE,
-  UPDATE_PASSWORD,
-  UPDATE_PASSWORD_SUCCESS,
-  UPDATE_PASSWORD_FAILURE
-} from "Types";
+import * as types from "Types";
 
 /**
  * initial auth user
  */
 const INIT_STATE = {
   user: localStorage.getItem("user_id"),
-  access: [],
   loading: false,
   register: {
     form: {
@@ -57,7 +32,10 @@ const INIT_STATE = {
     loading: false,
     success: false
   },
-  error: ""
+  error: "",
+  loggedInUser: {
+    access: []
+  }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -65,24 +43,20 @@ export default (state = INIT_STATE, action) => {
     /**
      * Login User
      */
-    case LOGIN_USER:
+    case types.LOGIN_USER:
       return { ...state, loading: true };
-    case LOGIN_USER_SUCCESS:
+    case types.LOGIN_USER_SUCCESS:
       return {
         ...state,
         loading: false,
         user: action.payload.user.userId,
-        access: action.payload.accessRights,
-        userInfo: action.payload.userInfo
+        loggedInUser: {
+          access: action.payload.accessRights,
+          ...action.payload.userInfo
+        }
       };
-    case USER_RIGHTS_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        access: action.payload.accessRights,
-        userInfo: action.payload.userInfo
-      };
-    case LOGIN_USER_FAILURE:
+
+    case types.LOGIN_USER_FAILURE:
       if (action.payload.message == "login failed") {
         NotificationManager.error(action.payload.message);
         return {
@@ -100,7 +74,19 @@ export default (state = INIT_STATE, action) => {
           user: action.payload.details.user
         };
       }
-    case USER_RIGHTS_FAILURE:
+    /**
+     * User rights
+     */
+    case types.USER_RIGHTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loggedInUser: {
+          access: action.payload.accessRights,
+          ...action.payload.userInfo
+        }
+      };
+    case types.USER_RIGHTS_FAILURE:
       NotificationManager.error(
         "Unable to load access rights. Please logout and try again."
       );
@@ -109,16 +95,16 @@ export default (state = INIT_STATE, action) => {
     /**
      * Resent Verificaiton Email
      */
-    case LOGIN_USER_RESENT_EMAIL:
+    case types.LOGIN_USER_RESENT_EMAIL:
       return { ...state, loading: false };
 
-    case LOGIN_USER_RESENT_EMAIL_SUCCESS:
+    case types.LOGIN_USER_RESENT_EMAIL_SUCCESS:
       NotificationManager.success(
         "A verification email has been sent, please check in your inbox"
       );
       return { ...state, loading: false, error: "" };
 
-    case LOGIN_USER_RESENT_EMAIL_FAILURE:
+    case types.LOGIN_USER_RESENT_EMAIL_FAILURE:
       NotificationManager.error(
         "Unable to send verification email, please contact your admin"
       );
@@ -127,26 +113,26 @@ export default (state = INIT_STATE, action) => {
     /**
      * Resent Verificaiton Password
      */
-    case LOGIN_USER_RESET_PASSWORD:
+    case types.LOGIN_USER_RESET_PASSWORD:
       return { ...state, loading: false };
 
-    case LOGIN_USER_RESET_PASSWORD_SUCCESS:
+    case types.LOGIN_USER_RESET_PASSWORD_SUCCESS:
       NotificationManager.success(
         "A reset password email has been sent, please check in your inbox"
       );
       return { ...state, loading: false, error: "" };
 
-    case LOGIN_USER_RESET_PASSWORD_FAILURE:
+    case types.LOGIN_USER_RESET_PASSWORD_FAILURE:
       NotificationManager.error(action.payload);
       return { ...state, loading: false, error: "" };
 
-    case LOGIN_USER_RESENT_EMAIL_SUCCESS:
+    case types.LOGIN_USER_RESENT_EMAIL_SUCCESS:
       NotificationManager.success(
         "A verification email has been sent, please check in your inbox"
       );
       return { ...state, loading: false, error: "" };
 
-    case LOGIN_USER_RESENT_EMAIL_FAILURE:
+    case types.LOGIN_USER_RESENT_EMAIL_FAILURE:
       NotificationManager.error(
         "Unable to send verification email, please contact your admin"
       );
@@ -155,43 +141,43 @@ export default (state = INIT_STATE, action) => {
     /**
      * Resent Verificaiton Password
      */
-    case LOGIN_USER_RESET_PASSWORD:
+    case types.LOGIN_USER_RESET_PASSWORD:
       return { ...state, loading: false };
 
-    case LOGIN_USER_RESET_PASSWORD_SUCCESS:
+    case types.LOGIN_USER_RESET_PASSWORD_SUCCESS:
       NotificationManager.success(
         "A reset password email has been sent, please check in your inbox"
       );
       return { ...state, loading: false, error: "" };
 
-    case LOGIN_USER_RESET_PASSWORD_FAILURE:
+    case types.LOGIN_USER_RESET_PASSWORD_FAILURE:
       NotificationManager.error(action.payload);
       return { ...state, loading: false, error: "" };
 
     /**
      * Log out User
      */
-    case LOGOUT_USER:
+    case types.LOGOUT_USER:
       return { ...state };
-    case LOGOUT_USER_SUCCESS:
+    case types.LOGOUT_USER_SUCCESS:
       return { ...state, user: null };
 
-    case LOGOUT_USER_FAILURE:
+    case types.LOGOUT_USER_FAILURE:
       NotificationManager.error('Unable to logout"');
       return { ...state };
 
     /**
      * Register
      */
-    case SIGNUP_USER:
+    case types.SIGNUP_USER:
       return { ...state, register: { ...state.register, loading: true } };
-    case SIGNUP_USER_SUCCESS:
+    case types.SIGNUP_USER_SUCCESS:
       NotificationManager.success("Accout Created");
       return {
         ...state,
         register: { ...state.register, loading: false, success: true }
       };
-    case SIGNUP_USER_FAILURE:
+    case types.SIGNUP_USER_FAILURE:
       NotificationManager.error(action.payload);
       return {
         ...state,
@@ -200,7 +186,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Reset Success
      */
-    case HANDLE_RESET_SUCCESS:
+    case types.HANDLE_RESET_SUCCESS:
       return {
         ...state,
         register: {
@@ -230,7 +216,7 @@ export default (state = INIT_STATE, action) => {
     /**
      * Handle Change
      */
-    case HANDLE_REGISTER_FORM:
+    case types.HANDLE_REGISTER_FORM:
       if (action.payload.type == "userInfo")
         return {
           ...state,
@@ -285,20 +271,18 @@ export default (state = INIT_STATE, action) => {
           }
         };
 
-    case HANDLE_REGISTER_ERROR:
+    case types.HANDLE_REGISTER_ERROR:
       NotificationManager.error(action.payload);
       return { ...state, loading: false };
 
     /* profile stuff */
-    case UPDATE_PASSWORD:
+    case types.UPDATE_PASSWORD:
       return { ...state, loading: true };
-    case UPDATE_PASSWORD_SUCCESS:
-      NotificationManager.success(
-        "Password changed successfully."
-      );
+    case types.UPDATE_PASSWORD_SUCCESS:
+      NotificationManager.success("Password changed successfully.");
       return { ...state, loading: false, error: "" };
 
-    case UPDATE_PASSWORD_FAILURE:
+    case types.UPDATE_PASSWORD_FAILURE:
       NotificationManager.error(action.payload);
       return { ...state, loading: false, error: "" };
 

@@ -1,133 +1,82 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Col, Row, Form } from "reactstrap";
 
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import FormInput from "Components/Form/Components/FormInput";
+import { Button } from "@material-ui/core";
 
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-
-import { onChangeUpdateUser, updateUser } from "Actions";
-
-const styles = theme => ({
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
-  },
-  fullWidth: {
-    margin: 0
-  }
-});
+import { updateUser } from "Actions";
 
 class UpdateUserDetailsForm extends Component {
   constructor(props) {
     super(props);
+    this.state = this.props.loggedInUser;
+    this.handleChange = this.props.handleChange;
+    this.submitForm = this.props.submitForm;
+  }
+
+  handleChange(field, value) {
+    this.setState({ [field]: value });
+  }
+
+  submitForm() {
+    console.log("update user");
+    this.props.userUpdate(this.state);
   }
 
   render() {
-    const {
-      classes,
-
-      userUpdate,
-
-      onChangeUpdateUser,
-      updateUser
-    } = this.props;
+    const { firstName, lastName, email, contact } = this.state;
     return (
-      <Form>
-        <Row form>
-          <Col md={6}>
-            <TextField
-              required
-              id="firstName"
+      <form>
+        <div className="row justify-content-center">
+          <div className="col-5">
+            <FormInput
               label="First Name"
-              value={userUpdate ? userUpdate.firstName : ""}
-              onChange={e => onChangeUpdateUser("firstName", e.target.value)}
-              className={classes.textField}
-              margin="normal"
-              variant="outlined"
+              value={firstName}
+              target="firstName"
+              handleChange={this.handleChange}
             />
-          </Col>
-          <Col md={6}>
-            <TextField
-              required
-              id="lastName"
+            <FormInput
+              label="Email"
+              value={email}
+              target="email"
+              handleChange={this.handleChange}
+            />
+          </div>
+          <div className="col-5 offset-md-1">
+            <FormInput
               label="Last Name"
-              value={userUpdate ? userUpdate.lastName : ""}
-              onChange={e => onChangeUpdateUser("lastName", e.target.value)}
-              className={classes.textField}
-              margin="normal"
-              variant="outlined"
+              value={lastName}
+              target="lastName"
+              handleChange={this.handleChange}
             />
-          </Col>
-        </Row>
-        <Row form>
-          <Col md={6}>
-            <TextField
-              required
-              id="email"
-              label="Email Address"
-              value={userUpdate ? userUpdate.email : ""}
-              onChange={e => onChangeUpdateUser("email", e.target.value)}
-              className={classes.textField}
-              margin="normal"
-              variant="outlined"
-            />
-          </Col>
-          <Col md={6}>
-            <TextField
-              required
-              id="contact"
+            <FormInput
               label="Contact"
-              value={userUpdate ? userUpdate.contact : ""}
-              onChange={e => onChangeUpdateUser("contact", e.target.value)}
-              className={classes.textField}
-              margin="normal"
-              variant="outlined"
+              value={contact}
+              target="contact"
+              handleChange={this.handleChange}
             />
-          </Col>
-        </Row>
-        <Row form className={classes.fullWidth}>
-          <TextField
-            fullWidth
-            id="description"
-            label="Description"
-            className={classes.textField}
-            value={userUpdate ? userUpdate.description : ""}
-            onChange={e => onChangeUpdateUser("description", e.target.value)}
-            multiline
-            rows="4"
-            margin="normal"
-            variant="outlined"
-          />
-        </Row>
-        <Row className="justify-content-end mr-10">
+          </div>
+        </div>
+        <div className="d-flex flex-row-reverse my-20">
           <Button
             variant="contained"
-            color="primary"
-            className="text-white mb-10"
-            onClick={updateUser}
+            className="btn-success text-white"
+            onClick={this.submitForm}
           >
             Save
           </Button>
-        </Row>
-      </Form>
+        </div>
+      </form>
     );
   }
 }
 
-UpdateUserDetailsForm.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-const mapStateToProps = ({ usersState, rolesState }) => {
-  const { userUpdate } = usersState;
-  const { roles } = rolesState;
-  return { userUpdate, roles };
+const mapStateToProps = ({ authUser }) => {
+  const { loggedInUser } = authUser;
+  return { loggedInUser };
 };
 
 export default connect(
   mapStateToProps,
-  { onChangeUpdateUser, updateUser }
-)(withStyles(styles)(UpdateUserDetailsForm));
+  { updateUser }
+)(UpdateUserDetailsForm);

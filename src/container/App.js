@@ -25,7 +25,7 @@ const InitialPath = ({ component: Component, ...rest }) => (
 );
 
 function App(props) {
-  const { location, match, user } = props;
+  const { location, match, loggedInUser } = props;
 
   // check if user is authenticated, if not redirect to login
   switch (new Auth().isAuthenticated()) {
@@ -48,7 +48,7 @@ function App(props) {
       <Switch>
         <InitialPath
           path={`${match.url}app`}
-          authUser={user}
+          authUser={loggedInUser}
           component={HorizontalLayout}
         />
         <Route path={`/login`} exact component={Login} />
@@ -63,8 +63,8 @@ function App(props) {
 
 // map state to props
 const mapStateToProps = ({ authUser }) => {
-  const { user } = authUser;
-  return { user };
+  const { loggedInUser } = authUser;
+  return { loggedInUser };
 };
 
 // export default App;

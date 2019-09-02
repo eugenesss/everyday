@@ -53,7 +53,7 @@ class crm_customer extends Component {
           title={nowShowing}
           actionGroup={{
             add: { onClick: this.newCust },
-            mid: { label: "Import", onClick: this.importCust },
+            // mid: { label: "Import", onClick: this.importCust },
             more: [{ label: "Refresh List", onClick: this.refresh }]
           }}
         />

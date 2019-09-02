@@ -25,6 +25,7 @@ import api from "Api";
 
 import Auth from "../../../Auth/Auth";
 
+// Login API
 const signInUserWithEmailPasswordRequest = async (email, password) => {
   const result = await api.post("/users/login", {
     email: email,
@@ -33,13 +34,21 @@ const signInUserWithEmailPasswordRequest = async (email, password) => {
   return result.data;
 };
 
+// Access Rights API
 const getUserAccessRightsRequest = async () => {
   const result = await api.get(`/accesssettings/user/accessRights`);
   return result.data.data;
 };
 
+// User Profile API
 const getUserProfileRequest = async userID => {
   const result = await api.get(`/users/${userID}`, userID);
+  return result.data;
+};
+
+// Logout API
+const logoutUserWithAccessToken = async () => {
+  const result = await api.post(`/users/logout`);
   return result.data;
 };
 
@@ -82,12 +91,7 @@ function* getUserRights() {
   }
 }
 
-const logoutUserWithAccessToken = async () => {
-  const result = await api.post(`/users/logout`);
-  return result.data;
-};
-
-function* logoutUser({ }) {
+function* logoutUser({}) {
   try {
     yield call(logoutUserWithAccessToken);
     yield put(logoutUserSuccess());

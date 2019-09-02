@@ -30,7 +30,8 @@ function AccessControl(props) {
 }
 
 const mapStateToProps = ({ authUser }) => {
-  const { user, access } = authUser;
+  const { user, loggedInUser } = authUser;
+  const { access } = loggedInUser;
   return { user, access };
 };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
+// import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -10,7 +10,7 @@ import TableRow from "@material-ui/core/TableRow";
 const CreditedInvoices = ({ invoices }) => {
   return (
     <div>
-      <TabsHeader title="Credited Invoices" />
+      {/* <TabsHeader title="Credited Invoices" /> */}
       <div className="table-responsive">
         <Table>
           <TableHead>

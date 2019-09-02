@@ -68,7 +68,7 @@ class crm_deal extends Component {
           title={nowShowing}
           actionGroup={{
             add: { onClick: this.newDeal },
-            mid: { label: "Import", onClick: this.importDeal },
+            // mid: { label: "Import", onClick: this.importDeal },
             more: [{ label: "Refresh List", onClick: this.refresh }]
           }}
         />

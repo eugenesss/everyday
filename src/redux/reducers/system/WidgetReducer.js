@@ -1,7 +1,15 @@
 import * as types from "Types/system/WidgetTypes";
 
 const INIT_STATE = {
-  crmSummary: { loading: false, data: null },
+  crmSummary: {
+    loading: false,
+    data: {
+      totalLeads: 0,
+      totalOpenDeals: 0,
+      openDealsAmount: 0,
+      dealsWonAmount: 0
+    }
+  },
   untouchedLeads: { loading: false, data: [] }
 };
 
