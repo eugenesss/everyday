@@ -14,11 +14,9 @@ import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
 import LeadOverviewTab from "./tabs/Overview";
 import LeadDetailsTab from "./tabs/Details";
 import EventsTab from "Components/CRM/View/Events/EventTab";
-
 // Modals
 import ConvertLeadModal from "Components/CRM/Lead/Convert/ConvertLeadModal";
 import ConvertSuccessModal from "Components/CRM/Lead/Convert/ConvertSuccessModal";
-import AddEventDialog from "Components/Calendar/Dialogs/AddEventDialog";
 // routes
 import { leadEditPage, leadListPage, leadNewPage } from "Helpers/url/crm";
 //Actions
@@ -31,14 +29,10 @@ import {
   checkAccountExist,
   transferLead
 } from "Actions";
-// Add events dialog
 
 class crm_view_lead extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      addEvent: false
-    };
     this.newLead = this.newLead.bind(this);
     this.startConvert = this.startConvert.bind(this);
     this.edit = this.edit.bind(this);
@@ -104,11 +98,6 @@ class crm_view_lead extends Component {
     });
   }
 
-  // events
-  newEvent() {
-    console.log("new events");
-  }
-
   /**
    * START CONVERT LEAD
    */
@@ -125,7 +114,6 @@ class crm_view_lead extends Component {
 
   render() {
     const { lead, loading, sectionLoading } = this.props.leadToView;
-
     return (
       <React.Fragment>
         <Helmet>
@@ -168,8 +156,9 @@ class crm_view_lead extends Component {
                   </div>
                   <div label="Events">
                     <EventsTab
-                      pastEvents={lead.pastEvents}
-                      upcomingEvents={lead.upcomingEvents}
+                      events={lead.events}
+                      eventableType={"Lead"}
+                      eventableId={lead.id}
                     />
                   </div>
                   <div label="Details">
@@ -181,12 +170,6 @@ class crm_view_lead extends Component {
 
             <ConvertLeadModal />
             <ConvertSuccessModal />
-            <AddEventDialog
-            // open={isAddEvent}
-            // handleClose={hideCreateEvent}
-            // addEvent={this.props.addEvent}
-            // dayView={this.state.slotSelected}
-            />
           </React.Fragment>
         ) : (
           <RecordNotFound />

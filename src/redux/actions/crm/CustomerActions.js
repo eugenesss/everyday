@@ -173,3 +173,11 @@ export const transferCustomerFailure = error => ({
   type: types.TRANSFER_CUSTOMER_FAILURE,
   payload: error
 });
+
+/**
+ * Event
+ */
+export const addCustomerEvent = data => ({
+  type: types.ADD_CUSTOMER_EVENT,
+  payload: data
+});

@@ -18,30 +18,32 @@ const DialogRoot = ({
   fullBlock
 }) => {
   return (
-    <React.Fragment>
-      <Dialog
-        fullWidth
-        maxWidth={size}
-        open={show}
-        onClose={handleHide}
-        aria-labelledby="max-width-dialog-title"
-      >
-        {title && (
-          <DialogTitle id="max-width-dialog-title">{title}</DialogTitle>
-        )}
-        <DialogContent className={classnames({ "p-0": fullBlock })}>
-          {children}
-        </DialogContent>
+    <Dialog
+      fullWidth
+      maxWidth={size}
+      open={show}
+      onClose={handleHide}
+      aria-labelledby="max-width-dialog-title"
+    >
+      {title && <DialogTitle id="max-width-dialog-title">{title}</DialogTitle>}
+      <DialogContent className={classnames({ "p-0": fullBlock })}>
+        {children}
+      </DialogContent>
+      {(close || dialogAction) && (
         <DialogActions>
-          {close ? <Button onClick={handleHide}>Close</Button> : null}
+          {close ? <Button onClick={handleHide}>Cancel</Button> : null}
           {dialogAction && (
-            <Button onClick={dialogAction} className="mr-10" color="primary">
+            <Button
+              onClick={dialogAction}
+              className="ml-20 btn-success text-white"
+              variant="contained"
+            >
               {dialogActionLabel}
             </Button>
           )}
         </DialogActions>
-      </Dialog>
-    </React.Fragment>
+      )}
+    </Dialog>
   );
 };
 

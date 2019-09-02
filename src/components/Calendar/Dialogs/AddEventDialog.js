@@ -3,10 +3,26 @@ import { connectModal } from "redux-modal";
 import DialogRoot from "Components/Dialog/DialogRoot";
 import NewEventForm from "Components/Form/Calendar/NewEventForm";
 
-const AddEventDialog = ({ handleHide, show, dayView, addEvent }) => {
+const AddEventDialog = ({
+  handleHide,
+  show,
+  eventableType,
+  eventableId,
+  addEvent
+}) => {
   return (
-    <DialogRoot show={show} handleHide={handleHide} size="sm" title="Add Event">
-      <NewEventForm dayView={dayView} addEvent={addEvent} />
+    <DialogRoot
+      show={show}
+      handleHide={handleHide}
+      size="sm"
+      title="New Event Details"
+    >
+      <NewEventForm
+        eventableType={eventableType}
+        eventableId={eventableId}
+        addEvent={addEvent}
+        formType={eventableType}
+      />
     </DialogRoot>
   );
 };

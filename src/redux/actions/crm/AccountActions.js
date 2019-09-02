@@ -170,3 +170,11 @@ export const transferAccountFailure = error => ({
   type: types.TRANSFER_ACCOUNT_FAILURE,
   payload: error
 });
+
+/**
+ * Event
+ */
+export const addAccountEvent = data => ({
+  type: types.ADD_ACCOUNT_EVENT,
+  payload: data
+});

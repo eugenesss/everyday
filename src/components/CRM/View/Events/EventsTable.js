@@ -2,23 +2,46 @@ import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import RecordsList from "Components/Everyday/RecordsList";
+import { EventNote, Edit } from "@material-ui/icons";
 
-const EventsTable = ({ tableData, title, action }) => {
+import { getTheDate } from "Helpers/helpers";
+
+const EventsTable = ({ tableData, title, action, showNewEventDialog }) => {
   const columns = [
     {
-      name: "id",
+      name: "allDay",
+      options: { display: "excluded", filter: false, sort: false }
+    },
+    { label: "Title", name: "title" },
+    { label: "Description", name: "desc" },
+    {
+      label: "From",
+      name: "start",
       options: {
-        display: "excluded"
+        customBodyRender: (value, tableMeta) => {
+          console.log(value);
+          console.log(getTheDate(value, "ddd, d MMM YY"));
+          return tableMeta.rowData[0]
+            ? getTheDate(value, "ddd, d MMM YY")
+            : getTheDate(value, "ddd, d MMM YY hh:mma");
+        }
       }
     },
-    { label: "Subject", name: "name" },
-    { label: "Activity Type", name: "amount" },
-    { label: "Status", name: "stage" },
-    { label: "Due Date", name: "stage" },
-    { label: "From", name: "closingDate" },
-    { label: "To", name: "account" },
-    { label: "Activity Owner", name: "account" },
-    { label: "Last Modified On", name: "account" }
+    {
+      label: "To",
+      name: "end",
+      options: {
+        customBodyRender: (value, tableMeta) =>
+          tableMeta.rowData[0]
+            ? getTheDate(value, "ddd, d MMM YY")
+            : getTheDate(value, "ddd, d MMM YY hh:mma")
+      }
+    },
+    {
+      label: "Event Owner",
+      name: "userInfo",
+      options: { customBodyRender: value => (value ? value.name : "") }
+    }
   ];
 
   const options = {
@@ -29,12 +52,20 @@ const EventsTable = ({ tableData, title, action }) => {
     search: false,
     filter: false,
     viewColumns: false,
-    // title: false,
     elevation: 0,
     selectableRows: false,
     rowsPerPage: 10,
     rowsPerPageOptions: [10, 30, 60, 100],
-    textLabels: { body: { noMatch: "No Events" } }
+    textLabels: { body: { noMatch: "No Events" } },
+    customToolbar: () => {
+      return (
+        <Tooltip id="tooltip-icon" title="New Event">
+          <IconButton aria-label="new-event" onClick={showNewEventDialog}>
+            <EventNote fontSize="small" />
+          </IconButton>
+        </Tooltip>
+      );
+    }
   };
 
   if (action == true) {
@@ -49,7 +80,7 @@ const EventsTable = ({ tableData, title, action }) => {
             <React.Fragment>
               <Tooltip id="tooltip-icon" title="Edit">
                 <IconButton className="text-primary mr-2">
-                  <i className="zmdi zmdi-edit" />
+                  <Edit />
                 </IconButton>
               </Tooltip>
             </React.Fragment>

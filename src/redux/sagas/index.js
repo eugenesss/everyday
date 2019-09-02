@@ -20,6 +20,7 @@ import crmFieldSagas from "./crm/CrmField";
 //settings
 import userSagas from "./settings/userControl/Users";
 import companySagas from "./settings/general/Company";
+import profileSagas from "./settings/general/Profile";
 import roleSagas from "./settings/userControl/Roles";
 import groupSagas from "./settings/userControl/Groups";
 import hierarchySagas from "./settings/userControl/Hierarchies";
@@ -51,6 +52,7 @@ export default function* rootSaga(getState) {
     hierarchySagas(),
     userSagas(),
     companySagas(),
+    profileSagas(),
     quoteSagas(),
     invoiceSagas(),
     accountingSagas(),

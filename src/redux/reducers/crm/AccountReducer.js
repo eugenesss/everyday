@@ -116,7 +116,6 @@ export default (state = INIT_STATE, action) => {
       return { ...state, accountForm: INIT_STATE.accountForm };
     case types.NEW_ACCOUNT_FAILURE:
       NotificationManager.error("Error in POST API");
-      console.log(action.payload);
       return {
         ...state,
         accountForm: { ...state.accountForm, loading: false }
@@ -138,7 +137,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.EDIT_ACCOUNT_FAILURE:
       NotificationManager.error("Error in Edit");
-      console.log(action.payload);
       return {
         ...state,
         accountForm: { ...state.accountForm, loading: false }
@@ -154,7 +152,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.GET_ACCOUNT_FORM_FAILURE:
       NotificationManager.error("Error in fetching form fields");
-      console.log(action.payload);
       return { ...state };
 
     /**
@@ -184,7 +181,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.DELETE_ACCOUNT_FAILURE:
       NotificationManager.error(action.payload.message);
-      console.log(action.payload);
       return {
         ...state,
         accountToView: { ...state.accountToView, loading: false },
@@ -212,7 +208,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.ADD_NOTE_ACCOUNT_FAILURE:
       NotificationManager.error("Error in adding Note");
-      console.log(action.payload);
       return {
         ...state,
         accountToView: { ...state.accountToView, sectionLoading: false }
@@ -238,7 +233,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.SET_ACCOUNT_ACTIVE_FAILURE:
       NotificationManager.error("Error");
-      console.log(action.payload);
       return {
         ...state,
         accountToView: { ...state.accountToView, loading: false }
@@ -264,10 +258,23 @@ export default (state = INIT_STATE, action) => {
       };
     case types.TRANSFER_ACCOUNT_FAILURE:
       NotificationManager.error("Error in Transferring Record");
-      console.log(action.payload);
       return {
         ...state,
         accountToView: { ...state.accountToView, loading: false }
+      };
+
+    /**
+     * Event
+     */
+    case types.ADD_ACCOUNT_EVENT:
+      var newEvent = Object.assign([], state.accountToView.account.events);
+      newEvent.push(action.payload);
+      return {
+        ...state,
+        accountToView: {
+          ...state.accountToView,
+          account: { ...state.accountToView.account, events: newEvent }
+        }
       };
 
     default:

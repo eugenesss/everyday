@@ -20,7 +20,11 @@ function Info(props) {
   return (
     <React.Fragment>
       <List disablePadding className={classes.root}>
-        <ListItem className={classes.listItem} onClick={onClick} button>
+        <ListItem
+          className={classes.listItem}
+          onClick={onClick}
+          button={onClick}
+        >
           <ListItemAvatar>
             {icon ? (
               <Avatar>{icon}</Avatar>
@@ -35,9 +39,11 @@ function Info(props) {
                 {subtitle && subtitle}
               </p>
             </div>
-            <div className="my-auto">
-              <ArrowForward fontSize="inherit" />
-            </div>
+            {onClick && (
+              <div className="my-auto">
+                <ArrowForward fontSize="inherit" />
+              </div>
+            )}
           </div>
         </ListItem>
       </List>

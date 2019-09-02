@@ -35,6 +35,7 @@ class TransferRecordModal extends Component {
         handleHide={handleHide}
         dialogActionLabel="Transfer"
         dialogAction={this.onSubmit}
+        close
       >
         <div className="row">
           <div className="col">

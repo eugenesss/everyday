@@ -90,10 +90,6 @@ class crm_view_deal extends Component {
     });
   }
 
-  newEvent() {
-    console.log("new events");
-  }
-
   /**
    * NEW NOTE
    */
@@ -139,8 +135,9 @@ class crm_view_deal extends Component {
                   </div>
                   <div label="Events">
                     <EventsTab
-                      pastEvents={deal.pastEvents}
-                      upcomingEvents={deal.upcomingEvents}
+                      events={deal.events}
+                      eventableType="Deal"
+                      eventableId={deal.id}
                     />
                   </div>
                   <div label="Details">

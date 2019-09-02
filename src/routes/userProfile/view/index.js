@@ -11,25 +11,24 @@ class UserProfileView extends Component {
   }
 
   componentDidMount() {
-    this.props.getUserProfile(this.props.match.params.id);
+    //this.props.getUserProfile(this.props.match.params.id);
   }
 
   render() {
-    const { userProfile } = this.props;
+    const { userInfo } = this.props;
     return (
       <React.Fragment>
-        <ProfileLayout userView={userProfile} />
+        <ProfileLayout userView={userInfo} />
       </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = ({ usersState }) => {
-  const { userProfile } = usersState;
-  return { userProfile };
+  const { userInfo } = usersState;
+  return { userInfo };
 };
 
 export default connect(
-  mapStateToProps,
-  { getUserProfile }
+  mapStateToProps
 )(UserProfileView);

@@ -28,7 +28,6 @@ import {
 } from "Types";
 
 const INIT_STATE = {
-  me: {}, //AuthUser
   users: [],
   usersLoading: false,
 
@@ -62,8 +61,7 @@ export default (state = INIT_STATE, action) => {
         usersLoading: false,
         users: action.payload.users,
         userSettings: action.payload.settings,
-        accessGroups: action.payload.accessGroups,
-        me: action.payload[1] //AuthUser
+        accessGroups: action.payload.accessGroups
       };
 
     /**
@@ -78,7 +76,6 @@ export default (state = INIT_STATE, action) => {
         var rIndex = userAdd.role.findIndex(
           role => role == action.payload.value
         );
-        console.log(rIndex);
         if (rIndex >= 0) {
           userAdd.role.splice(rIndex, 1);
         } else {
@@ -101,7 +98,6 @@ export default (state = INIT_STATE, action) => {
       // var allUsers = Object.assign([], state.users);
       // var users = [...allUsers, action.payload];
       NotificationManager.success("User Added");
-      console.log("here");
       return {
         ...state,
         userAdd: INIT_STATE.userAdd,

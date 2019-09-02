@@ -7,12 +7,18 @@ import { show } from "redux-modal";
 import BigCalendar from "react-big-calendar";
 import moment from "moment";
 
+// Calendar Components
 import CustomToolbar from "Components/Calendar/CustomToolbar";
-import SelectSlotDialog from "Components/Calendar/Dialogs/SelectSlotDialog";
-import AddEventDialog from "Components/Calendar/Dialogs/AddEventDialog";
+import CustomEvent from "Components/Calendar/CustomEvent";
+
+// Calendar Dialogs
 import EventInfoDialog from "Components/Calendar/Dialogs/EventInfoDialog";
-import Popover from '@material-ui/core/Popover';
+
+// Calendar form
+import NewEventForm from "Components/Form/Calendar/NewEventForm";
+
 import { getAllEvents, deleteEvent, addEvent } from "Actions";
+import Popover from "@material-ui/core/Popover";
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
@@ -22,50 +28,60 @@ class Calendar extends Component {
     this.state = {
       eventInfoOpen: false,
       eventInfo: {},
-      isSlotSelected: false,
-      slotSelected: null,
-      showEventSelected: false,
-      editNow: false,
       calendarView: "month",
       showPop: false,
+      slotSelected: "",
       x: 0,
-      y: 0 ,
+      y: 0
     };
+    this.renderPopover = this.renderPopover.bind(this);
+    this.onMouseDownCapture = this.onMouseDownCapture.bind(this);
+    this.deleteEvent = this.deleteEvent.bind(this);
+    this.newEvent = this.newEvent.bind(this);
   }
 
   componentDidMount() {
     this.props.getAllEvents();
   }
 
-  openAddEvent() {
+  openAddEvent(e) {
     this.props.show("add_event", {
-      addEvent: this.props.addEvent,
-      dayView: this.state.slotSelected
+      dayView: e
     });
   }
 
-  onMouseDownCapture(e) {
-    console.log(e.screenX, e.pageX)
-    console.log(e.screenY, e.pageY)
+  deleteEvent(id) {
+    this.setState({
+      eventInfoOpen: !this.state.eventInfoOpen,
+      eventInfo: {}
+    });
+    window.alert("Delete this event?");
+    this.props.deleteEvent(id);
+  }
 
-  
+  newEvent(event) {
+    this.setState({ showPop: !this.state.showPop });
+    this.props.addEvent(event);
+  }
+
+  onMouseDownCapture(e) {
     this.setState({ x: e.pageX, y: e.pageY });
   }
 
-  handleClose = () => {
-    this.setState({ x: 0, y: 0, showPop: !this.state.showPop });
+  renderPopover(e) {
+    this.setState({ slotSelected: e, showPop: !this.state.showPop });
   }
 
   render() {
     const { showEvents } = this.props;
-
-
-    // if(this.state.showPop){
-    //   console.log(this.state)
-    //   console.log(this.state.x, this.state.y, this.state.slotSelected )
-    // }
-    
-
+    const {
+      eventInfoOpen,
+      eventInfo,
+      showPop,
+      slotSelected,
+      x,
+      y
+    } = this.state;
     return (
       <React.Fragment>
         <div className="calendar-wrapper">
@@ -75,109 +91,69 @@ class Calendar extends Component {
           </Helmet>
 
           <div className="row">
-            <div className="col-md-12" onTouchEnd={this.onMouseDownCapture.bind(this)} onMouseDown={this.onMouseDownCapture.bind(this)}>
+            <div
+              className="col-md-12"
+              onMouseDownCapture={this.onMouseDownCapture}
+            >
               {/* Month View */}
               <BigCalendar
-                style={{ position: "relative"}}
+                popup
+                style={{ position: "relative" }}
                 selectable
                 events={showEvents}
                 views={["month"]}
-                step={60}
-                showMultiDayTimes
                 onSelectEvent={e => {
                   this.setState({
-                    eventInfoOpen: !this.state.eventInfoOpen,
-                    eventInfo: [e],
-                    showPop: false
+                    eventInfoOpen: !eventInfoOpen,
+                    eventInfo: [e]
                   });
                 }}
                 defaultDate={new Date()}
-                onSelectSlot={ async(e) => {
-                  let item = await e
-                  // console.log(item)
-                  // console.log(this.state.x, this.state.y )
-                  // console.log('set state')
-                  this.setState({
-                    // isSlotSelected: !this.state.isSlotSelected,
-                    slotSelected: item,
-                    showPop: true
-                  })
-                }}
+                onSelectSlot={e => this.renderPopover(e)}
                 components={{
-                  toolbar: CustomToolbar
+                  toolbar: CustomToolbar,
+                  event: CustomEvent
                 }}
               />
             </div>
           </div>
 
-          {this.state.eventInfoOpen && (
+          {eventInfoOpen && (
             <EventInfoDialog
-              open={this.state.eventInfoOpen}
+              open={eventInfoOpen}
               handleClose={() =>
                 this.setState({
-                  eventInfoOpen: !this.state.eventInfoOpen,
+                  eventInfoOpen: !eventInfoOpen,
                   eventInfo: {}
                 })
               }
-              information={this.state.eventInfo}
-              deleteNow={itemId => {
-                this.setState({
-                  eventInfoOpen: !this.state.eventInfoOpen,
-                  eventInfo: [{}]
-                });
-                this.props.deleteEvent(itemId);
-              }}
+              information={eventInfo}
+              deleteNow={itemId => this.deleteEvent(itemId)}
             />
           )}
-
-          {this.state.isSlotSelected && (
-            <SelectSlotDialog
-              open={this.state.isSlotSelected}
-              handleClose={() => this.setState({ isSlotSelected: false })}
-              slotSelected={this.state.slotSelected}
-              showCreateEvent={() => {
-                this.setState({ isSlotSelected: false });
-                this.openAddEvent();
-              }}
-            />
-          )}
-
-          <AddEventDialog />
-
-          {this.state.showPop && (
-            // <div style={{
-            //   height:100, width:100, 
-            //   position:'absolute',
-            //   zIndex:1000,
-            //   left: this.state.x, 
-            //   top: this.state.y, 
-            //   backgroundColor:"red"}}>
-            // </div>
-            <Popover 
-              id={'simple-popover'}
-              open={this.state.showPop}
-              // anchorEl={anchorEl}
-              onClose={this.handleClose}
-              anchorReference="anchorPosition"
-              anchorPosition={{ top: this.state.y, left: this.state.x }}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-            >
-              <div style={{display:'flex', flexDirection:'column', width: 150}}>
-                {new Date(this.state.slotSelected.start).toDateString()}
-                {new Date(this.state.slotSelected.end).toDateString()}
-              </div>
-            </Popover>
-          
-          )}
-
         </div>
+
+        <Popover
+          id={"calendar-popover"}
+          open={showPop}
+          onClose={this.renderPopover}
+          anchorReference="anchorPosition"
+          anchorPosition={{ top: y, left: x }}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "left"
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left"
+          }}
+          elevation={2}
+        >
+          <div className="p-20 w-100">
+            <h2>New Event Detail</h2>
+            <NewEventForm dayView={slotSelected} addEvent={this.newEvent} />
+          </div>
+        </Popover>
       </React.Fragment>
     );
   }

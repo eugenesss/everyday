@@ -7,8 +7,34 @@ import {
 } from "Components/Everyday/Layout/View/ProfileCard";
 import { EventOutlined, CalendarToday } from "@material-ui/icons";
 
+import { getTheDate, getEventTime } from "Helpers/helpers";
+
+function showEvents(events) {
+  var showInfo =
+    events.length > 0 ? (
+      events
+        .slice(0, 3)
+        .map((event, key) => (
+          <Info
+            key={key}
+            icon={<CalendarToday fontSize="small" />}
+            title={event.title}
+            subtitle={`${getTheDate(event.start)} - ${getEventTime(
+              event.start,
+              event.allDay
+            )}`}
+          />
+        ))
+    ) : (
+      <p className="text-center text-muted">No events upcoming</p>
+    );
+
+  return showInfo;
+}
+
 function AccountCard(props) {
   const { acct } = props;
+
   return (
     <Wrapper>
       <Contact
@@ -27,19 +53,7 @@ function AccountCard(props) {
           <EventOutlined />
           Upcoming Events
         </div>
-        {acct.upcomingEvents.length > 0 ? (
-          acct.upcomingEvents.map((event, key) => (
-            <Info
-              key={key}
-              icon={<CalendarToday fontSize="small" />}
-              title={"event"}
-              subtitle="date"
-              onClick={() => console.log("clicked")}
-            />
-          ))
-        ) : (
-          <p className="text-center text-muted">No events upcoming</p>
-        )}
+        {showEvents(acct.events)}
       </div>
       <KeyDetails
         keyDetails={[

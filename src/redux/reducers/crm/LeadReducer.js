@@ -91,7 +91,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.GET_LEAD_SUMMARY_FAILURE:
       NotificationManager.warning("Error in fetching Lead Summary");
-      console.log(action.payload);
       return { ...state, leadSummary: INIT_STATE.leadSummary };
 
     /**
@@ -99,7 +98,6 @@ export default (state = INIT_STATE, action) => {
      */
     case types.GET_LEAD_FAILURE:
       NotificationManager.warning("Error in fetching Lead Data");
-      console.log(action.payload);
       return {
         ...state,
         leadToView: INIT_STATE.leadToView,
@@ -158,7 +156,6 @@ export default (state = INIT_STATE, action) => {
       return { ...state, leadForm: { ...state.leadForm, loading: false } };
     case types.NEW_LEAD_FAILURE:
       NotificationManager.error("Error in POST API");
-      console.log(action.payload);
       return { ...state, leadForm: { ...state.leadForm, loading: false } };
 
     /**
@@ -171,7 +168,6 @@ export default (state = INIT_STATE, action) => {
       return { ...state, leadForm: { ...state.leadForm, loading: false } };
     case types.EDIT_LEAD_FAILURE:
       NotificationManager.error("Error in Edit Lead");
-      console.log(action.payload);
       return { ...state, leadForm: { ...state.leadForm, loading: false } };
 
     /**
@@ -184,7 +180,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.GET_LEADFORM_FIELDS_FAILURE:
       NotificationManager.error("Error in fetching form fields");
-      console.log(action.payload);
       return { ...state };
 
     /**
@@ -230,7 +225,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.CHECK_ACCOUNT_EXIST_FAILURE:
       NotificationManager.error("Error in Account Check");
-      console.log(action.payload);
       return {
         ...state,
         leadToView: { ...state.leadToView, loading: false }
@@ -262,7 +256,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.CONVERT_LEAD_FAILURE:
       NotificationManager.warning("Error in Convert POST API");
-      console.log(action.payload);
       return {
         ...state,
         leadToConvert: {
@@ -300,7 +293,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.DELETE_LEAD_FAILURE:
       NotificationManager.error("Error in Deleting Lead");
-      console.log(action.payload);
       return {
         ...state,
         leadToView: { ...state.leadToView, loading: false },
@@ -328,7 +320,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.ADD_NOTE_LEAD_FAILURE:
       NotificationManager.error("Error in adding Note");
-      console.log(action.payload);
       return {
         ...state,
         leadToView: { ...state.leadToView, sectionLoading: false }
@@ -351,8 +342,21 @@ export default (state = INIT_STATE, action) => {
       };
     case types.TRANSFER_LEAD_FAILURE:
       NotificationManager.error("Error in Transferring Record");
-      console.log(action.payload);
       return { ...state, leadToView: { ...state.leadToView, loading: false } };
+
+    /**
+     * Events
+     */
+    case types.ADD_LEAD_EVENT:
+      var newEvent = Object.assign([], state.leadToView.lead.events);
+      newEvent.push(action.payload);
+      return {
+        ...state,
+        leadToView: {
+          ...state.leadToView,
+          lead: { ...state.leadToView.lead, events: newEvent }
+        }
+      };
 
     default:
       return { ...state };

@@ -7,7 +7,7 @@ import DateTimePicker from "Components/Form/Components/Pickers/DateTimePicker";
 import DatePicker from "Components/Form/Components/Pickers/DatePicker";
 import { Button, Switch, FormControlLabel } from "@material-ui/core";
 
-import { getDateTime } from "Helpers/helpers";
+import { getDateTime, isSameDay } from "Helpers/helpers";
 import { updateEvent } from "Actions";
 
 class EventInformation extends Component {
@@ -33,10 +33,7 @@ class EventInformation extends Component {
     const eventEnd = allDay
       ? getDateTime(end, "ddd, d MMM YY")
       : getDateTime(end);
-    var isSameDay =
-      end.getDate() === start.getDate() &&
-      end.getMonth() === start.getMonth() &&
-      end.getFullYear() === start.getFullYear();
+    var sameDay = isSameDay(start, end);
     return (
       <React.Fragment>
         <div className="d-flex justify-content-between">
@@ -49,17 +46,17 @@ class EventInformation extends Component {
           <p className="fs-14 text-muted text-right">
             {allDay ? (
               <React.Fragment>
-                {isSameDay ? (
+                {sameDay ? (
                   <span>{eventStart}</span>
                 ) : (
                   <span>All Day from {eventStart}</span>
                 )}
                 <br />
-                {isSameDay ? <span>All Day</span> : <span>To {eventEnd}</span>}
+                {sameDay ? <span>All Day</span> : <span>To {eventEnd}</span>}
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {isSameDay ? (
+                {sameDay ? (
                   <React.Fragment>
                     <span>{getDateTime(start, "ddd, d MMM YY")}</span>
                     <br />

@@ -12,6 +12,8 @@ export * from "./settings/userControl/GroupTypes";
 export * from "./settings/userControl/HierarchyTypes";
 
 // General Types
+export * from "./settings/general/ProfileTypes";
+
 export * from "./settings/general/CompanyTypes";
 
 // Accounting Types

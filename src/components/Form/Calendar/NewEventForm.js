@@ -17,22 +17,27 @@ class NewEventForm extends Component {
       desc: "",
       start: this.props.dayView
         ? new Date(this.props.dayView.start).setHours(12)
-        : "",
+        : new Date(),
       end: this.props.dayView
         ? new Date(this.props.dayView.end).setHours(13)
-        : "",
+        : new Date(),
       title: "",
       allDay: false
     };
     this.editField = this.editField.bind(this);
+    this.showDesc = this.showDesc.bind(this);
   }
 
   editField = (element, value) => {
     this.setState({ [element]: value });
   };
 
+  showDesc() {
+    this.setState({ showDesc: !this.state });
+  }
+
   OnBlurValidation = () => {
-    let state = { ...this.state };
+    let state = { ...this.state.event };
     if (state.start == "" || state.end == "") {
       this.props.handleRegErrorForm(
         "Either you have set the start or end time set wrongly or you have not set a start and end time"
@@ -54,26 +59,22 @@ class NewEventForm extends Component {
     return true;
   };
 
-  ConfirmEvent = () => {
+  ConfirmEvent = (eventableType, eventableId, formType) => {
     if (this.OnBlurValidation()) {
-      const item = { ...this.state };
-      const data = {
-        desc: item.desc,
-        end: item.end,
-        start: item.start,
-        title: item.title,
-        allDay: item.allDay
-      };
-      this.props.addEvent(data);
+      let data = Object.assign({}, this.state);
+      if (eventableId && eventableType)
+        data = { ...data, eventableId, eventableType };
+      this.props.addEvent(data, formType);
     }
   };
 
   render() {
     const { title, desc, start, end, allDay } = this.state;
+    const { eventableType, eventableId, formType } = this.props;
     return (
       <form autoComplete="off">
         <div className="row">
-          <div className="col">
+          <div className="col-6">
             {allDay ? (
               <DatePicker
                 label="Start"
@@ -91,8 +92,6 @@ class NewEventForm extends Component {
                 required={!start}
               />
             )}
-          </div>
-          <div className="col">
             {allDay ? (
               <DatePicker
                 label="End"
@@ -112,22 +111,22 @@ class NewEventForm extends Component {
             )}
           </div>
         </div>
-        <div className="text-right text-muted">
+        <div className="text-left text-muted">
           <FormControlLabel
             control={
               <Switch
                 checked={allDay}
                 onChange={() => this.editField("allDay", !allDay)}
                 value="allDay"
+                className="ml-10"
                 disableRipple
               />
             }
             label="All day event"
             labelPlacement="start"
-            className="mb-0"
+            className="mb-0 fs-14"
           />
         </div>
-
         <FormInput
           label="Title"
           value={title}
@@ -141,14 +140,14 @@ class NewEventForm extends Component {
           target="desc"
           handleChange={this.editField}
           multiline
-          rows={3}
         />
-
         <div className="d-flex justify-content-end">
           <Button
             variant="contained"
             className="text-white btn-success"
-            onClick={() => this.ConfirmEvent()}
+            onClick={() =>
+              this.ConfirmEvent(eventableType, eventableId, formType)
+            }
           >
             Add
           </Button>
