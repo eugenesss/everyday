@@ -9,7 +9,6 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import UserBlock from "./UserBlock";
 import UserFeedBlock from "./UserFeedBlock";
 
-import { getAllUsers, updateUserStart } from "Actions"; //AuthUser
 
 const styles = () => ({
   bannerStyle: {
@@ -26,22 +25,19 @@ class ProfileLayout extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    this.props.getAllUsers(); //AuthUser
-  }
 
   componentDidMount() {
-    this.props.updateUserStart(this.props.userView);
+    //this.props.updateUserStart(this.props.userView);
   }
 
   render() {
-    const { classes, userView, usersLoading } = this.props;
+    const { classes, userInfo, usersLoading } = this.props;
     return (
       <React.Fragment>
         <Row>
           <Col lg={4}>
             <UserBlock
-              user={userView}
+              user={userInfo}
               uploadFile={e => {
                 console.log(e.target.files[0]);
               }}
@@ -61,12 +57,11 @@ ProfileLayout.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ usersState, uploadFile }) => {
-  const { me, usersLoading } = usersState;
-  return { me, usersLoading };
+const mapStateToProps = ({ authUser }) => {
+  const { userInfo, usersLoading } = authUser;
+  return { userInfo, usersLoading };
 };
 
 export default connect(
-  mapStateToProps,
-  { getAllUsers, updateUserStart }
+  mapStateToProps
 )(withStyles(styles)(ProfileLayout));

@@ -22,7 +22,10 @@ import {
   LOGIN_USER_RESET_PASSWORD_SUCCESS,
   LOGIN_USER_RESET_PASSWORD_FAILURE,
   USER_RIGHTS_SUCCESS,
-  USER_RIGHTS_FAILURE
+  USER_RIGHTS_FAILURE,
+  UPDATE_PASSWORD,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAILURE
 } from "Types";
 
 /**
@@ -76,7 +79,8 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         loading: false,
-        access: action.payload.accessRights
+        access: action.payload.accessRights,
+        userInfo: action.payload.userInfo
       };
     case LOGIN_USER_FAILURE:
       if (action.payload.message == "login failed") {
@@ -284,6 +288,19 @@ export default (state = INIT_STATE, action) => {
     case HANDLE_REGISTER_ERROR:
       NotificationManager.error(action.payload);
       return { ...state, loading: false };
+
+    /* profile stuff */
+    case UPDATE_PASSWORD:
+      return { ...state, loading: true };
+    case UPDATE_PASSWORD_SUCCESS:
+      NotificationManager.success(
+        "Password changed successfully."
+      );
+      return { ...state, loading: false, error: "" };
+
+    case UPDATE_PASSWORD_FAILURE:
+      NotificationManager.error(action.payload);
+      return { ...state, loading: false, error: "" };
 
     default:
       return { ...state };

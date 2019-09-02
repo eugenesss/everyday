@@ -74,7 +74,9 @@ function* signInUserWithEmailPassword({ payload }) {
 function* getUserRights() {
   try {
     const userRights = yield call(getUserAccessRightsRequest);
-    yield put(userRightsSuccess(userRights));
+    let userid = localStorage.getItem("user_id");
+    const userInfo = yield call(getUserProfileRequest, userid);
+    yield put(userRightsSuccess(userRights, userInfo));
   } catch (error) {
     yield put(userRightsFailure(error.response.data.error));
   }

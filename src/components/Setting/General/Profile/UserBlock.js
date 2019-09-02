@@ -27,8 +27,8 @@ const UserBlock = ({ user, uploadFile }) => {
         </div>
 
         <div className={"ml-20"}>
-          <h1>{user ? user.name : "John"}</h1>
-          <div>{user ? user.email : "Johnny1990@gmail.com"}</div>
+          <h1>{user ? user.name : ""}</h1>
+          <div>{user ? user.email : ""}</div>
         </div>
       </Row>
       <Row className={"pl-20 pr-20 pt-30 pb-20 border-bottom"}>
