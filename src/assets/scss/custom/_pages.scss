@@ -170,9 +170,26 @@
     }
     .rbc-month-view {
       border-radius: $block-border-radius;
-      background-color: $white;
+      background-color: #ffffffbd;
+      color: #9c9c9c;
+      border: none;
     }
   }
+}
+
+.rbc-header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+// .rbc-today {
+//   background-color: #fffcf8;
+// }
+.rbc-date-cell {
+  padding: 2px 6px;
+}
+.rbc-off-range-bg {
+  background-color: #efefef;
 }
 
 .rbc-month-row {
@@ -180,11 +197,19 @@
 }
 
 .rbc-event {
-  background-color: #76baff;
+  background-color: $blue-1;
+  padding: 2px;
   border-radius: 5px;
+  font-size: 14px;
+  color: $blue;
+  margin-top: 2px;
+  .rbc-event-bg {
+    background-color: $blue-2;
+    width: 10px;
+  }
 }
 .rbc-selected {
-  background-color: #629ad4 !important;
+  background-color: $blue-3 !important;
 }
 
 .rbc-toolbar button.rbc-active,

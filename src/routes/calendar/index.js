@@ -74,7 +74,7 @@ class Calendar extends Component {
 
   renderForm = slotSelected => (
     <React.Fragment>
-      <h2>New Event Details</h2>
+      <h2>New Event</h2>
       <NewEventForm dayView={slotSelected} addEvent={this.newEvent} />
     </React.Fragment>
   );

@@ -60,7 +60,7 @@ const EventsTable = ({ tableData, title, action, showNewEventDialog }) => {
     filter: false,
     viewColumns: false,
     elevation: 0,
-    selectableRows: false,
+    selectableRows: "none",
     rowsPerPage: 10,
     rowsPerPageOptions: [10, 30, 60, 100],
     textLabels: { body: { noMatch: "No Events" } },
