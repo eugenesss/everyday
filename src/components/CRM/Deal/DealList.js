@@ -13,7 +13,7 @@ import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 import NumberFormat from "react-number-format";
 import { getTheDate } from "Helpers/helpers";
 
-const DealList = ({ tableData, loading, title, action }) => {
+const DealList = ({ tableData, loading, title, action, noRelated }) => {
   const columns = [
     {
       name: "id",
@@ -91,6 +91,7 @@ const DealList = ({ tableData, loading, title, action }) => {
       label: "Account",
       name: "accountInfo",
       options: {
+        display: noRelated && "excluded",
         customBodyRender: value => {
           return value ? (
             <NavLink to={`accounts/${value.id}`}>{value.name}</NavLink>
@@ -104,6 +105,7 @@ const DealList = ({ tableData, loading, title, action }) => {
       label: "Customer",
       name: "customerInfo",
       options: {
+        display: noRelated && "excluded",
         customBodyRender: value => {
           return value ? (
             <NavLink to={`customers/${value.id}`}>{value.name}</NavLink>

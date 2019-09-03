@@ -157,9 +157,9 @@ class crm_view_customer extends Component {
                   <div label="Overview">
                     <OverviewTab cust={customer} />
                   </div>
-                  <div label="Deals">
+                  {/*  <div label="Deals">
                     <DealsTab deals={customer.deals} />
-                  </div>
+                  </div> */}
                   <div label="Events">
                     <EventsTab
                       eventableType="Customer"

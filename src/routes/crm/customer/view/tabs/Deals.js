@@ -7,7 +7,7 @@ function CustomerDealsTab(props) {
   return (
     <div className="row">
       <div className="col">
-        <DealList title="Related Deals" tableData={deals} />
+        <DealList title="Related Deals" tableData={deals} noRelated />
       </div>
     </div>
   );

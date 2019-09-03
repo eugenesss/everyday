@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import BgCard from "Components/Everyday/BgCard";
 
 // Widgets
 import Comments from "Components/Widgets/Comments";
@@ -16,19 +15,8 @@ function AccountOverviewTab(props) {
   return (
     <React.Fragment>
       <div className="row">
-        <div className="col">
-          <BgCard>Deals this month</BgCard>
-        </div>
-        <div className="col">
-          <BgCard>Total Spent</BgCard>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col">
+        <div className="col-6">
           <Comments comments={acct.notes} addComment={addNote} />
-        </div>
-        <div className="col">
-          <BgCard>upcoming</BgCard>
         </div>
       </div>
       <div className="row">

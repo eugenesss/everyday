@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import BgCard from "Components/Everyday/BgCard";
+
+// comments widget
 import Comments from "Components/Widgets/Comments";
+
+// deals list
+import DealList from "Components/CRM/Deal/DealList";
 
 import { addNoteCustomer } from "Actions";
 
@@ -13,16 +17,13 @@ function CustomerOverviewTab(props) {
   return (
     <React.Fragment>
       <div className="row">
-        <div className="col">
-          <BgCard>Number of deals</BgCard>
-        </div>
-        <div className="col">
-          <BgCard>Total Spent</BgCard>
+        <div className="col-6">
+          <Comments comments={cust.notes} addComment={addNote} />
         </div>
       </div>
       <div className="row">
-        <div className="col-6">
-          <Comments comments={cust.notes} addComment={addNote} />
+        <div className="col">
+          <DealList title="Related Deals" tableData={cust.deals} noRelated />
         </div>
       </div>
     </React.Fragment>
