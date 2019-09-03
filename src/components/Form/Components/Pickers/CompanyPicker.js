@@ -76,7 +76,8 @@ function getSuggestionValue(suggestion) {
 
 const styles = theme => ({
   inputRoot: {
-    margin: theme.spacing(1),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
     width: "100%"
   },
   suggestionsContainerOpen: {

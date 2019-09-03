@@ -71,7 +71,7 @@ export function getTheTime(date) {
 }
 
 export function isSameDay(start, end) {
-  return moment(start).isSame(end);
+  return moment(start).isSame(end, "day");
 }
 
 export function getEventTime(time, allDay) {

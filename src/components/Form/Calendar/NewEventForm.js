@@ -20,7 +20,7 @@ class NewEventForm extends Component {
         : new Date(),
       end: this.props.dayView
         ? new Date(this.props.dayView.end).setHours(13)
-        : new Date(),
+        : new Date().setHours(new Date().getHours() + 1),
       title: "",
       allDay: false
     };
