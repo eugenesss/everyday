@@ -2,8 +2,6 @@ import React from "react";
 import { getEventTime } from "Helpers/helpers";
 
 const CustomEvent = props => {
-  console.log(props);
-
   return (
     <div className="d-flex">
       <span className="rbc-event-bg"></span>

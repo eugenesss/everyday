@@ -67,7 +67,6 @@ export default (state = INIT_STATE, action) => {
       };
     case Types.ADD_EVENT_FAILURE:
       NotificationManager.warning("Failed to Add Event");
-      console.log(action.payload);
       return {
         ...state,
         eventsLoading: false,

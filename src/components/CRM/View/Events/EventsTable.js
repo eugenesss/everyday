@@ -13,7 +13,6 @@ const EventsTable = ({ tableData, title, action, showNewEventDialog }) => {
       options: { display: "excluded", filter: false, sort: false }
     },
     { label: "Title", name: "title" },
-    { label: "Description", name: "desc" },
     {
       label: "Start",
       name: "start",
