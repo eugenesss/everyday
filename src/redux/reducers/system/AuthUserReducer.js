@@ -277,11 +277,11 @@ export default (state = INIT_STATE, action) => {
       NotificationManager.error(action.payload);
       return { ...state, loading: false };
 
-    case HANDLE_REGISTER_SUCCESS:
+    case types.HANDLE_REGISTER_SUCCESS:
       NotificationManager.success(action.payload);
       return { ...state, loading: false };
 
-    case HANDLE_REGISTER_WARNING:
+    case types.HANDLE_REGISTER_WARNING:
       // var Constants = {
       //   CHANGE: 'change',
       //   INFO: 'info',
