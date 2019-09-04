@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DataBlock from "./DataBlock";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import { Stars } from "@material-ui/icons";
 
 // actions
 import { getCrmSummary } from "Actions";
@@ -14,31 +14,37 @@ class CrmSummary extends Component {
     const { loading, data } = this.props.crmSummary;
     return (
       <div className="row">
-        {loading && <RctSectionLoader />}
-        {data && (
-          <React.Fragment>
-            <div className="col">
-              <DataBlock label={"Total Leads"} amount={data.totalLeads} />
-            </div>
-            <div className="col">
-              <DataBlock label={"Open Deals"} amount={data.totalOpenDeals} />
-            </div>
-            <div className="col">
-              <DataBlock
-                label={"Open Deal Amount"}
-                money
-                amount={data.openDealsAmount}
-              />
-            </div>
-            <div className="col">
-              <DataBlock
-                label={"Total Deal Won"}
-                money
-                amount={data.dealsWonAmount}
-              />
-            </div>
-          </React.Fragment>
-        )}
+        <div className="col-3">
+          <DataBlock
+            label={"Total Leads"}
+            amount={data && data.totalLeads}
+            loading={loading}
+            icon={<Stars />}
+          />
+        </div>
+        <div className="col-3">
+          <DataBlock
+            loading={loading}
+            label={"Open Deals"}
+            amount={data && data.totalOpenDeals}
+          />
+        </div>
+        <div className="col-3">
+          <DataBlock
+            loading={loading}
+            label={"Open Deal Amount"}
+            money
+            amount={data && data.openDealsAmount}
+          />
+        </div>
+        <div className="col-3">
+          <DataBlock
+            loading={loading}
+            label={"Total Deal Won"}
+            money
+            amount={data && data.dealsWonAmount}
+          />
+        </div>
       </div>
     );
   }

@@ -11,13 +11,13 @@ import moment from "moment";
 import CustomToolbar from "Components/Calendar/CustomToolbar";
 import CustomEvent from "Components/Calendar/CustomEvent";
 
-// Calendar Dialogs
-import EventInfoDialog from "Components/Calendar/Dialogs/EventInfoDialog";
+// Event Info
+import EventInfo from "Components/Calendar/EventInfo";
 
 // Calendar form
 import NewEventForm from "Components/Form/Calendar/NewEventForm";
 
-import { getAllEvents, deleteEvent, addEvent } from "Actions";
+import { getAllEvents, addEvent } from "Actions";
 import Popover from "@material-ui/core/Popover";
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
@@ -26,62 +26,62 @@ class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eventInfoOpen: false,
-      eventInfo: {},
       calendarView: "month",
       showPop: false,
-      slotSelected: "",
+      component: null,
       x: 0,
       y: 0
     };
-    this.renderPopover = this.renderPopover.bind(this);
+    this.renderEventFormPopover = this.renderEventFormPopover.bind(this);
+    this.renderEventPopover = this.renderEventPopover.bind(this);
     this.onMouseDownCapture = this.onMouseDownCapture.bind(this);
-    this.deleteEvent = this.deleteEvent.bind(this);
     this.newEvent = this.newEvent.bind(this);
+    this.closePopover = this.closePopover.bind(this);
   }
 
   componentDidMount() {
     this.props.getAllEvents();
   }
 
-  openAddEvent(e) {
-    this.props.show("add_event", {
-      dayView: e
-    });
-  }
-
-  deleteEvent(id) {
-    this.setState({
-      eventInfoOpen: !this.state.eventInfoOpen,
-      eventInfo: {}
-    });
-    window.alert("Delete this event?");
-    this.props.deleteEvent(id);
-  }
-
+  // create new event
   newEvent(event) {
     this.setState({ showPop: !this.state.showPop });
     this.props.addEvent(event);
   }
 
+  // Axis for popover
   onMouseDownCapture(e) {
     this.setState({ x: e.pageX, y: e.pageY });
   }
 
-  renderPopover(e) {
-    this.setState({ slotSelected: e, showPop: !this.state.showPop });
+  closePopover() {
+    this.setState({ showPop: false });
   }
+
+  // show popover on calendar tile click
+  renderEventFormPopover(slotSelected) {
+    this.setState({
+      showPop: !this.state.showPop,
+      component: this.renderForm(slotSelected)
+    });
+  }
+
+  renderEventPopover(slotSelected) {
+    this.setState({ showPop: true, component: this.renderEvent(slotSelected) });
+  }
+
+  renderEvent = slotSelected => <EventInfo eventInfo={slotSelected} />;
+
+  renderForm = slotSelected => (
+    <React.Fragment>
+      <h2>New Event</h2>
+      <NewEventForm dayView={slotSelected} addEvent={this.newEvent} />
+    </React.Fragment>
+  );
 
   render() {
     const { showEvents } = this.props;
-    const {
-      eventInfoOpen,
-      eventInfo,
-      showPop,
-      slotSelected,
-      x,
-      y
-    } = this.state;
+    const { showPop, x, y } = this.state;
     return (
       <React.Fragment>
         <div className="calendar-wrapper">
@@ -95,21 +95,19 @@ class Calendar extends Component {
               className="col-md-12"
               onMouseDownCapture={this.onMouseDownCapture}
             >
-              {/* Month View */}
               <BigCalendar
                 popup
                 style={{ position: "relative" }}
                 selectable
                 events={showEvents}
                 views={["month"]}
-                onSelectEvent={e => {
-                  this.setState({
-                    eventInfoOpen: !eventInfoOpen,
-                    eventInfo: [e]
-                  });
-                }}
+                onSelectEvent={slotSelected =>
+                  this.renderEventPopover(slotSelected)
+                }
                 defaultDate={new Date()}
-                onSelectSlot={e => this.renderPopover(e)}
+                onSelectSlot={slotSelected =>
+                  this.renderEventFormPopover(slotSelected)
+                }
                 components={{
                   toolbar: CustomToolbar,
                   event: CustomEvent
@@ -117,26 +115,11 @@ class Calendar extends Component {
               />
             </div>
           </div>
-
-          {eventInfoOpen && (
-            <EventInfoDialog
-              open={eventInfoOpen}
-              handleClose={() =>
-                this.setState({
-                  eventInfoOpen: !eventInfoOpen,
-                  eventInfo: {}
-                })
-              }
-              information={eventInfo}
-              deleteNow={itemId => this.deleteEvent(itemId)}
-            />
-          )}
         </div>
-
         <Popover
           id={"calendar-popover"}
           open={showPop}
-          onClose={this.renderPopover}
+          onClose={this.closePopover}
           anchorReference="anchorPosition"
           anchorPosition={{ top: y, left: x }}
           anchorOrigin={{
@@ -149,9 +132,8 @@ class Calendar extends Component {
           }}
           elevation={2}
         >
-          <div className="p-20 w-100">
-            <h2>New Event Detail</h2>
-            <NewEventForm dayView={slotSelected} addEvent={this.newEvent} />
+          <div className="p-20 w-100" style={{ minWidth: 450 }}>
+            {this.state.component}
           </div>
         </Popover>
       </React.Fragment>
@@ -169,7 +151,6 @@ export default connect(
   mapStateToProps,
   {
     getAllEvents,
-    deleteEvent,
     addEvent,
     show
   }

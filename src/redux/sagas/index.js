@@ -17,18 +17,17 @@ import accountSagas from "./crm/Account";
 import dealSagas from "./crm/Deal";
 import crmFieldSagas from "./crm/CrmField";
 
-//settings
+// settings
 import userSagas from "./settings/userControl/Users";
 import companySagas from "./settings/general/Company";
 import profileSagas from "./settings/general/Profile";
 import roleSagas from "./settings/userControl/Roles";
 import groupSagas from "./settings/userControl/Groups";
-import hierarchySagas from "./settings/userControl/Hierarchies";
 
-//calendar
+// calendar
 import calendarSagas from "./calendar/Calendar";
 
-//login
+// auth
 import loginSagas from "./auth/Login";
 import registerSagas from "./auth/Register";
 
@@ -46,28 +45,37 @@ import widgetSagas from "./widget/Widget";
 
 export default function* rootSaga(getState) {
   yield all([
-    calendarSagas(),
-    roleSagas(),
-    groupSagas(),
-    hierarchySagas(),
-    userSagas(),
-    companySagas(),
-    profileSagas(),
+    // Accounting
     quoteSagas(),
     invoiceSagas(),
     accountingSagas(),
     creditNoteSagas(),
     paymentSagas(),
+
+    // CRM
     leadSagas(),
     customerSagas(),
     accountSagas(),
     dealSagas(),
     crmFieldSagas(),
+
+    // Auth
     loginSagas(),
     registerSagas(),
+
+    // System
     uploadFileSagas(),
     importRecordSagas(),
     reportSagas(),
-    widgetSagas()
+    widgetSagas(),
+    // Calendar
+    calendarSagas(),
+
+    // Settings
+    roleSagas(),
+    groupSagas(),
+    userSagas(),
+    companySagas(),
+    profileSagas()
   ]);
 }

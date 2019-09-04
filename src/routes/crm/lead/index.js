@@ -63,7 +63,7 @@ class crm_lead extends Component {
           title={nowShowing}
           actionGroup={{
             add: { onClick: this.newLead },
-            mid: { label: "Import", onClick: this.importLead },
+            // mid: { label: "Import", onClick: this.importLead },
             more: [{ label: "Refresh List", onClick: this.refresh }]
           }}
         />

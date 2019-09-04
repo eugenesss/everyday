@@ -8,15 +8,10 @@ import {
   delay
 } from "redux-saga/effects";
 
-
-import * as Types from 'Types'
-import * as Actions from 'Actions'
-
+import * as Types from "Types";
+import * as Actions from "Actions";
 
 import api from "Api";
-
-import { quote, quoteList } from "Components/DummyData";
-import { leadSummary } from "../../../components/DummyData";
 
 //=========================
 // REQUESTS
@@ -75,51 +70,53 @@ const getAllQuoteRequest = async () => {
 //   return result.data;
 // }
 
-const submitEditQuoteSummaryRequest = async({payload}) => {
+const submitEditQuoteSummaryRequest = async ({ payload }) => {
   const result = await api.patch(`/quotations/${payload.id}`, payload);
   return result.data;
-}
+};
 
-const deleteQuotationfromDBRequest = async(item) => {
+const deleteQuotationfromDBRequest = async item => {
   const result = await api.delete(`/quotations/${item.payload}`);
   return result.data;
-}
+};
 
 const addNoteQuotationRequest = async (id, note) => {
   const result = await api.post(`/quotations/${id}/notes`, note);
   return result.data;
 };
 
-const patchStateQuotationRequest = async (payload) => {
-  const result = await api.post(`/quotations/updateStatus/`, {data: payload});
+const patchStateQuotationRequest = async payload => {
+  const result = await api.post(`/quotations/updateStatus/`, { data: payload });
   return result.data;
 };
 
-const createNewVersionStateQuotationRequest = async (payload) => {
-  const result = await api.post(`/quotations/newVersion`, {data: payload});
+const createNewVersionStateQuotationRequest = async payload => {
+  const result = await api.post(`/quotations/newVersion`, { data: payload });
   return result.data;
 };
 
-const revertPreviousVersionStateQuotationRequest = async (payload) => {
-  const result = await api.post(`/quotations/revertQuotation`, {data: payload});
+const revertPreviousVersionStateQuotationRequest = async payload => {
+  const result = await api.post(`/quotations/revertQuotation`, {
+    data: payload
+  });
   return result.data;
 };
 
-const convertInvoiceQuotationRequest = async (payload) => {
-  const result = await api.post(`/quotations/convertInvoice`, {data: payload});
+const convertInvoiceQuotationRequest = async payload => {
+  const result = await api.post(`/quotations/convertInvoice`, {
+    data: payload
+  });
   return result.data;
 };
 
-const getQuoteRequest = async (quoteID) => {
-  
-  if(quoteID.type == "invoice"){
+const getQuoteRequest = async quoteID => {
+  if (quoteID.type == "invoice") {
     const result = await api.get(`/invoices/${quoteID.quoteID}`);
     return result.data;
   } else {
     const result = await api.get(`/quotations/${quoteID.quoteID}`);
     return result.data;
   }
-
 };
 
 const handleQuotationAccountsRequest = async () => {
@@ -128,11 +125,11 @@ const handleQuotationAccountsRequest = async () => {
 };
 
 const submitNewQuotationRequest = async payload => {
-  const result = await api.post("/quotations/submitQuotations", {data: payload}); 
+  const result = await api.post("/quotations/submitQuotations", {
+    data: payload
+  });
   return result.data;
 };
-
-
 
 // const getAllQuoteRequest = async () => {
 //   const result = quoteList;
@@ -154,9 +151,6 @@ const submitNewQuotationRequest = async payload => {
 //   const result = leadSummary;
 //   return result;
 // };
-
-
-
 
 //=========================
 // CALL(GENERATOR) Actions
@@ -198,7 +192,6 @@ const submitNewQuotationRequest = async payload => {
 //   }
 // }
 
-
 function* getAllQuoteFromDB() {
   try {
     const data = yield call(getAllQuoteRequest);
@@ -232,13 +225,13 @@ function* submitQuoteSummarytoDB(payload) {
 function* deleteQuotationfromDB(item) {
   try {
     const data = yield call(deleteQuotationfromDBRequest, item);
-    if(data.count == 0){
+    if (data.count == 0) {
       var error = new Error();
-      throw error
+      throw error;
     }
     yield put(Actions.deleteSingleQuoteSuccess(data));
   } catch (error) {
-    yield put(Actions.deleteSingleQuoteFailure('Unable to delete the record'));
+    yield put(Actions.deleteSingleQuoteFailure("Unable to delete the record"));
   }
 }
 
@@ -272,7 +265,10 @@ function* createNewVersionStateQuotation({ payload }) {
 
 function* revertPreviousVersionStateQuotation({ payload }) {
   try {
-    const data = yield call(revertPreviousVersionStateQuotationRequest, payload);
+    const data = yield call(
+      revertPreviousVersionStateQuotationRequest,
+      payload
+    );
     yield put(Actions.HandleStateUpdateSuccess(data.data));
   } catch (error) {
     yield put(Actions.HandleStateUpdateFailure(error));
@@ -284,7 +280,11 @@ function* convertInvoiceQuotation({ payload }) {
     const data = yield call(convertInvoiceQuotationRequest, payload);
     yield put(Actions.HandleStateUpdateSuccess(data.data));
   } catch (error) {
-    yield put(Actions.HandleStateUpdateFailure('Unable to convert the quotation to invoice'));
+    yield put(
+      Actions.HandleStateUpdateFailure(
+        "Unable to convert the quotation to invoice"
+      )
+    );
   }
 }
 
@@ -293,21 +293,24 @@ function* handleQuotationAccounts({ payload }) {
     const data = yield call(handleQuotationAccountsRequest, payload);
     yield put(Actions.HandleQuotationAccountsSuccess(data));
   } catch (error) {
-    yield put(Actions.HandleQuotationAccountsFailure('Unable to retrieve account records'));
+    yield put(
+      Actions.HandleQuotationAccountsFailure(
+        "Unable to retrieve account records"
+      )
+    );
   }
 }
-
 
 function* submitNewQuotation({ payload }) {
   try {
     const data = yield call(submitNewQuotationRequest, payload);
     yield put(Actions.submitNewQuotationSuccess(data));
   } catch (error) {
-    yield put(Actions.submitNewQuotationFailure('Unable to create new quotation'));
+    yield put(
+      Actions.submitNewQuotationFailure("Unable to create new quotation")
+    );
   }
 }
-
-
 
 //=======================
 // WATCHER FUNCTIONS
@@ -337,13 +340,22 @@ export function* patchStateQuotationWatcher() {
   yield takeEvery(Types.HANDLE_STATE_UPDATE, patchStateQuotation);
 }
 export function* createNewVersionQuotationWatcher() {
-  yield takeEvery(Types.HANDLE_STATE_CREATE_NEW_VERSION, createNewVersionStateQuotation);
+  yield takeEvery(
+    Types.HANDLE_STATE_CREATE_NEW_VERSION,
+    createNewVersionStateQuotation
+  );
 }
 export function* revertPreviousVersionQuotationWatcher() {
-  yield takeEvery(Types.HANDLE_STATE_REVERT_PREVIOUS_VERSION, revertPreviousVersionStateQuotation);
+  yield takeEvery(
+    Types.HANDLE_STATE_REVERT_PREVIOUS_VERSION,
+    revertPreviousVersionStateQuotation
+  );
 }
 export function* convertInvoiceQuotationWatcher() {
-  yield takeEvery(Types.HANDLE_STATE_CONVERT_INVOICE_QUOTATION, convertInvoiceQuotation);
+  yield takeEvery(
+    Types.HANDLE_STATE_CONVERT_INVOICE_QUOTATION,
+    convertInvoiceQuotation
+  );
 }
 export function* handleAccountsWatcher() {
   yield takeEvery(Types.HANDLE_QUOTATION_ACCOUNTS, handleQuotationAccounts);
@@ -351,8 +363,6 @@ export function* handleAccountsWatcher() {
 export function* submitNewQuotationWatcher() {
   yield takeEvery(Types.SUBMIT_NEW_QUOTATION, submitNewQuotation);
 }
-
-
 
 //=======================
 // FORK SAGAS TO STORE
@@ -371,8 +381,6 @@ export default function* rootSaga() {
     fork(revertPreviousVersionQuotationWatcher),
     fork(convertInvoiceQuotationWatcher),
     fork(handleAccountsWatcher),
-    fork(submitNewQuotationWatcher),
-
-  
+    fork(submitNewQuotationWatcher)
   ]);
 }

@@ -5,6 +5,9 @@ import { withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { ExitToApp, Settings } from "@material-ui/icons";
 
+// Avatar
+import Avatar from "Components/Everyday/Avatar";
+
 // Logout
 import { logoutUser } from "Actions";
 import Auth from "../../../../Auth/Auth";
@@ -14,7 +17,7 @@ import Calendar from "Components/Widgets/Calendar/CalendarLayout";
 
 function UserDrawerContent(props) {
   const toggleDrawer = props.toggleDrawer;
-  const { user, history } = props;
+  const { loggedInUser, history } = props;
   function toSettingPage() {
     history.push("/app/settings");
   }
@@ -24,17 +27,14 @@ function UserDrawerContent(props) {
         <div className="col-12">
           <div className="media">
             <div className="media-left mr-25">
-              <img
-                src={require("Assets/avatars/user-1.jpg")}
-                className="img-fluid rounded-circle"
-                alt="user profile"
-                width="70"
-              />
+              <Avatar name={loggedInUser.name} size={60} />
             </div>
             <div className="media-body my-auto">
-              <h4 className="mb-5">Andre Hicks</h4>
+              <h4 className="mb-5">
+                {loggedInUser.name ? loggedInUser.name : ""}
+              </h4>
               <span className="text-muted fs-14 mb-0 d-block">
-                Sr. Develoepr @Oracle
+                {loggedInUser.email ? loggedInUser.email : ""}
               </span>
             </div>
           </div>
@@ -75,8 +75,8 @@ function UserDrawerContent(props) {
 
 // map state to props
 const mapStateToProps = ({ authUser }) => {
-  const { user } = authUser;
-  return { user };
+  const { loggedInUser } = authUser;
+  return { loggedInUser };
 };
 
 export default withRouter(

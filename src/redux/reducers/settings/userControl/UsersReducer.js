@@ -17,9 +17,6 @@ import {
   ON_CHANGE_UPDATE_USER_RIGHTS,
   UPDATE_USER_RIGHTS,
   UPDATE_USER_RIGHTS_SUCCESS,
-  GET_USER_PROFILE,
-  GET_USER_PROFILE_SUCCESS,
-  GET_USER_PROFILE_END,
   GET_USER_FAILURE,
   SHOW_ADD_USER,
   HIDE_ADD_USER,
@@ -34,9 +31,6 @@ const INIT_STATE = {
   isAddUser: false,
   isUserControl: false,
   userControl: {},
-
-  userProfile: {},
-  profileLoading: false,
 
   userUpdate: null,
   userAdd: {
@@ -179,26 +173,6 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         usersLoading: false
-      };
-
-    /**
-     * GET User Profile
-     */
-    case GET_USER_PROFILE:
-      return {
-        ...state,
-        profileLoading: true
-      };
-    case GET_USER_PROFILE_SUCCESS:
-      return {
-        ...state,
-        profileLoading: false,
-        userProfile: action.payload
-      };
-    case GET_USER_PROFILE_END:
-      return {
-        ...state,
-        userProfile: INIT_STATE.userProfile
       };
 
     /**

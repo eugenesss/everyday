@@ -30,7 +30,6 @@ NumberFormatCustom.propTypes = {
 
 const AmountInput = props => {
   const { nodollar, ...others } = props;
-  
   return (
     <FormInput
       disabled={props.disabled}
@@ -39,7 +38,6 @@ const AmountInput = props => {
       {...others}
     />
   );
-
 };
 
 export default AmountInput;

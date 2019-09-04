@@ -1,6 +1,4 @@
-/**
- * Redux Actions
- */
+// App settings
 export * from "./AppSettingsActions";
 
 // CRM Actions
@@ -18,8 +16,6 @@ export * from "./accounting/CreditNoteActions";
 export * from "./accounting/PaymentActions";
 export * from "./accounting/AccountingAction";
 
-// System Actions
-
 // Report Actions
 export * from "./system/ReportActions";
 // Import Record Actions
@@ -36,9 +32,8 @@ export * from "./settings/general/CompanyActions";
 export * from "./settings/general/ProfileActions";
 export * from "./settings/userControl/RolesActions";
 export * from "./settings/userControl/GroupsActions";
-export * from "./settings/userControl/HierarchiesActions";
 
-//Login actions
+// Auth actions
 export * from "./auth/LoginActions";
 export * from "./auth/RegisterActions";
 

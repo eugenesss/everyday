@@ -4,7 +4,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import RecordsList from "Components/Everyday/RecordsList";
 import { EventNote, Edit } from "@material-ui/icons";
 
-import { getTheDate } from "Helpers/helpers";
+import { getTheDate, getTheTime } from "Helpers/helpers";
 
 const EventsTable = ({ tableData, title, action, showNewEventDialog }) => {
   const columns = [
@@ -13,28 +13,34 @@ const EventsTable = ({ tableData, title, action, showNewEventDialog }) => {
       options: { display: "excluded", filter: false, sort: false }
     },
     { label: "Title", name: "title" },
-    { label: "Description", name: "desc" },
+    {
+      label: "Start",
+      name: "start",
+      options: {
+        customBodyRender: (value, tableMeta) =>
+          tableMeta.rowData[0] ? "" : getTheTime(value)
+      }
+    },
+    {
+      label: "End",
+      name: "end",
+      options: {
+        customBodyRender: (value, tableMeta) =>
+          tableMeta.rowData[0] ? "" : getTheTime(value)
+      }
+    },
     {
       label: "From",
       name: "start",
       options: {
-        customBodyRender: (value, tableMeta) => {
-          console.log(value);
-          console.log(getTheDate(value, "ddd, d MMM YY"));
-          return tableMeta.rowData[0]
-            ? getTheDate(value, "ddd, d MMM YY")
-            : getTheDate(value, "ddd, d MMM YY hh:mma");
-        }
+        customBodyRender: value => getTheDate(value)
       }
     },
     {
       label: "To",
       name: "end",
       options: {
-        customBodyRender: (value, tableMeta) =>
-          tableMeta.rowData[0]
-            ? getTheDate(value, "ddd, d MMM YY")
-            : getTheDate(value, "ddd, d MMM YY hh:mma")
+        customBodyRender: value => getTheDate(value)
       }
     },
     {
@@ -53,7 +59,7 @@ const EventsTable = ({ tableData, title, action, showNewEventDialog }) => {
     filter: false,
     viewColumns: false,
     elevation: 0,
-    selectableRows: false,
+    selectableRows: "none",
     rowsPerPage: 10,
     rowsPerPageOptions: [10, 30, 60, 100],
     textLabels: { body: { noMatch: "No Events" } },

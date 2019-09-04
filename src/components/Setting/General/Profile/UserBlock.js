@@ -1,50 +1,32 @@
 import React from "react";
-import { Col, Row } from "reactstrap";
 import BgCard from "Components/Everyday/BgCard";
+import Avatar from "Components/Everyday/Avatar";
 
-const UserBlock = ({ user, uploadFile }) => {
+const UserBlock = ({ user }) => {
+  const { name, email } = user;
   return (
-    <BgCard>
-      <Row className={"align-items-center pl-20 pb-20 border-bottom"}>
-        <div style={{ position: "relative" }}>
-          <img
-            src={require("Assets/avatars/user-1.jpg")}
-            alt="user profile"
-            className="rounded-circle bordered"
-            width="150"
-            height="150"
-          />
-
-          {/* <input  
-                // className="rounded-circle bordered" 
-                style={{
-                  border: '1px solid black', position:'absolute',
-                  top: 0, left: 0, width : 150, bottom: 0
-                }}
-                type="file"
-                onChange={(e)=> uploadFile(e)}
-              /> */}
-        </div>
-
-        <div className={"ml-20"}>
-          <h1>{user ? user.name : ""}</h1>
-          <div>{user ? user.email : ""}</div>
-        </div>
-      </Row>
-      <Row className={"pl-20 pr-20 pt-30 pb-20 border-bottom"}>
-        <Col>
-          <h2>About</h2>
-          <div>{user ? user.description : ""}</div>
-        </Col>
-      </Row>
-      <Row className={"pl-20 pr-20 pt-30 pb-10"}>
-        <Col md={3}>Contact</Col>
-        <Col md={9}>
-          <div className="text-right">
-            <b>{user ? user.contact : ""}</b>
+    <BgCard fullBlock>
+      <div className="d-flex border-bottom p-40">
+        <div className="media">
+          <div className="media-left mr-25">
+            <Avatar name={name} size={60} />
           </div>
-        </Col>
-      </Row>
+          <div className="media-body my-auto">
+            <h3 className="mb-5">{user ? name : ""}</h3>
+            <span className="text-muted mb-0 d-block">{user ? email : ""}</span>
+          </div>
+        </div>
+      </div>
+      <div className="d-flex py-20 px-40">
+        <div>
+          <span className="mb-0 text-muted fs-12">Company</span>
+          <p>companyName</p>
+        </div>
+        {/* <div>
+          <span className="mb-0 text-muted fs-12">Contact</span>
+          <p>1234 5678</p>
+        </div> */}
+      </div>
     </BgCard>
   );
 };

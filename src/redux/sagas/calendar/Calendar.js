@@ -103,17 +103,14 @@ function* addEventToDB({ payload }) {
   const { item, type } = payload;
   try {
     const data = yield call(addEventRequest, item);
-    switch (type) {
-      case "Lead":
-        yield put(Actions.addLeadEvent(data));
-      case "Customer":
-        yield put(Actions.addCustomerEvent(data));
-      case "Account":
-        yield put(Actions.addAccountEvent(data));
-      case "Deal":
-        yield put(Actions.addDealEvent(data));
-      default:
-        yield put(Actions.addEventSuccess(data));
+    if (type == "Lead") {
+      yield put(Actions.addLeadEvent(data));
+    } else if (type == "Customer") {
+      yield put(Actions.addCustomerEvent(data));
+    } else if (type == "Account") {
+      yield put(Actions.addAccountEvent(data));
+    } else {
+      yield put(Actions.addEventSuccess(data));
     }
   } catch (err) {
     yield put(Actions.addEventFailure(err));

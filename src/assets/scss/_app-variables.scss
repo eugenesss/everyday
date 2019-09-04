@@ -12,8 +12,6 @@ $dribbble: #f06292;
 $youtube: #d50000;
 $github: #424242;
 $skype: #4fc3f7;
-$everyday: linear-gradient(90deg, #1482af 0%, #125b96 50%, #e46464 100%);
-$everydaySecondary: #fac257;
 
 $colors: () !default;
 $colors: map-merge(
@@ -30,9 +28,7 @@ $colors: map-merge(
     "dribbble": $dribbble,
     "youtube": $youtube,
     "github": $github,
-    "skype": $skype,
-    "everyday": $everyday,
-    "everydaySecondary": $everydaySecondary
+    "skype": $skype
   ),
   $colors
 );
@@ -50,7 +46,6 @@ $dribbble: $dribbble;
 $youtube: $youtube;
 $github: $github;
 $skype: $skype;
-$everyday: $everyday;
 
 $theme-colors: () !default;
 $theme-colors: map-merge(

@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Info(props) {
-  const { icon, title, subtitle, onClick } = props;
+  const { icon, title, subtitle, onClick, button } = props;
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -23,7 +23,7 @@ function Info(props) {
         <ListItem
           className={classes.listItem}
           onClick={onClick}
-          button={onClick}
+          button={button}
         >
           <ListItemAvatar>
             {icon ? (

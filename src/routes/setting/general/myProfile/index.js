@@ -1,36 +1,34 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import ProfileLayout from "Components/Setting/General/Profile/ProfileLayout";
-
-import { getUserProfile } from "Actions";
+import UserBlock from "Components/Setting/General/Profile/UserBlock";
+import UserFeedBlock from "Components/Setting/General/Profile/UserFeedBlock";
 
 class MyProfile extends Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount() {
-    this.props.getUserProfile(this.props.user);
-  }
-
   render() {
-    const { userProfile } = this.props;
+    const { loggedInUser } = this.props;
     return (
       <React.Fragment>
-        <ProfileLayout userView={userProfile} />
+        <div className="row">
+          <div className="col-4">
+            <UserBlock user={loggedInUser} />
+          </div>
+          <div className="col-8">
+            <UserFeedBlock />
+          </div>
+        </div>
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = ({ authUser, usersState }) => {
-  const { user } = authUser;
-  const { userProfile } = usersState;
-  return { user };
+const mapStateToProps = ({ authUser }) => {
+  const { loggedInUser } = authUser;
+  return { loggedInUser };
 };
 
-export default connect(
-  mapStateToProps,
-  { getUserProfile }
-)(MyProfile);
+export default connect(mapStateToProps)(MyProfile);

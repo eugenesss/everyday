@@ -9,7 +9,6 @@ export * from "./calendar/CalendarTypes";
 export * from "./settings/userControl/UserTypes";
 export * from "./settings/userControl/RoleTypes";
 export * from "./settings/userControl/GroupTypes";
-export * from "./settings/userControl/HierarchyTypes";
 
 // General Types
 export * from "./settings/general/ProfileTypes";
@@ -31,10 +30,9 @@ export * from "./crm/DealTypes";
 export * from "./crm/CrmFieldTypes";
 export * from "./crm/SalesTeamTypes";
 
-// Login
+// Auth
 export * from "./auth/LoginTypes";
 export * from "./auth/RegisterTypes";
 
 // UploadFile Actions
-export * from './upload/uploadFile'
-
+export * from "./upload/uploadFile";

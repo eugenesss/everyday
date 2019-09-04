@@ -40,8 +40,6 @@ import { singleLead } from "Helpers/url/crm";
 
 import api from "Api";
 
-import { leadSummary } from "Components/DummyData";
-
 //=========================
 // REQUESTS
 //=========================
@@ -66,7 +64,7 @@ const getLeadRequest = async leadID => {
   return result.data;
 };
 const getLeadSummaryRequest = async () => {
-  const result = leadSummary;
+  const result = [];
   return result;
 };
 const postLeadRequest = async lead => {

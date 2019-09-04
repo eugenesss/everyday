@@ -6,7 +6,7 @@ import SideDrawer from "Components/Everyday/SideDrawer";
 import DrawerListCollapsible from "Components/Everyday/SideDrawer/DrawerListCollapsible";
 import DrawerListItem from "Components/Everyday/SideDrawer/DrawerListItem";
 
-import { accessControlHelper } from "Helpers/accessControlHelper";
+// import { accessControlHelper } from "Helpers/accessControlHelper";
 
 class SettingsDirectory extends Component {
   constructor(props) {
@@ -48,7 +48,7 @@ class SettingsDirectory extends Component {
             secondary
             selected={location.pathname === "/app/settings/general/my-profile"}
           />
-          <DrawerListItem
+          {/* <DrawerListItem
             onClickListItem={() =>
               this.handleClickItem("/app/settings/general/company-details")
             }
@@ -57,50 +57,48 @@ class SettingsDirectory extends Component {
             selected={
               location.pathname === "/app/settings/general/company-details"
             }
-          />
+          /> */}
         </DrawerListCollapsible>
 
-        {accessControlHelper(["AccessSetting:viewall"], null) && (
-          <DrawerListCollapsible
-            title={"User & Control"}
-            state={user}
-            openNested={() => this.handleClick("user")}
-          >
-            <DrawerListItem
-              onClickListItem={() =>
-                this.handleClickItem("/app/settings/users-and-controls/users")
-              }
-              title="Users"
-              secondary
-              selected={
-                location.pathname === "/app/settings/users-and-controls/users"
-              }
-            />
-            <DrawerListItem
-              onClickListItem={() =>
-                this.handleClickItem(
-                  "/app/settings/users-and-controls/roles-and-permissions"
-                )
-              }
-              title={"Roles & Permissions"}
-              secondary
-              selected={
-                location.pathname ===
+        <DrawerListCollapsible
+          title={"User & Control"}
+          state={user}
+          openNested={() => this.handleClick("user")}
+        >
+          <DrawerListItem
+            onClickListItem={() =>
+              this.handleClickItem("/app/settings/users-and-controls/users")
+            }
+            title="Users"
+            secondary
+            selected={
+              location.pathname === "/app/settings/users-and-controls/users"
+            }
+          />
+          <DrawerListItem
+            onClickListItem={() =>
+              this.handleClickItem(
                 "/app/settings/users-and-controls/roles-and-permissions"
-              }
-            />
-            <DrawerListItem
-              onClickListItem={() =>
-                this.handleClickItem("/app/settings/users-and-controls/groups")
-              }
-              title={"Groups"}
-              secondary
-              selected={
-                location.pathname === "/app/settings/users-and-controls/groups"
-              }
-            />
-          </DrawerListCollapsible>
-        )}
+              )
+            }
+            title={"Roles & Permissions"}
+            secondary
+            selected={
+              location.pathname ===
+              "/app/settings/users-and-controls/roles-and-permissions"
+            }
+          />
+          <DrawerListItem
+            onClickListItem={() =>
+              this.handleClickItem("/app/settings/users-and-controls/groups")
+            }
+            title={"Groups"}
+            secondary
+            selected={
+              location.pathname === "/app/settings/users-and-controls/groups"
+            }
+          />
+        </DrawerListCollapsible>
 
         {/* <ListItem button onClick={() => this.handleClick("crm")}>
               <ListItemText
