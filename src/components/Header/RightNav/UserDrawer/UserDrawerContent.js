@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
 import { ExitToApp, Settings } from "@material-ui/icons";
+import { Scrollbars } from "react-custom-scrollbars";
 
 // Avatar
 import Avatar from "Components/Everyday/Avatar";
@@ -23,29 +24,31 @@ function UserDrawerContent(props) {
   }
   return (
     <div className="user-drawer" role="presentation" onKeyDown={toggleDrawer()}>
-      <div className="row top-drawer">
-        <div className="col-12">
-          <div className="media">
-            <div className="media-left mr-25">
-              <Avatar name={loggedInUser.name} size={60} />
-            </div>
-            <div className="media-body my-auto">
-              <h4 className="mb-5">
-                {loggedInUser.name ? loggedInUser.name : ""}
-              </h4>
-              <span className="text-muted fs-14 mb-0 d-block">
-                {loggedInUser.email ? loggedInUser.email : ""}
-              </span>
-            </div>
+      <div className="d-flex top-drawer">
+        <div className="media">
+          <div className="media-left mr-25">
+            <Avatar name={loggedInUser.name} size={60} />
+          </div>
+          <div className="media-body my-auto">
+            <h2 className="mb-5">
+              {loggedInUser.name ? loggedInUser.name : ""}
+            </h2>
+            <span className="text-muted fs-14 mb-0 d-block">
+              {loggedInUser.email ? loggedInUser.email : ""}
+            </span>
           </div>
         </div>
       </div>
       <hr />
-
-      <div className="row user-drawer-content">
-        <Calendar />
-      </div>
-
+      <Scrollbars
+        className="rct-scroll"
+        autoHeightMin={350}
+        style={{ maxHeight: "calc(100vh - 250px)" }}
+      >
+        <div className="user-drawer-content">
+          <Calendar />
+        </div>
+      </Scrollbars>
       <div className="drawer-footer">
         <hr />
         <div className="drawer-actions">

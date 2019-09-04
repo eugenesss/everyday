@@ -170,8 +170,11 @@
     padding: 15px 40px;
   }
   .user-drawer-content {
-    margin-top: 20px;
+    //margin-top: 20px;
     padding: 15px 40px;
+    // max-height: calc(100vh - 25%);
+    // overflow: scroll;
+    // height: 100%;
   }
   .drawer-actions {
     margin-top: 20px;
