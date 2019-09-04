@@ -13,6 +13,10 @@ import RegisterForm from "./Forms/UserRegisterForm";
 import SelectPlanForm from "./Forms/SelectPlanForm";
 import PaymentDetailForm from "./Forms/PaymentDetailForm";
 
+
+import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+
+
 // Actions
 import {
   registerUser,
@@ -161,7 +165,7 @@ class RegisterSteps extends React.Component {
     }
   };
 
-  componentWillUnmount() {
+  componentDidMount() {
     this.props.resetSuccess();
   }
 
@@ -334,71 +338,77 @@ class RegisterSteps extends React.Component {
     // change success to normal for development
     return (
       <div style={{}}>
-        {!success ? (
-          <div style={{}}>
-            <Stepper alternativeLabel activeStep={activeStep}>
-              {steps.map((label, index) => {
-                const stepProps = {};
-                return (
-                  <Step key={label} {...stepProps}>
-                    <StepButton onClick={() => this.handleNext(index)}>
-                      <p className="mb-0 text-black">{label}</p>
-                    </StepButton>
-                  </Step>
-                );
-              })}
-            </Stepper>
+        
+        {loading? <RctPageLoader/> :
+      
+          <div>
+            {!success ? (
+              <div style={{}}>
+                <Stepper alternativeLabel activeStep={activeStep}>
+                  {steps.map((label, index) => {
+                    const stepProps = {};
+                    return (
+                      <Step key={label} {...stepProps}>
+                        <StepButton onClick={() => this.handleNext(index)}>
+                          <p className="mb-0 text-black">{label}</p>
+                        </StepButton>
+                      </Step>
+                    );
+                  })}
+                </Stepper>
 
-            <div
-              style={{
-                display: "flex",
-                width: "100%",
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              {StepperPage}
-            </div>
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                >
+                  {StepperPage}
+                </div>
+              </div>
+            ) : (
+              <Paper square elevation={0}>
+                <div
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    paddingLeft: 21,
+                    paddingRight: 21
+                  }}
+                >
+                  <h1 style={{ textAlign: "center" }}>
+                    A verification link has been sent to your email account
+                  </h1>
+                  <p style={{ textAlign: "center" }}>
+                    Please click on the link that has just been sent to your email
+                    account to verify your email and continue the registeration
+                    process.
+                  </p>
+
+                  <Fab
+                    variant="extended"
+                    className="text-white"
+                    size="medium"
+                    style={{
+                      backgroundColor: AppConfig.themeColors.primary,
+                      marginBottom: "1.5rem",
+                      marginLeft: 15
+                    }}
+                    type="submit"
+                    onClick={this.props.history}
+                  >
+                    <span style={{ width: 80 }}>Login</span>
+                  </Fab>
+                </div>
+              </Paper>
+            )}
           </div>
-        ) : (
-          <Paper square elevation={0}>
-            <div
-              style={{
-                display: "flex",
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column",
-                paddingLeft: 21,
-                paddingRight: 21
-              }}
-            >
-              <h1 style={{ textAlign: "center" }}>
-                A verification link has been sent to your email account
-              </h1>
-              <p style={{ textAlign: "center" }}>
-                Please click on the link that has just been sent to your email
-                account to verify your email and continue the registeration
-                process.
-              </p>
-
-              <Fab
-                variant="extended"
-                className="text-white"
-                size="medium"
-                style={{
-                  backgroundColor: AppConfig.themeColors.primary,
-                  marginBottom: "1.5rem",
-                  marginLeft: 15
-                }}
-                type="submit"
-                onClick={this.props.history}
-              >
-                <span style={{ width: 80 }}>Login</span>
-              </Fab>
-            </div>
-          </Paper>
-        )}
+        }
       </div>
     );
   }

@@ -9,7 +9,10 @@ const INIT_STATE = {
     action: false,
     loading: false,
     tableData: [],
-    companyList: null
+    companyList: null,
+    invoicesList : [],
+    fetchInvoice : false,
+    fetchInvoiceList: [],
   },
   paymentToView: { loading: false, payment: [] }
 };
@@ -92,14 +95,13 @@ export default (state = INIT_STATE, action) => {
         };
 
     case types.GET_SINGLE_COMPANY_PAYMENT_FAILURE:
-
-      return {
-        ...state,
-        paymentToView: {
-          ...state.paymentToView,
-          loading: false,
-        }
-      };
+        return {
+          ...state,
+          paymentToView: {
+            ...state.paymentToView,
+            loading: false,
+          }
+        };
 
     case types.FETCH_ALL_COMPANINES:
       return {
@@ -129,6 +131,38 @@ export default (state = INIT_STATE, action) => {
           },
         }   
       
+    case types.FETCH_ALL_INVOICES_COMPANINES:
+        return {
+          ...state,
+          paymentList: {
+            ...state.paymentList,
+            fetchInvoice : true
+          },
+        } 
+
+    case types.FETCH_ALL_INVOICES_COMPANINES_SUCCESS:
+        return {
+          ...state,
+          paymentList: {
+            ...state.paymentList,
+            fetchInvoice : false,
+            fetchInvoiceList : action.payload
+          },
+        } 
+
+    case types.FETCH_ALL_INVOICES_COMPANINES_FAILURE:
+        return {
+          ...state, 
+          paymentList: {
+            ...state.paymentList,
+            fetchInvoice : false,
+            fetchInvoiceList : []
+          },       
+        } 
+        
+
+
+        
     default:
       return { ...state };
   }

@@ -26,25 +26,174 @@ import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices"
 // import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // InvoicePaymentList
-import SelectInvoicePaymentList from "Components/Accounting/Payment/SelectInvoicePaymentList";
 import NewPayment from "Components/Form/Payment/NewPayment"
+import InvoicesOneCompany from "Components/Accounting/Payment/InvoicesOneCompany";
 
 import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
 import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
 
+import DialogRoot from "Components/Dialog/DialogRoot";
+
 // Actions
-import { fetchAllCompanies} from "Actions";
+import { 
+  fetchAllCompanies, 
+  fetchAllInovicesOneCompany,
+  handleRegErrorForm,
+  handleRegSuccessForm,
+  handleRegWarningForm,
+} from "Actions";
+
+
+
+const newPayment = {
+
+
+}
+
 
 class acct_new_payment extends Component {
- 
+
+  state=({
+    InvoiceList : [],
+
+    invoice:{
+      customer: '',
+      invoiceId: '',
+      paidAmount : 0,
+      paymentMethod: '',
+      date: new Date(),
+      paymentRef: '',
+      memo : '',
+      paymentDifference: 'Keep Open'
+    },
+
+
+    paymentObjects:[],
+
+    redirectAllocation: false
+  
+  })
+
   componentDidMount(){
     this.props.fetchAllCompanies()
   }
 
+  _renderAllInvoicesForOneCompany = (e) => {
+    this.props.fetchAllInovicesOneCompany(e.id)
+  }
+  
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+  
+    const { fetchInvoice, fetchInvoiceList} = this.props.paymentList
+  
+    if(prevProps.paymentList.fetchInvoice != fetchInvoice){
+      if(fetchInvoiceList.length > 0){
+        return fetchInvoiceList
+      }
+    }
+   
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (snapshot !== null) {
+      this.setState({InvoiceList: snapshot})
+    }
+  }
+
+  onSetState = (a, b) =>{
+    let invoice = {...this.state.invoice}
+    invoice[a] = b
+
+    this.setState({invoice: invoice})
+  }
+
+
+  onCheckList = (rowIndex, value) => {
+   
+    let Invoice = {...this.state.invoice}
+
+    if(Invoice.paidAmount==0){
+      this.props.handleRegErrorForm('Unable to process, please input paid amount')
+      return
+    }
+
+    let InvoiceList = [...this.state.InvoiceList]
+
+    console.log(InvoiceList)
+
+    if(value){
+
+      if(!InvoiceList[rowIndex].reconcile.disabled){
+
+        InvoiceList[rowIndex].reconcile.reconcile = false
+        this.setState({InvoiceList: InvoiceList})
+        this.props.handleRegWarningForm(`#${InvoiceList[rowIndex].invoiceId} invoice removed from payment, item updated`)
+
+      } else {
+        this.props.handleRegWarningForm(`#${InvoiceList[rowIndex].invoiceId} invoice has been previously marked paid, therefore unable to process your order`)
+      }
+
+    } else {
+
+      if(Invoice.paidAmount >= InvoiceList[rowIndex].openBalance){
+
+        InvoiceList[rowIndex].reconcile.reconcile = true
+        this.setState({InvoiceList: InvoiceList})
+        this.props.handleRegSuccessForm(`#${InvoiceList[rowIndex].invoiceId} invoice marked paid, item updated`)
+     
+      } else {
+
+        if(InvoiceList[rowIndex].reconcile.disabled){
+          this.props.handleRegWarningForm(`#${InvoiceList[rowIndex].invoiceId} invoice has been previously marked paid, therefore unable to process your order`)
+        } else {
+          this.setState({redirectAllocation:true})
+          this.props.handleRegErrorForm('Unable to reconcile due to insufficent fund. Redirected to pay with remaining sum amount')
+        }
+
+      }
+      
+    }
+  
+    // let data = this.state.paymentData
+    // data[rowIndex].reconcile.reconcile = value
+    // this.setState({paymentData: data})
+
+  }
+
+
+  _redirectAllocationRestart = () =>{
+    this.setState({redirectAllocation: false})
+  }
 
   render() {
 
-    const {loading, companyList} = this.props.paymentList
+    const {loading, companyList, fetchInvoice} = this.props.paymentList
+
+    let container = null
+    if(fetchInvoice){
+      container = (
+        <RctPageLoader/>         
+      )
+    } else {
+      if(this.state.InvoiceList.length > 0){ 
+        container = (
+          <InvoicesOneCompany
+            title={'All Invoices'}
+            tableData={this.state.InvoiceList}
+            onCheckList={this.onCheckList}
+          />
+        )
+      } else {
+        container = (
+          <FormInputLayout 
+            title="Select a Company"
+            desc="To show all confirmed invoices"
+          >
+          </FormInputLayout>
+        )
+      }
+    }
 
     return loading ? (
       <RctPageLoader />
@@ -53,8 +202,8 @@ class acct_new_payment extends Component {
       // companyList
         <React.Fragment>
             <Helmet>
-            <title>Everyday | Payment</title>
-            <meta name="description" content="Everyday Payment Management" />
+              <title>Everyday | Payment</title>
+              <meta name="description" content="Everyday Payment Management" />
             </Helmet>
             
             <FormWrapper
@@ -64,28 +213,58 @@ class acct_new_payment extends Component {
             >
    
               <form autoComplete="off">
+
                 <FormInputLayout
                   title="Key Information"
                   desc="Payment information"
                 >
                     <NewPayment
                       companyList={companyList}
+                      onSetState={this.onSetState}
+                      state={this.state.invoice}
+                      _renderAllInvoicesForOneCompany={this._renderAllInvoicesForOneCompany}
                     />
 
                 </FormInputLayout>
+                
+                {container}
 
-
-                <div className="row border-top py-30 px-30 justify-content-md-center">
-                  <div className="col-11">
-                    {/* <SelectInvoicePaymentList
-                        // title={nowShowing}
-                        // action={action}
-                        tableData={this.state.paymentData}
-                        loading={loading}
-                        onCheckList={this.onCheckList}
-                    /> */}
+                {this.state.InvoiceList.length >0 && 
+                  <div className="col text-right">
+                    Allocation = total input amount - allocation
                   </div>
-                </div>
+                }
+
+
+     
+     
+                {this.state.redirectAllocation && (
+                  <DialogRoot
+                    title="Allocate Paid Amount"
+                    size="sm"
+                    show={this.state.redirectAllocation}
+                    handleHide={this._redirectAllocationRestart}
+                    dialogActionLabel="Transfer"
+                    dialogAction={this.onSubmit}
+                  >
+                    <div className="row">
+                      {/* <div className="col">
+                        <MakePayment
+                          invoice={invoice}
+                          handleHide={this.launchMakePaymentDialog}
+                          makePayment={this.makePayment}
+                        />
+                      </div> */}
+                      show open balance,
+
+                      show current paid amount, 
+
+                      show how much you want to pay,
+
+                      back and enter payment
+                    </div>
+                  </DialogRoot>
+                )}
 
 
               </form>
@@ -109,7 +288,13 @@ const mapStateToProps = ({ accountingState }) => {
 
 export default connect(
   mapStateToProps,
-  { fetchAllCompanies}
+  { 
+    fetchAllCompanies,
+    fetchAllInovicesOneCompany,
+    handleRegErrorForm,
+    handleRegSuccessForm,
+    handleRegWarningForm
+  }
 )(acct_new_payment);
 
 

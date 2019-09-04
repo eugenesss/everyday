@@ -45,7 +45,7 @@ function NumberFormatCustom(props) {
 
 const EditableInput = props => {
   const classes = useStyles();
-  const { label, value, amount } = props;
+  const { label, value, amount, ...others } = props;
   return (
     <FormControl className={classes.root}>
       <InputLabel shrink className={classes.label}>
@@ -59,6 +59,7 @@ const EditableInput = props => {
         className={classes.input}
         value={value}
         readOnly
+        {...others}
       />
     </FormControl>
   );

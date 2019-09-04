@@ -14,14 +14,14 @@ import AppConfig from "Constants/AppConfig";
 
 // redux action
 import {
-  signInUserWithEmailPassword,
+  signInAccount,
   userResentEmail,
   handleRegErrorForm
 } from "Actions";
 
 class Signin extends Component {
   constuctor() {
-    this.routeChange = this.routeChange.bind(this);
+    // this.routeChange = this.routeChange.bind(this);
   }
 
   state = {
@@ -32,15 +32,16 @@ class Signin extends Component {
   /**
    * On User Login
    */
-  onUserLogin = e => {
-    e.preventDefault();
+  onUserLogin = () => {
+   
     if (this.state.emailAddress !== "" && this.state.password !== "") {
-      this.props.signInUserWithEmailPassword(this.state, this.props.history);
+      this.props.signInAccount(this.state, this.props.history)
     } else {
       this.props.handleRegErrorForm(
         "Please type your email address and password"
       );
     }
+
   };
 
   routeChange(element) {
@@ -60,10 +61,10 @@ class Signin extends Component {
     }
   }
 
-  resentVerificationEmail = () => {
-    this.setState({ emailAddress: "", password: "" });
-    this.props.userResentEmail(this.props.user);
-  };
+  // resentVerificationEmail = () => {
+  //   this.setState({ emailAddress: "", password: "" });
+  //   this.props.userResentEmail(this.props.user);
+  // };
 
   render() {
     const { emailAddress, password } = this.state;
@@ -75,20 +76,32 @@ class Signin extends Component {
 
         <div className="login_module">
           <div className="row justify-content-center">
-            <div className="col-8">
+            <div className="col-md-8 col-sm-12">
               <div className="session-body text-center">
-                <h2 className="text-left">
-                  Get your free
-                  <br />
-                  {AppConfig.brandName} account now.
+
+                <div className="logo-mini" style={{marginBottom: 25, textAlign:'left'}}>
+                    <img
+                      src={require("Assets/img/appLogo_orig_light.png")}
+                      alt="site logo"
+                      width="150"
+                    />
+                    <p className="session-head fw-light text-left mb-30 fs-14 text-muted" style={{margin: 5}}>
+                        Work-life has never been better
+                    </p>
+                </div>
+
+                <h2 className="text-left
+                ">
+                  Get your {AppConfig.brandName} account now
                 </h2>
                 <p className="session-head fw-light text-left mb-30 fs-14 text-muted">
-                  Try Everyday Business free for 30 days.
+                  Try everyday business account
                   <br />
-                  Everyday basic free for unlimited time
+                  forever free for unlimited time
                 </p>
 
-                <Form onSubmit={this.onUserLogin}>
+                {/* onSubmit={this.onUserLogin} */}
+                <Form>
                   <FormGroup className="has-wrapper">
                     <Input
                       type="email"
@@ -104,7 +117,7 @@ class Signin extends Component {
                     />
                   </FormGroup>
 
-                  {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && (
+                  {/* {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && ( */}
                     <div className="mb-40">
                       <FormGroup
                         className="has-wrapper"
@@ -123,9 +136,9 @@ class Signin extends Component {
                           }
                         />
 
-                        <span className="has-icon" style={{ top: 6 }}>
+                        {/* <span className="has-icon" style={{ top: 6 }}>
                           <i className="ti-eye" />
-                        </span>
+                        </span> */}
                       </FormGroup>
                       <div className="text-right">
                         <a
@@ -139,9 +152,9 @@ class Signin extends Component {
                         </a>
                       </div>
                     </div>
-                  )}
+                  {/* )} */}
 
-                  {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && (
+                  {/* {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && ( */}
                     <FormGroup className="mb-20">
                       <Fab
                         variant="extended"
@@ -151,9 +164,8 @@ class Signin extends Component {
                         style={{
                           marginBottom: "1.5rem"
                         }}
-                        type="submit"
                       >
-                        <span style={{ width: 120 }}>Sign in</span>
+                        <span onClick={() => this.onUserLogin()} style={{ width: 120 }}>Sign in</span>
                       </Fab>
 
                       <div className="row d-flex justify-content-center align-items-center">
@@ -171,9 +183,9 @@ class Signin extends Component {
                         </p>
                       </div>
                     </FormGroup>
-                  )}
+                  
 
-                  {error == "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && (
+                  {/* {error == "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && (
                     <FormGroup className="mb-20">
                       <Fab
                         variant="extended"
@@ -218,15 +230,17 @@ class Signin extends Component {
                         </div>
                       </div>
                     </FormGroup>
-                  )}
+                  )} */}
+   
                 </Form>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="login_placeholder">
-          <video
+        {/* appSignUpIn_yellow */}
+        <div className="login_placeholder"  style={{flexDirection:'column', justifyContent:'center'}}>
+          {/* <video
             src="https://ak5.picdn.net/shutterstock/videos/1015322305/preview/stock-footage-creative-business-team-having-meeting-at-the-office-successful-deal-business-partners-concluding.mp4"
             loop={true}
             autoPlay
@@ -239,9 +253,29 @@ class Signin extends Component {
               bottom: 0,
               overflow: "hidden"
             }}
-          />
+          /> */}
 
-          <div
+            <img
+              src={require("Assets/img/appSignIn_yellow.png")}
+              alt="site logo"
+              style={{
+                  height: '45%',
+                  marginBottom: 25,
+              }}
+            />
+
+   
+            <h2 className="text-center">
+              Automate Your Workflow
+            </h2>
+            <p className="session-head fw-light text-center mb-30 fs-14 text-muted">
+              Digitalise your work processes to cloud
+              <br />
+              Accessable anywhere and anytime
+            </p>
+
+
+          {/* <div
             style={{
               position: "relative",
               height: "100%",
@@ -287,8 +321,9 @@ class Signin extends Component {
                 Say goodbye to papers
               </h1>
             </div>
-          </div>
+          </div> */}
         </div>
+      
       </div>
     );
   }
@@ -297,18 +332,12 @@ const mapStateToProps = ({ authUser }) => {
   const { user, loading, error } = authUser;
   return { user, loading, error };
 };
-/*
-export default withRouter(connect(null)(Signin));
-const mapStateToProps = ({ authUser }) => {
-	const { user, loading } = authUser;
-	return { user, loading }
-}
-*/
+
 export default withRouter(
   connect(
     mapStateToProps,
     {
-      signInUserWithEmailPassword,
+      signInAccount,
       userResentEmail,
       handleRegErrorForm
     }

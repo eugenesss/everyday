@@ -193,7 +193,7 @@ class acct_view_quotation extends Component {
               <MatButton
                 variant="contained"
                 className="btn-primary mr-10 text-white"
-                onClick={() => console.log("Email Client")}
+                onClick={() => {}}
               >
                 Email Client
               </MatButton>
@@ -241,7 +241,7 @@ class acct_view_quotation extends Component {
           break;
 
         case "Converted":
-          console.log("Converted Mode");
+          // console.log("Converted Mode");
           break;
 
         default:

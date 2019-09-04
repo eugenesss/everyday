@@ -59,6 +59,7 @@ export default (state = INIT_STATE, action) => {
     case types.LOGIN_USER_FAILURE:
       if (action.payload.message == "login failed") {
         NotificationManager.error(action.payload.message);
+
         return {
           ...state,
           loading: false,
@@ -67,6 +68,7 @@ export default (state = INIT_STATE, action) => {
         };
       } else {
         NotificationManager.error(action.payload.message);
+
         return {
           ...state,
           loading: false,
@@ -273,6 +275,21 @@ export default (state = INIT_STATE, action) => {
 
     case types.HANDLE_REGISTER_ERROR:
       NotificationManager.error(action.payload);
+      return { ...state, loading: false };
+
+    case HANDLE_REGISTER_SUCCESS:
+      NotificationManager.success(action.payload);
+      return { ...state, loading: false };
+
+    case HANDLE_REGISTER_WARNING:
+      // var Constants = {
+      //   CHANGE: 'change',
+      //   INFO: 'info',
+      //   SUCCESS: 'success',
+      //   WARNING: 'warning',
+      //   ERROR: 'error'
+      // };
+      NotificationManager.warning(action.payload);
       return { ...state, loading: false };
 
     /* profile stuff */

@@ -43,8 +43,22 @@ class forgetpassword extends Component {
 
         <div className="login_module">
           <div className="row justify-content-center">
-            <div className="col-8">
+          <div className="col-md-8 col-sm-12">
               <div className="session-body text-center">
+
+              
+                <div className="logo-mini" style={{marginBottom: 25, textAlign:'left'}}>
+                    <img
+                      src={require("Assets/img/appLogo_orig_light.png")}
+                      alt="site logo"
+                      width="150"
+                    />
+                    <p className="session-head fw-light text-left mb-30 fs-14 text-muted" style={{margin: 5}}>
+                        Work-life has never been better
+                    </p>
+                </div>
+
+
                 <h2 className="text-left">
                   Lost your account?
                   <br />
@@ -78,10 +92,10 @@ class forgetpassword extends Component {
                     <i className="ti-email" />
                   </span>
                   <FormFeedback>
-                    Oh noes! You need to input a valid email addresss!
+                    You need to input a valid email addresss!
                   </FormFeedback>
                   <FormFeedback valid>
-                    We will look for your delicious email!
+                    The email address is valid!
                   </FormFeedback>
                 </FormGroup>
 
@@ -118,70 +132,29 @@ class forgetpassword extends Component {
           </div>
         </div>
 
-        <div className="login_placeholder">
-          <video
-            src="https://ak5.picdn.net/shutterstock/videos/1015322305/preview/stock-footage-creative-business-team-having-meeting-at-the-office-successful-deal-business-partners-concluding.mp4"
-            loop
-            autoPlay
-            type="video/mp4"
-            style={{
-              minHeight: "100%",
-              minWidth: "100%",
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              overflow: "hidden"
-            }}
-          />
 
-          <div
-            style={{
-              position: "relative",
-              height: "100%",
-              width: "100%",
-              backgroundColor: "rgba(0,0,0,0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column"
-            }}
-          >
-            <div
+        <div className="login_placeholder" style={{flexDirection:'column', justifyContent:'center'}}>
+            
+            <img
+              src={require("Assets/img/appSignUp_yellow.png")}
+              alt="site logo"
               style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column"
+                  height: '45%',
+                  marginBottom: 25,
               }}
-            >
-              <h1
-                className="mb-0 text-black"
-                style={{ fontSize: 32, color: "white" }}
-              >
-                Make your life easier
-              </h1>
-              <h1
-                className=" mb-0 text-black"
-                style={{ fontSize: 32, color: "white" }}
-              >
-                No more papers
-              </h1>
+            />
 
-              <h1
-                className="mb-0 text-black"
-                style={{ fontSize: 32, color: "white" }}
-              >
-                Digitise your workflow
-              </h1>
-              <h1
-                className=" mb-0 text-black"
-                style={{ fontSize: 32, color: "white" }}
-              >
-                Say goodbye to papers
-              </h1>
-            </div>
-          </div>
+            <h2 className="text-center">
+              Overview In One Click
+            </h2>
+            <p className="session-head fw-light text-center mb-30 fs-14 text-muted">
+              Digitalise your workprocesses to cloud
+              <br />
+              Accessable anywhere and anytime
+            </p>
+
         </div>
+
       </div>
     );
   }

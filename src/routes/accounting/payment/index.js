@@ -53,9 +53,23 @@ const data = [{
 }]
 
 class acct_payment extends Component {
+
   componentDidMount() {
     this.props.fetchAllPayment();
   }
+
+  refresh() {
+    // this.props.getAllLead();
+  }
+  
+  importPayment() {
+    // this.props.history.push(leadImportPage);
+  }
+
+  newPayment = () => {
+    this.props.history.push(newPayment);
+  }
+
 
   render() {
     const {
@@ -74,18 +88,12 @@ class acct_payment extends Component {
          <meta name="description" content="Everyday Payment Management" />
        </Helmet>
        <PageTitleBar
-         title={
-           <div className="d-flex">
-             {/* <ListViewSelector
-               dropdownOpen={dropdownOpen}
-               toggle={this.props.toggleInvoiceDropDown}
-               options={options}
-               nowShowing={nowShowing}
-               onChangeValue={this.props.changeInvoiceView}
-             />
-             <ShowListSummaryButton action={this.props.toggleInvoiceSummary} /> */}
-           </div>
-         }
+         title={'All Payments'}
+         actionGroup={{
+           add: { onClick: this.newPayment },
+           mid: { label: "Import", onClick: this.importPayment },
+           more: [{ label: "Refresh List", onClick: this.refresh }]
+         }}
          createLink={newPayment}
        />
        {/* {showSummary && <ListSummary summary={summary} />} */}

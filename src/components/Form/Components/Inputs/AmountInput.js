@@ -6,6 +6,7 @@ import FormInput from "Components/Form/Components/FormInput";
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
+  console.log("AmountInput ", props.target);
   return (
     <NumberFormat
       {...other}
@@ -29,7 +30,6 @@ NumberFormatCustom.propTypes = {
 
 const AmountInput = props => {
   const { nodollar, ...others } = props;
-
   return (
     <FormInput
       disabled={props.disabled}

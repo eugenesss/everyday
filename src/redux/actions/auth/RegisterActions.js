@@ -5,12 +5,14 @@ import {
   HANDLE_REGISTER_FORM,
 
   HANDLE_REGISTER_ERROR,
-
+  HANDLE_REGISTER_SUCCESS,
+  HANDLE_REGISTER_WARNING,
+  
   HANDLE_RESET_SUCCESS
 } from "Types";
 
 export const registerUser = () => ({
-  type: SIGNUP_USER
+  type: SIGNUP_USER,
 });
 export const registerUserSuccess = (success, msg) => ({
   type: SIGNUP_USER_SUCCESS,
@@ -30,6 +32,17 @@ export const handleRegErrorForm = (value) => ({
   type: HANDLE_REGISTER_ERROR,
   payload: value
 });
+
+export const handleRegSuccessForm = (value) => ({
+  type: HANDLE_REGISTER_SUCCESS,
+  payload: value
+});
+
+export const handleRegWarningForm = (value) => ({
+  type: HANDLE_REGISTER_WARNING,
+  payload: value
+});
+
 
 export const resetSuccess = () => ({
   type: HANDLE_RESET_SUCCESS

@@ -25,8 +25,22 @@ import {
 } from "Actions";
 
 class acct_invoice extends Component {
+
+
   componentDidMount() {
     this.props.getAllInvoice();
+  }
+
+  refresh() {
+    // this.props.getAllLead();
+  }
+  
+  importInvoice() {
+    // this.props.history.push(leadImportPage);
+  }
+
+  newInvoice = () =>{
+    this.props.history.push(invoiceNewPage);
   }
 
   render() {
@@ -51,18 +65,12 @@ class acct_invoice extends Component {
           <meta name="description" content="Everyday Invoice Management" />
         </Helmet>
         <PageTitleBar
-          title={
-            <div className="d-flex">
-              {/* <ListViewSelector
-                dropdownOpen={dropdownOpen}
-                toggle={this.props.toggleInvoiceDropDown}
-                options={options}
-                nowShowing={nowShowing}
-                onChangeValue={this.props.changeInvoiceView}
-              />
-              <ShowListSummaryButton action={this.props.toggleInvoiceSummary} /> */}
-            </div>
-          }
+          title={'All Invoices'}
+          actionGroup={{
+            add: { onClick: this.newInvoice },
+            mid: { label: "Import", onClick: this.importInvoice },
+            more: [{ label: "Refresh List", onClick: this.refresh }]
+          }}
           createLink={invoiceNewPage}
         />
         {/* {showSummary && <ListSummary summary={summary} />} */}

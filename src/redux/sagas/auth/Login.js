@@ -56,6 +56,7 @@ function* signInUserWithEmailPassword({ payload }) {
   const { emailAddress, password } = payload.user;
   const { history } = payload;
 
+  
   try {
     const signInUser = yield call(
       signInUserWithEmailPasswordRequest,
@@ -141,7 +142,7 @@ function* UserResentPassword({ payload }) {
   }
 }
 
-export function* signinUser() {
+export function* signinUserWatcher() {
   yield takeEvery(LOGIN_USER, signInUserWithEmailPassword);
 }
 
@@ -163,7 +164,7 @@ export function* getAccessRights() {
 
 export default function* rootSaga() {
   yield all([
-    fork(signinUser),
+    fork(signinUserWatcher),
     fork(signoutUser),
     fork(usersentEmail),
     fork(usersentPassword),

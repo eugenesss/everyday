@@ -26,9 +26,23 @@ import {
 } from "Actions";
 
 class acct_quotation extends Component {
+
+
   componentDidMount() {
     this.props.getAllQuotation();
     this.props.getQuotationSummary();
+  }
+
+  refresh() {
+    // this.props.getAllLead();
+  }
+  
+  importQuotation() {
+    // this.props.history.push(leadImportPage);
+  }
+
+  newQuotation = () => {
+    this.props.history.push(quoteNewPage);
   }
 
   render() {
@@ -49,21 +63,13 @@ class acct_quotation extends Component {
           <meta name="description" content="Everyday Quotation Management" />
         </Helmet>
         <PageTitleBar
-          title={
-            <div className="d-flex">
-              {/* <ListViewSelector
-                dropdownOpen={dropdownOpen}
-                toggle={this.props.toggleQuotationDropDown}
-                options={options}
-                nowShowing={nowShowing}
-                onChangeValue={this.props.changeQuotationView}
-              />
-              <ShowListSummaryButton
-                action={this.props.toggleQuotationSummary}
-              /> */}
-            </div>
-          }
-          createLink={quoteNewPage}
+          title={'All Quotations'}
+          // createLink={quoteNewPage}
+          actionGroup={{
+            add: { onClick: this.newQuotation },
+            mid: { label: "Import", onClick: this.importQuotation },
+            more: [{ label: "Refresh List", onClick: this.refresh }]
+          }}
         />
         {/* showSummary && <ListSummary summary={summary} /> */}
         <QuotationList
