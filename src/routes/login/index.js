@@ -76,17 +76,28 @@ class Signin extends Component {
 
         <div className="login_module">
           <div className="row justify-content-center">
-            <div className="col-8">
+            <div className="col-md-8 col-sm-12">
               <div className="session-body text-center">
-                <h2 className="text-left">
-                  Get your free
-                  <br />
-                  {AppConfig.brandName} account now.
+
+                <div className="logo-mini" style={{marginBottom: 25, textAlign:'left'}}>
+                    <img
+                      src={require("Assets/img/appLogo_orig_light.png")}
+                      alt="site logo"
+                      width="150"
+                    />
+                    <p className="session-head fw-light text-left mb-30 fs-14 text-muted" style={{margin: 5}}>
+                        Work-life has never been better
+                    </p>
+                </div>
+
+                <h2 className="text-left
+                ">
+                  Get your {AppConfig.brandName} account now
                 </h2>
                 <p className="session-head fw-light text-left mb-30 fs-14 text-muted">
-                  Try Everyday Business free for 30 days.
+                  Try everyday business account
                   <br />
-                  Everyday basic free for unlimited time
+                  forever free for unlimited time
                 </p>
 
                 {/* onSubmit={this.onUserLogin} */}
@@ -227,8 +238,9 @@ class Signin extends Component {
           </div>
         </div>
 
-        <div className="login_placeholder">
-          <video
+        {/* appSignUpIn_yellow */}
+        <div className="login_placeholder"  style={{flexDirection:'column', justifyContent:'center'}}>
+          {/* <video
             src="https://ak5.picdn.net/shutterstock/videos/1015322305/preview/stock-footage-creative-business-team-having-meeting-at-the-office-successful-deal-business-partners-concluding.mp4"
             loop={true}
             autoPlay
@@ -241,9 +253,29 @@ class Signin extends Component {
               bottom: 0,
               overflow: "hidden"
             }}
-          />
+          /> */}
 
-          <div
+            <img
+              src={require("Assets/img/appSignIn_yellow.png")}
+              alt="site logo"
+              style={{
+                  height: '45%',
+                  marginBottom: 25,
+              }}
+            />
+
+   
+            <h2 className="text-center">
+              Automate Your Workflow
+            </h2>
+            <p className="session-head fw-light text-center mb-30 fs-14 text-muted">
+              Digitalise your work processes to cloud
+              <br />
+              Accessable anywhere and anytime
+            </p>
+
+
+          {/* <div
             style={{
               position: "relative",
               height: "100%",
@@ -289,7 +321,7 @@ class Signin extends Component {
                 Say goodbye to papers
               </h1>
             </div>
-          </div>
+          </div> */}
         </div>
       
       </div>

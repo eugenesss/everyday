@@ -98,10 +98,6 @@ class QuotationForm extends Component {
       };
     }
   
-
-    
-    console.log(this.props.quotationData)
-
   }
 
   componentWillUnmount(){
@@ -144,8 +140,7 @@ class QuotationForm extends Component {
   }
 
   _handleProdQuote =(element, value, key) => {
-    console.log("_handleProdQuote")
-    console.log(element, value, key)
+   
     let StateformFieldsProducts = [...this.state.formFieldsProducts]
     let formFields = {...this.state.formFields}
 
@@ -221,6 +216,24 @@ class QuotationForm extends Component {
   
   }
 
+  _restart = () =>{
+    console.log('restart')
+
+    let restartFormFieldsProducts = this.state.formFieldsProducts
+    restartFormFieldsProducts = [{...formFieldsProducts}]
+
+
+    let restartFormFields = this.state.formFields
+    restartFormFields.subtotal = 0
+    restartFormFields.tax_amount = 0
+    restartFormFields.discount_total = 0
+    restartFormFields.totalAmt = 0
+    restartFormFields.discount = ''
+    restartFormFields.discount_rate = 0
+  
+    this.setState({formFieldsProducts: restartFormFieldsProducts, formFields : restartFormFields})
+
+  }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
       if(prevProps.quotationList.uploaded != this.props.quotationList.uploaded){
@@ -411,6 +424,7 @@ class QuotationForm extends Component {
                   handleChange={this._handleProdQuote}
                   handleAdd={this._addNewProdQuote}
                   handleRemove={this._removeProdQuote}
+                  restart={this._restart}
                 />
               </div>
           </div>

@@ -42,6 +42,12 @@ const getAllCompanyPaymentRequest = async data => {
   return result.data;
 };
 
+const getAllInvoicesCompanyPaymentRequest = async data => {
+  const result = await api.post("/accountreconciles/getAllInvoicesOneCompany", {id: data}); 
+  return result.data;
+};
+
+
 //=========================
 // CALL(GENERATOR) ACTIONS
 //=========================
@@ -101,6 +107,18 @@ function* getAllCompanyPaymentFromDB({ payload }) {
   }
 }
 
+
+function* getAllInvoicesCompanyPaymentFromDB({ payload }) {
+  try {
+    const data = yield call(getAllInvoicesCompanyPaymentRequest, payload);
+    yield delay(500);
+    yield put(actions.fetchAllInovicesOneCompanySuccess(data.fields));
+  } catch (error) {
+    yield put(actions.fetchAllInovicesOneCompanyFailure(error));
+  }
+}
+
+
 //=======================
 // WATCHER FUNCTIONS
 //=======================
@@ -122,6 +140,11 @@ export function* getAllCompanyPaymentWatcher() {
   yield takeEvery(types.FETCH_ALL_COMPANINES, getAllCompanyPaymentFromDB);
 }
 
+export function* getAllInvoicesCompanyPaymentWatcher() {
+  yield takeEvery(types.FETCH_ALL_INVOICES_COMPANINES, getAllInvoicesCompanyPaymentFromDB);
+}
+
+
 //=======================
 // FORK SAGAS TO STORE
 //=======================
@@ -133,6 +156,16 @@ export default function* rootSaga() {
     fork(getSingleCompanyPaymentWatcher),
     fork(getAllCompanyPaymentWatcher),
 
+    fork(getAllInvoicesCompanyPaymentWatcher),
 
   ]);
 }
+
+
+
+
+// export const  = "FETCH_ALL_INVOICES_COMPANINES";
+// export const FETCH_ALL_INVOICES_COMPANINES_SUCCESS = "FETCH_ALL_INVOICES_COMPANINES_SUCCESS";
+// export const FETCH_ALL_INVOICES_COMPANINES_FAILURE = "FETCH_ALL_INVOICES_COMPANINES_FAILURE";
+
+

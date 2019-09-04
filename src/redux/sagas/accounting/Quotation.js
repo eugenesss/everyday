@@ -203,7 +203,6 @@ function* getAllQuoteFromDB() {
   try {
     const data = yield call(getAllQuoteRequest);
     yield delay(500);
-    console.log(data.fields)
     yield put(Actions.getQuotationSuccess(data.fields));
   } catch (error) {
     yield put(Actions.getQuotationFailure(error));

@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import { Form, FormGroup, Label, Col } from "reactstrap";
 import TextField from '@material-ui/core/TextField';
 import {KeyboardDatePicker} from '@material-ui/pickers';
@@ -14,41 +14,49 @@ import FormInput from "Components/Form/Components/FormInput";
 import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
 
 
-export default class PaymentList extends Component {
+export default class PaymentList extends PureComponent {
     
     constructor(props) {
         super(props)   
         
         this.companyList = this.props.companyList
 
-        this.state = (
-            {
-                customer: '',
-                invoiceId: '',
-                paidAmount : 0,
-                paymentMethod: '',
-                date: new Date(),
-                paymentRef: '',
-                memo : '',
-                paymentDifference: 'Keep Open'
-            }
-        )
+        // this.state = (
+        //     {
+        //         customer: '',
+        //         invoiceId: '',
+        //         paidAmount : 0,
+        //         paymentMethod: '',
+        //         date: new Date(),
+        //         paymentRef: '',
+        //         memo : '',
+        //         paymentDifference: 'Keep Open'
+        //     }
+        // )
     }
 
 
 
     handleChange = (a, b) => {
-        this.setState({[a]: b})
-        // if all items are filled, send to parent
-        // this.props.preparePayment()
+
+        if(a == "customer"){
+            const filterItem = this.props.companyList.filter(e => {
+                if(e.value == b){
+                    return e
+                }
+            })
+            this.props._renderAllInvoicesForOneCompany(filterItem[0])
+        }
+
+        this.props.onSetState(a, b)
+        // this.setState({[a]: b})
     }
   
 
 
     render(){
 
-        console.log(this.state.customer)
-
+        const {customer, paymentMethod, paymentDifference, paidAmount, paymentRef , memo, date} = this.props.state
         return(
         
             <div className="row">
@@ -57,8 +65,8 @@ export default class PaymentList extends Component {
                 <div className="col-md-6">  
                     <DatePickerInput
                         label="Payment Date"
-                        value={Moment(this.state.date).format('LLL')}
-                        required={!this.state.date}
+                        value={Moment(date).format('LLL')}
+                        required={!date}
                         onChange={date =>
                             this.handleChange('date', e._d)
                         }
@@ -72,7 +80,7 @@ export default class PaymentList extends Component {
                     {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
                          <FormInput
                             label="Company"
-                            value={this.state.customer}
+                            value={customer}
                             selectValues={this.props.companyList}
                             target="customer"
                             handleChange={this.handleChange}
@@ -83,8 +91,8 @@ export default class PaymentList extends Component {
                         
                         <FormInput
                             label="Payment Method"
-                            value={this.state.paymentMethod}
-                            required={!this.state.paymentMethod}
+                            value={paymentMethod}
+                            required={!paymentMethod}
                             selectValues={paymentOption}
                             target="paymentMethod"
                             handleChange={this.handleChange}
@@ -95,8 +103,8 @@ export default class PaymentList extends Component {
                         
                         <FormInput
                             label="Payment Method"
-                            value={this.state.paymentDifference}
-                            required={!this.state.paymentDifference}
+                            value={paymentDifference}
+                            required={!paymentDifference}
                             selectValues={paymentDifferenceOptions}
                             target="paymentDifference"
                             handleChange={this.handleChange}
@@ -110,8 +118,8 @@ export default class PaymentList extends Component {
                     {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
                         <AmountInput
                             label="Paid Amount"
-                            value={this.state.paidAmount}
-                            required={!this.state.paidAmount}
+                            value={paidAmount}
+                            required={!paidAmount}
                             target='paidAmount'
                             onChange={e => {
                                 this.handleChange("paidAmount", e.target.value)
@@ -124,8 +132,8 @@ export default class PaymentList extends Component {
                         
                         <FormInput
                             label="Payment Ref"
-                            value={this.state.paymentRef}
-                            required={!this.state.paymentRef}
+                            value={paymentRef}
+                            required={!paymentRef}
                             target='paymentRef'
                             handleChange={this.handleChange}
                         />
@@ -136,7 +144,7 @@ export default class PaymentList extends Component {
                         
                         <FormInput
                             label="Memo"
-                            value={this.state.memo}
+                            value={memo}
                             target="memo"
                             handleChange={this.handleChange}
                         />

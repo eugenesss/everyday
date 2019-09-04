@@ -11,10 +11,20 @@ import InvoiceTotalTableInput from "./InvoiceTotalTableInput";
 import MatButton from "@material-ui/core/Button";
 import Button from "@material-ui/core/Button";
 
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
+
+
+
+
 import FormInput from "Components/Form/Components/FormInput";
 import FormMultiInput from "Components/Form/Components/FormMultiInput";
 import AmountInput from "Components/Form/Components/Inputs/AmountInput";
 import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
+
+import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
+
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
@@ -28,12 +38,16 @@ export default class InvoiceProductInput extends PureComponent {
       handleChange,
       handleAdd,
       handleRemove,
+      restart,
       taxTable,
       disabled
     } = this.props;
 
     return (
       <React.Fragment>
+
+    
+
         {products.map((row, key) => {
           return (
             <div
@@ -80,22 +94,20 @@ export default class InvoiceProductInput extends PureComponent {
                 nodollar
                 target="quantity"
                 keys={key}
-                // handleChange={handleChange}
-                onChange={e => {
-                  handleChange("quantity", e.target.value, key)
-                }}
+                handleChange={handleChange}
+                // onChange={e => {
+                //   handleChange("quantity", e.target.value, key)
+                // }}
               />
 
               <AmountInput
-                label="Price Per Item"
+                label="Price Per Item ($)"
                 value={row.price}
                 required={!row.price}
                 target="price"
+                // nodollar
                 keys={key}
-                onChange={e => {
-                  handleChange("price", e.target.value, key)
-                }}
-                // handleChange={handleChange}
+                handleChange={handleChange}
               />
 
               <FormMultiInput
@@ -114,57 +126,77 @@ export default class InvoiceProductInput extends PureComponent {
                 value={`${row.tax_rate}%`}
               />
 
-              <AmountInput
-                label="Discount"
-                value={row.discount ? row.discount : 0}
-                target="discount"
-                keys={key}
-                handleChange={handleChange}
-              />
+              {/* <div style={{width:'80%'}}>
+                <EditableInput style={{fontSize: 35, color:'#464d69'}} label="Tax" value={`${row.tax_rate}%`} />
+              </div> */}
 
-              <AmountInput label="Amount" disabled={true} value={row.amount} />
-          
+              {/* <div className="d-flex align-items-center"> */}
+                <AmountInput
+                  label="Discount"
+                  value={row.discount}
+                  target="discount"
+                  keys={key}
+                  handleChange={handleChange}
+                  // onChange={e => {
+                  //   console.log(e.target.value)
+                  //   handleChange("price", e.target.value, key)
+                  // }}
+                />
+              {/* </div> */}
+
+              <AmountInput nodollar label="Amount" disabled={true} value={row.amount} />
+
+              {/* <div style={{width:'80%'}}>
+                <EditableInput style={{fontSize: 35, color:'#464d69'}} label="Amount" value={`$${row.amount}`} />
+              </div> */}
+
               {key > 0 && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className="text-white ml-10"
-                  onClick={() => handleRemove(key)}
-                >
-                  Delete Item
-                </Button>
+                <div className="flex-column d-flex align-items-center justify-content-center">
+                  <DeleteIcon
+                    variant="contained"
+                    color="primary"
+                    fontSize="large"
+                    onClick={() => handleRemove(key)}
+                  />
+                  Delete                    
+                </div>
               )}
 
               {key == 0 && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className="text-white ml-10"
-                  // onClick={() => handleRemove(key)}
-                >
-                  Restart Item
-                </Button>
+                <div className="flex-column d-flex align-items-center justify-content-center">
+                  <AutorenewIcon
+                    variant="contained"
+                    color="primary"
+                    fontSize="large"
+                    // className="ml-10"
+                    onClick={() => restart()}
+                  />
+                    Restart
+                </div>
               )}
             </div>
           );
         })}
 
-        <div className="row">
+        <div className="row" style={{marginTop: 10}}>
           <div className="col-md-12 d-flex justify-content-end">
-            <div>
+            <div className="d-flex align-items-center">
               {!disabled && (
-                <Button
+                <div className="flex-column d-flex align-items-center">
+                <AddCircleIcon
                   variant="contained"
                   color="primary"
-                  className="text-white ml-10"
+                  fontSize="large"
+                  // className="text-white ml-10"
                   onClick={() => handleAdd()}
-                >
+                />
                   Add Product
-                </Button>
+                </div>
               )}
             </div>
           </div>
         </div>
+        
       </React.Fragment>
     );
   }

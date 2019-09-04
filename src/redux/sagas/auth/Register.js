@@ -23,12 +23,15 @@ const registerUserRequest = async form => {
 function* registerUserToDB() {
   // console.log('registerUserToDB')
   // console.log(payload)
+
   const getRegisterForm = state => state.authUser.register.form;
-  const form = yield select(getRegisterForm);
+
 
   try {
+    const form = yield select(getRegisterForm);
     const data = yield call(registerUserRequest, form);
-    yield delay(800);
+
+    // yield delay(800);
     yield put(registerUserSuccess(data.msg));
   } catch (error) {
     yield put(registerUserFailure(error.response.data.error.message));

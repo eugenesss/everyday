@@ -144,3 +144,22 @@ export const fetchAllCompaniesFailure = data => ({
   type: types.FETCH_ALL_COMPANINES_FAILURE,
   payload: data
 });
+
+
+
+
+export const fetchAllInovicesOneCompany = data => ({
+  type: types.FETCH_ALL_INVOICES_COMPANINES,
+  payload: data
+});
+
+export const fetchAllInovicesOneCompanySuccess = data => ({
+  type: types.FETCH_ALL_INVOICES_COMPANINES_SUCCESS,
+  payload: data
+});
+
+export const fetchAllInovicesOneCompanyFailure = data => ({
+  type: types.FETCH_ALL_INVOICES_COMPANINES_FAILURE,
+  payload: data
+});
+

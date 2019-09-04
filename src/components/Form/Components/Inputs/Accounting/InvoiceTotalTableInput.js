@@ -9,6 +9,7 @@ import FormMultiInput from "Components/Form/Components/FormMultiInput";
 import AmountInput from "Components/Form/Components/Inputs/AmountInput";
 import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
 
+import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
 
 
 function ccyFormat(num) {
@@ -26,20 +27,32 @@ const InvoiceTotalTableInput = ({ invoice }) => {
           value={invoice.subtotal? ccyFormat(invoice.subtotal) : 0}
         />
 
+        {/* <EditableInput style={{fontSize: 35, color:'#464d69'}} label="Subtotal" value={`$${invoice.subtotal? ccyFormat(invoice.subtotal) : 0}`} /> */}
+              
+
         <FormInput
           label="Tax"
           value={invoice.tax_amount? ccyFormat(invoice.tax_amount):0}
         />
+
+        {/* <EditableInput style={{fontSize: 35, color:'#464d69'}} label="Tax" value={`$${invoice.tax_amount? ccyFormat(invoice.tax_amount):0}`} /> */}
+
 
         <FormInput
           label="Discount"
           value={invoice.discount_rate? `${invoice.discount_rate}%`: `0%`}
         />
 
+        {/* <EditableInput style={{fontSize: 35, color:'#464d69'}} label="Discount" value={invoice.discount_rate? `${invoice.discount_rate}%`: `0%`} /> */}
+
+
         <FormInput
           label="Total Amount"
           value={invoice.totalAmt? ccyFormat(invoice.totalAmt) : 0}
         />
+
+        {/* <EditableInput style={{fontSize: 35, color:'#464d69'}} label="Total Amount" value={`$${invoice.totalAmt? ccyFormat(invoice.totalAmt) : 0}`} /> */}
+
 
       {/* <TableBody>
         <TableRow>

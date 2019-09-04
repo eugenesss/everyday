@@ -14,6 +14,9 @@ import {
   SIGNUP_USER_FAILURE,
   HANDLE_REGISTER_FORM,
   HANDLE_REGISTER_ERROR,
+  HANDLE_REGISTER_SUCCESS,
+  HANDLE_REGISTER_WARNING,
+
   HANDLE_RESET_SUCCESS,
   LOGIN_USER_RESENT_EMAIL,
   LOGIN_USER_RESENT_EMAIL_SUCCESS,
@@ -187,11 +190,9 @@ export default (state = INIT_STATE, action) => {
      * Register
      */
     case SIGNUP_USER:
-      console.log('SIGNUP_USER', true)
       return { ...state, register: { ...state.register, loading: true } };
 
     case SIGNUP_USER_SUCCESS:
-      console.log('SIGNUP_USER_SUCCESS', false)
       NotificationManager.success("Accout Created");
       return {
         ...state,
@@ -295,13 +296,28 @@ export default (state = INIT_STATE, action) => {
       NotificationManager.error(action.payload);
       return { ...state, loading: false };
 
+      
+    case HANDLE_REGISTER_SUCCESS:
+        NotificationManager.success(action.payload);
+        return { ...state, loading: false };
+
+    case HANDLE_REGISTER_WARNING:
+        // var Constants = {
+        //   CHANGE: 'change',
+        //   INFO: 'info',
+        //   SUCCESS: 'success',
+        //   WARNING: 'warning',
+        //   ERROR: 'error'
+        // };
+        NotificationManager.warning(action.payload);
+        return { ...state, loading: false };
+    
+        
     /* profile stuff */
     case UPDATE_PASSWORD:
       return { ...state, loading: true };
     case UPDATE_PASSWORD_SUCCESS:
-      NotificationManager.success(
-        "Password changed successfully."
-      );
+      NotificationManager.success("Password changed successfully.");
       return { ...state, loading: false, error: "" };
 
     case UPDATE_PASSWORD_FAILURE:

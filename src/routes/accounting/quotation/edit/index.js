@@ -42,10 +42,7 @@ class acct_edit_quotation extends Component {
   //   this.props.submitNewQuote(element, item)
   // }
 
-
   _quotationParent = (item) =>{
-    console.log("_quotationParent")
-    console.log(item)
     this.props.submitNewQuote(item)
   }
 
