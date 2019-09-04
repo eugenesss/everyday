@@ -2,38 +2,7 @@
  * Auth User Reducers
  */
 import { NotificationManager } from "react-notifications";
-<<<<<<< HEAD
-import {
-  LOGIN_USER,
-  LOGIN_USER_SUCCESS,
-  LOGIN_USER_FAILURE,
-  LOGOUT_USER,
-  LOGOUT_USER_SUCCESS,
-  LOGOUT_USER_FAILURE,
-  SIGNUP_USER,
-  SIGNUP_USER_SUCCESS,
-  SIGNUP_USER_FAILURE,
-  HANDLE_REGISTER_FORM,
-  HANDLE_REGISTER_ERROR,
-  HANDLE_REGISTER_SUCCESS,
-  HANDLE_REGISTER_WARNING,
-
-  HANDLE_RESET_SUCCESS,
-  LOGIN_USER_RESENT_EMAIL,
-  LOGIN_USER_RESENT_EMAIL_SUCCESS,
-  LOGIN_USER_RESENT_EMAIL_FAILURE,
-  LOGIN_USER_RESET_PASSWORD,
-  LOGIN_USER_RESET_PASSWORD_SUCCESS,
-  LOGIN_USER_RESET_PASSWORD_FAILURE,
-  USER_RIGHTS_SUCCESS,
-  USER_RIGHTS_FAILURE,
-  UPDATE_PASSWORD,
-  UPDATE_PASSWORD_SUCCESS,
-  UPDATE_PASSWORD_FAILURE
-} from "Types";
-=======
 import * as types from "Types";
->>>>>>> origin
 
 /**
  * initial auth user
@@ -86,13 +55,8 @@ export default (state = INIT_STATE, action) => {
           ...action.payload.userInfo
         }
       };
-<<<<<<< HEAD
-    case LOGIN_USER_FAILURE:
-
-=======
 
     case types.LOGIN_USER_FAILURE:
->>>>>>> origin
       if (action.payload.message == "login failed") {
         NotificationManager.error(action.payload.message);
 
@@ -209,12 +173,7 @@ export default (state = INIT_STATE, action) => {
      */
     case types.SIGNUP_USER:
       return { ...state, register: { ...state.register, loading: true } };
-<<<<<<< HEAD
-
-    case SIGNUP_USER_SUCCESS:
-=======
     case types.SIGNUP_USER_SUCCESS:
->>>>>>> origin
       NotificationManager.success("Accout Created");
       return {
         ...state,
@@ -319,11 +278,11 @@ export default (state = INIT_STATE, action) => {
       return { ...state, loading: false };
 
       
-    case HANDLE_REGISTER_SUCCESS:
+    case types.HANDLE_REGISTER_SUCCESS:
         NotificationManager.success(action.payload);
         return { ...state, loading: false };
 
-    case HANDLE_REGISTER_WARNING:
+    case types.HANDLE_REGISTER_WARNING:
         // var Constants = {
         //   CHANGE: 'change',
         //   INFO: 'info',
@@ -338,11 +297,7 @@ export default (state = INIT_STATE, action) => {
     /* profile stuff */
     case types.UPDATE_PASSWORD:
       return { ...state, loading: true };
-<<<<<<< HEAD
-    case UPDATE_PASSWORD_SUCCESS:
-=======
     case types.UPDATE_PASSWORD_SUCCESS:
->>>>>>> origin
       NotificationManager.success("Password changed successfully.");
       return { ...state, loading: false, error: "" };
 

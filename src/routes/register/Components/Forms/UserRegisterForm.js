@@ -107,7 +107,7 @@ const RegisterForm = props => {
               </span>
     
               <FormFeedback>Need a valid email addresss!</FormFeedback>
-              <FormFeedback valid>Thats a valid email address!</FormFeedback>
+              <FormFeedback valid>Thats a tasty email you got there!</FormFeedback>
             </Col>
           </div>
 
@@ -188,7 +188,7 @@ const RegisterForm = props => {
                 <i className="ti-lock" />
               </span>
               <FormFeedback >The two passwords need to match</FormFeedback>
-              <FormFeedback valid>Great, the passwords match!</FormFeedback>
+              <FormFeedback valid>Sweet, the passwords matched!</FormFeedback>
             </Col>
           </div>
         </FormGroup>

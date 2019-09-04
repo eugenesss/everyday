@@ -1,7 +1,7 @@
 import * as types from "Types/auth/LoginTypes";
 
 export const signInAccount = (user, history) => ({
-  type: LOGIN_USER,
+  type: types.LOGIN_USER,
   payload: { user, history }
 });
 export const signinUserSuccess = (user, accessRights, userInfo) => ({

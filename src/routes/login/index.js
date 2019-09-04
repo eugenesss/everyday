@@ -32,7 +32,8 @@ class Signin extends Component {
   /**
    * On User Login
    */
-  onUserLogin = () => {
+  onUserLogin = (e) => {
+    e.preventDefault()
    
     if (this.state.emailAddress !== "" && this.state.password !== "") {
       this.props.signInAccount(this.state, this.props.history)
@@ -101,7 +102,7 @@ class Signin extends Component {
                 </p>
 
                 {/* onSubmit={this.onUserLogin} */}
-                <Form>
+                <Form onSubmit={this.onUserLogin}  >
                   <FormGroup className="has-wrapper">
                     <Input
                       type="email"
@@ -117,7 +118,6 @@ class Signin extends Component {
                     />
                   </FormGroup>
 
-                  {/* {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && ( */}
                     <div className="mb-40">
                       <FormGroup
                         className="has-wrapper"
@@ -134,6 +134,7 @@ class Signin extends Component {
                           onChange={event =>
                             this.setState({ password: event.target.value })
                           }
+                         
                         />
 
                         {/* <span className="has-icon" style={{ top: 6 }}>
@@ -152,9 +153,7 @@ class Signin extends Component {
                         </a>
                       </div>
                     </div>
-                  {/* )} */}
 
-                  {/* {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && ( */}
                     <FormGroup className="mb-20">
                       <Fab
                         variant="extended"
@@ -164,8 +163,9 @@ class Signin extends Component {
                         style={{
                           marginBottom: "1.5rem"
                         }}
+                        type="submit"
                       >
-                        <span onClick={() => this.onUserLogin()} style={{ width: 120 }}>Sign in</span>
+                        <span style={{ width: 120 }}>Sign in</span>
                       </Fab>
 
                       <div className="row d-flex justify-content-center align-items-center">
@@ -185,53 +185,7 @@ class Signin extends Component {
                     </FormGroup>
                   
 
-                  {/* {error == "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && (
-                    <FormGroup className="mb-20">
-                      <Fab
-                        variant="extended"
-                        className="text-white"
-                        size="large"
-                        style={{
-                          backgroundColor: AppConfig.themeColors.primary,
-                          marginBottom: "1.5rem",
-                          marginTop: "2rem"
-                        }}
-                        onClick={() => this.resentVerificationEmail()}
-                      >
-                        <Icon>trending_flat</Icon>
-                      </Fab>
-                      <div
-                        onClick={() => this.routeChange("register")}
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center"
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "rgba(0,0,0,0.5)",
-                            fontWeight: 300,
-                            fontSize: 14
-                          }}
-                        >
-                          You have signed up with us before
-                        </div>
-                        <div
-                          style={{
-                            color: "black",
-                            fontSize: 14,
-                            fontWeight: "400",
-                            marginLeft: 5
-                          }}
-                        >
-                          Resend verification email
-                        </div>
-                      </div>
-                    </FormGroup>
-                  )} */}
-   
+      
                 </Form>
               </div>
             </div>
