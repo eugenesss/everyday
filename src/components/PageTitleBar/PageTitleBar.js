@@ -17,22 +17,25 @@ const PageTitleBar = ({
   customButton,
   actionButton,
   actionGroup,
-  history
+  history,
+  noBack
 }) => {
   const classes = useStyles();
   return (
     <div className="page-title d-flex justify-content-between align-items-center">
       <div className="page-title-wrap">
-        <IconButton
-          onClick={() => history.goBack()}
-          disableRipple
-          aria-label="back"
-        >
-          <ArrowBack
-            fontSize="small"
-            style={{ color: "rgba(0, 0, 0, 0.54)" }}
-          />
-        </IconButton>
+        {!noBack && (
+          <IconButton
+            onClick={() => history.goBack()}
+            disableRipple
+            aria-label="back"
+          >
+            <ArrowBack
+              fontSize="small"
+              style={{ color: "rgba(0, 0, 0, 0.54)" }}
+            />
+          </IconButton>
+        )}
         <h2 className="">{title && title}</h2>
       </div>
       <div className="d-flex">

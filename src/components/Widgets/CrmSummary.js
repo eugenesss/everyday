@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DataBlock from "./DataBlock";
-import { Stars } from "@material-ui/icons";
-
 // actions
 import { getCrmSummary } from "Actions";
 
@@ -14,37 +12,41 @@ class CrmSummary extends Component {
     const { loading, data } = this.props.crmSummary;
     return (
       <div className="row">
-        <div className="col-3">
+        <div className="col">
           <DataBlock
-            label={"Total Leads"}
+            label={"lead in total"}
             amount={data && data.totalLeads}
             loading={loading}
-            icon={<Stars />}
           />
         </div>
-        <div className="col-3">
+        <div className="col">
           <DataBlock
             loading={loading}
-            label={"Open Deals"}
+            label={"deals in pipeline"}
             amount={data && data.totalOpenDeals}
           />
         </div>
-        <div className="col-3">
+        <div className="col">
           <DataBlock
             loading={loading}
-            label={"Open Deal Amount"}
-            money
+            label={"in the pipeline"}
             amount={data && data.openDealsAmount}
           />
         </div>
-        <div className="col-3">
+        <div className="col">
           <DataBlock
             loading={loading}
-            label={"Total Deal Won"}
-            money
+            label={"sales this month"}
             amount={data && data.dealsWonAmount}
           />
         </div>
+        {/* <div className="col">
+          <DataBlock
+            loading={loading}
+            label={"in the pipeline"}
+            amount={data && data.dealsWonAmount}
+          />
+        </div> */}
       </div>
     );
   }

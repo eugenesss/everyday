@@ -1,32 +1,18 @@
 import React from "react";
-import CountUp from "react-countup";
-import NumberFormat from "react-number-format";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+
+import { kFormatter } from "Helpers/helpers";
 
 // rct card box
 import { RctCard } from "Components/RctCard";
 
-const DataBlock = ({ label, amount, money, loading, icon }) => (
+const DataBlock = ({ label, amount, loading }) => (
   <RctCard>
     {loading && <RctSectionLoader />}
-    <div className="rct-block-title d-flex justify-content-between">
-      <div className="d-flex align-items-start">
-        <h2>{label}</h2>
-      </div>
-      <div className="align-items-end">
-        <div className="featured-section-icon">{icon}</div>
-        <h2 className="d-block text-muted counter-point mt-40">
-          {money ? (
-            <NumberFormat
-              value={amount}
-              displayType={"text"}
-              thousandSeparator={true}
-              prefix={"$"}
-            />
-          ) : (
-            <CountUp start={0} end={amount} duration={1} useEasing={true} />
-          )}
-        </h2>
+    <div className="d-flex justify-content-center py-20">
+      <div className="text-center">
+        <h2 className="d-block counter-point">{kFormatter(amount)}</h2>
+        <p className="text-muted">{label}</p>
       </div>
     </div>
   </RctCard>
