@@ -14,7 +14,7 @@ import AppConfig from "Constants/AppConfig";
 
 // redux action
 import {
-  signInAccount,
+  signInUserWithEmailPassword,
   userResentEmail,
   handleRegErrorForm
 } from "Actions";
@@ -33,15 +33,13 @@ class Signin extends Component {
    * On User Login
    */
   onUserLogin = () => {
-   
     if (this.state.emailAddress !== "" && this.state.password !== "") {
-      this.props.signInAccount(this.state, this.props.history)
+      this.props.signInUserWithEmailPassword(this.state, this.props.history);
     } else {
       this.props.handleRegErrorForm(
         "Please type your email address and password"
       );
     }
-
   };
 
   routeChange(element) {
@@ -78,20 +76,27 @@ class Signin extends Component {
           <div className="row justify-content-center">
             <div className="col-md-8 col-sm-12">
               <div className="session-body text-center">
-
-                <div className="logo-mini" style={{marginBottom: 25, textAlign:'left'}}>
-                    <img
-                      src={require("Assets/img/appLogo_orig_light.png")}
-                      alt="site logo"
-                      width="150"
-                    />
-                    <p className="session-head fw-light text-left mb-30 fs-14 text-muted" style={{margin: 5}}>
-                        Work-life has never been better
-                    </p>
+                <div
+                  className="logo-mini"
+                  style={{ marginBottom: 25, textAlign: "left" }}
+                >
+                  <img
+                    src={require("Assets/img/appLogo_orig_light.png")}
+                    alt="site logo"
+                    width="150"
+                  />
+                  <p
+                    className="session-head fw-light text-left mb-30 fs-14 text-muted"
+                    style={{ margin: 5 }}
+                  >
+                    Work-life has never been better
+                  </p>
                 </div>
 
-                <h2 className="text-left
-                ">
+                <h2
+                  className="text-left
+                "
+                >
                   Get your {AppConfig.brandName} account now
                 </h2>
                 <p className="session-head fw-light text-left mb-30 fs-14 text-muted">
@@ -118,72 +123,76 @@ class Signin extends Component {
                   </FormGroup>
 
                   {/* {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && ( */}
-                    <div className="mb-40">
-                      <FormGroup
-                        className="has-wrapper"
-                        style={{ marginBottom: "0.5rem" }}
-                      >
-                        <Input
-                          value={password}
-                          style={password ? PasswordStyle : emptyField}
-                          type="Password"
-                          name="password"
-                          id="password"
-                          className="has-input input-lg"
-                          placeholder="Password"
-                          onChange={event =>
-                            this.setState({ password: event.target.value })
-                          }
-                        />
+                  <div className="mb-40">
+                    <FormGroup
+                      className="has-wrapper"
+                      style={{ marginBottom: "0.5rem" }}
+                    >
+                      <Input
+                        value={password}
+                        style={password ? PasswordStyle : emptyField}
+                        type="Password"
+                        name="password"
+                        id="password"
+                        className="has-input input-lg"
+                        placeholder="Password"
+                        onChange={event =>
+                          this.setState({ password: event.target.value })
+                        }
+                      />
 
-                        {/* <span className="has-icon" style={{ top: 6 }}>
+                      {/* <span className="has-icon" style={{ top: 6 }}>
                           <i className="ti-eye" />
                         </span> */}
-                      </FormGroup>
-                      <div className="text-right">
-                        <a
-                          className="fw-light fs-12"
-                          onClick={() => this.routeChange("forget")}
-                          style={{
-                            color: "rgba(0,0,0,0.4)"
-                          }}
-                        >
-                          Forget Password?
-                        </a>
-                      </div>
+                    </FormGroup>
+                    <div className="text-right">
+                      <a
+                        className="fw-light fs-12"
+                        onClick={() => this.routeChange("forget")}
+                        style={{
+                          color: "rgba(0,0,0,0.4)"
+                        }}
+                      >
+                        Forget Password?
+                      </a>
                     </div>
+                  </div>
                   {/* )} */}
 
                   {/* {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && ( */}
-                    <FormGroup className="mb-20">
-                      <Fab
-                        variant="extended"
-                        className="text-white"
-                        size="medium"
-                        color="primary"
-                        style={{
-                          marginBottom: "1.5rem"
-                        }}
+                  <FormGroup className="mb-20">
+                    <Fab
+                      variant="extended"
+                      className="text-white"
+                      size="medium"
+                      color="primary"
+                      style={{
+                        marginBottom: "1.5rem"
+                      }}
+                    >
+                      <span
+                        onClick={() => this.onUserLogin()}
+                        style={{ width: 120 }}
                       >
-                        <span onClick={() => this.onUserLogin()} style={{ width: 120 }}>Sign in</span>
-                      </Fab>
+                        Sign in
+                      </span>
+                    </Fab>
 
-                      <div className="row d-flex justify-content-center align-items-center">
-                        <p
-                          className="fs-12 fw-light"
-                          style={{ color: "rgba(0,0,0,0.4)" }}
+                    <div className="row d-flex justify-content-center align-items-center">
+                      <p
+                        className="fs-12 fw-light"
+                        style={{ color: "rgba(0,0,0,0.4)" }}
+                      >
+                        Not signed up yet?
+                        <a
+                          className="ml-5 fw-semi-bold"
+                          onClick={() => this.routeChange("register")}
                         >
-                          Not signed up yet?
-                          <a
-                            className="ml-5 fw-semi-bold"
-                            onClick={() => this.routeChange("register")}
-                          >
-                            Sign Up
-                          </a>
-                        </p>
-                      </div>
-                    </FormGroup>
-                  
+                          Sign Up
+                        </a>
+                      </p>
+                    </div>
+                  </FormGroup>
 
                   {/* {error == "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && (
                     <FormGroup className="mb-20">
@@ -231,7 +240,6 @@ class Signin extends Component {
                       </div>
                     </FormGroup>
                   )} */}
-   
                 </Form>
               </div>
             </div>
@@ -239,7 +247,10 @@ class Signin extends Component {
         </div>
 
         {/* appSignUpIn_yellow */}
-        <div className="login_placeholder"  style={{flexDirection:'column', justifyContent:'center'}}>
+        <div
+          className="login_placeholder"
+          style={{ flexDirection: "column", justifyContent: "center" }}
+        >
           {/* <video
             src="https://ak5.picdn.net/shutterstock/videos/1015322305/preview/stock-footage-creative-business-team-having-meeting-at-the-office-successful-deal-business-partners-concluding.mp4"
             loop={true}
@@ -255,25 +266,21 @@ class Signin extends Component {
             }}
           /> */}
 
-            <img
-              src={require("Assets/img/appSignIn_yellow.png")}
-              alt="site logo"
-              style={{
-                  height: '45%',
-                  marginBottom: 25,
-              }}
-            />
+          <img
+            src={require("Assets/img/appSignIn_yellow.png")}
+            alt="site logo"
+            style={{
+              height: "45%",
+              marginBottom: 25
+            }}
+          />
 
-   
-            <h2 className="text-center">
-              Automate Your Workflow
-            </h2>
-            <p className="session-head fw-light text-center mb-30 fs-14 text-muted">
-              Digitalise your work processes to cloud
-              <br />
-              Accessable anywhere and anytime
-            </p>
-
+          <h2 className="text-center">Automate Your Workflow</h2>
+          <p className="session-head fw-light text-center mb-30 fs-14 text-muted">
+            Digitalise your work processes to cloud
+            <br />
+            Accessable anywhere and anytime
+          </p>
 
           {/* <div
             style={{
@@ -323,7 +330,6 @@ class Signin extends Component {
             </div>
           </div> */}
         </div>
-      
       </div>
     );
   }
@@ -337,7 +343,7 @@ export default withRouter(
   connect(
     mapStateToProps,
     {
-      signInAccount,
+      signInUserWithEmailPassword,
       userResentEmail,
       handleRegErrorForm
     }
