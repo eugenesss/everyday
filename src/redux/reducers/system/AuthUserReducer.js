@@ -34,7 +34,8 @@ const INIT_STATE = {
   },
   error: "",
   loggedInUser: {
-    access: []
+    access: [],
+    baseContact: {}
   }
 };
 
@@ -79,6 +80,8 @@ export default (state = INIT_STATE, action) => {
     /**
      * User rights
      */
+    case types.USER_RIGHTS:
+      return { ...state, loading: true };
     case types.USER_RIGHTS_SUCCESS:
       return {
         ...state,
@@ -302,6 +305,25 @@ export default (state = INIT_STATE, action) => {
     case types.UPDATE_PASSWORD_FAILURE:
       NotificationManager.error(action.payload);
       return { ...state, loading: false, error: "" };
+    /**
+     * Update current user details
+     */
+    case types.UPDATE_CURRENT_USER:
+      return { ...state, loading: true };
+    case types.UPDATE_CURRENT_USER_SUCCESS:
+      NotificationManager.success("Personal details updated");
+      return {
+        ...state,
+        loading: false,
+        loggedInUser: { access: state.loggedInUser.access, ...action.payload }
+      };
+    case types.UPDATE_CURRENT_USER_FAILURE:
+      NotificationManager.error("Error in updating details");
+      console.log(action.payload);
+      return {
+        ...state,
+        loading: false
+      };
 
     default:
       return { ...state };

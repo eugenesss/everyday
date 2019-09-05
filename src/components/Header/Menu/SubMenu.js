@@ -8,6 +8,9 @@ import Tab from "@material-ui/core/Tab";
 import AppConfig from "Constants/AppConfig";
 
 const StyledTabs = withStyles({
+  flexContainer: {
+    justifyContent: "center"
+  },
   indicator: {
     display: "flex",
     justifyContent: "center",

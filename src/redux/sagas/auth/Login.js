@@ -5,7 +5,9 @@ import {
   LOGOUT_USER,
   LOGIN_USER_RESENT_EMAIL,
   LOGIN_USER_RESET_PASSWORD,
-  USER_RIGHTS
+  USER_RIGHTS,
+  UPDATE_CURRENT_USER,
+  UPDATE_PASSWORD
 } from "Types";
 
 import {
@@ -18,7 +20,11 @@ import {
   userResetPasswordFailure,
   userResetPasswordSuccess,
   userRightsSuccess,
-  userRightsFailure
+  userRightsFailure,
+  updateCurrentUserSuccess,
+  updateCurrentUserFailure,
+  updatePasswordSuccess,
+  updatePasswordFailure
 } from "Actions";
 
 import api from "Api";
@@ -34,21 +40,9 @@ const signInUserWithEmailPasswordRequest = async (email, password) => {
   return result.data;
 };
 
-// Access Rights API
-const getUserAccessRightsRequest = async () => {
-  const result = await api.get(`/accesssettings/user/accessRights`);
-  return result.data.data;
-};
-
 // User Profile API
 const getUserProfileRequest = async userID => {
   const result = await api.get(`/users/${userID}`, userID);
-  return result.data;
-};
-
-// Logout API
-const logoutUserWithAccessToken = async () => {
-  const result = await api.post(`/users/logout`);
   return result.data;
 };
 
@@ -56,7 +50,6 @@ function* signInUserWithEmailPassword({ payload }) {
   const { emailAddress, password } = payload.user;
   const { history } = payload;
 
-  
   try {
     const signInUser = yield call(
       signInUserWithEmailPasswordRequest,
@@ -81,6 +74,13 @@ function* signInUserWithEmailPassword({ payload }) {
   }
 }
 
+/**
+ * Get User rights
+ */
+const getUserAccessRightsRequest = async () => {
+  const result = await api.get(`/accesssettings/user/accessRights`);
+  return result.data.data;
+};
 function* getUserRights() {
   try {
     const userRights = yield call(getUserAccessRightsRequest);
@@ -92,6 +92,11 @@ function* getUserRights() {
   }
 }
 
+// Logout API
+const logoutUserWithAccessToken = async () => {
+  const result = await api.post(`/users/logout`);
+  return result.data;
+};
 function* logoutUser({}) {
   try {
     yield call(logoutUserWithAccessToken);
@@ -102,11 +107,13 @@ function* logoutUser({}) {
   }
 }
 
+/**
+ * Resend verification email
+ */
 const userResentVerificationEmail = async userId => {
   const result = await api.post(`/users/verify`, { id: userId });
   return result.data;
 };
-
 function* UserResentEmail({ payload }) {
   try {
     yield call(userResentVerificationEmail, payload.user);
@@ -116,6 +123,9 @@ function* UserResentEmail({ payload }) {
   }
 }
 
+/**
+ * Resent forget password email
+ */
 const userResentPasswordEmail = async email => {
   const result = await api.post(`/users/reset`, { email: email });
 
@@ -125,7 +135,6 @@ const userResentPasswordEmail = async email => {
     return result;
   }
 };
-
 function* UserResentPassword({ payload }) {
   try {
     yield call(userResentPasswordEmail, payload.email);
@@ -137,29 +146,72 @@ function* UserResentPassword({ payload }) {
     } else {
       errorMessage = error.message;
     }
-
     yield put(userResetPasswordFailure(errorMessage));
   }
 }
 
+/**
+ * Update current user
+ */
+const updateCurrentUserRequest = async data => {
+  const result = await api.patch(`users/${data.id}`, data);
+  return result.data;
+};
+function* updateCurrentUser({ payload }) {
+  try {
+    const data = yield call(updateCurrentUserRequest, payload);
+    yield put(updateCurrentUserSuccess(data));
+  } catch (error) {
+    yield put(updateCurrentUserFailure(error));
+  }
+}
+
+/**
+ * Update Password
+ */
+const updateUserPassword = async (oldPassword, newPassword) => {
+  await api.post(`/users/change-password`, {
+    oldPassword: oldPassword,
+    newPassword: newPassword
+  });
+  return true;
+};
+function* updatePasswordToDB({ payload }) {
+  try {
+    const data = yield call(
+      updateUserPassword,
+      payload.oldPassword,
+      payload.newPassword
+    );
+    yield put(updatePasswordSuccess(data));
+  } catch (err) {
+    yield put(updatePasswordFailure(err));
+  }
+}
+
+//=======================
+// WATCHER FUNCTIONS
+//=======================
 export function* signinUserWatcher() {
   yield takeEvery(LOGIN_USER, signInUserWithEmailPassword);
 }
-
 export function* signoutUser() {
   yield takeEvery(LOGOUT_USER, logoutUser);
 }
-
 export function* usersentEmail() {
   yield takeEvery(LOGIN_USER_RESENT_EMAIL, UserResentEmail);
 }
-
 export function* usersentPassword() {
   yield takeEvery(LOGIN_USER_RESET_PASSWORD, UserResentPassword);
 }
-
 export function* getAccessRights() {
   yield takeEvery(USER_RIGHTS, getUserRights);
+}
+export function* updateCurrentUserWatcher() {
+  yield takeEvery(UPDATE_CURRENT_USER, updateCurrentUser);
+}
+export function* updatePasswordWatcher() {
+  yield takeEvery(UPDATE_PASSWORD, updatePasswordToDB);
 }
 
 export default function* rootSaga() {
@@ -168,6 +220,8 @@ export default function* rootSaga() {
     fork(signoutUser),
     fork(usersentEmail),
     fork(usersentPassword),
-    fork(getAccessRights)
+    fork(getAccessRights),
+    fork(updateCurrentUserWatcher),
+    fork(updatePasswordWatcher)
   ]);
 }

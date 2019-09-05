@@ -11,8 +11,6 @@ export * from "./settings/userControl/RoleTypes";
 export * from "./settings/userControl/GroupTypes";
 
 // General Types
-export * from "./settings/general/ProfileTypes";
-
 export * from "./settings/general/CompanyTypes";
 
 // Accounting Types

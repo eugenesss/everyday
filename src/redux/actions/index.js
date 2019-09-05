@@ -29,7 +29,6 @@ export * from "./calendar/CalendarActions";
 // Settings Actions
 export * from "./settings/userControl/UsersActions";
 export * from "./settings/general/CompanyActions";
-export * from "./settings/general/ProfileActions";
 export * from "./settings/userControl/RolesActions";
 export * from "./settings/userControl/GroupsActions";
 

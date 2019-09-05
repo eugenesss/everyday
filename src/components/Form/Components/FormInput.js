@@ -30,11 +30,9 @@ class FormInput extends PureComponent {
       selectValues,
       target,
       keys,
+      helperText,
       ...others
     } = this.props;
-
-    console.log('FormInput ',label)
-
 
     return (
       <FormControl className={classes.root}>
@@ -45,7 +43,7 @@ class FormInput extends PureComponent {
           <Select
             value={value}
             onChange={e => handleChange(target, e.target.value, keys)}
-            input={<BaseInput />}
+            input={<BaseInput {...others} />}
           >
             {selectValues &&
               selectValues.map((select, key) => (
@@ -63,7 +61,11 @@ class FormInput extends PureComponent {
             {...others}
           />
         )}
-        {required && <FormHelperText error>* Required Field</FormHelperText>}
+        {required && (
+          <FormHelperText error>
+            {helperText ? helperText : "* Required Field"}
+          </FormHelperText>
+        )}
       </FormControl>
     );
   }

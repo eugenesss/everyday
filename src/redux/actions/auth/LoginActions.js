@@ -74,3 +74,36 @@ export const userRightsFailure = error => ({
   type: types.USER_RIGHTS_FAILURE,
   payload: error
 });
+
+/**
+ * Update current user details
+ */
+export const updateCurrentUser = data => ({
+  type: types.UPDATE_CURRENT_USER,
+  payload: data
+});
+export const updateCurrentUserSuccess = data => ({
+  type: types.UPDATE_CURRENT_USER_SUCCESS,
+  payload: data
+});
+export const updateCurrentUserFailure = error => ({
+  type: types.UPDATE_CURRENT_USER_FAILURE,
+  payload: error
+});
+
+/**
+ * Update Password
+ */
+
+export const updatePassword = (oldPassword, newPassword) => ({
+  type: UPDATE_PASSWORD,
+  payload: { oldPassword, newPassword }
+});
+export const updatePasswordSuccess = msg => ({
+  type: UPDATE_PASSWORD_SUCCESS,
+  payload: msg
+});
+export const updatePasswordFailure = err => ({
+  type: UPDATE_PASSWORD_FAILURE,
+  payload: err
+});

@@ -3,18 +3,17 @@ import React from "react";
 import DialogRoot from "Components/Dialog/DialogRoot";
 import UserControlForm from "Components/Form/Setting/General/UserControlForm";
 
-
-const UserControlDialog = ({handleClose, open}) => {
+const UserControlDialog = ({ handleClose, show, userToEdit }) => {
   return (
     <DialogRoot
-      show={open}
+      show={show}
       handleHide={handleClose}
       //size="md"
       title="User Control Settings"
     >
-      <UserControlForm/>
+      <UserControlForm userToEdit={userToEdit} />
     </DialogRoot>
   );
-}
+};
 
 export default UserControlDialog;

@@ -58,12 +58,12 @@ function Header(props) {
                 />
               </Link>
             </div>
-            <MainMenu
-              resetSubLink={changeMainLink}
-              location={location}
-              navLinks={navLinks}
-            />
           </div>
+          <MainMenu
+            resetSubLink={changeMainLink}
+            location={location}
+            navLinks={navLinks}
+          />
           <RightNav />
         </Toolbar>
       </AppBar>

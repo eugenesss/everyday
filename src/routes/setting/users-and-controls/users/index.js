@@ -1,32 +1,64 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import AccessControl from "Components/AccessControl";
-import NoAccessComponent from "Components/AccessControl/NoAccessComponent";
 import UsersList from "Components/Setting/UserControl/Users/UsersList";
+
+// Dialogs
+import AddUserDialog from "Components/Setting/UserControl/Users/AddUserDialog";
+import UserControlDialog from "Components/Setting/UserControl/Users/UserControlDialog";
+
+// Actions
 import { getAllUsers } from "Actions";
 
 class UsersLayout extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { addUserDialog: false, userControlDialog: false };
+    this.openAddUserDialog = this.openAddUserDialog.bind(this);
+    this.openUserControlDialog = this.openUserControlDialog.bind(this);
+  }
+
   componentDidMount() {
     this.props.getAllUsers();
   }
 
+  openAddUserDialog(id) {
+    this.setState({ addUserDialog: !this.state.addUserDialog, userToEdit: id });
+  }
+
+  openUserControlDialog() {
+    this.setState({ userControlDialog: !this.state.userControlDialog });
+  }
+
   render() {
+    const { userList, usersLoading } = this.props;
+    const { addUserDialog, userControlDialog, userToEdit } = this.state;
     return (
       <React.Fragment>
-        <AccessControl
-          action={["AccessSetting:viewall"]}
-          noAccessComponent={<NoAccessComponent />}
-        >
-          <UsersList />
-        </AccessControl>
+        <UsersList
+          action={{
+            openAddUserDialog: this.openAddUserDialog,
+            openUserControlDialog: this.openUserControlDialog
+          }}
+          tableData={userList}
+          loading={usersLoading}
+        />
+        <AddUserDialog
+          show={addUserDialog}
+          handleClose={this.openAddUserDialog}
+        />
+        <UserControlDialog
+          show={userControlDialog}
+          handleClose={this.openUserControlDialog}
+          userToEdit={userToEdit}
+        />
       </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = ({ usersState }) => {
-  const { users } = usersState;
-  return { users };
+  const { userList, usersLoading } = usersState;
+  return { userList, usersLoading };
 };
 
 export default connect(

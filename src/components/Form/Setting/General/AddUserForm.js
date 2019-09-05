@@ -1,39 +1,69 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Col, Row, Form } from "reactstrap";
 
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Select from "@material-ui/core/Select";
-import Checkbox from "@material-ui/core/Checkbox";
-import Chip from "@material-ui/core/Chip";
-import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
-import MenuItem from "@material-ui/core/MenuItem";
-import ListItemText from "@material-ui/core/ListItemText";
 
-import PropTypes from "prop-types";
+// Multiple Select
+import Select from "@material-ui/core/Select";
+import Chip from "@material-ui/core/Chip";
+import MenuItem from "@material-ui/core/MenuItem";
 import { withStyles } from "@material-ui/core/styles";
+
+// Form Inputs
+import FormInput from "Components/Form/Components/FormInput";
+import BaseInput from "Components/Form/Components/BaseInput";
 
 import { addUser, onChangeAddUser } from "Actions";
 
 const styles = theme => ({
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
+  item: {
+    paddingLeft: theme.spacing(3)
   },
-  fullWidth: {
-    margin: 0
+  group: {
+    fontWeight: theme.typography.fontWeightMedium,
+    opacity: 1
   },
-  chips: {
-    display: "flex",
-    flexWrap: "wrap"
+  menuChips: {
+    marginRight: theme.spacing(1),
+    color: "#fff",
+    backgroundColor: theme.palette.secondary.main
   }
 });
 
 class AddUserForm extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      email: "",
+      baseContact: {
+        firstName: "",
+        lastName: "",
+        mobile: ""
+      },
+      password: "",
+      confirmPassword: "",
+      roles: []
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeContact = this.handleChangeContact.bind(this);
+    this.handleSubmitForm = this.handleSubmitForm.bind(this);
+  }
+
+  handleChange(field, value) {
+    this.setState({ [field]: value });
+  }
+  handleChangeContact(field, value) {
+    this.setState({
+      baseContact: { ...this.state.baseContact, [field]: value }
+    });
+  }
+
+  handleSubmitForm() {
+    const newUser = {
+      ...this.state,
+      name: `${this.state.baseContact.firstName} ${this.state.baseContact.lastName}`
+    };
+    this.props.addUser(newUser);
   }
 
   validateEmail = email => {
@@ -41,197 +71,158 @@ class AddUserForm extends Component {
     return re.test(String(email).toLowerCase());
   };
 
+  renderMenu(accessGroups) {
+    const menu = [];
+    accessGroups.forEach(group => {
+      menu.push(
+        <MenuItem key={group.id} disabled className={this.props.classes.group}>
+          {group.name}
+        </MenuItem>
+      );
+      group.roles
+        .sort((a, b) => b.tier - a.tier)
+        .forEach(grpRole => {
+          menu.push(
+            <MenuItem
+              key={grpRole.id}
+              value={grpRole.id}
+              className={this.props.classes.item}
+            >
+              {grpRole.name}
+              <span className="text-muted font-italic fs-12 ml-5">
+                Tier: {grpRole.tier}
+              </span>
+            </MenuItem>
+          );
+        });
+    });
+    return menu;
+  }
+
   render() {
-    const {
-      classes,
-
-      userAdd,
-      accessGroups,
-
-      addUser,
-      onChangeAddUser
-    } = this.props;
+    const { classes, accessGroups } = this.props;
+    console.log(accessGroups);
+    const { email, baseContact, password, confirmPassword, roles } = this.state;
     return (
-      <Form>
-        <Row form className={"align-items-center"}>
-          <Col md={6}>
-            <TextField
-              value={userAdd.firstName || ""}
-              required
-              error={!userAdd.firstName}
-              className={classes.textField}
-              onChange={e => onChangeAddUser("firstName", e.target.value)}
-              id="firstName"
+      <form autoComplete="off">
+        <h3 style={{ marginLeft: 35 }}>User Contact Details</h3>
+        <div className="row mb-20 justify-content-center">
+          <div className="col-5">
+            <FormInput
               label="First Name"
-              margin="normal"
-              variant="outlined"
+              value={baseContact.firstName}
+              required={!baseContact.firstName}
+              target="firstName"
+              handleChange={this.handleChangeContact}
             />
-          </Col>
-          <Col md={6}>
-            <TextField
-              value={userAdd.lastName || ""}
-              required
-              error={!userAdd.lastName}
-              className={classes.textField}
-              onChange={e => onChangeAddUser("lastName", e.target.value)}
-              id="lastName"
+            <FormInput
+              label="Mobile"
+              value={baseContact.mobile}
+              target="mobile"
+              handleChange={this.handleChangeContact}
+            />
+          </div>
+          <div className="col-5 offset-md-1">
+            <FormInput
               label="Last Name"
-              margin="normal"
-              variant="outlined"
+              value={baseContact.lastName}
+              required={!baseContact.lastName}
+              target="lastName"
+              handleChange={this.handleChangeContact}
             />
-          </Col>
-        </Row>
-        <Row form>
-          <Col md={6}>
-            <TextField
-              value={userAdd.email || ""}
-              required
-              error={!userAdd.email || !this.validateEmail(userAdd.email)}
-              className={classes.textField}
-              onChange={e => onChangeAddUser("email", e.target.value)}
-              id="email"
+          </div>
+        </div>
+        <h3 style={{ marginLeft: 35 }}>Login Details</h3>
+        <div className="row justify-content-center">
+          <div className="col-11">
+            <FormInput
               label="Email"
-              margin="normal"
-              variant="outlined"
+              value={email}
+              required={!email}
+              target="email"
+              handleChange={this.handleChange}
             />
-          </Col>
-          <Col md={6}>
-            <TextField
-              value={userAdd.contact || ""}
-              required
-              error={!userAdd.contact}
-              className={classes.textField}
-              onChange={e => onChangeAddUser("contact", e.target.value)}
-              id="contact"
-              label="Contact"
-              margin="normal"
-              variant="outlined"
-            />
-          </Col>
-        </Row>
-        <Row form>
-          <Col md={6}>
-            <TextField
-              value={userAdd.password || ""}
-              required
-              type="password"
-              error={!userAdd.password}
-              className={classes.textField}
-              onChange={e => onChangeAddUser("password", e.target.value)}
-              id="email"
+          </div>
+        </div>
+        <div className="row mb-20 justify-content-center">
+          <div className="col-5">
+            <FormInput
               label="Password"
-              margin="normal"
-              variant="outlined"
+              value={password}
+              required={!password}
+              target="password"
+              handleChange={this.handleChange}
             />
-          </Col>
-          <Col md={6}>
-            <TextField
-              value={userAdd.repeatpass || ""}
-              required
-              type="password"
-              error={userAdd.password != userAdd.repeatpass}
-              className={classes.textField}
-              onChange={e => onChangeAddUser("repeatpass", e.target.value)}
-              id="contact"
-              label="password"
-              margin="normal"
-              variant="outlined"
+          </div>
+          <div className="col-5 offset-md-1">
+            <FormInput
+              label="Confirm Password"
+              value={confirmPassword}
+              required={password !== confirmPassword}
+              helperText="Password has to match."
+              target="confirmPassword"
+              handleChange={this.handleChange}
             />
-          </Col>
-        </Row>
-        <Row form className={classes.fullWidth}>
-          <Col md={12}>
-            <InputLabel htmlFor="role" style={{ fontSize: "0.8rem" }}>
-              Role
-            </InputLabel>
+          </div>
+        </div>
+
+        <h3 style={{ marginLeft: 35 }}>User Role</h3>
+        <div className="row justify-content-center">
+          <div className="col-11">
             <Select
-              error={userAdd.role.length == 0}
-              style={{ height: "40px", marginTop: "-0.5rem" }}
               multiple
-              input={<Input id="role" />}
-              value={ userAdd && userAdd.role ? userAdd.role : []}              
+              input={<BaseInput />}
+              value={roles}
+              onChange={e => this.handleChange("roles", e.target.value)}
               renderValue={selected => (
-                <div className={classes.chips}>
-                  {selected.map(function(value) {                    
-                    for(const grp of accessGroups){
+                <div className="d-flex">
+                  {selected.map(value => {
+                    for (const grp of accessGroups) {
                       var role = grp.roles.find(role => role.id == value);
-                      if(role !== undefined){
+                      if (role !== undefined) {
                         break;
                       }
                     }
-                   
+
                     return (
                       <Chip
                         key={value}
                         label={role.name}
-                        className={classes.chip}
+                        className={classes.menuChips}
                       />
                     );
                   })}
                 </div>
               )}
             >
-              {accessGroups.map(function(group) {
-                var items = [];
-                  for(const role of group.roles){
-                    var selectedItem = false || role.name == "Member";
-                    for(var i in userAdd.role){
-                      if(userAdd.role[i] == role.id){
-                        selectedItem = true;
-                      }
-                    }                                       
-                    items.push(
-                      <MenuItem
-                      key={role.id}
-                      value={role.id}
-                      disabled={role.name == "Member"}
-                    >
-                      <Checkbox
-                        color="primary"
-                        checked={ selectedItem }
-                        value={role.id}
-                        onChange={e => onChangeAddUser("role", e.target.value)}
-                      />
-                      <ListItemText primary={role.name+"-"+group.name+" ("+role.tier+")"} />
-                    </MenuItem>
-                    );
-                  }   
-                return items;
-              })}
+              {this.renderMenu(accessGroups)}
             </Select>
-          </Col>
-        </Row>
-        <Row className={"justify-content-end " + classes.textField}>
+          </div>
+        </div>
+        <div className="d-flex mt-40 justify-content-end">
           <Button
             variant="contained"
-            color="primary"
-            className="text-white mb-10 mt-20"
-            onClick={addUser}
+            className="btn-success text-white"
+            onClick={this.handleSubmitForm}
             disabled={
-              !userAdd.firstName ||
-              !userAdd.lastName ||
-              !userAdd.email ||
-              !this.validateEmail(userAdd.email) ||
-              !userAdd.contact ||
-              !userAdd.password ||
-              userAdd.password != userAdd.repeatpass ||
-              userAdd.role.length == 0
+              !baseContact.firstName ||
+              !baseContact.lastName ||
+              !this.validateEmail(email) ||
+              !password ||
+              password !== confirmPassword ||
+              roles.length == 0
             }
           >
             Create
           </Button>
-        </Row>
-      </Form>
+        </div>
+      </form>
     );
   }
 }
 
-AddUserForm.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
 const mapStateToProps = ({ usersState }) => {
-  const { userAdd, accessGroups } = usersState; 
+  const { userAdd, accessGroups } = usersState;
   return { userAdd, accessGroups };
 };
 

@@ -5,7 +5,6 @@ import { NotificationManager } from "react-notifications";
 import {
   GET_ALL_USERS,
   GET_ALL_USERS_SUCCESS,
-  ON_CHANGE_ADD_USER,
   ADD_USER,
   ADD_USER_SUCCESS,
   ADD_USER_FAILURE,
@@ -17,25 +16,17 @@ import {
   ON_CHANGE_UPDATE_USER_RIGHTS,
   UPDATE_USER_RIGHTS,
   UPDATE_USER_RIGHTS_SUCCESS,
-  GET_USER_FAILURE,
-  SHOW_ADD_USER,
-  HIDE_ADD_USER,
-  SHOW_USER_CONTROLS,
-  HIDE_USER_CONTROLS
+  GET_USER_FAILURE
 } from "Types";
 
 const INIT_STATE = {
-  users: [],
+  userList: [],
   usersLoading: false,
 
-  isAddUser: false,
   isUserControl: false,
   userControl: {},
 
-  userUpdate: null,
-  userAdd: {
-    role: []
-  }
+  userUpdate: null
 };
 
 export default (state = INIT_STATE, action) => {
@@ -53,7 +44,7 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         usersLoading: false,
-        users: action.payload.users,
+        userList: action.payload.users,
         userSettings: action.payload.settings,
         accessGroups: action.payload.accessGroups
       };
@@ -61,42 +52,20 @@ export default (state = INIT_STATE, action) => {
     /**
      * ADD User
      */
-    case ON_CHANGE_ADD_USER:
-      var userAdd = { ...state.userAdd };
-      if (action.payload.field == "role") {
-        if (userAdd.role == undefined) {
-          userAdd.role = [];
-        }
-        var rIndex = userAdd.role.findIndex(
-          role => role == action.payload.value
-        );
-        if (rIndex >= 0) {
-          userAdd.role.splice(rIndex, 1);
-        } else {
-          userAdd.role.push(action.payload.value);
-        }
-      } else {
-        userAdd[action.payload.field] = action.payload.value;
-      }
-      return {
-        ...state,
-        userAdd: userAdd
-      };
     case ADD_USER:
       return {
         ...state,
-        isAddUser: false,
         usersLoading: true
       };
     case ADD_USER_SUCCESS:
-      // var allUsers = Object.assign([], state.users);
-      // var users = [...allUsers, action.payload];
+      var allUsers = Object.assign([], state.userList);
+      var users = [...allUsers, action.payload];
       NotificationManager.success("User Added");
       return {
         ...state,
-        userAdd: INIT_STATE.userAdd,
-        usersLoading: false
-        // user: users
+        // userAdd: INIT_STATE.userAdd,
+        usersLoading: false,
+        userList: users
       };
     case ADD_USER_FAILURE:
       NotificationManager.error("Failed to Add User");
@@ -185,35 +154,24 @@ export default (state = INIT_STATE, action) => {
     /**
      * State Changes
      */
-    case SHOW_ADD_USER:
-      return {
-        ...state,
-        isAddUser: true
-      };
+    // case SHOW_USER_CONTROLS:
+    //   var allsettings = state.userSettings;
+    //   var userSetting = allsettings.find(setting => {
+    //     return action.payload == setting.userid;
+    //   });
+    //   var userControl = state.users.find(user => user.id == action.payload);
+    //   return {
+    //     ...state,
+    //     isUserControl: true,
+    //     userControl: userControl,
+    //     userSettings: userSetting
+    //   };
 
-    case HIDE_ADD_USER:
-      return {
-        ...state,
-        isAddUser: false
-      };
-
-    case SHOW_USER_CONTROLS:
-      var allsettings = state.userSettings;
-      var userSetting = allsettings.find(setting => {
-        return action.payload.id == setting.userid;
-      });
-      return {
-        ...state,
-        isUserControl: true,
-        userControl: action.payload,
-        userSettings: userSetting
-      };
-
-    case HIDE_USER_CONTROLS:
-      return {
-        ...state,
-        isUserControl: false
-      };
+    // case HIDE_USER_CONTROLS:
+    //   return {
+    //     ...state,
+    //     isUserControl: false
+    //   };
 
     default:
       return { ...state };

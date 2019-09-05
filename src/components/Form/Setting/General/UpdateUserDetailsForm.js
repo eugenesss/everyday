@@ -3,80 +3,87 @@ import { connect } from "react-redux";
 
 import FormInput from "Components/Form/Components/FormInput";
 import { Button } from "@material-ui/core";
+import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
-import { updateUser } from "Actions";
+import { updateCurrentUser } from "Actions";
 
 class UpdateUserDetailsForm extends Component {
   constructor(props) {
     super(props);
-    this.state = this.props.loggedInUser;
-    this.handleChange = this.props.handleChange;
-    this.submitForm = this.props.submitForm;
+    this.state = this.props.user;
+    this.handleChange = this.handleChange.bind(this);
+    this.submitForm = this.submitForm.bind(this);
+    this.handleChangeBaseContact = this.handleChangeBaseContact.bind(this);
   }
 
   handleChange(field, value) {
     this.setState({ [field]: value });
   }
+  handleChangeBaseContact(field, value) {
+    this.setState({
+      baseContact: { ...this.state.baseContact, [field]: value }
+    });
+  }
 
   submitForm() {
-    console.log("update user");
-    this.props.userUpdate(this.state);
+    this.props.updateCurrentUser(this.state);
   }
 
   render() {
-    const { firstName, lastName, email, contact } = this.state;
+    const { baseContact, email } = this.state;
     return (
-      <form>
-        <div className="row justify-content-center">
-          <div className="col-5">
-            <FormInput
-              label="First Name"
-              value={firstName}
-              target="firstName"
-              handleChange={this.handleChange}
-            />
-            <FormInput
-              label="Email"
-              value={email}
-              target="email"
-              handleChange={this.handleChange}
-            />
-          </div>
-          <div className="col-5 offset-md-1">
-            <FormInput
-              label="Last Name"
-              value={lastName}
-              target="lastName"
-              handleChange={this.handleChange}
-            />
-            <FormInput
-              label="Contact"
-              value={contact}
-              target="contact"
-              handleChange={this.handleChange}
-            />
-          </div>
-        </div>
-        <div className="d-flex flex-row-reverse my-20">
-          <Button
-            variant="contained"
-            className="btn-success text-white"
-            onClick={this.submitForm}
-          >
-            Save
-          </Button>
-        </div>
-      </form>
+      <React.Fragment>
+        {this.props.loading ? (
+          <RctSectionLoader />
+        ) : (
+          <form>
+            <div className="row justify-content-center">
+              <div className="col-5">
+                <FormInput
+                  label="First Name"
+                  defaultValue={baseContact.firstName}
+                  target="firstName"
+                  handleChange={this.handleChangeBaseContact}
+                />
+
+                <FormInput
+                  label="Mobile"
+                  defaultValue={baseContact.mobile}
+                  target="mobile"
+                  handleChange={this.handleChangeBaseContact}
+                />
+              </div>
+              <div className="col-5 offset-md-1">
+                <FormInput
+                  label="Last Name"
+                  defaultValue={baseContact.lastName}
+                  target="lastName"
+                  handleChange={this.handleChangeBaseContact}
+                />
+              </div>
+            </div>
+            <div className="d-flex flex-row-reverse my-20">
+              <Button
+                variant="contained"
+                className="btn-success text-white"
+                onClick={this.submitForm}
+              >
+                Save
+              </Button>
+            </div>
+          </form>
+        )}
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = ({ authUser }) => {
-  const { loggedInUser } = authUser;
-  return { loggedInUser };
+  const { loggedInUser, loading } = authUser;
+  return { loggedInUser, loading };
 };
 
 export default connect(
-  mapStateToProps,
-  { updateUser }
+  null,
+  { updateCurrentUser }
 )(UpdateUserDetailsForm);

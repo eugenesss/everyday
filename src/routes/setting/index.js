@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-
 import { withRouter } from "react-router-dom";
-
 import { Helmet } from "react-helmet";
+import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+
 // async components
 import * as async from "Components/AsyncComponent/Settings";
 import SettingsDirectory from "Components/Setting/SettingsDirectory";
@@ -20,6 +20,7 @@ class Settings extends Component {
           <title>Everyday | System Settings</title>
           <meta name="description" content="Everyday System" />
         </Helmet>
+        <PageTitleBar title="Settings" />
         <div className="row">
           <div className="col-2">
             <SettingsDirectory />

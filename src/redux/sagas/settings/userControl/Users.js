@@ -1,5 +1,11 @@
 import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
-import { GET_ALL_USERS, ADD_USER, UPDATE_USER, GET_USER_PROFILE } from "Types";
+import {
+  GET_ALL_USERS,
+  ADD_USER,
+  UPDATE_USER,
+  GET_USER_PROFILE,
+  UPDATE_USER_RIGHTS
+} from "Types";
 import {
   getAllUsersSuccess,
   addUserSuccess,
@@ -11,7 +17,6 @@ import {
   updateUserRightsSuccess
 } from "Actions";
 import api from "Api";
-import { UPDATE_USER_RIGHTS } from "../../../types/settings/userControl/UserTypes";
 
 //=========================
 // REQUESTS
@@ -24,15 +29,16 @@ const getAllUsersRequest = async () => {
 const getAllSettingsRequest = async () => {
   const result = await api.post("/accesssettings/viewall");
   return result.data.data;
-}
+};
 
 const getAllGroupsRequest = async () => {
-  const result = await api.post(`/accessgroups/viewall`)
-  return result.data.data
-}
+  const result = await api.post(`/accessgroups/viewall`);
+  return result.data.data;
+};
 
 const addUserRequest = async newUser => {
   const result = await api.post("/users", newUser);
+  console.log(result);
   return result.data;
 };
 const updateUserRequest = async user => {
@@ -45,10 +51,12 @@ const getUserProfileRequest = async userID => {
 };
 
 const updateUserRights = async (userId, rights) => {
-  const result = await api.post("/accesssettings/saveUserRights", { saveUserId: userId, rights: rights });
+  const result = await api.post("/accesssettings/saveUserRights", {
+    saveUserId: userId,
+    rights: rights
+  });
   return result.data;
-}
-
+};
 
 //=========================
 // CALL(GENERATOR) ACTIONS
@@ -63,20 +71,20 @@ function* getAllUsersFromDB() {
     yield put(getUserFailure(err));
   }
 }
-function* addUserToDB() {
-  const getNewUser = state => state.usersState.userAdd;
-  const newUser = yield select(getNewUser);
-  newUser.name = newUser.firstName + " " + newUser.lastName;
-
+function* addUserToDB({ payload }) {
+  const { roles, confirmPassword, ...others } = payload;
   try {
-    var userdata = { roles: [] };
-    for (const role of newUser.role) {
+    // var userdata = { roles: [] };
+    for (const role of roles) {
       userdata.roles.push({ id: role });
     }
-    newUser.role = [];
-    const data = yield call(addUserRequest, newUser);
+    // newUser.role = [];
+    // const data = yield call(addUserRequest, payload);
+    // const data2 = yield call(updateUserRights, data.id, [userdata]);
 
-    const data2 = yield call(updateUserRights, data.id, [userdata]);
+    const data = yield call(addUserRequest, { ...others });
+    yield call(updateUserRights, data.id, roles);
+
     yield put(addUserSuccess(data));
   } catch (err) {
     yield put(addUserFailure(err));
@@ -94,7 +102,6 @@ function* updateUserToDB() {
 }
 function* getUserProfileFromDB({ payload }) {
   try {
-
     const data = yield call(getUserProfileRequest, payload);
     yield put(getUserProfileSuccess(data));
   } catch (err) {
@@ -111,7 +118,6 @@ function* updateUserRightsToDB() {
     yield put(updateUserFailure(err));
   }
 }
-
 
 //=======================
 // WATCHER FUNCTIONS
@@ -131,7 +137,6 @@ export function* getUserProfileWatcher() {
 export function* updateUserRightsWatcher() {
   yield takeEvery(UPDATE_USER_RIGHTS, updateUserRightsToDB);
 }
-
 
 //=======================
 // FORK SAGAS TO STORE

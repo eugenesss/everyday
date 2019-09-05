@@ -16,11 +16,7 @@ import {
   ON_CHANGE_UPDATE_USER_RIGHTS,
   UPDATE_USER_RIGHTS,
   UPDATE_USER_RIGHTS_SUCCESS,
-  GET_USER_FAILURE,
-  SHOW_ADD_USER,
-  HIDE_ADD_USER,
-  SHOW_USER_CONTROLS,
-  HIDE_USER_CONTROLS
+  GET_USER_FAILURE
 } from "Types";
 
 /**
@@ -41,8 +37,9 @@ export const onChangeAddUser = (field, value) => ({
   type: ON_CHANGE_ADD_USER,
   payload: { field, value }
 });
-export const addUser = () => ({
-  type: ADD_USER
+export const addUser = data => ({
+  type: ADD_USER,
+  payload: data
 });
 export const addUserSuccess = user => ({
   type: ADD_USER_SUCCESS,
@@ -64,8 +61,9 @@ export const onChangeUpdateUser = (field, value) => ({
   type: ON_CHANGE_UPDATE_USER,
   payload: { field, value }
 });
-export const updateUser = () => ({
-  type: UPDATE_USER
+export const updateUser = data => ({
+  type: UPDATE_USER,
+  payload: data
 });
 export const updateUserSuccess = user => ({
   type: UPDATE_USER_SUCCESS,
@@ -93,24 +91,4 @@ export const updateUserRightsSuccess = userRights => ({
 export const getUserFailure = err => ({
   type: GET_USER_FAILURE,
   payload: err
-});
-
-/**
- * State Changes
- */
-export const showAddUser = () => ({
-  type: SHOW_ADD_USER
-});
-
-export const hideAddUser = () => ({
-  type: HIDE_ADD_USER
-});
-
-export const showUserControls = user => ({
-  type: SHOW_USER_CONTROLS,
-  payload: user
-});
-
-export const hideUserControls = () => ({
-  type: HIDE_USER_CONTROLS
 });

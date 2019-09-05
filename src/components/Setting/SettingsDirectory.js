@@ -34,7 +34,7 @@ class SettingsDirectory extends Component {
     const { location } = this.props;
     const { general, user, crm, accounting, reminder } = this.state;
     return (
-      <SideDrawer listHeader="Settings">
+      <SideDrawer>
         <DrawerListCollapsible
           title="General"
           state={general}
