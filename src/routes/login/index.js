@@ -34,7 +34,6 @@ class Signin extends Component {
    */
   onUserLogin = (e) => {
     e.preventDefault()
-   
     if (this.state.emailAddress !== "" && this.state.password !== "") {
       this.props.signInAccount(this.state, this.props.history)
     } else {
@@ -42,7 +41,6 @@ class Signin extends Component {
         "Please type your email address and password"
       );
     }
-
   };
 
   routeChange(element) {

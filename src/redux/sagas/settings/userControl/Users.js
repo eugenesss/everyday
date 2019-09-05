@@ -32,6 +32,9 @@ const getAllGroupsRequest = async () => {
 }
 
 const addUserRequest = async newUser => {
+  console.log('addUserRequest')
+  console.log(newUser)
+
   const result = await api.post("/users", newUser);
   return result.data;
 };
@@ -45,6 +48,10 @@ const getUserProfileRequest = async userID => {
 };
 
 const updateUserRights = async (userId, rights) => {
+  console.log('updateUserRights')
+  console.log(userId)
+  console.log(rights)
+
   const result = await api.post("/accesssettings/saveUserRights", { saveUserId: userId, rights: rights });
   return result.data;
 }
@@ -63,7 +70,10 @@ function* getAllUsersFromDB() {
     yield put(getUserFailure(err));
   }
 }
+
 function* addUserToDB() {
+
+  console.log('addUserToDB')
   const getNewUser = state => state.usersState.userAdd;
   const newUser = yield select(getNewUser);
   newUser.name = newUser.firstName + " " + newUser.lastName;
@@ -74,14 +84,18 @@ function* addUserToDB() {
       userdata.roles.push({ id: role });
     }
     newUser.role = [];
-    const data = yield call(addUserRequest, newUser);
 
-    const data2 = yield call(updateUserRights, data.id, [userdata]);
+    const data = yield call(addUserRequest, newUser);
+    yield call(updateUserRights, data.id, [userdata]);
     yield put(addUserSuccess(data));
+
   } catch (err) {
+    console.log(err.response)
     yield put(addUserFailure(err));
   }
 }
+
+
 function* updateUserToDB() {
   const getUser = state => state.usersState.userUpdate;
   const user = yield select(getUser);

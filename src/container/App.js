@@ -28,7 +28,10 @@ function App(props) {
   const { location, match, loggedInUser } = props;
 
   // check if user is authenticated, if not redirect to login
-  switch (new Auth().isAuthenticated()) {
+
+  console.log('isAuthenticated', new Auth().isAuthenticated())
+
+  switch (new Auth().isAuthenticated()) {    
     case false:
       if (location.pathname === "/") {
         return <Redirect to={"/login"} />;

@@ -29,9 +29,10 @@ api.interceptors.response.use(
       case 400:
         break;
       case 401:
-        if(window.location.pathname != "/login"){
-          window.location.replace("/login");
-        }
+        console.log('error 401, should replace url to /login')
+        // if(window.location.pathname != "/login"){
+        //   window.location.replace("/login");
+        // }
         break;
       case 404:
         break;
