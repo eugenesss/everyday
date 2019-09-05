@@ -5,8 +5,8 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import FormInput from "Components/Form/Components/FormInput";
 
 function NumberFormatCustom(props) {
+
   const { inputRef, onChange, ...other } = props;
-  console.log('AmountInput ', props.target)
   return (
     <NumberFormat
       {...other}

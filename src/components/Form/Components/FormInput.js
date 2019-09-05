@@ -33,9 +33,6 @@ class FormInput extends PureComponent {
       ...others
     } = this.props;
 
-    console.log('FormInput ',label)
-
-
     return (
       <FormControl className={classes.root}>
         <InputLabel className="fw-bold" shrink>

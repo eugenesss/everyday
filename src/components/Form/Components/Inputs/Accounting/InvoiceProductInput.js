@@ -33,14 +33,15 @@ function ccyFormat(num) {
 export default class InvoiceProductInput extends PureComponent {
   render() {
     const {
-      invoice,
+      // invoice,
       products,
       handleChange,
       handleAdd,
       handleRemove,
       restart,
       taxTable,
-      disabled
+      disabled,
+      edit
     } = this.props;
 
     return (
@@ -60,142 +61,195 @@ export default class InvoiceProductInput extends PureComponent {
               }}
               key={key}
             >
-              {/* <TableCell>
-                      {!disabled && 
-                        <TextField
-                            value={row.description}
-                            onChange={e =>
-                              handleChange(key, "description", e.target.value)
-                            }
-                            fullWidth
-                            margin="dense"
-                            variant="outlined"
-                            disabled={disabled}
-                        />
-                      }
-                      {disabled && 
-                        <p>{row.description}</p>
-                      }
-                    </TableCell> */}
+              {edit && 
+                <FormInput
+                  label="Description"
+                  value={row.description}
+                  required={!row.description}
+                  target="description"
+                  keys={key}
+                  handleChange={handleChange}
+                />
+              }
 
-              <FormInput
-                label="Description"
-                value={row.description}
-                required={!row.description}
-                target="description"
-                keys={key}
-                handleChange={handleChange}
-              />
+              {!edit && 
+                <EditableInput
+                  label="Description"
+                  value={row.description}
+                />
+              }
 
-              <AmountInput
-                label="Quantity"
-                value={row.quantity}
-                required={!row.quantity}
-                nodollar
-                target="quantity"
-                keys={key}
-                handleChange={handleChange}
-                // onChange={e => {
-                //   handleChange("quantity", e.target.value, key)
-                // }}
-              />
+              {edit && 
+                <AmountInput
+                  label="Quantity"
+                  value={row.quantity}
+                  required={!row.quantity}
+                  nodollar
+                  target="quantity"
+                  keys={key}
+                  handleChange={handleChange}
+                />
+              }
 
-              <AmountInput
-                label="Price Per Item ($)"
-                value={row.price}
-                required={!row.price}
-                target="price"
-                // nodollar
-                keys={key}
-                handleChange={handleChange}
-              />
+              {!edit && 
+                <EditableInput
+                  label="Quantity"
+                  value={row.quantity}
+                />
+              }
 
-              <FormMultiInput
-                label="Tax Options"
-                value={row.tax_id}
-                required={!row.price}
-                selectValues={taxTable}
-                target="tax_id"
-                keys={key}
-                handleChange={handleChange}
-              />
 
-              <FormInput
-                label="Tax"
-                disabled={true}
-                value={`${row.tax_rate}%`}
-              />
+              {edit && 
+                <AmountInput
+                  label="Price Per Item"
+                  value={row.price}
+                  required={!row.price}
+                  target="price"
+                  // nodollar
+                  keys={key}
+                  handleChange={handleChange}
+                />
+              }
+
+              {!edit && 
+                <EditableInput
+                  label="Price"
+                  value={row.price}
+                />
+              }
+
+              
+              {edit && 
+                <FormMultiInput
+                  label="Tax Options"
+                  value={row.tax_id}
+                  required={!row.tax_id}
+                  selectValues={taxTable}
+                  target="tax_id"
+                  keys={key}
+                  handleChange={handleChange}
+                />
+              }
+
+              {edit &&
+                <FormInput
+                  label="Tax"
+                  disabled={true}
+                  value={`${row.tax_rate}%`}
+                />
+              }
+
+              {!edit &&
+                <EditableInput
+                  label="Tax"
+                  value={`${row.tax_rate}%`}
+                />
+              }
 
               {/* <div style={{width:'80%'}}>
                 <EditableInput style={{fontSize: 35, color:'#464d69'}} label="Tax" value={`${row.tax_rate}%`} />
               </div> */}
 
-              {/* <div className="d-flex align-items-center"> */}
+              {edit &&
                 <AmountInput
-                  label="Discount"
-                  value={row.discount}
-                  target="discount"
-                  keys={key}
-                  handleChange={handleChange}
-                  // onChange={e => {
-                  //   console.log(e.target.value)
-                  //   handleChange("price", e.target.value, key)
-                  // }}
+                    label="Discount"
+                    value={row.discount}
+                    target="discount"
+                    keys={key}
+                    handleChange={handleChange}
+                    // onChange={e => {
+                    //   console.log(e.target.value)
+                    //   handleChange("price", e.target.value, key)
+                    // }}
                 />
-              {/* </div> */}
+              }
 
-              <AmountInput nodollar label="Amount" disabled={true} value={row.amount} />
+              {!edit &&
+                <EditableInput
+                  label="Discount"
+                  value={`${row.discount}`}
+                />
+              }
+
+              {edit &&
+                <FormInput 
+                  label="Amount"
+                  disabled={true} 
+                  value={row.amount? `$${row.amount}`: `$0`}
+                  // handleChange={handleChange}
+                />
+              }
+
+              {!edit &&
+                <EditableInput
+                  label="Amount"
+                  value={row.amount? `$${row.amount}`: `$0`}
+                />
+              }
+
+
 
               {/* <div style={{width:'80%'}}>
                 <EditableInput style={{fontSize: 35, color:'#464d69'}} label="Amount" value={`$${row.amount}`} />
               </div> */}
 
-              {key > 0 && (
-                <div className="flex-column d-flex align-items-center justify-content-center">
-                  <DeleteIcon
-                    variant="contained"
-                    color="primary"
-                    fontSize="large"
-                    onClick={() => handleRemove(key)}
-                  />
-                  Delete                    
+              {edit &&
+                <div>
+                  {key > 0 && (
+                    <div className="flex-column d-flex align-items-center justify-content-center">
+                      <DeleteIcon
+                        variant="contained"
+                        color="primary"
+                        fontSize="large"
+                        onClick={() => handleRemove(key)}
+                      />
+                      Delete                    
+                    </div>
+                  )}
                 </div>
-              )}
+              }
 
-              {key == 0 && (
-                <div className="flex-column d-flex align-items-center justify-content-center">
-                  <AutorenewIcon
-                    variant="contained"
-                    color="primary"
-                    fontSize="large"
-                    // className="ml-10"
-                    onClick={() => restart()}
-                  />
-                    Restart
+              {edit &&
+                <div>
+                  {key == 0 && (
+                    <div className="flex-column d-flex align-items-center justify-content-center">
+                      <AutorenewIcon
+                        variant="contained"
+                        color="primary"
+                        fontSize="large"
+                        // className="ml-10"
+                        onClick={() => restart()}
+                      />
+                        Restart
+                    </div>
+                  )}
                 </div>
-              )}
+              }
+
             </div>
           );
         })}
 
-        <div className="row" style={{marginTop: 10}}>
-          <div className="col-md-12 d-flex justify-content-end">
-            <div className="d-flex align-items-center">
-              {!disabled && (
-                <div className="flex-column d-flex align-items-center">
-                <AddCircleIcon
-                  variant="contained"
-                  color="primary"
-                  fontSize="large"
-                  // className="text-white ml-10"
-                  onClick={() => handleAdd()}
-                />
-                  Add Product
-                </div>
-              )}
+        {edit &&
+          <div className="row" style={{marginTop: 10}}>
+            <div className="col-md-12 d-flex justify-content-end">
+              <div className="d-flex align-items-center">
+                {!disabled && (
+                  <div className="flex-column d-flex align-items-center">
+                  <AddCircleIcon
+                    variant="contained"
+                    color="primary"
+                    fontSize="large"
+                    // className="text-white ml-10"
+                    onClick={() => handleAdd()}
+                  />
+                    Add Product
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        }
         
       </React.Fragment>
     );
