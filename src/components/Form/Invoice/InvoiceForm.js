@@ -221,7 +221,7 @@ class InvoiceForm extends Component {
 
     var today = new Date();
     var duedate = new Date();
-    duedate.setDate(today.getDate()+3);
+    duedate.setDate(today.getDate()+5);
 
     // payload: {item: item, products: products}
     const postData = {...this.state.formFields}
@@ -230,7 +230,7 @@ class InvoiceForm extends Component {
     let modifiedPostData = {...postData}
     modifiedPostData.quotationLine = quotationLine
     modifiedPostData.sent_date = postData.date,
-    modifiedPostData.due_date = postData.duedate,
+    modifiedPostData.due_date = duedate,
     modifiedPostData.companyName = postData.accountId.name,
     modifiedPostData.accountId = {
       name: modifiedPostData.accountId.name,
@@ -238,6 +238,25 @@ class InvoiceForm extends Component {
     }
 
     this.props.handleSubmit(modifiedPostData)
+
+  }
+
+  _restart = () =>{
+    console.log('restart')
+
+    let restartFormFieldsProducts = this.state.formFieldsProducts
+    restartFormFieldsProducts = [{...formFieldsProducts}]
+
+
+    let restartFormFields = this.state.formFields
+    restartFormFields.subtotal = 0
+    restartFormFields.tax_amount = 0
+    restartFormFields.discount_total = 0
+    restartFormFields.totalAmt = 0
+    restartFormFields.discount = ''
+    restartFormFields.discount_rate = 0
+  
+    this.setState({formFieldsProducts: restartFormFieldsProducts, formFields : restartFormFields})
 
   }
 
@@ -424,6 +443,7 @@ class InvoiceForm extends Component {
                   handleChange={this._handleProdQuote}
                   handleAdd={this._addNewProdQuote}
                   handleRemove={this._removeProdQuote}
+                  restart={this._restart}
                 />
               </div>
           </div>

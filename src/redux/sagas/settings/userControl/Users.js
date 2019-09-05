@@ -74,16 +74,12 @@ function* getAllUsersFromDB() {
 function* addUserToDB({ payload }) {
   const { roles, confirmPassword, ...others } = payload;
   try {
-    // var userdata = { roles: [] };
+    var userdata = { roles: [] };
     for (const role of roles) {
       userdata.roles.push({ id: role });
     }
-    // newUser.role = [];
-    // const data = yield call(addUserRequest, payload);
-    // const data2 = yield call(updateUserRights, data.id, [userdata]);
-
     const data = yield call(addUserRequest, { ...others });
-    yield call(updateUserRights, data.id, roles);
+    yield call(updateUserRights, data.id, [userdata]);
 
     yield put(addUserSuccess(data));
   } catch (err) {

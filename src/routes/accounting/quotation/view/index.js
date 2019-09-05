@@ -20,6 +20,11 @@ import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 // Quotation Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
+import QuotationCard from "Components/Accounting/Quotation/QuotationCard";
+import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
+import OverviewTab from "./tabs/Overview";
+
+
 import {
   quoteNewPage,
   quoteEditPage,
@@ -280,7 +285,12 @@ class acct_view_quotation extends Component {
           moreButton={moreButtons}
         />
         <div className="row">
+
           <div className="col-md-3">
+            <QuotationCard/>
+          </div>
+
+          {/* <div className="col-md-3">
             <BgCard>
               <AccountingDetails
                 type="quotation"
@@ -296,31 +306,36 @@ class acct_view_quotation extends Component {
                 currency={quotation.currency.name}
               />
             </BgCard>
-          </div>
+          </div> */}
+
           <div className="col-md-9">
             {buttonCollection}
-            <TabsWrapper>
-              <div icon="zmdi-shopping-basket text-success" label="QUOTATION">
-                <ViewTemplate
-                  order={quotation}
-                  id={quotation.quoteID}
-                  disabled={true}
-                />
-              </div>
-              {/*  <div icon="zmdi-pizza text-warning" label="ACTIVITY LOG">
-                <ActivityLog />
-              </div> */}
-              <div icon="zmdi-assignment text-danger" label="NOTES">
-                <div className="row">
-                  <div>
-                    {/* <NotesLayout
-                      allNotes={quotation.notes}
-                      handleAddNote={this.addNote}
+
+        
+            <ProfileTabs loading={false}>
+                  <div label="Overview">
+                    <OverviewTab
+                      quotation={quotation}
+                    />
+                  </div>
+
+                  <div label="Deals">
+                    {/* <DealsTab deals={customer.deals} /> */}
+                  </div>
+
+                  <div label="Events">
+                    {/* <EventsTab
+                      eventableType="Customer"
+                      eventableId={customer.id}
+                      events={customer.events}
                     /> */}
                   </div>
-                </div>
-              </div>
-            </TabsWrapper>
+
+                  <div label="Details">
+                    {/* <DetailsTab cust={customer} /> */}
+                  </div>
+            </ProfileTabs>
+            
           </div>
         </div>
       </React.Fragment>
@@ -354,3 +369,33 @@ export default connect(
     HandleConvertInvoiceQuotation
   }
 )(acct_view_quotation);
+
+
+
+
+/*
+
+    <TabsWrapper>
+              <div icon="zmdi-shopping-basket text-success" label="QUOTATION">
+                <ViewTemplate
+                  order={quotation}
+                  id={quotation.quoteID}
+                  disabled={true}
+                />
+              </div>
+               <div icon="zmdi-pizza text-warning" label="ACTIVITY LOG">
+                <ActivityLog />
+              </div>
+              <div icon="zmdi-assignment text-danger" label="NOTES">
+                <div className="row">
+                  <div>
+                    <NotesLayout
+                      allNotes={quotation.notes}
+                      handleAddNote={this.addNote}
+                    /> 
+                  </div>
+                </div>
+              </div>
+            </TabsWrapper>
+
+*/

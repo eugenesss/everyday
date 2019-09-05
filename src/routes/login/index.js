@@ -7,23 +7,14 @@ import { withRouter } from "react-router-dom";
 import { Form, FormGroup, Input } from "reactstrap";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Fab from "@material-ui/core/Fab";
-import Icon from "@material-ui/core/Icon";
 
 // app config
 import AppConfig from "Constants/AppConfig";
 
 // redux action
-import {
-  signInUserWithEmailPassword,
-  userResentEmail,
-  handleRegErrorForm
-} from "Actions";
+import { signInAccount, userResentEmail, handleRegErrorForm } from "Actions";
 
 class Signin extends Component {
-  constuctor() {
-    // this.routeChange = this.routeChange.bind(this);
-  }
-
   state = {
     emailAddress: "",
     password: ""
@@ -32,9 +23,10 @@ class Signin extends Component {
   /**
    * On User Login
    */
-  onUserLogin = () => {
+  onUserLogin = e => {
+    e.preventDefault();
     if (this.state.emailAddress !== "" && this.state.password !== "") {
-      this.props.signInUserWithEmailPassword(this.state, this.props.history);
+      this.props.signInAccount(this.state, this.props.history);
     } else {
       this.props.handleRegErrorForm(
         "Please type your email address and password"
@@ -58,11 +50,6 @@ class Signin extends Component {
         break;
     }
   }
-
-  // resentVerificationEmail = () => {
-  //   this.setState({ emailAddress: "", password: "" });
-  //   this.props.userResentEmail(this.props.user);
-  // };
 
   render() {
     const { emailAddress, password } = this.state;
@@ -105,8 +92,7 @@ class Signin extends Component {
                   forever free for unlimited time
                 </p>
 
-                {/* onSubmit={this.onUserLogin} */}
-                <Form>
+                <Form onSubmit={this.onUserLogin}>
                   <FormGroup className="has-wrapper">
                     <Input
                       type="email"
@@ -122,7 +108,6 @@ class Signin extends Component {
                     />
                   </FormGroup>
 
-                  {/* {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && ( */}
                   <div className="mb-40">
                     <FormGroup
                       className="has-wrapper"
@@ -140,10 +125,6 @@ class Signin extends Component {
                           this.setState({ password: event.target.value })
                         }
                       />
-
-                      {/* <span className="has-icon" style={{ top: 6 }}>
-                          <i className="ti-eye" />
-                        </span> */}
                     </FormGroup>
                     <div className="text-right">
                       <a
@@ -156,116 +137,41 @@ class Signin extends Component {
                         Forget Password?
                       </a>
                     </div>
-                  </div>
-                  {/* )} */}
 
-                  {/* {error != "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && ( */}
-                  <FormGroup className="mb-20">
-                    <Fab
-                      variant="extended"
-                      className="text-white"
-                      size="medium"
-                      color="primary"
-                      style={{
-                        marginBottom: "1.5rem"
-                      }}
-                    >
-                      <span
-                        onClick={() => this.onUserLogin()}
-                        style={{ width: 120 }}
-                      >
-                        Sign in
-                      </span>
-                    </Fab>
-
-                    <div className="row d-flex justify-content-center align-items-center">
-                      <p
-                        className="fs-12 fw-light"
-                        style={{ color: "rgba(0,0,0,0.4)" }}
-                      >
-                        Not signed up yet?
-                        <a
-                          className="ml-5 fw-semi-bold"
-                          onClick={() => this.routeChange("register")}
-                        >
-                          Sign Up
-                        </a>
-                      </p>
-                    </div>
-                  </FormGroup>
-
-                  {/* {error == "LOGIN_FAILED_EMAIL_NOT_VERIFIED" && (
                     <FormGroup className="mb-20">
                       <Fab
                         variant="extended"
                         className="text-white"
-                        size="large"
+                        size="medium"
+                        color="primary"
                         style={{
-                          backgroundColor: AppConfig.themeColors.primary,
-                          marginBottom: "1.5rem",
-                          marginTop: "2rem"
+                          marginBottom: "1.5rem"
                         }}
-                        onClick={() => this.resentVerificationEmail()}
+                        type="submit"
                       >
-                        <Icon>trending_flat</Icon>
+                        <span style={{ width: 120 }}>Sign in</span>
                       </Fab>
-                      <div
-                        onClick={() => this.routeChange("register")}
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center"
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "rgba(0,0,0,0.5)",
-                            fontWeight: 300,
-                            fontSize: 14
-                          }}
+
+                      <div className="row d-flex justify-content-center align-items-center">
+                        <p
+                          className="fs-12 fw-light"
+                          style={{ color: "rgba(0,0,0,0.4)" }}
                         >
-                          You have signed up with us before
-                        </div>
-                        <div
-                          style={{
-                            color: "black",
-                            fontSize: 14,
-                            fontWeight: "400",
-                            marginLeft: 5
-                          }}
-                        >
-                          Resend verification email
-                        </div>
+                          Sign Up
+                        </p>
                       </div>
                     </FormGroup>
-                  )} */}
+                  </div>
                 </Form>
               </div>
             </div>
           </div>
         </div>
 
-        {/* appSignUpIn_yellow */}
         <div
           className="login_placeholder"
           style={{ flexDirection: "column", justifyContent: "center" }}
         >
-          {/* <video
-            src="https://ak5.picdn.net/shutterstock/videos/1015322305/preview/stock-footage-creative-business-team-having-meeting-at-the-office-successful-deal-business-partners-concluding.mp4"
-            loop={true}
-            autoPlay
-            type="video/mp4"
-            style={{
-              minHeight: "100%",
-              minWidth: "100%",
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              overflow: "hidden"
-            }}
-          /> */}
-
           <img
             src={require("Assets/img/appSignIn_yellow.png")}
             alt="site logo"
@@ -281,54 +187,6 @@ class Signin extends Component {
             <br />
             Accessable anywhere and anytime
           </p>
-
-          {/* <div
-            style={{
-              position: "relative",
-              height: "100%",
-              width: "100%",
-              backgroundColor: "rgba(0,0,0,0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column"
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column"
-              }}
-            >
-              <h1
-                className="mb-0 text-black"
-                style={{ fontSize: 32, color: "white" }}
-              >
-                Make your life easier
-              </h1>
-              <h1
-                className=" mb-0 text-black"
-                style={{ fontSize: 32, color: "white" }}
-              >
-                No more papers
-              </h1>
-
-              <h1
-                className="mb-0 text-black"
-                style={{ fontSize: 32, color: "white" }}
-              >
-                Digitise your workflow
-              </h1>
-              <h1
-                className=" mb-0 text-black"
-                style={{ fontSize: 32, color: "white" }}
-              >
-                Say goodbye to papers
-              </h1>
-            </div>
-          </div> */}
         </div>
       </div>
     );
@@ -343,7 +201,7 @@ export default withRouter(
   connect(
     mapStateToProps,
     {
-      signInUserWithEmailPassword,
+      signInAccount,
       userResentEmail,
       handleRegErrorForm
     }

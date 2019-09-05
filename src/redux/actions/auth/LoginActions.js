@@ -3,7 +3,7 @@ import * as types from "Types/auth/LoginTypes";
 /**
  * Log in User
  */
-export const signInUserWithEmailPassword = (user, history) => ({
+export const signInAccount = (user, history) => ({
   type: types.LOGIN_USER,
   payload: { user, history }
 });

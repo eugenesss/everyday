@@ -197,7 +197,7 @@ class QuotationForm extends Component {
 
     var today = new Date();
     var duedate = new Date();
-    duedate.setDate(today.getDate()+3);
+    duedate.setDate(today.getDate()+5);
 
     const postData = {...this.state.formFields}
     const quotationLine = [...this.state.formFieldsProducts]
@@ -205,7 +205,7 @@ class QuotationForm extends Component {
     let modifiedPostData = {...postData}
     modifiedPostData.quotationLine = quotationLine
     modifiedPostData.sent_date = postData.date,
-    modifiedPostData.due_date = postData.duedate,
+    modifiedPostData.due_date = duedate,
     modifiedPostData.companyName = postData.accountId.name,
     modifiedPostData.accountId = {
       name: modifiedPostData.accountId.name,
@@ -425,6 +425,7 @@ class QuotationForm extends Component {
                   handleAdd={this._addNewProdQuote}
                   handleRemove={this._removeProdQuote}
                   restart={this._restart}
+                  edit
                 />
               </div>
           </div>

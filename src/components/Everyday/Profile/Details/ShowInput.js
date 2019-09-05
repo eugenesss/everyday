@@ -43,26 +43,23 @@ function NumberFormatCustom(props) {
   );
 }
 
-const EditableInput = props => {
+const ShowInput = props => {
   const classes = useStyles();
   const { label, value, amount, ...others } = props;
+
   return (
     <FormControl className={classes.root}>
       <InputLabel shrink className={classes.label}>
         {label}
       </InputLabel>
-      <InputBase
-        inputComponent={amount && NumberFormatCustom}
-        startAdornment={
-          amount && <InputAdornment position="start">$</InputAdornment>
-        }
-        className={classes.input}
-        value={value}
-        readOnly
-        {...others}
-      />
+
+      <div style={{marginTop: 16, fontSize: 18}} {...others}>
+        {value}
+      </div>
+
+
     </FormControl>
   );
 };
 
-export default EditableInput;
+export default ShowInput;
