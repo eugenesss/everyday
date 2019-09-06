@@ -1,4 +1,5 @@
 import axios from "axios";
+import { NotificationManager } from "react-notifications";
 
 const api = axios.create({
   baseURL:
@@ -11,7 +12,7 @@ const api = axios.create({
 api.interceptors.request.use(config => {
   const token = localStorage.getItem("accessKey");
   if (token) {
-    config.url += `?access_token=${token}`;
+    config.headers = { Authorization: `${token}` };
   }
   return config;
 });
@@ -29,9 +30,14 @@ api.interceptors.response.use(
       case 400:
         break;
       case 401:
-        if(window.location.pathname != "/login"){
-          window.location.replace("/login");
-        }
+        // not logged in
+        // if (window.location.pathname != "/login") {
+        //   window.location.replace("/login");
+        // }
+        break;
+      case 403:
+        // no access rights
+        NotificationManager.error("Unauthorised access");
         break;
       case 404:
         break;

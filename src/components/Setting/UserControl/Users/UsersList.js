@@ -21,30 +21,31 @@ const UsersList = ({ tableData, loading, action }) => {
       label: "Mobile",
       name: "baseContact",
       options: { customBodyRender: value => (value ? value.mobile : "") }
-    },
-    {
-      label: "Actions",
-      name: "id",
-      options: {
-        filter: false,
-        customBodyRender: value => {
-          return (
-            <React.Fragment>
-              <Tooltip id="tooltip-icon" title="Edit Role">
-                <IconButton
-                  aria-label="More Options"
-                  onClick={() => {
-                    action.openUserControlDialog(value);
-                  }}
-                >
-                  <Edit fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            </React.Fragment>
-          );
-        }
-      }
     }
+    // {
+    //   label: "Actions",
+    //   name: "id",
+    //   options: {
+    //     filter: false,
+    //     customBodyRender: value => {
+    //       return (
+    //         <React.Fragment>
+    //           <Tooltip id="tooltip-icon" title="Edit Role">
+    //             <IconButton
+    //               aria-label="More Options"
+    //               style={{ padding: 6 }}
+    //               onClick={() => {
+    //                 action.openUserControlDialog(value);
+    //               }}
+    //             >
+    //               <Edit style={{ fontSize: 16 }} />
+    //             </IconButton>
+    //           </Tooltip>
+    //         </React.Fragment>
+    //       );
+    //     }
+    //   }
+    // }
   ];
 
   listOptions.viewColumns = false;

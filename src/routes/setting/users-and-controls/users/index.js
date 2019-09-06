@@ -12,7 +12,11 @@ import { getAllUsers } from "Actions";
 class UsersLayout extends Component {
   constructor(props) {
     super(props);
-    this.state = { addUserDialog: false, userControlDialog: false };
+    this.state = {
+      addUserDialog: false,
+      userControlDialog: false,
+      userToEdit: ""
+    };
     this.openAddUserDialog = this.openAddUserDialog.bind(this);
     this.openUserControlDialog = this.openUserControlDialog.bind(this);
   }
@@ -21,12 +25,15 @@ class UsersLayout extends Component {
     this.props.getAllUsers();
   }
 
-  openAddUserDialog(id) {
-    this.setState({ addUserDialog: !this.state.addUserDialog, userToEdit: id });
+  openAddUserDialog() {
+    this.setState({ addUserDialog: !this.state.addUserDialog });
   }
 
-  openUserControlDialog() {
-    this.setState({ userControlDialog: !this.state.userControlDialog });
+  openUserControlDialog(id) {
+    this.setState({
+      userControlDialog: !this.state.userControlDialog,
+      userToEdit: id
+    });
   }
 
   render() {

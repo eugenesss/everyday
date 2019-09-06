@@ -96,14 +96,14 @@ export const updateCurrentUserFailure = error => ({
  */
 
 export const updatePassword = (oldPassword, newPassword) => ({
-  type: UPDATE_PASSWORD,
+  type: types.UPDATE_PASSWORD,
   payload: { oldPassword, newPassword }
 });
 export const updatePasswordSuccess = msg => ({
-  type: UPDATE_PASSWORD_SUCCESS,
+  type: types.UPDATE_PASSWORD_SUCCESS,
   payload: msg
 });
 export const updatePasswordFailure = err => ({
-  type: UPDATE_PASSWORD_FAILURE,
+  type: types.UPDATE_PASSWORD_FAILURE,
   payload: err
 });

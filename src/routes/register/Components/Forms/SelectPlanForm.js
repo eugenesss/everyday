@@ -52,33 +52,23 @@ const SelectPlanForm = props => {
             "Periodic customer, pipeline and sales reports",
             "Create invoices and track payments"
           ]}
-          radioButton={
-            <Radio
-              checked={priceplan == "pro"}
-              onChange={() => {
-                handleRegForm("priceplan", "pro");
-                props.validatePlate("pro");
-              }}
-              value="d"
-              color="secondary"
-              name="radio-button-demo"
-              inputProps={{ "aria-label": "D" }}
-            />
-          }
+          // radioButton={
+          //   <Radio
+          //     checked={priceplan == "pro"}
+          //     onChange={() => {
+          //       handleRegForm("priceplan", "pro");
+          //       props.validatePlate("pro");
+          //     }}
+          //     value="d"
+          //     color="secondary"
+          //     name="radio-button-demo"
+          //     inputProps={{ "aria-label": "D" }}
+          //   />
+          // }
         />
       </div>
     </div>
   );
 };
-// const mapStateToProps = ({ authUser }) => {
-//   const { register } = authUser;
-//   const { priceplan } = register.form;
-//   return { priceplan };
-// };
-
-// export default connect(
-//   mapStateToProps,
-//   { handleRegForm }
-// )(SelectPlanForm);
 
 export default SelectPlanForm;
