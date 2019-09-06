@@ -109,6 +109,8 @@ function* addEventToDB({ payload }) {
       yield put(Actions.addCustomerEvent(data));
     } else if (type == "Account") {
       yield put(Actions.addAccountEvent(data));
+    } else if (type == "Deal") {
+      yield put(Actions.addDealEvent(data));
     } else {
       yield put(Actions.addEventSuccess(data));
     }

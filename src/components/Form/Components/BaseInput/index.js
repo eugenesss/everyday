@@ -23,11 +23,12 @@ const BootstrapInput = withStyles(theme => ({
     }
   }
 }))(
-  React.forwardRef((props, ref) => <InputBase fullWidth ref={ref} {...props} />)
+  React.forwardRef((props, ref) => (
+    <InputBase autoComplete="new-password" fullWidth ref={ref} {...props} />
+  ))
 );
 
 const BaseInput = React.forwardRef((props, ref) => (
-  
   <BootstrapInput ref={ref} {...props} />
 ));
 

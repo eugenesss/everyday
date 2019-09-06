@@ -157,7 +157,13 @@ class Signin extends Component {
                           className="fs-12 fw-light"
                           style={{ color: "rgba(0,0,0,0.4)" }}
                         >
-                          Sign Up
+                          Don't have an account?
+                          <a
+                            className="fw-semi-bold ml-5"
+                            onClick={() => this.routeChange("register")}
+                          >
+                            Sign up now
+                          </a>
                         </p>
                       </div>
                     </FormGroup>

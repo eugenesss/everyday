@@ -83,7 +83,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.GET_DEAL_SUMMARY_FAILURE:
       NotificationManager.warning("Error in fetching Deal Summary");
-      console.log(action.payload);
       return { ...state, dealSummary: INIT_STATE.dealSummary };
 
     /**
@@ -91,7 +90,6 @@ export default (state = INIT_STATE, action) => {
      */
     case types.GET_DEAL_FAILURE:
       NotificationManager.warning("Error in fetching Deal Data");
-      console.log(action.payload);
       return {
         ...state,
         dealToView: INIT_STATE.dealToView,
@@ -202,7 +200,6 @@ export default (state = INIT_STATE, action) => {
         }
       };
     case types.ON_SUBMIT_NEW_STAGE_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         dealToView: {
@@ -216,7 +213,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.ON_SUBMIT_NEW_STAGE_FAILURE:
       NotificationManager.error("Error in POST API");
-      console.log(action.payload);
       return {
         ...state,
         dealToView: {
@@ -241,7 +237,6 @@ export default (state = INIT_STATE, action) => {
       return { ...state, dealForm: INIT_STATE.dealForm };
     case types.NEW_DEAL_FAILURE:
       NotificationManager.error("Error in POST API");
-      console.log(action.payload);
       return {
         ...state,
         dealForm: { ...state.dealForm, loading: false }
@@ -263,7 +258,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.EDIT_DEAL_FAILURE:
       NotificationManager.error("Error in Edit");
-      console.log(action.payload);
       return {
         ...state,
         dealForm: { ...state.dealForm, loading: false }
@@ -279,7 +273,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.GET_DEAL_FORM_FAILURE:
       NotificationManager.error("Error in fetching form fields");
-      console.log(action.payload);
       return { ...state };
 
     /**
@@ -308,7 +301,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.DELETE_DEAL_FAILURE:
       NotificationManager.error("Error in Deleting Deal");
-      console.log(action.payload);
       return {
         ...state,
         dealToView: { ...state.dealToView, loading: false },
@@ -336,7 +328,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.ADD_NOTE_DEAL_FAILURE:
       NotificationManager.error("Error in adding Note");
-      console.log(action.payload);
       return {
         ...state,
         dealToView: { ...state.dealToView, sectionLoading: false }
@@ -359,7 +350,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.TRANSFER_DEAL_FAILURE:
       NotificationManager.error("Error in Transferring Record");
-      console.log(action.payload);
       return { ...state, dealToView: { ...state.dealToView, loading: false } };
 
     /**
