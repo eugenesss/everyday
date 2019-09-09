@@ -4,14 +4,14 @@
 const AppConfig = {
   appLogo: require("Assets/img/appLogo_orig_light.png"), // App Logo
   brandName: "Everyday", // Brand Name
-  navCollapsed: false, // Sidebar collapse
-  darkMode: false, // Dark Mode
-  boxLayout: false, // Box Layout
-  rtlLayout: false, // RTL Layout
-  miniSidebar: false, // Mini Sidebar
-  enableSidebarBackgroundImage: true, // Enable Sidebar Background Image
-  isDarkSidenav: true, // Set true to dark sidebar
-  enableThemeOptions: false, // Enable Theme Options
+  // navCollapsed: false, // Sidebar collapse
+  // darkMode: false, // Dark Mode
+  // boxLayout: false, // Box Layout
+  // rtlLayout: false, // RTL Layout
+  // miniSidebar: false, // Mini Sidebar
+  // enableSidebarBackgroundImage: true, // Enable Sidebar Background Image
+  // isDarkSidenav: true, // Set true to dark sidebar
+  // enableThemeOptions: false, // Enable Theme Options
   locale: {
     languageId: "english",
     locale: "en",

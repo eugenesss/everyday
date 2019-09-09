@@ -4,7 +4,7 @@ import UsersList from "Components/Setting/UserControl/Users/UsersList";
 
 // Dialogs
 import AddUserDialog from "Components/Setting/UserControl/Users/AddUserDialog";
-import UserControlDialog from "Components/Setting/UserControl/Users/UserControlDialog";
+// import UserControlDialog from "Components/Setting/UserControl/Users/UserControlDialog";
 
 // Actions
 import { getAllUsers } from "Actions";
@@ -53,11 +53,11 @@ class UsersLayout extends Component {
           show={addUserDialog}
           handleClose={this.openAddUserDialog}
         />
-        <UserControlDialog
+        {/* <UserControlDialog
           show={userControlDialog}
           handleClose={this.openUserControlDialog}
           userToEdit={userToEdit}
-        />
+        /> */}
       </React.Fragment>
     );
   }

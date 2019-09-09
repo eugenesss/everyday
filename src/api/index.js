@@ -1,6 +1,8 @@
 import axios from "axios";
 import { NotificationManager } from "react-notifications";
 
+console.log(process.env.NODE_ENV);
+
 const api = axios.create({
   baseURL:
     process.env.NODE_ENV === "production"

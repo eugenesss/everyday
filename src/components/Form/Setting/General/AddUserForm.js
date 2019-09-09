@@ -101,7 +101,6 @@ class AddUserForm extends Component {
 
   render() {
     const { classes, accessGroups } = this.props;
-    console.log(accessGroups);
     const { email, baseContact, password, confirmPassword, roles } = this.state;
     return (
       <form autoComplete="off">

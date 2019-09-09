@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "description": "Everday, a System for your Everyday Needs",
   "scripts": {
-    "start": "cross-env NODE_ENV=production npm run build",
-    "dev": "cross-env NODE_ENV=development npm run development",
+    "start": "npm run dev",
+    "dev": "npm run development",
     "build": "webpack --mode production",
+    "staging": "webpack --env.NODE_ENV=staging",
     "development": "webpack-dev-server --mode development --inline --progress"
   },
   "keywords": [
@@ -21,7 +22,6 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
-    "cross-env": "^5.2.0",
     "css-loader": "^3.0.0",
     "eslint": "^4.19.1",
     "eslint-config-react-app": "^2.1.0",
@@ -41,7 +41,7 @@
     "sass-loader": "^6.0.7",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
-    "webpack": "4.5.0",
+    "webpack": "^4.39.3",
     "webpack-bundle-analyzer": ">=3.3.2",
     "webpack-cli": "2.0.14",
     "webpack-dev-server": "^3.3.1"

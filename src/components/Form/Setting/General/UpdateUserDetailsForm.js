@@ -41,14 +41,14 @@ class UpdateUserDetailsForm extends Component {
               <div className="col-5">
                 <FormInput
                   label="First Name"
-                  defaultValue={baseContact.firstName}
+                  defaultValue={baseContact && baseContact.firstName}
                   target="firstName"
                   handleChange={this.handleChangeBaseContact}
                 />
 
                 <FormInput
                   label="Mobile"
-                  defaultValue={baseContact.mobile}
+                  defaultValue={baseContact && baseContact.mobile}
                   target="mobile"
                   handleChange={this.handleChangeBaseContact}
                 />
@@ -56,7 +56,7 @@ class UpdateUserDetailsForm extends Component {
               <div className="col-5 offset-md-1">
                 <FormInput
                   label="Last Name"
-                  defaultValue={baseContact.lastName}
+                  defaultValue={baseContact && baseContact.lastName}
                   target="lastName"
                   handleChange={this.handleChangeBaseContact}
                 />

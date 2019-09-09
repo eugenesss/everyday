@@ -1,31 +1,21 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-  select,
-  delay
-} from "redux-saga/effects";
+import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
 
 import { SIGNUP_USER } from "Types";
 
-import { registerUserSuccess, registerUserFailure} from "Actions";
+import { registerUserSuccess, registerUserFailure } from "Actions";
 
 import api from "Api";
 
 const registerUserRequest = async form => {
-  const result = await api.post("/basecompanies/signup", form);
+  const result = await api.post("/users/signup", form);
   return result.data;
 };
-
 
 function* registerUserToDB() {
   // console.log('registerUserToDB')
   // console.log(payload)
 
   const getRegisterForm = state => state.authUser.register.form;
-
 
   try {
     const form = yield select(getRegisterForm);
@@ -38,13 +28,10 @@ function* registerUserToDB() {
   }
 }
 
-
 export function* registerUserWatcher() {
   yield takeEvery(SIGNUP_USER, registerUserToDB);
 }
 
-
 export default function* rootSaga() {
   yield all([fork(registerUserWatcher)]);
 }
-
