@@ -129,11 +129,8 @@ const PaymentDetailForm = props => {
 
 
 
-        {/* <FormGroup row className="has-wrapper">
-        
-        </FormGroup> */}
-
         <FormGroup row className="has-wrapper" style={{display:'flex', justifyContent:'center', marginBottom: '1rem'}}>
+
           <div>
             <Label for="payment_expiry" className="fs-13 text-left" sm={12}>
               Valid To
@@ -158,7 +155,7 @@ const PaymentDetailForm = props => {
           </div>
 
           <div>
-            <Label for="payment_code" className="fs-13 text-left" sm={12}>
+          <Label for="payment_code" className="fs-13 text-left" sm={12}>
               CVC
             </Label>
             <Col>
@@ -174,9 +171,15 @@ const PaymentDetailForm = props => {
                   handleRegForm("payment_code", e.target.value, "paymentInfo")
                 }}
               />
+              <span className="has-icon" style={{ top: "6px" }}>
+                <i className="ti-credit-card" />
+              </span>
             </Col>
           </div>
+
         </FormGroup>
+
+
     
       </Form>
     </div>
