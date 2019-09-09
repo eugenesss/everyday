@@ -1,6 +1,6 @@
 {
   "name": "everyday",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Everday, a System for your Everyday Needs",
   "scripts": {
     "start": "npm run dev",
