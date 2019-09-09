@@ -3,6 +3,7 @@
  */
 const AppConfig = {
   appLogo: require("Assets/img/appLogo_orig_light.png"), // App Logo
+  tagLine: "For Your Everyday System Needs",
   brandName: "Everyday", // Brand Name
   navCollapsed: false, // Sidebar collapse
   darkMode: false, // Dark Mode

@@ -6,7 +6,8 @@ import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 
 
 // app config
-import { appLogo } from "Constants/AppConfig";
+import AppConfig from "Constants/AppConfig";
+
 import RegisterSteps from "./Components/RegisterSteps";
 
 class RegisterPage extends Component {
@@ -55,24 +56,8 @@ class RegisterPage extends Component {
 
                 </div>
 
-
-                {/* {loading && 
-                  <div className="register_module">
-                    <div style={{overflow:'auto', width: '100%', display:'flex', justifyContent:'center', flexDirection:'column', alignItems:'center'}}>
-                      <Link to="/" className="logo-mini" style={{marginBottom: 25}}>
-                        <img
-                          src={require("Assets/img/appLogo_orig_light.png")}
-                          alt="site logo"
-                          width="150"
-                        />
-                      </Link>
-                      <RctPageLoader/>
-                    </div>
-                  </div>
-                } */}
-
                 <div className="register_module">
-                    <div style={{overflow:'auto', width: '100%', display:'flex', justifyContent:'center', flexDirection:'column', alignItems:'center'}}>
+                    <div style={{overflow:'auto', width: '100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
                       <Link to="/" className="logo-mini">
                         <img
                           src={require("Assets/img/appLogo_orig_light.png")}
@@ -82,7 +67,7 @@ class RegisterPage extends Component {
                       </Link>
 
                       <p className="session-head fw-light text-center mb-30 fs-14 text-muted" style={{margin: 5}}>
-                        Work-life has never been better
+                        {AppConfig.tagLine}
                       </p>
 
                       <RegisterSteps

@@ -183,7 +183,8 @@ class RegisterSteps extends React.Component {
             style={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "center"
+              alignItems: "center",
+              width:'100%'
             }}
           >
             <RegisterForm
@@ -210,9 +211,9 @@ class RegisterSteps extends React.Component {
                 className="fs-12 fw-light"
                 style={{ color: "rgba(0,0,0,0.4)" }}
               >
-                Back to
+                Already have an account?
                 <a className="fw-semi-bold ml-5" onClick={this.props.history}>
-                  Login
+                  Login here
                 </a>
               </p>
             </div>
@@ -225,7 +226,9 @@ class RegisterSteps extends React.Component {
             style={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "center"
+              alignItems: "center",
+              width:'100%'
+
             }}
           >
             <SelectPlanForm
@@ -281,7 +284,9 @@ class RegisterSteps extends React.Component {
             style={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "center"
+              alignItems: "center",
+              width:'100%'
+
             }}
           >
             <PaymentDetailForm {...this.props} />
@@ -337,13 +342,12 @@ class RegisterSteps extends React.Component {
 
     // change success to normal for development
     return (
-      <div style={{}}>
+      <div class="w-75 p-3">
         
         {loading? <RctPageLoader/> :
-      
           <div>
             {!success ? (
-              <div style={{}}>
+              <div class="w-100 p-3">
                 <Stepper alternativeLabel activeStep={activeStep}>
                   {steps.map((label, index) => {
                     const stepProps = {};
@@ -358,9 +362,9 @@ class RegisterSteps extends React.Component {
                 </Stepper>
 
                 <div
+                  class="w-100 p-3"
                   style={{
                     display: "flex",
-                    width: "100%",
                     justifyContent: "center",
                     alignItems: "center"
                   }}

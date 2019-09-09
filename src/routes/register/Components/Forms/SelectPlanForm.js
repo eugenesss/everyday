@@ -5,10 +5,11 @@ import Radio from "@material-ui/core/Radio";
 // import { connect } from "react-redux";
 // import { handleRegForm } from "Actions";
 
+
 const SelectPlanForm = props => {
   const { priceplan, handleRegForm } = props;
   return (
-    <div className="price-list mb-0">
+    <div className="price-list mb-0 w-100 p-3">
       <div className="row row-eq-height mb-30">
         <PricingBlock
           planType="free"

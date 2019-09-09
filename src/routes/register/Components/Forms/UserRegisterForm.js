@@ -27,7 +27,7 @@ const RegisterForm = props => {
   // const emailValidator = (new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(email))
 
   return (
-    <React.Fragment>
+    <div class="w-100 p-3">
       <Form>
         <FormGroup row className="has-wrapper" style={{display:'flex', justifyContent:'center', marginBottom: '1rem'}}>
 
@@ -37,7 +37,7 @@ const RegisterForm = props => {
             </Label>
             <Col sm={12} >
               <Input
-                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10}}
+                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10, paddingRight:40}}
                 value={firstName}
                 name="firstName"
                 id="firstName"
@@ -60,7 +60,7 @@ const RegisterForm = props => {
             </Label>
             <Col sm={12}>
               <Input
-                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10}}
+                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10, paddingRight:40}}
                 value={lastName}
                 name="lastName"
                 id="lastName"
@@ -87,7 +87,7 @@ const RegisterForm = props => {
             </Label>
             <Col sm={12}>
               <Input
-                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10}}
+                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10, paddingRight:40}}
                 type="email"
                 value={email}
                 name="email"
@@ -117,7 +117,7 @@ const RegisterForm = props => {
             </Label>
             <Col sm={12}>
               <Input
-                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10}}
+                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10, paddingRight:40}}
                 value={name}
                 name="companyName"
                 id="companyName"
@@ -144,7 +144,7 @@ const RegisterForm = props => {
             </Label>
             <Col sm={12}>
               <Input
-                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10}}
+                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10, paddingRight:40}}
                 type="password"
                 value={password}
                 name="password"
@@ -169,7 +169,7 @@ const RegisterForm = props => {
             </Label>
             <Col sm={12} style={{}}>
               <Input
-                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10}}
+                style={{border:'1px solid rgba(0,0,0,0.08)', borderRadius: 10, paddingRight:40}}
                 type="password"
                 defaultValue={repassword}
                 name="repassword"
@@ -196,7 +196,7 @@ const RegisterForm = props => {
        
 
       </Form>
-    </React.Fragment>
+    </div>
   );
 };
 
