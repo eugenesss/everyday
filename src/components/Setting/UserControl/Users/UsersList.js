@@ -8,8 +8,6 @@ import { PersonAdd, Edit } from "@material-ui/icons";
 
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
-import { listOptions } from "Helpers/helpers";
-
 const UsersList = ({ tableData, loading, action }) => {
   const columns = [
     {
@@ -48,25 +46,37 @@ const UsersList = ({ tableData, loading, action }) => {
     // }
   ];
 
-  listOptions.viewColumns = false;
-  listOptions.customToolbar = () => (
-    <Tooltip id="tooltip-icon" title="Add User">
-      <IconButton
-        className="mr-2"
-        aria-label="Add User"
-        onClick={action.openAddUserDialog}
-      >
-        <PersonAdd />
-      </IconButton>
-    </Tooltip>
-  );
+  const options = {
+    filterType: "multiselect",
+    responsive: "scroll",
+    download: false,
+    print: false,
+    selectableRows: "none",
+    elevation: 0,
+    rowsPerPage: 15,
+    viewColumns: false,
+    rowsPerPageOptions: [15, 30, 60, 100],
+    textLabels: { body: { noMatch: "No data to display" } },
+    customToolbar: () => (
+      <Tooltip id="tooltip-icon" title="Add User">
+        <IconButton
+          className="mr-2"
+          aria-label="Add User"
+          onClick={action.openAddUserDialog}
+        >
+          <PersonAdd />
+        </IconButton>
+      </Tooltip>
+    )
+  };
+
   return (
     <BgCard fullBlock>
       <RecordsList
         title={"All Users"}
         columns={columns}
         data={tableData}
-        options={listOptions}
+        options={options}
       />
       {loading && <RctSectionLoader />}
     </BgCard>
