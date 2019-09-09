@@ -2,7 +2,6 @@
  * App Reducers
  */
 import { combineReducers } from "redux";
-import settings from "./settings";
 import { reducer as modal } from "redux-modal";
 
 // accounting
@@ -37,7 +36,6 @@ import uploadFileReducer from "./upload/uploadFileReducer";
 import ImportReducer from "./system/ImportReducer";
 
 const reducers = combineReducers({
-  settings,
   authUser: authUserReducer,
   uploadFile: uploadFileReducer,
   importRecord: ImportReducer,

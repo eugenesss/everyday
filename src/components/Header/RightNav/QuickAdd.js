@@ -24,11 +24,11 @@ const links = [
   { title: "sidebar.lead", link: leadNewPage },
   { title: "sidebar.customer", link: customerNewPage },
   { title: "sidebar.account", link: accountNewPage },
-  { title: "sidebar.deal", link: dealNewPage },
-  { title: "sidebar.quotation", link: quoteNewPage },
-  { title: "sidebar.invoice", link: invoiceNewPage },
-  { title: "sidebar.payment", link: newPayment },
-  { title: "sidebar.credit_note", link: crednoteNewPage }
+  { title: "sidebar.deal", link: dealNewPage }
+  // { title: "sidebar.quotation", link: quoteNewPage },
+  // { title: "sidebar.invoice", link: invoiceNewPage },
+  // { title: "sidebar.payment", link: newPayment },
+  // { title: "sidebar.credit_note", link: crednoteNewPage }
 ];
 
 const QuickLinks = () => (

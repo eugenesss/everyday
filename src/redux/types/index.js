@@ -1,5 +1,4 @@
 // System Types
-export * from "./system/AppSettingTypes";
 export * from "./system/ReportTypes";
 
 //Calendar Types
