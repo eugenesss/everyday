@@ -13,9 +13,7 @@ import RegisterForm from "./Forms/UserRegisterForm";
 import SelectPlanForm from "./Forms/SelectPlanForm";
 import PaymentDetailForm from "./Forms/PaymentDetailForm";
 
-
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
-
 
 // Actions
 import {
@@ -184,7 +182,7 @@ class RegisterSteps extends React.Component {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              width:'100%'
+              width: "100%"
             }}
           >
             <RegisterForm
@@ -227,8 +225,7 @@ class RegisterSteps extends React.Component {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              width:'100%'
-
+              width: "100%"
             }}
           >
             <SelectPlanForm
@@ -285,8 +282,7 @@ class RegisterSteps extends React.Component {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              width:'100%'
-
+              width: "100%"
             }}
           >
             <PaymentDetailForm {...this.props} />
@@ -342,12 +338,13 @@ class RegisterSteps extends React.Component {
 
     // change success to normal for development
     return (
-      <div class="w-75 p-3">
-        
-        {loading? <RctPageLoader/> :
+      <div className="w-75 p-3">
+        {loading ? (
+          <RctPageLoader />
+        ) : (
           <div>
             {!success ? (
-              <div class="w-100 p-3">
+              <div className="w-100 p-3">
                 <Stepper alternativeLabel activeStep={activeStep}>
                   {steps.map((label, index) => {
                     const stepProps = {};
@@ -362,7 +359,7 @@ class RegisterSteps extends React.Component {
                 </Stepper>
 
                 <div
-                  class="w-100 p-3"
+                  className="w-100 p-3"
                   style={{
                     display: "flex",
                     justifyContent: "center",
@@ -389,9 +386,9 @@ class RegisterSteps extends React.Component {
                     A verification link has been sent to your email account
                   </h1>
                   <p style={{ textAlign: "center" }}>
-                    Please click on the link that has just been sent to your email
-                    account to verify your email and continue the registeration
-                    process.
+                    Please click on the link that has just been sent to your
+                    email account to verify your email and continue the
+                    registeration process.
                   </p>
 
                   <Fab
@@ -412,7 +409,7 @@ class RegisterSteps extends React.Component {
               </Paper>
             )}
           </div>
-        }
+        )}
       </div>
     );
   }
