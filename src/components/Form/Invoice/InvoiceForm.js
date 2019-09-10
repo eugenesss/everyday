@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import InvoiceFields from "Components/Form/Components/Inputs/Accounting/InvoiceFields";
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
 import InvoiceTotalTableInput from "Components/Form/Components/Inputs/Accounting/InvoiceTotalTableInput";
-import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/InvoiceProductInput";
+import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/EditInvoiceProductInput";
 import Button from '@material-ui/core/Button';
 
 // Form Layout
@@ -18,6 +18,12 @@ import FormInput from "Components/Form/Components/FormInput";
 import FormMultiInput from "Components/Form/Components/FormMultiInput";
 import AmountInput from "Components/Form/Components/Inputs/AmountInput";
 import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
+
+
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
+
 
 
 // Actions
@@ -427,37 +433,59 @@ class InvoiceForm extends Component {
 
           </FormInputLayout>
       
-      
+            
           <FormInputLayout
-            title="Invoice List"
+            title="Quotation List"
             desc="Please state down the description, unit, price and tax option clearly"
-          >
-       
-          </FormInputLayout>
+          ></FormInputLayout>
 
-          <div className="row border-top py-30 px-30 justify-content-md-center">
+          
+          <div className="row px-30 justify-content-md-end">
+              <div className="row col-md-11" style={{marginTop: 10}}>
+                <div className="col-md-12 d-flex justify-content-end">
+                  <div className="flex-column d-flex align-items-center">
+                    <AddCircleIcon
+                      variant="contained"
+                      color="primary"
+                      fontSize="large"
+                      // className="text-white ml-10"
+                      onClick={this._addNewProdQuote}
+                    />
+                    Add Product
+                  </div>
+                
+                  {this.state.formFieldsProducts.length > 1 && (
+                      <div className="flex-column d-flex align-items-center">
+                        <DeleteIcon
+                          variant="contained"
+                          color="primary"
+                          fontSize="large"
+                          onClick={this._removeProdQuote}
+                        />
+                        Delete Product            
+                      </div>
+                    )} 
+                  </div>
+              </div>
+          </div>
+
+          <div className="row py-30 px-30 justify-content-md-center">
+            
               <div className="col-11">
                 <InvoiceProductInput
                   products={this.state.formFieldsProducts}
+                  quotation={this.state.formFields}
                   taxTable={taxTable}
                   handleChange={this._handleProdQuote}
-                  handleAdd={this._addNewProdQuote}
+                  // handleAdd={this._addNewProdQuote}
                   handleRemove={this._removeProdQuote}
                   restart={this._restart}
+                  edit
                 />
               </div>
           </div>
-         
-          <FormInputLayout
-            title="Executive Summary"
-            desc="All items have been calculated with taxes. Ensure all information are keyed correct, especially taxation."
-          >
-            <div className="row" style={{display:'flex', justifyContent:"flex-end"}}>
-                <div className="col-6">
-                  <InvoiceTotalTableInput invoice={this.state.formFields} />
-                </div>
-            </div>
-          </FormInputLayout>
+
+
 
 
         </form>

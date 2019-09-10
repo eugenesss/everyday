@@ -65,6 +65,13 @@ class acct_view_quotation extends Component {
     this.props.clearSingleQuotation();
   }
 
+  /**
+   * New
+   */
+  newQuotation() {
+    this.props.history.push(quoteNewPage)
+  }
+
   edit(quotation) {
     this.props.history.push(quoteEditPage(quotation.id));
   }
@@ -87,166 +94,104 @@ class acct_view_quotation extends Component {
     const { loading, quotation } = this.props.quotationToView;
 
     let buttonCollection = null;
-    let moreButtons = null;
     
     if (quotation) {
       switch (quotation.state) {
         case "Draft":
           // console.log('Draft Mode')
           buttonCollection = (
-            <div className="rct-block p-10 mb-10">
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() =>
-                  this.props.HandleStateUpdate(quotation.id, "Open")
-                }
-              >
-                Open Quotation
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => this.edit(quotation)}
-              >
-                Edit Quotation
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => {
-                  this.props.deleteSingleQuote(this.props.match.params.id);
-                }}
-              >
-                Delete Quotation
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => {
-                  this.props.HandleConvertInvoiceQuotation(quotation.id);
-                }}
-              >
-                Convert to invoice
-              </MatButton>
-              {/* <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={()=> console.log('To Pdf Print')}
-                >
-                  To PDF &amp; Print
-                </MatButton> */}
-            </div>
-          );
+            <PageTitleBar
+              title="View Quotation"
+              actionGroup={{
+                add: { onClick: () => this.newQuotation() },
+                mid: { label: "Edit", onClick: () => this.edit(quotation) },
+                more: [
+                  {
+                    label: "Open Quotation",
+                    onClick: () => this.props.HandleStateUpdate(quotation.id, "Open")
+                  },
+                  {
+                    label: "Convert to Invoice",
+                    onClick: () => this.props.HandleConvertInvoiceQuotation(quotation.id)
+                  },
+                  {
+                    label: "Delete Quotation",
+                    onClick: () => this.props.deleteSingleQuote(this.props.match.params.id)
+                  },
+                ]
+              }}
+            />
+          )
+         
 
           break;
 
         case "Open":
-          buttonCollection = (
-            <div className="rct-block p-10 mb-10">
-              {/* <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={()=> this.props.HandleStateUpdate(quotation.id, 'Draft')}
-                >
-                  Convert to draft
-                </MatButton> */}
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => this.edit(quotation)}
-              >
-                Edit Quotation
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => {
-                  if (quotation.version == 1) {
-                    this.props.deleteSingleQuote(this.props.match.params.id);
-                  } else {
-                    this.props.HandleStateRevertPreviousVersion(
-                      quotation.id,
-                      "Quotation"
-                    );
-                  }
-                }}
-              >
-                Delete Quotation
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => {
-                  this.props.HandleStateCreateNewVersion(
-                    quotation.id,
-                    "Quotation"
-                  );
-                }}
-              >
-                Create New Version
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => {
-                  this.props.HandleConvertInvoiceQuotation(quotation.id);
-                }}
-              >
-                Convert to invoice
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => {}}
-              >
-                Email Client
-              </MatButton>
-              {/* <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={()=> console.log('To Pdf Print')}
-                >
-                  Save to PDF &amp; Print
-                </MatButton> */}
-            </div>
-          );
 
-          // moreButtons =
-          //   <MoreButton >
-          //   {{
-          //     label: "Edit", handleOnClick: () => this.edit(quotation)
-          //   }}
-          //   {{
-          //     label: "Delete", handleOnClick: (() => {
-          //       this.props.deleteSingleQuote(this.props.match.params.id)
-          //     })
-          //   }}
-          //   {{
-          //     label: "Clone", handleOnClick: ()=> console.log('Clone item')
-          //   }}
-          //   {{
-          //     label: "New Version",handleOnClick: ()=> console.log('Create new version of the quotation')
-          //   }}
-          //   </MoreButton>
+          buttonCollection = (
+              <PageTitleBar
+                title="View Quotation"
+                actionGroup={{
+                  add: { onClick: () => this.newQuotation() },
+                  mid: { label: "Edit", onClick: () => this.edit(quotation) },
+                  more: [
+                    {
+                      label: "Create New Version",
+                      onClick: () => {
+                          this.props.HandleStateCreateNewVersion(
+                            quotation.id,
+                            "Quotation"
+                          )
+                      }
+                    },
+                    {
+                      label: "Convert to Invoice",
+                      onClick: () => this.props.HandleConvertInvoiceQuotation(quotation.id)
+                    },
+                    {
+                      label: "Delete Quotation",
+                      onClick: () => {
+                        
+                          if (quotation.version == 1) {
+                            this.props.deleteSingleQuote(this.props.match.params.id);
+                          } else {
+                            this.props.HandleStateRevertPreviousVersion(
+                              quotation.id,
+                              "Quotation"
+                            );
+                          }
+                        
+                      }
+                    },
+                  ]
+                }}
+              />
+          )
+          
+      
           break;
 
         case "Closed":
-          // buttonCollection = (
-          //   <div className="rct-block p-10 mb-10">
-          //     <MatButton
-          //       variant="contained"
-          //       className="btn-primary mr-10 text-white"
-          //       onClick={()=> this.props.HandleStateUpdate(quotation.id, 'Open')}
-          //     >
-
-          //     </MatButton>
-          //   </div>
-          // )
+            buttonCollection = (
+              <PageTitleBar
+                title="View Quotation"
+                actionGroup={{
+                  add: { onClick: () => this.newQuotation() },                  
+                }}
+              />
+            )
           break;
 
         case "Converted":
           // console.log("Converted Mode");
+            buttonCollection = (
+              <PageTitleBar
+                title="View Quotation"
+                actionGroup={{
+                  add: { onClick: () => this.newQuotation() },                  
+                }}
+              />
+            )
           break;
 
         default:
@@ -258,6 +203,7 @@ class acct_view_quotation extends Component {
       return <Redirect to="/app/acct/quotations" />;
     }
 
+        
     return loading ? (
       <RctPageLoader />
     ) : quotation ? (
@@ -265,53 +211,20 @@ class acct_view_quotation extends Component {
         <Helmet>
           <title>Everyday | View Quotation</title>
         </Helmet>
-        <PageTitleBar
-          title="View Quotation"
-          // extraButtons={[
-          //   {
-          //     color: "primary",
-          //     label: "Convert to invoice"
-          //   },
-          //   {
-          //     color: "primary",
-          //     label: "Send by email"
-          //   },
-          //   {
-          //     color: "primary",
-          //     label: "To PDF & Print"
-          //   }
-          // ]}
-          createLink={quoteNewPage}
-          moreButton={moreButtons}
-        />
+
+        {buttonCollection}
+        
         <div className="row">
 
           <div className="col-md-3">
-            <QuotationCard/>
+            <QuotationCard
+              quotation={quotation}
+            />
           </div>
 
-          {/* <div className="col-md-3">
-            <BgCard>
-              <AccountingDetails
-                type="quotation"
-                accountID={quotation.quoteID}
-                status={quotation.state}
-                account={quotation.account && quotation.account.name}
-                customer={quotation.customer && quotation.customer.name}
-                sent_date={quotation.sent_date}
-                created_date={quotation.createdAt}
-                owner={quotation.owner.name}
-                price={quotation.totalAmt}
-                version={quotation.version}
-                currency={quotation.currency.name}
-              />
-            </BgCard>
-          </div> */}
-
           <div className="col-md-9">
-            {buttonCollection}
 
-        
+          
             <ProfileTabs loading={false}>
                   <div label="Overview">
                     <OverviewTab

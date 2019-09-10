@@ -15,7 +15,7 @@ import FormInput from "Components/Form/Components/FormInput";
 import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
 
 
-export default class Payment extends Component {
+export default class MakePayment extends Component {
     
 
     state=({
@@ -199,7 +199,7 @@ export default class Payment extends Component {
 
                     <div style={{marginTop: 25, display: 'flex'}} className="col-md-12">
                         <div onClick={this._handleSubmitPayment} style={{marginRight: 25}}>Register Payment</div>
-                        <div onClick={this._handleSubmitPayment}>Cancel</div>
+                        {/* <div onClick={this._handleSubmitPayment}>Cancel</div> */}
                     </div>
                 
                 </div>

@@ -15,22 +15,25 @@ import { singleAccount, singleCustomer } from "Helpers/url/crm";
 function QuotationCard(props) {
   const { quotation } = props;
 
-
   return (
     <Wrapper>
       <Contact
         noAvatar
-        name={"Quotation"}
+        name={"Invoice"}
         subHeading={
           `#${quotation.quoteID}`
         }
-        // indicator={quotation.latest}
       />
-        <div className="d-flex flex-column">
-          {`Version: ${quotation.version}`}
-          {`State: ${quotation.state}`}
-        </div>
 
+      <div className="d-flex flex-column">
+          <div>
+            {`Version: ${quotation.version}`}
+          </div>
+          <div>
+            {`State: ${quotation.state}`}
+          </div>
+      </div>
+     
       <KeyDetails
         keyDetails={[
           {

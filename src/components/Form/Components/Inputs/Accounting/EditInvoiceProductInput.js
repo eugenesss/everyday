@@ -336,6 +336,7 @@ export default function SpanningTable(props) {
               <TableCell>Description</TableCell>
               <TableCell align="right">Quantity</TableCell>
               <TableCell align="right">Price</TableCell>
+              <TableCell align="right">Tax Options</TableCell>
               <TableCell align="right">Tax</TableCell>
               <TableCell align="right">Discount</TableCell>
               <TableCell align="right">Total Amount</TableCell>
@@ -344,21 +345,86 @@ export default function SpanningTable(props) {
           </TableHead>
 
           <TableBody>
+
             {products.map((row, key) => (
                 <TableRow key={key}>
-                  <TableCell>{row.description}</TableCell>
-                  <TableCell align="right">{row.quantity}</TableCell>
-                  <TableCell align="right">{`$${row.price}`}</TableCell>
-                  <TableCell align="right">{`${row.tax_rate}%`}</TableCell>
-                  <TableCell align="right">{row.discount}</TableCell>
+                  <TableCell>
+                    <FormInput
+                        // label="Description"
+                        value={row.description}
+                        required={!row.description}
+                        target="description"
+                        keys={key}
+                        handleChange={handleChange}
+                        style={{margin:0, padding:0}}
+                    />
+                  </TableCell>
+                  <TableCell align="right">
+                    <AmountInput
+                        value={row.quantity}
+                        required={!row.quantity}
+                        nodollar
+                        target="quantity"
+                        keys={key}
+                        handleChange={handleChange}
+                        style={{margin:0, padding:0}}
+
+                    />
+
+                  </TableCell>
+                  <TableCell align="right">
+                    <AmountInput
+                        value={row.price}
+                        required={!row.price}
+                        target="price"
+                        // nodollar
+                        keys={key}
+                        handleChange={handleChange}
+                        style={{margin:0, padding:0}}
+
+                    />
+                  </TableCell>
+                  <TableCell align="right">
+                    <FormMultiInput
+                        value={row.tax_id}
+                        required={!row.tax_id}
+                        selectValues={taxTable}
+                        target="tax_id"
+                        keys={key}
+                        handleChange={handleChange}
+                        style={{margin:0, padding:0}}
+
+                    />
+                  </TableCell>
+
+                  <TableCell align="right">
+                    <FormInput
+                        disabled={true}
+                        value={`${row.tax_rate}%`}
+                        style={{margin:0, padding:0}}
+                    />
+                  </TableCell>   
+
+                  <TableCell align="right">
+
+                    <AmountInput
+                        value={row.discount}
+                        target="discount"
+                        keys={key}
+                        handleChange={handleChange}
+                        style={{margin:0, padding:0}}
+                        // onChange={e => {
+                        //   console.log(e.target.value)
+                        //   handleChange("price", e.target.value, key)
+                        // }}
+                    />
+                  </TableCell>
                   <TableCell align="right">{`$${row.amount}`}</TableCell>
                 </TableRow>
             ))}
 
-
-
             <TableRow>
-              <TableCell colSpan={3} rowSpan={3} />
+              <TableCell colSpan={4} rowSpan={3} />
               <TableCell colSpan={2}>Subtotal</TableCell>
               <TableCell align="right">{ccyFormat(quotation.subtotal)}</TableCell>
             </TableRow>

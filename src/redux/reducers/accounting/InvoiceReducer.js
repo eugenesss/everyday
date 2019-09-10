@@ -239,7 +239,6 @@ export default (state = INIT_STATE, action) => {
           };
   
     case types.SUBMIT_NEW_INVOICE_FAILURE:
-          console.log('SUBMIT_NEW_INVOICE_FAILURE')
           return {
             ...state, 
             invoiceList: {
@@ -249,16 +248,14 @@ export default (state = INIT_STATE, action) => {
           };
   
     case types.RESTART_UPLOAD_STATUS:
-          console.log('RESTART_UPLOAD_STATUS')
-          return {
-            ...state, 
-            invoiceList: {
-              ...state.invoiceList,
-              uploaded: false
-            },
-          };
 
-
+        return {
+          ...state, 
+          invoiceList: {
+            ...state.invoiceList,
+            uploaded: false
+          },
+        };
       
     default:
       return { ...state };

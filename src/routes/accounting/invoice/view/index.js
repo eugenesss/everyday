@@ -15,7 +15,7 @@ import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import BgCard from "Components/Everyday/BgCard";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
-import MakePayment from "Components/Form/Payment/Payment";
+import MakePayment from "Components/Form/Payment/MakePayment";
 // Invoice Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
@@ -37,6 +37,12 @@ import { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandl
 // Add events dialog
 // Delete Quotation, Edit Quotation, Transfer Quotation
 
+import InvoiceCard from "Components/Accounting/Invoice/InvoiceCard";
+import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
+import OverviewTab from "./tabs/Overview";
+
+
+
 class acct_view_invoice extends Component {
   state = {
     makePayment: false
@@ -54,6 +60,10 @@ class acct_view_invoice extends Component {
   addNote = invoice => {
     this.props.addNoteQuotation(this.props.match.params.id, invoice);
   };
+
+  newInvoice() {
+    this.props.history.push(invoiceNewPage)
+  }
 
   edit(invoice) {
     this.props.history.push(invoiceEditPage(invoice.id));
@@ -105,130 +115,87 @@ class acct_view_invoice extends Component {
     if (invoice) {
       switch (invoice.state) {
         case "Draft":
-          // console.log('Draft Mode')
-          buttonCollection = (
-            <div className="rct-block p-10 mb-10">
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() =>
-                  this.props.InvoiceHandleStateUpdate(invoice.id, "Current")
-                }
-              >
-                Make Current Invoice
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => this.edit(invoice)}
-              >
-                Edit Invoice
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => {
-                  this.props.deleteSingleInvoice(this.props.match.params.id);
-                }}
-              >
-                Delete Invoice
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() =>
-                  this.props.InvoiceHandleStateUpdate(invoice.id, "Confirmed")
-                }
-              >
-                Confirm Invoice
-              </MatButton>
-              {/* <MatButton
-                  variant="contained"
-                  className="btn-primary mr-10 text-white"
-                  onClick={()=> console.log('To Pdf Print')}
-                >
-                  To PDF &amp; Print
-                </MatButton> */}
-            </div>
-          );
 
+        buttonCollection = (
+            <PageTitleBar
+              title="View Invoice"
+              actionGroup={{
+                add: { onClick: () => this.newInvoice() },
+                mid: { label: "Edit", onClick: () => this.edit(invoice) },
+                more: [
+                  {
+                    label: "Make Invoice Current",
+                    onClick: () => this.props.InvoiceHandleStateUpdate(invoice.id, "Current")
+                  },
+   
+                  {
+                    label: "Delete Quotation",
+                    onClick: () => this.props.deleteSingleInvoice(this.props.match.params.id)
+                  },
+                ]
+              }}
+            />
+          )
+         
           break;
 
         case "Current":
+
           buttonCollection = (
-            <div className="rct-block p-10 mb-10">
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => this.edit(invoice)}
-              >
-                Edit Invoice
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => {
-                  this.props.InvoiceHandleStateCreateNewVersion(
-                    invoice.id,
-                    "Invoice"
-                  );
-                }}
-              >
-                New Version
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() =>
-                  this.props.InvoiceHandleStateUpdate(invoice.id, "Confirmed")
-                }
-              >
-                Confirm Invoice
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => {
-                  this.props.deleteSingleInvoice(this.props.match.params.id);
-                }}
-              >
-                Delete Quotation
-              </MatButton>
-            </div>
-          );
+            <PageTitleBar
+              title="View Invoice"
+              actionGroup={{
+                add: { onClick: () => this.newInvoice() },
+                mid: { label: "Edit", onClick: () => this.edit(invoice) },
+                more: [
+                  {
+                    label: "New Version Invoice",
+                    onClick: () => {
+                      this.props.InvoiceHandleStateCreateNewVersion(
+                        invoice.id,
+                        "Invoice"
+                      )
+                    }
+                  },
+                  {
+                    label: "Confirm Invoice",
+                    onClick: () => this.props.InvoiceHandleStateUpdate(invoice.id, "Confirmed")
+                  },
+    
+                ]
+              }}
+            />
+          )
+        
           break;
 
         case "Confirmed":
-          buttonCollection = (
-            <div className="rct-block p-10 mb-10">
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={this.launchMakePaymentDialog}
-              >
-                Pay Invoice
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => console.log("Email Client")}
-              >
-                Email Client
-              </MatButton>
-              <MatButton
-                variant="contained"
-                className="btn-primary mr-10 text-white"
-                onClick={() => console.log("To Pdf Print")}
-              >
-                Save to PDF &amp; Print
-              </MatButton>
-            </div>
-          );
 
+
+            buttonCollection = (
+              <PageTitleBar
+                title="View Invoice"
+                actionGroup={{
+                  add: { onClick: () => this.newInvoice() },
+                  mid: { label: "Pay", onClick:() =>  this.launchMakePaymentDialog()},
+                }}
+              />
+            )
+
+    
           break;
 
         case "Paid":
-          console.log("Paid Mode");
+
+            buttonCollection = (
+              <PageTitleBar
+                title="View Invoice"
+                actionGroup={{
+                  add: { onClick: () => this.newInvoice() },
+                }}
+              />
+            )
+
           break;
 
         default:
@@ -247,51 +214,46 @@ class acct_view_invoice extends Component {
         <Helmet>
           <title>Everyday | View Invoice</title>
         </Helmet>
-        <PageTitleBar
-          title="View Invoice"
-          createLink={invoiceNewPage}
-          moreButton={moreButtons}
-        />
+        
+        {buttonCollection}
 
         <div className="row">
+          
           <div className="col-md-3">
-            <BgCard>
-              <AccountingDetails
-                type="invoice"
-                accountID={invoice.quoteID}
-                status={invoice.state}
-                account={invoice.account && invoice.account.name}
-                customer={invoice.customer && invoice.customer.name}
-                sent_date={invoice.sent_date}
-                owner={invoice.owner.name}
-                created_date={invoice.createdAt}
-                price={invoice.totalAmt}
-                version={invoice.version}
-                currency={invoice.currency.name}
-              />
-            </BgCard>
+            <InvoiceCard
+              quotation={invoice}
+            />
           </div>
+
           <div className="col-md-9">
-            {buttonCollection}
-            <TabsWrapper>
-              <div icon="zmdi-shopping-basket text-success" label="INVOICE">
-                <ViewTemplate order={invoice} id={invoice.invoiceID} />
-              </div>
-              {/* <div icon="zmdi-pizza text-warning" label="ACTIVITY LOG">
-                <ActivityLog />
-              </div> */}
-              <div icon="zmdi-assignment text-danger" label="NOTES">
-                <div className="row">
-                  <div>
-                    {/* <NotesLayout
-                      allNotes={invoice.notes}
-                      handleAddNote={this.addNote}
+          
+
+            <ProfileTabs loading={false}>
+                  <div label="Overview">
+                    <OverviewTab
+                      quotation={invoice}
+                    />
+                  </div>
+
+                  <div label="Deals">
+                    {/* <DealsTab deals={customer.deals} /> */}
+                  </div>
+
+                  <div label="Events">
+                    {/* <EventsTab
+                      eventableType="Customer"
+                      eventableId={customer.id}
+                      events={customer.events}
                     /> */}
                   </div>
-                </div>
-              </div>
-            </TabsWrapper>
+
+                  <div label="Details">
+                    {/* <DetailsTab cust={customer} /> */}
+                  </div>
+            </ProfileTabs>
+            
           </div>
+        
         </div>
 
         {this.state.makePayment && (

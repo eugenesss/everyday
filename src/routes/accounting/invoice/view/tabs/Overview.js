@@ -16,7 +16,6 @@ import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/In
 function QuotationOverviewTab(props) {
   const { quotation } = props;
   
-
   return (
     <React.Fragment>
       <div className="row">
