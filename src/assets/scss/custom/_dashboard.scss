@@ -234,11 +234,7 @@
     padding: 0 0.625rem;
   }
 }
-@media (max-width: 1400px) {
-  .counter-point ~ p {
-    display: none;
-  }
-}
+
 @media (max-width: 1366px) and (min-width: 992px) {
   .current-widget {
     padding: 0.9375rem; //15px;
@@ -275,7 +271,7 @@
     font-size: 2.75rem;
   }
   .counter-point {
-    font-size: 1.2rem;
+    font-size: 1.8rem;
   }
 }
 @media (max-width: 1199px) and (min-width: 320px) {
