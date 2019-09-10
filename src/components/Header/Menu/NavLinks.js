@@ -54,29 +54,29 @@ export default [
       // }
     ]
   },
-  // {
-  //   url: "/app/acct/quotations",
-  //   baseUrl: "/app/acct",
-  //   name: "Accounting",
-  //   child_routes: [
-  //     {
-  //       title: "sidebar.quotations",
-  //       path: quoteListPage
-  //     },
-  //     {
-  //       title: "sidebar.invoices",
-  //       path: invoiceListPage
-  //     },
-  //     {
-  //       title: "sidebar.payment",
-  //       path: paymentPage
-  //     },
-  //     {
-  //       title: "sidebar.credit_note",
-  //       path: crednoteListPage
-  //     }
-  //   ]
-  // },
+  {
+    url: "/app/acct/quotations",
+    baseUrl: "/app/acct",
+    name: "Accounting",
+    child_routes: [
+      {
+        title: "sidebar.quotations",
+        path: quoteListPage
+      },
+      {
+        title: "sidebar.invoices",
+        path: invoiceListPage
+      },
+      {
+        title: "sidebar.payment",
+        path: paymentPage
+      },
+      {
+        title: "sidebar.credit_note",
+        path: crednoteListPage
+      }
+    ]
+  },
   {
     url: "/app/reports",
     baseUrl: "/app/reports",

@@ -2,13 +2,7 @@ import axios from "axios";
 import { NotificationManager } from "react-notifications";
 
 const api = axios.create({
-  baseURL:
-    process.env.NODE_ENV === "production"
-      ? "https://api.everydaycrm.sg/api"
-      : process.env.NODE_ENV === "staging"
-      ? "https://staging-api.everydaycrm.sg/api"
-      : "http://localhost:3001/api"
-  // timeout: 6000,
+  baseURL: process.env.API_URL
 });
 
 api.interceptors.request.use(config => {
