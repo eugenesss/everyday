@@ -43,7 +43,7 @@ const QuotationList = ({ loading, title, action, tableData }) => {
       name: "totalAmt",
       options: {
         customBodyRender: value => {
-          return value.toFixed(2);
+          return `$${value.toFixed(2)}`
         }
       }
     },
