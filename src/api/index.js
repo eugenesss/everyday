@@ -2,8 +2,7 @@ import axios from "axios";
 import { NotificationManager } from "react-notifications";
 
 const api = axios.create({
-  // baseURL: process.env.API_URL,
-  baseURL: "http://192.168.1.191:3001/api"
+  baseURL: process.env.API_URL
 });
 
 api.interceptors.request.use(config => {

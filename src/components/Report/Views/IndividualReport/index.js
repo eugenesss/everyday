@@ -23,7 +23,7 @@ class IndividualReport extends PureComponent {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
-    if (this.props.users.length < 1) this.props.getAllUsers();
+    if (this.props.userList.length < 1) this.props.getAllUsers();
   }
   handleChange(event) {
     this.setState(oldValues => ({
@@ -48,10 +48,8 @@ class IndividualReport extends PureComponent {
               label="User Report"
               value={selected}
               onChange={this.handleChange}
-              className="mr-20"
-              style={{ minWidth: 300 }}
             >
-              {this.props.users.map((user, key) => (
+              {this.props.userList.map((user, key) => (
                 <MenuItem key={key} value={user.id}>
                   {user.name}
                 </MenuItem>
@@ -156,8 +154,8 @@ class IndividualReport extends PureComponent {
 
 const mapStateToProps = ({ reportState, usersState }) => {
   const { individualReport } = reportState;
-  const { users } = usersState;
-  return { individualReport, users };
+  const { userList } = usersState;
+  return { individualReport, userList };
 };
 
 export default connect(

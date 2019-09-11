@@ -110,46 +110,61 @@ class ReportContainer extends Component {
     const { startDate, endDate, nowShowing, dateRange } = this.state;
     return (
       <React.Fragment>
-        <div className="align-items-start">
-          <TextField
-            select
-            label="Presets"
-            value={nowShowing}
-            onChange={this.handleChange}
-            className="mr-20"
-            style={{ minWidth: 160 }}
-          >
-            {dateRange.map((range, key) => (
-              <MenuItem key={key} value={range}>
-                {range}
-              </MenuItem>
-            ))}
-          </TextField>
-          <DatePicker
-            className="mr-20"
-            format="DD/MM/YYYY"
-            variant="inline"
-            label="Start Date"
-            value={startDate}
-            onChange={date => this.handleCustomDate(date, "start")}
-          />
-          <DatePicker
-            className="mr-20"
-            format="DD/MM/YYYY"
-            variant="inline"
-            label="End Date"
-            value={endDate}
-            onChange={date => this.handleCustomDate(date, "end")}
-          />
-          {this.props.additionalSelection}
-          <Button
-            variant="contained"
-            className="text-white mr-20 mt-5"
-            color="primary"
-            onClick={() => this.submit()}
-          >
-            Apply
-          </Button>
+        <div className="align-items-start report-container">
+          <div className="row report-presets">
+            <div className="col-sm-2">
+              <TextField
+                select
+                label="Presets"
+                value={nowShowing}
+                onChange={this.handleChange}
+                className="mb-5"
+                fullWidth
+              >
+                {dateRange.map((range, key) => (
+                  <MenuItem key={key} value={range}>
+                    {range}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </div>
+            <div className="col-sm-2">
+              <DatePicker
+                format="DD/MM/YYYY"
+                variant="inline"
+                label="Start Date"
+                value={startDate}
+                className="mb-5"
+                onChange={date => this.handleCustomDate(date, "start")}
+              />
+            </div>
+            <div className="col-sm-2">
+              <DatePicker
+                format="DD/MM/YYYY"
+                variant="inline"
+                label="End Date"
+                value={endDate}
+                className="mb-5"
+                onChange={date => this.handleCustomDate(date, "end")}
+              />
+            </div>
+            {this.props.additionalSelection && (
+              <div className="col-sm-2">{this.props.additionalSelection}</div>
+            )}
+            <div className="col-sm-1">
+              <div>
+                <Button
+                  variant="contained"
+                  className="text-white mt-10"
+                  color="secondary"
+                  onClick={() => this.submit()}
+                >
+                  Apply
+                </Button>
+              </div>
+            </div>
+          </div>
+
           <div className="rct-block mt-30 p-30">{this.props.children}</div>
         </div>
       </React.Fragment>

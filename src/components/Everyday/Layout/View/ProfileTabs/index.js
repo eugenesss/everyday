@@ -73,8 +73,7 @@ function a11yProps(index) {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    padding: "0px 24px"
+    flexGrow: 1
   }
 }));
 

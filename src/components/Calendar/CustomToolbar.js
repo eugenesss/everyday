@@ -5,7 +5,6 @@ import { convertMonth, convertDay } from "Helpers/helpers";
 
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
 import Chip from "@material-ui/core/Chip";
 import { NavigateBefore, NavigateNext } from "@material-ui/icons";
 
@@ -25,24 +24,23 @@ const CalendarToolbar = toolbar => {
     <React.Fragment>
       <div className="toolbar-container mb-10">
         <div className="row justify-content-between">
-          <div className="col">
-            <Button variant="outlined" className="mr-20" onClick={goToToday}>
-              Today
-            </Button>
-            <Chip
-              label={
-                convertDay(today.getDay()) +
-                " - " +
-                today.getDate() +
-                " / " +
-                convertMonth(today.getMonth()) +
-                " / " +
-                today.getFullYear()
-              }
-              className="bg-white border"
-            />
+          <div className="col-md-4">
+            <div>
+              <Chip
+                label={
+                  convertDay(today.getDay()) +
+                  " - " +
+                  today.getDate() +
+                  " / " +
+                  convertMonth(today.getMonth()) +
+                  " / " +
+                  today.getFullYear()
+                }
+                className="bg-white border"
+              />
+            </div>
           </div>
-          <div className="col">
+          <div className="col-md-4">
             <div className="d-flex justify-content-center align-items-center">
               <IconButton
                 size="small"
@@ -68,7 +66,13 @@ const CalendarToolbar = toolbar => {
               </IconButton>
             </div>
           </div>
-          <div className="col text-right"></div>
+          <div className="col-md-4 text-right">
+            <div>
+              <Button variant="outlined" onClick={goToToday}>
+                Today
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </React.Fragment>

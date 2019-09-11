@@ -112,3 +112,20 @@
     margin: 0;
   }
 }
+
+@media (max-width: 898px) {
+  .title-action-buttons {
+    .extra-action-buttons {
+      button {
+        display: none;
+      }
+    }
+  }
+}
+@media (max-width: 375px) {
+  .page-title-wrap {
+    .back-button {
+      display: none;
+    }
+  }
+}

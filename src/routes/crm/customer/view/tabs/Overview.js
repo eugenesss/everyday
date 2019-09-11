@@ -17,12 +17,12 @@ function CustomerOverviewTab(props) {
   return (
     <React.Fragment>
       <div className="row">
-        <div className="col-6">
+        <div className="col-lg-6">
           <Comments comments={cust.notes} addComment={addNote} />
         </div>
       </div>
       <div className="row">
-        <div className="col">
+        <div className="col-lg-12">
           <DealList title="Related Deals" tableData={cust.deals} noRelated />
         </div>
       </div>

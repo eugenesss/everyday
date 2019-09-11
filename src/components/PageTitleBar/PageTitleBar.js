@@ -29,6 +29,7 @@ const PageTitleBar = ({
             onClick={() => history.goBack()}
             disableRipple
             aria-label="back"
+            className="back-button"
           >
             <ArrowBack
               fontSize="small"
@@ -38,19 +39,21 @@ const PageTitleBar = ({
         )}
         <h2 className="">{title && title}</h2>
       </div>
-      <div className="d-flex">
-        {customButton && customButton}
-        {actionButton &&
-          actionButton.map((button, key) => (
-            <Button
-              key={key}
-              variant="contained"
-              className={`${button.classes} ${classes.actionButton}`}
-              onClick={button.onClick}
-            >
-              {button.label}
-            </Button>
-          ))}
+      <div className="d-flex title-action-buttons">
+        <div className="extra-action-buttons">
+          {customButton && customButton}
+          {actionButton &&
+            actionButton.map((button, key) => (
+              <Button
+                key={key}
+                variant="contained"
+                className={`${button.classes} ${classes.actionButton}`}
+                onClick={button.onClick}
+              >
+                {button.label}
+              </Button>
+            ))}
+        </div>
         {actionGroup && <ActionButtonGroup buttons={actionGroup} />}
       </div>
     </div>

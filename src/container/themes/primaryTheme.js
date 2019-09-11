@@ -54,7 +54,6 @@ const theme = createMuiTheme({
     }
   },
   custom: {
-    sideDrawerPaperHeight: "calc(100vh - 160px)",
     boxShadow: "0 1px 15px 1px rgba(69, 65, 78, 0.08)"
   }
 });

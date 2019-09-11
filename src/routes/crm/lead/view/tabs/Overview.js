@@ -20,10 +20,10 @@ function LeadOverviewTab(props) {
   return (
     <React.Fragment>
       <div className="row">
-        <div className="col-6">
+        <div className="col-lg-6">
           <Comments comments={lead.notes} addComment={addNote} />
         </div>
-        <div className="col-6">
+        <div className="col-lg-6">
           <BgCard heading="Upcoming Events">
             <ShowUpcoming events={lead.events} />
           </BgCard>

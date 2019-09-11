@@ -15,12 +15,12 @@ function AccountOverviewTab(props) {
   return (
     <React.Fragment>
       <div className="row">
-        <div className="col-6">
+        <div className="col-lg-6">
           <Comments comments={acct.notes} addComment={addNote} />
         </div>
       </div>
       <div className="row">
-        <div className="col-12">
+        <div className="col-lg-12">
           <RelatedCustomer customers={acct.customers} />
         </div>
       </div>

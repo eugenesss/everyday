@@ -52,6 +52,12 @@
 .profile-tabs-container {
   padding: 1rem 0rem;
 }
+/*======= responsive =======*/
+@media (max-width: 1100px) and (min-width: 992px) {
+  .profile-card {
+    padding: 1rem 2rem;
+  }
+}
 
 /*======= Pricing Scss =======*/
 
@@ -129,9 +135,8 @@
     font-size: 0.875rem; //14px;
   }
   .checkicon {
-    padding-top:0.5em;
+    padding-top: 0.5em;
     color: $success;
-    
   }
 }
 
@@ -1057,5 +1062,16 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 6px 20px rgba(0, 0, 0, 0.08);
     background-color: white;
     z-index: 1;
+  }
+}
+
+//================= Report Section =============//
+
+@media (max-width: 996px) {
+  .report-container {
+    .report-presets {
+      margin-top: 10px;
+      padding: 10px;
+    }
   }
 }

@@ -125,10 +125,10 @@ class crm_view_deal extends Component {
             />
 
             <div className="row">
-              <div className="col-3">
+              <div className="col-lg-3">
                 <DealCard deal={deal} />
               </div>
-              <div className="col-9">
+              <div className="col-lg-9">
                 <ProfileTabs loading={sectionLoading}>
                   <div label="Overview">
                     <OverviewTab deal={deal} />

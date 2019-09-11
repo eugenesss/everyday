@@ -116,9 +116,8 @@ class crm_view_customer extends Component {
   }
 
   render() {
-    
     const { loading, customer, sectionLoading } = this.props.customerToView;
-    
+
     return (
       <React.Fragment>
         {loading ? (
@@ -151,11 +150,10 @@ class crm_view_customer extends Component {
               }}
             />
             <div className="row">
-              <div className="col-md-3">
+              <div className="col-lg-3">
                 <CustomerCard cust={customer} />
               </div>
-              <div className="col-md-9">
-
+              <div className="col-lg-9">
                 <ProfileTabs loading={sectionLoading}>
                   <div label="Overview">
                     <OverviewTab cust={customer} />
@@ -174,7 +172,6 @@ class crm_view_customer extends Component {
                     <DetailsTab cust={customer} />
                   </div>
                 </ProfileTabs>
-
               </div>
             </div>
           </React.Fragment>

@@ -9,8 +9,7 @@ const useStyles = makeStyles(theme => ({
     zIndex: 90,
     position: "relative",
     height: "100%",
-    borderRadius: "15px",
-    height: theme.custom.sideDrawerPaperHeight
+    borderRadius: "15px"
   },
   root: {
     width: "100%",

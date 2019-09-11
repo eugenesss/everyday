@@ -21,12 +21,12 @@ function OverviewTab(props) {
   return (
     <React.Fragment>
       <div className="row">
-        <div className="col">
+        <div className="col-lg-12">
           <SelectDealStage deal={deal} currentDeal={deal} />
         </div>
       </div>
       <div className="row">
-        <div className="col-6">
+        <div className="col-lg-6">
           <Comments comments={deal.notes} addComment={addNote} />
         </div>
         {/* <div className="col">
@@ -34,7 +34,7 @@ function OverviewTab(props) {
         </div> */}
       </div>
       <div className="row">
-        <div className="col">
+        <div className="col-lg-12">
           <DealHistory history={deal.history} />
         </div>
       </div>

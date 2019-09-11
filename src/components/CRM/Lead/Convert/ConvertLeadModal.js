@@ -91,7 +91,7 @@ class ConvertLeadModal extends Component {
         {loading && <RctSectionLoader />}
         <DialogContent className="p-30">
           <div className="row justify-content-center">
-            <div className="col-4">
+            <div className="col-lg-4">
               <AccountSelection
                 name={lead.name}
                 companyName={lead.companyName}

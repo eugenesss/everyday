@@ -151,10 +151,10 @@ class crm_view_account extends Component {
           }}
         />
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-lg-3">
             <AccountCard acct={account} />
           </div>
-          <div className="col-md-9">
+          <div className="col-lg-9">
             <ProfileTabs loading={sectionLoading}>
               <div label="Overview">
                 <OverviewTab acct={account} />

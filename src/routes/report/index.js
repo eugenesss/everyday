@@ -55,7 +55,7 @@ class ReportsComponent extends Component {
           <meta name="description" content="Everyday Informational Reports" />
         </Helmet>
         <div className="row">
-          <div className="col-2">
+          <div className="col-lg-2">
             <SideDrawer listHeader="Reports List">
               <DrawerListCollapsible
                 title="Deals"
@@ -153,7 +153,7 @@ class ReportsComponent extends Component {
             {/* </List>
             </Drawer> */}
           </div>
-          <div className="col-10">
+          <div className="col-lg-10">
             <ReportViews componentToRender={activeView} />
           </div>
         </div>

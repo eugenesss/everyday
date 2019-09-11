@@ -138,6 +138,10 @@ class crm_view_lead extends Component {
                 more: [
                   { label: "Refresh", onClick: () => this.refresh(lead.id) },
                   {
+                    label: "Convert",
+                    onClick: () => this.startConvert(lead.companyName)
+                  },
+                  {
                     label: "Transfer Record",
                     onClick: () => this.transfer(lead)
                   },
@@ -146,10 +150,10 @@ class crm_view_lead extends Component {
               }}
             />
             <div className="row">
-              <div className="col-md-3">
+              <div className="col-lg-3">
                 <LeadCard lead={lead} />
               </div>
-              <div className="col-md-9">
+              <div className="col-lg-9">
                 <ProfileTabs loading={sectionLoading}>
                   <div label="Overview">
                     <LeadOverviewTab lead={lead} />
