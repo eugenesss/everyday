@@ -19,6 +19,7 @@ import SystemDialogs from "Components/Everyday/SystemDialogs";
 
 /**
  * Initial Path To Check Whether User Is Logged In Or Not
+ *
  */
 const InitialPath = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => <Component {...props} />} />
