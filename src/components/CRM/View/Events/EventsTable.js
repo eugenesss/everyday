@@ -44,7 +44,7 @@ const EventsTable = ({ tableData, title, action, showNewEventDialog }) => {
       }
     },
     {
-      label: "Event Owner",
+      label: "Owner",
       name: "userInfo",
       options: { customBodyRender: value => (value ? value.name : "") }
     }

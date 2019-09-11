@@ -79,7 +79,7 @@ const DealList = ({ tableData, loading, title, action, noRelated }) => {
       }
     },
     {
-      label: "Closing Date",
+      label: "Closing",
       name: "closingDate",
       options: {
         customBodyRender: value => {

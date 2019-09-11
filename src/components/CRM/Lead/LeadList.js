@@ -74,7 +74,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
       }
     },
     {
-      label: "Interest Level",
+      label: "Interest",
       name: "interest",
       options: {
         sort: false,
