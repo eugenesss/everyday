@@ -138,15 +138,12 @@ class Signin extends Component {
                       </a>
                     </div>
 
-                    <FormGroup className="mb-20">
+                    <FormGroup className="my-20">
                       <Fab
                         variant="extended"
-                        className="text-white"
+                        className="text-white my-20"
                         size="medium"
                         color="primary"
-                        style={{
-                          marginBottom: "1.5rem"
-                        }}
                         type="submit"
                       >
                         <span style={{ width: 120 }}>Sign in</span>

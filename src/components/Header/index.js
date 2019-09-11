@@ -3,9 +3,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Link, withRouter } from "react-router-dom";
 
-// Logo
-import { appLogo } from "Constants/AppConfig";
-
 import navLinks from "./Menu/NavLinks";
 
 // Right Nav
@@ -14,6 +11,9 @@ import RightNav from "./RightNav";
 // Menu
 import MainMenu from "./Menu/MainMenu";
 import SubMenu from "./Menu/SubMenu";
+
+// Mobile Sidebar
+import MobileSideBar from "./MobileSideBar";
 
 function getChildRoute(location) {
   const currentRoute = navLinks.find(link =>
@@ -59,6 +59,11 @@ function Header(props) {
               </Link>
             </div>
           </div>
+          <MobileSideBar
+            resetSubLink={changeMainLink}
+            location={location}
+            navLinks={navLinks}
+          />
           <MainMenu
             resetSubLink={changeMainLink}
             location={location}

@@ -17,7 +17,7 @@ const AccountList = ({ tableData, loading, title, action }) => {
       options: { display: "excluded", filter: false, sort: false }
     },
     {
-      label: "Account Name",
+      label: "Name",
       name: "name",
       options: {
         customBodyRender: (value, tableMeta) => {

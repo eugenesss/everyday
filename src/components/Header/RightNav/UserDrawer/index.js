@@ -35,7 +35,7 @@ export default function UserDrawer() {
         anchor="right"
         open={state.show}
         onClose={toggleDrawer()}
-        PaperProps={{ style: { backgroundColor: "#fffffff2", width: "25%" } }}
+        PaperProps={{ style: { backgroundColor: "#fffffff2", width: 450 } }}
       >
         <UserDrawerContent toggleDrawer={toggleDrawer} />
       </Drawer>

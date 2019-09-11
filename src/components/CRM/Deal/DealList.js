@@ -25,7 +25,7 @@ const DealList = ({ tableData, loading, title, action, noRelated }) => {
       }
     },
     {
-      label: "Deal Name",
+      label: "Name",
       name: "name",
       options: {
         customBodyRender: (value, tableMeta) => {

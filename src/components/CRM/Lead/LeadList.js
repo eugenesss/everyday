@@ -13,8 +13,6 @@ import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 //Sub Components
 import LeadInterestLevel from "./LeadInterestLevel";
 
-import { TableRow, TableCell } from "@material-ui/core";
-
 const LeadList = ({ tableData, loading, title, action }) => {
   const columns = [
     {

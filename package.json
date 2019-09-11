@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "description": "Everday, a System for your Everyday Needs",
   "scripts": {
-    "start": "webpack --env.API_URL=https://api.everydaycrm.sg/api  --mode production",
+    "start": "npm run dev",
     "staging": "webpack --env.API_URL=https://staging-api.everydaycrm.com/api --mode production",
-    "dev": "webpack-dev-server --env.API_URL=http://localhost:3001/api  --mode development --inline --progress"
+    "dev": "webpack-dev-server --env.API_URL=http://localhost:3001/api  --mode development --inline --progress",
+    "build": "webpack --env.API_URL=https://api.everydaycrm.sg/api  --mode production"
   },
   "keywords": [
     "reactjs"

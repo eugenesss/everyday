@@ -231,7 +231,7 @@
 }
 @media (max-width: 1430px) {
   .rct-header > div {
-    padding: 0 0.625rem;
+    padding: 0px 1rem;
   }
 }
 
@@ -458,7 +458,6 @@
   }
   .page-title {
     h2 {
-      width: 50px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
