@@ -19,23 +19,23 @@ function PersonalInformation(props) {
       desc="Storing information of the Customer to better understand them."
       {...others}
     >
-      <div className="row">
-        <div className="col-5 d-block offset-md-1">
+      <div className="row justify-content-center">
+        <div className="col-md-5 d-block">
           {email}
           {mobile}
           {title}
         </div>
-        <div className="col-5 d-block offset-md-1">
+        <div className="col-md-5 d-block offset-md-1">
           {source}
           {office}
           {fax}
         </div>
       </div>
-      <div className="row">
-        <div className="col-11 offset-md-1">{address}</div>
+      <div className="row justify-content-center">
+        <div className="col-md-11">{address}</div>
       </div>
-      <div className="row">
-        <div className="col-11 offset-md-1">{description}</div>
+      <div className="row justify-content-center">
+        <div className="col-md-11 offset-md-1">{description}</div>
       </div>
     </FormInputLayout>
   );

@@ -22,10 +22,10 @@ class Settings extends Component {
         </Helmet>
         <PageTitleBar title="Settings" />
         <div className="row">
-          <div className="col-2">
+          <div className="col-lg-2">
             <SettingsDirectory />
           </div>
-          <div className="col-10">
+          <div className="col-lg-10">
             <Switch>
               {/* ------- General ------- */}
               <Route

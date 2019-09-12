@@ -9,18 +9,18 @@ function CompanyInformation(props) {
       desc="Keeping details of Lead's company can go a long way. This information will be used for Accounts on successful conversion."
       {...others}
     >
-      <div className="row">
-        <div className="col-5 d-block offset-md-1">
+      <div className="row justify-content-center">
+        <div className="col-md-5 d-block">
           {industry}
           {website}
         </div>
-        <div className="col-5 d-block offset-md-1">
+        <div className="col-md-5 d-block offset-md-1">
           {office}
           {fax}
         </div>
       </div>
-      <div className="row">
-        <div className="col-11 d-block offset-md-1">{address}</div>
+      <div className="row justify-content-center">
+        <div className="col-md-11 d-block">{address}</div>
       </div>
     </FormInputLayout>
   );

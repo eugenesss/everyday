@@ -9,8 +9,8 @@ function ShippingInformation(props) {
       desc="The key fields to get you started with a new Account record."
       {...others}
     >
-      <div className="row">
-        <div className="col-11 offset-md-1">{address}</div>
+      <div className="row justify-content-center">
+        <div className="col-md-11">{address}</div>
       </div>
     </FormInputLayout>
   );

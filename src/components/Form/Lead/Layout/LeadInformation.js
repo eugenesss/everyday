@@ -17,19 +17,19 @@ function LeadInformation(props) {
       desc="This information is used to contact leads and will be transferred to Customer on successful conversion."
       {...others}
     >
-      <div className="row">
-        <div className="col-5 d-block offset-md-1">
+      <div className="row justify-content-center">
+        <div className="col-md-5 d-block">
           {email}
           {title}
           {interest}
         </div>
-        <div className="col-5 d-block offset-md-1">
+        <div className="col-md-5 d-block offset-md-1">
           {mobile}
           {source}
         </div>
       </div>
-      <div className="row">
-        <div className="col-11 d-block offset-md-1">{description}</div>
+      <div className="row justify-content-center">
+        <div className="col-md-11 d-block">{description}</div>
       </div>
     </FormInputLayout>
   );

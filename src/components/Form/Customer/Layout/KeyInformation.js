@@ -9,12 +9,12 @@ function KeyInformation(props) {
       desc="The key fields to get you started with a new Customer record."
       {...others}
     >
-      <div className="row">
-        <div className="col-5 d-block offset-md-1">
+      <div className="row justify-content-center">
+        <div className="col-md-5 d-block">
           {firstName}
           {lastName}
         </div>
-        <div className="col-5 d-block offset-md-1">
+        <div className="col-md-5 d-block offset-md-1">
           {owner}
           {account}
         </div>
