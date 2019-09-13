@@ -199,9 +199,9 @@ export const addNoteDealFailure = error => ({
 /**
  * Transfer
  */
-export const transferDeal = (id, newOwner) => ({
+export const transferDeal = (id, newOwner, history) => ({
   type: types.TRANSFER_DEAL,
-  payload: { id, newOwner }
+  payload: { id, newOwner, history }
 });
 export const transferDealSuccess = data => ({
   type: types.TRANSFER_DEAL_SUCCESS,

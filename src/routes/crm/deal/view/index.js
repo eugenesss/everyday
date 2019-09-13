@@ -60,11 +60,9 @@ class crm_view_deal extends Component {
   transfer(deal) {
     this.props.show("transfer_record", {
       name: deal.name,
-      action: val => this.handleTransfer(deal.id, val)
+      currentOwner: deal.userId,
+      action: val => this.props.transferDeal(deal.id, val, this.props.history)
     });
-  }
-  handleTransfer(id, newOwner) {
-    this.props.transferDeal(id, newOwner);
   }
 
   /**

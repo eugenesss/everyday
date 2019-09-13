@@ -43,7 +43,6 @@ export default (state = INIT_STATE, action) => {
       };
 
     case GET_ALL_USERS_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         usersLoading: false,

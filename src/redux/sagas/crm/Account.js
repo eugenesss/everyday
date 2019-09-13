@@ -11,26 +11,8 @@ import {
   TRANSFER_ACCOUNT,
   GET_ACCOUNT_FORM_FIELDS
 } from "Types";
-import {
-  getAccountFailure,
-  getAccountSuccess,
-  getSingleAccountSuccess,
-  newAccountSuccess,
-  newAccountFailure,
-  editAccountSuccess,
-  editAccountFailure,
-  deleteAccountSuccess,
-  deleteAccountFailure,
-  addNoteAccountSuccess,
-  addNoteAccountFailure,
-  setAccountActiveSuccess,
-  setAccountActiveFailure,
-  transferAccountSuccess,
-  transferAccountFailure,
-  getAccountFormSuccess,
-  getAccountFormFailure
-} from "Actions";
-import { singleAccount } from "Helpers/url/crm";
+import * as actions from "Actions";
+import { singleAccount, accountListPage } from "Helpers/url/crm";
 
 import api from "Api";
 
@@ -94,37 +76,37 @@ function* changeAccountList({ payload }) {
     if (payload == "All Accounts") {
       // All Accounts
       data = yield call(getAllAccountRequest);
-      yield put(getAccountSuccess(data));
+      yield put(actions.getAccountSuccess(data));
     } else if (payload == "Active Accounts") {
       // My Accounts
       data = yield call(getActiveAccountRequest);
-      yield put(getAccountSuccess(data));
+      yield put(actions.getAccountSuccess(data));
     } else if (payload == "Inactive Accounts") {
       // Open Accounts
       data = yield call(getInactiveAccountRequest);
-      yield put(getAccountSuccess(data));
+      yield put(actions.getAccountSuccess(data));
     } else {
       data = yield call(getAllAccountRequest);
-      yield put(getAccountSuccess(data));
+      yield put(actions.getAccountSuccess(data));
     }
   } catch (error) {
-    yield put(getAccountFailure(error));
+    yield put(actions.getAccountFailure(error));
   }
 }
 function* getAllAccountFromDB() {
   try {
     const data = yield call(getAllAccountRequest);
-    yield put(getAccountSuccess(data));
+    yield put(actions.getAccountSuccess(data));
   } catch (error) {
-    yield put(getAccountFailure(error));
+    yield put(actions.getAccountFailure(error));
   }
 }
 function* getAccountFromDB({ payload }) {
   try {
     const data = yield call(getAccountRequest, payload);
-    yield put(getSingleAccountSuccess(data));
+    yield put(actions.getSingleAccountSuccess(data));
   } catch (error) {
-    yield put(getAccountFailure(error));
+    yield put(actions.getAccountFailure(error));
   }
 }
 function* postAccountToDB({ payload }) {
@@ -133,25 +115,25 @@ function* postAccountToDB({ payload }) {
     const data = yield call(postAccountRequest, form);
     yield delay(500);
     if (redirect) history.push(singleAccount(data.id));
-    yield put(newAccountSuccess(data));
+    yield put(actions.newAccountSuccess(data));
   } catch (error) {
-    yield put(newAccountFailure(error));
+    yield put(actions.newAccountFailure(error));
   }
 }
 function* patchAccountToDB({ payload }) {
   try {
     const data = yield call(patchAccountRequest, payload);
     yield delay(500);
-    yield put(editAccountSuccess(data));
+    yield put(actions.editAccountSuccess(data));
   } catch (error) {
-    yield put(editAccountFailure(error));
+    yield put(actions.editAccountFailure(error));
   }
 }
 function* deleteAccountFromDB({ payload }) {
   try {
     yield call(deleteAccountRequest, payload);
     yield delay(500);
-    yield put(deleteAccountSuccess(payload));
+    yield put(actions.deleteAccountSuccess(payload));
   } catch (error) {
     let errorMessage;
     if (error.response) {
@@ -159,16 +141,16 @@ function* deleteAccountFromDB({ payload }) {
     } else {
       errorMessage = error;
     }
-    yield put(deleteAccountFailure(errorMessage));
+    yield put(actions.deleteAccountFailure(errorMessage));
   }
 }
 function* addNoteAccountToDB({ payload }) {
   const { id, note } = payload;
   try {
     const data = yield call(addNoteAccountRequest, id, note);
-    yield put(addNoteAccountSuccess(data));
+    yield put(actions.addNoteAccountSuccess(data));
   } catch (error) {
-    yield put(addNoteAccountFailure(error));
+    yield put(actions.addNoteAccountFailure(error));
   }
 }
 function* setAccountActiveToDB({ payload }) {
@@ -176,28 +158,28 @@ function* setAccountActiveToDB({ payload }) {
   try {
     const data = yield call(setAccountActiveRequest, id, status);
     yield delay(500);
-    yield put(setAccountActiveSuccess(data));
+    yield put(actions.setAccountActiveSuccess(data));
   } catch (error) {
-    yield put(setAccountActiveFailure(error));
+    yield put(actions.setAccountActiveFailure(error));
   }
 }
 function* transferAccountInDB({ payload }) {
-  const { id, newOwner } = payload;
+  const { id, newOwner, history } = payload;
   try {
     const data = yield call(transferAccountRequest, id, newOwner);
-    window.location.replace(singleAccount(data.id));
     yield delay(500);
-    yield put(transferAccountSuccess(data));
+    history.push(accountListPage);
+    yield put(actions.transferAccountSuccess(data));
   } catch (error) {
-    yield put(transferAccountFailure(error));
+    yield put(actions.transferAccountFailure(error));
   }
 }
 function* getAccountFieldsFromDB() {
   try {
     const data = yield call(getAccountFielsRequest);
-    yield put(getAccountFormSuccess(data));
+    yield put(actions.getAccountFormSuccess(data));
   } catch (error) {
-    yield put(getAccountFormFailure(error));
+    yield put(actions.getAccountFormFailure(error));
   }
 }
 

@@ -161,9 +161,9 @@ export const setCustomerActiveFailure = error => ({
 /**
  * Transfer
  */
-export const transferCustomer = (id, newOwner) => ({
+export const transferCustomer = (id, newOwner, history) => ({
   type: types.TRANSFER_CUSTOMER,
-  payload: { id, newOwner }
+  payload: { id, newOwner, history }
 });
 export const transferCustomerSuccess = data => ({
   type: types.TRANSFER_CUSTOMER_SUCCESS,

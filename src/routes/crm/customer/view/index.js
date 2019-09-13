@@ -77,11 +77,10 @@ class crm_view_customer extends Component {
   transfer(customer) {
     this.props.show("transfer_record", {
       name: customer.name,
-      action: val => this.handleTransfer(customer.id, val)
+      currentOwner: customer.userId,
+      action: val =>
+        this.props.transferCustomer(customer.id, val, this.props.history)
     });
-  }
-  handleTransfer(id, newOwner) {
-    this.props.transferCustomer(id, newOwner);
   }
 
   /**

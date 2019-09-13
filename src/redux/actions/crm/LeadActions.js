@@ -205,9 +205,9 @@ export const addNoteLeadFailure = error => ({
 /**
  * Transfer
  */
-export const transferLead = (id, newOwner) => ({
+export const transferLead = (id, newOwner, history) => ({
   type: types.TRANSFER_LEAD,
-  payload: { id, newOwner }
+  payload: { id, newOwner, history }
 });
 export const transferLeadSuccess = data => ({
   type: types.TRANSFER_LEAD_SUCCESS,

@@ -68,11 +68,9 @@ class crm_view_lead extends Component {
   transfer(lead) {
     this.props.show("transfer_record", {
       name: lead.name,
-      action: val => this.handleTransfer(lead.id, val)
+      currentOwner: lead.userId,
+      action: val => this.props.transferLead(lead.id, val, this.props.history)
     });
-  }
-  handleTransfer(id, newOwner) {
-    this.props.transferLead(id, newOwner);
   }
 
   /**

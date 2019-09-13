@@ -158,9 +158,9 @@ export const setAccountActiveFailure = error => ({
 /**
  * Transfer
  */
-export const transferAccount = (id, newOwner) => ({
+export const transferAccount = (id, newOwner, history) => ({
   type: types.TRANSFER_ACCOUNT,
-  payload: { id, newOwner }
+  payload: { id, newOwner, history }
 });
 export const transferAccountSuccess = data => ({
   type: types.TRANSFER_ACCOUNT_SUCCESS,

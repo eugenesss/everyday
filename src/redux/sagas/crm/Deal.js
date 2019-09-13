@@ -12,29 +12,9 @@ import {
   TRANSFER_DEAL,
   GET_DEAL_FORM_FIELDS
 } from "Types";
-import {
-  getDealSuccess,
-  getDealFailure,
-  getSingleDealSuccess,
-  getDealSummarySuccess,
-  getDealSummaryFailure,
-  newDealSuccess,
-  newDealFailure,
-  editDealSuccess,
-  editDealFailure,
-  newStageSuccess,
-  newStageFailure,
-  deleteDealSuccess,
-  deleteDealFailure,
-  addNoteDealSuccess,
-  addNoteDealFailure,
-  transferDealSuccess,
-  transferDealFailure,
-  getDealFormSuccess,
-  getDealFormFailure
-} from "Actions";
+import * as actions from "Actions";
 
-import { singleDeal } from "Helpers/url/crm";
+import { singleDeal, dealListPage } from "Helpers/url/crm";
 
 import api from "Api";
 
@@ -106,49 +86,49 @@ function* changeDealList({ payload }) {
     if (payload == "All Deals") {
       // All Deals
       data = yield call(getAllDealRequest);
-      yield put(getDealSuccess(data));
+      yield put(actions.getDealSuccess(data));
     } else if (payload == "Open Deals") {
       // Open Deals
       data = yield call(getOpenDealRequest);
-      yield put(getDealSuccess(data));
+      yield put(actions.getDealSuccess(data));
     } else if (payload == "Closed Deals") {
       // Open Deals
       data = yield call(getClosedDealRequest);
-      yield put(getDealSuccess(data));
+      yield put(actions.getDealSuccess(data));
     } else if (payload == "Won Deals") {
       // Open Deals
       data = yield call(getWonDealRequest);
-      yield put(getDealSuccess(data));
+      yield put(actions.getDealSuccess(data));
     } else {
       data = yield call(getAllDealRequest);
-      yield put(getDealSuccess(data));
+      yield put(actions.getDealSuccess(data));
     }
   } catch (error) {
-    yield put(getDealFailure(error));
+    yield put(actions.getDealFailure(error));
   }
 }
 function* getAllDealFromDB() {
   try {
     const data = yield call(getAllDealRequest);
-    yield put(getDealSuccess(data));
+    yield put(actions.getDealSuccess(data));
   } catch (error) {
-    yield put(getDealFailure(error));
+    yield put(actions.getDealFailure(error));
   }
 }
 function* getDealFromDB({ payload }) {
   try {
     const data = yield call(getDealRequest, payload);
-    yield put(getSingleDealSuccess(data));
+    yield put(actions.getSingleDealSuccess(data));
   } catch (error) {
-    yield put(getDealFailure(error));
+    yield put(actions.getDealFailure(error));
   }
 }
 function* getDealSummaryFromDB() {
   try {
     const data = yield call(getDealSummaryRequest);
-    yield put(getDealSummarySuccess(data));
+    yield put(actions.getDealSummarySuccess(data));
   } catch (error) {
-    yield put(getDealSummaryFailure(error));
+    yield put(actions.getDealSummaryFailure(error));
   }
 }
 function* postDealToDB({ payload }) {
@@ -157,9 +137,9 @@ function* postDealToDB({ payload }) {
     const data = yield call(postDealRequest, form);
     yield delay(500);
     if (redirect) history.push(singleDeal(data.id));
-    yield put(newDealSuccess(data));
+    yield put(actions.newDealSuccess(data));
   } catch (error) {
-    yield put(newDealFailure(error));
+    yield put(actions.newDealFailure(error));
   }
 }
 function* postStageToDB({ payload }) {
@@ -167,54 +147,54 @@ function* postStageToDB({ payload }) {
   try {
     const deal = yield call(postNewStageRequest, dealID, stageID);
     yield delay(500);
-    yield put(newStageSuccess(deal));
+    yield put(actions.newStageSuccess(deal));
   } catch (error) {
-    yield put(newStageFailure(error));
+    yield put(actions.newStageFailure(error));
   }
 }
 function* patchDealToDB({ payload }) {
   try {
     const data = yield call(patchDealRequest, payload);
     yield delay(500);
-    yield put(editDealSuccess(data));
+    yield put(actions.editDealSuccess(data));
   } catch (error) {
-    yield put(editDealFailure(error));
+    yield put(actions.editDealFailure(error));
   }
 }
 function* deleteDealFromDB({ payload }) {
   try {
     yield delay(500);
-    yield put(deleteDealSuccess(payload));
+    yield put(actions.deleteDealSuccess(payload));
   } catch (error) {
-    yield put(deleteDealFailure(error));
+    yield put(actions.deleteDealFailure(error));
   }
 }
 function* addNoteDealToDB({ payload }) {
   const { id, note } = payload;
   try {
     const data = yield call(addNoteDealRequest, id, note);
-    yield put(addNoteDealSuccess(data));
+    yield put(actions.addNoteDealSuccess(data));
   } catch (error) {
-    yield put(addNoteDealFailure(error));
+    yield put(actions.addNoteDealFailure(error));
   }
 }
 function* transferDealInDB({ payload }) {
-  const { id, newOwner } = payload;
+  const { id, newOwner, history } = payload;
   try {
     const data = yield call(transferDealRequest, id, newOwner);
-    window.location.replace(singleDeal(data.id));
     yield delay(500);
-    yield put(transferDealSuccess(data));
+    history.push(dealListPage);
+    yield put(actions.transferDealSuccess(data));
   } catch (error) {
-    yield put(transferDealFailure(error));
+    yield put(actions.transferDealFailure(error));
   }
 }
 function* getDealFormFieldsFromDB() {
   try {
     const data = yield call(getDealFormFieldsRequest);
-    yield put(getDealFormSuccess(data));
+    yield put(actions.getDealFormSuccess(data));
   } catch (error) {
-    yield put(getDealFormFailure(error));
+    yield put(actions.getDealFormFailure(error));
   }
 }
 

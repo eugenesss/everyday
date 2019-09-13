@@ -11,27 +11,9 @@ import {
   TRANSFER_CUSTOMER,
   GET_CUSTOMER_FORM_FIELDS
 } from "Types";
-import {
-  getCustomerFailure,
-  getCustomerSuccess,
-  getSingleCustomerSuccess,
-  newCustomerSuccess,
-  newCustomerFailure,
-  editCustomerSuccess,
-  editCustomerFailure,
-  deleteCustomerSuccess,
-  deleteCustomerFailure,
-  addNoteCustomerSuccess,
-  addNoteCustomerFailure,
-  setCustomerActiveSuccess,
-  setCustomerActiveFailure,
-  transferCustomerSuccess,
-  transferCustomerFailure,
-  getCustomerFormSuccess,
-  getCustomerFormFailure
-} from "Actions";
+import * as actions from "Actions";
 
-import { singleCustomer } from "Helpers/url/crm";
+import { singleCustomer, customerListPage } from "Helpers/url/crm";
 
 import api from "Api";
 
@@ -95,37 +77,37 @@ function* changeCustomerList({ payload }) {
     if (payload == "All Customers") {
       // All Customers
       data = yield call(getAllCustomerRequest);
-      yield put(getCustomerSuccess(data));
+      yield put(actions.getCustomerSuccess(data));
     } else if (payload == "Active Customers") {
       // My Customers
       data = yield call(getActiveCustomerRequest);
-      yield put(getCustomerSuccess(data));
+      yield put(actions.getCustomerSuccess(data));
     } else if (payload == "Inactive Customers") {
       // Open Customers
       data = yield call(getInactiveCustomerRequest);
-      yield put(getCustomerSuccess(data));
+      yield put(actions.getCustomerSuccess(data));
     } else {
       data = yield call(getAllCustomerRequest);
-      yield put(getCustomerSuccess(data));
+      yield put(actions.getCustomerSuccess(data));
     }
   } catch (error) {
-    yield put(getCustomerFailure(error));
+    yield put(actions.getCustomerFailure(error));
   }
 }
 function* getAllCustomerFromDB() {
   try {
     const data = yield call(getAllCustomerRequest);
-    yield put(getCustomerSuccess(data));
+    yield put(actions.getCustomerSuccess(data));
   } catch (error) {
-    yield put(getCustomerFailure(error));
+    yield put(actions.getCustomerFailure(error));
   }
 }
 function* getCustomerFromDB({ payload }) {
   try {
     const data = yield call(getCustomerRequest, payload);
-    yield put(getSingleCustomerSuccess(data));
+    yield put(actions.getSingleCustomerSuccess(data));
   } catch (error) {
-    yield put(getCustomerFailure(error));
+    yield put(actions.getCustomerFailure(error));
   }
 }
 function* postCustomerToDB({ payload }) {
@@ -134,36 +116,36 @@ function* postCustomerToDB({ payload }) {
     const data = yield call(postCustomerRequest, form);
     yield delay(500);
     if (redirect) history.push(singleCustomer(data.id));
-    yield put(newCustomerSuccess(data));
+    yield put(actions.newCustomerSuccess(data));
   } catch (error) {
-    yield put(newCustomerFailure(error));
+    yield put(actions.newCustomerFailure(error));
   }
 }
 function* editCustomerToDB({ payload }) {
   try {
     const data = yield call(editCustomerRequest, payload);
     yield delay(500);
-    yield put(editCustomerSuccess(data));
+    yield put(actions.editCustomerSuccess(data));
   } catch (error) {
-    yield put(editCustomerFailure(error));
+    yield put(actions.editCustomerFailure(error));
   }
 }
 function* deleteCustomerFromDB({ payload }) {
   try {
     yield call(deleteCustomerRequest, payload);
     yield delay(500);
-    yield put(deleteCustomerSuccess(payload));
+    yield put(actions.deleteCustomerSuccess(payload));
   } catch (error) {
-    yield put(deleteCustomerFailure(error));
+    yield put(actions.deleteCustomerFailure(error));
   }
 }
 function* addNoteCustomerToDB({ payload }) {
   const { id, note } = payload;
   try {
     const data = yield call(addNoteCustomerRequest, id, note);
-    yield put(addNoteCustomerSuccess(data));
+    yield put(actions.addNoteCustomerSuccess(data));
   } catch (error) {
-    yield put(addNoteCustomerFailure(error));
+    yield put(actions.addNoteCustomerFailure(error));
   }
 }
 function* setCustomerToDB({ payload }) {
@@ -171,28 +153,28 @@ function* setCustomerToDB({ payload }) {
   try {
     const data = yield call(setCustomerActiveRequest, id, status);
     yield delay(500);
-    yield put(setCustomerActiveSuccess(data));
+    yield put(actions.setCustomerActiveSuccess(data));
   } catch (error) {
-    yield put(setCustomerActiveFailure(error));
+    yield put(actions.setCustomerActiveFailure(error));
   }
 }
 function* transferCustomerInDB({ payload }) {
-  const { id, newOwner } = payload;
+  const { id, newOwner, history } = payload;
   try {
     const data = yield call(transferCustomerRequest, id, newOwner);
-    window.location.replace(singleCustomer(data.id));
     yield delay(500);
-    yield put(transferCustomerSuccess(data));
+    history.push(customerListPage);
+    yield put(actions.transferCustomerSuccess(data));
   } catch (error) {
-    yield put(transferCustomerFailure(error));
+    yield put(actions.transferCustomerFailure(error));
   }
 }
 function* getCustomerFormFieldsFromDB() {
   try {
     const data = yield call(getCustomerFormFieldsRequest);
-    yield put(getCustomerFormSuccess(data));
+    yield put(actions.getCustomerFormSuccess(data));
   } catch (error) {
-    yield put(getCustomerFormFailure(error));
+    yield put(actions.getCustomerFormFailure(error));
   }
 }
 

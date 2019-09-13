@@ -14,7 +14,7 @@ import {
   GET_LEADFORM_FIELDS
 } from "Types";
 import * as actions from "Actions";
-import { singleLead } from "Helpers/url/crm";
+import { singleLead, leadListPage } from "Helpers/url/crm";
 
 import api from "Api";
 
@@ -194,11 +194,11 @@ function* checkAccountFromDB({ payload }) {
   }
 }
 function* transferLeadToDB({ payload }) {
-  const { id, newOwner } = payload;
+  const { id, newOwner, history } = payload;
   try {
     const data = yield call(transferLeadRequest, id, newOwner);
-    window.location.replace(singleLead(data.id));
     yield delay(500);
+    history.push(leadListPage);
     yield put(actions.transferLeadSuccess(data));
   } catch (error) {
     yield put(actions.transferLeadFailure(error));

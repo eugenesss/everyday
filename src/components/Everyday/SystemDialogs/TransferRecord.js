@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { connectModal } from "redux-modal";
 import DialogRoot from "Components/Dialog/DialogRoot";
-import FormInput from "Components/Form/Components/FormInput";
+import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
+import BaseInput from "Components/Form/Components/BaseInput";
 
 // Actions
 import { getAllUsers } from "Actions";
@@ -10,15 +11,15 @@ import { getAllUsers } from "Actions";
 class TransferRecordModal extends Component {
   constructor(props) {
     super(props);
-    this.state = { newOwner: "" };
+    this.state = { newOwner: this.props.currentOwner };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
   componentDidMount() {
     this.props.getAllUsers();
   }
-  onChange(field, val) {
-    this.setState({ [field]: val });
+  onChange(val) {
+    this.setState({ newOwner: val });
   }
   onSubmit() {
     this.props.action(this.state.newOwner);
@@ -26,7 +27,7 @@ class TransferRecordModal extends Component {
   }
 
   render() {
-    const { show, handleHide, users, name } = this.props;
+    const { show, handleHide, userList, name } = this.props;
     return (
       <DialogRoot
         title="Transfer Record"
@@ -46,12 +47,23 @@ class TransferRecordModal extends Component {
         </div>
         <div className="row justify-content-center">
           <div className="col-8 align-self-center">
-            <FormInput
-              label="New Owner"
-              value={this.state.newOwner}
-              selectValues={users}
-              handleChange={this.onChange}
-            />
+            <FormControl>
+              <InputLabel className="fw-bold" shrink>
+                New Owner
+              </InputLabel>
+              <Select
+                value={this.state.newOwner}
+                onChange={e => this.onChange(e.target.value)}
+                input={<BaseInput />}
+              >
+                {userList &&
+                  userList.map((select, key) => (
+                    <MenuItem key={key} value={select.id}>
+                      {select.name}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
           </div>
         </div>
       </DialogRoot>
@@ -59,8 +71,8 @@ class TransferRecordModal extends Component {
   }
 }
 const mapStateToProps = ({ usersState }) => {
-  const { users } = usersState;
-  return { users };
+  const { userList } = usersState;
+  return { userList };
 };
 
 export default connect(

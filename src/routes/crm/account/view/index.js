@@ -79,11 +79,10 @@ class crm_view_account extends Component {
   transfer(account) {
     this.props.show("transfer_record", {
       name: account.name,
-      action: val => this.handleTransfer(account.id, val)
+      currentOwner: account.userId,
+      action: val =>
+        this.props.transferAccount(account.id, val, this.props.history)
     });
-  }
-  handleTransfer(id, newOwner) {
-    this.props.transferAccount(id, newOwner);
   }
 
   /**
