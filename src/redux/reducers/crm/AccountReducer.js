@@ -113,7 +113,10 @@ export default (state = INIT_STATE, action) => {
       };
     case types.NEW_ACCOUNT_SUCCESS:
       NotificationManager.success("Account Created");
-      return { ...state, accountForm: INIT_STATE.accountForm };
+      return {
+        ...state,
+        accountForm: { ...state.accountForm, loading: false }
+      };
     case types.NEW_ACCOUNT_FAILURE:
       NotificationManager.error("Error in POST API");
       return {

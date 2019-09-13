@@ -13,29 +13,7 @@ import {
   TRANSFER_LEAD,
   GET_LEADFORM_FIELDS
 } from "Types";
-import {
-  getLeadSuccess,
-  getLeadFailure,
-  getSingleLeadSuccess,
-  getLeadSummarySuccess,
-  getLeadSummaryFailure,
-  newLeadSuccess,
-  newLeadFailure,
-  editLeadSuccess,
-  editLeadFailure,
-  convertLeadSuccess,
-  convertLeadFailure,
-  deleteLeadSuccess,
-  deleteLeadFailure,
-  addNoteLeadSuccess,
-  addNoteLeadFailure,
-  checkAccountExistSuccess,
-  checkAccountExistFailure,
-  transferLeadSuccess,
-  transferLeadFailure,
-  getLeadFormFieldsSuccess,
-  getLeadFormFieldsFailure
-} from "Actions";
+import * as actions from "Actions";
 import { singleLead } from "Helpers/url/crm";
 
 import api from "Api";
@@ -114,60 +92,60 @@ function* changeLeadList({ payload }) {
     if (payload == "All Leads") {
       // All Leads
       data = yield call(getAllLeadRequest);
-      yield put(getLeadSuccess(data));
+      yield put(actions.getLeadSuccess(data));
     } else if (payload == "Open Leads") {
       // Open Leads
       data = yield call(getOpenLeadRequest);
-      yield put(getLeadSuccess(data));
+      yield put(actions.getLeadSuccess(data));
     } else if (payload == "Hot Leads") {
       // Hot Leads
       data = yield call(getHotLeadRequest);
-      yield put(getLeadSuccess(data));
+      yield put(actions.getLeadSuccess(data));
     } else if (payload == "Cold Leads") {
       // Cold Leads
       data = yield call(getColdLeadRequest);
-      yield put(getLeadSuccess(data));
+      yield put(actions.getLeadSuccess(data));
     } else {
       data = yield call(getAllLeadRequest);
-      yield put(getLeadSuccess(data));
+      yield put(actions.getLeadSuccess(data));
     }
   } catch (error) {
-    yield put(getLeadFailure(error));
+    yield put(actions.getLeadFailure(error));
   }
 }
 function* getAllLeadFromDB() {
   try {
     const data = yield call(getAllLeadRequest);
-    yield put(getLeadSuccess(data));
+    yield put(actions.getLeadSuccess(data));
   } catch (error) {
-    yield put(getLeadFailure(error));
+    yield put(actions.getLeadFailure(error));
   }
 }
 function* getLeadFromDB({ payload }) {
   try {
     const data = yield call(getLeadRequest, payload);
-    yield put(getSingleLeadSuccess(data));
+    yield put(actions.getSingleLeadSuccess(data));
   } catch (error) {
-    yield put(getLeadFailure(error));
+    yield put(actions.getLeadFailure(error));
   }
 }
 function* getLeadSummaryFromDB() {
   try {
     const data = yield call(getLeadSummaryRequest);
-    yield put(getLeadSummarySuccess(data));
+    yield put(actions.getLeadSummarySuccess(data));
   } catch (error) {
-    yield put(getLeadSummaryFailure(error));
+    yield put(actions.getLeadSummaryFailure(error));
   }
 }
 function* postLeadToDB({ payload }) {
-  const { form, redirect } = payload;
+  const { form, redirect, history } = payload;
   try {
     const data = yield call(postLeadRequest, form);
     yield delay(500);
-    if (redirect) window.location.replace(singleLead(data.id));
-    yield put(newLeadSuccess(data));
+    if (redirect) history.push(singleLead(data.id));
+    yield put(actions.newLeadSuccess(data));
   } catch (error) {
-    yield put(newLeadFailure(error));
+    yield put(actions.newLeadFailure(error));
   }
 }
 function* convertLeadToDB({ payload }) {
@@ -175,44 +153,44 @@ function* convertLeadToDB({ payload }) {
   try {
     const data = yield call(convertLeadRequest, id, dealDetails, accountId);
     yield delay(500);
-    yield put(convertLeadSuccess(data));
+    yield put(actions.convertLeadSuccess(data));
   } catch (error) {
-    yield put(convertLeadFailure(error));
+    yield put(actions.convertLeadFailure(error));
   }
 }
 function* editLeadToDB({ payload }) {
   try {
     const data = yield call(editLeadRequest, payload);
     yield delay(500);
-    yield put(editLeadSuccess(data));
+    yield put(actions.editLeadSuccess(data));
   } catch (error) {
-    yield put(editLeadFailure(error));
+    yield put(actions.editLeadFailure(error));
   }
 }
 function* deleteLeadFromDB({ payload }) {
   try {
     yield call(deleteLeadRequest, payload);
     yield delay(500);
-    yield put(deleteLeadSuccess(payload));
+    yield put(actions.deleteLeadSuccess(payload));
   } catch (error) {
-    yield put(deleteLeadFailure(error));
+    yield put(actions.deleteLeadFailure(error));
   }
 }
 function* addLeadNoteToDB({ payload }) {
   const { id, note } = payload;
   try {
     const data = yield call(addNoteLeadRequest, id, note);
-    yield put(addNoteLeadSuccess(data));
+    yield put(actions.addNoteLeadSuccess(data));
   } catch (error) {
-    yield put(addNoteLeadFailure(error));
+    yield put(actions.addNoteLeadFailure(error));
   }
 }
 function* checkAccountFromDB({ payload }) {
   try {
     const data = yield call(checkAccountRequest, payload);
-    yield put(checkAccountExistSuccess(data.count, data.data));
+    yield put(actions.checkAccountExistSuccess(data.count, data.data));
   } catch (error) {
-    yield put(checkAccountExistFailure(error));
+    yield put(actions.checkAccountExistFailure(error));
   }
 }
 function* transferLeadToDB({ payload }) {
@@ -221,17 +199,17 @@ function* transferLeadToDB({ payload }) {
     const data = yield call(transferLeadRequest, id, newOwner);
     window.location.replace(singleLead(data.id));
     yield delay(500);
-    yield put(transferLeadSuccess(data));
+    yield put(actions.transferLeadSuccess(data));
   } catch (error) {
-    yield put(transferLeadFailure(error));
+    yield put(actions.transferLeadFailure(error));
   }
 }
 function* getLeadFormFieldsFromDB() {
   try {
     const data = yield call(getLeadFormFieldsRequest);
-    yield put(getLeadFormFieldsSuccess(data));
+    yield put(actions.getLeadFormFieldsSuccess(data));
   } catch (error) {
-    yield put(getLeadFormFieldsFailure(error));
+    yield put(actions.getLeadFormFieldsFailure(error));
   }
 }
 

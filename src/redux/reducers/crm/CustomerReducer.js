@@ -114,7 +114,10 @@ export default (state = INIT_STATE, action) => {
       };
     case types.NEW_CUSTOMER_SUCCESS:
       NotificationManager.success("Customer Created");
-      return { ...state, customerForm: INIT_STATE.customerForm };
+      return {
+        ...state,
+        customerForm: { ...state.customerForm, loading: false }
+      };
     case types.NEW_CUSTOMER_FAILURE:
       NotificationManager.error("Error in POST API");
       return {

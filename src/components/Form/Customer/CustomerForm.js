@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
@@ -87,7 +88,7 @@ class CustomerForm extends Component {
   }
 
   onSubmit() {
-    this.props.handleSubmit(this.state.customer, true);
+    this.props.handleSubmit(this.state.customer, true, this.props.history);
   }
 
   onSaveNew() {
@@ -241,9 +242,11 @@ const mapStateToProps = ({ crmState }) => {
   return { customerForm };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    getCustomerFormFields
-  }
-)(CustomerForm);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    {
+      getCustomerFormFields
+    }
+  )(CustomerForm)
+);

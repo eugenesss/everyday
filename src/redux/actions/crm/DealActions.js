@@ -92,9 +92,9 @@ export const getDealSummaryFailure = error => ({
  * New Deal
  */
 
-export const newDeal = (form, redirect) => ({
+export const newDeal = (form, redirect, history) => ({
   type: types.NEW_DEAL,
-  payload: { form, redirect }
+  payload: { form, redirect, history }
 });
 
 export const newDealSuccess = data => ({

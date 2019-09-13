@@ -5,21 +5,12 @@ const AppConfig = {
   appLogo: require("Assets/img/appLogo_orig_light.png"), // App Logo
   tagLine: "For Your Everyday System Needs",
   brandName: "Everyday", // Brand Name
-  // navCollapsed: false, // Sidebar collapse
-  // darkMode: false, // Dark Mode
-  // boxLayout: false, // Box Layout
-  // rtlLayout: false, // RTL Layout
-  // miniSidebar: false, // Mini Sidebar
-  // enableSidebarBackgroundImage: true, // Enable Sidebar Background Image
-  // isDarkSidenav: true, // Set true to dark sidebar
-  // enableThemeOptions: false, // Enable Theme Options
   locale: {
     languageId: "english",
     locale: "en",
     name: "English",
     icon: "en"
   },
-  //enableUserTour: process.env.NODE_ENV === "production" ? true : false, // Enable / Disable User Tour
   copyRightText: "Everyday © All Rights Reserved.", // Copy Right Text
   // light theme colors
   themeColors: {
@@ -36,10 +27,6 @@ const AppConfig = {
     white: "#FFFFFF",
     purple: "#896BD6",
     yellow: "#D46B08"
-  },
-  // dark theme colors
-  darkThemeColors: {
-    darkBgColor: "#424242"
   }
 };
 

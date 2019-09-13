@@ -2,7 +2,7 @@ import React from "react";
 import classname from "classnames";
 
 const FormInputLayout = props => (
-  <div className="row py-30 px-30 justify-content-md-center">
+  <div className="row p-30 justify-content-md-center">
     <div className="col-lg-5 px-20">
       <div>
         <h2>{props.title}</h2>

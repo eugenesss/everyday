@@ -92,9 +92,9 @@ export const getLeadSummaryFailure = error => ({
 /**
  * New Lead
  */
-export const newLead = (form, redirect) => ({
+export const newLead = (form, redirect, history) => ({
   type: types.NEW_LEAD,
-  payload: { form, redirect }
+  payload: { form, redirect, history }
 });
 export const newLeadSuccess = lead => ({
   type: types.NEW_LEAD_SUCCESS,

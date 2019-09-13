@@ -129,11 +129,11 @@ function* getCustomerFromDB({ payload }) {
   }
 }
 function* postCustomerToDB({ payload }) {
-  const { form, redirect } = payload;
+  const { form, redirect, history } = payload;
   try {
     const data = yield call(postCustomerRequest, form);
     yield delay(500);
-    if (redirect) window.location.replace(singleCustomer(data.id));
+    if (redirect) history.push(singleCustomer(data.id));
     yield put(newCustomerSuccess(data));
   } catch (error) {
     yield put(newCustomerFailure(error));

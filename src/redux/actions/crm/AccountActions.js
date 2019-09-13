@@ -63,9 +63,9 @@ export const clearSingleAccount = () => ({
 /**
  * New Account
  */
-export const newAccount = (form, redirect) => ({
+export const newAccount = (form, redirect, history) => ({
   type: types.NEW_ACCOUNT,
-  payload: { form, redirect }
+  payload: { form, redirect, history }
 });
 export const newAccountSuccess = data => ({
   type: types.NEW_ACCOUNT_SUCCESS,

@@ -152,11 +152,11 @@ function* getDealSummaryFromDB() {
   }
 }
 function* postDealToDB({ payload }) {
-  const { form, redirect } = payload;
+  const { form, redirect, history } = payload;
   try {
     const data = yield call(postDealRequest, form);
     yield delay(500);
-    if (redirect) window.location.replace(singleDeal(data.id));
+    if (redirect) history.push(singleDeal(data.id));
     yield put(newDealSuccess(data));
   } catch (error) {
     yield put(newDealFailure(error));

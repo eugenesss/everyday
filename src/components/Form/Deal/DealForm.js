@@ -1,10 +1,10 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 // Form Layout
 import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
-import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
 import { KeyInformation, DealInformation } from "./Layout";
 
 // Input Components
@@ -48,7 +48,7 @@ class DealForm extends Component {
   }
 
   onSubmit() {
-    this.props.handleSubmit(this.state.deal, true);
+    this.props.handleSubmit(this.state.deal, true, this.props.history);
   }
 
   onSaveNew() {
@@ -205,9 +205,11 @@ const mapStateToProps = ({ crmState }) => {
   return { dealForm };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    getDealFormFields
-  }
-)(DealForm);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    {
+      getDealFormFields
+    }
+  )(DealForm)
+);

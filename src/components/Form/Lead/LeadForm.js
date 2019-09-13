@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 // Form Layout
@@ -87,7 +88,7 @@ class LeadForm extends Component {
   }
 
   onSubmit() {
-    this.props.handleSubmit(this.state.lead, true);
+    this.props.handleSubmit(this.state.lead, true, this.props.history);
   }
 
   onSaveNew() {
@@ -280,9 +281,11 @@ const mapStateToProps = ({ crmState }) => {
   return { leadForm };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    getLeadFormFields
-  }
-)(LeadForm);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    {
+      getLeadFormFields
+    }
+  )(LeadForm)
+);

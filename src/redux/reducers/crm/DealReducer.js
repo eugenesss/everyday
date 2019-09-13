@@ -234,13 +234,10 @@ export default (state = INIT_STATE, action) => {
       };
     case types.NEW_DEAL_SUCCESS:
       NotificationManager.success("Deal Created");
-      return { ...state, dealForm: INIT_STATE.dealForm };
+      return { ...state, dealForm: { ...state.dealForm, loading: false } };
     case types.NEW_DEAL_FAILURE:
       NotificationManager.error("Error in POST API");
-      return {
-        ...state,
-        dealForm: { ...state.dealForm, loading: false }
-      };
+      return { ...state, dealForm: { ...state.dealForm, loading: false } };
 
     /**
      * Edit
