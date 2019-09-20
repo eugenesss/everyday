@@ -26,7 +26,7 @@ export default class ViewPayment extends Component {
   state = {
     customer: this.props.invoice.customerName,
     invoiceId: this.props.invoice.id,
-    paidAmount: this.props.invoice.paidAmount,
+    paidAmount: this.props.invoice.amount,
     paymentMethod: this.props.invoice.paymentMethod,
     date: new Date(this.props.invoice.createdAt),
     paymentRef: this.props.invoice.paymentRef,

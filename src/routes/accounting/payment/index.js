@@ -81,6 +81,7 @@ class acct_payment extends Component {
       loading
     } = this.props.paymentState.paymentList;
     
+    
     return (
       <React.Fragment>
        <Helmet>

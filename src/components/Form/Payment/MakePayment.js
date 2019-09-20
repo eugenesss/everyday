@@ -8,7 +8,7 @@ import {KeyboardDatePicker} from '@material-ui/pickers';
 import Moment from 'moment'
 
 const paymentOption =  [{name:'Paypal', value: 'Paypal'}, {name:'Stripe', value: 'Stripe'}, {name:'Bank FAST', value: 'Bank FAST'}]
-const paymentDifferenceOptions =  [{name:'Keep Open', value: 'Keep Open'}, {name:'Fully Reconcile', value: 'Fully Reconcile'}]
+const paymentDifferenceOptions =  [{name:'Keep Open', value: false}, {name:'Fully Reconcile', value: true}]
 
 import AmountInput from "Components/Form/Components/Inputs/AmountInput";
 import FormInput from "Components/Form/Components/FormInput";
@@ -19,31 +19,47 @@ export default class MakePayment extends Component {
     
 
     state=({
-        customer: this.props.invoice.accountId.value,
-        customerName: this.props.invoice.accountId.name,
-        invoiceId: this.props.invoice.id,
-        invoiceQuote: this.props.invoice.quoteID,
-        paidAmount : 0,
-        paymentMethod: '',
-        date: new Date(),
-        paymentRef: '',
-        memo : '',
-        paymentDifference: '',
-        userId : localStorage.getItem('user_id'),
+        
+        singlePayment:{
+            customer: this.props.invoice.accountId.value,
+            customerName: this.props.invoice.accountId.name,
+            invoiceId: this.props.invoice.id,
+            invoiceQuote: this.props.invoice.quoteID,
+            amount : 0,
+            paymentMethod: '',
+            date: new Date(),
+            paymentRef: "",
+            memo : '',
+            paymentDifference: '',
+            userId : localStorage.getItem('user_id'),
+        },
+        
     })
 
     handleChange = (a, b) => {
-        this.setState({[a]: b})
+        let singlePayment = {...this.state.singlePayment}
+        singlePayment[a] = b
+        this.setState({singlePayment: singlePayment})
     }
 
     _handleSubmitPayment = () => {
-        this.props.makePayment(this.state)
+        this.props.makePayment(this.state.singlePayment)
     }
 
     
     render(){
 
         const {invoice} = this.props
+
+        const {
+            amount,
+            paymentMethod,
+            date,
+            paymentRef,
+            memo,
+            paymentDifference
+        }  = this.state.singlePayment
+
 
         return(
             <div>
@@ -80,12 +96,12 @@ export default class MakePayment extends Component {
                                 }}
                             /> */}
                             <AmountInput
-                                label="Paid Amount"
-                                value={this.state.paidAmount}
-                                required={!this.state.paidAmount}
-                                target='paidAmount'
+                                label="Amount"
+                                value={amount}
+                                required={!amount}
+                                target='amount'
                                 onChange={e => {
-                                    this.handleChange("paidAmount", e.target.value)
+                                    this.handleChange("amount", e.target.value)
                                 }}
                             />
                             {/* <FormInput
@@ -108,8 +124,8 @@ export default class MakePayment extends Component {
                             />  */}
                             <FormInput
                                 label="Payment Method"
-                                value={this.state.paymentMethod}
-                                required={!this.state.paymentMethod}
+                                value={paymentMethod}
+                                required={!paymentMethod}
                                 selectValues={paymentOption}
                                 target="paymentMethod"
                                 handleChange={this.handleChange}
@@ -125,9 +141,9 @@ export default class MakePayment extends Component {
                                 selectValues={paymentDifferenceOptions}
                             />    */}
                             <FormInput
-                                label="Payment Difference"
-                                value={this.state.paymentDifference}
-                                required={!this.state.paymentDifference}
+                                label="Reconciled"
+                                value={paymentDifference}
+                                // required={!paymentDifference}
                                 selectValues={paymentDifferenceOptions}
                                 target="paymentDifference"
                                 handleChange={this.handleChange}
@@ -152,7 +168,7 @@ export default class MakePayment extends Component {
                             /> */}
                             <DatePickerInput
                                 label="Date"
-                                value={''}
+                                value={date}
                             />
                         </div>
                     
@@ -168,10 +184,10 @@ export default class MakePayment extends Component {
                                 //targetType={targetType}
                             /> */}
                             <FormInput
-                                label="Payment Method"
+                                label="Payment Ref"
                                 placeholder={"e.g. 003/10"}
-                                value={this.state.paymentRef}
-                                required={!this.state.paymentRef}
+                                value={paymentRef}
+                                required={!paymentRef}
                                 target="paymentRef"
                                 handleChange={this.handleChange}
                             />  
@@ -189,7 +205,7 @@ export default class MakePayment extends Component {
                             <FormInput
                                 label="Message"
                                 placeholder={"Enter message.."}
-                                value={this.state.memo}
+                                value={memo}
                                 target="memo"
                                 handleChange={this.handleChange}
                             />  

@@ -11,15 +11,30 @@ import BgCard from "Components/Everyday/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import Checkbox from '@material-ui/core/Checkbox';
 
+import { makeStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import Moment from "moment";
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  input: {
+    margin: theme.spacing(1),
+  },
+}));
+
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const InvoicesOneCompany = ({ tableData, loading, title, action, onCheckList}) => {
-  
+const InvoicesOneCompany = ({ tableData, loading, title, action, onCheckList, handleChange}) => {
+
+  const classes = useStyles();
 
   const columns = [
     {
@@ -80,32 +95,28 @@ const InvoicesOneCompany = ({ tableData, loading, title, action, onCheckList}) =
     },
 
     {
-      label: "Reconcile",
-      name: "reconcile",
+      label: "Reconciled",
+      name: "reconciled",
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
-          // console.log('reconcile value', value)
-          // return value? 'auto tick' : 'no tick'
-          // return (
-          //   <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
-          // );
+          
           if(value.disabled){
             return (
               <Checkbox
-                checked={value.reconcile}
+                checked={value}
                 value="checkedA"
                 onChange={event => {
-                  onCheckList(tableMeta.rowIndex, value.reconcile)
+                  onCheckList(tableMeta.rowIndex, value)
                 }}
               />
             )
           } else {
             return (
               <Checkbox
-                checked={value.reconcile}
+                checked={value}
                 value="checkedA"
                 onChange={event => {
-                  onCheckList(tableMeta.rowIndex, value.reconcile)
+                  onCheckList(tableMeta.rowIndex, value)
                 }}
               />
             )
@@ -116,17 +127,24 @@ const InvoicesOneCompany = ({ tableData, loading, title, action, onCheckList}) =
   },
     
   {
-    label: "Allocation",
-    name: "allocation",
+    label: "Amount",
+    name: "amount",
     options: {
-      customBodyRender: value => {
-        return `$${numberWithCommas(value)}`
+      customBodyRender: (value, tableMeta) => {
+        // return `$${numberWithCommas(value)}`
+        return (
+          <Input
+            placeholder="Enter amount"
+            // className={classes.input}
+            value={value}
+            style={{margin:0}}
+            onChange={(e)=> handleChange(e.target.value, tableMeta.rowIndex)}
+          />
+        )
       }
     }
   },
     
-    
-
 
   ];
 
@@ -156,6 +174,7 @@ const InvoicesOneCompany = ({ tableData, loading, title, action, onCheckList}) =
       }
     });
   }
+
 
   listOptions.customToolbarSelect = (
     selectedRows,

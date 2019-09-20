@@ -44,6 +44,7 @@ import OverviewTab from "./tabs/Overview";
 
 
 class acct_view_invoice extends Component {
+
   state = {
     makePayment: false
   };
@@ -100,10 +101,11 @@ class acct_view_invoice extends Component {
       return
     }
 
-    this.props.makePayment(item);
+  
+    this.props.makePayment({payment: [item], balance: []})
+
     this.launchMakePaymentDialog();
   };
-
 
 
   render() {
@@ -124,12 +126,12 @@ class acct_view_invoice extends Component {
                 mid: { label: "Edit", onClick: () => this.edit(invoice) },
                 more: [
                   {
-                    label: "Make Invoice Current",
-                    onClick: () => this.props.InvoiceHandleStateUpdate(invoice.id, "Current")
+                    label: "Confirm Invoice",
+                    onClick: () => this.props.InvoiceHandleStateUpdate(invoice.id, "Confirmed")
                   },
    
                   {
-                    label: "Delete Quotation",
+                    label: "Delete Invoice",
                     onClick: () => this.props.deleteSingleInvoice(this.props.match.params.id)
                   },
                 ]
@@ -151,17 +153,17 @@ class acct_view_invoice extends Component {
                   {
                     label: "New Version Invoice",
                     onClick: () => {
-                      this.props.InvoiceHandleStateCreateNewVersion(
-                        invoice.id,
-                        "Invoice"
-                      )
+                      // this.props.InvoiceHandleStateCreateNewVersion(
+                      //   invoice.id,
+                      //   "Invoice"
+                      // )
+                      this.props.InvoiceHandleStateUpdate(invoice.id, "Current")
                     }
                   },
                   {
                     label: "Confirm Invoice",
                     onClick: () => this.props.InvoiceHandleStateUpdate(invoice.id, "Confirmed")
-                  },
-    
+                  }
                 ]
               }}
             />
@@ -178,6 +180,19 @@ class acct_view_invoice extends Component {
                 actionGroup={{
                   add: { onClick: () => this.newInvoice() },
                   mid: { label: "Pay", onClick:() =>  this.launchMakePaymentDialog()},
+                  more: [
+                    {
+                      label: "New Version",
+                      onClick: () => {
+                        // this.props.InvoiceHandleStateCreateNewVersion(
+                        //   invoice.id,
+                        //   "Invoice"
+                        // )
+                        this.props.InvoiceHandleStateUpdate(invoice.id, "Current")
+
+                      }
+                    }
+                  ]
                 }}
               />
             )

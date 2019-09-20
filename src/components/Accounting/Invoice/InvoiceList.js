@@ -43,7 +43,7 @@ const InvoiceList = ({ tableData, loading, title, action }) => {
       name: "totalAmt",
       options: {
         customBodyRender: value => {
-          return value.toFixed(2);
+          return `$${value.toFixed(2)}`
         }
       }
     },

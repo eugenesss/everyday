@@ -64,7 +64,7 @@ const PaymentList = ({ tableData, loading, title, action }) => {
     // },
     {
       label: "Paid Amount",
-      name: "paidAmount",
+      name: "amount",
       options: {
         customBodyRender: (value, tableMeta) => {
           return `$${numberWithCommas(value)}`

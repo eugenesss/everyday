@@ -393,7 +393,6 @@ export default function SpanningTable(props) {
                         keys={key}
                         handleChange={handleChange}
                         style={{margin:0, padding:0}}
-
                     />
                   </TableCell>
 

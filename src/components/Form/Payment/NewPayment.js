@@ -6,7 +6,6 @@ import Moment from 'moment'
 
 const paymentOption =  [{name:'Paypal', value: 'Paypal'}, {name:'Stripe', value: 'Stripe'}, {name:'Bank FAST', value: 'Bank FAST'}]
 const paymentDifferenceOptions =  [{name:'Keep Open', value: 'Keep Open'}, {name:'Fully Reconcile', value: 'Fully Reconcile'}]
-const paymentCompany = [ { name: 'Shaking Company', value: 'Shaking Company' }, { name: 'Dry Spices Ba Wang Kua', value: 'Dry Spices Ba Wang Kua' }]
 
 
 import AmountInput from "Components/Form/Components/Inputs/AmountInput";
@@ -25,7 +24,7 @@ export default class PaymentList extends PureComponent {
         //     {
         //         customer: '',
         //         invoiceId: '',
-        //         paidAmount : 0,
+        //         amount : 0,
         //         paymentMethod: '',
         //         date: new Date(),
         //         paymentRef: '',
@@ -39,16 +38,18 @@ export default class PaymentList extends PureComponent {
 
     handleChange = (a, b) => {
 
-        if(a == "customer"){
+
+        if(a == "customerName"){
             const filterItem = this.props.companyList.filter(e => {
                 if(e.value == b){
                     return e
                 }
             })
             this.props._renderAllInvoicesForOneCompany(filterItem[0])
+            return this.props.onSetState(a, b, filterItem[0])
         }
 
-        this.props.onSetState(a, b)
+        this.props.onSetState(a, b, )
         // this.setState({[a]: b})
     }
   
@@ -56,7 +57,8 @@ export default class PaymentList extends PureComponent {
 
     render(){
 
-        const {customer, paymentMethod, paymentDifference, paidAmount, paymentRef , memo, date} = this.props.state
+        const {customerName, paymentMethod, paymentDifference, amount, paymentRef , memo, date} = this.props.state
+        
         return(
         
             <div className="row">
@@ -80,9 +82,9 @@ export default class PaymentList extends PureComponent {
                     {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
                          <FormInput
                             label="Company"
-                            value={customer}
+                            value={customerName}
                             selectValues={this.props.companyList}
-                            target="customer"
+                            target="customerName"
                             handleChange={this.handleChange}
                         /> 
                     {/* </div> */}
@@ -102,9 +104,9 @@ export default class PaymentList extends PureComponent {
                     {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
                         
                         <FormInput
-                            label="Payment Method"
+                            label="Reconciled"
                             value={paymentDifference}
-                            required={!paymentDifference}
+                            // required={!paymentDifference}
                             selectValues={paymentDifferenceOptions}
                             target="paymentDifference"
                             handleChange={this.handleChange}
@@ -117,12 +119,12 @@ export default class PaymentList extends PureComponent {
 
                     {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
                         <AmountInput
-                            label="Paid Amount"
-                            value={paidAmount}
-                            required={!paidAmount}
-                            target='paidAmount'
+                            label="Amount"
+                            value={amount}
+                            required={!amount}
+                            target='amount'
                             onChange={e => {
-                                this.handleChange("paidAmount", e.target.value)
+                                this.handleChange("amount", e.target.value)
                             }}
                         />
                     {/* </div> */}
@@ -133,6 +135,7 @@ export default class PaymentList extends PureComponent {
                         <FormInput
                             label="Payment Ref"
                             value={paymentRef}
+                            placeholder={"e.g. 003/10"}
                             required={!paymentRef}
                             target='paymentRef'
                             handleChange={this.handleChange}
