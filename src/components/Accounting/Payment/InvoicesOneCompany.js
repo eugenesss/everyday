@@ -38,12 +38,12 @@ const InvoicesOneCompany = ({ tableData, loading, title, action, onCheckList, ha
 
   const columns = [
     {
-      name: "id",
+      name: "invoiceId",
       options: { display: "excluded", filter: false, sort: false }
     },
     {
       label: "Invoice",
-      name: "invoiceId",
+      name: "invoiceQuote",
       options: { 
         customBodyRender: (value, tableMeta) => {
           return (
@@ -198,3 +198,4 @@ const InvoicesOneCompany = ({ tableData, loading, title, action, onCheckList, ha
 };
 
 export default InvoicesOneCompany;
+

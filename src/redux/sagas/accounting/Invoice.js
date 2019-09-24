@@ -33,7 +33,7 @@ const getAllInvoiceRequest = async () => {
 
 const getInvoiceRequest = async invoiceID => {
   console.log("getInvoiceRequest");
-  const result = await api.get(`/invoices/${invoiceID}`);
+  const result = await api.post(`/invoices/getInvoiceReconcile`, { data: invoiceID });
   return result.data;
 };
 
@@ -139,7 +139,8 @@ function* getInvoiceFromDB({ payload }) {
   try {
     const data = yield call(getInvoiceRequest, payload);
     yield delay(500);
-    yield put(actions.getSingleInvoiceSuccess(data));
+
+    yield put(actions.getSingleInvoiceSuccess(data.fields));
   } catch (error) {
     yield put(actions.getInvoiceFailure(error));
   }

@@ -68,6 +68,7 @@ class acct_new_payment extends Component {
       userId : localStorage.getItem('user_id'),
     },
 
+    currentInvoiceAmount : 0,
 
     InvoiceList : [],
     BalancePayment: [],
@@ -117,7 +118,6 @@ class acct_new_payment extends Component {
     this.setState({invoice: invoice})
   }
 
-
   onCheckList = (rowIndex, value) => {
     let InvoiceList = [...this.state.InvoiceList]
 
@@ -130,7 +130,6 @@ class acct_new_payment extends Component {
     InvoiceList[rowIndex].reconciled = !value
     this.setState({InvoiceList: InvoiceList})
   }
-
 
   onBalancePaymentCheck = (rowIndex, value) => {
     let BalancePayment = [...this.state.BalancePayment]
@@ -168,23 +167,31 @@ class acct_new_payment extends Component {
   handleChange = (e, index) => {
 
     let InvoiceList = [...this.state.InvoiceList]
+    let currentInvoiceAmount = 0
 
     InvoiceList[index].amount = e
 
     if(e >= InvoiceList[index].openBalance) {
       InvoiceList[index].reconciled = true
+      InvoiceList[index].amount = InvoiceList[index].openBalance
+
     } else {
       InvoiceList[index].reconciled = false
     }
 
-    this.setState({InvoiceList: InvoiceList})
-  }
+   
+    // currentInvoiceAmount = this.state.currentInvoiceAmount + e
+    // if(currentInvoiceAmount = "NaN"){
+    //   currentInvoiceAmount = 0
+    // }
 
+    // console.log(currentInvoiceAmount)
+    this.setState({InvoiceList: InvoiceList, currentInvoiceAmount: currentInvoiceAmount})
+  }
 
   _redirectAllocationRestart = () =>{
     this.setState({redirectAllocation: false})
   }
-
 
   _submitPayment = (e) => {
 
@@ -192,25 +199,31 @@ class acct_new_payment extends Component {
     const array = [...this.state.InvoiceList]
     let currentAmount = 0
 
-
     array.map((item, index) => {
-
-      currentAmount = parseFloat(currentAmount) + parseFloat(item.amount) 
-
       if(item.amount > 0){
-        let invoice = {...this.state.invoice}
-        invoice.amount = item.amount
-        invoice.invoiceQuote = item.invoiceId
-        invoice.invoiceId = item.id
-        invoice.reconciled = item.reconciled
-        SubmitPaymentArray.push(invoice)
+        currentAmount = parseFloat(currentAmount) + parseFloat(item.amount) 
+        // let invoice = {...this.state.invoice}
+        // invoice.amount = item.amount
+        // invoice.invoiceQuote = item.invoiceId
+        // invoice.invoiceId = item.id
+        // invoice.reconciled = item.reconciled
+        SubmitPaymentArray.push(item)
       }
     })
+
+    // Single payment for multiple invoices
+    let payment = {
+      payment: this.state.invoice,
+      invoices : SubmitPaymentArray
+    }
+
+    const calculatePaymentAmount = this.state.invoice.amount - currentAmount
 
     let BalancePayment = [...this.state.BalancePayment]
     let paymentBalance = []
     
     if(BalancePayment.length > 0) {
+      console.log('looping BalancePayment')
       BalancePayment.map(item =>{
         if(item.reconciled){
           if(item.allocation > 0){
@@ -220,36 +233,63 @@ class acct_new_payment extends Component {
           }
         }
       })
+      console.log('looping BalancePayment ended')
     }
     
-
-  
-    // console.log('send to backend for payment')
-    // this.props.makePayment({payment: SubmitPaymentArray, balance: paymentBalance});
+    console.log('this.state.invoice.paymentDifference')
+    console.log(this.state.invoice.paymentDifference)
 
     if(SubmitPaymentArray.length > 0){
-
-      const invoiceAmount = this.state.invoice.amount
   
-      if(invoiceAmount != currentAmount){
-        console.log('Your payment amount does not match your invoices payment')
-        window.confirm('Your payment amount does not match your invoices payment')
+      if(calculatePaymentAmount > 0){
+
+        if(!this.state.invoice.paymentDifference) {
+        
+          const r = window.confirm(`Your payment amount does not match your invoices payment. Click OK if you would like the remaining amount to be saved into balance which will surface when attempting next payment.`); if(r == true){
+            payment.balancePayment = calculatePaymentAmount
+            this.props.makePayment({payment: payment, balance: paymentBalance})
+          }
+
+        } else {
+          
+          const r = window.confirm(`You have set the reconciled to "Fully Reconciled", the remaining amount will not be reflected in the balance in your next payment.`); if(r == true) {
+            payment.balancePayment = calculatePaymentAmount
+            this.props.makePayment({payment: payment, balance: paymentBalance})
+          }
+
+        }
+
+      } else if (calculatePaymentAmount == 0){
+
+        // if(!this.state.invoice.paymentDifference) {
+        //   this.props.makePayment({payment: payment, balance: paymentBalance});
+        // } else {
+        //   const r = window.confirm(`You have set the reconciled to "Fully Reconciled", the balance of $${calculatePaymentAmount} will not be reflected in the balance in your next payment.`); if(r == true) {
+        //     this.props.makePayment({payment: payment, balance: paymentBalance})
+        //   }
+        // }
+        this.props.makePayment({payment: payment, balance: paymentBalance});
+
+
       } else {
-        console.log('send to backend for payment')
-        this.props.makePayment({payment: SubmitPaymentArray, balance: paymentBalance});
+        const r = window.confirm(`Your payment amount does not match your invoice(s) payment, you have a record of $${calculatePaymentAmount}. Please check your payment again.`); if(r == true){}
       }
 
     } else {
-      console.log('no item to make payment')
       // window.confirm('No items to make payment, please check your invoices again')
 
       if(paymentBalance.length > 0){
-        const r = window.confirm("You have opted for payment using existing invoices, click OK to confirm and cancel to return."); if(r == true){
-          this.props.makePayment({payment: [], balance: paymentBalance})
+        const r = window.confirm("You have opted to pay using existing balance(s) from previous payment, click OK to confirm and cancel to return."); if(r == true){
+          this.props.makePayment({payment: {}, balance: paymentBalance})
+        }
+      } else {
+        console.log('no item to make payment')
+
+        const r = window.confirm('No payment detected, please key in the amount and payment details to proceed'); if(r == true){
+          this.props.makePayment({payment: {}, balance: paymentBalance})
         }
       }
 
-      
     }
 
   }
@@ -383,6 +423,16 @@ class acct_new_payment extends Component {
                   {container}
 
                   {balancePayment}
+
+                  {/* <div>
+                    <div>
+                      total input: {this.state.invoice.amount}
+                    </div>
+                    <div>
+                      total invoice amount: {this.state.currentInvoiceAmount}
+                    </div>
+                  </div> */}
+
 
                 {this.state.redirectAllocation && (
                   <DialogRoot

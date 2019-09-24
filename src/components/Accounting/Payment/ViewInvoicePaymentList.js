@@ -13,7 +13,7 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import Moment from "moment";
 import Checkbox from '@material-ui/core/Checkbox';
-
+import AppConfig from 'Constants/AppConfig'
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -86,6 +86,37 @@ const ViewInvoicePaymentList = ({ tableData, loading, title, action, onCheckList
           }
         }
     },
+
+    {
+      label: "Reconciled",
+      name: "reconciled",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+
+          if(value){
+            return (
+              <Checkbox
+                  checked={value}
+                  disabled
+                  color="primary"
+                  style={{
+                    color: AppConfig.themeColors.primary
+                  }}
+              />
+            )
+          } else {
+            return (
+              <Checkbox
+                  checked={value}
+                  disabled
+              />
+            )
+          }
+          
+        },
+      },
+    },
+
     {
       label: "Allocation",
       name: "allocated",
@@ -109,33 +140,7 @@ const ViewInvoicePaymentList = ({ tableData, loading, title, action, onCheckList
     //     }
     // },
     
-    // {
-    //     label: "Reconcile",
-    //     name: "reconcile",
-    //     options: {
-    //       customBodyRender: (value, tableMeta, updateValue) => {
-    //         // console.log('reconcile value', value)
-    //         // return value? 'auto tick' : 'no tick'
-    //         // return (
-    //         //   <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
-    //         // );
-    //         if(value.disabled){
-    //           return (
-    //             <Checkbox
-    //               checked={value.reconcile}
-    //               value="checkedA"
-    //               onChange={event => {
-    //                 onCheckList(tableMeta.rowIndex, !value.reconcile)
-    //               }}
-    //             />
-    //           )
-    //         } else {
-    //           return "false"
-    //         }
-            
-    //       },
-    //     },
-    // },
+  
 
     // {
     //   label: "Total Invoices",

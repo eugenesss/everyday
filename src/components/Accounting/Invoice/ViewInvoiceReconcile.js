@@ -1,3 +1,4 @@
+
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -11,96 +12,82 @@ import BgCard from "Components/Everyday/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
 import Moment from "moment";
-
+import Checkbox from '@material-ui/core/Checkbox';
+import AppConfig from 'Constants/AppConfig'
 function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const PaymentList = ({ tableData, loading, title, action }) => {
+const ViewInvoiceReconcile = ({ tableData, loading, title, action, onCheckList }) => {
+
+
   const columns = [
     {
-      name: "id",
+      name: "credit_id",
       options: { display: "excluded", filter: false, sort: false }
     },
+    // {
+    //     label: `Payment #${tableMeta.rowData[0]}`,
+    //     name: "credit_id",
+    //     options: {
+    //       customBodyRender: (value, tableMeta) => {
+    //         return (
+    //           <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
+    //         );
+    //       }
+    //     }
+    // },
     {
-      label: "Company",
-      name: "setup",
-      options: { 
+        label: "Amount",
+        name: "amount",
+        options: { 
         customBodyRender: (value, tableMeta) => {
-          return (
-            // <NavLink to={`payments/${value.id}`}>{value.name}</NavLink>
-            <NavLink to={`payments/${tableMeta.rowData[0]}`}>{value.name}</NavLink>
-          );
+            return `$${numberWithCommas(value)}`
         }
       },
     },
-    // {
-    //   label: "# Invoice",
-    //   name: "invoiceQuote",
-    //   options: {
-    //     customBodyRender: (value, tableMeta) => {
-    //       return value
-    //     }
-    //   }
-    // },
     {
-      label: "Payment Method",
-      name: "paymentMethod",
-      options: {
+        label: "Reconciled",
+        name: "reconciled",
+        options: {
+          customBodyRender: (value, tableMeta) => {
+  
+            if(value){
+              return (
+                <Checkbox
+                    checked={value}
+                    disabled
+                    color="primary"
+                    style={{
+                      color: AppConfig.themeColors.primary
+                    }}
+                />
+              )
+            } else {
+              return (
+                <Checkbox
+                    checked={value}
+                    disabled
+                />
+              )
+            }
+            
+          },
+        },
+      },
+    {
+        label: "Date",
+        name: "updatedAt",
+        options: {
         customBodyRender: (value, tableMeta) => {
-          return value
+            return Moment(new Date(value)).format("LL");
+        //   return (
+        //     <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
+        //   );
         }
       }
     },
-    
-    // {
-    //   label: "Customer",
-    //   name: "customerName",
-    //   options: {
-    //     customBodyRender: value => {
-    //       return value
-    //     }
-    //   }
-    // },
-    {
-      label: "Paid Amount",
-      name: "amount",
-      options: {
-        customBodyRender: (value, tableMeta) => {
-          return `$${numberWithCommas(value)}`
-        }
-      }
-    },
-    {
-      label: "Payment Ref",
-      name: "paymentRef",
-      options: {
-        customBodyRender: value => {
-          return value
-        }
-      }
-    },
-    {
-      label: "Payment Made",
-      name: "createdAt",
-      options: {
-        customBodyRender: value => {
-          return Moment(new Date(value)).format("LL");
-        }
-      }
-    },
-    
-    // {
-    //   label: "Remaining Amount ",
-    //   name: "duePayment",
-    //   options: {
-    //     customBodyRender: value => {
-    //       return `$${value.toLocaleString()}`
-    //     }
-    //   }
-    // },
-    
-    
+   
 
 
   ];
@@ -153,4 +140,4 @@ const PaymentList = ({ tableData, loading, title, action }) => {
   );
 };
 
-export default PaymentList;
+export default ViewInvoiceReconcile;

@@ -43,6 +43,8 @@ export default class MakePayment extends Component {
     }
 
     _handleSubmitPayment = () => {
+
+       
         this.props.makePayment(this.state.singlePayment)
     }
 
@@ -141,7 +143,7 @@ export default class MakePayment extends Component {
                                 selectValues={paymentDifferenceOptions}
                             />    */}
                             <FormInput
-                                label="Reconciled"
+                                label="Payment Difference"
                                 value={paymentDifference}
                                 // required={!paymentDifference}
                                 selectValues={paymentDifferenceOptions}

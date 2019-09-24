@@ -10,11 +10,12 @@ import ShowInput from "Components/Everyday/Profile/Details/ShowInput";
 import { addNoteCustomer } from "Actions";
 
 import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/InvoiceProductInput";
+import ViewInvoiceReconcile from "Components/Accounting/Invoice/ViewInvoiceReconcile";
 
 
 
 function QuotationOverviewTab(props) {
-  const { quotation } = props;
+  const { quotation, payment } = props;
   
   return (
     <React.Fragment>
@@ -38,7 +39,7 @@ function QuotationOverviewTab(props) {
                         
                         <div className="d-flex">
 
-                            <div className="col-6 d-flex">
+                            <div className="col-4 d-flex">
                                 <EditableInput 
                                     style={{color:'#464d69'}}
                                     label="Date of Issue"
@@ -48,7 +49,7 @@ function QuotationOverviewTab(props) {
                             
                             </div>
                             
-                            <div className="col-6">
+                            <div className="col-4 d-flex">
                                 <EditableInput 
                                     style={{color:'#464d69'}}
                                     label="Due Date"
@@ -56,29 +57,21 @@ function QuotationOverviewTab(props) {
                                 />
                             </div>
 
+                            <div className="col-4 d-flex">
+
+                                <EditableInput 
+                                    style={{color:'#464d69'}}
+                                    label="Amount Due"
+                                    amount={quotation.totalAmt}
+                                    value={`$${quotation.totalAmt}`}
+                                />
+
+                            </div>
+
+                         
                         
                         </div>
             
-                        <div className="d-flex">
-
-                        <div className="col-6">
-                            {/* <EditableInput 
-                                style={{fontSize: 20, color:'#464d69'}}
-                                label="Amount Due"
-                                value={`123`}
-                            /> */}
-                        </div>
-                    
-                        <div className="col-6">
-                            <EditableInput 
-                                style={{color:'#464d69'}}
-                                label="Amount Due"
-                                amount={quotation.totalAmt}
-                                value={`$${quotation.totalAmt}`}
-                            />
-                        </div>
-          
-                    </div>
 
                     </div>
                 </div>
@@ -91,6 +84,17 @@ function QuotationOverviewTab(props) {
                             quotation={quotation}
                             edit={false}
                             // taxTable={taxTable}
+                        />
+                    </div>
+                </div>
+
+
+                <div className="d-flex flex-row">
+                    <div className="col-12">
+                        <ViewInvoiceReconcile
+                            // title={nowShowing}
+                            // action={action}
+                            tableData={payment}
                         />
                     </div>
                 </div>

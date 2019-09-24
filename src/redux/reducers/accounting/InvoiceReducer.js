@@ -22,7 +22,7 @@ const INIT_STATE = {
     loading: false,
     summary: []
   },
-  invoiceToView: { loading: false, invoice: null }
+  invoiceToView: { loading: false, invoice: null, payment: null }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -124,12 +124,15 @@ export default (state = INIT_STATE, action) => {
       };
 
     case types.GET_SINGLE_INVOICE_SUCCESS:
+
+    
       return {
         ...state,
         invoiceToView: {
           ...state.invoiceToView,
           loading: false,
-          invoice: action.payload
+          invoice: action.payload.InvoiceSource,
+          payment: action.payload.ReconcileSource
         }
       };
 

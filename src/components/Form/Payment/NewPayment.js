@@ -5,7 +5,7 @@ import {KeyboardDatePicker} from '@material-ui/pickers';
 import Moment from 'moment'
 
 const paymentOption =  [{name:'Paypal', value: 'Paypal'}, {name:'Stripe', value: 'Stripe'}, {name:'Bank FAST', value: 'Bank FAST'}]
-const paymentDifferenceOptions =  [{name:'Keep Open', value: 'Keep Open'}, {name:'Fully Reconcile', value: 'Fully Reconcile'}]
+const paymentDifferenceOptions =  [{name:'Keep Open', value: false}, {name:'Fully Reconcile', value: true}]
 
 
 import AmountInput from "Components/Form/Components/Inputs/AmountInput";
@@ -64,6 +64,7 @@ export default class PaymentList extends PureComponent {
             <div className="row">
                 
                 <div className="col-md-6"></div>
+                
                 <div className="col-md-6">  
                     <DatePickerInput
                         label="Payment Date"
@@ -80,38 +81,50 @@ export default class PaymentList extends PureComponent {
 
 
                     {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
-                         <FormInput
-                            label="Company"
-                            value={customerName}
-                            selectValues={this.props.companyList}
-                            target="customerName"
-                            handleChange={this.handleChange}
-                        /> 
+                        
                     {/* </div> */}
                 
                     {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
                         
-                        <FormInput
-                            label="Payment Method"
-                            value={paymentMethod}
-                            required={!paymentMethod}
-                            selectValues={paymentOption}
-                            target="paymentMethod"
-                            handleChange={this.handleChange}
-                        />                
+                    <FormInput
+                        label="Company"
+                        value={customerName}
+                        selectValues={this.props.companyList}
+                        target="customerName"
+                        handleChange={this.handleChange}
+                    /> 
+
+                    <FormInput
+                        label="Payment Method"
+                        value={paymentMethod}
+                        required={!paymentMethod}
+                        selectValues={paymentOption}
+                        target="paymentMethod"
+                        handleChange={this.handleChange}
+                    />                
                     {/* </div> */}
 
                     {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
                         
-                        <FormInput
-                            label="Reconciled"
-                            value={paymentDifference}
-                            // required={!paymentDifference}
-                            selectValues={paymentDifferenceOptions}
-                            target="paymentDifference"
-                            handleChange={this.handleChange}
-                        />  
+                 
                     {/* </div> */}
+
+                     {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
+                        
+                  
+                     <FormInput
+                        label="Payment Ref"
+                        value={paymentRef}
+                        placeholder={"e.g. 003/10"}
+                        required={!paymentRef}
+                        target='paymentRef'
+                        handleChange={this.handleChange}
+                    />
+
+                 
+
+                    {/* </div> */}
+
 
                 </div>
 
@@ -131,28 +144,25 @@ export default class PaymentList extends PureComponent {
 
 
                     {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
-                        
-                        <FormInput
-                            label="Payment Ref"
-                            value={paymentRef}
-                            placeholder={"e.g. 003/10"}
-                            required={!paymentRef}
-                            target='paymentRef'
-                            handleChange={this.handleChange}
-                        />
+                    <FormInput
+                        label="Memo"
+                        value={memo}
+                        target="memo"
+                        handleChange={this.handleChange}
+                    />
+                       
+                    <FormInput
+                        label="Reconciled"
+                        value={paymentDifference}
+                        // required={!paymentDifference}
+                        selectValues={paymentDifferenceOptions}
+                        target="paymentDifference"
+                        handleChange={this.handleChange}
+                    />  
 
                     {/* </div> */}
 
-                    {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
-                        
-                        <FormInput
-                            label="Memo"
-                            value={memo}
-                            target="memo"
-                            handleChange={this.handleChange}
-                        />
-                    {/* </div> */}
-
+                   
                 </div>
 
              

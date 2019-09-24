@@ -80,15 +80,15 @@ class acct_view_invoice extends Component {
 
   makePayment = (item) =>  {
 
-    let paidAmount
+    let amount
 
-    if(item.paidAmount != 0){
-      item.paidAmount = parseInt(item.paidAmount)
+    if(item.amount != 0){
+      item.amount = parseInt(item.amount)
     } else {
-      paidAmount = 0;
+      amount = 0;
     }
     
-    if(paidAmount == 0) {
+    if(amount == 0) {
       this.props.makePaymentIncompleteFields('paid amount')
       return
     }
@@ -100,16 +100,38 @@ class acct_view_invoice extends Component {
       this.props.makePaymentIncompleteFields('payment method')
       return
     }
+    
+    let payment = {
+      payment: {
+        customer: item.customer,
+        customerName: item.customerName,
+        amount : item.amount,
+        paymentMethod: item.paymentMethod,
+        date: item.date,
+        paymentRef: item.paymentRef,
+        memo : item.memo,
+        paymentDifference: item.paymentDifference,
+        userId : localStorage.getItem('user_id'),
+      },
+      invoices : [{
+        amount : item.amount,
+        invoiceQuote : item.invoiceQuote,
+        invoiceId : item.invoiceId,
+        reconciled : item.paymentDifference,
+      }]
+    }
 
-  
-    this.props.makePayment({payment: [item], balance: []})
+    this.props.makePayment({payment: payment, balance: []})
+
 
     this.launchMakePaymentDialog();
   };
 
 
   render() {
-    const { loading, invoice } = this.props.invoiceToView;
+    const { loading, invoice, payment } = this.props.invoiceToView;
+
+    console.log(this.props.invoiceToView)
 
     let buttonCollection = null;
     let moreButtons = null;
@@ -222,6 +244,7 @@ class acct_view_invoice extends Component {
       return <Redirect to="/app/acct/invoices" />;
     }
 
+
     return loading ? (
       <RctPageLoader />
     ) : invoice ? (
@@ -247,6 +270,7 @@ class acct_view_invoice extends Component {
                   <div label="Overview">
                     <OverviewTab
                       quotation={invoice}
+                      payment = {payment}
                     />
                   </div>
 
