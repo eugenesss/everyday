@@ -52,7 +52,7 @@ const EventsTable = ({ tableData, title, action, showNewEventDialog }) => {
 
   const options = {
     filterType: "dropdown",
-    responsive: "scroll",
+    responsive: "scrollMaxHeight",
     download: false,
     print: false,
     search: false,

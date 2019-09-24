@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     zIndex: 90,
     position: "relative",
-    height: "100%",
+    height: "auto",
     borderRadius: "15px"
   },
   root: {

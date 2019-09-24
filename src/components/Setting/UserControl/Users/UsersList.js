@@ -48,7 +48,7 @@ const UsersList = ({ tableData, loading, action }) => {
 
   const options = {
     filterType: "multiselect",
-    responsive: "scroll",
+    responsive: "scrollMaxHeight",
     download: false,
     print: false,
     selectableRows: "none",

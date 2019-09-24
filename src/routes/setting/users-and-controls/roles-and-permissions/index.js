@@ -1,47 +1,98 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Col, Row } from "reactstrap";
 
-import AccessControl from "Components/AccessControl";
-import NoAccessComponent from "Components/AccessControl/NoAccessComponent";
-
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
-
+// Role Components
 import RolesList from "Components/Setting/UserControl/Roles/RolesList";
 import RolesManager from "Components/Setting/UserControl/Roles/RolesManager";
-import { getAllRoles } from "Actions";
+
+// New Role Dialog
+import NewRoleDialog from "Components/Setting/UserControl/Roles/NewRoleDialog";
+
+import { getAllRoles, updateRole } from "Actions";
 
 class RolesLayout extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      selectedRole: null,
+      newRoleDialog: false,
+      selectedRoleAccess: []
+    };
+    this.onSelectRole = this.onSelectRole.bind(this);
+    this.handleNewRoleDialog = this.handleNewRoleDialog.bind(this);
+    this.handleAccessChange = this.handleAccessChange.bind(this);
+    this.onEditRole = this.onEditRole.bind(this);
   }
   componentDidMount() {
     this.props.getAllRoles();
   }
 
+  onSelectRole(selectedRole) {
+    this.setState({
+      selectedRole,
+      selectedRoleAccess: selectedRole.accessRights
+    });
+  }
+  handleAccessChange(access, catKey, actionKey, methodKey) {
+    const updatedAccess = Object.assign(
+      [],
+      this.state.selectedRole.accessRights
+    );
+    methodKey != null
+      ? // Crud
+        (updatedAccess[catKey].accessRights[actionKey].method[
+          methodKey
+        ].access = access)
+      : // custom method
+        (updatedAccess[catKey].accessRights[actionKey].method.access = access);
+    this.setState({
+      selectedRole: { ...this.state.selectedRole, accessRights: updatedAccess }
+    });
+  }
+  onEditRole() {
+    console.log("edit");
+    console.log(this.state.selectedRole);
+  }
+
+  handleNewRoleDialog() {
+    this.setState({ newRoleDialog: !this.state.newRoleDialog });
+  }
+
   render() {
-    const { rolesLoading } = this.props;
+    const { loading } = this.props;
+    const { selectedRole, newRoleDialog, selectedRoleAccess } = this.state;
     return (
       <React.Fragment>
-        {/* <AccessControl action={["RolePermission:manage"]} noAccessComponent={<NoAccessComponent/>}> */}
-        <Row>
-          <Col md={3}>
-            <RolesList />
-          </Col>
-          <Col md={9}>
-            <RolesManager />
-          </Col>
-        </Row>
-        {/* </AccessControl> */}
-        {rolesLoading && <RctSectionLoader />}
+        <div className="row">
+          <div className="col-md-6">
+            <RolesList
+              handleDialog={this.handleNewRoleDialog}
+              selectRole={this.onSelectRole}
+              loading={loading}
+            />
+          </div>
+          {selectedRole && (
+            <div className="col-md-6">
+              <RolesManager
+                handleAccessChange={this.handleAccessChange}
+                selectedRole={selectedRole}
+                saveAccess={() => this.onEditRole()}
+              />
+            </div>
+          )}
+        </div>
+        <NewRoleDialog
+          show={newRoleDialog}
+          handleHide={this.handleNewRoleDialog}
+        />
       </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = ({ rolesState }) => {
-  const { rolesLoading } = rolesState;
-  return { rolesLoading };
+  const { loading, allRoles } = rolesState;
+  return { loading, allRoles };
 };
 
 export default connect(

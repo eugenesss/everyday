@@ -88,7 +88,7 @@ class SettingsDirectory extends Component {
               "/app/settings/users-and-controls/roles-and-permissions"
             }
           />
-          <DrawerListItem
+          {/* <DrawerListItem
             onClickListItem={() =>
               this.handleClickItem("/app/settings/users-and-controls/groups")
             }
@@ -97,7 +97,7 @@ class SettingsDirectory extends Component {
             selected={
               location.pathname === "/app/settings/users-and-controls/groups"
             }
-          />
+          /> */}
         </DrawerListCollapsible>
 
         {/* <ListItem button onClick={() => this.handleClick("crm")}>

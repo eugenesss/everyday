@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 // page req
 import { Helmet } from "react-helmet";
+import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 //Page Req
 import ReportViews from "Components/Report/Views";
@@ -54,6 +55,7 @@ class ReportsComponent extends Component {
           <title>Everyday | Reports</title>
           <meta name="description" content="Everyday Informational Reports" />
         </Helmet>
+        <PageTitleBar title="Reports" />
         <div className="row">
           <div className="col-lg-2">
             <SideDrawer listHeader="Reports List">

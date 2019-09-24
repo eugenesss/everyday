@@ -33,6 +33,7 @@ const getInactiveAccountRequest = async () => {
 };
 const getAccountRequest = async acctID => {
   const result = await api.get(`/accounts/${acctID}`);
+  console.log(result);
   return result.data;
 };
 const postAccountRequest = async acct => {

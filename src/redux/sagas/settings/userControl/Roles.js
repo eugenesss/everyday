@@ -1,13 +1,8 @@
 import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
-import {
-  GET_ALL_ROLES,
-  ADD_ROLE,
-  UPDATE_ROLE,
-  DELETE_ROLE
-} from "Types";
+import { GET_ALL_ROLES, ADD_ROLE, UPDATE_ROLE, DELETE_ROLE } from "Types";
 import {
   getAllRolesSuccess,
-  getRoleFailure,
+  getAllRolesFailure,
   addRoleSuccess,
   addRoleFailure,
   updateRoleSuccess,
@@ -18,41 +13,38 @@ import {
 // import api from "Api";
 import api from "Api";
 
+import { role1, role2, role3, bestCase } from "./dummy";
+
 //=========================
 // REQUESTS
 //=========================
-const getAllAccessRightsRequest = async () => {
-  const result = await api.get(`/accessrights`);
-  return result.data;
-};
-const getAllAccessRolesRequest = async () => {
-  const result = await api.post(`/accessroles/viewall`);
 
-  return result.data.data;
+const getAllRolesRequest = async () => {
+  // const result = await api.post(`/accessroles/viewall`);
+  // return result.data.data;
+  return bestCase;
 };
-/*
-const getAllAccessRolesAccessRightsRequest = async () => {
-  const result = await api.get(`/accessroles/accessRights`);
-  return result.data.data;
-};
-*/
+
 const addRoleRequest = async () => {
   const result = await api.post(`/accessroles`, {
-    "name": "New Role"
+    name: "New Role"
   });
   return result.data;
 };
 
 const updateRoleNameRequest = async (roleName, roleId) => {
   const result = await api.patch(`accessRoles/${roleId}`, {
-    "name": roleName
+    name: roleName
   });
   return result.data;
 };
 const updateRoleRightRequest = async (roleId, rights) => {
-  const result = await api.post(`accessRoles/saveRights`, { id: roleId, rights: rights })
-  return result.data
-}
+  const result = await api.post(`accessRoles/saveRights`, {
+    id: roleId,
+    rights: rights
+  });
+  return result.data;
+};
 
 const deleteRoleRequest = async role => {
   try {
@@ -68,12 +60,10 @@ const deleteRoleRequest = async role => {
 //=========================
 function* getAllRolesFromDB() {
   try {
-    const accessRights = yield call(getAllAccessRightsRequest);
-    const accessRoles = yield call(getAllAccessRolesRequest);
-    //const roleRights = yield call(getAllAccessRolesAccessRightsRequest);
-    yield put(getAllRolesSuccess(accessRights, accessRoles));
+    const data = yield call(getAllRolesRequest);
+    yield put(getAllRolesSuccess(data));
   } catch (err) {
-    yield put(getRoleFailure(err));
+    yield put(getAllRolesFailure(err));
   }
 }
 function* addRoleToDB() {
@@ -86,12 +76,12 @@ function* addRoleToDB() {
 }
 function* updateRoleToDB() {
   try {
-    const getRights = state => state.rolesState.selectedRoleRights
-    const rights = yield select(getRights)
+    const getRights = state => state.rolesState.selectedRoleRights;
+    const rights = yield select(getRights);
     const getRole = state => state.rolesState.selectedRole;
     const role = yield select(getRole);
     yield call(updateRoleNameRequest, role.name, role.id);
-    const data = yield call(updateRoleRightRequest, role.id, rights) 
+    const data = yield call(updateRoleRightRequest, role.id, rights);
     yield put(updateRoleSuccess(data));
   } catch (err) {
     yield put(updateRoleFailure(err));

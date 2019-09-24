@@ -4,7 +4,7 @@ import ChartConfig from "Constants/chart-config";
 
 const options = {
   fill: false,
-  responsive: true,
+  responsive: "scrollMaxHeight",
   scales: {
     xAxes: [
       {
