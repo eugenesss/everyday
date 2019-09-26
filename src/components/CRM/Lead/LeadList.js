@@ -32,24 +32,8 @@ const LeadList = ({ tableData, loading, title, action }) => {
       }
     },
     { label: "Company", name: "companyName" },
-    {
-      label: "Email",
-      name: "baseContact",
-      options: {
-        customBodyRender: value => {
-          return value.email ? value.email : "";
-        }
-      }
-    },
-    {
-      label: "Mobile",
-      name: "baseContact",
-      options: {
-        customBodyRender: value => {
-          return value.mobile ? value.mobile : "";
-        }
-      }
-    },
+    { label: "Email", name: "email" },
+    { label: "Mobile", name: "mobile" },
     {
       label: "Status",
       name: "statusInfo",
@@ -66,13 +50,7 @@ const LeadList = ({ tableData, loading, title, action }) => {
           )
       }
     },
-    {
-      label: "Source",
-      name: "sourceInfo",
-      options: {
-        customBodyRender: value => (value ? value.name : " ")
-      }
-    },
+    { label: "Source", name: "source" },
     {
       label: "Interest",
       name: "interest",
@@ -93,42 +71,30 @@ const LeadList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Industry",
-      name: "industryInfo",
+      name: "industry",
       options: {
-        display: false,
-        customBodyRender: value => {
-          return value ? value : "";
-        }
+        display: false
       }
     },
     {
       label: "Website",
-      name: "baseContact",
+      name: "website",
       options: {
-        display: false,
-        customBodyRender: value => {
-          return value.website ? value.website : "";
-        }
+        display: false
       }
     },
     {
       label: "Office",
-      name: "baseContact",
+      name: "phone",
       options: {
-        display: false,
-        customBodyRender: value => {
-          return value.office ? value.phone : "";
-        }
+        display: false
       }
     },
     {
       label: "Fax",
-      name: "baseContact",
+      name: "fax",
       options: {
-        display: false,
-        customBodyRender: value => {
-          return value.fax ? value.fax : "";
-        }
+        display: false
       }
     }
   ];

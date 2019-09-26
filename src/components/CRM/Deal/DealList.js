@@ -91,7 +91,7 @@ const DealList = ({ tableData, loading, title, action, noRelated }) => {
       label: "Account",
       name: "accountInfo",
       options: {
-        display: noRelated && "excluded",
+        display: noRelated ? "excluded" : true,
         customBodyRender: value => {
           return value ? (
             <NavLink to={`accounts/${value.id}`}>{value.name}</NavLink>
@@ -105,7 +105,7 @@ const DealList = ({ tableData, loading, title, action, noRelated }) => {
       label: "Customer",
       name: "customerInfo",
       options: {
-        display: noRelated && "excluded",
+        display: noRelated ? "excluded" : true,
         customBodyRender: value => {
           return value ? (
             <NavLink to={`customers/${value.id}`}>{value.name}</NavLink>
@@ -126,22 +126,16 @@ const DealList = ({ tableData, loading, title, action, noRelated }) => {
     },
     {
       label: "Source",
-      name: "sourceInfo",
+      name: "source",
       options: {
-        display: false,
-        customBodyRender: value => {
-          return value ? value.name : "";
-        }
+        display: false
       }
     },
     {
       label: "Type",
-      name: "typeInfo",
+      name: "type",
       options: {
-        display: false,
-        customBodyRender: value => {
-          return value ? value.name : "";
-        }
+        display: false
       }
     }
   ];

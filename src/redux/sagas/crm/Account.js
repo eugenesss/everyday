@@ -20,8 +20,8 @@ import api from "Api";
 // REQUESTS
 //=========================
 const getAllAccountRequest = async () => {
-  const result = await api.get("/accounts");
-  return result.data;
+  const result = await api.get("/accounts/getall");
+  return result.data.data;
 };
 const getActiveAccountRequest = async () => {
   const result = await api.get("/accounts");
@@ -33,7 +33,6 @@ const getInactiveAccountRequest = async () => {
 };
 const getAccountRequest = async acctID => {
   const result = await api.get(`/accounts/${acctID}`);
-  console.log(result);
   return result.data;
 };
 const postAccountRequest = async acct => {

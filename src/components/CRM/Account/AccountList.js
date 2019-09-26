@@ -27,28 +27,9 @@ const AccountList = ({ tableData, loading, title, action }) => {
         }
       }
     },
-    {
-      label: "Industry",
-      name: "industryInfo"
-    },
-    {
-      label: "Website",
-      name: "baseContact",
-      options: {
-        customBodyRender: value => {
-          return value ? value.website : "";
-        }
-      }
-    },
-    {
-      label: "Office",
-      name: "baseContact",
-      options: {
-        customBodyRender: value => {
-          return value ? value.phone : "";
-        }
-      }
-    },
+    { label: "Industry", name: "industry" },
+    { label: "Website", name: "website" },
+    { label: "Office", name: "phone" },
     {
       label: "Status",
       name: "isActive",
@@ -69,12 +50,9 @@ const AccountList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Fax",
-      name: "baseContact",
+      name: "fax",
       options: {
-        display: false,
-        customBodyRender: value => {
-          return value ? value.fax : "";
-        }
+        display: false
       }
     }
   ];

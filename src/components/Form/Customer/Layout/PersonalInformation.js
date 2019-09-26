@@ -35,7 +35,7 @@ function PersonalInformation(props) {
         <div className="col-md-11">{address}</div>
       </div>
       <div className="row justify-content-center">
-        <div className="col-md-11 offset-md-1">{description}</div>
+        <div className="col-md-11">{description}</div>
       </div>
     </FormInputLayout>
   );

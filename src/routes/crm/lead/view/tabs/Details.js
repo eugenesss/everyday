@@ -27,13 +27,13 @@ const LeadDetailsTab = props => {
         title={<EditableInput label="Job Title" value={lead.baseContact.title} />}
         interest={<EditableInput label="Lead Interest" value={lead.interest} />}
         mobile={<EditableInput label="Mobile" value={lead.baseContact.mobile} />}
-        source={<EditableInput label="Source" value={lead.sourceInfo && lead.sourceInfo.name} />}
+        source={<EditableInput label="Source" value={lead.sourceInfo} />}
         description={<EditableInput multiline rows={4} label="Description" value={lead.baseContact.info} />}
       />
       <hr />
       <CompanyInformation
         fullWidth
-        industry={<EditableInput label="Industry" value={lead.industryInfo && lead.industryInfo.name} />}
+        industry={<EditableInput label="Industry" value={lead.industryInfo && lead.industryInfo} />}
         website={<EditableInput label="Website" value={lead.baseContact.website} />}
         office={<EditableInput label="Office" value={lead.baseContact.phone} />}
         fax={<EditableInput label="Fax" value={lead.baseContact.fax} />}

@@ -16,7 +16,7 @@ function AccountDetailsTab(props) {
         fullWidth
         name={<EditableInput label="Name" value={acct.baseContact.name} />}
         owner={<EditableInput label="Owner" value={acct.userInfo.name} />}
-        industry={<EditableInput label="Industry" value={acct.industryInfo && acct.industryInfo.name} />}
+        industry={<EditableInput label="Industry" value={acct.industryInfo} />}
       />
       <hr />
       <AccountInformation

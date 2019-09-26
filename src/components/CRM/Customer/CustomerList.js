@@ -40,24 +40,9 @@ const CustomerList = ({ tableData, loading, title, action }) => {
         }
       }
     },
-    {
-      label: "Email",
-      name: "baseContact",
-      options: {
-        customBodyRender: value => {
-          return value.email ? value.email : "";
-        }
-      }
-    },
-    {
-      label: "Mobile",
-      name: "baseContact",
-      options: {
-        customBodyRender: value => {
-          return value.mobile ? value.mobile : "";
-        }
-      }
-    },
+    { label: "Email", name: "email" },
+    { label: "Mobile", name: "mobile" },
+    { label: "Source", name: "source" },
     {
       label: "Status",
       name: "isActive",
@@ -78,22 +63,16 @@ const CustomerList = ({ tableData, loading, title, action }) => {
     },
     {
       label: "Office",
-      name: "baseContact",
+      name: "phone",
       options: {
-        display: false,
-        customBodyRender: value => {
-          return value.phone ? value.phone : "";
-        }
+        display: false
       }
     },
     {
       label: "Fax",
-      name: "baseContact",
+      name: "fax",
       options: {
-        display: false,
-        customBodyRender: value => {
-          return value.fax ? value.fax : "";
-        }
+        display: false
       }
     }
   ];

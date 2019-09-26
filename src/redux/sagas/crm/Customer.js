@@ -21,8 +21,8 @@ import api from "Api";
 // REQUESTS
 //=========================
 const getAllCustomerRequest = async () => {
-  const result = await api.get("/customers");
-  return result.data;
+  const result = await api.get("/customers/getall");
+  return result.data.data;
 };
 const getActiveCustomerRequest = async () => {
   const result = await api.get("/customers");

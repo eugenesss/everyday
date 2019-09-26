@@ -22,8 +22,9 @@ import api from "Api";
 // REQUESTS
 //=========================
 const getAllDealRequest = async () => {
-  const result = await api.get("/deals");
-  return result.data;
+  const result = await api.get("/deals/getall");
+  console.log(result);
+  return result.data.data;
 };
 const getOpenDealRequest = async () => {
   const result = await api.get("/deals");

@@ -5,9 +5,6 @@ import BgCard from "Components/Everyday/BgCard";
 // Comments Widget
 import Comments from "Components/Widgets/Comments";
 
-// upcoming events (temp)
-import ShowUpcoming from "Components/CRM/View/Events/ShowUpcoming";
-
 import { addNoteLead } from "Actions";
 
 function LeadOverviewTab(props) {
@@ -24,9 +21,7 @@ function LeadOverviewTab(props) {
           <Comments comments={lead.notes} addComment={addNote} />
         </div>
         <div className="col-lg-6">
-          <BgCard heading="Upcoming Events">
-            <ShowUpcoming events={lead.events} />
-          </BgCard>
+          <BgCard>follow ups</BgCard>
         </div>
       </div>
     </React.Fragment>

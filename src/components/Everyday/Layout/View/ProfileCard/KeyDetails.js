@@ -13,7 +13,7 @@ function KeyDetails(props) {
         keyDetails.map((detail, key) => (
           <div className="profile-details" key={key}>
             <span>{detail.label}</span>
-            <span>{detail.value}</span>
+            <span className="text-right">{detail.value}</span>
           </div>
         ))}
     </div>

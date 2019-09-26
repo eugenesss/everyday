@@ -22,8 +22,8 @@ import api from "Api";
 // REQUESTS
 //=========================
 const getAllLeadRequest = async () => {
-  const result = await api.get("/leads");
-  return result.data;
+  const result = await api.get("/leads/getall");
+  return result.data.data;
 };
 const getOpenLeadRequest = async () => {
   const result = await api.get("/leads");
@@ -69,7 +69,7 @@ const addNoteLeadRequest = async (id, note) => {
   return result.data;
 };
 const checkAccountRequest = async companyName => {
-  const result = await api.post(`/accounts/accountExist`, {
+  const result = await api.post(`/leads/ifAccountExist`, {
     accountName: companyName
   });
   return result.data;

@@ -28,18 +28,8 @@ function DetailsTab(props) {
       <hr />
       <DealInformation
         fullWidth
-        source={
-          <EditableInput
-            label="Source"
-            value={deal.sourceInfo && deal.sourceInfo.name}
-          />
-        }
-        type={
-          <EditableInput
-            label="Type"
-            value={deal.typeInfo && deal.typeInfo.name}
-          />
-        }
+        source={<EditableInput label="Source" value={deal.sourceInfo} />}
+        type={<EditableInput label="Type" value={deal.typeInfo} />}
         customer={
           <EditableInput
             label="Customer"
