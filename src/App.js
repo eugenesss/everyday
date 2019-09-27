@@ -9,8 +9,18 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
-// css
-import "./lib/reactifyCss";
+
+/**
+ * CSS imports
+ */
+// Use For Full Calender
+import "react-big-calendar/lib/css/react-big-calendar.css";
+// notifications
+import "react-notifications/lib/notifications.css";
+// calendar
+import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
+// Custom Style File
+import "Assets/scss/_style.scss";
 
 // app component
 import App from "./container/App";
