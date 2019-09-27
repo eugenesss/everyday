@@ -1,5 +1,5 @@
 import React from "react";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 
 import { kFormatter } from "Helpers/helpers";
 

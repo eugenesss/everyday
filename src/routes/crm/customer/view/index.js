@@ -5,7 +5,7 @@ import { show } from "redux-modal";
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 //Page Components
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import RctPageLoader from "Components/RctPageLoader";
 import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
 // Layout
 import CustomerCard from "Components/CRM/Customer/CustomerCard";

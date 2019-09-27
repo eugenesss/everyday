@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import RctPageLoader from "Components/RctPageLoader";
 
 
 // app config

@@ -7,7 +7,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // Components
 import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import RctPageLoader from "Components/RctPageLoader";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 import BgCard from "Components/Everyday/BgCard";
 import RecordNotFound from "Components/Everyday/Error/RecordNotFound";

@@ -2,7 +2,7 @@ import React from "react";
 import Loadable from "react-loadable";
 
 // rct page loader
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import RctPageLoader from "Components/RctPageLoader";
 
 // accounting management
 

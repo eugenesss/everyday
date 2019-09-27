@@ -10,25 +10,25 @@ import IntlMessages from "Util/IntlMessages";
 // Page Components
 import BgCard from "Components/Everyday/BgCard";
 import DealForm from "Components/Form/Deal/DealForm";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import RctPageLoader from "Components/RctPageLoader";
 import QuotationForm from "Components/Form/Quotation/QuotationForm";
 
 import InvoiceFields from "Components/Form/Components/Inputs/Accounting/InvoiceFields";
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
 import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/InvoiceProductInput";
-import Button from '@material-ui/core/Button';
-
-
+import Button from "@material-ui/core/Button";
 
 // Actions
-import { getSingleQuotation, clearSingleQuotation, submitNewQuote } from "Actions";
+import {
+  getSingleQuotation,
+  clearSingleQuotation,
+  submitNewQuote
+} from "Actions";
 
 class acct_edit_quotation extends Component {
-
-
   componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleQuotation(id, true);
@@ -42,33 +42,30 @@ class acct_edit_quotation extends Component {
   //   this.props.submitNewQuote(element, item)
   // }
 
-  _quotationParent = (item) =>{
-    this.props.submitNewQuote(item)
-  }
-
+  _quotationParent = item => {
+    this.props.submitNewQuote(item);
+  };
 
   render() {
-    const {currencyTable, taxTable, discountTable} = this.props.quotationList
+    const { currencyTable, taxTable, discountTable } = this.props.quotationList;
 
-    const {loading, quotation} = this.props.quotationToView;
+    const { loading, quotation } = this.props.quotationToView;
 
     return loading ? (
       <RctPageLoader />
     ) : quotation ? (
       <React.Fragment>
-
         <Helmet>
           <title>Everyday | New Quotation</title>
           <meta name="description" content="Everyday Quotation Creation" />
         </Helmet>
-        
-        <QuotationForm 
-          title="sidebar.newQuotation" 
+
+        <QuotationForm
+          title="sidebar.newQuotation"
           handleSubmit={this._quotationParent}
           edit={true}
           quotationData={quotation}
         />
-
       </React.Fragment>
     ) : (
       <PageErrorMessage
@@ -89,7 +86,6 @@ class acct_edit_quotation extends Component {
 //   { submitEditDeal }
 // )(acct_edit_quotation);
 
-
 const mapStateToProps = ({ accountingState, crmState, usersState }) => {
   const { quotationState } = accountingState;
   const { quotationToView, quotationList, quotationForm } = quotationState;
@@ -101,6 +97,5 @@ const mapStateToProps = ({ accountingState, crmState, usersState }) => {
 
 export default connect(
   mapStateToProps,
-  { getSingleQuotation, clearSingleQuotation ,submitNewQuote}
+  { getSingleQuotation, clearSingleQuotation, submitNewQuote }
 )(acct_edit_quotation);
-

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 
 // Form Layout
 import FormWrapper from "Components/Form/Components/Layout/FormWrapper";

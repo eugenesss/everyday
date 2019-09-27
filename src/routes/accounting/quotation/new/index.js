@@ -9,7 +9,7 @@ import IntlMessages from "Util/IntlMessages";
 
 // Page Components
 import BgCard from "Components/Everyday/BgCard";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 import QuotationForm from "Components/Form/Quotation/QuotationForm";
 
 // Actions

@@ -10,7 +10,7 @@ import {
   Checkbox
 } from "@material-ui/core";
 import FullScreenDialog from "Components/Dialog/FullScreenDialog";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 

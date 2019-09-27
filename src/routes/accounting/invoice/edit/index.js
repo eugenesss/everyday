@@ -10,30 +10,28 @@ import IntlMessages from "Util/IntlMessages";
 // Page Components
 import BgCard from "Components/Everyday/BgCard";
 import DealForm from "Components/Form/Deal/DealForm";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import RctPageLoader from "Components/RctPageLoader";
 
 import InvoiceFields from "Components/Form/Components/Inputs/Accounting/InvoiceFields";
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
 import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/InvoiceProductInput";
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
 
 import InvoiceForm from "Components/Form/Invoice/InvoiceForm";
 
-
 // Actions
-import { 
-  getSingleQuotation, 
-  clearSingleQuotation, 
-  deleteSingleQuote, 
-  addNewProdQuote, 
-  removeProdQuote, 
-  handleProdQuote, 
-  handleChangeQuote, 
+import {
+  getSingleQuotation,
+  clearSingleQuotation,
+  deleteSingleQuote,
+  addNewProdQuote,
+  removeProdQuote,
+  handleProdQuote,
+  handleChangeQuote,
   submitNewQuote,
-
   submitInvoice,
   getSingleInvoice
 } from "Actions";
@@ -44,8 +42,6 @@ import {
 // Delete Quotation, Edit Quotation, Transfer Quotation
 
 class acct_edit_quotation extends Component {
-
-
   UNSAFE_componentWillMount() {
     var id = this.props.match.params.id;
     this.props.getSingleInvoice(id);
@@ -55,34 +51,30 @@ class acct_edit_quotation extends Component {
     this.props.clearSingleQuotation();
   }
 
-  _quotationParent = (item) =>{
-    this.props.submitInvoice(item)
-  }
+  _quotationParent = item => {
+    this.props.submitInvoice(item);
+  };
 
   render() {
-
     // const {currencyTable, taxTable, discountTable} = this.props.quotationList
-    // const {products, quotation} = this.props.quotationForm 
-    const { loading, invoice } = this.props.invoiceToView
-
+    // const {products, quotation} = this.props.quotationForm
+    const { loading, invoice } = this.props.invoiceToView;
 
     return loading ? (
       <RctPageLoader />
     ) : invoice ? (
-      
       <React.Fragment>
         <Helmet>
-            <title>Everyday | New Invoice</title>
-            <meta name="description" content="Everyday Invoices Creation" />
+          <title>Everyday | New Invoice</title>
+          <meta name="description" content="Everyday Invoices Creation" />
         </Helmet>
-        <InvoiceForm 
+        <InvoiceForm
           title="sidebar.newQuotation"
           handleSubmit={this._quotationParent}
           edit={true}
           invoiceData={invoice}
         />
       </React.Fragment>
-      
     ) : (
       <PageErrorMessage
         heading="Not Found"
@@ -102,24 +94,32 @@ class acct_edit_quotation extends Component {
 //   { submitEditDeal }
 // )(acct_edit_quotation);
 
-
 const mapStateToProps = ({ accountingState }) => {
   const { invoiceState } = accountingState;
-  const { invoiceToView , invoiceList} = invoiceState;
-  return { invoiceToView , invoiceList};
+  const { invoiceToView, invoiceList } = invoiceState;
+  return { invoiceToView, invoiceList };
 };
 
 // deleted
 
 export default connect(
   mapStateToProps,
-  { getSingleInvoice, submitInvoice, getSingleQuotation, clearSingleQuotation, deleteSingleQuote, addNewProdQuote, removeProdQuote, handleProdQuote, handleChangeQuote, submitNewQuote }
+  {
+    getSingleInvoice,
+    submitInvoice,
+    getSingleQuotation,
+    clearSingleQuotation,
+    deleteSingleQuote,
+    addNewProdQuote,
+    removeProdQuote,
+    handleProdQuote,
+    handleChangeQuote,
+    submitNewQuote
+  }
 )(acct_edit_quotation);
 
-
-
 // const mapStateToProps = ({ accountingState, crmState, usersState }) => {
-//   const {tableData, } = crmState.accountState.accountList 
+//   const {tableData, } = crmState.accountState.accountList
 //   const { quotationState,} = accountingState;
 //   const { quotationForm, quotationList, quotationToView } = quotationState;
 //   const { users } = usersState;

@@ -6,7 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import { PersonAdd, Edit } from "@material-ui/icons";
 
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 
 const UsersList = ({ tableData, loading, action }) => {
   const columns = [

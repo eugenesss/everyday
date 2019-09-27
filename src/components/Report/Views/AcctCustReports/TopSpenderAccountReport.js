@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import ReportContainer from "Components/Report/Components/ReportContainer";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 // Charts
 import TopSpenderAccountChart from "Components/Charts/TopSpenderAccountChart";
 // Actions

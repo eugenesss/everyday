@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import BgCard from "Components/Everyday/BgCard";
 import { Table } from "reactstrap";
 import Button from "@material-ui/core/Button";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 
 import Dropzone from "Components/Dropzone";
 

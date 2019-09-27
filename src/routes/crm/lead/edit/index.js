@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 // Page Components
 import { Helmet } from "react-helmet";
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import RctPageLoader from "Components/RctPageLoader";
 import LeadForm from "Components/Form/Lead/LeadForm";
 
 // Actions

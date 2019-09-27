@@ -9,7 +9,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { Refresh } from "@material-ui/icons";
 
 import { singleLead } from "Helpers/url/crm";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 
 import moment from "moment";

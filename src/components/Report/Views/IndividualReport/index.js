@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import ReportContainer from "Components/Report/Components/ReportContainer";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 import NumberFormat from "react-number-format";
 
 // User Selction

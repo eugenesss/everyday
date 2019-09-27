@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 
 // Page Components
 import DealForm from "Components/Form/Deal/DealForm";
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import RctPageLoader from "Components/RctPageLoader";
 
 // Actions
 import { editDeal, getSingleDeal } from "Actions";

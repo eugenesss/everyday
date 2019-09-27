@@ -6,7 +6,7 @@ import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import UpdatePasswordForm from "Components/Form/Setting/General/UpdatePasswordForm";
 import UpdateUserDetailsForm from "Components/Form/Setting/General/UpdateUserDetailsForm";
 
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 
 import { Person, SupervisedUserCircle } from "@material-ui/icons";
 

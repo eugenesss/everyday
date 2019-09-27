@@ -6,7 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import BgCard from "Components/Everyday/BgCard";
 
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 
 const CreditNoteList = ({ tableData, loading, title, action }) => {
   const columns = [

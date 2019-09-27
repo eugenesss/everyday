@@ -4,7 +4,7 @@ import { Col, Row } from "reactstrap";
 
 import AccessControl from "Components/AccessControl";
 import NoAccessComponent from "Components/AccessControl/NoAccessComponent";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 
 import GroupsManager from "Components/Setting/UserControl/Groups/GroupsManager";
 import GroupsList from "Components/Setting/UserControl/Groups/GroupsList";

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 //Components Req
 import Button from "@material-ui/core/Button";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 import DealStageStepper from "./Components/DealStageStepper";
 import BgCard from "Components/Everyday/BgCard";
 

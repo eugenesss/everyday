@@ -13,7 +13,7 @@ import RegisterForm from "./Forms/UserRegisterForm";
 import SelectPlanForm from "./Forms/SelectPlanForm";
 import PaymentDetailForm from "./Forms/PaymentDetailForm";
 
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import RctPageLoader from "Components/RctPageLoader";
 
 // Actions
 import {

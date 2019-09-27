@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import FormInput from "Components/Form/Components/FormInput";
 import { Button } from "@material-ui/core";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 
 import { updateCurrentUser } from "Actions";
 

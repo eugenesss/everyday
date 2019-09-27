@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import RecordsList from "Components/Everyday/RecordsList";
 import { listOptions } from "Helpers/helpers";
 import { singleAccount } from "Helpers/url/crm";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 
 import ActiveStatusBadge from "Components/Everyday/StatusBadge/ActiveStatusBadge";
 

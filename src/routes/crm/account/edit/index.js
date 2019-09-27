@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 
 // Page Components
 import AccountForm from "Components/Form/Account/AccountForm";
-import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
+import RctPageLoader from "Components/RctPageLoader";
 
 // Actions
 import { editAccount, getSingleAccount } from "Actions";

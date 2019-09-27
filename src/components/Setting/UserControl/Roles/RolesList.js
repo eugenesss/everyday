@@ -6,7 +6,7 @@ import { Button, Divider } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 
 import HierachyView from "./Components/HierachyView";
-import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
+import RctSectionLoader from "Components/RctSectionLoader";
 
 class RolesList extends PureComponent {
   render() {
