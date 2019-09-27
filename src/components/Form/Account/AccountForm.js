@@ -16,7 +16,7 @@ import FormInput from "Components/Form/Components/FormInput";
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
 
 // Actions
-import { getAccountFormFields } from "Actions";
+import { getAccountFormFields } from "Ducks/crm/account";
 
 const initialState = {
   account: {

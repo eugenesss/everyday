@@ -12,12 +12,13 @@ import PaymentState from "./accounting/PaymentReducer";
 import AccountingReducer from "./accounting/AccountingReducer";
 
 // crm
-import LeadReducer from "./crm/LeadReducer";
-import CustomerReducer from "./crm/CustomerReducer";
-import AccountReducer from "./crm/AccountReducer";
-import DealReducer from "./crm/DealReducer";
-import CrmFieldReducer from "./crm/CrmFieldReducer";
-import SalesTeamReducer from "./crm/SalesTeamReducer";
+import {
+  LeadReducer,
+  CustomerReducer,
+  AccountReducer,
+  DealReducer,
+  CrmFieldReducer
+} from "Ducks/crm";
 
 //settings
 import usersReducer from "./settings/userControl/UsersReducer";
@@ -27,25 +28,18 @@ import rolesReducer from "./settings/userControl/RolesReducer";
 
 // system
 import authUserReducer from "./system/AuthUserReducer";
-import reportReducer from "./system/ReportReducer";
-import calendarReducer from "./calendar/CalendarReducer";
-import WidgetReducer from "./system/WidgetReducer";
-
-// upload file
-import uploadFileReducer from "./upload/uploadFileReducer";
-import ImportReducer from "./system/ImportReducer";
+import { ReportReducer } from "Ducks/report";
+import { CalendarReducer } from "Ducks/calendar";
+import { WidgetReducer } from "Ducks/widget";
 
 const reducers = combineReducers({
   authUser: authUserReducer,
-  uploadFile: uploadFileReducer,
-  importRecord: ImportReducer,
   crmState: combineReducers({
     leadState: LeadReducer,
     customerState: CustomerReducer,
     accountState: AccountReducer,
     dealState: DealReducer,
-    crmField: CrmFieldReducer,
-    salesTeamState: SalesTeamReducer
+    crmField: CrmFieldReducer
   }),
   accountingState: combineReducers({
     quotationState: QuotationReducer,
@@ -55,8 +49,8 @@ const reducers = combineReducers({
     accountState: AccountingReducer
   }),
   widgetState: WidgetReducer,
-  reportState: reportReducer,
-  calendarState: calendarReducer,
+  reportState: ReportReducer,
+  calendarState: CalendarReducer,
   usersState: usersReducer,
   rolesState: rolesReducer,
   groupsState: groupsReducer,

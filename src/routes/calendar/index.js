@@ -17,7 +17,7 @@ import EventInfo from "Components/Calendar/EventInfo";
 // Calendar form
 import NewEventForm from "Components/Form/Calendar/NewEventForm";
 
-import { getAllEvents, addEvent } from "Actions";
+import { getAllEvents, addEvent } from "Ducks/calendar";
 import Popover from "@material-ui/core/Popover";
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));

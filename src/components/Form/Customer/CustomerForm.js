@@ -12,7 +12,7 @@ import FormInput from "Components/Form/Components/FormInput";
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
 
 // Actions
-import { getCustomerFormFields } from "Actions";
+import { getCustomerFormFields } from "Ducks/crm/customer";
 
 const initialState = {
   customer: {

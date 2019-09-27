@@ -9,7 +9,7 @@ import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
-import { changeCustomerView, getAllCustomer } from "Actions";
+import { changeCustomerView, getAllCustomer } from "Ducks/crm/customer";
 import { customerNewPage } from "Helpers/url/crm";
 
 class crm_customer extends Component {

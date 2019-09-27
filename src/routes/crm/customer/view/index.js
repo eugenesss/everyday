@@ -30,7 +30,7 @@ import {
   addNoteCustomer,
   setCustomerActive,
   transferCustomer
-} from "Actions";
+} from "Ducks/crm/customer";
 // Add events dialog
 
 class crm_view_customer extends Component {

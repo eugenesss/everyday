@@ -14,9 +14,9 @@ import {
   onClickStep,
   setCurrentStep,
   onChangeStepState,
-  submitNewStage,
-  getDealStage
-} from "Actions";
+  submitNewStage
+} from "Ducks/crm/deal";
+import { getDealStage } from "Ducks/crm/crmField";
 
 class SelectDealStage extends Component {
   componentDidMount() {

@@ -14,7 +14,7 @@ import {
   changeAccountView,
   toggleAccountDropDown,
   getAllAccount
-} from "Actions";
+} from "Ducks/crm/account";
 
 class crm_account extends Component {
   constructor(props) {

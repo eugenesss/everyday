@@ -13,7 +13,7 @@ import CompanyPicker from "Components/Form/Components/Pickers/CompanyPicker";
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
 
 // Actions
-import { getLeadFormFields } from "Actions";
+import { getLeadFormFields } from "Ducks/crm/lead";
 
 const initialState = {
   lead: {

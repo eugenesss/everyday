@@ -9,7 +9,7 @@ import DealForm from "Components/Form/Deal/DealForm";
 import RctPageLoader from "Components/RctPageLoader";
 
 // Actions
-import { editDeal, getSingleDeal } from "Actions";
+import { editDeal, getSingleDeal } from "Ducks/crm/deal";
 
 class crm_edit_deal extends Component {
   componentDidMount() {

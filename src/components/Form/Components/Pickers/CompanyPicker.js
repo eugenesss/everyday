@@ -15,7 +15,7 @@ import {
   MenuItem
 } from "@material-ui/core";
 
-import { getAllAccount } from "Actions";
+import { getAllAccount } from "Ducks/crm/account";
 
 function renderInput(inputProps) {
   const { value, classes, ref, ...other } = inputProps;

@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet";
 import DealForm from "Components/Form/Deal/DealForm";
 
 // Actions
-import { newDeal } from "Actions";
+import { newDeal } from "Ducks/crm/deal";
 
 const crm_new_deal = props => (
   <React.Fragment>

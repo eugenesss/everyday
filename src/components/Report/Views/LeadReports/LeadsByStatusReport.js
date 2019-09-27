@@ -5,7 +5,7 @@ import RctSectionLoader from "Components/RctSectionLoader";
 // Charts
 import LeadsByStatusChart from "Components/Charts/LeadsByStatusChart";
 // Action
-import { getLeadsByStatus } from "Actions";
+import { getLeadsByStatus } from "Ducks/report";
 
 function LeadsByStatusReport(props) {
   const { loading, data } = props.leadsByStatus;

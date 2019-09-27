@@ -14,7 +14,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // Actions
-import { changeDealView, getAllDeal, getDealSummary } from "Actions";
+import { changeDealView, getAllDeal, getDealSummary } from "Ducks/crm/deal";
 import { dealNewPage } from "Helpers/url/crm";
 
 class crm_deal extends Component {

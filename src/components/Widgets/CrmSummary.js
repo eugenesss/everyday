@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import DataBlock from "./DataBlock";
 // actions
-import { getCrmSummary } from "Actions";
+import { getCrmSummary } from "Ducks/widget";
 
 class CrmSummary extends Component {
   componentDidMount() {

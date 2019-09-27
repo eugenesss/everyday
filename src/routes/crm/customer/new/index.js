@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet";
 import CustomerForm from "Components/Form/Customer/CustomerForm";
 
 // Action
-import { newCustomer } from "Actions";
+import { newCustomer } from "Ducks/crm/customer";
 
 const crm_new_customer = props => (
   <React.Fragment>

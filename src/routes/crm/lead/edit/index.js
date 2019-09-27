@@ -6,7 +6,7 @@ import RctPageLoader from "Components/RctPageLoader";
 import LeadForm from "Components/Form/Lead/LeadForm";
 
 // Actions
-import { editLead, getSingleLead } from "Actions";
+import { editLead, getSingleLead } from "Ducks/crm/lead";
 
 class crm_edit_lead extends Component {
   componentDidMount() {

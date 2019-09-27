@@ -23,7 +23,7 @@ import {
   addNoteDeal,
   deleteDeal,
   transferDeal
-} from "Actions";
+} from "Ducks/crm/deal";
 //  Update Stage/Amount,
 
 class crm_view_deal extends Component {

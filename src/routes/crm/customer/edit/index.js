@@ -9,7 +9,7 @@ import RctPageLoader from "Components/RctPageLoader";
 import CustomerForm from "Components/Form/Customer/CustomerForm";
 
 // Actions
-import { editCustomer, getSingleCustomer } from "Actions";
+import { editCustomer, getSingleCustomer } from "Ducks/crm/customer";
 
 class crm_edit_customer extends Component {
   componentDidMount() {

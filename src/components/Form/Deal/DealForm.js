@@ -13,7 +13,7 @@ import AmountInput from "Components/Form/Components/Inputs/AmountInput";
 import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
 
 // Actions
-import { getDealFormFields } from "Actions";
+import { getDealFormFields } from "Ducks/crm/deal";
 
 const initialState = {
   deal: {

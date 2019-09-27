@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import ViewEventInfo from "./View/ViewEventInfo";
 import EditableEventInfo from "./View/EditableEventInfo";
 
-import { updateEvent, deleteEvent } from "Actions";
+import { updateEvent, deleteEvent } from "Ducks/calendar";
 
 class EventInfoDialog extends Component {
   constructor(props) {

@@ -13,7 +13,7 @@ import RctSectionLoader from "Components/RctSectionLoader";
 import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 
 import moment from "moment";
-import { getUntouchedLeads } from "Actions";
+import { getUntouchedLeads } from "Ducks/widget";
 
 const columns = [
   {

@@ -17,7 +17,7 @@ import { Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 // Actions
-import { handleSuccessConvertModal } from "Actions";
+import { handleSuccessConvertModal } from "Ducks/crm/lead";
 
 const useStyles = makeStyles({
   avatar: {

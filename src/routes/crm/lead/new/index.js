@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet";
 import LeadForm from "Components/Form/Lead/LeadForm";
 
 // Actions
-import { newLead } from "Actions";
+import { newLead } from "Ducks/crm/lead";
 
 const crm_new_lead = props => (
   <React.Fragment>

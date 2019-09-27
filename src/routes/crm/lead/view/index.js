@@ -28,7 +28,7 @@ import {
   addNoteLead,
   checkAccountExist,
   transferLead
-} from "Actions";
+} from "Ducks/crm/lead";
 
 class crm_view_lead extends Component {
   constructor(props) {

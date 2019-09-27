@@ -17,49 +17,15 @@ import {
   DELETE_ROLE,
   DELETE_ROLE_SUCCESS,
   DELETE_ROLE_FAILURE,
-  GET_ROLE_FAILURE,
-  CHANGE_SELECTED_ROLE,
-  CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY,
-  CHANGE_SELECTED_GROUP_ROLE,
-  CHANGE_REMOVE_GROUP_ROLE,
-  CHANGE_ADD_GROUP_ROLE
+  GET_ROLE_FAILURE
 } from "Types";
 
 const INIT_STATE = {
   allRoles: null,
   loading: false
-
-  // selectedRole: {},
-  // selectedAccessRightsCategory: null, // State to control expansion panel in Roles & Permissions Settings
-  // accessRights: [], // All Rights
-  // roleRights: [], // Rights belonging to corresponding roles
-  // selectedRoleRights: [], // Access rights belonging to selected role
-  // selectedRoleGroups: [], // Roles belonging to selected group (GroupsManager.js)
-  // unselectedRoleGroups: [] // Roles not belonging to selected group (GroupsManager.js)
 };
 
 export default (state = INIT_STATE, action) => {
-  // function updateAccessRoleState(role) {
-  //   var roles = Object.assign([], state.accessRoles).map(rol =>
-  //     rol.id == role.id ? (rol = role) : rol
-  //   );
-  //   return roles;
-  // }
-  // function groupBy(list, keyGetter) {
-  //   // to group array into nested objects base on selected attributes
-  //   const map = new Map();
-  //   list.forEach(item => {
-  //     const key = keyGetter(item);
-  //     const collection = map.get(key);
-  //     if (!collection) {
-  //       map.set(key, [item]);
-  //     } else {
-  //       collection.push(item);
-  //     }
-  //   });
-  //   return map;
-  // }
-
   switch (action.type) {
     /**
      * Get All Roles
@@ -70,16 +36,6 @@ export default (state = INIT_STATE, action) => {
         loading: true
       };
     case GET_ALL_ROLES_SUCCESS:
-      // let accessRights = action.payload.accessRights;
-      // let accessRightsCategory = [
-      //   ...groupBy(accessRights, right => right.categoryName).values()
-      // ];
-      // let accessRightsModel = [];
-      // for (let i = 0; i < accessRightsCategory.length; i++) {
-      //   accessRightsModel.push([
-      //     ...groupBy(accessRightsCategory[i], right => right.model).values()
-      //   ]);
-      // }
       return {
         ...state,
         loading: false,
@@ -177,95 +133,6 @@ export default (state = INIT_STATE, action) => {
     case GET_ROLE_FAILURE:
       NotificationManager.warning("Error in fetching Role Data");
       return INIT_STATE;
-
-    /**
-     * State Changes
-     */
-    // case CHANGE_SELECTED_ROLE: // Change selected role in Role List (RolesList.js)
-    //   let selectedRole = action.payload;
-    //   let selectedRights =
-    //     selectedRole.rights !== undefined ? [...selectedRole.rights] : [];
-    //   //selectedRole.id = action.payload.id
-
-    //   return {
-    //     ...state,
-    //     selectedRole: selectedRole,
-    //     selectedRoleRights: selectedRights
-    //   };
-    // case CHANGE_SELECTED_ACCESS_RIGHTS_CATEGORY: // Change selected category to control expansion panel in Role Manager (RolesManager.js)
-    //   let selectedAccessRightsCategory = action.payload;
-    //   if (action.payload == state.selectedAccessRightsCategory)
-    //     selectedAccessRightsCategory = null;
-    //   return {
-    //     ...state,
-    //     selectedAccessRightsCategory: selectedAccessRightsCategory
-    //   };
-    // case CHANGE_SELECTED_GROUP_ROLE: // Change list of roles assigned and not assign to group in Groups List (GroupsList.js)
-    //   var selectedGroupRoles = Object.assign([], action.payload);
-    //   var allRoles = Object.assign([], state.accessRoles);
-    //   var selectedRoles = allRoles.filter(role => {
-    //     return (
-    //       selectedGroupRoles.findIndex(groupRole => {
-    //         return groupRole.roleId == role.id;
-    //       }) >= 0
-    //     );
-    //   });
-    //   var unselectedRoles = allRoles.filter(role => {
-    //     return (
-    //       selectedGroupRoles.findIndex(groupRole => {
-    //         return groupRole.roleId == role.id;
-    //       }) < 0
-    //     );
-    //   });
-    //   var removedRoleName = "";
-    //   var addedRoleName = "";
-    //   return {
-    //     ...state,
-    //     removedRoleName: removedRoleName,
-    //     addedRoleName: addedRoleName,
-    //     selectedRoleGroups: selectedRoles,
-    //     unselectedRoleGroups: unselectedRoles
-    //   };
-    // case CHANGE_REMOVE_GROUP_ROLE:
-    //   var selectedRoles = state.selectedRoleGroups;
-    //   var unselectedRoles = state.unselectedRoleGroups;
-    //   var removedRole = action.payload;
-    //   var newSelected = selectedRoles.filter(role => {
-    //     return role.id != removedRole;
-    //   });
-    //   var addRole = selectedRoles.find(role => {
-    //     return role.id == removedRole;
-    //   });
-    //   var newUnselected = [...unselectedRoles, addRole];
-    //   var removedRoleName = "";
-    //   var addedRoleName = action.payload;
-    //   return {
-    //     ...state,
-    //     removedRoleName: removedRoleName,
-    //     addedRoleName: addedRoleName,
-    //     selectedRoleGroups: newSelected,
-    //     unselectedRoleGroups: newUnselected
-    //   };
-    // case CHANGE_ADD_GROUP_ROLE:
-    //   var selectedRoles = state.selectedRoleGroups;
-    //   var unselectedRoles = state.unselectedRoleGroups;
-    //   var removedRole = action.payload;
-    //   var newUnselected = unselectedRoles.filter(role => {
-    //     return role.id != removedRole;
-    //   });
-    //   var addRole = unselectedRoles.find(role => {
-    //     return role.id == removedRole;
-    //   });
-    //   var newSelected = [...selectedRoles, addRole];
-    //   var addedRoleName = "";
-    //   var removedRoleName = action.payload;
-    //   return {
-    //     ...state,
-    //     removedRoleName: removedRoleName,
-    //     addedRoleName: addedRoleName,
-    //     selectedRoleGroups: newSelected,
-    //     unselectedRoleGroups: newUnselected
-    //   };
 
     default:
       return { ...state };

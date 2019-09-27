@@ -21,7 +21,8 @@ import AccountSelection from "./Components/AccountSelection";
 import ConvertLeadForm from "Components/Form/Lead/ConvertLeadForm";
 
 // Actions
-import { convertLead, handleConvertModal, getDealStage } from "Actions";
+import { convertLead, handleConvertModal } from "Ducks/crm/lead";
+import { getDealStage } from "Ducks/crm/crmField";
 
 class ConvertLeadModal extends Component {
   constructor(props) {

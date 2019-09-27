@@ -31,7 +31,7 @@ import {
   setAccountActive,
   deleteAccount,
   transferAccount
-} from "Actions";
+} from "Ducks/crm/account";
 // Add events dialog
 
 class crm_view_account extends Component {

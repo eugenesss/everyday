@@ -9,7 +9,7 @@ import AccountForm from "Components/Form/Account/AccountForm";
 import RctPageLoader from "Components/RctPageLoader";
 
 // Actions
-import { editAccount, getSingleAccount } from "Actions";
+import { editAccount, getSingleAccount } from "Ducks/crm/account";
 
 class crm_new_account extends Component {
   componentDidMount() {

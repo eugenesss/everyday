@@ -11,7 +11,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // import ListSummary from "Components/Everyday/ListSummary/ListSummary";
 // import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 // Actions
-import { changeLeadView, getAllLead, getLeadSummary } from "Actions";
+import { changeLeadView, getAllLead, getLeadSummary } from "Ducks/crm/lead";
 import { leadNewPage, leadImportPage } from "Helpers/url/crm";
 
 class crm_lead extends Component {
