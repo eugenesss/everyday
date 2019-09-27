@@ -20,10 +20,7 @@ import {
 } from "Ducks/crm";
 
 // settings
-import userSagas from "./settings/userControl/Users";
-import companySagas from "./settings/general/Company";
-import roleSagas from "./settings/userControl/Roles";
-import groupSagas from "./settings/userControl/Groups";
+import { UserManagementSaga, RolesSaga } from "Ducks/setting";
 
 // calendar
 import { CalendarSaga } from "Ducks/calendar";
@@ -65,9 +62,7 @@ export default function* rootSaga(getState) {
     CalendarSaga(),
 
     // Settings
-    roleSagas(),
-    groupSagas(),
-    userSagas(),
-    companySagas()
+    RolesSaga(),
+    UserManagementSaga()
   ]);
 }

@@ -17,7 +17,7 @@ import {
   UPDATE_USER_RIGHTS,
   UPDATE_USER_RIGHTS_SUCCESS,
   GET_USER_FAILURE
-} from "Types";
+} from "./UserManagementTypes";
 
 /**
  * GET All Users

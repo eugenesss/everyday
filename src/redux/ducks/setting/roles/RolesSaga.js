@@ -1,5 +1,10 @@
 import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
-import { GET_ALL_ROLES, ADD_ROLE, UPDATE_ROLE, DELETE_ROLE } from "Types";
+import {
+  GET_ALL_ROLES,
+  ADD_ROLE,
+  UPDATE_ROLE,
+  DELETE_ROLE
+} from "./RolesTypes";
 import {
   getAllRolesSuccess,
   getAllRolesFailure,
@@ -9,7 +14,7 @@ import {
   updateRoleFailure,
   deleteRoleSuccess,
   deleteRoleFailure
-} from "Actions";
+} from "./RolesActions";
 // import api from "Api";
 import api from "Api";
 

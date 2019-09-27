@@ -7,7 +7,7 @@ import AddUserDialog from "Components/Setting/UserControl/Users/AddUserDialog";
 // import UserControlDialog from "Components/Setting/UserControl/Users/UserControlDialog";
 
 // Actions
-import { getAllUsers } from "Actions";
+import { getAllUsers } from "Ducks/setting/userManagement";
 
 class UsersLayout extends Component {
   constructor(props) {

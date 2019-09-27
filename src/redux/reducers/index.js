@@ -21,10 +21,7 @@ import {
 } from "Ducks/crm";
 
 //settings
-import usersReducer from "./settings/userControl/UsersReducer";
-import companyReducer from "./settings/general/CompanyReducer";
-import groupsReducer from "./settings/userControl/GroupsReducer";
-import rolesReducer from "./settings/userControl/RolesReducer";
+import { UserManagementReducer, RolesReducer } from "Ducks/setting";
 
 // system
 import authUserReducer from "./system/AuthUserReducer";
@@ -51,10 +48,10 @@ const reducers = combineReducers({
   widgetState: WidgetReducer,
   reportState: ReportReducer,
   calendarState: CalendarReducer,
-  usersState: usersReducer,
-  rolesState: rolesReducer,
-  groupsState: groupsReducer,
-  companyState: companyReducer,
+  usersState: UserManagementReducer,
+  rolesState: RolesReducer,
+  // groupsState: groupsReducer,
+  // companyState: CompanySettingsReducer,
   modal
 });
 

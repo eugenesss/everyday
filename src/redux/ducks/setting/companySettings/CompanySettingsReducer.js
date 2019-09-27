@@ -2,41 +2,39 @@
  * Company Reducers
  */
 import { NotificationManager } from "react-notifications";
-import { 
+import {
   GET_COMPANY,
   GET_COMPANY_SUCCESS,
   GET_COMPANY_FAILURE,
-
   ON_CHANGE_UPDATE_COMPANY,
   UPDATE_COMPANY,
   UPDATE_COMPANY_SUCCESS,
-  UPDATE_COMPANY_FAILURE,
- } from "Types";
+  UPDATE_COMPANY_FAILURE
+} from "./CompanySettingsTypes";
 
 const INIT_STATE = {
   company: {},
   companyLoading: false,
-  companyUpdate: null,
+  companyUpdate: null
 };
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-
     /**
      * GET Company
      */
     case GET_COMPANY:
-      return { 
+      return {
         ...state,
-        companyLoading: true,
-       };
+        companyLoading: true
+      };
     case GET_COMPANY_SUCCESS:
       return {
         ...state,
         companyLoading: false,
         company: action.payload,
-        companyUpdate: action.payload,
-      }
+        companyUpdate: action.payload
+      };
     case GET_COMPANY_FAILURE:
       NotificationManager.warning("Error in fetching Company Data");
       return INIT_STATE;
@@ -49,28 +47,28 @@ export default (state = INIT_STATE, action) => {
         ...state,
         companyUpdate: {
           ...state.companyUpdate,
-          [action.payload.field] : action.payload.value
+          [action.payload.field]: action.payload.value
         }
-      }
+      };
     case UPDATE_COMPANY:
       return {
         ...state,
         companyLoading: true
-      }
+      };
     case UPDATE_COMPANY_SUCCESS:
-      NotificationManager.success("Company Updated")
+      NotificationManager.success("Company Updated");
       return {
         ...state,
         companyLoading: false,
         company: action.payload,
         companyUpdate: action.payload
-      }
+      };
     case UPDATE_COMPANY_FAILURE:
-      NotificationManager.error("Failed to Update Company")
+      NotificationManager.error("Failed to Update Company");
       return {
         ...state,
-        companyLoading: false,
-      }
+        companyLoading: false
+      };
 
     default:
       return { ...state };

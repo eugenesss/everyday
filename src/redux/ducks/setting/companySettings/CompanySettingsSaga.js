@@ -1,11 +1,11 @@
 import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
-import { GET_COMPANY, UPDATE_COMPANY } from "Types";
+import { GET_COMPANY, UPDATE_COMPANY } from "./CompanySettingsTypes";
 import {
   getCompanySuccess,
   getCompanyFailure,
   updateCompanySuccess,
   updateCompanyFailure
-} from "Actions";
+} from "./CompanySettingsActions";
 //import api from "Api";
 const company1 = {
   name: "Fish LLC",

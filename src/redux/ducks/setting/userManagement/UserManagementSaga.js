@@ -5,7 +5,7 @@ import {
   UPDATE_USER,
   GET_USER_PROFILE,
   UPDATE_USER_RIGHTS
-} from "Types";
+} from "./UserManagementTypes";
 import {
   getAllUsersSuccess,
   addUserSuccess,
@@ -15,7 +15,7 @@ import {
   getUserProfileSuccess,
   getUserFailure,
   updateUserRightsSuccess
-} from "Actions";
+} from "./UserManagementActions";
 import api from "Api";
 
 //=========================

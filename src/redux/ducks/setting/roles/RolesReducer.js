@@ -18,7 +18,7 @@ import {
   DELETE_ROLE_SUCCESS,
   DELETE_ROLE_FAILURE,
   GET_ROLE_FAILURE
-} from "Types";
+} from "./RolesTypes";
 
 const INIT_STATE = {
   allRoles: null,
