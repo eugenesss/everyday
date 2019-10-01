@@ -89,6 +89,18 @@ const BalancePayment = ({ tableData, loading, title, onCheckList, onBalancePayme
         },
       },
     },
+
+    
+    {
+      label: "Type",
+      name: "type",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+          return value
+        }
+      }
+    },
+    
     {
       label: "Date",
       name: "dated",

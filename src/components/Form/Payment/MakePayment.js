@@ -13,6 +13,8 @@ const paymentDifferenceOptions =  [{name:'Keep Open', value: false}, {name:'Full
 import AmountInput from "Components/Form/Components/Inputs/AmountInput";
 import FormInput from "Components/Form/Components/FormInput";
 import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
+import AppConfig from 'Constants/AppConfig'
+import Checkbox from '@material-ui/core/Checkbox';
 
 
 export default class MakePayment extends Component {
@@ -25,6 +27,7 @@ export default class MakePayment extends Component {
             customerName: this.props.invoice.accountId.name,
             invoiceId: this.props.invoice.id,
             invoiceQuote: this.props.invoice.quoteID,
+            reconcileInvoice: false,
             amount : 0,
             paymentMethod: '',
             date: new Date(),
@@ -43,8 +46,6 @@ export default class MakePayment extends Component {
     }
 
     _handleSubmitPayment = () => {
-
-       
         this.props.makePayment(this.state.singlePayment)
     }
 
@@ -61,7 +62,6 @@ export default class MakePayment extends Component {
             memo,
             paymentDifference
         }  = this.state.singlePayment
-
 
         return(
             <div>
@@ -174,8 +174,6 @@ export default class MakePayment extends Component {
                             />
                         </div>
                     
-
-
                         <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}>
                             {/* <div style={{paddingRight: 10}}>Payment Ref: </div>
                             <FormTextField
@@ -214,6 +212,24 @@ export default class MakePayment extends Component {
                         </div>
 
                     </div>
+
+                    <div>
+                        <span>Reconcile Invoice</span>
+                        <div>
+                            <Checkbox
+                                checked={this.state.reconcileInvoice}
+                                // disabled
+                                color="primary"
+                                style={{
+                                    color: AppConfig.themeColors.primary
+                                }}
+                                onChange={event => {
+                                    this.handleChange('reconcileInvoice', event.target.checked)
+                                }}
+                            />
+                        </div>
+                    </div>
+
 
                     <div style={{marginTop: 25, display: 'flex'}} className="col-md-12">
                         <div onClick={this._handleSubmitPayment} style={{marginRight: 25}}>Register Payment</div>

@@ -9,7 +9,7 @@ import api from "Api";
 //=========================
 
 const makePaymentRequest = async data => {  
-  const result = await api.post("/accountreconciles/payment", { data: data });
+  const result = await api.post("/accountpayments/payment", { data: data });
   return result.data;
 };
 
@@ -38,7 +38,7 @@ const getAllCompanyPaymentRequest = async data => {
 
 const getAllInvoicesCompanyPaymentRequest = async data => {
   const result = await api.post("/accountreconciles/getAllInvoicesOneCompany", {
-    id: data
+    data: data
   });
   return result.data;
 };

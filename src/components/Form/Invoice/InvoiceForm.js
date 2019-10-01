@@ -435,7 +435,7 @@ class InvoiceForm extends Component {
       
             
           <FormInputLayout
-            title="Quotation List"
+            title="Invoice List"
             desc="Please state down the description, unit, price and tax option clearly"
           ></FormInputLayout>
 

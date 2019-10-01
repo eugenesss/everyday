@@ -15,15 +15,6 @@ import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 // Credit Note Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
-// Invoice Credited Tab
-import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices";
-
-// Activity Log Tab
-// import ActivityLog from "Components/Everyday/ActivityLog";
-
-// Notes Tab
-// import NewNote from "Components/Form/Note/NewNote";
-// import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // InvoicePaymentList
 import ViewInvoicePaymentList from "Components/Accounting/Payment/ViewInvoicePaymentList";

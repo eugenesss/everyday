@@ -37,6 +37,19 @@ const ViewInvoiceReconcile = ({ tableData, loading, title, action, onCheckList }
     //       }
     //     }
     // },
+
+    
+    {
+      label: "Type",
+      name: "type",
+      options: { 
+        customBodyRender: (value, tableMeta) => {
+            return value
+        }
+      },
+    },
+
+
     {
         label: "Amount",
         name: "amount",

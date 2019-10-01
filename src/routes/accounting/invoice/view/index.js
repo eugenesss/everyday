@@ -101,6 +101,8 @@ class acct_view_invoice extends Component {
       return
     }
     
+
+    
     let payment = {
       payment: {
         customer: item.customer,
@@ -117,7 +119,7 @@ class acct_view_invoice extends Component {
         amount : item.amount,
         invoiceQuote : item.invoiceQuote,
         invoiceId : item.invoiceId,
-        reconciled : item.paymentDifference,
+        reconciled : item.reconcileInvoice,
       }]
     }
 
@@ -130,8 +132,6 @@ class acct_view_invoice extends Component {
 
   render() {
     const { loading, invoice, payment } = this.props.invoiceToView;
-
-    console.log(this.props.invoiceToView)
 
     let buttonCollection = null;
     let moreButtons = null;

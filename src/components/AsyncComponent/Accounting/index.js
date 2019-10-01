@@ -6,17 +6,16 @@ import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 
 // accounting management
 
-export const acct_new_credit_note_component = Loadable({
-  loader: () => import("Routes/accounting/new/credit_note"),
-  loading: () => <RctPageLoader />
-});
 
 export const acct_credit_note_component = Loadable({
   loader: () => import("Routes/accounting/credit_note"),
   loading: () => <RctPageLoader />
 });
 
-// accounting management view
+export const acct_new_credit_note_component = Loadable({
+  loader: () => import("Routes/accounting/credit_note/new"),
+  loading: () => <RctPageLoader />
+});
 
 export const view_credit_note = Loadable({
   loader: () => import("Routes/accounting/credit_note/view"),

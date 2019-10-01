@@ -10,13 +10,13 @@ import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader/RctPageLoader";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 import BgCard from "Components/Everyday/BgCard";
-import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
+import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 
 // Credit Note Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
 // Invoice Credited Tab
-import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices";
+// import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices";
 
 // Activity Log Tab
 // import ActivityLog from "Components/Everyday/ActivityLog";
@@ -25,78 +25,113 @@ import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices"
 // import NewNote from "Components/Form/Note/NewNote";
 // import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
-// Actions
-import { getSingleCreditNote, clearSingleCreditNote } from "Actions";
+// InvoicePaymentList
+// import ViewInvoicePaymentList from "Components/Accounting/CreditNote/ViewInvoicePaymentList";
+import ViewCredit from "Components/Form/Credit/ViewCredit"
+import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
+import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
 
-class acct_view_credit_note extends Component {
+import BalancePayment from "Components/Accounting/CreditNote/BalancePayment";
+
+
+
+// Actions
+import { getSingleCreditNote, convertSingleCreditNote } from "Actions";
+
+class acct_view_payment extends Component {
+
   componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleCreditNote(id);
   }
 
   componentWillUnmount() {
-    this.props.clearSingleCreditNote();
+    // this.props.clearSinglePayment();
   }
 
+  // _submitPayment = () => {
+  //   const r = window.confirm(`Click OK to confirm the credit note`); if(r == true){
+  //     console.log('submit payment')
+  //     this.props.convertSingleCreditNote()
+  //   }
+  // }
+
+  state=({
+    payment: {},
+    paymentData : []
+  })
+
+  preparePayment = (item) => {
+    // this.setState({payment: item})
+    const r = window.confirm(`Click OK to confirm the credit note`); if(r == true){
+      this.props.convertSingleCreditNote(item)
+    }
+
+  }
+
+  onCheckList = (rowIndex, value) => {
+    let data = this.state.paymentData
+    data[rowIndex].reconcile.reconcile = value
+    this.setState({paymentData: data})
+  }
+
+
+
   render() {
-    const { loading, creditNote } = this.props.creditNoteToView;
+
+    const { loading, creditNote, creditReconcile } = this.props.creditNoteToView;
+
     return loading ? (
       <RctPageLoader />
     ) : creditNote ? (
+
       <React.Fragment>
+    
         <Helmet>
-          <title>Everyday | View Credit Note</title>
+            <title>Everyday | View Payment</title>
         </Helmet>
-        <PageTitleBar
-          title="View Credit Note"
-          createLink="/acct/new/credit_note"
-        />
-        <div className="row">
-          <div className="col-md-4">
-            <BgCard>
-              <AccountingDetails
-                type="credit_note"
-                accountID={creditNote.creditID}
-                status={creditNote.status.name}
-                account={creditNote.account && creditNote.account.name}
-                sentDate={creditNote.sentOn}
-                owner={creditNote.owner.name}
+
+
+        <FormWrapper
+          // onSave={this._submitPayment}
+          disabled={false}
+          title={`Payment for ${creditNote.customerName}`}
+        >
+        
+          {/* {loading && <RctSectionLoader />} */}
+
+          <form autoComplete="off">
+
+            <FormInputLayout
+              title="Key Information"
+              desc="Payment information"
+            >
+
+              <ViewCredit
+                state={creditNote}
+                preparePayment={this.preparePayment}
               />
-            </BgCard>
-          </div>
-          <div className="col-md-8">
-            <TabsWrapper>
-              <div
-                icon="zmdi-shopping-cart-plus text-success"
-                label="CREDIT NOTE"
-              >
-                {/* <ViewTemplate /> */}
-              </div>
-              <div
-                icon="zmdi-shopping-cart text-warning"
-                label="INVOICE CREDITED"
-              >
-                <CreditedInvoices />
-              </div>
-              {/* <div icon="zmdi-pizza text-info" label="ACTIVITY LOG">
-                <ActivityLog />
-              </div> */}
-              <div icon="zmdi-assignment text-danger" label="NOTES">
-                <div className="row">
-                  <div className="col-md-5">
-                    <NewNote /* onAddNote="function" */ />
-                  </div>
-                  <div className="col-md-7">
-                    <DisplayAllNotes notes={creditNote.notes} />
-                  </div>
-                </div>
-              </div>
-            </TabsWrapper>
-          </div>
-        </div>
+                
+            </FormInputLayout>
+
+            {creditNote.paidOff !==  "" &&
+              <BalancePayment
+                title={'Credit Balances'}
+                tableData={creditReconcile}
+              />
+            }
+      
+          </form>
+
+        </FormWrapper>
+              
+             
       </React.Fragment>
     ) : (
-      <RecordNotFound />
+      <PageErrorMessage
+        heading="Not Found"
+        message="This could be because of a network problem or the record might have been deleted"
+      />
     );
   }
 }
@@ -109,5 +144,6 @@ const mapStateToProps = ({ accountingState }) => {
 
 export default connect(
   mapStateToProps,
-  { getSingleCreditNote, clearSingleCreditNote }
-)(acct_view_credit_note);
+  { getSingleCreditNote, convertSingleCreditNote }
+)(acct_view_payment);
+

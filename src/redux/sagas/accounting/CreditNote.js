@@ -1,116 +1,111 @@
 import { all, call, fork, put, takeEvery, delay } from "redux-saga/effects";
-import {
-  CHANGE_CREDIT_NOTE_LIST_VIEW,
-  GET_ALL_CREDIT_NOTE,
-  GET_SINGLE_CREDIT_NOTE
-} from "Types";
-import {
-  getCreditNoteSuccess,
-  getCreditNoteFailure,
-  getSingleCreditNoteSuccess
-} from "Actions";
+import * as Types from "Types";
+import * as Actions from "Actions";
 
 import api from "Api";
 
 //=========================
 // REQUESTS
 //=========================
-// const getAllCreditNoteRequest = async () => {
-//   const result = creditNoteList;
-//   return result;
-// };
-// const getMyCreditNoteRequest = async () => {
-//   const result = creditNoteList;
-//   return result;
-// };
-// const getOpenCreditNoteRequest = async () => {
-//   const result = creditNoteList;
-//   return result;
-// };
-// const getClosedCreditNoteRequest = async () => {
-//   const result = creditNoteList;
-//   return result;
-// };
-// const getCreditNoteRequest = async credID => {
-//   console.log(`fetching ${credID}`);
-//   const result = creditNote;
-//   return result;
-// };
 
+
+const getAllCreditNoteRequest = async () => {
+  const result = await api.get("/creditnotes/getAllCompanyCreditNotes");
+  return result.data;
+};
+const getSingleCreditNoteRequest = async data => {
+  // console.log(`getSingleCreditNoteRequest`);
+  // console.log(data)
+  const result = await api.post("/creditnotes/getSingleCompanyCreditNotes", {data: data});
+  return result.data
+};
+
+const postSingleCreditNoteRequest = async data => {
+  // console.log(`postSingleCreditNoteRequest`);
+  // console.log(data)
+  const result = await api.post("/creditnotes/credit", {data: data});
+  return result.data
+};
+
+
+const convertSingleCreditNoteRequest = async payload => {
+  // console.log(`postSingleCreditNoteRequest`);
+  // console.log(data)
+  const result = await api.patch(`/creditnotes/${payload.id}`, payload);
+  return result.data
+};
 //=========================
 // CALL(GENERATOR) ACTIONS
 //=========================
-function* changeCreditNoteList({ payload }) {
-  let data;
-  try {
-    if (payload == "All Credit Notes") {
-      // All Credit Notes
-      yield delay(500);
-      data = yield call(getAllCreditNoteRequest);
-      yield put(getCreditNoteSuccess(data));
-    } else if (payload == "My Credit Notes") {
-      // My Credit Notes
-      data = yield call(getMyCreditNoteRequest);
-      yield delay(500);
-      yield put(getCreditNoteSuccess(data));
-    } else if (payload == "Open Credit Notes") {
-      // Open Credit Notes
-      data = yield call(getOpenCreditNoteRequest);
-      yield delay(500);
-      yield put(getCreditNoteSuccess(data));
-    } else if (payload == "Closed Credit Notes") {
-      // Closed Credit Notes
-      data = yield call(getClosedCreditNoteRequest);
-      yield delay(500);
-      yield put(getCreditNoteSuccess(data));
-    } else {
-      yield delay(500);
-      data = yield call(getAllCreditNoteRequest);
-      yield put(getCreditNoteSuccess(data));
-    }
-  } catch (error) {
-    yield put(getCreditNoteFailure(error));
-  }
-}
+
 function* getAllCreditNoteFromDB() {
   try {
     const data = yield call(getAllCreditNoteRequest);
     yield delay(500);
-    yield put(getCreditNoteSuccess(data));
+    yield put(Actions.getAllCreditNoteSuccess(data.fields));
   } catch (error) {
-    yield put(getCreditNoteFailure(error));
+    yield put(Actions.getAllCreditNoteFailure(error));
   }
 }
+
 function* getCreditNoteFromDB({ payload }) {
   try {
-    const data = yield call(getCreditNoteRequest, payload);
+    const data = yield call(getSingleCreditNoteRequest, payload);
     yield delay(500);
-    yield put(getSingleCreditNoteSuccess(data));
+    yield put(Actions.getSingleCreditNoteSuccess(data.data));
   } catch (error) {
-    yield put(getCreditNoteFailure(error));
+    yield put(Actions.getSingleCreditNoteFailure(error));
   }
 }
+
+function* postCreditNoteFromDB({ payload }) {
+  try {
+    const data = yield call(postSingleCreditNoteRequest, payload);
+    yield delay(500);
+    yield put(Actions.postSingleCreditNoteSuccess(data));
+  } catch (error) {
+    yield put(Actions.postCreditNoteFailure(error));
+  }
+}
+
+function* convertCreditNoteFromDB({ payload }) {
+  try {
+    const data = yield call(convertSingleCreditNoteRequest, payload);
+    yield delay(500);
+    yield put(Actions.converSingleCreditNoteSuccess(data));
+  } catch (error) {
+    yield put(Actions.converSingleCreditNoteFailure(error));
+  }
+}
+
+
 
 //=======================
 // WATCHER FUNCTIONS
 //=======================
-export function* changeViewWatcher() {
-  yield takeEvery(CHANGE_CREDIT_NOTE_LIST_VIEW, changeCreditNoteList);
-}
+
 export function* getAllCreditNoteWatcher() {
-  yield takeEvery(GET_ALL_CREDIT_NOTE, getAllCreditNoteFromDB);
+  yield takeEvery(Types.GET_ALL_CREDIT_NOTE, getAllCreditNoteFromDB);
 }
 export function* getSingleCreditNoteWatcher() {
-  yield takeEvery(GET_SINGLE_CREDIT_NOTE, getCreditNoteFromDB);
+  yield takeEvery(Types.GET_SINGLE_CREDIT_NOTE, getCreditNoteFromDB);
+}
+export function* postSingleCreditNoteWatcher() {
+  yield takeEvery(Types.POST_SINGLE_CREDIT_NOTE, postCreditNoteFromDB);
 }
 
+export function* convertSingleCreditNoteWatcher() {
+  yield takeEvery(Types.CONVERT_SINGLE_CREDIT_NOTE, convertCreditNoteFromDB);
+}
 //=======================
 // FORK SAGAS TO STORE
 //=======================
 export default function* rootSaga() {
   yield all([
-    fork(changeViewWatcher),
     fork(getAllCreditNoteWatcher),
-    fork(getSingleCreditNoteWatcher)
+    fork(getSingleCreditNoteWatcher),
+    fork(postSingleCreditNoteWatcher),
+    fork(convertSingleCreditNoteWatcher)
+
   ]);
 }

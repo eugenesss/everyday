@@ -15,15 +15,7 @@ import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 // Credit Note Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
-// Invoice Credited Tab
-import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices";
 
-// Activity Log Tab
-// import ActivityLog from "Components/Everyday/ActivityLog";
-
-// Notes Tab
-// import NewNote from "Components/Form/Note/NewNote";
-// import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // InvoicePaymentList
 import NewPayment from "Components/Form/Payment/NewPayment"
@@ -84,7 +76,7 @@ class acct_new_payment extends Component {
   }
 
   _renderAllInvoicesForOneCompany = (e) => {
-    this.props.fetchAllInovicesOneCompany(e.id)
+    this.props.fetchAllInovicesOneCompany({id: e.id, key: 'all'})
   }
   
   getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -236,8 +228,6 @@ class acct_new_payment extends Component {
       console.log('looping BalancePayment ended')
     }
     
-    console.log('this.state.invoice.paymentDifference')
-    console.log(this.state.invoice.paymentDifference)
 
     if(SubmitPaymentArray.length > 0){
   
@@ -245,14 +235,14 @@ class acct_new_payment extends Component {
 
         if(!this.state.invoice.paymentDifference) {
         
-          const r = window.confirm(`Your payment amount does not match your invoices payment. Click OK if you would like the remaining amount to be saved into balance which will surface when attempting next payment.`); if(r == true){
+          const r = window.confirm(`Your current payment amount will lead to excess balance. Click OK to confirm excess amount to be saved into balance which will be surfaced during next payment or Cancel to return.`); if(r == true){
             payment.balancePayment = calculatePaymentAmount
             this.props.makePayment({payment: payment, balance: paymentBalance})
           }
 
         } else {
           
-          const r = window.confirm(`You have set the reconciled to "Fully Reconciled", the remaining amount will not be reflected in the balance in your next payment.`); if(r == true) {
+          const r = window.confirm(`You have set the reconciled to "Fully Reconciled". Click OK to confirm the remaining amount will not be reflected in the balance in your next payment or Cancel to return.`); if(r == true) {
             payment.balancePayment = calculatePaymentAmount
             this.props.makePayment({payment: payment, balance: paymentBalance})
           }
@@ -272,14 +262,14 @@ class acct_new_payment extends Component {
 
 
       } else {
-        const r = window.confirm(`Your payment amount does not match your invoice(s) payment, you have a record of $${calculatePaymentAmount}. Please check your payment again.`); if(r == true){}
+        const r = window.confirm(`Your payment amount does not match your invoice(s) payment, you have a record balance of $${calculatePaymentAmount}. Please check your payment again.`); if(r == true){}
       }
 
     } else {
       // window.confirm('No items to make payment, please check your invoices again')
 
       if(paymentBalance.length > 0){
-        const r = window.confirm("You have opted to pay using existing balance(s) from previous payment, click OK to confirm and cancel to return."); if(r == true){
+        const r = window.confirm("You have opted to pay using existing balance(s) from previous payment, click OK to confirm or Cancel to return."); if(r == true){
           this.props.makePayment({payment: {}, balance: paymentBalance})
         }
       } else {
@@ -378,7 +368,7 @@ class acct_new_payment extends Component {
       if(this.state.BalancePayment.length > 0){
         balancePayment = (
           <BalancePayment
-            title={'Balance Payment'}
+            title={'Credit & Debit Balances'}
             tableData={this.state.BalancePayment}
             onBalancePaymentCheck={this.onBalancePaymentCheck}
             balanceHandleChange={this.balanceHandleChange}

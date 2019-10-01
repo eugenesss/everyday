@@ -1,53 +1,126 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+
+import RecordsList from "Components/Everyday/RecordsList";
+import { listOptions } from "Helpers/helpers";
+
 //Page req
-// import DataList from "Components/Everyday/DataList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import BgCard from "Components/Everyday/BgCard";
-
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 
+import Moment from "moment";
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const CreditNoteList = ({ tableData, loading, title, action }) => {
+
   const columns = [
     {
       name: "id",
       options: { display: "excluded", filter: false, sort: false }
     },
     {
-      label: "Credit Note #",
-      name: "creditID",
-      options: {
+      label: "Customer",
+      name: "customerName",
+      options: { 
         customBodyRender: (value, tableMeta) => {
           return (
-            <NavLink to={`credit_note/${tableMeta.rowData[0]}`}>
-              {value}
-            </NavLink>
+            // <NavLink to={`payments/${value.id}`}>{value.name}</NavLink>
+            <NavLink to={`credit_notes/${tableMeta.rowData[0]}`}>{value}</NavLink>
           );
         }
+      },
+    },
+    // {
+    //   label: "# Invoice",
+    //   name: "invoiceQuote",
+    //   options: {
+    //     customBodyRender: (value, tableMeta) => {
+    //       return value
+    //     }
+    //   }
+    // },
+    {
+      label: "Payment Method",
+      name: "paymentMethod",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+          return value
+        }
       }
     },
-    { label: "Date Sent", name: "sentOn" },
+    
+    // {
+    //   label: "Customer",
+    //   name: "customerName",
+    //   options: {
+    //     customBodyRender: value => {
+    //       return value
+    //     }
+    //   }
+    // },
     {
-      label: "Account",
-      name: "account",
+      label: "Paid Amount",
+      name: "amount",
       options: {
-        customBodyRender: value => {
-          return value ? value.name : "";
+        customBodyRender: (value, tableMeta) => {
+          return `$${numberWithCommas(value)}`
         }
       }
     },
     {
-      label: "Status",
-      name: "status",
+      label: "Payment Ref",
+      name: "paymentRef",
       options: {
         customBodyRender: value => {
-          return value.name;
+          return value
         }
       }
     },
-    { label: "Amount", name: "amtToCredit" },
-    { label: "Remaining Amount", name: "amtRemaining" }
+    {
+      label: "Payment Made",
+      name: "date",
+      options: {
+        customBodyRender: value => {
+          return Moment(new Date(value)).format("LL");
+        }
+      }
+    },
+    // {
+    //   label: "Paid Off",
+    //   name: "paidOff",
+    //   options: {
+    //     customBodyRender: value => {
+    //       return `${value}`
+    //     }
+    //   }
+    // },
+    // {
+    //   label: "Reconciled",
+    //   name: "reconciled",
+    //   options: {
+    //     customBodyRender: value => {
+    //       return `${value}`
+    //     }
+    //   }
+    // },
+    // {
+    //   label: "Remaining Amount ",
+    //   name: "duePayment",
+    //   options: {
+    //     customBodyRender: value => {
+    //       return `$${value.toLocaleString()}`
+    //     }
+    //   }
+    // },
+    
+    
+
+
   ];
 
   if (action == true) {
@@ -77,9 +150,22 @@ const CreditNoteList = ({ tableData, loading, title, action }) => {
     });
   }
 
+  listOptions.customToolbarSelect = (
+    selectedRows,
+    displayData,
+    setSelectRows
+  ) =>
+    // delete multiple function
+    null;
+
   return (
     <BgCard fullBlock>
-      {/* <DataList title={title} columns={columns} tableData={tableData} /> */}
+      <RecordsList
+        title={title}
+        columns={columns}
+        data={tableData}
+        options={listOptions}
+      />
       {loading && <RctSectionLoader />}
     </BgCard>
   );

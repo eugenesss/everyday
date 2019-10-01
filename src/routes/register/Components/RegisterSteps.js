@@ -417,6 +417,7 @@ class RegisterSteps extends React.Component {
     );
   }
 }
+
 const mapStateToProps = ({ authUser }) => {
   const { register } = authUser;
   const { loading, success } = register;
