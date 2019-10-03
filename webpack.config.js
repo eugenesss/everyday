@@ -78,7 +78,9 @@ module.exports = function(env) {
         Routes: path.resolve(__dirname, "src/routes/"),
         Constants: path.resolve(__dirname, "src/constants/"),
         Helpers: path.resolve(__dirname, "src/helpers/"),
-        Api: path.resolve(__dirname, "src/api/")
+        Api: path.resolve(__dirname, "src/api/"),
+        Services: path.resolve(__dirname, "src/services/"),
+        Auth: path.resolve(__dirname, "src/auth/")
       }
     },
 

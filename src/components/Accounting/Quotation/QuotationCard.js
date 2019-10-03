@@ -6,12 +6,12 @@ import {
   KeyDetails
 } from "Components/Everyday/Layout/View/ProfileCard";
 import { EventOutlined } from "@material-ui/icons";
-import { singleAccount } from "Helpers/url/crm";
+import { singleAccount } from "Helpers/crmURL";
 
-import ShowUpcoming from "Components/CRM/View/Events/ShowUpcoming";
+// import ShowUpcoming from "Components/CRM/View/Events/ShowUpcoming";
 
 function QuotationCard(props) {
-//   const { cust } = props;
+  //   const { cust } = props;
   return (
     <Wrapper>
       {/* <Contact

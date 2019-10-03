@@ -2,7 +2,7 @@ import React from "react";
 import BgCard from "Components/Everyday/BgCard";
 import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
 
-import { KeyInformation, DealInformation } from "Components/Form/Deal//Layout";
+import { KeyInformation, DealInformation } from "../../components/form/Layout";
 import { getTheDate } from "Helpers/helpers";
 
 function DetailsTab(props) {

@@ -35,7 +35,7 @@ import { ReportSaga } from "Ducks/report";
 // widgets
 import { WidgetSaga } from "Ducks/widget";
 
-export default function* rootSaga(getState) {
+export default function* rootSaga() {
   yield all([
     // Accounting
     quoteSagas(),

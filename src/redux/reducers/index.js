@@ -30,6 +30,11 @@ import { CalendarReducer } from "Ducks/calendar";
 import { WidgetReducer } from "Ducks/widget";
 
 const reducers = combineReducers({
+  // sessionState: combineReducers({
+  //   authState: AuthReducer,
+  //   registerState: RegisterState,
+  //   forgetPasswordState: ForgetPasswordReducer
+  // }),
   authUser: authUserReducer,
   crmState: combineReducers({
     leadState: LeadReducer,

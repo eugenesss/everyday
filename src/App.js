@@ -23,7 +23,7 @@ import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "Assets/scss/_style.scss";
 
 // app component
-import App from "./container/App";
+import App from "Routes/app";
 
 import { store } from "Redux/store";
 
