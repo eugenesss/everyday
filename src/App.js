@@ -23,9 +23,9 @@ import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "Assets/scss/_style.scss";
 
 // app component
-import App from "./container/App";
+import App from "Routes/app";
 
-import { store } from "./redux/store";
+import { store } from "Redux/store";
 
 const MainApp = () => (
   <Provider store={store}>

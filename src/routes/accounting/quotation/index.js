@@ -14,7 +14,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // List
 import QuotationList from "Components/Accounting/Quotation/QuotationList";
-import { quoteNewPage } from "Helpers/url/accounting";
+import { quoteNewPage } from "Helpers/accountingURL";
 
 // Actions
 import {
@@ -26,8 +26,6 @@ import {
 } from "Actions";
 
 class acct_quotation extends Component {
-
-
   componentDidMount() {
     this.props.getAllQuotation();
     this.props.getQuotationSummary();
@@ -36,14 +34,14 @@ class acct_quotation extends Component {
   refresh() {
     // this.props.getAllLead();
   }
-  
+
   importQuotation() {
     // this.props.history.push(leadImportPage);
   }
 
   newQuotation = () => {
     this.props.history.push(quoteNewPage);
-  }
+  };
 
   render() {
     const {
@@ -63,7 +61,7 @@ class acct_quotation extends Component {
           <meta name="description" content="Everyday Quotation Management" />
         </Helmet>
         <PageTitleBar
-          title={'All Quotations'}
+          title={"All Quotations"}
           // createLink={quoteNewPage}
           actionGroup={{
             add: { onClick: this.newQuotation },

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 //sub components
-import DealList from "Components/CRM/Deal/DealList";
+import DealList from "./components/DealList";
 
 // page req
 import { Helmet } from "react-helmet";
@@ -14,8 +14,8 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // Actions
-import { changeDealView, getAllDeal, getDealSummary } from "Actions";
-import { dealNewPage } from "Helpers/url/crm";
+import { changeDealView, getAllDeal, getDealSummary } from "Ducks/crm/deal";
+import { dealNewPage } from "Helpers/crmURL";
 
 class crm_deal extends Component {
   constructor(props) {

@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 // Page Components
 import { Helmet } from "react-helmet";
 import RctPageLoader from "Components/RctPageLoader";
-import LeadForm from "Components/Form/Lead/LeadForm";
+import LeadForm from "../components/forms/LeadForm";
 
 // Actions
-import { editLead, getSingleLead } from "Actions";
+import { editLead, getSingleLead } from "Ducks/crm/lead";
 
 class crm_edit_lead extends Component {
   componentDidMount() {

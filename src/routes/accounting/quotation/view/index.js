@@ -24,12 +24,11 @@ import QuotationCard from "Components/Accounting/Quotation/QuotationCard";
 import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
 import OverviewTab from "./tabs/Overview";
 
-
 import {
   quoteNewPage,
   quoteEditPage,
   singleQuote
-} from "Helpers/url/accounting";
+} from "Helpers/accountingURL";
 
 // import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 
@@ -69,7 +68,7 @@ class acct_view_quotation extends Component {
    * New
    */
   newQuotation() {
-    this.props.history.push(quoteNewPage)
+    this.props.history.push(quoteNewPage);
   }
 
   edit(quotation) {
@@ -94,7 +93,7 @@ class acct_view_quotation extends Component {
     const { loading, quotation } = this.props.quotationToView;
 
     let buttonCollection = null;
-    
+
     if (quotation) {
       switch (quotation.state) {
         case "Draft":
@@ -108,90 +107,91 @@ class acct_view_quotation extends Component {
                 more: [
                   {
                     label: "Open Quotation",
-                    onClick: () => this.props.HandleStateUpdate(quotation.id, "Open")
+                    onClick: () =>
+                      this.props.HandleStateUpdate(quotation.id, "Open")
                   },
                   {
                     label: "Convert to Invoice",
-                    onClick: () => this.props.HandleConvertInvoiceQuotation(quotation.id)
+                    onClick: () =>
+                      this.props.HandleConvertInvoiceQuotation(quotation.id)
                   },
                   {
                     label: "Delete Quotation",
-                    onClick: () => this.props.deleteSingleQuote(this.props.match.params.id)
-                  },
+                    onClick: () =>
+                      this.props.deleteSingleQuote(this.props.match.params.id)
+                  }
                 ]
               }}
             />
-          )
-         
+          );
 
           break;
 
         case "Open":
-
           buttonCollection = (
-              <PageTitleBar
-                title="View Quotation"
-                actionGroup={{
-                  add: { onClick: () => this.newQuotation() },
-                  mid: { label: "Edit", onClick: () => this.edit(quotation) },
-                  more: [
-                    {
-                      label: "Create New Version",
-                      onClick: () => {
-                          this.props.HandleStateCreateNewVersion(
-                            quotation.id,
-                            "Quotation"
-                          )
+            <PageTitleBar
+              title="View Quotation"
+              actionGroup={{
+                add: { onClick: () => this.newQuotation() },
+                mid: { label: "Edit", onClick: () => this.edit(quotation) },
+                more: [
+                  {
+                    label: "Create New Version",
+                    onClick: () => {
+                      this.props.HandleStateCreateNewVersion(
+                        quotation.id,
+                        "Quotation"
+                      );
+                    }
+                  },
+                  {
+                    label: "Convert to Invoice",
+                    onClick: () =>
+                      this.props.HandleConvertInvoiceQuotation(quotation.id)
+                  },
+                  {
+                    label: "Delete Quotation",
+                    onClick: () => {
+                      if (quotation.version == 1) {
+                        this.props.deleteSingleQuote(
+                          this.props.match.params.id
+                        );
+                      } else {
+                        this.props.HandleStateRevertPreviousVersion(
+                          quotation.id,
+                          "Quotation"
+                        );
                       }
-                    },
-                    {
-                      label: "Convert to Invoice",
-                      onClick: () => this.props.HandleConvertInvoiceQuotation(quotation.id)
-                    },
-                    {
-                      label: "Delete Quotation",
-                      onClick: () => {
-                        
-                          if (quotation.version == 1) {
-                            this.props.deleteSingleQuote(this.props.match.params.id);
-                          } else {
-                            this.props.HandleStateRevertPreviousVersion(
-                              quotation.id,
-                              "Quotation"
-                            );
-                          }
-                        
-                      }
-                    },
-                  ]
-                }}
-              />
-          )
-          
-      
+                    }
+                  }
+                ]
+              }}
+            />
+          );
+
           break;
 
         case "Closed":
-            buttonCollection = (
-              <PageTitleBar
-                title="View Quotation"
-                actionGroup={{
-                  add: { onClick: () => this.newQuotation() },                  
-                }}
-              />
-            )
+          buttonCollection = (
+            <PageTitleBar
+              title="View Quotation"
+              actionGroup={{
+                add: { onClick: () => this.newQuotation() }
+              }}
+            />
+          );
           break;
 
         case "Converted":
           // console.log("Converted Mode");
-            buttonCollection = (
-              <PageTitleBar
-                title="View Quotation"
-                actionGroup={{
-                  add: { onClick: () => this.newQuotation() },                  
-                }}
-              />
-            )
+          buttonCollection = (
+            <PageTitleBar
+              title="View Quotation"
+              actionGroup={{
+                add: { onClick: () => this.newQuotation() }
+              }}
+            />
+          );
           break;
 
         default:
@@ -203,7 +203,6 @@ class acct_view_quotation extends Component {
       return <Redirect to="/app/acct/quotations" />;
     }
 
-        
     return loading ? (
       <RctPageLoader />
     ) : quotation ? (
@@ -213,42 +212,32 @@ class acct_view_quotation extends Component {
         </Helmet>
 
         {buttonCollection}
-        
-        <div className="row">
 
+        <div className="row">
           <div className="col-md-3">
-            <QuotationCard
-              quotation={quotation}
-            />
+            <QuotationCard quotation={quotation} />
           </div>
 
           <div className="col-md-9">
-
-          
             <ProfileTabs loading={false}>
-                  <div label="Overview">
-                    <OverviewTab
-                      quotation={quotation}
-                    />
-                  </div>
+              <div label="Overview">
+                <OverviewTab quotation={quotation} />
+              </div>
 
-                  <div label="Deals">
-                    {/* <DealsTab deals={customer.deals} /> */}
-                  </div>
+              <div label="Deals">
+                {/* <DealsTab deals={customer.deals} /> */}
+              </div>
 
-                  <div label="Events">
-                    {/* <EventsTab
+              <div label="Events">
+                {/* <EventsTab
                       eventableType="Customer"
                       eventableId={customer.id}
                       events={customer.events}
                     /> */}
-                  </div>
+              </div>
 
-                  <div label="Details">
-                    {/* <DetailsTab cust={customer} /> */}
-                  </div>
+              <div label="Details">{/* <DetailsTab cust={customer} /> */}</div>
             </ProfileTabs>
-            
           </div>
         </div>
       </React.Fragment>
@@ -282,9 +271,6 @@ export default connect(
     HandleConvertInvoiceQuotation
   }
 )(acct_view_quotation);
-
-
-
 
 /*
 

@@ -30,7 +30,7 @@ import DialogRoot from "Components/Dialog/DialogRoot";
 
 
 // Actions
-import { newInvoice, invoiceEditPage, invoiceNewPage } from "Helpers/url/accounting";
+import { newInvoice, invoiceEditPage, invoiceNewPage } from "Helpers/accountingURL";
 import { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion, makePayment, makePaymentIncompleteFields  } from "Actions";
 
 // addNoteToQuotation(acctID), onNoteChange, clearNote

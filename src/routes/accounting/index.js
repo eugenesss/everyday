@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 
 // async components
 import * as async from "Components/AsyncComponent/Accounting";
-import * as url from "Helpers/url/accounting";
+import * as url from "Helpers/accountingURL";
 
 function acctSwitcher() {
   return (

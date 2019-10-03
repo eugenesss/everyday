@@ -5,11 +5,11 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 
 // Page Components
-import DealForm from "Components/Form/Deal/DealForm";
+import DealForm from "../components/form/DealForm";
 import RctPageLoader from "Components/RctPageLoader";
 
 // Actions
-import { editDeal, getSingleDeal } from "Actions";
+import { editDeal, getSingleDeal } from "Ducks/crm/deal";
 
 class crm_edit_deal extends Component {
   componentDidMount() {

@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 //sub components
-import CustomerList from "Components/CRM/Customer/CustomerList";
+import CustomerList from "./components/CustomerList";
 
 // page req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
-import { changeCustomerView, getAllCustomer } from "Actions";
-import { customerNewPage } from "Helpers/url/crm";
+import { changeCustomerView, getAllCustomer } from "Ducks/crm/customer";
+import { customerNewPage } from "Helpers/crmURL";
 
 class crm_customer extends Component {
   constructor(props) {

@@ -29,7 +29,7 @@ import {
 
 import api from "Api";
 
-import Auth from "../../../Auth/Auth";
+import Auth from "Auth";
 
 // Login API
 const signInUserWithEmailPasswordRequest = async (email, password) => {

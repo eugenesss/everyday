@@ -14,19 +14,17 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // List
 import InvoiceList from "Components/Accounting/Invoice/InvoiceList";
-import { invoiceNewPage } from "Helpers/url/accounting";
+import { invoiceNewPage } from "Helpers/accountingURL";
 
 // Actions
 import {
   changeInvoiceView,
   toggleInvoiceDropDown,
   toggleInvoiceSummary,
-  getAllInvoice,
+  getAllInvoice
 } from "Actions";
 
 class acct_invoice extends Component {
-
-
   componentDidMount() {
     this.props.getAllInvoice();
   }
@@ -34,14 +32,14 @@ class acct_invoice extends Component {
   refresh() {
     // this.props.getAllLead();
   }
-  
+
   importInvoice() {
     // this.props.history.push(leadImportPage);
   }
 
-  newInvoice = () =>{
+  newInvoice = () => {
     this.props.history.push(invoiceNewPage);
-  }
+  };
 
   render() {
     const {
@@ -55,7 +53,6 @@ class acct_invoice extends Component {
 
     const { showSummary, summary } = this.props.invoiceState.invoiceSummary;
 
-    
     return (
       <React.Fragment>
         <Helmet>
@@ -63,7 +60,7 @@ class acct_invoice extends Component {
           <meta name="description" content="Everyday Invoice Management" />
         </Helmet>
         <PageTitleBar
-          title={'All Invoices'}
+          title={"All Invoices"}
           actionGroup={{
             add: { onClick: this.newInvoice },
             mid: { label: "Import", onClick: this.importInvoice },
@@ -93,6 +90,6 @@ export default connect(
     changeInvoiceView,
     toggleInvoiceDropDown,
     toggleInvoiceSummary,
-    getAllInvoice,
+    getAllInvoice
   }
 )(acct_invoice);

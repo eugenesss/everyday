@@ -9,7 +9,6 @@ import IntlMessages from "Util/IntlMessages";
 
 // Page Components
 import BgCard from "Components/Everyday/BgCard";
-import DealForm from "Components/Form/Deal/DealForm";
 import RctSectionLoader from "Components/RctSectionLoader";
 
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";

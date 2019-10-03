@@ -13,7 +13,7 @@ import PeriodSalesChart from "Components/Charts/PeriodSalesChart";
 import DealsPipelineChart from "Components/Charts/DealsPipelineChart";
 import LeadsByStatusChart from "Components/Charts/LeadsByStatusChart";
 // Actions
-import { getIndividualReport, getAllUsers } from "Actions";
+import { getIndividualReport, getAllUsers } from "Ducks/report";
 
 class IndividualReport extends PureComponent {
   constructor(props) {

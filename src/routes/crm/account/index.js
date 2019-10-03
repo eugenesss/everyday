@@ -5,16 +5,16 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
-import { accountNewPage } from "Helpers/url/crm";
+import { accountNewPage } from "Helpers/crmURL";
 //sub components
-import AccountList from "Components/CRM/Account/AccountList";
+import AccountList from "./components/AccountList";
 
 // Actions
 import {
   changeAccountView,
   toggleAccountDropDown,
   getAllAccount
-} from "Actions";
+} from "Ducks/crm/account";
 
 class crm_account extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllEvents } from "Actions";
+import { getAllEvents } from "Ducks/calendar";
 
 import Calendar from "react-calendar";
 import DisplayEvents from "./DisplayEvents";

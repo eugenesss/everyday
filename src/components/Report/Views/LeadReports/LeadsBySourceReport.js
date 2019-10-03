@@ -5,7 +5,7 @@ import RctSectionLoader from "Components/RctSectionLoader";
 // Charts
 import LeadsBySourceChart from "Components/Charts/LeadsBySourceChart";
 // Action
-import { getLeadsBySource } from "Actions";
+import { getLeadsBySource } from "Ducks/report";
 
 function LeadsBySourceReport(props) {
   const { loading, data } = props.leadsBySource;

@@ -8,7 +8,7 @@ import RolesManager from "Components/Setting/UserControl/Roles/RolesManager";
 // New Role Dialog
 import NewRoleDialog from "Components/Setting/UserControl/Roles/NewRoleDialog";
 
-import { getAllRoles, updateRole } from "Actions";
+import { getAllRoles, updateRole } from "Ducks/setting/roles";
 
 class RolesLayout extends Component {
   constructor(props) {

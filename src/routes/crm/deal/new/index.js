@@ -5,10 +5,10 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 
 // Form Componnet
-import DealForm from "Components/Form/Deal/DealForm";
+import DealForm from "../components/form/DealForm";
 
 // Actions
-import { newDeal } from "Actions";
+import { newDeal } from "Ducks/crm/deal";
 
 const crm_new_deal = props => (
   <React.Fragment>

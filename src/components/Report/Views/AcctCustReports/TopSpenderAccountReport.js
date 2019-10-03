@@ -5,7 +5,7 @@ import RctSectionLoader from "Components/RctSectionLoader";
 // Charts
 import TopSpenderAccountChart from "Components/Charts/TopSpenderAccountChart";
 // Actions
-import { getTopSpenderAccount } from "Actions";
+import { getTopSpenderAccount } from "Ducks/report";
 
 function TopSpenderAccountReport(props) {
   const { loading, data } = props.topSpenderAccount;

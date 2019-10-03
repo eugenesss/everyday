@@ -12,40 +12,36 @@ import PaymentState from "./accounting/PaymentReducer";
 import AccountingReducer from "./accounting/AccountingReducer";
 
 // crm
-import LeadReducer from "./crm/LeadReducer";
-import CustomerReducer from "./crm/CustomerReducer";
-import AccountReducer from "./crm/AccountReducer";
-import DealReducer from "./crm/DealReducer";
-import CrmFieldReducer from "./crm/CrmFieldReducer";
-import SalesTeamReducer from "./crm/SalesTeamReducer";
+import {
+  LeadReducer,
+  CustomerReducer,
+  AccountReducer,
+  DealReducer,
+  CrmFieldReducer
+} from "Ducks/crm";
 
 //settings
-import usersReducer from "./settings/userControl/UsersReducer";
-import companyReducer from "./settings/general/CompanyReducer";
-import groupsReducer from "./settings/userControl/GroupsReducer";
-import rolesReducer from "./settings/userControl/RolesReducer";
+import { UserManagementReducer, RolesReducer } from "Ducks/setting";
 
 // system
 import authUserReducer from "./system/AuthUserReducer";
-import reportReducer from "./system/ReportReducer";
-import calendarReducer from "./calendar/CalendarReducer";
-import WidgetReducer from "./system/WidgetReducer";
-
-// upload file
-import uploadFileReducer from "./upload/uploadFileReducer";
-import ImportReducer from "./system/ImportReducer";
+import { ReportReducer } from "Ducks/report";
+import { CalendarReducer } from "Ducks/calendar";
+import { WidgetReducer } from "Ducks/widget";
 
 const reducers = combineReducers({
+  // sessionState: combineReducers({
+  //   authState: AuthReducer,
+  //   registerState: RegisterState,
+  //   forgetPasswordState: ForgetPasswordReducer
+  // }),
   authUser: authUserReducer,
-  uploadFile: uploadFileReducer,
-  importRecord: ImportReducer,
   crmState: combineReducers({
     leadState: LeadReducer,
     customerState: CustomerReducer,
     accountState: AccountReducer,
     dealState: DealReducer,
-    crmField: CrmFieldReducer,
-    salesTeamState: SalesTeamReducer
+    crmField: CrmFieldReducer
   }),
   accountingState: combineReducers({
     quotationState: QuotationReducer,
@@ -55,12 +51,12 @@ const reducers = combineReducers({
     accountState: AccountingReducer
   }),
   widgetState: WidgetReducer,
-  reportState: reportReducer,
-  calendarState: calendarReducer,
-  usersState: usersReducer,
-  rolesState: rolesReducer,
-  groupsState: groupsReducer,
-  companyState: companyReducer,
+  reportState: ReportReducer,
+  calendarState: CalendarReducer,
+  usersState: UserManagementReducer,
+  rolesState: RolesReducer,
+  // groupsState: groupsReducer,
+  // companyState: CompanySettingsReducer,
   modal
 });
 

@@ -8,12 +8,12 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import { Refresh } from "@material-ui/icons";
 
-import { singleLead } from "Helpers/url/crm";
+import { singleLead } from "Helpers/crmURL";
 import RctSectionLoader from "Components/RctSectionLoader";
 import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 
 import moment from "moment";
-import { getUntouchedLeads } from "Actions";
+import { getUntouchedLeads } from "Ducks/widget";
 
 const columns = [
   {

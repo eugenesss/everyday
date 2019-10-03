@@ -10,15 +10,11 @@ import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 import CreditNoteList from "Components/Accounting/CreditNote/CreditNoteList";
 
 // Actions
-import {
-  getAllCreditNote
-} from "Actions";
+import { getAllCreditNote } from "Actions";
 
-import { crednoteNewPage, singleCredNote } from "Helpers/url/accounting";
-
+import { crednoteNewPage, singleCredNote } from "Helpers/accountingURL";
 
 class acct_payment extends Component {
-
   componentDidMount() {
     this.props.getAllCreditNote();
   }
@@ -26,53 +22,51 @@ class acct_payment extends Component {
   refresh() {
     // this.props.getAllLead();
   }
-  
+
   importPayment() {
     // this.props.history.push(leadImportPage);
   }
 
   newCredit = () => {
     this.props.history.push(crednoteNewPage);
-  }
-
+  };
 
   render() {
-    
     const {
       action,
       loading,
-      tableData,
-    } = this.props.creditNoteState.creditNoteList
+      tableData
+    } = this.props.creditNoteState.creditNoteList;
 
     return (
       <React.Fragment>
-       <Helmet>
-         <title>Everyday | Payment</title>
-         <meta name="description" content="Everyday Payment Management" />
-       </Helmet>
-       <PageTitleBar
-         title={'All Credit Notes'}
-         actionGroup={{
-           add: { onClick: this.newCredit },
-           mid: { label: "Import", onClick: this.importPayment },
-           more: [{ label: "Refresh List", onClick: this.refresh }]
-         }}
-         createLink={crednoteNewPage}
-       />
-       {/* {showSummary && <ListSummary summary={summary} />} */}
-       <CreditNoteList
-         title={'All Credit Notes'}
-         action={action}
-         tableData={tableData}
-         loading={loading}
-       />
-     </React.Fragment>
+        <Helmet>
+          <title>Everyday | Payment</title>
+          <meta name="description" content="Everyday Payment Management" />
+        </Helmet>
+        <PageTitleBar
+          title={"All Credit Notes"}
+          actionGroup={{
+            add: { onClick: this.newCredit },
+            mid: { label: "Import", onClick: this.importPayment },
+            more: [{ label: "Refresh List", onClick: this.refresh }]
+          }}
+          createLink={crednoteNewPage}
+        />
+        {/* {showSummary && <ListSummary summary={summary} />} */}
+        <CreditNoteList
+          title={"All Credit Notes"}
+          action={action}
+          tableData={tableData}
+          loading={loading}
+        />
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = ({ accountingState }) => {
-  const { paymentState,creditNoteState } = accountingState;
+  const { paymentState, creditNoteState } = accountingState;
   return { paymentState, creditNoteState };
 };
 

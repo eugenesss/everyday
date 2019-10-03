@@ -5,7 +5,7 @@ import RctSectionLoader from "Components/RctSectionLoader";
 // Charts
 import DealsByOwnerChart from "Components/Charts/DealsByOwnerChart";
 // Actions
-import { getDealsByOwner } from "Actions";
+import { getDealsByOwner } from "Ducks/report";
 
 function DealsByOwnerReport(props) {
   const { loading, data } = props.dealsByOwner;

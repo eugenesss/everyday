@@ -17,11 +17,9 @@ import {
   fetchAllPayment
 } from "Actions";
 
-import { newPayment } from "Helpers/url/accounting";
-
+import { newPayment } from "Helpers/accountingURL";
 
 class acct_payment extends Component {
-
   componentDidMount() {
     this.props.fetchAllPayment();
   }
@@ -29,15 +27,14 @@ class acct_payment extends Component {
   refresh() {
     // this.props.getAllLead();
   }
-  
+
   importPayment() {
     // this.props.history.push(leadImportPage);
   }
 
   newPayment = () => {
     this.props.history.push(newPayment);
-  }
-
+  };
 
   render() {
     const {
@@ -48,32 +45,30 @@ class acct_payment extends Component {
       tableData,
       loading
     } = this.props.paymentState.paymentList;
-    
-    
+
     return (
       <React.Fragment>
-       <Helmet>
-         <title>Everyday | Payment</title>
-         <meta name="description" content="Everyday Payment Management" />
-       </Helmet>
-       <PageTitleBar
-         title={'All Payments'}
-         actionGroup={{
-           add: { onClick: this.newPayment },
-           mid: { label: "Import", onClick: this.importPayment },
-           more: [{ label: "Refresh List", onClick: this.refresh }]
-         }}
-         createLink={newPayment}
-       />
+        <Helmet>
+          <title>Everyday | Payment</title>
+          <meta name="description" content="Everyday Payment Management" />
+        </Helmet>
+        <PageTitleBar
+          title={"All Payments"}
+          actionGroup={{
+            add: { onClick: this.newPayment },
+            mid: { label: "Import", onClick: this.importPayment },
+            more: [{ label: "Refresh List", onClick: this.refresh }]
+          }}
+          createLink={newPayment}
+        />
 
-       <PaymentList
-         title={nowShowing}
-         action={action}
-         tableData={tableData}
-         loading={loading}
-       />
-       
-     </React.Fragment>
+        <PaymentList
+          title={nowShowing}
+          action={action}
+          tableData={tableData}
+          loading={loading}
+        />
+      </React.Fragment>
     );
   }
 }

@@ -5,7 +5,7 @@ import RctSectionLoader from "Components/RctSectionLoader";
 // Charts
 import DealsPipelineChart from "Components/Charts/DealsPipelineChart";
 // Action
-import { getDealsPipeline } from "Actions";
+import { getDealsPipeline } from "Ducks/report";
 
 function DealsPipelineReport(props) {
   const { loading, data } = props.dealsPipeline;

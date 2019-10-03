@@ -11,38 +11,31 @@ import paymentSagas from "./accounting/Payment";
 import accountingSagas from "./accounting/Accounting";
 
 //  crm
-import leadSagas from "./crm/Lead";
-import customerSagas from "./crm/Customer";
-import accountSagas from "./crm/Account";
-import dealSagas from "./crm/Deal";
-import crmFieldSagas from "./crm/CrmField";
+import {
+  LeadSaga,
+  CustomerSaga,
+  AccountSaga,
+  DealSaga,
+  CrmFieldSaga
+} from "Ducks/crm";
 
 // settings
-import userSagas from "./settings/userControl/Users";
-import companySagas from "./settings/general/Company";
-import roleSagas from "./settings/userControl/Roles";
-import groupSagas from "./settings/userControl/Groups";
+import { UserManagementSaga, RolesSaga } from "Ducks/setting";
 
 // calendar
-import calendarSagas from "./calendar/Calendar";
+import { CalendarSaga } from "Ducks/calendar";
 
 // auth
 import loginSagas from "./auth/Login";
 import registerSagas from "./auth/Register";
 
-// uploadFile
-import uploadFileSagas from "./upload/uploadFile";
-
-// import record
-import importRecordSagas from "./import/Import";
-
 // reports
-import reportSagas from "./report/Report";
+import { ReportSaga } from "Ducks/report";
 
 // widgets
-import widgetSagas from "./widget/Widget";
+import { WidgetSaga } from "Ducks/widget";
 
-export default function* rootSaga(getState) {
+export default function* rootSaga() {
   yield all([
     // Accounting
     quoteSagas(),
@@ -52,28 +45,24 @@ export default function* rootSaga(getState) {
     paymentSagas(),
 
     // CRM
-    leadSagas(),
-    customerSagas(),
-    accountSagas(),
-    dealSagas(),
-    crmFieldSagas(),
+    LeadSaga(),
+    CustomerSaga(),
+    AccountSaga(),
+    DealSaga(),
+    CrmFieldSaga(),
 
     // Auth
     loginSagas(),
     registerSagas(),
 
     // System
-    uploadFileSagas(),
-    importRecordSagas(),
-    reportSagas(),
-    widgetSagas(),
+    ReportSaga(),
+    WidgetSaga(),
     // Calendar
-    calendarSagas(),
+    CalendarSaga(),
 
     // Settings
-    roleSagas(),
-    groupSagas(),
-    userSagas(),
-    companySagas()
+    RolesSaga(),
+    UserManagementSaga()
   ]);
 }

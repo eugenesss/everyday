@@ -21,9 +21,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const webpack = require('webpack');
-
-
+const webpack = require("webpack");
 
 // the path(s) that should be cleaned
 let pathsToClean = ["dist", "build"];
@@ -35,16 +33,13 @@ let cleanOptions = {
   dry: false
 };
 
-
 module.exports = function(env) {
-
   const envKeys = Object.keys(env).reduce((prev, next) => {
     prev[`process.env.${next}`] = JSON.stringify(env[next]);
     return prev;
   }, {});
 
-
-  return {    
+  return {
     // mode: argv.mode ? argv.mode : 'development',
 
     entry: ["babel-polyfill", "react-hot-loader/patch", "./src/index.js"],
@@ -74,6 +69,7 @@ module.exports = function(env) {
     resolve: {
       alias: {
         Redux: path.resolve(__dirname, "src/redux"),
+        Ducks: path.resolve(__dirname, "src/redux/ducks"),
         Actions: path.resolve(__dirname, "src/redux/actions/"),
         Types: path.resolve(__dirname, "src/redux/types/"),
         Components: path.resolve(__dirname, "src/components/"),
@@ -82,10 +78,12 @@ module.exports = function(env) {
         Routes: path.resolve(__dirname, "src/routes/"),
         Constants: path.resolve(__dirname, "src/constants/"),
         Helpers: path.resolve(__dirname, "src/helpers/"),
-        Api: path.resolve(__dirname, "src/api/")
+        Api: path.resolve(__dirname, "src/api/"),
+        Services: path.resolve(__dirname, "src/services/"),
+        Auth: path.resolve(__dirname, "src/auth/")
       }
     },
-  
+
     module: {
       rules: [
         {
@@ -191,5 +189,5 @@ module.exports = function(env) {
       })
       // new BundleAnalyzerPlugin()
     ]
-  }
+  };
 };

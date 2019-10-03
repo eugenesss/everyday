@@ -8,9 +8,7 @@ import {
   KeyDetails
 } from "Components/Everyday/Layout/View/ProfileCard";
 import NumberFormat from "react-number-format";
-import { singleAccount, singleCustomer } from "Helpers/url/crm";
-
-
+import { singleAccount, singleCustomer } from "Helpers/crmURL";
 
 function QuotationCard(props) {
   const { quotation } = props;
@@ -20,19 +18,13 @@ function QuotationCard(props) {
       <Contact
         noAvatar
         name={"Quotation"}
-        subHeading={
-          `#${quotation.quoteID}`
-        }
+        subHeading={`#${quotation.quoteID}`}
         // indicator={quotation.latest}
       />
-        <div className="d-flex flex-column">
-          <div>
-            {`Version: ${quotation.version}`}
-          </div>
-          <div>
-            {`State: ${quotation.state}`}
-          </div>
-        </div>
+      <div className="d-flex flex-column">
+        <div>{`Version: ${quotation.version}`}</div>
+        <div>{`State: ${quotation.state}`}</div>
+      </div>
 
       <KeyDetails
         keyDetails={[

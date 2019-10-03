@@ -5,7 +5,7 @@ import RctSectionLoader from "Components/RctSectionLoader";
 // Charts
 import LeadsByOwnerChart from "Components/Charts/LeadsByOwnerChart";
 // Action
-import { getLeadsByOwner } from "Actions";
+import { getLeadsByOwner } from "Ducks/report";
 
 function LeadsByOwnerReport(props) {
   const { loading, data } = props.leadsByOwner;

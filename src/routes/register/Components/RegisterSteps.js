@@ -28,7 +28,7 @@ import {
   PasswordValidator,
   StepperZeroValidator,
   CheckCreditCard
-} from "./Validation/Validation";
+} from "./Validation";
 
 function getSteps() {
   return ["Enter Your Details", "Select a Plan", "Payment Details"];

@@ -5,7 +5,7 @@ import RctSectionLoader from "Components/RctSectionLoader";
 // Charts
 import DealsByTypeChart from "Components/Charts/DealsByTypeChart";
 // Action
-import { getDealsByType } from "Actions";
+import { getDealsByType } from "Ducks/report";
 
 function DealsByTypeReport(props) {
   const { loading, data } = props.dealsByType;
