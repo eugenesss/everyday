@@ -166,18 +166,11 @@ class acct_new_payment extends Component {
     if(e >= InvoiceList[index].openBalance) {
       InvoiceList[index].reconciled = true
       InvoiceList[index].amount = InvoiceList[index].openBalance
-
     } else {
+      InvoiceList[index].amount = e
       InvoiceList[index].reconciled = false
     }
 
-   
-    // currentInvoiceAmount = this.state.currentInvoiceAmount + e
-    // if(currentInvoiceAmount = "NaN"){
-    //   currentInvoiceAmount = 0
-    // }
-
-    // console.log(currentInvoiceAmount)
     this.setState({InvoiceList: InvoiceList, currentInvoiceAmount: currentInvoiceAmount})
   }
 
@@ -215,7 +208,6 @@ class acct_new_payment extends Component {
     let paymentBalance = []
     
     if(BalancePayment.length > 0) {
-      console.log('looping BalancePayment')
       BalancePayment.map(item =>{
         if(item.reconciled){
           if(item.allocation > 0){
@@ -225,7 +217,6 @@ class acct_new_payment extends Component {
           }
         }
       })
-      console.log('looping BalancePayment ended')
     }
     
 
@@ -273,8 +264,6 @@ class acct_new_payment extends Component {
           this.props.makePayment({payment: {}, balance: paymentBalance})
         }
       } else {
-        console.log('no item to make payment')
-
         const r = window.confirm('No payment detected, please key in the amount and payment details to proceed'); if(r == true){
           this.props.makePayment({payment: {}, balance: paymentBalance})
         }

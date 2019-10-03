@@ -61,6 +61,11 @@ export default (state = INIT_STATE, action) => {
         }
       };
     case Types.POST_SINGLE_CREDIT_NOTE_SUCCESS:
+
+      setTimeout(() =>{
+        window.history.back()
+      }, 250)
+
       return {
         ...state,
         creditNoteList: {
@@ -93,7 +98,7 @@ export default (state = INIT_STATE, action) => {
           ...state.creditNoteToView,
           loading: false,
           creditNote: action.payload.creditNote,
-          creditReconcile : action.payload.AccountReconcileSource
+          creditReconcile : action.payload.reconcileSource
         }
       };
     case Types.GET_SINGLE_CREDIT_NOTE_FAILURE:
@@ -107,8 +112,6 @@ export default (state = INIT_STATE, action) => {
 
       
 
-
-
     // Convert Credit Note
     case Types.CONVERT_SINGLE_CREDIT_NOTE:
       return {
@@ -116,15 +119,14 @@ export default (state = INIT_STATE, action) => {
         creditNoteToView: { ...state.creditNoteToView, loading: true }
       };
     case Types.CONVERT_SINGLE_CREDIT_NOTE_SUCCESS:
-
-      // window.history.back()
-
+      
       return {
         ...state,
         creditNoteToView: {
           ...state.creditNoteToView,
           loading: false,
-          // creditNote: action.payload
+          creditNote: action.payload.creditNoteObject,
+          creditReconcile: action.payload.AccountReconcileSource
         }
       };
     case Types.CONVERT_SINGLE_CREDIT_NOTE_FAILURE:

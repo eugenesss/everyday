@@ -19,7 +19,7 @@ export default class ViewCredit extends Component {
 
   state = {
     payment : this.props.state,
-    editable : this.props.state.paidOff ===  "" ? true : false
+    // editable : this.props.state.paidOff ===  "" ? true : false
   };
 
   _handleChange = (a, b) => {
@@ -30,10 +30,9 @@ export default class ViewCredit extends Component {
 
   render() {
    
-
     // const {customerName, paymentMethod, paidOff, reconciled, amount, paymentRef , memo, date} = this.props.state
 
-    const {amount, createdAt, customer, customerName, id, memo, paidOff, paymentMethod, paymentRef, reconciled  } = this.state.payment
+    const {amount, createdAt, customer, customerName, id, memo, paymentMethod, paymentRef, reconciled  } = this.state.payment
      
     return (
 
@@ -66,7 +65,7 @@ export default class ViewCredit extends Component {
         </div>
 
     
-        <div className="col-md-12">  
+        {/* <div className="col-md-12">  
 
             {this.state.editable &&
               <div>
@@ -97,44 +96,17 @@ export default class ViewCredit extends Component {
               <EditableInput label="Paid Off" value={paidOff?  "Paid off directly" : "Use as credit payment"} />
             }
            
-        </div>
+        </div> */}
 
-     
+    
         <div className="col-md-12">  
-
-          {this.state.editable &&
-            <div>
-              {paidOff === false && reconciled !== "" &&
-                  <FormInput
-                      label="Reconciled"
-                      value={reconciled}
-                      selectValues={reconcileOptions}
-                      target="reconciled"
-                      handleChange={this._handleChange}
-                  />  
-              }
-
-              {paidOff === false && reconciled === "" &&
-                  <FormInput
-                      label="Reconciled"
-                      value={reconciled}
-                      required={!reconciled}
-                      selectValues={reconcileOptions}
-                      target="reconciled"
-                      handleChange={this._handleChange}
-                  />  
-              }
-            </div>
+          {reconciled && 
+            <EditableInput label="Reconciled" value={"Fully Reconcile"} />
           }
-            
-          {!this.state.editable &&
-            <EditableInput label="Reconciled" value={reconciled?  "Fully Reconcile" : "Keep Open"} />
-          }
-
         </div>
     
 
-        {this.state.editable &&
+        {/* {this.state.editable &&
           <div className="col-md-12 d-flex justify-content-end" onClick={() => this.props.preparePayment(this.state.payment)}>
             <span style={{
               display: 'flex', justifyContent:'center',
@@ -142,7 +114,7 @@ export default class ViewCredit extends Component {
               borderRadius: 5, border: '1px solid black'
             }}>save</span>
           </div>
-        }
+        } */}
 
         
 

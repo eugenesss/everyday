@@ -15,7 +15,6 @@ import { singleAccount, singleCustomer } from "Helpers/url/crm";
 function QuotationCard(props) {
   const { quotation } = props;
 
-
   return (
     <Wrapper>
       <Contact
@@ -27,8 +26,12 @@ function QuotationCard(props) {
         // indicator={quotation.latest}
       />
         <div className="d-flex flex-column">
-          {`Version: ${quotation.version}`}
-          {`State: ${quotation.state}`}
+          <div>
+            {`Version: ${quotation.version}`}
+          </div>
+          <div>
+            {`State: ${quotation.state}`}
+          </div>
         </div>
 
       <KeyDetails

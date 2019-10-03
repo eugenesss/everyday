@@ -199,9 +199,9 @@ class InvoiceForm extends Component {
     this.setState({formFieldsProducts: StateformFieldsProducts})
   }
 
-  _removeProdQuote =(key) =>{
+  _removeProdQuote = () =>{
     let StateformFieldsProducts = [...this.state.formFieldsProducts]
-    StateformFieldsProducts.splice(key, 1)
+    StateformFieldsProducts.pop()
     this.setState({formFieldsProducts: StateformFieldsProducts})
   }
 
@@ -248,7 +248,6 @@ class InvoiceForm extends Component {
   }
 
   _restart = () =>{
-    console.log('restart')
 
     let restartFormFieldsProducts = this.state.formFieldsProducts
     restartFormFieldsProducts = [{...formFieldsProducts}]
@@ -307,24 +306,7 @@ class InvoiceForm extends Component {
             <div className="row">
               <div className="col-5 d-block">
                 
-                {/* <FormMultiInput
-                  label="Company"
-                  value={formFields.accountId}
-                  required={!formFields.accountId}
-                  selectValues={accountsList}
-                  target="accountId"
-                  handleChange={this._handleChangeFormField}
-                />
-
-                <FormInput
-                  label="Attention to"
-                  value={formFields.attn_toId}
-                  required={!formFields.attn_toId}
-                  selectValues={this.state.attn_to_array}
-                  target="attn_toId"
-                  handleChange={this._handleChangeFormField}
-                /> */}
-
+    
                 {this.edit && 
                   <FormInput
                     label="Company"
@@ -415,8 +397,6 @@ class InvoiceForm extends Component {
                   />
                 </div>  
             </div>
-
-
             <div className="row">
                 <div className="col-11">
                   <FormInput
@@ -439,36 +419,6 @@ class InvoiceForm extends Component {
             desc="Please state down the description, unit, price and tax option clearly"
           ></FormInputLayout>
 
-          
-          <div className="row px-30 justify-content-md-end">
-              <div className="row col-md-11" style={{marginTop: 10}}>
-                <div className="col-md-12 d-flex justify-content-end">
-                  <div className="flex-column d-flex align-items-center">
-                    <AddCircleIcon
-                      variant="contained"
-                      color="primary"
-                      fontSize="large"
-                      // className="text-white ml-10"
-                      onClick={this._addNewProdQuote}
-                    />
-                    Add Product
-                  </div>
-                
-                  {this.state.formFieldsProducts.length > 1 && (
-                      <div className="flex-column d-flex align-items-center">
-                        <DeleteIcon
-                          variant="contained"
-                          color="primary"
-                          fontSize="large"
-                          onClick={this._removeProdQuote}
-                        />
-                        Delete Product            
-                      </div>
-                    )} 
-                  </div>
-              </div>
-          </div>
-
           <div className="row py-30 px-30 justify-content-md-center">
             
               <div className="col-11">
@@ -478,11 +428,41 @@ class InvoiceForm extends Component {
                   taxTable={taxTable}
                   handleChange={this._handleProdQuote}
                   // handleAdd={this._addNewProdQuote}
-                  handleRemove={this._removeProdQuote}
+                  // handleRemove={this._removeProdQuote}
                   restart={this._restart}
                   edit
                 />
               </div>
+
+
+              {/* <div className="row px-30 justify-content-md-end"> */}
+                  <div className="row col-md-11" style={{marginTop: 25}}>
+                    <div className="col-md-12 d-flex justify-content-end">
+                      <div className="flex-column d-flex align-items-center" onClick={this._addNewProdQuote}>
+                        <AddCircleIcon
+                          variant="contained"
+                          color="primary"
+                          fontSize="large"
+                          // className="text-white ml-10"
+                        />
+                        Add Product
+                      </div>
+                    
+                      {this.state.formFieldsProducts.length > 1 && (
+                        <div style={{marginLeft: 50}} className="flex-column d-flex align-items-center" onClick={this._removeProdQuote}>
+                          <DeleteIcon
+                            variant="contained"
+                            color="primary"
+                            fontSize="large"
+                          />
+                          Delete Product          
+                        </div>
+                      )} 
+                      </div>
+                  </div>
+              {/* </div> */}
+
+
           </div>
 
 

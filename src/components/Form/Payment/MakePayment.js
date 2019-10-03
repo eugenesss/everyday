@@ -1,11 +1,6 @@
 import React, {Component} from 'react'
-import { Form, FormGroup, Label, Col } from "reactstrap";
-// import FormSelectField from "Components/Form/Components/FormSelectField";
-// import FormTextField from "Components/Form/Components/FormTextField";
-import TextField from '@material-ui/core/TextField';
-// import NumberFormatCustom from "Components/Form/Components/NumberFormatCustom";
-import {KeyboardDatePicker} from '@material-ui/pickers';
-import Moment from 'moment'
+
+import Button from "@material-ui/core/Button";
 
 const paymentOption =  [{name:'Paypal', value: 'Paypal'}, {name:'Stripe', value: 'Stripe'}, {name:'Bank FAST', value: 'Bank FAST'}]
 const paymentDifferenceOptions =  [{name:'Keep Open', value: false}, {name:'Fully Reconcile', value: true}]
@@ -15,6 +10,7 @@ import FormInput from "Components/Form/Components/FormInput";
 import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
 import AppConfig from 'Constants/AppConfig'
 import Checkbox from '@material-ui/core/Checkbox';
+import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
 
 
 export default class MakePayment extends Component {
@@ -28,6 +24,7 @@ export default class MakePayment extends Component {
             invoiceId: this.props.invoice.id,
             invoiceQuote: this.props.invoice.quoteID,
             reconcileInvoice: false,
+
             amount : 0,
             paymentMethod: '',
             date: new Date(),
@@ -40,9 +37,31 @@ export default class MakePayment extends Component {
     })
 
     handleChange = (a, b) => {
-        let singlePayment = {...this.state.singlePayment}
-        singlePayment[a] = b
-        this.setState({singlePayment: singlePayment})
+
+        if(a == "amount") {
+
+            let singlePayment = {...this.state.singlePayment}
+            const {reconciledAmount} = this.props
+
+            if(b >= reconciledAmount) {
+                singlePayment.amount = reconciledAmount
+                singlePayment.reconcileInvoice = true
+            } else {
+                singlePayment.amount = b
+                singlePayment.reconcileInvoice = false
+            }
+
+            this.setState({singlePayment: singlePayment})
+
+        } else {
+
+            let singlePayment = {...this.state.singlePayment}
+            singlePayment[a] = b
+
+            this.setState({singlePayment: singlePayment})
+
+        }
+        
     }
 
     _handleSubmitPayment = () => {
@@ -52,15 +71,16 @@ export default class MakePayment extends Component {
     
     render(){
 
-        const {invoice} = this.props
-
+        const {invoice, reconciledAmount} = this.props
+    
         const {
             amount,
             paymentMethod,
             date,
             paymentRef,
             memo,
-            paymentDifference
+            paymentDifference,
+            reconcileInvoice
         }  = this.state.singlePayment
 
         return(
@@ -68,35 +88,19 @@ export default class MakePayment extends Component {
 
                 <div className="row">
                     <div className="col-md-6">
-                            <FormInput
-                                label="Company"
-                                value={invoice.accountId.name}
-                                disabled ={true}
-                            />  
+                        <EditableInput label="Company" value={invoice.accountId.name} />
                     </div>
-                    <div className="col-md-6"></div>
+                    <div className="col-md-6">
+                        <EditableInput label="Amount Left" value={`$${reconciledAmount}`} />
+                    </div>
                 </div>
 
                 <div className="row">
 
                     <div className="col-md-6">
 
-                        {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}>
-                            <div style={{paddingRight: 10}}>Total Amount:</div>
-                            <div>${invoice.totalAmt}</div>
-                        </div> */}
-
                         <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}>
-                            {/* <div style={{paddingRight: 10}}>Paid Amount: </div> */}
-                            {/* <TextField
-                                value={this.state.paidAmount}
-                                onChange={this.handleChange}
-                                id="formatted-numberformat-input"
-                                name="paidAmount"
-                                InputProps={{
-                                    inputComponent: NumberFormatCustom,
-                                }}
-                            /> */}
+                       
                             <AmountInput
                                 label="Amount"
                                 value={amount}
@@ -106,24 +110,11 @@ export default class MakePayment extends Component {
                                     this.handleChange("amount", e.target.value)
                                 }}
                             />
-                            {/* <FormInput
-                                label="Payment Method"
-                                value={this.state.paymentMethod}
-                                required={!this.state.paymentMethod}
-                                selectValues={paymentOption}
-                                target="paymentMethod"
-                                handleChange={this.handleChange}
-                            />   */}
+                   
                         </div>
                     
                         <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}>
-                            {/* <div style={{paddingRight: 10}}>Payment Method: </div> */}
-                            {/* <FormSelectField
-                                value={this.state.paymentMethod}
-                                target={"paymentMethod"}
-                                handleChange ={this.handleChange}
-                                selectValues={paymentOption}
-                            />  */}
+                            
                             <FormInput
                                 label="Payment Method"
                                 value={paymentMethod}
@@ -131,17 +122,12 @@ export default class MakePayment extends Component {
                                 selectValues={paymentOption}
                                 target="paymentMethod"
                                 handleChange={this.handleChange}
-                            />                
+                            />  
+
                         </div>
 
                         <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}>
-                            {/* <div style={{paddingRight: 10}}>Payment Differences: </div>
-                            <FormSelectField
-                                value={this.state.paymentDifference}
-                                target={"paymentDifference"}
-                                handleChange ={this.handleChange}
-                                selectValues={paymentDifferenceOptions}
-                            />    */}
+                            
                             <FormInput
                                 label="Payment Difference"
                                 value={paymentDifference}
@@ -149,7 +135,8 @@ export default class MakePayment extends Component {
                                 selectValues={paymentDifferenceOptions}
                                 target="paymentDifference"
                                 handleChange={this.handleChange}
-                            />                     
+                            />   
+
                         </div>
 
                     </div>
@@ -194,16 +181,9 @@ export default class MakePayment extends Component {
                         </div>
 
                         <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}>
-                            {/* <div style={{paddingRight: 10}}>Memo: </div>
-                            <FormTextField
-                                placeholder={"e.g. Invoice SAS/003"}
-                                value={this.state.memo}
-                                handleChange={this.handleChange}
-                                target={'memo'}
-                                //targetType={targetType}
-                            /> */}
+                           
                             <FormInput
-                                label="Message"
+                                label="Memo"
                                 placeholder={"Enter message.."}
                                 value={memo}
                                 target="memo"
@@ -213,27 +193,29 @@ export default class MakePayment extends Component {
 
                     </div>
 
-                    <div>
-                        <span>Reconcile Invoice</span>
-                        <div>
-                            <Checkbox
-                                checked={this.state.reconcileInvoice}
-                                // disabled
-                                color="primary"
-                                style={{
-                                    color: AppConfig.themeColors.primary
-                                }}
-                                onChange={event => {
-                                    this.handleChange('reconcileInvoice', event.target.checked)
-                                }}
-                            />
-                        </div>
+                    <div style={{marginLeft: 10,  marginTop: 5}}>
+                        <span style={{color: 'rgba(0, 0, 0, 0.54)'}}>Reconciled</span>
+                        
+                        <Checkbox
+                            checked={reconcileInvoice}
+                            color="primary"
+                            style={{color: AppConfig.themeColors.primary}}
+                            onChange={event => {
+                                this.handleChange('reconcileInvoice', event.target.checked)
+                            }}
+                        />
+                        
                     </div>
 
-
-                    <div style={{marginTop: 25, display: 'flex'}} className="col-md-12">
-                        <div onClick={this._handleSubmitPayment} style={{marginRight: 25}}>Register Payment</div>
-                        {/* <div onClick={this._handleSubmitPayment}>Cancel</div> */}
+                    <div style={{marginTop: 25, marginBottom: 25}} className="col-md-12">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className="text-white"
+                            onClick={this._handleSubmitPayment}
+                        >
+                            Make Payment
+                        </Button>
                     </div>
                 
                 </div>

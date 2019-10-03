@@ -100,8 +100,7 @@ class acct_view_invoice extends Component {
       this.props.makePaymentIncompleteFields('payment method')
       return
     }
-    
-
+  
     
     let payment = {
       payment: {
@@ -125,16 +124,15 @@ class acct_view_invoice extends Component {
 
     this.props.makePayment({payment: payment, balance: []})
 
-
     this.launchMakePaymentDialog();
   };
 
 
   render() {
-    const { loading, invoice, payment } = this.props.invoiceToView;
+
+    const { loading, invoice, payment, amount } = this.props.invoiceToView;
 
     let buttonCollection = null;
-    let moreButtons = null;
 
     if (invoice) {
       switch (invoice.state) {
@@ -174,11 +172,7 @@ class acct_view_invoice extends Component {
                 more: [
                   {
                     label: "New Version Invoice",
-                    onClick: () => {
-                      // this.props.InvoiceHandleStateCreateNewVersion(
-                      //   invoice.id,
-                      //   "Invoice"
-                      // )
+                    onClick: () => {                   
                       this.props.InvoiceHandleStateUpdate(invoice.id, "Current")
                     }
                   },
@@ -206,12 +200,7 @@ class acct_view_invoice extends Component {
                     {
                       label: "New Version",
                       onClick: () => {
-                        // this.props.InvoiceHandleStateCreateNewVersion(
-                        //   invoice.id,
-                        //   "Invoice"
-                        // )
                         this.props.InvoiceHandleStateUpdate(invoice.id, "Current")
-
                       }
                     }
                   ]
@@ -265,12 +254,12 @@ class acct_view_invoice extends Component {
 
           <div className="col-md-9">
           
-
             <ProfileTabs loading={false}>
                   <div label="Overview">
                     <OverviewTab
                       quotation={invoice}
                       payment = {payment}
+                      reconciledAmount={amount}
                     />
                   </div>
 
@@ -307,6 +296,7 @@ class acct_view_invoice extends Component {
             <div className="row">
               <div className="col">
                 <MakePayment
+                  reconciledAmount={amount}
                   invoice={invoice}
                   handleHide={this.launchMakePaymentDialog}
                   makePayment={this.makePayment}

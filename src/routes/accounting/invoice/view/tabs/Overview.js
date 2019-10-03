@@ -15,8 +15,9 @@ import ViewInvoiceReconcile from "Components/Accounting/Invoice/ViewInvoiceRecon
 
 
 function QuotationOverviewTab(props) {
-  const { quotation, payment } = props;
-  
+
+  const { quotation, payment, reconciledAmount} = props;
+
   return (
     <React.Fragment>
       <div className="row">
@@ -27,57 +28,59 @@ function QuotationOverviewTab(props) {
           
             <BgCard contentCustomClasses={"d-flex flex-column"}>
 
-                <div className="d-flex flex-row">
-                    <div className="col-4">                    
+                <div className="d-flex flex-row justify-content-start">
+                    <div className="col-9">                    
                         <ShowInput
-                            label="Bill to"
+                            label="Billing Address"
                             value={quotation.billing}
                         />
+
+                        <ShowInput
+                            label="Shipping Address"
+                            value={quotation.shipping}
+                        />
+
+                        <ShowInput
+                            label="Description"
+                            value={quotation.description}
+                        />
+
                     </div>
 
-                    <div className="col-8 d-flex flex-column">
+                    <div className="col-3  flex-column">
                         
-                        <div className="d-flex">
-
-                            <div className="col-4 d-flex">
-                                <EditableInput 
-                                    style={{color:'#464d69'}}
-                                    label="Date of Issue"
-                                    input=""
-                                    value={getTheDate(quotation.createdAt)}
-                                />
-                            
-                            </div>
-                            
-                            <div className="col-4 d-flex">
-                                <EditableInput 
-                                    style={{color:'#464d69'}}
-                                    label="Due Date"
-                                    value={getTheDate(quotation.dueDate)}
-                                />
-                            </div>
-
-                            <div className="col-4 d-flex">
-
-                                <EditableInput 
-                                    style={{color:'#464d69'}}
-                                    label="Amount Due"
-                                    amount={quotation.totalAmt}
-                                    value={`$${quotation.totalAmt}`}
-                                />
-
-                            </div>
-
-                         
+                        <div className="d-flex  justify-content-end">
+                            <EditableInput 
+                                style={{color:'#464d69'}}
+                                label="Date of Issue"
+                                input=""
+                                value={getTheDate(quotation.createdAt)}
+                            />
+                        </div>
                         
+                        <div className="d-flex  justify-content-end">
+                            <EditableInput 
+                                style={{color:'#464d69'}}
+                                label="Due Date"
+                                value={getTheDate(quotation.dueDate)}
+                            />
+                        </div>
+
+                        <div className="d-flex  justify-content-end">
+
+                            <EditableInput 
+                                style={{color:'#464d69'}}
+                                label="Amount Left"
+                                value={`$${reconciledAmount}`}
+                            />
+
                         </div>
             
-
                     </div>
                 </div>
 
 
-                <div className="d-flex flex-row">
+                <div className="d-flex flex-row" style={{marginTop: 50}}>
                     <div className="col-12">
                         <InvoiceProductInput
                             products={quotation.quotationLine}
@@ -89,16 +92,30 @@ function QuotationOverviewTab(props) {
                 </div>
 
 
-                <div className="d-flex flex-row">
+                {payment && 
+                    <div>
+                        {payment.length > 0 && 
+                            <div className="d-flex flex-row">
+                                <div className="col-12">
+                                    <ViewInvoiceReconcile
+                                        title={"Payment Records"}
+                                        tableData={payment}
+                                    />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                
+                <div className="d-flex flex-row" style={{marginTop: 50}}>
                     <div className="col-12">
-                        <ViewInvoiceReconcile
-                            // title={nowShowing}
-                            // action={action}
-                            tableData={payment}
+                        <ShowInput
+                            label='Terms & Conditions'
+                            value={quotation.terms}
                         />
                     </div>
                 </div>
-
+                
             
             </BgCard>
 

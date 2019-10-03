@@ -153,7 +153,7 @@ export default class NewCredit extends PureComponent {
         //     paidOffContainer = null
         // }
 
-        paidOffContainer = null
+        // paidOffContainer = null
 
 
         return(
@@ -199,7 +199,7 @@ export default class NewCredit extends PureComponent {
                 
                 {container}
 
-                {paidOffContainer}
+                {/* {paidOffContainer} */}
 
                 {/* {rowIndex !== "" && balanceLength !== 0 || invoiceLength !== 0 &&
                     <div className="col-md-12">  

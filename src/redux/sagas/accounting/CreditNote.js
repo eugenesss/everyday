@@ -14,24 +14,18 @@ const getAllCreditNoteRequest = async () => {
   return result.data;
 };
 const getSingleCreditNoteRequest = async data => {
-  // console.log(`getSingleCreditNoteRequest`);
-  // console.log(data)
   const result = await api.post("/creditnotes/getSingleCompanyCreditNotes", {data: data});
   return result.data
 };
 
 const postSingleCreditNoteRequest = async data => {
-  // console.log(`postSingleCreditNoteRequest`);
-  // console.log(data)
   const result = await api.post("/creditnotes/credit", {data: data});
   return result.data
 };
 
 
 const convertSingleCreditNoteRequest = async payload => {
-  // console.log(`postSingleCreditNoteRequest`);
-  // console.log(data)
-  const result = await api.patch(`/creditnotes/${payload.id}`, payload);
+  const result = await api.post(`/creditnotes/convertcredit/`, {data: payload});
   return result.data
 };
 //=========================
@@ -64,7 +58,7 @@ function* postCreditNoteFromDB({ payload }) {
     yield delay(500);
     yield put(Actions.postSingleCreditNoteSuccess(data));
   } catch (error) {
-    yield put(Actions.postCreditNoteFailure(error));
+    yield put(Actions.postSingleCreditNoteFailure(error));
   }
 }
 
@@ -72,7 +66,7 @@ function* convertCreditNoteFromDB({ payload }) {
   try {
     const data = yield call(convertSingleCreditNoteRequest, payload);
     yield delay(500);
-    yield put(Actions.converSingleCreditNoteSuccess(data));
+    yield put(Actions.converSingleCreditNoteSuccess(data.data));
   } catch (error) {
     yield put(Actions.converSingleCreditNoteFailure(error));
   }

@@ -51,8 +51,7 @@ class acct_new_payment extends Component {
       date: new Date(),
       paymentRef: '',
       memo : '',
-      paidOff: "",
-      reconciled: "",
+      reconciled : false,
       userId : localStorage.getItem('user_id'),
     },
 
@@ -130,21 +129,7 @@ class acct_new_payment extends Component {
     this.setState({InvoiceList: InvoiceList})
   }
 
-  onBalancePaymentCheck = (rowIndex, value) => {
-    let BalancePayment = [...this.state.BalancePayment]
 
-    if(!value){
-      BalancePayment[rowIndex].reconciled = true 
-      if(BalancePayment[rowIndex].allocation == 0){
-        BalancePayment[rowIndex].allocation = BalancePayment[rowIndex].amount
-      }
-    } else{
-      BalancePayment[rowIndex].reconciled = false 
-      // BalancePayment[rowIndex].allocation = 0
-    }
-  
-    this.setState({BalancePayment: BalancePayment})
-  }
 
   balanceHandleChange = (value, index) => {
     let BalancePayment = [...this.state.BalancePayment]
@@ -269,80 +254,6 @@ class acct_new_payment extends Component {
       // tableData,
     } = this.props.creditNoteState.creditNoteList
 
-    let container = null
-
-
-    if(fetchInvoice){
-      container = (
-        <RctPageLoader/>         
-      )
-    } else {
-      
-      switch(this.state.rowIndex) {
-        case 1:
-            // container = (
-            //   <FormInputLayout 
-            //     title="Credit Company"
-            //     desc="Please select the Paid Off option to determine if the credit note should be directed to company or use it for future invoices."
-            //   >
-            //   </FormInputLayout>
-            // )
-          break
-        case 2:
-              
-            // console.log('paidOff ', this.state.invoice.paidOff)
-
-            // if(this.state.InvoiceList.length > 0){
-            //   container = (
-            //     <InvoicesOneCompany
-            //       title={'All Invoices'}
-            //       tableData={this.state.InvoiceList}
-            //       onCheckList={this.onCheckList}
-            //       handleChange={this.handleChange}
-            //       _handleSelectedIndex={this._handleSelectedIndex}
-            //     />
-            //   )
-            // } else {
-
-            //   container = (
-            //     <FormInputLayout 
-            //       title="No Invoices Found"
-            //       desc="No matching records found in the database"
-            //     >
-            //     </FormInputLayout>
-            //   )
-              
-            // }
-
-          break
-        case 3:
-            // if(this.state.BalancePayment.length > 0){
-            //   container = (
-            //     <BalancePayment
-            //       title={'Debit Balances'}
-            //       tableData={this.state.BalancePayment}
-            //       onBalancePaymentCheck={this.onBalancePaymentCheck}
-            //       balanceHandleChange={this.balanceHandleChange}
-            //       _handleSelectedIndex={this._handleSelectedIndex}
-            //     />
-            //   )
-            // } else {
-            //   container = (
-            //     <FormInputLayout 
-            //       title="No Balance Payment Found"
-            //       desc="No matching records found in the database"
-            //     >
-            //     </FormInputLayout>
-            //   )
-            // }
-
-          break
-        default:
-          break
-      }
-      
-    }
-
 
     return loading ? (
       <RctPageLoader />
@@ -381,8 +292,6 @@ class acct_new_payment extends Component {
 
                 </FormInputLayout>
                 
-                {/* {container} */}
-
               </form>
 
             </FormWrapper>

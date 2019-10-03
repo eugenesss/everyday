@@ -38,7 +38,11 @@ class FormMultiInput extends PureComponent {
           {label}
         </InputLabel>
         {selectValues ? (
-          <Select value={value} onChange={e=> handleChange(target, e.target.value, keys)} input={<BaseInput />}>
+          <Select 
+          value={value} 
+          onChange={e=> handleChange(target, e.target.value, keys)} 
+          input={<BaseInput {...others} />}
+        >
             {selectValues &&
               selectValues.map((select, key) => (
                 <MenuItem key={key} value={select}>

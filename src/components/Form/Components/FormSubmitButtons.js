@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 
-const FormSubmitButtons = ({ onSave, onSaveNew, disabled, edit }) => {
+const FormSubmitButtons = ({ onSave, onSaveNew, disabled, edit, name }) => {
   return (
     <div className="d-block pr-20">
       {!edit && onSaveNew && (
@@ -16,7 +16,7 @@ const FormSubmitButtons = ({ onSave, onSaveNew, disabled, edit }) => {
         onClick={() => onSave()}
         disabled={!disabled}
       >
-        Save
+        {name? name : "Save"}
       </Button>
     </div>
   );

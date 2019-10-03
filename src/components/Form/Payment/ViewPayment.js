@@ -48,6 +48,7 @@ export default class ViewPayment extends Component {
     return (
       <div className="row">
         <div className="col-md-6" />
+        
         <div className="col-md-6">
        
           <EditableInput label="Payment Date" value={Moment(this.state.date).format("LLL")} />
@@ -55,46 +56,25 @@ export default class ViewPayment extends Component {
         </div>
 
         <div className="col-md-6">
-          {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
-          {/* <FormInput label="Company" value={this.state.customer} disabled={true} /> */}
+
           <EditableInput label="Company" value={this.state.customer} />
-          {/* </div> */}
-
-          {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
-
          
           <EditableInput label="Payment Method" value={this.state.paymentMethod} />
 
-          <EditableInput label="Payment Difference" value={this.state.paymentDifference} />
-
-          {/* </div> */}
-
-          {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
-
-    
-          {/* </div> */}
         </div>
 
         <div className="col-md-6">
-          {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
-          
+     
           <EditableInput label="Paid Amount" value={`$${this.state.paidAmount}`} />
 
-          {/* </div> */}
-
-          {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
-
-          <EditableInput label="Payment Refernece" value={this.state.paymentRef} />
-
-          {/* </div> */}
-
-          {/* <div style={{marginTop: 15, display:'flex', flexDirection:'row', alignItems:'center'}}> */}
-
-          <EditableInput label="Memo" value={this.state.memo} />
-
-    
-          {/* </div> */}
+          <EditableInput label="Payment Reference" value={this.state.paymentRef} />
+       
         </div>
+
+        <div className="col-md-12">
+          <EditableInput label="Memo" value={this.state.memo} />
+        </div>
+
       </div>
     );
   }

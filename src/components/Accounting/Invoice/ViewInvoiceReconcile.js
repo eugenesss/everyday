@@ -26,6 +26,7 @@ const ViewInvoiceReconcile = ({ tableData, loading, title, action, onCheckList }
       name: "credit_id",
       options: { display: "excluded", filter: false, sort: false }
     },
+
     // {
     //     label: `Payment #${tableMeta.rowData[0]}`,
     //     name: "credit_id",
@@ -38,7 +39,20 @@ const ViewInvoiceReconcile = ({ tableData, loading, title, action, onCheckList }
     //     }
     // },
 
-    
+    // {
+    //   label: "Invoice",
+    //   name: "quoteID",
+    //   options: { 
+    //     customBodyRender: (value, tableMeta) => {
+    //       if(value) {
+    //         return <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
+    //       } else {
+    //         return '-'
+    //       }
+    //     }
+    //   },
+    // },
+
     {
       label: "Type",
       name: "type",
@@ -49,45 +63,16 @@ const ViewInvoiceReconcile = ({ tableData, loading, title, action, onCheckList }
       },
     },
 
-
     {
-        label: "Amount",
-        name: "amount",
-        options: { 
+      label: "Amount",
+      name: "amount",
+      options: { 
         customBodyRender: (value, tableMeta) => {
             return `$${numberWithCommas(value)}`
         }
       },
     },
-    {
-        label: "Reconciled",
-        name: "reconciled",
-        options: {
-          customBodyRender: (value, tableMeta) => {
-  
-            if(value){
-              return (
-                <Checkbox
-                    checked={value}
-                    disabled
-                    color="primary"
-                    style={{
-                      color: AppConfig.themeColors.primary
-                    }}
-                />
-              )
-            } else {
-              return (
-                <Checkbox
-                    checked={value}
-                    disabled
-                />
-              )
-            }
-            
-          },
-        },
-      },
+
     {
         label: "Date",
         name: "updatedAt",
@@ -100,6 +85,37 @@ const ViewInvoiceReconcile = ({ tableData, loading, title, action, onCheckList }
         }
       }
     },
+
+    {
+      label: "Reconciled",
+      name: "reconciled",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+
+          if(value){
+            return (
+              <Checkbox
+                  checked={value}
+                  disabled
+                  color="primary"
+                  style={{
+                    color: AppConfig.themeColors.primary
+                  }}
+              />
+            )
+          } else {
+            return (
+              <Checkbox
+                  checked={value}
+                  disabled
+              />
+            )
+          }
+          
+        },
+      },
+    },
+  
    
 
 
@@ -141,7 +157,7 @@ const ViewInvoiceReconcile = ({ tableData, loading, title, action, onCheckList }
     null;
 
   return (
-    <BgCard fullBlock>
+    <BgCard fullBlock customStyles={{boxShadow: "none", borderRadius: 0, marginTop: 25}}>
       <RecordsList
         title={title}
         columns={columns}

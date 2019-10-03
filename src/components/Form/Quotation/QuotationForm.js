@@ -178,7 +178,7 @@ class QuotationForm extends Component {
 
   _removeProdQuote =() =>{
     let StateformFieldsProducts = [...this.state.formFieldsProducts]
-    StateformFieldsProducts.splice(StateformFieldsProducts.length-1, 1)
+    StateformFieldsProducts.pop()
     this.setState({formFieldsProducts: StateformFieldsProducts})
   }
 
@@ -276,7 +276,6 @@ class QuotationForm extends Component {
     const { formFields } = this.state;
 
 
-    console.log(this.state)
 
     return (
 
@@ -408,36 +407,7 @@ class QuotationForm extends Component {
             desc="Please state down the description, unit, price and tax option clearly"
           ></FormInputLayout>
 
-          
-          <div className="row px-30 justify-content-md-end">
-              <div className="row col-md-11" style={{marginTop: 10}}>
-                <div className="col-md-12 d-flex justify-content-end">
-                  <div className="flex-column d-flex align-items-center">
-                    <AddCircleIcon
-                      variant="contained"
-                      color="primary"
-                      fontSize="large"
-                      // className="text-white ml-10"
-                      onClick={this._addNewProdQuote}
-                    />
-                    Add Product
-                  </div>
-                
-                  {this.state.formFieldsProducts.length > 1 && (
-                      <div className="flex-column d-flex align-items-center">
-                        <DeleteIcon
-                          variant="contained"
-                          color="primary"
-                          fontSize="large"
-                          onClick={this._removeProdQuote}
-                        />
-                        Delete Product            
-                      </div>
-                    )} 
-                  </div>
-              </div>
-          </div>
-
+   
           <div className="row py-30 px-30 justify-content-md-center">
             
               <div className="col-11">
@@ -452,6 +422,37 @@ class QuotationForm extends Component {
                   edit
                 />
               </div>
+
+
+
+              {/* <div className="row px-30 justify-content-md-end"> */}
+              <div className="row col-md-11" style={{marginTop: 25}}>
+                    <div className="col-md-12 d-flex justify-content-end">
+                      <div className="flex-column d-flex align-items-center" onClick={this._addNewProdQuote}>
+                        <AddCircleIcon
+                          variant="contained"
+                          color="primary"
+                          fontSize="large"
+                          // className="text-white ml-10"
+                        />
+                        Add Product
+                      </div>
+                    
+                      {this.state.formFieldsProducts.length > 1 && (
+                        <div style={{marginLeft: 50}} className="flex-column d-flex align-items-center" onClick={this._removeProdQuote}>
+                          <DeleteIcon
+                            variant="contained"
+                            color="primary"
+                            fontSize="large"
+                          />
+                          Delete Product          
+                        </div>
+                      )} 
+                      </div>
+                  </div>
+              {/* </div> */}
+
+
           </div>
 
 

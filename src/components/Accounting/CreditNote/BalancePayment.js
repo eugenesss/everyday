@@ -56,9 +56,25 @@ const BalancePayment = ({ tableData, title, loading, action}) => {
 
   const columns = [
     {
-      name: "id",
+      name: "debit_id",
       options: { display: "excluded", filter: false, sort: false }
     },
+
+
+    {
+      label: "Invoice",
+      name: "quoteID",
+      options: { 
+        customBodyRender: (value, tableMeta) => {
+          if(value) {
+            return <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
+          } else {
+            return '-'
+          }
+        }
+      },
+    },
+
 
     {
       label: "Type",
@@ -76,6 +92,7 @@ const BalancePayment = ({ tableData, title, loading, action}) => {
         }
       }
     },
+
 
     {
       label: "Date",

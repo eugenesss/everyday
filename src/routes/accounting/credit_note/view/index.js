@@ -49,37 +49,30 @@ class acct_view_payment extends Component {
     // this.props.clearSinglePayment();
   }
 
-  // _submitPayment = () => {
-  //   const r = window.confirm(`Click OK to confirm the credit note`); if(r == true){
-  //     console.log('submit payment')
-  //     this.props.convertSingleCreditNote()
-  //   }
-  // }
-
-  state=({
-    payment: {},
-    paymentData : []
-  })
-
-  preparePayment = (item) => {
-    // this.setState({payment: item})
-    const r = window.confirm(`Click OK to confirm the credit note`); if(r == true){
-      this.props.convertSingleCreditNote(item)
+  _submitPayment = () => {
+    const r = window.confirm(`Are you sure? You are attempting to pay off the remaining amount. Click Ok to continue.`); if(r == true){
+      var id = this.props.match.params.id;
+      this.props.convertSingleCreditNote(id)
     }
-
   }
-
-  onCheckList = (rowIndex, value) => {
-    let data = this.state.paymentData
-    data[rowIndex].reconcile.reconcile = value
-    this.setState({paymentData: data})
-  }
-
-
 
   render() {
 
     const { loading, creditNote, creditReconcile } = this.props.creditNoteToView;
+
+    let buttonTitle = ""
+    let buttonDisable = true
+    if(creditNote){
+      switch(creditNote.reconciled){
+        case true:
+          buttonTitle = "Credit Note Paid"
+          buttonDisable = false
+          break
+        default:
+          buttonTitle = "Pay Off Remaining Balance"
+          break
+      }
+    }
 
     return loading ? (
       <RctPageLoader />
@@ -93,13 +86,12 @@ class acct_view_payment extends Component {
 
 
         <FormWrapper
-          // onSave={this._submitPayment}
-          disabled={false}
+          onSave={this._submitPayment}
+          name={buttonTitle}
+          disabled={buttonDisable}
           title={`Payment for ${creditNote.customerName}`}
         >
         
-          {/* {loading && <RctSectionLoader />} */}
-
           <form autoComplete="off">
 
             <FormInputLayout
@@ -109,17 +101,14 @@ class acct_view_payment extends Component {
 
               <ViewCredit
                 state={creditNote}
-                preparePayment={this.preparePayment}
               />
                 
             </FormInputLayout>
 
-            {creditNote.paidOff !==  "" &&
-              <BalancePayment
-                title={'Credit Balances'}
-                tableData={creditReconcile}
-              />
-            }
+            <BalancePayment
+              title={'Credit Balances'}
+              tableData={creditReconcile}
+            />
       
           </form>
 

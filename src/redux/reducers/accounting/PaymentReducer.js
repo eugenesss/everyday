@@ -68,7 +68,7 @@ export default (state = INIT_STATE, action) => {
         NotificationManager.success("Payment made successfully")
         setTimeout(() =>{
           window.location.reload();
-        }, 500)
+        }, 250)
         return {
           ...state,
         };
