@@ -2,11 +2,10 @@
  * Initialise Modules
  */
 
-import {
-  AsyncHomebaseComponent,
-  Async_report_component,
-  Async_calendar_component
-} from "Components/AsyncComponent/AsyncComponent";
+import HomebaseComponent from "Routes/homebase/AsyncRoutes";
+import CalendarComponent from "Routes/calendar/AsyncRoutes";
+import ReportComponent from "Routes/report/AsyncRoutes";
+
 import crm from "Routes/crm";
 import Accounting from "Routes/accounting";
 import Setting from "Routes/setting";
@@ -14,7 +13,7 @@ import Setting from "Routes/setting";
 export default [
   {
     path: "homebase",
-    component: AsyncHomebaseComponent
+    component: HomebaseComponent
   },
   {
     path: "crm",
@@ -26,11 +25,11 @@ export default [
   },
   {
     path: "reports",
-    component: Async_report_component
+    component: ReportComponent
   },
   {
     path: "calendar",
-    component: Async_calendar_component
+    component: CalendarComponent
   },
   {
     path: "settings",

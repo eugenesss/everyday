@@ -1,5 +1,5 @@
 import React from "react";
-import { ReportDefaultMessage } from "Components/Report/Components/DefaultMessages";
+import { ReportDefaultMessage } from "../DefaultMessages";
 
 // Report Components
 

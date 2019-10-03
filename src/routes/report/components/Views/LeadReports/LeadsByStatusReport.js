@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import ReportContainer from "Components/Report/Components/ReportContainer";
+import ReportContainer from "../../ReportContainer";
 import RctSectionLoader from "Components/RctSectionLoader";
 // Charts
 import LeadsByStatusChart from "Components/Charts/LeadsByStatusChart";

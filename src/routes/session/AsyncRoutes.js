@@ -1,7 +1,3 @@
-/**
- * AsyncComponent
- * Code Splitting Component / Server Side Rendering
- */
 import React from "react";
 import Loadable from "react-loadable";
 

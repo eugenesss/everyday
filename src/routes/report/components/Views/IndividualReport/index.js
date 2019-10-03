@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import ReportContainer from "Components/Report/Components/ReportContainer";
+import ReportContainer from "../../ReportContainer";
 import RctSectionLoader from "Components/RctSectionLoader";
 import NumberFormat from "react-number-format";
 
@@ -13,7 +13,8 @@ import PeriodSalesChart from "Components/Charts/PeriodSalesChart";
 import DealsPipelineChart from "Components/Charts/DealsPipelineChart";
 import LeadsByStatusChart from "Components/Charts/LeadsByStatusChart";
 // Actions
-import { getIndividualReport, getAllUsers } from "Ducks/report";
+import { getIndividualReport } from "Ducks/report";
+import { getAllUsers } from "Ducks/setting/userManagement";
 
 class IndividualReport extends PureComponent {
   constructor(props) {
