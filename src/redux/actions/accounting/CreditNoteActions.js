@@ -1,86 +1,71 @@
-import {
-  CREDIT_NOTE_LIST_DROPDOWN,
-  CHANGE_CREDIT_NOTE_LIST_VIEW,
-  GET_CREDIT_NOTE_FAILURE,
-  GET_ALL_CREDIT_NOTE,
-  GET_MY_CREDIT_NOTE,
-  GET_OPEN_CREDIT_NOTE,
-  GET_CLOSED_CREDIT_NOTE,
-  GET_CREDIT_NOTE_SUCCESS,
-  GET_SINGLE_CREDIT_NOTE,
-  GET_SINGLE_CREDIT_NOTE_SUCCESS,
-  CLEAR_SINGLE_CREDIT_NOTE
-} from "Types";
+import * as Types from "Types";
 
-/**
- * Change List View
- */
-export const changeCreditNoteView = newValue => ({
-  type: CHANGE_CREDIT_NOTE_LIST_VIEW,
-  payload: newValue
-});
-/**
- * Toggle DropDown
- */
-export const toggleCreditNoteDropDown = () => ({
-  type: CREDIT_NOTE_LIST_DROPDOWN
-});
 
-/**
- * Get CreditNote Failure
- */
-export const getCreditNoteFailure = error => ({
-  type: GET_CREDIT_NOTE_FAILURE,
-  payload: error
-});
-
-/**
- * Get CreditNote Success
- */
-export const getCreditNoteSuccess = data => ({
-  type: GET_CREDIT_NOTE_SUCCESS,
-  payload: data
-});
 
 /**
  * Get All CreditNote
  */
-export const getAllCreditNote = () => ({
-  type: GET_ALL_CREDIT_NOTE
+export const getAllCreditNote = data => ({
+  type: Types.GET_ALL_CREDIT_NOTE,
+  payload: data
+});
+export const getAllCreditNoteSuccess = data => ({
+  type: Types.GET_ALL_CREDIT_NOTE_SUCCESS,
+  payload: data
+});
+export const getAllCreditNoteFailure = () => ({
+  type: Types.GET_ALL_CREDIT_NOTE_FAILTURE
 });
 
-/**
- * Get My CreditNote
- */
-export const getMyCreditNote = () => ({
-  type: GET_MY_CREDIT_NOTE
-});
 
-/**
- * Get Open CreditNote
- */
-export const getOpenCreditNote = () => ({
-  type: GET_OPEN_CREDIT_NOTE
-});
-
-/**
- * Get Closed CreditNote
- */
-export const getClosedCreditNote = () => ({
-  type: GET_CLOSED_CREDIT_NOTE
-});
 
 /**
  * Get Single CreditNote
  */
-export const getSingleCreditNote = credID => ({
-  type: GET_SINGLE_CREDIT_NOTE,
-  payload: credID
-});
-export const getSingleCreditNoteSuccess = data => ({
-  type: GET_SINGLE_CREDIT_NOTE_SUCCESS,
+export const getSingleCreditNote = data => ({
+  type: Types.GET_SINGLE_CREDIT_NOTE,
   payload: data
 });
-export const clearSingleCreditNote = () => ({
-  type: CLEAR_SINGLE_CREDIT_NOTE
+export const getSingleCreditNoteSuccess = data => ({
+  type: Types.GET_SINGLE_CREDIT_NOTE_SUCCESS,
+  payload: data
 });
+export const getSingleCreditNoteFailure = () => ({
+  type: Types.GET_SINGLE_CREDIT_NOTE_FAILURE,
+});
+
+
+/**
+ * Post Single CreditNote
+ */
+export const postSingleCreditNote = data => ({
+  type: Types.POST_SINGLE_CREDIT_NOTE,
+  payload: data
+});
+export const postSingleCreditNoteSuccess = data => ({
+  type: Types.POST_SINGLE_CREDIT_NOTE_SUCCESS,
+  payload: data
+});
+export const postSingleCreditNoteFailure = () => ({
+  type: Types.POST_SINGLE_CREDIT_NOTE_FAILURE,
+});
+
+
+/**
+ * Post Single CreditNote
+ */
+export const convertSingleCreditNote = data => ({
+  type: Types.CONVERT_SINGLE_CREDIT_NOTE,
+  payload: data
+});
+export const converSingleCreditNoteSuccess = data => ({
+  type: Types.CONVERT_SINGLE_CREDIT_NOTE_SUCCESS,
+  payload: data
+});
+export const converSingleCreditNoteFailure = () => ({
+  type: Types.CONVERT_SINGLE_CREDIT_NOTE_FAILURE,
+});
+
+
+
+

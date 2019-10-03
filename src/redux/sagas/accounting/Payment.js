@@ -8,8 +8,8 @@ import api from "Api";
 // REQUESTS
 //=========================
 
-const makePaymentRequest = async data => {
-  const result = await api.post("/accountreconciles/payment", { data: data });
+const makePaymentRequest = async data => {  
+  const result = await api.post("/accountpayments/payment", { data: data });
   return result.data;
 };
 
@@ -38,7 +38,7 @@ const getAllCompanyPaymentRequest = async data => {
 
 const getAllInvoicesCompanyPaymentRequest = async data => {
   const result = await api.post("/accountreconciles/getAllInvoicesOneCompany", {
-    id: data
+    data: data
   });
   return result.data;
 };
@@ -62,13 +62,13 @@ function* fetchAllPaymentFromDB({ payload }) {
     const data = yield call(fetchAllPaymentRequest, payload);
     yield delay(500);
 
-    console.log(data.fields);
-
     // if(data.success != 1) {
     //   var error = new Error('Unable to fetch payment list');
     //   throw error
     // }
-
+ 
+    // return {getAllInvoicesPayment, checkingBalancePayment}
+   
     yield put(actions.fetchAllPaymentSuccess(data.fields));
   } catch (error) {
     yield put(actions.fetchAllPaymentFailure(error));
@@ -93,7 +93,7 @@ function* getSingleCompanyPaymentFromDB({ payload }) {
 function* getAllCompanyPaymentFromDB({ payload }) {
   try {
     const data = yield call(getAllCompanyPaymentRequest, payload);
-    console.log("getAllCompanyPaymentFromDB");
+
     yield delay(500);
     yield put(actions.fetchAllCompaniesSuccess(data.fields));
   } catch (error) {
@@ -105,6 +105,7 @@ function* getAllInvoicesCompanyPaymentFromDB({ payload }) {
   try {
     const data = yield call(getAllInvoicesCompanyPaymentRequest, payload);
     yield delay(500);
+
     yield put(actions.fetchAllInovicesOneCompanySuccess(data.fields));
   } catch (error) {
     yield put(actions.fetchAllInovicesOneCompanyFailure(error));

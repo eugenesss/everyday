@@ -7,13 +7,15 @@ function BgCard(props) {
     heading,
     fullBlock,
     customClasses,
+    customStyles,
     actionButtons,
     headingCustomClasses,
     contentCustomClasses
+
   } = props;
   return (
     <div className="d-block">
-      <div className={`rct-block ${customClasses ? customClasses : ""}`}>
+      <div className={`rct-block ${customClasses ? customClasses : ""}`} style={customStyles} >
         {heading && (
           <div
             className={`rct-block-title ${

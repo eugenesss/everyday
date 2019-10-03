@@ -14,10 +14,13 @@ const FormWrapper = props => (
           onSaveNew={props.onSaveNew}
           disabled={props.disabled}
           edit={props.edit}
+          name={props.name}
         />
       }
     />
+
     {props.children}
+
     <div className="row mb-30">
       <div className="col text-right">
         <FormSubmitButtons
@@ -25,9 +28,11 @@ const FormWrapper = props => (
           onSaveNew={props.onSaveNew}
           disabled={props.disabled}
           edit={props.edit}
+          name={props.name}
         />
       </div>
     </div>
+
   </React.Fragment>
 );
 

@@ -8,47 +8,57 @@ import { listOptions } from "Helpers/helpers";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import BgCard from "Components/Everyday/BgCard";
-
 import RctSectionLoader from "Components/RctSectionLoader";
 
 import Moment from "moment";
-
+import Checkbox from "@material-ui/core/Checkbox";
+import AppConfig from "Constants/AppConfig";
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const CreditNoteList = ({ tableData, loading, title, action }) => {
+const ViewInvoiceReconcile = ({
+  tableData,
+  loading,
+  title,
+  action,
+  onCheckList
+}) => {
   const columns = [
     {
-      name: "id",
+      name: "credit_id",
       options: { display: "excluded", filter: false, sort: false }
     },
-    {
-      label: "Customer",
-      name: "customerName",
-      options: {
-        customBodyRender: (value, tableMeta) => {
-          return (
-            // <NavLink to={`payments/${value.id}`}>{value.name}</NavLink>
-            <NavLink to={`credit_notes/${tableMeta.rowData[0]}`}>
-              {value}
-            </NavLink>
-          );
-        }
-      }
-    },
+
     // {
-    //   label: "# Invoice",
-    //   name: "invoiceQuote",
+    //     label: `Payment #${tableMeta.rowData[0]}`,
+    //     name: "credit_id",
+    //     options: {
+    //       customBodyRender: (value, tableMeta) => {
+    //         return (
+    //           <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
+    //         );
+    //       }
+    //     }
+    // },
+
+    // {
+    //   label: "Invoice",
+    //   name: "quoteID",
     //   options: {
     //     customBodyRender: (value, tableMeta) => {
-    //       return value
+    //       if(value) {
+    //         return <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
+    //       } else {
+    //         return '-'
+    //       }
     //     }
-    //   }
+    //   },
     // },
+
     {
-      label: "Payment Method",
-      name: "paymentMethod",
+      label: "Type",
+      name: "type",
       options: {
         customBodyRender: (value, tableMeta) => {
           return value;
@@ -56,17 +66,8 @@ const CreditNoteList = ({ tableData, loading, title, action }) => {
       }
     },
 
-    // {
-    //   label: "Customer",
-    //   name: "customerName",
-    //   options: {
-    //     customBodyRender: value => {
-    //       return value
-    //     }
-    //   }
-    // },
     {
-      label: "Paid Amount",
+      label: "Amount",
       name: "amount",
       options: {
         customBodyRender: (value, tableMeta) => {
@@ -74,51 +75,42 @@ const CreditNoteList = ({ tableData, loading, title, action }) => {
         }
       }
     },
+
     {
-      label: "Payment Ref",
-      name: "paymentRef",
+      label: "Date",
+      name: "updatedAt",
       options: {
-        customBodyRender: value => {
-          return value;
+        customBodyRender: (value, tableMeta) => {
+          return Moment(new Date(value)).format("LL");
+          //   return (
+          //     <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
+          //   );
         }
       }
     },
+
     {
-      label: "Payment Made",
-      name: "date",
+      label: "Reconciled",
+      name: "reconciled",
       options: {
-        customBodyRender: value => {
-          return Moment(new Date(value)).format("LL");
+        customBodyRender: (value, tableMeta) => {
+          if (value) {
+            return (
+              <Checkbox
+                checked={value}
+                disabled
+                color="primary"
+                style={{
+                  color: AppConfig.themeColors.primary
+                }}
+              />
+            );
+          } else {
+            return <Checkbox checked={value} disabled />;
+          }
         }
       }
     }
-    // {
-    //   label: "Paid Off",
-    //   name: "paidOff",
-    //   options: {
-    //     customBodyRender: value => {
-    //       return `${value}`
-    //     }
-    //   }
-    // },
-    // {
-    //   label: "Reconciled",
-    //   name: "reconciled",
-    //   options: {
-    //     customBodyRender: value => {
-    //       return `${value}`
-    //     }
-    //   }
-    // },
-    // {
-    //   label: "Remaining Amount ",
-    //   name: "duePayment",
-    //   options: {
-    //     customBodyRender: value => {
-    //       return `$${value.toLocaleString()}`
-    //     }
-    //   }
-    // },
   ];
 
   if (action == true) {
@@ -157,7 +149,10 @@ const CreditNoteList = ({ tableData, loading, title, action }) => {
     null;
 
   return (
-    <BgCard fullBlock>
+    <BgCard
+      fullBlock
+      customStyles={{ boxShadow: "none", borderRadius: 0, marginTop: 25 }}
+    >
       <RecordsList
         title={title}
         columns={columns}
@@ -169,4 +164,4 @@ const CreditNoteList = ({ tableData, loading, title, action }) => {
   );
 };
 
-export default CreditNoteList;
+export default ViewInvoiceReconcile;

@@ -55,8 +55,6 @@ class acct_invoice extends Component {
 
     const { showSummary, summary } = this.props.invoiceState.invoiceSummary;
 
-    console.log(tableData)
-
     
     return (
       <React.Fragment>

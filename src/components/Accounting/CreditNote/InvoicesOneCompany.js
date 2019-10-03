@@ -32,7 +32,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const InvoicesOneCompany = ({ tableData, loading, title, action, onCheckList, handleChange}) => {
+const InvoicesOneCompany = ({ tableData, loading, title, action, _handleSelectedIndex, handleChange}) => {
 
   const classes = useStyles();
 
@@ -84,67 +84,36 @@ const InvoicesOneCompany = ({ tableData, loading, title, action, onCheckList, ha
         }
       }
     },
+    
+    // {
+    //   label: "Open Balance",
+    //   name: "openBalance",
+    //   options: {
+    //     customBodyRender: value => {
+    //       return `$${numberWithCommas(value)}`
+    //     }
+    //   }
+    // },
+    
     {
-      label: "Open Balance",
-      name: "openBalance",
+      label: "Amount",
+      name: "amount",
       options: {
-        customBodyRender: value => {
-          return `$${numberWithCommas(value)}`
+        customBodyRender: (value, tableMeta) => {
+          // return `$${numberWithCommas(value)}`
+          return (
+            <Input
+              placeholder="Enter amount"
+              // className={classes.input}
+              value={value}
+              style={{margin:0}}
+              onChange={(e)=> handleChange(e.target.value, tableMeta.rowIndex)}
+            />
+          )
         }
       }
     },
-
-    {
-      label: "Reconciled",
-      name: "reconciled",
-      options: {
-        customBodyRender: (value, tableMeta, updateValue) => {
-          
-          if(value.disabled){
-            return (
-              <Checkbox
-                checked={value}
-                value="checkedA"
-                onChange={event => {
-                  onCheckList(tableMeta.rowIndex, value)
-                }}
-              />
-            )
-          } else {
-            return (
-              <Checkbox
-                checked={value}
-                value="checkedA"
-                onChange={event => {
-                  onCheckList(tableMeta.rowIndex, value)
-                }}
-              />
-            )
-          }
-          
-        },
-      },
-  },
-    
-  {
-    label: "Amount",
-    name: "amount",
-    options: {
-      customBodyRender: (value, tableMeta) => {
-        // return `$${numberWithCommas(value)}`
-        return (
-          <Input
-            placeholder="Enter amount"
-            // className={classes.input}
-            value={value}
-            style={{margin:0}}
-            onChange={(e)=> handleChange(e.target.value, tableMeta.rowIndex)}
-          />
-        )
-      }
-    }
-  },
-    
+      
 
   ];
 
@@ -176,13 +145,29 @@ const InvoicesOneCompany = ({ tableData, loading, title, action, onCheckList, ha
   }
 
 
-  listOptions.customToolbarSelect = (
-    selectedRows,
-    displayData,
-    setSelectRows
-  ) =>
-    // delete multiple function
-    null;
+  const options = {
+    selectableRows: true,
+    selectableRowsOnClick: true,
+    selectableRows: 'single',
+    customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+      <div></div>
+    ),
+    onRowsSelect: (curRowSelected, allRowsSelected) => {
+      if(allRowsSelected.length > 0) {
+        _handleSelectedIndex(allRowsSelected[0].index)
+      } else {
+        _handleSelectedIndex(null)
+      }
+    }
+  };
+
+  // listOptions.customToolbarSelect = (
+  //   selectedRows,
+  //   displayData,
+  //   setSelectRows
+  // ) =>
+  //   // delete multiple function
+  //   null;
 
   return (
     <BgCard fullBlock>
@@ -190,7 +175,7 @@ const InvoicesOneCompany = ({ tableData, loading, title, action, onCheckList, ha
         title={title}
         columns={columns}
         data={tableData}
-        options={listOptions}
+        options={options}
       />
       {loading && <RctSectionLoader />}
     </BgCard>

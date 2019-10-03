@@ -33,7 +33,10 @@ class acct_new_invoice extends Component {
             <title>Everyday | New Invoice</title>
             <meta name="description" content="Everyday Invoices Creation" />
         </Helmet>
-        <InvoiceForm title="sidebar.newQuotation" handleSubmit={this._invoiceParent} />
+        <InvoiceForm 
+          title="sidebar.newQuotation" 
+          handleSubmit={this._invoiceParent} 
+        />
       </React.Fragment>
     );
   }

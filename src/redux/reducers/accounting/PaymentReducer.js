@@ -13,6 +13,7 @@ const INIT_STATE = {
     invoicesList : [],
     fetchInvoice : false,
     fetchInvoiceList: [],
+    fetchBalancePayment: []
   },
   paymentToView: { loading: false, payment: [] }
 };
@@ -65,6 +66,9 @@ export default (state = INIT_STATE, action) => {
 
     case types.MAKE_PAYMENT_SUCCESS:
         NotificationManager.success("Payment made successfully")
+        setTimeout(() =>{
+          window.location.reload();
+        }, 250)
         return {
           ...state,
         };
@@ -141,12 +145,15 @@ export default (state = INIT_STATE, action) => {
         } 
 
     case types.FETCH_ALL_INVOICES_COMPANINES_SUCCESS:
+          // return {getAllInvoicesPayment, checkingBalancePayment}
+          
         return {
           ...state,
           paymentList: {
             ...state.paymentList,
             fetchInvoice : false,
-            fetchInvoiceList : action.payload
+            fetchInvoiceList : action.payload.getAllInvoicesPayment,
+            fetchBalancePayment: action.payload.checkingBalancePayment
           },
         } 
 

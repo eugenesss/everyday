@@ -135,6 +135,7 @@ const userResentPasswordEmail = async email => {
     return result;
   }
 };
+
 function* UserResentPassword({ payload }) {
   try {
     yield call(userResentPasswordEmail, payload.email);

@@ -699,6 +699,7 @@ export default (state = INIT_STATE, action) => {
           ...state,
           quotationList :{
             ...state.quotationList,
+            uploaded: false,
           }  
         };
 

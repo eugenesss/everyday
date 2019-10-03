@@ -13,12 +13,14 @@ import RctSectionLoader from "Components/RctSectionLoader";
 
 import Moment from "moment";
 import Checkbox from '@material-ui/core/Checkbox';
-
+import AppConfig from 'Constants/AppConfig'
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 const ViewInvoicePaymentList = ({ tableData, loading, title, action, onCheckList }) => {
+
+
   const columns = [
     {
       name: "id",
@@ -29,9 +31,14 @@ const ViewInvoicePaymentList = ({ tableData, loading, title, action, onCheckList
         name: "invoiceId",
         options: { 
         customBodyRender: (value, tableMeta) => {
-          return (
-            <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
-          );
+          if(value){
+            return (
+              <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
+            );
+          } else {
+            return '-'
+          }
+          
         }
       },
     },
@@ -40,7 +47,11 @@ const ViewInvoicePaymentList = ({ tableData, loading, title, action, onCheckList
         name: "dated",
         options: {
         customBodyRender: (value, tableMeta) => {
+          if(value){
             return Moment(new Date(value)).format("LL");
+          } else {
+            return '-'
+          }
 
         //   return (
         //     <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
@@ -53,11 +64,11 @@ const ViewInvoicePaymentList = ({ tableData, loading, title, action, onCheckList
         name: "dueDate",
         options: {
           customBodyRender: (value, tableMeta) => {
-            return Moment(new Date(value)).format("LL");
-
-            // return (
-            //   <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
-            // );
+            if(value){
+              return Moment(new Date(value)).format("LL");
+            } else {
+              return '-'
+            }
           }
         }
     },
@@ -66,56 +77,46 @@ const ViewInvoicePaymentList = ({ tableData, loading, title, action, onCheckList
         name: "originalAmount",
         options: {
           customBodyRender: (value, tableMeta) => {
-            return `$${numberWithCommas(value)}`
-
-            // return (
-            //   <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
-            // );
-          }
-        }
-    },
-    
-    {
-        label: "Open Balance",
-        name: "openBalance",
-        options: {
-          customBodyRender: (value, tableMeta) => {
-            return `$${numberWithCommas(value)}`
-
-            // return (
-            //   <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
-            // );
-          }
-        }
-    },
-    
-    {
-        label: "Reconcile",
-        name: "reconcile",
-        options: {
-          customBodyRender: (value, tableMeta, updateValue) => {
-            // console.log('reconcile value', value)
-            // return value? 'auto tick' : 'no tick'
-            // return (
-            //   <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
-            // );
-            if(value.disabled){
-              return (
-                <Checkbox
-                  checked={value.reconcile}
-                  value="checkedA"
-                  onChange={event => {
-                    onCheckList(tableMeta.rowIndex, !value.reconcile)
-                  }}
-                />
-              )
-            } else {
-              return "false"
+            if(value){
+              return `$${numberWithCommas(value)}`
+            } else{
+              return `-`
             }
-            
-          },
-        },
+
+          }
+        }
     },
+
+    {
+      label: "Reconciled",
+      name: "reconciled",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+
+          if(value){
+            return (
+              <Checkbox
+                  checked={value}
+                  disabled
+                  color="primary"
+                  style={{
+                    color: AppConfig.themeColors.primary
+                  }}
+              />
+            )
+          } else {
+            return (
+              <Checkbox
+                  checked={value}
+                  disabled
+              />
+            )
+          }
+          
+        },
+      },
+    },
+
     {
       label: "Allocation",
       name: "allocated",
@@ -124,7 +125,23 @@ const ViewInvoicePaymentList = ({ tableData, loading, title, action, onCheckList
           return `$${numberWithCommas(value)}`
         },
       }
-  },
+    },
+    // {
+    //     label: "Open Balance",
+    //     name: "openBalance",
+    //     options: {
+    //       customBodyRender: (value, tableMeta) => {
+    //         return `$${numberWithCommas(value)}`
+
+    //         // return (
+    //         //   <NavLink to={`invoices/${tableMeta.rowData[0]}`}>{value}</NavLink>
+    //         // );
+    //       }
+    //     }
+    // },
+    
+  
+
     // {
     //   label: "Total Invoices",
     //   name: "totalInvoices",

@@ -22,7 +22,7 @@ const INIT_STATE = {
     loading: false,
     summary: []
   },
-  invoiceToView: { loading: false, invoice: null }
+  invoiceToView: { loading: false, invoice: null, payment: null, amount: null }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -124,12 +124,15 @@ export default (state = INIT_STATE, action) => {
       };
 
     case types.GET_SINGLE_INVOICE_SUCCESS:
+
       return {
         ...state,
         invoiceToView: {
           ...state.invoiceToView,
           loading: false,
-          invoice: action.payload
+          invoice: action.payload.InvoiceSource,
+          payment: action.payload.ReconcileSource,
+          amount: action.payload.ReconcileAmount
         }
       };
 
@@ -239,7 +242,6 @@ export default (state = INIT_STATE, action) => {
           };
   
     case types.SUBMIT_NEW_INVOICE_FAILURE:
-          console.log('SUBMIT_NEW_INVOICE_FAILURE')
           return {
             ...state, 
             invoiceList: {
@@ -249,16 +251,14 @@ export default (state = INIT_STATE, action) => {
           };
   
     case types.RESTART_UPLOAD_STATUS:
-          console.log('RESTART_UPLOAD_STATUS')
-          return {
-            ...state, 
-            invoiceList: {
-              ...state.invoiceList,
-              uploaded: false
-            },
-          };
 
-
+        return {
+          ...state, 
+          invoiceList: {
+            ...state.invoiceList,
+            uploaded: false
+          },
+        };
       
     default:
       return { ...state };

@@ -19,21 +19,21 @@ function QuotationCard(props) {
     <Wrapper>
       <Contact
         noAvatar
-        name={"Quotation"}
+        name={"Invoice"}
         subHeading={
           `#${quotation.quoteID}`
         }
-        // indicator={quotation.latest}
       />
-        <div className="d-flex flex-column">
+
+      <div className="d-flex flex-column">
           <div>
             {`Version: ${quotation.version}`}
           </div>
           <div>
             {`State: ${quotation.state}`}
           </div>
-        </div>
-
+      </div>
+     
       <KeyDetails
         keyDetails={[
           {

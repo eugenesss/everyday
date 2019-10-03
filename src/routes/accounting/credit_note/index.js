@@ -7,71 +7,76 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // List View
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
-
-// List
 import CreditNoteList from "Components/Accounting/CreditNote/CreditNoteList";
 
 // Actions
 import {
-  changeCreditNoteView,
-  toggleCreditNoteDropDown,
   getAllCreditNote
 } from "Actions";
 
-class acct_credit_note extends Component {
+import { crednoteNewPage, singleCredNote } from "Helpers/url/accounting";
+
+
+class acct_payment extends Component {
+
   componentDidMount() {
     this.props.getAllCreditNote();
   }
 
+  refresh() {
+    // this.props.getAllLead();
+  }
+  
+  importPayment() {
+    // this.props.history.push(leadImportPage);
+  }
+
+  newCredit = () => {
+    this.props.history.push(crednoteNewPage);
+  }
+
+
   render() {
+    
     const {
-      dropdownOpen,
-      options,
-      nowShowing,
       action,
+      loading,
       tableData,
-      loading
-    } = this.props.creditNoteState.creditNoteList;
+    } = this.props.creditNoteState.creditNoteList
+
     return (
       <React.Fragment>
-        <Helmet>
-          <title>Everyday | Credit Notes</title>
-          <meta name="description" content="Everyday Invoice Management" />
-        </Helmet>
-        <PageTitleBar
-          title={
-            <div className="d-flex">
-              <ListViewSelector
-                dropdownOpen={dropdownOpen}
-                toggle={this.props.toggleCreditNoteDropDown}
-                options={options}
-                nowShowing={nowShowing}
-                onChangeValue={this.props.changeCreditNoteView}
-              />
-            </div>
-          }
-          createLink="/acct/new/credit_note"
-        />
-        <CreditNoteList
-          title={nowShowing}
-          action={action}
-          tableData={tableData}
-          loading={loading}
-        />
-      </React.Fragment>
+       <Helmet>
+         <title>Everyday | Payment</title>
+         <meta name="description" content="Everyday Payment Management" />
+       </Helmet>
+       <PageTitleBar
+         title={'All Credit Notes'}
+         actionGroup={{
+           add: { onClick: this.newCredit },
+           mid: { label: "Import", onClick: this.importPayment },
+           more: [{ label: "Refresh List", onClick: this.refresh }]
+         }}
+         createLink={crednoteNewPage}
+       />
+       {/* {showSummary && <ListSummary summary={summary} />} */}
+       <CreditNoteList
+         title={'All Credit Notes'}
+         action={action}
+         tableData={tableData}
+         loading={loading}
+       />
+     </React.Fragment>
     );
   }
 }
+
 const mapStateToProps = ({ accountingState }) => {
-  const { creditNoteState } = accountingState;
-  return { creditNoteState };
+  const { paymentState,creditNoteState } = accountingState;
+  return { paymentState, creditNoteState };
 };
 
 export default connect(
   mapStateToProps,
-  {
-    changeCreditNoteView,
-    toggleCreditNoteDropDown,
-    getAllCreditNote
-  }
-)(acct_credit_note);
+  { getAllCreditNote }
+)(acct_payment);

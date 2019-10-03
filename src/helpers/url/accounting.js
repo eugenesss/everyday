@@ -35,3 +35,5 @@ export const singlePayment = id => `${paymentPage}/${id}`;
 export const newPayment = paymentPage + "/new";
 export const editPayment = paymentPage + "/edit";
 export const importPayment = paymentPage + "/import";
+
+

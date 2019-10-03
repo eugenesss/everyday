@@ -34,15 +34,15 @@ const PaymentList = ({ tableData, loading, title, action }) => {
         }
       },
     },
-    {
-      label: "# Invoice",
-      name: "invoiceQuote",
-      options: {
-        customBodyRender: (value, tableMeta) => {
-          return value
-        }
-      }
-    },
+    // {
+    //   label: "# Invoice",
+    //   name: "invoiceQuote",
+    //   options: {
+    //     customBodyRender: (value, tableMeta) => {
+    //       return value
+    //     }
+    //   }
+    // },
     {
       label: "Payment Method",
       name: "paymentMethod",
@@ -64,7 +64,7 @@ const PaymentList = ({ tableData, loading, title, action }) => {
     // },
     {
       label: "Paid Amount",
-      name: "paidAmount",
+      name: "amount",
       options: {
         customBodyRender: (value, tableMeta) => {
           return `$${numberWithCommas(value)}`

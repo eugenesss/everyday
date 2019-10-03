@@ -10,12 +10,13 @@ import ShowInput from "Components/Everyday/Profile/Details/ShowInput";
 import { addNoteCustomer } from "Actions";
 
 import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/InvoiceProductInput";
+import ViewInvoiceReconcile from "Components/Accounting/Invoice/ViewInvoiceReconcile";
 
 
 
 function QuotationOverviewTab(props) {
-  const { quotation } = props;
-  
+
+  const { quotation, payment, reconciledAmount} = props;
 
   return (
     <React.Fragment>
@@ -27,7 +28,6 @@ function QuotationOverviewTab(props) {
           
             <BgCard contentCustomClasses={"d-flex flex-column"}>
 
-               
                 <div className="d-flex flex-row justify-content-start">
                     <div className="col-9">                    
                         <ShowInput
@@ -68,14 +68,13 @@ function QuotationOverviewTab(props) {
 
                         <div className="d-flex  justify-content-end">
 
-                                <EditableInput 
-                                    style={{color:'#464d69'}}
-                                    label="Amount Due"
-                                    amount={quotation.totalAmt}
-                                    value={`$${quotation.totalAmt}`}
-                                />
+                            <EditableInput 
+                                style={{color:'#464d69'}}
+                                label="Amount Left"
+                                value={`$${reconciledAmount}`}
+                            />
 
-                            </div>
+                        </div>
             
                     </div>
                 </div>
@@ -92,7 +91,22 @@ function QuotationOverviewTab(props) {
                     </div>
                 </div>
 
-            
+
+                {payment && 
+                    <div>
+                        {payment.length > 0 && 
+                            <div className="d-flex flex-row">
+                                <div className="col-12">
+                                    <ViewInvoiceReconcile
+                                        title={"Payment Records"}
+                                        tableData={payment}
+                                    />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                
                 <div className="d-flex flex-row" style={{marginTop: 50}}>
                     <div className="col-12">
                         <ShowInput
@@ -102,7 +116,7 @@ function QuotationOverviewTab(props) {
                     </div>
                 </div>
                 
-
+            
             </BgCard>
 
 

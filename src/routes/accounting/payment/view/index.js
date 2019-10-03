@@ -15,15 +15,6 @@ import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 // Credit Note Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
-// Invoice Credited Tab
-import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices";
-
-// Activity Log Tab
-// import ActivityLog from "Components/Everyday/ActivityLog";
-
-// Notes Tab
-// import NewNote from "Components/Form/Note/NewNote";
-// import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
 
 // InvoicePaymentList
 import ViewInvoicePaymentList from "Components/Accounting/Payment/ViewInvoicePaymentList";
@@ -61,19 +52,19 @@ class acct_view_payment extends Component {
   }
 
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
+  // getSnapshotBeforeUpdate(prevProps, prevState) {
 
-    if (prevState.paymentData.length != this.props.paymentToView.payment.length) {
-      return this.props.paymentToView.payment
-    }
-    return null;
-  }
+  //   if (prevState.paymentData.length != this.props.paymentToView.payment.length) {
+  //     return this.props.paymentToView.payment
+  //   }
+  //   return null;
+  // }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (snapshot !== null) {
-      this.setState({paymentData: snapshot})
-    }
-  }
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+  //   if (snapshot !== null) {
+  //     this.setState({paymentData: snapshot})
+  //   }
+  // }
 
 
 
@@ -88,8 +79,6 @@ class acct_view_payment extends Component {
   render() {
     const { loading, company, payment } = this.props.paymentToView;
 
-    console.log('payment')
-    console.log(payment)
 
     return loading ? (
       <RctPageLoader />
@@ -97,45 +86,45 @@ class acct_view_payment extends Component {
 
       <React.Fragment>
     
-      <Helmet>
-          <title>Everyday | View Payment</title>
-      </Helmet>
+        <Helmet>
+            <title>Everyday | View Payment</title>
+        </Helmet>
 
-      <FormWrapper
-        onSave={this._submitPayment}
-        // disabled={false}
-        title={`Payment for ${company.customerName}`}
-      >
-      
-        {/* {loading && <RctSectionLoader />} */}
+        <FormWrapper
+          onSave={this._submitPayment}
+          // disabled={false}
+          title={`Payment for ${company.customerName}`}
+        >
+        
+          {/* {loading && <RctSectionLoader />} */}
 
-        <form autoComplete="off">
-          <FormInputLayout
-            title="Key Information"
-            desc="Payment information"
-          >
-              <ViewPayment
-                invoice={company}
-                preparePayment={this.preparePayment}
-              />
-              
-          </FormInputLayout>
+          <form autoComplete="off">
+            <FormInputLayout
+              title="Key Information"
+              desc="Payment information"
+            >
+                <ViewPayment
+                  invoice={company}
+                  preparePayment={this.preparePayment}
+                />
+                
+            </FormInputLayout>
 
-          <div className="row border-top py-30 px-30 justify-content-md-center">
-            <div className="col-11">
-              <ViewInvoicePaymentList
-                  // title={nowShowing}
-                  // action={action}
-                  tableData={this.state.paymentData}
-                  loading={loading}
-                  onCheckList={this.onCheckList}
-              />
+            <div className="row border-top py-30 px-30 justify-content-md-center">
+              <div className="col-11">
+                <ViewInvoicePaymentList
+                    // title={nowShowing}
+                    // action={action}
+                    tableData={payment}
+                    loading={loading}
+                    onCheckList={this.onCheckList}
+                />
+              </div>
             </div>
-          </div>
 
-        </form>
-      </FormWrapper>
-             
+          </form>
+        </FormWrapper>
+              
              
       </React.Fragment>
     ) : (
