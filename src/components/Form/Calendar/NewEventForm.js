@@ -14,27 +14,25 @@ class NewEventForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      desc: "",
-      start: this.props.dayView
-        ? new Date(this.props.dayView.start).setHours(12)
-        : new Date(),
-      end: this.props.dayView
-        ? new Date(this.props.dayView.end).setHours(13)
-        : new Date().setHours(new Date().getHours() + 1),
-      title: "",
-      allDay: false
+      eventForm: {
+        desc: "",
+        start: this.props.dayView
+          ? new Date(this.props.dayView.start).setHours(12)
+          : new Date(),
+        end: this.props.dayView
+          ? new Date(this.props.dayView.end).setHours(13)
+          : new Date().setHours(new Date().getHours() + 1),
+        title: "",
+        allDay: false
+      },
+      error: null
     };
     this.editField = this.editField.bind(this);
-    this.showDesc = this.showDesc.bind(this);
   }
 
   editField = (element, value) => {
-    this.setState({ [element]: value });
+    this.setState({ eventForm: { ...this.state.eventForm, [element]: value } });
   };
-
-  showDesc() {
-    this.setState({ showDesc: !this.state });
-  }
 
   OnBlurValidation = () => {
     let state = { ...this.state.event };
@@ -62,6 +60,7 @@ class NewEventForm extends Component {
   ConfirmEvent = (eventableType, eventableId, formType) => {
     if (this.OnBlurValidation()) {
       let data = Object.assign({}, this.state);
+      delete data.error;
       if (eventableId && eventableType)
         data = { ...data, eventableId, eventableType };
       this.props.addEvent(data, formType);
@@ -69,7 +68,7 @@ class NewEventForm extends Component {
   };
 
   render() {
-    const { title, desc, start, end, allDay } = this.state;
+    const { title, desc, start, end, allDay } = this.state.eventForm;
     const { eventableType, eventableId, formType } = this.props;
     return (
       <form autoComplete="off">

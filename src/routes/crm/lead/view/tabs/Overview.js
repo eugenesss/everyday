@@ -5,7 +5,7 @@ import BgCard from "Components/Everyday/BgCard";
 // Comments Widget
 import Comments from "Components/Widgets/Comments";
 
-import { addNoteLead } from "Actions";
+import { addNoteLead } from "Ducks/crm/lead";
 
 function LeadOverviewTab(props) {
   const { lead } = props;

@@ -11,7 +11,7 @@ import Comments from "Components/Widgets/Comments";
 // Deal history widget
 import DealHistory from "../../components/DealHistory";
 
-import { addNoteDeal } from "Actions";
+import { addNoteDeal } from "Ducks/crm/deal";
 
 function OverviewTab(props) {
   const { deal } = props;

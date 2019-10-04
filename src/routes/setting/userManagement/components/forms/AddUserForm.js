@@ -13,7 +13,7 @@ import { withStyles } from "@material-ui/core/styles";
 import FormInput from "Components/Form/Components/FormInput";
 import BaseInput from "Components/Form/Components/BaseInput";
 
-import { addUser, onChangeAddUser } from "Actions";
+import { addUser, onChangeAddUser } from "Ducks/setting/userManagement";
 
 const styles = theme => ({
   item: {

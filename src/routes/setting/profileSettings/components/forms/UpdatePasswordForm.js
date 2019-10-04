@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import FormInput from "Components/Form/Components/FormInput";
 
-import { updatePassword } from "Actions";
+import { updatePassword } from "Ducks/session/auth";
 
 class UpdatePasswordForm extends Component {
   constructor(props) {

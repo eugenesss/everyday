@@ -5,7 +5,7 @@ import FormInput from "Components/Form/Components/FormInput";
 import { Button } from "@material-ui/core";
 import RctSectionLoader from "Components/RctSectionLoader";
 
-import { updateCurrentUser } from "Actions";
+import { updateCurrentUser } from "Ducks/session/auth";
 
 class UpdateUserDetailsForm extends Component {
   constructor(props) {
