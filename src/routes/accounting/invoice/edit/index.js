@@ -8,18 +8,18 @@ import { Helmet } from "react-helmet";
 import IntlMessages from "Util/IntlMessages";
 
 // Page Components
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader";
 
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import RctPageLoader from "Components/RctPageLoader";
 
-import InvoiceFields from "Components/Form/Components/Inputs/Accounting/InvoiceFields";
-import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
-import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/InvoiceProductInput";
+import InvoiceFields from "Components/Form/Inputs/Accounting/InvoiceFields";
+import AddressFormInput from "Components/Form/Inputs/AddressFormInput";
+import InvoiceProductInput from "Components/Form/Inputs/Accounting/InvoiceProductInput";
 import Button from "@material-ui/core/Button";
 
-import InvoiceForm from "Components/Form/Invoice/InvoiceForm";
+import InvoiceForm from "../components/InvoiceForm";
 
 // Actions
 import {
@@ -33,14 +33,13 @@ import {
   submitNewQuote,
   submitInvoice,
   getSingleInvoice
-} from "Actions";
-// import { clearSingleQuotation, addNewProdQuote, removeProdQuote, handleProdQuote,  handleChangeQuote, getAllAccount, getAllUsers, submitNewQuote} from "Actions";
+} from "Ducks/accounting/invoice";
 
-// addNoteToQuotation(acctID), onNoteChange, clearNote
-// Add events dialog
-// Delete Quotation, Edit Quotation, Transfer Quotation
+
+
 
 class acct_edit_quotation extends Component {
+
   UNSAFE_componentWillMount() {
     var id = this.props.match.params.id;
     this.props.getSingleInvoice(id);

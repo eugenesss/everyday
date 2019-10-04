@@ -13,7 +13,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // List
-import InvoiceList from "Components/Accounting/Invoice/InvoiceList";
+import InvoiceList from "./components/tables/InvoiceList";
 import { invoiceNewPage } from "Helpers/accountingURL";
 
 // Actions
@@ -22,9 +22,10 @@ import {
   toggleInvoiceDropDown,
   toggleInvoiceSummary,
   getAllInvoice
-} from "Actions";
+} from "Ducks/accounting/invoice";
 
 class acct_invoice extends Component {
+  
   componentDidMount() {
     this.props.getAllInvoice();
   }

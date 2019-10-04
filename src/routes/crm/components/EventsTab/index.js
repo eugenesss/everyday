@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { show, hide } from "redux-modal";
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 import EventsTable from "./EventTable";
 
 import AddEventDialog from "./AddEventDialog";

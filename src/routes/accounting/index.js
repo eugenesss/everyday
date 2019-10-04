@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 // async components
-import * as async from "Components/AsyncComponent/Accounting";
+import * as async from "./AsyncRoutes";
 import * as url from "Helpers/accountingURL";
 
 function acctSwitcher() {
@@ -42,7 +42,7 @@ function acctSwitcher() {
         <Route
           exact
           path={`${url.invoiceListPage}/:id`}
-          component={async.view_invoice}
+          component={async.acct_view_invoice}
         />
         <Route
           path={`${url.invoiceListPage}/:id/edit`}

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 
 // Comments Widget
 import Comments from "Components/Widgets/Comments";

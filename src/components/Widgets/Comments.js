@@ -4,9 +4,9 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 
-import BgCard from "Components/Everyday/BgCard";
-import BgCardFooter from "Components/Everyday/BgCard/BgCardFooter";
-import BaseInput from "Components/Form/Components/BaseInput";
+import BgCard from "Components/BgCard";
+import BgCardFooter from "Components/BgCard/BgCardFooter";
+import BaseInput from "Components/Form/BaseInput";
 import Avatar from "Components/Everyday/Avatar";
 
 // card component

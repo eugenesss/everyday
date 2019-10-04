@@ -1,9 +1,9 @@
 import React from "react";
 
 // form components
-import FormInput from "Components/Form/Components/FormInput";
-import DateTimePicker from "Components/Form/Components/Pickers/DateTimePicker";
-import DatePicker from "Components/Form/Components/Pickers/DatePicker";
+import FormInput from "Components/Form/FormInput";
+import DateTimePicker from "Components/Form/Pickers/DateTimePicker";
+import DatePicker from "Components/Form/Pickers/DatePicker";
 import { Button, Switch, FormControlLabel } from "@material-ui/core";
 
 function EditableEventInfo(props) {

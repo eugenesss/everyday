@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import RctSectionLoader from "Components/RctSectionLoader";
 
 // Form Layout
-import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
+import FormWrapper from "Components/Form/Layout/FormWrapper";
 import { KeyInformation, PersonalInformation } from "./Layout";
 
 // Input Components
-import FormInput from "Components/Form/Components/FormInput";
-import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
+import FormInput from "Components/Form/FormInput";
+import AddressFormInput from "Components/Form/Inputs/AddressFormInput";
 
 // Actions
 import { getCustomerFormFields } from "Ducks/crm/customer";

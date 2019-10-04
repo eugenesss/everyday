@@ -1,30 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 import Comments from "Components/Widgets/Comments";
 
 import { isSameDay, getTheDate, getTheTime } from "Helpers/helpers";
 import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
 import ShowInput from "Components/Everyday/Profile/Details/ShowInput";
 
-import { addNoteCustomer } from "Actions";
+import { addNoteCustomer } from "Ducks/accounting/invoice";
 
-import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/InvoiceProductInput";
-import ViewInvoiceReconcile from "Components/Accounting/Invoice/ViewInvoiceReconcile";
-
-
+import InvoiceProductInput from "Components/Form/Inputs/Accounting/InvoiceProductInput";
+import ViewInvoiceReconcile from "../../components/tables/ViewInvoiceReconcile";
 
 function QuotationOverviewTab(props) {
 
   const { quotation, payment, reconciledAmount} = props;
-
+  
   return (
     <React.Fragment>
       <div className="row">
         <div className="col">
-
-
-            {/* <BgCard contentCustomClasses={"d-flex"}> */}
           
             <BgCard contentCustomClasses={"d-flex flex-column"}>
 
@@ -66,16 +61,16 @@ function QuotationOverviewTab(props) {
                             />
                         </div>
 
-                        <div className="d-flex  justify-content-end">
+                        {quotation.state == "Confirmed" && 
+                            <div className="d-flex  justify-content-end">
+                                <EditableInput 
+                                    style={{color:'#464d69'}}
+                                    label="Amount Left"
+                                    value={`$${reconciledAmount}`}
+                                />
+                            </div>
+                        }
 
-                            <EditableInput 
-                                style={{color:'#464d69'}}
-                                label="Amount Left"
-                                value={`$${reconciledAmount}`}
-                            />
-
-                        </div>
-            
                     </div>
                 </div>
 
@@ -119,9 +114,6 @@ function QuotationOverviewTab(props) {
             
             </BgCard>
 
-
-
-
         </div>
       </div>
     </React.Fragment>
@@ -129,6 +121,8 @@ function QuotationOverviewTab(props) {
 }
 
 export default connect(
-  null,
-  { addNoteCustomer }
+    null,
+    { addNoteCustomer }
 )(QuotationOverviewTab);
+  
+  

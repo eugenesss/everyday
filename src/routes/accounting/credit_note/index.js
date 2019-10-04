@@ -7,10 +7,12 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // List View
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
-import CreditNoteList from "Components/Accounting/CreditNote/CreditNoteList";
+import CreditNoteList from "./components/tables/CreditNoteList";
 
 // Actions
-import { getAllCreditNote } from "Actions";
+import {
+  getAllCreditNote
+} from "Ducks/accounting/credit";
 
 import { crednoteNewPage, singleCredNote } from "Helpers/accountingURL";
 

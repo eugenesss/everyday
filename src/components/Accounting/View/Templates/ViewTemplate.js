@@ -1,6 +1,6 @@
 import React from "react";
 
-import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/InvoiceProductInput";
+import InvoiceProductInput from "Components/Form/Inputs/Accounting/InvoiceProductInput";
 import moment from "moment"
 
 

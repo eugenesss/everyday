@@ -9,7 +9,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 
 // Credit Note Tab
@@ -18,24 +18,25 @@ import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
 
 // InvoicePaymentList
-import NewPayment from "Components/Form/Payment/NewPayment"
-import InvoicesOneCompany from "Components/Accounting/Payment/InvoicesOneCompany";
-import BalancePayment from "Components/Accounting/Payment/BalancePayment";
+import NewPayment from "../components/NewPayment"
 
-import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
-import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
+import InvoicesOneCompany from "../components/tables/InvoicesOneCompany";
+import BalancePayment from "../components/tables/BalancePayment";
+
+
+import FormWrapper from "Components/Form/Layout/FormWrapper";
+import FormInputLayout from "Components/Form/Layout/FormInputLayout";
 
 import DialogRoot from "Components/Dialog/DialogRoot";
+import Button from "@material-ui/core/Button";
+
 
 // Actions
 import { 
   fetchAllCompanies, 
   fetchAllInovicesOneCompany,
-  handleRegErrorForm,
-  handleRegSuccessForm,
-  handleRegWarningForm,
   makePayment
-} from "Actions";
+} from "Ducks/accounting/payment";
 
 
 
@@ -67,7 +68,14 @@ class acct_new_payment extends Component {
    
     SubmitPaymentArray:[],
     redirectAllocation: false,
-    currentAllocation: ''
+    currentAllocation: '',
+
+    message : false,
+    messageTitle: "",
+    messageContent: "",
+
+    payment: {}, 
+    balance: {},
 
   })
 
@@ -201,7 +209,7 @@ class acct_new_payment extends Component {
       payment: this.state.invoice,
       invoices : SubmitPaymentArray
     }
-
+ 
     const calculatePaymentAmount = this.state.invoice.amount - currentAmount
 
     let BalancePayment = [...this.state.BalancePayment]
@@ -226,51 +234,73 @@ class acct_new_payment extends Component {
 
         if(!this.state.invoice.paymentDifference) {
         
-          const r = window.confirm(`Your current payment amount will lead to excess balance. Click OK to confirm excess amount to be saved into balance which will be surfaced during next payment or Cancel to return.`); if(r == true){
-            payment.balancePayment = calculatePaymentAmount
-            this.props.makePayment({payment: payment, balance: paymentBalance})
-          }
-
+          let messageContent = `Your current payment amount will lead to excess balance. Click OK to confirm excess amount to be saved into balance which will be surfaced during next payment or Cancel to return.`          
+          // this.props.makePayment({payment: payment, balance: paymentBalance})
+          this.setState({message : true, messageTitle: 'Confirm Payment', messageContent: messageContent, payment: payment, balance: paymentBalance})
         } else {
-          
-          const r = window.confirm(`You have set the reconciled to "Fully Reconciled". Click OK to confirm the remaining amount will not be reflected in the balance in your next payment or Cancel to return.`); if(r == true) {
-            payment.balancePayment = calculatePaymentAmount
-            this.props.makePayment({payment: payment, balance: paymentBalance})
-          }
 
+          let messageContent = `You have set the reconciled to "Fully Reconciled". Click OK to confirm the remaining amount will not be reflected in the balance in your next payment or Cancel to return.`
+          // payment.balancePayment = calculatePaymentAmount
+          // this.props.makePayment({payment: payment, balance: paymentBalance})
+          this.setState({message : true, messageTitle: 'Confirm Payment', messageContent: messageContent, payment: payment, balance: paymentBalance})
         }
 
       } else if (calculatePaymentAmount == 0){
 
-        // if(!this.state.invoice.paymentDifference) {
-        //   this.props.makePayment({payment: payment, balance: paymentBalance});
-        // } else {
-        //   const r = window.confirm(`You have set the reconciled to "Fully Reconciled", the balance of $${calculatePaymentAmount} will not be reflected in the balance in your next payment.`); if(r == true) {
-        //     this.props.makePayment({payment: payment, balance: paymentBalance})
-        //   }
-        // }
-        this.props.makePayment({payment: payment, balance: paymentBalance});
+        // this.props.makePayment({payment: payment, balance: paymentBalance});
+        let messageContent = `Are you sure? Click Ok to proceed with payment`
+        this.setState({message : true, messageTitle: 'Confirm Payment', messageContent: messageContent, payment: payment, balance: paymentBalance})
 
 
       } else {
-        const r = window.confirm(`Your payment amount does not match your invoice(s) payment, you have a record balance of $${calculatePaymentAmount}. Please check your payment again.`); if(r == true){}
+
+        let messageContent = `Your payment amount does not match your invoice(s) payment, you have a record balance of $${calculatePaymentAmount}. Please check your payment again.`
+        this.setState({message : true, messageTitle: 'Payment Error', messageContent: messageContent, payment: {}, balance: {}})
+
       }
+
 
     } else {
       // window.confirm('No items to make payment, please check your invoices again')
 
       if(paymentBalance.length > 0){
-        const r = window.confirm("You have opted to pay using existing balance(s) from previous payment, click OK to confirm or Cancel to return."); if(r == true){
-          this.props.makePayment({payment: {}, balance: paymentBalance})
-        }
+
+        let messageContent = "You have opted to pay using existing balance(s) from previous payment, click OK to confirm or Cancel to return."
+        // this.props.makePayment({payment: {}, balance: paymentBalance})
+        this.setState({message : true, messageTitle: 'Confirm Payment', messageContent: messageContent, payment: {}, balance: paymentBalance})
+
       } else {
-        const r = window.confirm('No payment detected, please key in the amount and payment details to proceed'); if(r == true){
-          this.props.makePayment({payment: {}, balance: paymentBalance})
-        }
+
+        let messageContent = 'No payment detected, please key in the amount and payment details to proceed'
+        this.setState({message : true, messageTitle: 'Payment Error', messageContent: messageContent, payment: {}, balance: {}})
+        // this.props.makePayment({payment: {}, balance: paymentBalance})
+
       }
 
     }
 
+  }
+
+  _toggleMessageRestart = () =>{
+    this.setState({message : false, messageTitle: "", messageContent: ""})
+  }
+
+  _handleSubmitPayment = () => {
+
+    if(this.state.messageTitle != 'Payment Error'){
+      const payment = this.state.payment
+      const balance = this.state.balance
+      this.props.makePayment({payment: payment, balance: balance})
+    }
+
+    this.setState({
+      message: false,
+      messageTitle: "", 
+      messageContent: "",
+      payment: {},
+      balance: {}
+    })
+    
   }
 
   render() {
@@ -413,30 +443,31 @@ class acct_new_payment extends Component {
                   </div> */}
 
 
-                {this.state.redirectAllocation && (
+                {this.state.message && (
                   <DialogRoot
-                    title="Allocate Paid Amount"
+                    title={this.state.messageTitle}
                     size="sm"
-                    show={this.state.redirectAllocation}
-                    handleHide={this._redirectAllocationRestart}
-                    dialogActionLabel="Transfer"
-                    dialogAction={this.onSubmit}
+                    show={this.state.message}
+                    handleHide={this._toggleMessageRestart}
                   >
                     <div className="row">
-                      {/* <div className="col">
-                        <MakePayment
-                          invoice={invoice}
-                          handleHide={this.launchMakePaymentDialog}
-                          makePayment={this.makePayment}
-                        />
-                      </div> */}
-                      show open balance,
+                        <div className="col-md-12">
 
-                      show current paid amount, 
+                          {this.state.messageContent}
 
-                      show how much you want to pay,
+                        </div>
 
-                      back and enter payment
+                        <div style={{marginTop: 25, marginBottom: 25}} className="col-md-6 mx-auto">
+                          <Button
+                              variant="contained"
+                              color="primary"
+                              className="text-white"
+                              onClick={this._handleSubmitPayment}
+                          >
+                              Ok
+                          </Button>
+                        </div>
+
                     </div>
                   </DialogRoot>
                 )}
@@ -466,9 +497,6 @@ export default connect(
   { 
     fetchAllCompanies,
     fetchAllInovicesOneCompany,
-    handleRegErrorForm,
-    handleRegSuccessForm,
-    handleRegWarningForm,
     makePayment
   }
 )(acct_new_payment);

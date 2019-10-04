@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Row } from "reactstrap";
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 
 const CompanyBlock = ({ company }) => {
   return (

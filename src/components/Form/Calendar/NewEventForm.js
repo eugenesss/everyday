@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 // form components
-import FormInput from "Components/Form/Components/FormInput";
-import DateTimePicker from "Components/Form/Components/Pickers/DateTimePicker";
-import DatePicker from "Components/Form/Components/Pickers/DatePicker";
+import FormInput from "Components/Form/FormInput";
+import DateTimePicker from "Components/Form/Pickers/DateTimePicker";
+import DatePicker from "Components/Form/Pickers/DatePicker";
 import { Button, Switch, FormControlLabel } from "@material-ui/core";
 
 // Actions
-import { handleRegErrorForm } from "Actions";
+import { handleRegErrorForm } from "Ducks/session/register";
 
 class NewEventForm extends Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 import React from "react";
-import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
+import FormInputLayout from "Components/Form/Layout/FormInputLayout";
 
 function AccountInformation(props) {
   const { office, website, fax, description, ...others } = props;

@@ -1,5 +1,5 @@
 import React from "react";
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 import { Link } from "react-router-dom";
 import {
   Table,

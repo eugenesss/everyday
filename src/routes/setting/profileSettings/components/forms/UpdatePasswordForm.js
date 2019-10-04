@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import Button from "@material-ui/core/Button";
-import FormInput from "Components/Form/Components/FormInput";
+import FormInput from "Components/Form/FormInput";
 
 import { updatePassword } from "Ducks/session/auth";
 

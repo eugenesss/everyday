@@ -8,14 +8,13 @@ import { Helmet } from "react-helmet";
 import IntlMessages from "Util/IntlMessages";
 
 // Page Components
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader";
-import QuotationForm from "Components/Form/Quotation/QuotationForm";
+import QuotationForm from "../components/QuotationForm";
 
 // Actions
-import { 
-  submitNewQuotation
-} from "Actions";
+import { submitNewQuotation } from "Ducks/accounting/quotation";
+
 
 class acct_new_quote extends Component {
   state = {};

@@ -1,14 +1,14 @@
 import React from "react";
 
 // Form Components
-import AmountInput from "Components/Form/Components/Inputs/AmountInput";
+import AmountInput from "Components/Form/Inputs/AmountInput";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
-import FormInput from "Components/Form/Components/FormInput";
-import BaseInput from "Components/Form/Components/BaseInput";
+import FormInput from "Components/Form/FormInput";
+import BaseInput from "Components/Form/BaseInput";
 
 const ConvertLeadForm = ({ dealStage, dealDetails, handleChange }) => {
   return (

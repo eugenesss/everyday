@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
-import AmountInput from "Components/Form/Components/Inputs/AmountInput";
+import AmountInput from "Components/Form/Inputs/AmountInput";
 import FormControl from "@material-ui/core/FormControl";
 import Edit from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";

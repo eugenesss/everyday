@@ -1,5 +1,5 @@
 import React from "react";
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
 
 import { KeyInformation, DealInformation } from "../../components/form/Layout";

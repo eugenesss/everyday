@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import FormInput from "Components/Form/Components/FormInput";
+import FormInput from "Components/Form/FormInput";
 import { Button } from "@material-ui/core";
 import RctSectionLoader from "Components/RctSectionLoader";
 

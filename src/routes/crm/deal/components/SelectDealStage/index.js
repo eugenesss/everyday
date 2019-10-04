@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import RctSectionLoader from "Components/RctSectionLoader";
 import DealStageStepper from "./Components/DealStageStepper";
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 
 //Page Req
 import DealStageContent from "./Components/DealStageContent";

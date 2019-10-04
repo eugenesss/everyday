@@ -1,8 +1,5 @@
-/**
- * Auth User Reducers
- */
 import { NotificationManager } from "react-notifications";
-import * as types from "Types";
+import * as types from "./RegisterTypes";
 
 /**
  * initial auth user

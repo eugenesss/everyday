@@ -1,5 +1,5 @@
 import React from "react";
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 import Avatar from "Components/Everyday/Avatar";
 
 const UserBlock = ({ user }) => {

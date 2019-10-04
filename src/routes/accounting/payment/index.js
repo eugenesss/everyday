@@ -7,15 +7,10 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // List View
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
-import PaymentList from "Components/Accounting/Payment/PaymentList";
+import PaymentList from "./components/tables/PaymentList";
 
 // Actions
-import {
-  changePaymentView,
-  togglePaymentDropDown,
-  getAllPayment,
-  fetchAllPayment
-} from "Actions";
+import {fetchAllPayment} from "Ducks/accounting/payment";
 
 import { newPayment } from "Helpers/accountingURL";
 
@@ -80,5 +75,5 @@ const mapStateToProps = ({ accountingState }) => {
 
 export default connect(
   mapStateToProps,
-  { changePaymentView, togglePaymentDropDown, fetchAllPayment }
+  { fetchAllPayment }
 )(acct_payment);

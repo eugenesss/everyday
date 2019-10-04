@@ -1,5 +1,5 @@
 import React from "react";
-import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
+import FormInputLayout from "Components/Form/Layout/FormInputLayout";
 
 function ShippingInformation(props) {
   const { address, ...others } = props;

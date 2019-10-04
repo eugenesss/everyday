@@ -15,7 +15,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
 // form components
-import BaseInput from "Components/Form/Components/BaseInput";
+import BaseInput from "Components/Form/BaseInput";
 
 import { onChangeUpdateUserRights, updateUserRights } from "Actions";
 

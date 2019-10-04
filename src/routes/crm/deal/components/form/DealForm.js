@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import RctSectionLoader from "Components/RctSectionLoader";
 
 // Form Layout
-import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
+import FormWrapper from "Components/Form/Layout/FormWrapper";
 import { KeyInformation, DealInformation } from "./Layout";
 
 // Input Components
-import FormInput from "Components/Form/Components/FormInput";
-import AmountInput from "Components/Form/Components/Inputs/AmountInput";
-import DatePickerInput from "Components/Form/Components/Pickers/DatePicker";
+import FormInput from "Components/Form/FormInput";
+import AmountInput from "Components/Form/Inputs/AmountInput";
+import DatePickerInput from "Components/Form/Pickers/DatePicker";
 
 // Actions
 import { getDealFormFields } from "Ducks/crm/deal";

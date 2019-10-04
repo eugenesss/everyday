@@ -10,8 +10,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { withStyles } from "@material-ui/core/styles";
 
 // Form Inputs
-import FormInput from "Components/Form/Components/FormInput";
-import BaseInput from "Components/Form/Components/BaseInput";
+import FormInput from "Components/Form/FormInput";
+import BaseInput from "Components/Form/BaseInput";
 
 import { addUser, onChangeAddUser } from "Ducks/setting/userManagement";
 

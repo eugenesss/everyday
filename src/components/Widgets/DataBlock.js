@@ -4,7 +4,7 @@ import RctSectionLoader from "Components/RctSectionLoader";
 import { kFormatter } from "Helpers/helpers";
 
 // rct card box
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 
 const DataBlock = ({ label, amount, loading }) => (
   <BgCard fullBlock>

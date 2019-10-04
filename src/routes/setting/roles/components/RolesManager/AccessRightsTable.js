@@ -12,7 +12,7 @@ import {
 
 // Switch and Checkbox
 import Switch from "@material-ui/core/Switch";
-import StyledCheckbox from "Components/Form/Components/StyledCheckbox";
+import StyledCheckbox from "Components/Form/StyledCheckbox";
 
 const useStyles = makeStyles(theme => ({
   row: {

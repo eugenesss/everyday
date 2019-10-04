@@ -4,13 +4,13 @@ import { withRouter } from "react-router-dom";
 import RctSectionLoader from "Components/RctSectionLoader";
 
 // Form Layout
-import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
+import FormWrapper from "Components/Form/Layout/FormWrapper";
 import { KeyInformation, LeadInformation, CompanyInformation } from "./Layout";
 
 // Input Components
-import FormInput from "Components/Form/Components/FormInput";
-import CompanyPicker from "Components/Form/Components/Pickers/CompanyPicker";
-import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
+import FormInput from "Components/Form/FormInput";
+import CompanyPicker from "Components/Form/Pickers/CompanyPicker";
+import AddressFormInput from "Components/Form/Inputs/AddressFormInput";
 
 // Actions
 import { getLeadFormFields } from "Ducks/crm/lead";
