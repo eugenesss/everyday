@@ -4,9 +4,6 @@ import SettingsTab from "./Tabs/SettingsTab";
 import DetailsTab from "./Tabs/DetailsTab";
 import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 
-// import AccessControl from "Components/AccessControl";
-// import NoAccessComponent from "Components/AccessControl/NoAccessComponent";
-
 const CompanyDetailsBlock = ({ company }) => {
   return (
     <React.Fragment>
