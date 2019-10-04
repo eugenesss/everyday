@@ -11,7 +11,7 @@ import { Scrollbars } from "react-custom-scrollbars";
 import Avatar from "Components/Everyday/Avatar";
 
 // Logout
-import { logoutUser } from "Actions";
+import { logoutUser } from "Ducks/session/auth";
 import Auth from "Auth";
 
 function MobileSideBar(props) {
@@ -102,8 +102,9 @@ function MobileSideBar(props) {
   );
 }
 
-const mapStateToProps = ({ authUser }) => {
-  const { loggedInUser } = authUser;
+const mapStateToProps = ({ sessionState }) => {
+  const { authState } = sessionState;
+  const { loggedInUser } = authState;
   return { loggedInUser };
 };
 

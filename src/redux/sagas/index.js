@@ -25,9 +25,9 @@ import { UserManagementSaga, RolesSaga } from "Ducks/setting";
 // calendar
 import { CalendarSaga } from "Ducks/calendar";
 
-// auth
-import loginSagas from "./auth/Login";
-import registerSagas from "./auth/Register";
+// session
+import { ForgetPasswordSaga, RegisterSaga } from "Ducks/session";
+import AuthSaga from "Ducks/session/auth/AuthSaga";
 
 // reports
 import { ReportSaga } from "Ducks/report";
@@ -51,13 +51,15 @@ export default function* rootSaga() {
     DealSaga(),
     CrmFieldSaga(),
 
-    // Auth
-    loginSagas(),
-    registerSagas(),
+    // Session
+    AuthSaga(),
+    ForgetPasswordSaga(),
+    RegisterSaga(),
 
     // System
     ReportSaga(),
     WidgetSaga(),
+
     // Calendar
     CalendarSaga(),
 

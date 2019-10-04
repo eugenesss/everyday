@@ -21,7 +21,7 @@ import {
   handleRegForm,
   handleRegErrorForm,
   resetSuccess
-} from "Actions";
+} from "Ducks/session/register";
 
 import {
   EmailValidator,
@@ -203,7 +203,7 @@ class RegisterSteps extends React.Component {
                 type="submit"
                 onClick={this.handleNext}
               >
-                <span style={{ minWidth: 100 }}>Next</span>
+                <span className="px-10">Next</span>
               </Fab>
               <p
                 className="fs-12 fw-light"
@@ -254,7 +254,7 @@ class RegisterSteps extends React.Component {
                 type="submit"
                 onClick={this.handleBack}
               >
-                <span style={{ width: 100 }}>Back</span>
+                <span className="px-10">Back</span>
               </Fab>
 
               <Fab
@@ -269,7 +269,7 @@ class RegisterSteps extends React.Component {
                 type="submit"
                 onClick={this.handleNext}
               >
-                <span style={{ width: 100 }}>Next</span>
+                <span className="px-10">Next</span>
               </Fab>
             </div>
           </div>
@@ -310,7 +310,7 @@ class RegisterSteps extends React.Component {
                 type="submit"
                 onClick={this.handleBack}
               >
-                <span style={{ width: 100 }}>Back</span>
+                <span className="px-10">Back</span>
               </Fab>
 
               <Fab
@@ -325,7 +325,7 @@ class RegisterSteps extends React.Component {
                 type="submit"
                 onClick={this.handleNext}
               >
-                <span style={{ width: 100 }}>Next</span>
+                <span className="px-10">Next</span>
               </Fab>
             </div>
           </div>
@@ -414,9 +414,9 @@ class RegisterSteps extends React.Component {
     );
   }
 }
-const mapStateToProps = ({ authUser }) => {
-  const { register } = authUser;
-  const { loading, success } = register;
+const mapStateToProps = ({ sessionState }) => {
+  const { registerState } = sessionState;
+  const { form, loading, success } = registerState;
   const {
     userInfo,
     companyInfo,
@@ -425,7 +425,7 @@ const mapStateToProps = ({ authUser }) => {
     repassword,
     priceplan,
     paymentInfo
-  } = register.form;
+  } = form;
 
   return {
     /*

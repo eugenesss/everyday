@@ -12,7 +12,7 @@ const registerUserRequest = async form => {
 };
 
 function* registerUserToDB() {
-  const getRegisterForm = state => state.authUser.register.form;
+  const getRegisterForm = state => state.sessionState.registerState.form;
   try {
     const form = yield select(getRegisterForm);
     const data = yield call(registerUserRequest, form);

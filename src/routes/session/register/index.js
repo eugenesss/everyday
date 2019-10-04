@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import RctPageLoader from "Components/RctPageLoader";
 
 // app config
 import AppConfig from "Constants/AppConfig";
@@ -16,16 +13,8 @@ class RegisterPage extends Component {
   };
 
   render() {
-    const { loading, success } = this.props;
-
-    // const loading = true
-    // console.log("loading", loading)
-    // console.log("success", success)
-
     return (
       <div className="login_index">
-        {/* {loading && <RctPageLoader />} */}
-
         <div
           className="register_placeholder"
           style={{ flexDirection: "column", justifyContent: "center" }}
@@ -82,27 +71,4 @@ class RegisterPage extends Component {
   }
 }
 
-// map state to props
-const mapStateToProps = ({ authUser }) => {
-  const { register } = authUser;
-  const { loading, success } = register;
-  return { loading, success };
-};
-
-export default connect(mapStateToProps)(RegisterPage);
-
-{
-  /* <div className="session-body" style={{ padding: "2% 4%" }}>
-  </div> */
-}
-
-// <h1 className="mb-20">
-//                     <Link to="/">
-//                       <img
-//                         src={AppConfig.appLogo}
-//                         alt="session-logo"
-//                         className="img-fluid"
-//                         width="180"
-//                       />
-//                     </Link>
-//                   </h1>
+export default RegisterPage;

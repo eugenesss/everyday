@@ -13,9 +13,14 @@ import HorizontalContainer from "./components/HorizontalContainer";
 import SystemDialogs from "Components/Everyday/SystemDialogs";
 
 // Main Routes (App level)
-import Login from "Routes/login";
-import Register from "Routes/register";
-import ForgetPassword from "Routes/forgetpassword/forgetpassword";
+import {
+  LoginComponent,
+  ForgetPasswordComponent,
+  RegisterComponent
+} from "../session";
+// import Login from "Routes/login";
+// import Register from "Routes/register";
+// import ForgetPassword from "Routes/forgetpassword/forgetpassword";
 
 // Error pages
 import NotFound from "./components/ErrorPages/Err404";
@@ -57,9 +62,13 @@ function App(props) {
           authUser={loggedInUser}
           component={HorizontalContainer}
         />
-        <Route path={`/login`} exact component={Login} />
-        <Route path={`/register`} exact component={Register} />
-        <Route path={`/forgetpassword`} exact component={ForgetPassword} />
+        <Route path={`/login`} exact component={LoginComponent} />
+        <Route path={`/register`} exact component={RegisterComponent} />
+        <Route
+          path={`/forgetpassword`}
+          exact
+          component={ForgetPasswordComponent}
+        />
 
         <Route component={NotFound} />
       </Switch>
@@ -68,8 +77,9 @@ function App(props) {
 }
 
 // map state to props
-const mapStateToProps = ({ authUser }) => {
-  const { loggedInUser } = authUser;
+const mapStateToProps = ({ sessionState }) => {
+  const { authState } = sessionState;
+  const { loggedInUser } = authState;
   return { loggedInUser };
 };
 

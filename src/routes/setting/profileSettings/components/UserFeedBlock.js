@@ -27,8 +27,9 @@ const UserFeedBlock = ({ loggedInUser, loading }) => {
     </React.Fragment>
   );
 };
-const mapStateToProps = ({ authUser }) => {
-  const { loggedInUser, loading } = authUser;
+const mapStateToProps = ({ sessionState }) => {
+  const { authState } = sessionState;
+  const { loggedInUser, loading } = authState;
   return { loggedInUser, loading };
 };
 

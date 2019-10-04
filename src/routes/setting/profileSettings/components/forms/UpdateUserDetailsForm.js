@@ -78,11 +78,6 @@ class UpdateUserDetailsForm extends Component {
   }
 }
 
-const mapStateToProps = ({ authUser }) => {
-  const { loggedInUser, loading } = authUser;
-  return { loggedInUser, loading };
-};
-
 export default connect(
   null,
   { updateCurrentUser }

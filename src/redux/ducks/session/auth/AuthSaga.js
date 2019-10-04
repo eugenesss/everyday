@@ -21,9 +21,8 @@ import {
   updatePasswordFailure
 } from "./AuthActions";
 
-import api from "Api";
-
 import Auth from "Auth";
+import api from "Api";
 
 /**
  * Login User
@@ -33,6 +32,10 @@ const signInUserWithEmailPasswordRequest = async (email, password) => {
     email: email,
     password: password
   });
+  return result.data;
+};
+const getUserProfileRequest = async userID => {
+  const result = await api.get(`/users/${userID}`, userID);
   return result.data;
 };
 
@@ -157,6 +160,9 @@ export function* updatePasswordWatcher() {
   yield takeEvery(UPDATE_PASSWORD, updatePasswordToDB);
 }
 
+//=======================
+// FORK SAGAS TO STORE
+//=======================
 export default function* rootSaga() {
   yield all([
     fork(signinUserWatcher),

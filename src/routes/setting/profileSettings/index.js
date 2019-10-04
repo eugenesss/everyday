@@ -26,8 +26,9 @@ class MyProfile extends Component {
   }
 }
 
-const mapStateToProps = ({ authUser }) => {
-  const { loggedInUser } = authUser;
+const mapStateToProps = ({ sessionState }) => {
+  const { authState } = sessionState;
+  const { loggedInUser } = authState;
   return { loggedInUser };
 };
 

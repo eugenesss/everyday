@@ -12,17 +12,18 @@ import Fab from "@material-ui/core/Fab";
 import AppConfig from "Constants/AppConfig";
 
 // redux action
-import {
-  signInAccount,
-  userResentEmail,
-  handleRegErrorForm
-} from "Ducks/session/auth";
+import { signInAccount } from "Ducks/session/auth";
 
 class Signin extends Component {
-  state = {
-    emailAddress: "",
-    password: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      emailAddress: "",
+      password: "",
+      error: null
+    };
+    this.onUserLogin = this.onUserLogin.bind(this);
+  }
 
   /**
    * On User Login
@@ -32,9 +33,7 @@ class Signin extends Component {
     if (this.state.emailAddress !== "" && this.state.password !== "") {
       this.props.signInAccount(this.state, this.props.history);
     } else {
-      this.props.handleRegErrorForm(
-        "Please type your email address and password"
-      );
+      this.setState({ error: "Email and password field can't be empty!" });
     }
   };
 
@@ -141,7 +140,11 @@ class Signin extends Component {
                         Forget Password?
                       </a>
                     </div>
-
+                    {this.state.error && (
+                      <div className="mt-10">
+                        <p className="text-danger">{this.state.error}</p>
+                      </div>
+                    )}
                     <FormGroup className="my-20">
                       <Fab
                         variant="extended"
@@ -150,7 +153,7 @@ class Signin extends Component {
                         color="primary"
                         type="submit"
                       >
-                        <span style={{ width: 120 }}>Sign in</span>
+                        <span className="px-10">Sign in</span>
                       </Fab>
 
                       <div className="row d-flex justify-content-center align-items-center">
@@ -199,8 +202,9 @@ class Signin extends Component {
     );
   }
 } // map state to props
-const mapStateToProps = ({ authUser }) => {
-  const { user, loading, error } = authUser;
+const mapStateToProps = ({ sessionState }) => {
+  const { authState } = sessionState;
+  const { user, loading, error } = authState;
   return { user, loading, error };
 };
 
@@ -208,9 +212,7 @@ export default withRouter(
   connect(
     mapStateToProps,
     {
-      signInAccount,
-      userResentEmail,
-      handleRegErrorForm
+      signInAccount
     }
   )(Signin)
 );

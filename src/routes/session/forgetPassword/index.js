@@ -12,7 +12,7 @@ import Fab from "@material-ui/core/Fab";
 import AppConfig from "Constants/AppConfig";
 
 // redux action
-import { userResetPassword, handleRegErrorForm } from "Actions";
+import { userResetPassword } from "Ducks/session/forgetPassword";
 import { EmailValidator } from "../register/components/Validation";
 
 class forgetpassword extends Component {
@@ -20,7 +20,8 @@ class forgetpassword extends Component {
 
   state = {
     emailAddress: "",
-    emailValidated: ""
+    emailValidated: "",
+    error: null
   };
 
   resetPassword = () => {
@@ -29,7 +30,7 @@ class forgetpassword extends Component {
     }
 
     if (this.state.emailAddress.length == 0) {
-      this.props.handleRegErrorForm("The email field is not filled up.");
+      this.setState({ error: "Email field cannot be empty" });
     }
   };
 
@@ -99,8 +100,12 @@ class forgetpassword extends Component {
                   </FormFeedback>
                   <FormFeedback valid>The email address is valid!</FormFeedback>
                 </FormGroup>
-
-                <div>
+                {this.state.error && (
+                  <div>
+                    <p className="text-danger">{this.state.error}</p>
+                  </div>
+                )}
+                <FormGroup>
                   <Fab
                     variant="extended"
                     className="text-white"
@@ -111,7 +116,7 @@ class forgetpassword extends Component {
                     }}
                     onClick={() => this.resetPassword()}
                   >
-                    <span style={{ width: 100 }}>Recover email</span>
+                    <span className="px-10">Recover email</span>
                   </Fab>
                   <div className="d-flex justify-content-center align-items-center">
                     <p
@@ -127,7 +132,7 @@ class forgetpassword extends Component {
                       </a>
                     </p>
                   </div>
-                </div>
+                </FormGroup>
               </div>
             </div>
           </div>
@@ -157,8 +162,9 @@ class forgetpassword extends Component {
     );
   }
 } // map state to props
-const mapStateToProps = ({ authUser }) => {
-  const { user, loading } = authUser;
+const mapStateToProps = ({ sessionState }) => {
+  const { forgetPasswordState } = sessionState;
+  const { user, loading } = forgetPasswordState;
   return { user, loading };
 };
 
@@ -166,8 +172,7 @@ export default withRouter(
   connect(
     mapStateToProps,
     {
-      userResetPassword,
-      handleRegErrorForm
+      userResetPassword
     }
   )(forgetpassword)
 );

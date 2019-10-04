@@ -2,10 +2,6 @@ import React from "react";
 import PricingBlock from "Components/Widgets/PricingBlock";
 import Radio from "@material-ui/core/Radio";
 
-// import { connect } from "react-redux";
-// import { handleRegForm } from "Actions";
-
-
 const SelectPlanForm = props => {
   const { priceplan, handleRegForm } = props;
   return (

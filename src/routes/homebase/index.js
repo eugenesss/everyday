@@ -34,8 +34,9 @@ class Homebase extends Component {
     );
   }
 }
-const mapStateToProps = ({ authUser }) => {
-  const { name } = authUser.loggedInUser;
+const mapStateToProps = ({ sessionState }) => {
+  const { authState } = sessionState;
+  const { name } = authState.loggedInUser;
   return { name };
 };
 

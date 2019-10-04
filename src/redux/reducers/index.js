@@ -4,6 +4,13 @@
 import { combineReducers } from "redux";
 import { reducer as modal } from "redux-modal";
 
+// session
+import {
+  AuthReducer,
+  RegisterReducer,
+  ForgetPasswordReducer
+} from "Ducks/session";
+
 // accounting
 import QuotationReducer from "./accounting/QuotationReducer";
 import InvoiceReducer from "./accounting/InvoiceReducer";
@@ -24,18 +31,16 @@ import {
 import { UserManagementReducer, RolesReducer } from "Ducks/setting";
 
 // system
-import authUserReducer from "./system/AuthUserReducer";
 import { ReportReducer } from "Ducks/report";
 import { CalendarReducer } from "Ducks/calendar";
 import { WidgetReducer } from "Ducks/widget";
 
 const reducers = combineReducers({
-  // sessionState: combineReducers({
-  //   authState: AuthReducer,
-  //   registerState: RegisterState,
-  //   forgetPasswordState: ForgetPasswordReducer
-  // }),
-  authUser: authUserReducer,
+  sessionState: combineReducers({
+    authState: AuthReducer,
+    registerState: RegisterReducer,
+    forgetPasswordState: ForgetPasswordReducer
+  }),
   crmState: combineReducers({
     leadState: LeadReducer,
     customerState: CustomerReducer,
@@ -55,8 +60,6 @@ const reducers = combineReducers({
   calendarState: CalendarReducer,
   usersState: UserManagementReducer,
   rolesState: RolesReducer,
-  // groupsState: groupsReducer,
-  // companyState: CompanySettingsReducer,
   modal
 });
 

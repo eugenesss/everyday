@@ -1,22 +1,11 @@
 import React from "react";
-import {
-  Form,
-  FormGroup,
-  Label,
-  Col,
-  Input,
-  FormFeedback,
-  FormText
-} from "reactstrap";
-// import { connect } from "react-redux";
-// import { handleRegForm } from "Actions";
+import { Form, FormGroup, Label, Col, Input, FormFeedback } from "reactstrap";
 
 const RegisterForm = props => {
   const { userInfo, companyInfo, email, password, repassword } = props;
   const { firstName, lastName } = userInfo;
   const { name } = companyInfo;
 
-  // console.log(firstName)
   // Parent Function to Handle Email Validation
   const { emailState, validateEmail, passwordState, validatePassword } = props;
 
@@ -269,16 +258,5 @@ const RegisterForm = props => {
     </div>
   );
 };
-
-// const mapStateToProps = ({ authUser }) => {
-//   const { register } = authUser;
-//   const { userInfo, companyInfo, email, password, repassword } = register.form;
-//   return { userInfo, companyInfo, email, password, repassword };
-// };
-
-// export default connect(
-//   mapStateToProps,
-//   { handleRegForm }
-// )(RegisterForm);
 
 export default RegisterForm;

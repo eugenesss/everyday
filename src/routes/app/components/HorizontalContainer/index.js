@@ -9,7 +9,7 @@ import AppContainer from "./layoutContainer";
 import moduleInit from "Services/_moduleInitialise";
 
 // redux action
-import { getUserRights } from "Actions";
+import { getUserRights } from "Ducks/session/auth";
 
 class HorizontalContainer extends Component {
   componentDidMount() {
@@ -39,8 +39,9 @@ class HorizontalContainer extends Component {
     );
   }
 }
-const mapStateToProps = ({ authUser }) => {
-  const { loggedInUser, loading, error } = authUser;
+const mapStateToProps = ({ sessionState }) => {
+  const { authState } = sessionState;
+  const { loggedInUser, loading, error } = authState;
   const { access } = loggedInUser;
   return { loading, error, access };
 };
