@@ -27,16 +27,20 @@ import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
 // InvoicePaymentList
 // import ViewInvoicePaymentList from "Components/Accounting/CreditNote/ViewInvoicePaymentList";
-import ViewCredit from "Components/Form/Credit/ViewCredit"
+import ViewCredit from "../components/ViewCredit"
 import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
 import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
 
-import BalancePayment from "Components/Accounting/CreditNote/BalancePayment";
+import BalancePayment from "../components/tables/BalancePayment";
 
 
 
 // Actions
-import { getSingleCreditNote, convertSingleCreditNote } from "Actions";
+// import { getSingleCreditNote, convertSingleCreditNote } from "Actions";
+// Actions
+import {
+  getSingleCreditNote, convertSingleCreditNote
+} from "Ducks/accounting/credit";
 
 class acct_view_payment extends Component {
 

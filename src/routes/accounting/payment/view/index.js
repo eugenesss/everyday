@@ -3,30 +3,21 @@ import { connect } from "react-redux";
 
 // Global Req
 import { Helmet } from "react-helmet";
-import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // Components
-import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader";
-import AccountingDetails from "Components/Accounting/View/AccountingDetails";
-import BgCard from "Components/Everyday/BgCard";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 
-// Credit Note Tab
-import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
-
-
 // InvoicePaymentList
-import ViewInvoicePaymentList from "Components/Accounting/Payment/ViewInvoicePaymentList";
-import ViewPayment from "Components/Form/Payment/ViewPayment"
+import ViewInvoicePaymentList from "../components/tables/ViewInvoicePaymentList";
+import ViewPayment from "../components/ViewPayment"
+
 
 import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
 import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
 
-
-
 // Actions
-import { getSingleCompanyPayment, clearSinglePayment } from "Actions";
+import { getSingleCompanyPayment, clearSinglePayment }  from "Ducks/accounting/payment";
 
 class acct_view_payment extends Component {
   componentDidMount() {

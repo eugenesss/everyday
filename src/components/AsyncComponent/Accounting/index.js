@@ -26,8 +26,6 @@ export const view_credit_note = Loadable({
 // accounting management new
 
 
-
-
 export const acct_payment_component = Loadable({
   loader: () => import("Routes/accounting/payment"),
   loading: () => <RctPageLoader />
@@ -48,18 +46,19 @@ export const acct_new_payment_component = Loadable({
 
 
 // invoice
-export const view_invoice = Loadable({
+
+export const acct_invoice_component = Loadable({
+  loader: () => import("Routes/accounting/invoice"),
+  loading: () => <RctPageLoader />
+});
+
+export const acct_view_invoice = Loadable({
   loader: () => import("Routes/accounting/invoice/view"),
   loading: () => <RctPageLoader />
 });
 
 export const acct_new_invoice_component = Loadable({
   loader: () => import("Routes/accounting/invoice/new"),
-  loading: () => <RctPageLoader />
-});
-
-export const acct_invoice_component = Loadable({
-  loader: () => import("Routes/accounting/invoice"),
   loading: () => <RctPageLoader />
 });
 

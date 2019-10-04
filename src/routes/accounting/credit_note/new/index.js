@@ -14,9 +14,9 @@ import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 
 
 // InvoicePaymentList
-import NewCredit from "Components/Form/Credit/NewCredit"
-import InvoicesOneCompany from "Components/Accounting/CreditNote/InvoicesOneCompany";
-import BalancePayment from "Components/Accounting/CreditNote/BalancePayment";
+import NewCredit from "../components/NewCredit"
+import BalancePayment from "../components/tables/BalancePayment";
+import InvoicesOneCompany from "../components/tables/InvoicesOneCompany";
 
 import FormWrapper from "Components/Form/Components/Layout/FormWrapper";
 import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
@@ -24,12 +24,14 @@ import FormInputLayout from "Components/Form/Components/Layout/FormInputLayout";
 import DialogRoot from "Components/Dialog/DialogRoot";
 
 // Actions
-import { 
-  fetchAllCompanies, 
-  fetchAllInovicesOneCompany,
+import {
   postSingleCreditNote
-} from "Actions";
+} from "Ducks/accounting/credit"
 
+import {
+  fetchAllCompanies,
+  fetchAllInovicesOneCompany
+} from "Ducks/accounting/payment"
 
 
 class acct_new_payment extends Component {
@@ -321,29 +323,3 @@ export default connect(
   }
 )(acct_new_payment);
 
-
-
-/*
-<div className="col-md-8">
-  <TabsWrapper>
-    <div icon="zmdi-shopping-cart-plus text-success" label="PAYMENT">
-      <ViewTemplate />
-    </div>
-    <div icon="zmdi-shopping-cart text-warning" label="INVOICE PAID">
-      <CreditedInvoices />
-    </div>
-    <div icon="zmdi-pizza text-info" label="ACTIVITY LOG">
-      <ActivityLog />
-    </div> 
-    <div icon="zmdi-assignment text-danger" label="NOTES">
-      <div className="row">
-        <div className="col-md-5">
-        </div>
-        <div className="col-md-7">
-          {/* <DisplayAllNotes notes={payment.notes} />
-        </div>
-      </div>
-    </div>
-  </TabsWrapper>
-</div>
-*/

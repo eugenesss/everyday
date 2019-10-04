@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-// Global Req
+// // Global Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import { Redirect } from "react-router";
@@ -10,34 +10,32 @@ import { Redirect } from "react-router";
 import MatButton from "@material-ui/core/Button";
 
 // Components
-import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader";
-import BgCard from "Components/Everyday/BgCard";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
-import AccountingDetails from "Components/Accounting/View/AccountingDetails";
-import MakePayment from "Components/Form/Payment/MakePayment";
-// Invoice Tab
-import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
+import MakePayment from "../components/MakePayment";
 
-// Activity Log Tab
-// import ActivityLog from "Components/Everyday/ActivityLog";
 
-// Notes Tab
-// import NotesLayout from "Components/Everyday/Notes/NotesLayout";
 import DialogRoot from "Components/Dialog/DialogRoot";
-
-// import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
+import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 
 
 // Actions
 import { newInvoice, invoiceEditPage, invoiceNewPage } from "Helpers/accountingURL";
-import { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion, makePayment, makePaymentIncompleteFields  } from "Actions";
 
-// addNoteToQuotation(acctID), onNoteChange, clearNote
-// Add events dialog
-// Delete Quotation, Edit Quotation, Transfer Quotation
+import { 
+  getSingleInvoice, 
+  clearSingleInvoice, 
+  deleteSingleInvoice, 
+  InvoiceHandleStateUpdate, 
+  InvoiceHandleStateCreateNewVersion, 
+  InvoiceHandleStateRevertPreviousVersion, 
+} from "Ducks/accounting/invoice";
 
-import InvoiceCard from "Components/Accounting/Invoice/InvoiceCard";
+import {
+  makePayment, 
+  makePaymentIncompleteFields
+} from 'Ducks/accounting/payment';
+
+import InvoiceCard from "../components/InvoiceCard";
 import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
 import OverviewTab from "./tabs/Overview";
 
@@ -54,7 +52,7 @@ class acct_view_invoice extends Component {
     this.props.getSingleInvoice(id);
   }
 
-  componentWillUnmount() {
+  componentWillMount() {
     this.props.clearSingleInvoice();
   }
 
@@ -129,7 +127,8 @@ class acct_view_invoice extends Component {
 
 
   render() {
-
+    
+   
     const { loading, invoice, payment, amount } = this.props.invoiceToView;
 
     let buttonCollection = null;
@@ -232,11 +231,12 @@ class acct_view_invoice extends Component {
     if (this.props.invoiceList.deleted) {
       return <Redirect to="/app/acct/invoices" />;
     }
-
+      
 
     return loading ? (
       <RctPageLoader />
     ) : invoice ? (
+
       <React.Fragment>
         <Helmet>
           <title>Everyday | View Invoice</title>
@@ -254,7 +254,9 @@ class acct_view_invoice extends Component {
 
           <div className="col-md-9">
           
+          
             <ProfileTabs loading={false}>
+
                   <div label="Overview">
                     <OverviewTab
                       quotation={invoice}
@@ -264,7 +266,7 @@ class acct_view_invoice extends Component {
                   </div>
 
                   <div label="Deals">
-                    {/* <DealsTab deals={customer.deals} /> */}
+                   {/* <DealsTab deals={customer.deals} /> */}
                   </div>
 
                   <div label="Events">
@@ -278,8 +280,10 @@ class acct_view_invoice extends Component {
                   <div label="Details">
                     {/* <DetailsTab cust={customer} /> */}
                   </div>
+
             </ProfileTabs>
-            
+         
+
           </div>
         
         </div>
@@ -305,6 +309,7 @@ class acct_view_invoice extends Component {
             </div>
           </DialogRoot>
         )}
+
       </React.Fragment>
     ) : (
       <PageErrorMessage
@@ -322,7 +327,25 @@ const mapStateToProps = ({ accountingState }) => {
 
 export default connect(
   mapStateToProps,
-  { getSingleInvoice, clearSingleInvoice, deleteSingleInvoice, InvoiceHandleStateUpdate, InvoiceHandleStateCreateNewVersion, InvoiceHandleStateRevertPreviousVersion, makePayment, makePaymentIncompleteFields }
+  { 
+    getSingleInvoice, 
+    clearSingleInvoice, 
+    deleteSingleInvoice, 
+    InvoiceHandleStateUpdate, 
+    InvoiceHandleStateCreateNewVersion, 
+    InvoiceHandleStateRevertPreviousVersion,
+    makePayment,
+    makePaymentIncompleteFields
+  }
 )(acct_view_invoice);
 
-/// current invoice v1  - create new version - takes in same invoice but different version (Current)
+// class acct_view_invoice extends React.Component {
+
+//   render() {
+//     return(
+//       <div>Hello World</div>
+//     )
+//   }
+// }
+
+// export default acct_view_invoice

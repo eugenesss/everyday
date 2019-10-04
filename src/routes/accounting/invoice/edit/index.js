@@ -19,7 +19,7 @@ import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput
 import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/InvoiceProductInput";
 import Button from "@material-ui/core/Button";
 
-import InvoiceForm from "Components/Form/Invoice/InvoiceForm";
+import InvoiceForm from "../components/InvoiceForm";
 
 // Actions
 import {
@@ -33,14 +33,13 @@ import {
   submitNewQuote,
   submitInvoice,
   getSingleInvoice
-} from "Actions";
-// import { clearSingleQuotation, addNewProdQuote, removeProdQuote, handleProdQuote,  handleChangeQuote, getAllAccount, getAllUsers, submitNewQuote} from "Actions";
+} from "Ducks/accounting/invoice";
 
-// addNoteToQuotation(acctID), onNoteChange, clearNote
-// Add events dialog
-// Delete Quotation, Edit Quotation, Transfer Quotation
+
+
 
 class acct_edit_quotation extends Component {
+
   UNSAFE_componentWillMount() {
     var id = this.props.match.params.id;
     this.props.getSingleInvoice(id);

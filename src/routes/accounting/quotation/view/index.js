@@ -20,7 +20,7 @@ import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 // Quotation Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
-import QuotationCard from "Components/Accounting/Quotation/QuotationCard";
+import QuotationCard from "../components/QuotationCard";
 import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
 import OverviewTab from "./tabs/Overview";
 
@@ -49,7 +49,9 @@ import {
   HandleStateCreateNewVersion,
   HandleStateRevertPreviousVersion,
   HandleConvertInvoiceQuotation
-} from "Actions";
+} from "Ducks/accounting/quotation";
+
+
 // addNoteToQuotation(acctID), onNoteChange, clearNote
 // Add events dialog
 // Delete Quotation, Edit Quotation, Transfer Quotation
@@ -256,7 +258,6 @@ const mapStateToProps = ({ accountingState }) => {
   return { quotationToView, quotationList };
 };
 
-// deleted
 
 export default connect(
   mapStateToProps,
@@ -271,30 +272,3 @@ export default connect(
     HandleConvertInvoiceQuotation
   }
 )(acct_view_quotation);
-
-/*
-
-    <TabsWrapper>
-              <div icon="zmdi-shopping-basket text-success" label="QUOTATION">
-                <ViewTemplate
-                  order={quotation}
-                  id={quotation.quoteID}
-                  disabled={true}
-                />
-              </div>
-               <div icon="zmdi-pizza text-warning" label="ACTIVITY LOG">
-                <ActivityLog />
-              </div>
-              <div icon="zmdi-assignment text-danger" label="NOTES">
-                <div className="row">
-                  <div>
-                    <NotesLayout
-                      allNotes={quotation.notes}
-                      handleAddNote={this.addNote}
-                    /> 
-                  </div>
-                </div>
-              </div>
-            </TabsWrapper>
-
-*/

@@ -13,17 +13,25 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 
 // List
-import QuotationList from "Components/Accounting/Quotation/QuotationList";
+import QuotationList from "./components/QuotationList";
 import { quoteNewPage } from "Helpers/accountingURL";
 
 // Actions
+// import {
+//   changeQuotationView,
+//   toggleQuotationDropDown,
+//   toggleQuotationSummary,
+//   getAllQuotation,
+//   getQuotationSummary
+// } from "Actions";
 import {
   changeQuotationView,
   toggleQuotationDropDown,
   toggleQuotationSummary,
   getAllQuotation,
   getQuotationSummary
-} from "Actions";
+} from "Ducks/accounting/quotation";
+
 
 class acct_quotation extends Component {
   componentDidMount() {
@@ -52,7 +60,6 @@ class acct_quotation extends Component {
       loading,
       tableData
     } = this.props.quotationState.quotationList;
-    const { showSummary, summary } = this.props.quotationState.quotationSummary;
 
     return (
       <React.Fragment>

@@ -13,7 +13,7 @@ import RctSectionLoader from "Components/RctSectionLoader";
 
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
 import RctPageLoader from "Components/RctPageLoader";
-import QuotationForm from "Components/Form/Quotation/QuotationForm";
+import QuotationForm from "../components/QuotationForm";
 
 import InvoiceFields from "Components/Form/Components/Inputs/Accounting/InvoiceFields";
 import AddressFormInput from "Components/Form/Components/Inputs/AddressFormInput";
@@ -25,7 +25,7 @@ import {
   getSingleQuotation,
   clearSingleQuotation,
   submitNewQuote
-} from "Actions";
+} from "Ducks/accounting/quotation";
 
 class acct_edit_quotation extends Component {
   componentDidMount() {

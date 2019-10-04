@@ -42,7 +42,7 @@ function acctSwitcher() {
         <Route
           exact
           path={`${url.invoiceListPage}/:id`}
-          component={async.view_invoice}
+          component={async.acct_view_invoice}
         />
         <Route
           path={`${url.invoiceListPage}/:id/edit`}

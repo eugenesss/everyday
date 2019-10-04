@@ -7,7 +7,9 @@ import { isSameDay, getTheDate, getTheTime } from "Helpers/helpers";
 import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
 import ShowInput from "Components/Everyday/Profile/Details/ShowInput";
 
-import { addNoteCustomer } from "Actions";
+import {
+    addNoteCustomer
+} from "Ducks/accounting/quotation";
 
 import InvoiceProductInput from "Components/Form/Components/Inputs/Accounting/InvoiceProductInput";
 

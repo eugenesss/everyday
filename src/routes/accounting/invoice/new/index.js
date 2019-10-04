@@ -10,11 +10,11 @@ import IntlMessages from "Util/IntlMessages";
 // Page Components
 import BgCard from "Components/Everyday/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader";
-import InvoiceForm from "Components/Form/Invoice/InvoiceForm";
+import InvoiceForm from "../components/InvoiceForm";
 
 import { 
   submitNewInvoice
-} from "Actions";
+} from "Ducks/accounting/invoice";
 
 
 class acct_new_invoice extends Component {
