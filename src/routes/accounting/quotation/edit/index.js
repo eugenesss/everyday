@@ -4,21 +4,9 @@ import { connect } from "react-redux";
 // Sub components
 import { Helmet } from "react-helmet";
 
-// intl messages
-import IntlMessages from "Util/IntlMessages";
-
-// Page Components
-import BgCard from "Components/BgCard";
-import RctSectionLoader from "Components/RctSectionLoader";
-
 import PageErrorMessage from "Components/Error/PageErrorMessage";
 import RctPageLoader from "Components/RctPageLoader";
 import QuotationForm from "../components/QuotationForm";
-
-import InvoiceFields from "Components/Form/Inputs/Accounting/InvoiceFields";
-import AddressFormInput from "Components/Form/Inputs/AddressFormInput";
-import InvoiceProductInput from "Components/Form/Inputs/Accounting/InvoiceProductInput";
-import Button from "@material-ui/core/Button";
 
 // Actions
 import {
@@ -28,6 +16,7 @@ import {
 } from "Ducks/accounting/quotation";
 
 class acct_edit_quotation extends Component {
+
   componentDidMount() {
     var id = this.props.match.params.id;
     this.props.getSingleQuotation(id, true);
@@ -36,10 +25,6 @@ class acct_edit_quotation extends Component {
   componentWillUnmount() {
     this.props.clearSingleQuotation();
   }
-
-  // _quotationParent = (element, item) =>{
-  //   this.props.submitNewQuote(element, item)
-  // }
 
   _quotationParent = item => {
     this.props.submitNewQuote(item);

@@ -23,7 +23,7 @@ import AutorenewIcon from '@material-ui/icons/Autorenew';
 // Actions
 import { 
     // accountingClearState,
-    submitAccountQuotationInvoice,
+    // submitAccountQuotationInvoice,
     HandleQuotationAccounts,
     restartUploadQuotationStatus
   } from "Ducks/accounting/quotation";
@@ -111,17 +111,17 @@ class QuotationForm extends Component {
             return this.setState({formFields: formFields, attn_to_array: value.customer})
 
         case "currency":
-                formFields.currency_rate = value.rate
+              formFields.currency_rate = value.rate
             break
 
         case "discount":
-                formFields.discount_rate = value.rate
+              formFields.discount_rate = value.rate
             break
         case "attn_toId":
-                formFields[e] = value
+              formFields[e] = value
             break
         default :
-                formFields[e] = value
+              formFields[e] = value
             break 
 
     }
@@ -197,14 +197,10 @@ class QuotationForm extends Component {
     modifiedPostData.quotationLine = quotationLine
     modifiedPostData.sent_date = postData.date,
     modifiedPostData.due_date = duedate,
-    modifiedPostData.companyName = postData.accountId.name,
-    modifiedPostData.accountId = {
-      name: modifiedPostData.accountId.name,
-      value: modifiedPostData.accountId.value
-    }
-
+    modifiedPostData.attn_toId = postData.attn_toId.value
+   
     this.props.handleSubmit(modifiedPostData)
-  
+
   }
 
   _restart = () =>{
@@ -301,14 +297,6 @@ class QuotationForm extends Component {
                   />
                 }
           
-                {this.edit && 
-                  <FormMultiInput
-                    label="Attention to"
-                    value={formFields.attn_toId.name}
-                    target="attn_toId"
-                    disabled={true}
-                  />
-                }
 
                 {!this.edit && 
                   <FormMultiInput
@@ -330,15 +318,17 @@ class QuotationForm extends Component {
                   value={''}
                 />
 
-                <FormInput
-                  label="Owner"
-                  value={formFields.owner}
-                  required={!formFields.owner}
-                  selectValues={owner}
-                  target="owner"
-                  handleChange={this._handleChangeFormField}
-                />
-              
+                {!this.edit && 
+                  <FormInput
+                    label="Owner"
+                    value={formFields.owner}
+                    required={!formFields.owner}
+                    selectValues={owner}
+                    target="owner"
+                    handleChange={this._handleChangeFormField}
+                  />
+                }
+
               </div>
             </div>
           </FormInputLayout>
@@ -462,7 +452,7 @@ export default connect(
   mapStateToProps,
   { 
     // accountingClearState,
-    submitAccountQuotationInvoice,
+    // submitAccountQuotationInvoice,
     HandleQuotationAccounts,
     restartUploadQuotationStatus
   }
@@ -515,57 +505,3 @@ function getTax (product) {
     }
 }
 
-
-
-
-/*
-
-  {/* <InvoiceFields 
-          handleChange  = {this._handleChangeFormField}
-          edit={this.props.edit}
-          tableData={tableData}
-          currencyTable={currencyTable}
-          discountTable={discountTable}
-          quotation={this.state.formFields}
-          attn_to_array={this.state.attn_to_array}
-          users={users}
-        />
-
-        <div style={{marginTop: 20, marginBottom: 20}}>
-          <InvoiceProductInput
-            products={this.state.formFieldsProducts}
-            taxTable={taxTable}
-            handleChange={this._handleProdQuote}
-            handleAdd={this._addNewProdQuote}
-            handleRemove={this._removeProdQuote}
-          />
-
-          <div className="row">
-            <div className="col-md-6"/>
-            <div className="col-md-6">
-              <InvoiceTotalTableInput invoice={this.state.formFields} />
-            </div>
-          </div>
-
-        </div> 
-        
-        {/* <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop: 20}}> */
-            /* <Button variant="contained" color="secondary" className="mr-10" style={{color:'white'}}>
-              Save Draft
-            </Button> */
-
-            /* <Button onClick={() => {
-                this.props.submitNewQuote(quotation, products, '', this.props.type)
-              }} variant="contained" color="primary"  className="mr-10">
-              Save
-            </Button> 
-
-             <Button onClick={this._submitFormFieldsDB} variant="contained" color="primary"  className="mr-10">
-              Save
-            </Button>
-            
-         </div> 
-     
-     
-  */
-    

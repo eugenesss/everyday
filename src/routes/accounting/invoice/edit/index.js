@@ -23,14 +23,8 @@ import InvoiceForm from "../components/InvoiceForm";
 
 // Actions
 import {
-  getSingleQuotation,
-  clearSingleQuotation,
-  deleteSingleQuote,
-  addNewProdQuote,
-  removeProdQuote,
-  handleProdQuote,
-  handleChangeQuote,
-  submitNewQuote,
+
+  clearSingleInvoice,
   submitInvoice,
   getSingleInvoice
 } from "Ducks/accounting/invoice";
@@ -46,7 +40,7 @@ class acct_edit_quotation extends Component {
   }
 
   componentWillUnmount() {
-    this.props.clearSingleQuotation();
+    this.props.clearSingleInvoice();
   }
 
   _quotationParent = item => {
@@ -103,28 +97,8 @@ const mapStateToProps = ({ accountingState }) => {
 export default connect(
   mapStateToProps,
   {
-    getSingleInvoice,
+    clearSingleInvoice,
     submitInvoice,
-    getSingleQuotation,
-    clearSingleQuotation,
-    deleteSingleQuote,
-    addNewProdQuote,
-    removeProdQuote,
-    handleProdQuote,
-    handleChangeQuote,
-    submitNewQuote
+    getSingleInvoice
   }
 )(acct_edit_quotation);
-
-// const mapStateToProps = ({ accountingState, crmState, usersState }) => {
-//   const {tableData, } = crmState.accountState.accountList
-//   const { quotationState,} = accountingState;
-//   const { quotationForm, quotationList, quotationToView } = quotationState;
-//   const { users } = usersState;
-//   return { quotationForm, tableData, users, quotationList, quotationToView};
-// };
-
-// export default connect(
-//   mapStateToProps,
-//   { addNewProdQuote, removeProdQuote, handleProdQuote, handleChangeQuote, getAllAccount, getAllUsers, submitNewQuote, getSingleQuotation, clearSingleQuotation, deleteSingleQuote }
-// )(acct_edit_quotation);

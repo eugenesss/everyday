@@ -25,23 +25,10 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 
 
-
-// Actions
 import { 
-    clearSingleQuotation, 
-    addNewProdQuote, 
-    removeProdQuote, 
-    handleProdQuote,  
-    handleChangeQuote, 
-    getAllAccount, 
-    getAllUsers, 
-    submitNewQuote,
-
-    // accountingClearState,
-    // submitAccountQuotationInvoice,
-    HandleQuotationAccounts,
-    restartUploadStatus
-} from "Ducks/accounting/quotation";
+  restartUploadStatus,
+  clearSingleInvoice
+} from "Ducks/accounting/invoice";
 
 
 const formFieldsProducts =  {
@@ -126,15 +113,16 @@ class InvoiceForm extends Component {
           formFieldsProducts: [{...formFieldsProducts}],
           attn_to_array : []
         });
+
         this.props.restartUploadStatus()
       }
   }
 
   // quotationForm
   
-  componentDidMount() {
-    this.props.HandleQuotationAccounts()
-  }
+  // componentDidMount() {
+  //   this.props.HandleQuotationAccounts()
+  // }
 
   _handleChangeFormField = (e, value) => {
 
@@ -238,21 +226,15 @@ class InvoiceForm extends Component {
     modifiedPostData.quotationLine = quotationLine
     modifiedPostData.sent_date = postData.date,
     modifiedPostData.due_date = duedate,
-    modifiedPostData.companyName = postData.accountId.name,
-    modifiedPostData.accountId = {
-      name: modifiedPostData.accountId.name,
-      value: modifiedPostData.accountId.value
-    }
-
+    modifiedPostData.attn_toId = postData.attn_toId.value
+   
     this.props.handleSubmit(modifiedPostData)
-
   }
 
   _restart = () =>{
 
     let restartFormFieldsProducts = this.state.formFieldsProducts
     restartFormFieldsProducts = [{...formFieldsProducts}]
-
 
     let restartFormFields = this.state.formFields
     restartFormFields.subtotal = 0
@@ -287,7 +269,7 @@ class InvoiceForm extends Component {
     const {currencyTable, taxTable, discountTable, accountsList, owner} = this.props.quotationList
 
     const {formFields} = this.state;
-    
+        
     return (
 
       <FormWrapper
@@ -328,14 +310,14 @@ class InvoiceForm extends Component {
                   />
                 }
 
-                {this.edit && 
+                {/* {this.edit && 
                   <FormMultiInput
                     label="Attention to"
-                    value={formFields.attn_toId.name}
+                    value={formFields.attn_toId}
                     target="attn_toId"
                     disabled={true}
                   />
-                }
+                } */}
 
                 {!this.edit && 
                   <FormMultiInput
@@ -358,15 +340,17 @@ class InvoiceForm extends Component {
                   value={''}
                 />
 
-                <FormInput
-                  label="Owner"
-                  value={formFields.owner}
-                  required={!formFields.owner}
-                  selectValues={owner}
-                  target="owner"
-                  handleChange={this._handleChangeFormField}
-                />
-
+                {!this.edit && 
+                  <FormInput
+                    label="Owner"
+                    value={formFields.owner}
+                    required={!formFields.owner}
+                    selectValues={owner}
+                    target="owner"
+                    handleChange={this._handleChangeFormField}
+                  />
+                }
+                
               </div>
             </div>
           </FormInputLayout>
@@ -489,18 +473,7 @@ const mapStateToProps = ({ accountingState, crmState, usersState }) => {
 export default connect(
   mapStateToProps,
   { 
-    addNewProdQuote, 
-    clearSingleQuotation, 
-    removeProdQuote, 
-    handleProdQuote, 
-    handleChangeQuote, 
-    getAllAccount, 
-    getAllUsers, 
-    submitNewQuote,
-
-    // accountingClearState,
-    // submitAccountQuotationInvoice,
-    HandleQuotationAccounts,
+    clearSingleInvoice,
     restartUploadStatus
   }
 )(InvoiceForm);
