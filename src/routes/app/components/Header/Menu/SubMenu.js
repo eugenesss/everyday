@@ -8,8 +8,12 @@ import { AppBar, Tabs, Tab } from "@material-ui/core";
 import AppConfig from "Constants/AppConfig";
 
 const StyledTabs = withStyles({
+  root: {
+    minHeight: 40
+  },
   flexContainer: {
-    justifyContent: "center"
+    justifyContent: "center",
+    minHeight: 40
   },
   indicator: {
     display: "flex",
@@ -25,6 +29,8 @@ const StyledTabs = withStyles({
 
 const StyledTab = withStyles(theme => ({
   root: {
+    padding: "0px 10px",
+    minHeight: 40,
     color: "#a7a7a7",
     fontSize: theme.typography.pxToRem(14),
     "&:focus": {

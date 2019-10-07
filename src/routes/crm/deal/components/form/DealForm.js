@@ -20,7 +20,6 @@ const initialState = {
     userId: localStorage.getItem("user_id"),
     name: "",
     amount: "",
-    closingDate: "",
     accountId: "",
     customerId: "",
     stageId: "",
@@ -57,16 +56,8 @@ class DealForm extends Component {
   }
 
   checkDisabled() {
-    const {
-      name,
-      userId,
-      amount,
-      stageId,
-      closingDate,
-      accountId
-    } = this.state.deal;
-    const disabled =
-      name && userId && amount && stageId && closingDate && accountId;
+    const { name, userId, amount, stageId, accountId } = this.state.deal;
+    const disabled = name && userId && amount && stageId && accountId;
     return disabled;
   }
 
@@ -115,7 +106,6 @@ class DealForm extends Component {
               <DatePickerInput
                 label="Closing Date"
                 value={deal.closingDate ? deal.closingDate : null}
-                required={!deal.closingDate}
                 target="closingDate"
                 handleChange={this.handleChange}
               />

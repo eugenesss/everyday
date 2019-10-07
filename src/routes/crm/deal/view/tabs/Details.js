@@ -16,7 +16,7 @@ function DetailsTab(props) {
         closingDate={
           <EditableInput
             label="Closing Date"
-            value={getTheDate(deal.closingDate)}
+            value={deal.closingDate && getTheDate(deal.closingDate)}
           />
         }
         owner={<EditableInput label="Owner" value={deal.userInfo.name} />}

@@ -47,14 +47,17 @@ function Header(props) {
   return (
     <React.Fragment>
       <AppBar position="static" className="rct-header">
-        <Toolbar className="d-flex justify-content-between w-100">
+        <Toolbar
+          style={{ minHeight: 54 }}
+          className="d-flex justify-content-between w-100"
+        >
           <div className="d-flex">
             <div className="site-logo">
               <Link to="/" className="logo-mini">
                 <img
                   src={require("Assets/img/appLogo_orig_light.png")}
                   alt="site logo"
-                  width="100"
+                  width="90"
                 />
               </Link>
             </div>

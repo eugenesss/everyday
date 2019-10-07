@@ -31,7 +31,7 @@ const DialogRoot = ({
       </DialogContent>
       {(close || dialogAction) && (
         <DialogActions>
-          {close ? <Button onClick={handleHide}>Cancel</Button> : null}
+          {close ? <Button onClick={handleHide}>Close</Button> : null}
           {dialogAction && (
             <Button
               onClick={dialogAction}

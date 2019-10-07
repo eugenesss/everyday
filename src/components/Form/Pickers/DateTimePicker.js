@@ -11,7 +11,7 @@ const OverrideInput = props => {
 
 const styles = makeStyles(theme => ({
   root: {
-    marginTop: theme.spacing(1),
+    // marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
     width: "100%"
   }

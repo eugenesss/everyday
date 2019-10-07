@@ -46,13 +46,13 @@ function DealsByTypeChart(props) {
                     <tr key={key}>
                       {key == 0 && (
                         <td rowSpan={type.totalDeals}>
-                          <strong>{`${type.name} ( ${
-                            type.totalDeals
-                          } deal )`}</strong>
+                          <strong>{`${type.name} ( ${type.totalDeals} deal )`}</strong>
                         </td>
                       )}
                       <td>{deal.name}</td>
-                      <td>{getTheDate(deal.closingDate)}</td>
+                      <td>
+                        {deal.closingDate && getTheDate(deal.closingDate)}
+                      </td>
                       <td>{deal.userInfo}</td>
                       <td>{deal.stage}</td>
                       <td>{deal.chance}</td>

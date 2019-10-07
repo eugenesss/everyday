@@ -49,13 +49,13 @@ function DealsPipelineChart(props) {
                     <tr key={key}>
                       {key == 0 && (
                         <td rowSpan={stage.totalDeals}>
-                          <strong>{`${stage.name} ( ${
-                            stage.totalDeals
-                          } deal )`}</strong>
+                          <strong>{`${stage.name} ( ${stage.totalDeals} deal )`}</strong>
                         </td>
                       )}
                       <td>{deal.name}</td>
-                      <td>{getTheDate(deal.closingDate)}</td>
+                      <td>
+                        {deal.closingDate && getTheDate(deal.closingDate)}
+                      </td>
                       <td>{deal.userInfo}</td>
                       <td>{deal.type}</td>
                       <td>{deal.source}</td>

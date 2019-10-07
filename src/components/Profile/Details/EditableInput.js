@@ -11,7 +11,7 @@ import NumberFormat from "react-number-format";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    margin: theme.spacing(1),
+    marginBottom: theme.spacing(1),
     width: "100%"
   },
   input: {

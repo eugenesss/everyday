@@ -67,7 +67,9 @@ function TopSpenderCustomerChart(props) {
                       )}
                       <td>{deal.name}</td>
                       <td>{deal.stage}</td>
-                      <td>{getTheDate(deal.closingDate)}</td>
+                      <td>
+                        {deal.closingDate && getTheDate(deal.closingDate)}
+                      </td>
                       <td>
                         <NumberFormat
                           value={deal.amount}

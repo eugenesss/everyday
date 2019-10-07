@@ -60,13 +60,13 @@ function DealsByOwnerChart(props) {
                     <tr key={key}>
                       {key == 0 && (
                         <td rowSpan={owner.totalDeals}>
-                          <strong>{`${owner.name} ( ${
-                            owner.totalDeals
-                          } deal )`}</strong>
+                          <strong>{`${owner.name} ( ${owner.totalDeals} deal )`}</strong>
                         </td>
                       )}
                       <td>{deal.name}</td>
-                      <td>{getTheDate(deal.closingDate)}</td>
+                      <td>
+                        {deal.closingDate && getTheDate(deal.closingDate)}
+                      </td>
                       <td>{deal.stage}</td>
                       <td>{deal.chance}</td>
                       <td>
