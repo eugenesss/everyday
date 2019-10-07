@@ -8,8 +8,8 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // List View
 // import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 // ListSummary
-// import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-// import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
+// import ListSummary from "Components/ListSummary";
+// import ShowListSummaryButton from "Components/ShowListSummaryButton";
 // Actions
 import { changeLeadView, getAllLead, getLeadSummary } from "Ducks/crm/lead";
 import { leadNewPage, leadImportPage } from "Helpers/crmURL";

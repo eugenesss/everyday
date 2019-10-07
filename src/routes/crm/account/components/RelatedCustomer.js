@@ -9,7 +9,7 @@ import {
   TableRow
 } from "@material-ui/core";
 import { singleCustomer } from "Helpers/crmURL";
-import ActiveStatusBadge from "Components/Everyday/StatusBadge/ActiveStatusBadge";
+import ActiveStatusBadge from "Components/StatusBadge/ActiveStatusBadge";
 
 const RelatedCustomer = ({ customers }) => {
   return (

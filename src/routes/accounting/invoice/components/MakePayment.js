@@ -10,7 +10,7 @@ import FormInput from "Components/Form/FormInput";
 import DatePickerInput from "Components/Form/Pickers/DatePicker";
 import AppConfig from 'Constants/AppConfig'
 import Checkbox from '@material-ui/core/Checkbox';
-import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
+import EditableInput from "Components/Profile/Details/EditableInput";
 
 
 export default class MakePayment extends Component {

@@ -4,8 +4,8 @@ import BgCard from "Components/BgCard";
 import Comments from "Components/Widgets/Comments";
 
 import { isSameDay, getTheDate, getTheTime } from "Helpers/helpers";
-import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
-import ShowInput from "Components/Everyday/Profile/Details/ShowInput";
+import EditableInput from "Components/Profile/Details/EditableInput";
+import ShowInput from "Components/Profile/Details/ShowInput";
 
 import {
     addNoteCustomer

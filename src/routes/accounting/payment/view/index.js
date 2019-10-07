@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 
 // Components
 import RctPageLoader from "Components/RctPageLoader";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+import PageErrorMessage from "Components/Error/PageErrorMessage";
 
 // InvoicePaymentList
 import ViewInvoicePaymentList from "../components/tables/ViewInvoicePaymentList";

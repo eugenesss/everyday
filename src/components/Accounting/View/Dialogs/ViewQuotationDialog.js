@@ -3,14 +3,14 @@ import { connectModal } from "redux-modal";
 import DialogRoot from "Components/Dialog/DialogRoot";
 
 // Components
-import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
+import TabsWrapper from "Components/Tabs/TabsWrapper";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 
 // Quotation Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
 // Activity Log Tab
-import ActivityLog from "Components/Everyday/ActivityLog";
+import ActivityLog from "Components/ActivityLog";
 
 // Notes Tab
 import NewNote from "Components/Form/Note/NewNote";

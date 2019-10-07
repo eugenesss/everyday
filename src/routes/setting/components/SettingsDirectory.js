@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
 // Side Drawer
-import SideDrawer from "Components/Everyday/SideDrawer";
-import DrawerListCollapsible from "Components/Everyday/SideDrawer/DrawerListCollapsible";
-import DrawerListItem from "Components/Everyday/SideDrawer/DrawerListItem";
+import SideDrawer from "Components/SideDrawer";
+import DrawerListCollapsible from "Components/SideDrawer/DrawerListCollapsible";
+import DrawerListItem from "Components/SideDrawer/DrawerListItem";
 
 // Setting Links
 import settingsList from "./_settingsList";

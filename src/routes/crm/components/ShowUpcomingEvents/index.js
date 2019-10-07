@@ -1,5 +1,5 @@
 import React from "react";
-import { Info } from "Components/Everyday/Layout/View/ProfileCard";
+import { Info } from "Components/Layout/ProfileCard";
 import { CalendarToday } from "@material-ui/icons";
 import { getTheDate, getEventTime } from "Helpers/helpers";
 import moment from "moment";

@@ -12,7 +12,7 @@ import FormMultiInput from "Components/Form/FormMultiInput";
 import AmountInput from "Components/Form/Inputs/AmountInput";
 import DatePickerInput from "Components/Form/Pickers/DatePicker";
 
-import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
+import EditableInput from "Components/Profile/Details/EditableInput";
 
 const TAX_RATE = 0.07;
 

@@ -9,8 +9,8 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // ListSummary
-// import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-// import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
+// import ListSummary from "Components/ListSummary";
+// import ShowListSummaryButton from "Components/ShowListSummaryButton";
 
 // List
 import QuotationList from "./components/QuotationList";
@@ -24,6 +24,7 @@ import { quoteNewPage } from "Helpers/accountingURL";
 //   getAllQuotation,
 //   getQuotationSummary
 // } from "Actions";
+
 import {
   changeQuotationView,
   toggleQuotationDropDown,

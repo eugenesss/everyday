@@ -3,7 +3,7 @@ import {
   Wrapper,
   Contact,
   KeyDetails
-} from "Components/Everyday/Layout/View/ProfileCard";
+} from "Components/Layout/ProfileCard";
 
 import LeadInterestLevel from "./LeadInterestLevel";
 

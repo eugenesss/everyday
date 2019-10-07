@@ -10,8 +10,8 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 
 // // List Summary
-// import ListSummary from "Components/Everyday/ListSummary/ListSummary";
-// import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
+// import ListSummary from "Components/ListSummary";
+// import ShowListSummaryButton from "Components/ShowListSummaryButton";
 
 // Actions
 import { changeDealView, getAllDeal, getDealSummary } from "Ducks/crm/deal";

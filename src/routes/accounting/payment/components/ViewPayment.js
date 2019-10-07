@@ -15,7 +15,7 @@ import AmountInput from "Components/Form/Inputs/AmountInput";
 import FormInput from "Components/Form/FormInput";
 import DatePickerInput from "Components/Form/Pickers/DatePicker";
 
-import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
+import EditableInput from "Components/Profile/Details/EditableInput";
 
 
 export default class ViewPayment extends Component {

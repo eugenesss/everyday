@@ -1,6 +1,6 @@
 import React from "react";
 import BgCard from "Components/BgCard";
-import Avatar from "Components/Everyday/Avatar";
+import Avatar from "Components/Avatar";
 
 const UserBlock = ({ user }) => {
   const { name, email } = user;

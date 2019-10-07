@@ -8,9 +8,9 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import ReportViews from "./components/Views";
 
 // Side Drawer
-import SideDrawer from "Components/Everyday/SideDrawer";
-import DrawerListCollapsible from "Components/Everyday/SideDrawer/DrawerListCollapsible";
-import DrawerListItem from "Components/Everyday/SideDrawer/DrawerListItem";
+import SideDrawer from "Components/SideDrawer";
+import DrawerListCollapsible from "Components/SideDrawer/DrawerListCollapsible";
+import DrawerListItem from "Components/SideDrawer/DrawerListItem";
 
 class ReportsComponent extends Component {
   constructor(props) {

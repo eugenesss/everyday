@@ -10,7 +10,7 @@ import ThemeProvider from "./components/ThemeProvider";
 import HorizontalContainer from "./components/HorizontalContainer";
 
 // App level dialogs
-import SystemDialogs from "Components/Everyday/SystemDialogs";
+import SystemDialogs from "Components/SystemDialogs";
 
 // Main Routes (App level)
 import {

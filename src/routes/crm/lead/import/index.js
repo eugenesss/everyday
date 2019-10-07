@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 // Global Req
 import { Helmet } from "react-helmet";
 // Components
-import ImportRecords from "Components/Everyday/ImportRecords";
+import ImportRecords from "Components/ImportRecords";
 
 // Actions
 import { importRecord, fetchImportMapping } from "Ducks/import";

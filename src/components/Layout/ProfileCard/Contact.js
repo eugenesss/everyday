@@ -1,5 +1,5 @@
 import React from "react";
-import Avatar from "Components/Everyday/Avatar";
+import Avatar from "Components/Avatar";
 import { Call, Email, Language } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import { Tooltip, Fab, Chip } from "@material-ui/core";

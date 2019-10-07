@@ -15,7 +15,7 @@ import MakePayment from "../components/MakePayment";
 
 
 import DialogRoot from "Components/Dialog/DialogRoot";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+import PageErrorMessage from "Components/Error/PageErrorMessage";
 
 
 // Actions
@@ -36,7 +36,7 @@ import {
 } from 'Ducks/accounting/payment';
 
 import InvoiceCard from "../components/InvoiceCard";
-import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
+import ProfileTabs from "Components/Layout/ProfileTabs";
 import OverviewTab from "./tabs/Overview";
 
 

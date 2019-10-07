@@ -7,7 +7,7 @@ import ListItem from "@material-ui/core/ListItem";
 import BgCard from "Components/BgCard";
 import BgCardFooter from "Components/BgCard/BgCardFooter";
 import BaseInput from "Components/Form/BaseInput";
-import Avatar from "Components/Everyday/Avatar";
+import Avatar from "Components/Avatar";
 
 // card component
 import { Fab } from "@material-ui/core";

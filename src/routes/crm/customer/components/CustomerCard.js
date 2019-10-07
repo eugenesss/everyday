@@ -4,7 +4,7 @@ import {
   Wrapper,
   Contact,
   KeyDetails
-} from "Components/Everyday/Layout/View/ProfileCard";
+} from "Components/Layout/ProfileCard";
 import { EventOutlined } from "@material-ui/icons";
 import { singleAccount } from "Helpers/crmURL";
 

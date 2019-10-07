@@ -6,7 +6,7 @@ import {
   Contact,
   Info,
   KeyDetails
-} from "Components/Everyday/Layout/View/ProfileCard";
+} from "Components/Layout/ProfileCard";
 import NumberFormat from "react-number-format";
 import { singleAccount, singleCustomer } from "Helpers/crmURL";
 

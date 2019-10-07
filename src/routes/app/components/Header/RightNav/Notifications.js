@@ -6,8 +6,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import NotificationIcon from "@material-ui/icons/Notifications";
 
-import SingleNotification from "Components/Everyday/Notification/SingleNotification";
-import NoNotificationMessage from "Components/Everyday/Notification/NoNotificationMessage";
+import SingleNotification from "Components/SingleNotification";
+import NoNotificationMessage from "Components/NoNotificationMessage";
 
 class Notifications extends Component {
   state = {

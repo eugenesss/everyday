@@ -7,7 +7,7 @@ import { ExitToApp, Settings } from "@material-ui/icons";
 import { Scrollbars } from "react-custom-scrollbars";
 
 // Avatar
-import Avatar from "Components/Everyday/Avatar";
+import Avatar from "Components/Avatar";
 
 // Logout
 import { logoutUser } from "Ducks/session/auth";

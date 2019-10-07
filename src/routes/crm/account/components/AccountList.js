@@ -3,12 +3,12 @@ import { NavLink } from "react-router-dom";
 
 // import IconButton from "@material-ui/core/IconButton";
 // import Tooltip from "@material-ui/core/Tooltip";
-import RecordsList from "Components/Everyday/RecordsList";
+import RecordsList from "Components/RecordsList";
 import { listOptions } from "Helpers/helpers";
 import { singleAccount } from "Helpers/crmURL";
 import RctSectionLoader from "Components/RctSectionLoader";
 
-import ActiveStatusBadge from "Components/Everyday/StatusBadge/ActiveStatusBadge";
+import ActiveStatusBadge from "Components/StatusBadge/ActiveStatusBadge";
 
 const AccountList = ({ tableData, loading, title, action }) => {
   const columns = [

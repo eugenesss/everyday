@@ -2,7 +2,7 @@ import React from "react";
 import { ArrowForward } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import { List, ListItem, ListItemAvatar, Avatar } from "@material-ui/core";
-import EverydayAvatar from "Components/Everyday/Avatar";
+import EverydayAvatar from "Components/Avatar";
 
 const useStyles = makeStyles(theme => ({
   root: {
