@@ -22,7 +22,7 @@ import AutorenewIcon from '@material-ui/icons/Autorenew';
 
 // Actions
 import { 
-    accountingClearState,
+    // accountingClearState,
     submitAccountQuotationInvoice,
     HandleQuotationAccounts,
     restartUploadQuotationStatus
@@ -92,7 +92,7 @@ class QuotationForm extends Component {
   }
 
   componentWillUnmount(){
-    this.props.accountingClearState()
+    // this.props.accountingClearState()
   }
 
   componentDidMount() {
@@ -461,7 +461,7 @@ const mapStateToProps = ({ accountingState, crmState, usersState }) => {
 export default connect(
   mapStateToProps,
   { 
-    accountingClearState,
+    // accountingClearState,
     submitAccountQuotationInvoice,
     HandleQuotationAccounts,
     restartUploadQuotationStatus
