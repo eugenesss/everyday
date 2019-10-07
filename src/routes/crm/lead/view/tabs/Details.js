@@ -8,6 +8,8 @@ import {
   CompanyInformation
 } from "../../components/forms/Layout";
 
+import { getDate } from "Helpers/helpers";
+
 const LeadDetailsTab = props => {
   const { lead } = props;
   return (
@@ -39,6 +41,14 @@ const LeadDetailsTab = props => {
           <EditableInput label="Mobile" value={lead.baseContact.mobile} />
         }
         source={<EditableInput label="Source" value={lead.sourceInfo} />}
+        birthday={
+          <EditableInput
+            label="Birthday"
+            value={
+              lead.baseContact.birthday && getDate(lead.baseContact.birthday)
+            }
+          />
+        }
         description={
           <EditableInput
             multiline

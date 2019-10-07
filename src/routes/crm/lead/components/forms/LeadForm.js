@@ -9,6 +9,7 @@ import { KeyInformation, LeadInformation, CompanyInformation } from "./Layout";
 
 // Input Components
 import FormInput from "Components/Form/FormInput";
+import DatePickerInput from "Components/Form/Pickers/DatePicker";
 import CompanyPicker from "Components/Form/Pickers/CompanyPicker";
 import AddressFormInput from "Components/Form/Inputs/AddressFormInput";
 
@@ -27,6 +28,7 @@ const initialState = {
       phone: "",
       website: "",
       title: "",
+      birthday: "",
       _address: { address_1: "", address_2: "", city: "", zip: "" }
     }
   }
@@ -210,6 +212,16 @@ class LeadForm extends Component {
                 selectValues={fields.leadSource}
                 target="sourceId"
                 handleChange={this.handleLead}
+              />
+            }
+            birthday={
+              <DatePickerInput
+                label="Birthday"
+                value={
+                  lead.baseContact.birthday ? lead.baseContact.birthday : null
+                }
+                target="birthday"
+                handleChange={this.handleContact}
               />
             }
             description={

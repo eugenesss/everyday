@@ -9,6 +9,7 @@ import { KeyInformation, PersonalInformation } from "./Layout";
 
 // Input Components
 import FormInput from "Components/Form/FormInput";
+import DatePickerInput from "Components/Form/Pickers/DatePicker";
 import AddressFormInput from "Components/Form/Inputs/AddressFormInput";
 
 // Actions
@@ -27,6 +28,7 @@ const initialState = {
       phone: "",
       website: "",
       title: "",
+      birthday: "",
       _address: { address_1: "", address_2: "", city: "", zip: "" }
     }
   }
@@ -205,6 +207,18 @@ class CustomerForm extends Component {
                 label="Fax"
                 value={customer.baseContact.fax}
                 target="fax"
+                handleChange={this.handleContact}
+              />
+            }
+            birthday={
+              <DatePickerInput
+                label="Birthday"
+                value={
+                  customer.baseContact.birthday
+                    ? customer.baseContact.birthday
+                    : null
+                }
+                target="birthday"
                 handleChange={this.handleContact}
               />
             }

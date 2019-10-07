@@ -43,13 +43,20 @@ export function textTruncate(str, length, ending) {
 }
 
 /**
- * Get Date
+ * Get Day Date
  *
  * Takes in js dates
  */
 export function getTheDate(date) {
-  // let formatDate = format ? format : "DD MMM YYYY";
   return moment(date).format("ddd, DD MMM YYYY");
+}
+/**
+ * Get Date only
+ *
+ * Takes in js dates
+ */
+export function getDate(date) {
+  return moment(date).format("DD MMM YYYY");
 }
 /**
  * Get DateTime
@@ -66,7 +73,6 @@ export function getDateTime(date, format) {
  * Takes in js dates
  */
 export function getTheTime(date) {
-  // let formatDate = format ? format : "LT";
   return moment(date).format("LT");
 }
 

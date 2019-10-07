@@ -7,6 +7,8 @@ import {
   PersonalInformation
 } from "../../components/forms/Layout";
 
+import { getDate } from "Helpers/helpers";
+
 function CustomerDetailsTab(props) {
   const { cust } = props;
   return (
@@ -49,6 +51,14 @@ function CustomerDetailsTab(props) {
         }
         fax={<EditableInput label="Fax" value={cust.baseContact.fax} />}
         address={<EditableInput label="Address" value={cust.fullAddress} />}
+        birthday={
+          <EditableInput
+            label="Birthday"
+            value={
+              cust.baseContact.birthday && getDate(cust.baseContact.birthday)
+            }
+          />
+        }
         description={
           <EditableInput label="Description" value={cust.baseContact.info} />
         }

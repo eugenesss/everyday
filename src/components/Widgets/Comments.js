@@ -21,23 +21,31 @@ import {
 
 import { getTheDate, getTheTime } from "Helpers/helpers";
 
+const initState = {
+  name: "",
+  content: ""
+};
+
 export default class Comments extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      name: "",
-      content: ""
-    };
+    this.state = initState;
     this.onChange = this.onChange.bind(this);
+    this.submitComment = this.submitComment.bind(this);
   }
 
   onChange(value) {
     this.setState(prevState => ({ ...prevState, content: value }));
   }
 
+  submitComment() {
+    this.props.addComment(this.state);
+    this.setState(initState);
+  }
+
   render() {
     const { content } = this.state;
-    const { comments, addComment } = this.props;
+    const { comments } = this.props;
     return (
       <BgCard heading="Notes" fullBlock>
         <Scrollbars
@@ -118,7 +126,7 @@ export default class Comments extends PureComponent {
           />
           <Button
             variant="outlined"
-            onClick={() => addComment(this.state)}
+            onClick={this.submitComment}
             disabled={!this.state.content}
             className="ml-20 btn-xs"
           >

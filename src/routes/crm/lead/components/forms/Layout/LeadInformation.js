@@ -8,6 +8,7 @@ function LeadInformation(props) {
     interest,
     mobile,
     source,
+    birthday,
     description,
     ...others
   } = props;
@@ -26,6 +27,7 @@ function LeadInformation(props) {
         <div className="col-md-5 d-block offset-md-1">
           {mobile}
           {source}
+          {birthday}
         </div>
       </div>
       <div className="row justify-content-center">

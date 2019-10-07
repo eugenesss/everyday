@@ -11,6 +11,7 @@ function PersonalInformation(props) {
     fax,
     address,
     description,
+    birthday,
     ...others
   } = props;
   return (
@@ -24,6 +25,7 @@ function PersonalInformation(props) {
           {email}
           {mobile}
           {title}
+          {birthday}
         </div>
         <div className="col-md-5 d-block offset-md-1">
           {source}
