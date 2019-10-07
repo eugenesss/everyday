@@ -1,6 +1,7 @@
 import React from "react";
 
-import UpdateCompanyDetailsForm from "Components/Form/Setting/General/UpdateCompanyDetailsForm";
+import UpdateCompanyDetailsForm from "Routes/setting/companySettings/components/forms/UpdateCompanyDetailsForm.js";
+// import UpdateCompanyDetailsForm from "Components/Form/Setting/General/UpdateCompanyDetailsForm";
 
 const SettingsTab = () => {
   return (
