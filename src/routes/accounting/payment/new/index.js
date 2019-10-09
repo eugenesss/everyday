@@ -121,11 +121,11 @@ class acct_new_payment extends Component {
   onCheckList = (rowIndex, value) => {
     let InvoiceList = [...this.state.InvoiceList]
 
-    // if(!value){
-    //   InvoiceList[rowIndex].amount = InvoiceList[rowIndex].openBalance
-    // } else {
-    //   InvoiceList[rowIndex].amount = 0
-    // }
+    if(!value){
+      InvoiceList[rowIndex].amount = InvoiceList[rowIndex].openBalance
+    } else {
+      InvoiceList[rowIndex].amount = 0
+    }
 
     InvoiceList[rowIndex].reconciled = !value
     this.setState({InvoiceList: InvoiceList})
@@ -195,11 +195,6 @@ class acct_new_payment extends Component {
     array.map((item, index) => {
       if(item.amount > 0){
         currentAmount = parseFloat(currentAmount) + parseFloat(item.amount) 
-        // let invoice = {...this.state.invoice}
-        // invoice.amount = item.amount
-        // invoice.invoiceQuote = item.invoiceId
-        // invoice.invoiceId = item.id
-        // invoice.reconciled = item.reconciled
         SubmitPaymentArray.push(item)
       }
     })
@@ -307,53 +302,6 @@ class acct_new_payment extends Component {
 
 
 
-    // Access Category
-    // export const category = { id: "1", name: "CRM Access" };
-    // // Access Rights
-    // export const accessRight1 = {
-    //   id: "1",
-    //   name: "Lead",
-    //   model: "lead",
-    //   method: "read",
-    //   editable: true,
-    //   category: 1,
-    //   description: "Lorem Ipsum"
-    // };
-    // export const accessRight2 = {
-    //   id: "1",
-    //   name: "Lead",
-    //   model: "lead",
-    //   method: "create",
-    //   editable: true,
-    //   category: 1,
-    //   description: "Lorem Ipsum"
-    // };
-
-    // // Roles
-    // export const role1 = { name: "Company Admin", id: "1", tier: 0, isAdmin: true };
-    // export const role2 = {
-    //   name: "Sales Manager",
-    //   id: "2",
-    //   tier: 1,
-    //   isAdmin: false,
-    //   parentId: "1",
-    //   accessRight: [
-    //     { categoryName: "CRM", accessRight: [accessRight1, accessRight2] }
-    //   ]
-    // };
-    // export const role3 = {
-    //   name: "Accounting Manager",
-    //   id: "3",
-    //   tier: 2,
-    //   parentId: "2",
-    //   isAdmin: false,
-    //   accessRight: [{ categoryName: "CRM", accessRight: [accessRight1] }]
-    // };
-
-
-
-
-
     const {loading, companyList, fetchInvoice} = this.props.paymentList
 
     let container = null
@@ -429,20 +377,11 @@ class acct_new_payment extends Component {
                 </FormInputLayout>
                 
 
-                  {container}
+                {container}
 
-                  {balancePayment}
+                {balancePayment}
 
-                  {/* <div>
-                    <div>
-                      total input: {this.state.invoice.amount}
-                    </div>
-                    <div>
-                      total invoice amount: {this.state.currentInvoiceAmount}
-                    </div>
-                  </div> */}
-
-
+        
                 {this.state.message && (
                   <DialogRoot
                     title={this.state.messageTitle}
@@ -501,29 +440,3 @@ export default connect(
   }
 )(acct_new_payment);
 
-
-
-/*
-<div className="col-md-8">
-  <TabsWrapper>
-    <div icon="zmdi-shopping-cart-plus text-success" label="PAYMENT">
-      <ViewTemplate />
-    </div>
-    <div icon="zmdi-shopping-cart text-warning" label="INVOICE PAID">
-      <CreditedInvoices />
-    </div>
-    <div icon="zmdi-pizza text-info" label="ACTIVITY LOG">
-      <ActivityLog />
-    </div> 
-    <div icon="zmdi-assignment text-danger" label="NOTES">
-      <div className="row">
-        <div className="col-md-5">
-        </div>
-        <div className="col-md-7">
-          {/* <DisplayAllNotes notes={payment.notes} />
-        </div>
-      </div>
-    </div>
-  </TabsWrapper>
-</div>
-*/

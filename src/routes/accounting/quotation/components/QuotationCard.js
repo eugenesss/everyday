@@ -29,7 +29,7 @@ function QuotationCard(props) {
         keyDetails={[
           {
             label: "Client",
-            value: quotation.accountId && quotation.accountId.name
+            value: quotation.accountInfo && quotation.accountInfo.name
           },
           {
             label: "Owner",

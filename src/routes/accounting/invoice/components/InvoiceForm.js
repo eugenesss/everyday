@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import InvoiceFields from "Components/Form/Inputs/Accounting/InvoiceFields";
 import AddressFormInput from "Components/Form/Inputs/AddressFormInput";
 import InvoiceTotalTableInput from "Components/Form/Inputs/Accounting/InvoiceTotalTableInput";
-import InvoiceProductInput from "Components/Form/Inputs/Accounting/EditInvoiceProductInput";
+import EditInvoiceProductInput from "Components/Form/Inputs/Accounting/EditInvoiceProductInput";
 import Button from '@material-ui/core/Button';
 
 // Form Layout
@@ -30,6 +30,9 @@ import {
   clearSingleInvoice
 } from "Ducks/accounting/invoice";
 
+import { 
+  HandleQuotationAccounts,
+} from "Ducks/accounting/quotation";
 
 const formFieldsProducts =  {
   description: "",
@@ -120,9 +123,9 @@ class InvoiceForm extends Component {
 
   // quotationForm
   
-  // componentDidMount() {
-  //   this.props.HandleQuotationAccounts()
-  // }
+  componentDidMount() {
+    this.props.HandleQuotationAccounts()
+  }
 
   _handleChangeFormField = (e, value) => {
 
@@ -227,8 +230,24 @@ class InvoiceForm extends Component {
     modifiedPostData.sent_date = postData.date,
     modifiedPostData.due_date = duedate,
     modifiedPostData.attn_toId = postData.attn_toId.value
-   
-    this.props.handleSubmit(modifiedPostData)
+    // modifiedPostData.account = modifiedPostData.accountId.value
+
+    // delete modifiedPostData.accountId;
+
+    this._ValidityCheck(modifiedPostData)
+  }
+
+  _ValidityCheck = (item) => { 
+    console.log('validity check')
+
+    if(item.accountId && item.attn_toId && item.owner){
+      console.log('submit to database')
+      this.props.handleSubmit(item)
+
+    } else {
+      console.log('input error, fill up fields')
+
+    }
   }
 
   _restart = () =>{
@@ -248,20 +267,6 @@ class InvoiceForm extends Component {
 
   }
 
-
-  // checkDisabled() {
-  //   const {
-  //     name,
-  //     userId,
-  //     amount,
-  //     stageId,
-  //     closingDate,
-  //     accountId
-  //   } = this.state.deal;
-  //   const disabled =
-  //     name && userId && amount && stageId && closingDate && accountId;
-  //   return disabled;
-  // }
 
   render() {
 
@@ -407,7 +412,7 @@ class InvoiceForm extends Component {
           <div className="row py-30 px-30 justify-content-md-center">
             
               <div className="col-11">
-                <InvoiceProductInput
+                <EditInvoiceProductInput
                   products={this.state.formFieldsProducts}
                   quotation={this.state.formFields}
                   taxTable={taxTable}
@@ -473,6 +478,7 @@ const mapStateToProps = ({ accountingState, crmState, usersState }) => {
 export default connect(
   mapStateToProps,
   { 
+    HandleQuotationAccounts,
     clearSingleInvoice,
     restartUploadStatus
   }

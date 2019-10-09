@@ -31,7 +31,6 @@ class acct_edit_quotation extends Component {
   };
 
   render() {
-    const { currencyTable, taxTable, discountTable } = this.props.quotationList;
 
     const { loading, quotation } = this.props.quotationToView;
 
@@ -59,16 +58,6 @@ class acct_edit_quotation extends Component {
     );
   }
 }
-// const mapStateToProps = ({ crmState }) => {
-//   const { dealState } = crmState;
-//   const { dealForm } = dealState;
-//   return { dealForm };
-// };
-
-// export default connect(
-//   mapStateToProps,
-//   { submitEditDeal }
-// )(acct_edit_quotation);
 
 const mapStateToProps = ({ accountingState, crmState, usersState }) => {
   const { quotationState } = accountingState;

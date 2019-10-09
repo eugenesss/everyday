@@ -110,13 +110,8 @@ const convertInvoiceQuotationRequest = async payload => {
 };
 
 const getQuoteRequest = async quoteID => {
-  if (quoteID.type == "invoice") {
-    const result = await api.get(`/invoices/${quoteID.quoteID}`);
-    return result.data;
-  } else {
-    const result = await api.get(`/quotations/${quoteID.quoteID}`);
-    return result.data;
-  }
+  const result = await api.get(`/quotations/${quoteID.quoteID}`);
+  return result.data;
 };
 
 const handleQuotationAccountsRequest = async () => {

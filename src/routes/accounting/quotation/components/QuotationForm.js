@@ -26,7 +26,7 @@ import {
     // submitAccountQuotationInvoice,
     HandleQuotationAccounts,
     restartUploadQuotationStatus
-  } from "Ducks/accounting/quotation";
+} from "Ducks/accounting/quotation";
 
 const formFieldsProducts =  {
   description: "",
@@ -198,10 +198,26 @@ class QuotationForm extends Component {
     modifiedPostData.sent_date = postData.date,
     modifiedPostData.due_date = duedate,
     modifiedPostData.attn_toId = postData.attn_toId.value
-   
-    this.props.handleSubmit(modifiedPostData)
+    // modifiedPostData.account = modifiedPostData.accountId.value
+    // delete modifiedPostData.accountId;
+
+    this._ValidityCheck(modifiedPostData)
 
   }
+
+  _ValidityCheck = (item) => { 
+      console.log('validity check')
+
+      if(item.accountId && item.attn_toId && item.owner){
+        console.log('submit to database')
+        this.props.handleSubmit(item)
+      } else {
+        console.log('input error, fill up fields')
+      }
+  }
+
+
+
 
   _restart = () =>{
     console.log('restart')
