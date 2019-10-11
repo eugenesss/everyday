@@ -33,8 +33,8 @@ function RoleManager(props) {
         </Button>
       </div>
       <Divider className="mb-10" />
-      {selectedRole.accessRights &&
-        selectedRole.accessRights.map((category, key) => (
+      {selectedRole.accessRightCategories &&
+        selectedRole.accessRightCategories.map((category, key) => (
           <ExpansionPanel
             key={key}
             expanded={expanded === category.name}
@@ -48,12 +48,12 @@ function RoleManager(props) {
               <h4 className="mb-0">{category.name}</h4>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className="p-0">
-              {selectedRole.accessRights[key] && (
+              {selectedRole.accessRightCategories[key] && (
                 <AccessRightsTable
                   accessRights={category.accessRights}
                   handleAccessChange={handleAccessChange}
                   selectedRights={
-                    selectedRole.accessRights[key]["accessRights"]
+                    selectedRole.accessRightCategories[key]["accessrights"]
                   }
                   catKey={key}
                 />

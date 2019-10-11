@@ -28,60 +28,60 @@ const RightCell = ({ children, ...others }) => (
   </TableCell>
 );
 
+function renderCRUD(methodArray, catKey, actionKey) {
+  let row = methodArray.map((method, key) => {
+    if (method.name == "create")
+      return (
+        <RightCell key={key}>
+          <StyledCheckbox
+            checked={method.access}
+            onChange={() =>
+              handleAccessChange(!method.access, catKey, actionKey, key)
+            }
+          />
+        </RightCell>
+      );
+    else if (method.name == "read")
+      return (
+        <RightCell key={key}>
+          <StyledCheckbox
+            checked={method.access}
+            onChange={() =>
+              handleAccessChange(!method.access, catKey, actionKey, key)
+            }
+          />
+        </RightCell>
+      );
+    else if (method.name == "update")
+      return (
+        <RightCell key={key}>
+          <StyledCheckbox
+            checked={method.access}
+            onChange={() =>
+              handleAccessChange(!method.access, catKey, actionKey, key)
+            }
+          />
+        </RightCell>
+      );
+    else if (method.name == "delete")
+      return (
+        <RightCell key={key}>
+          <StyledCheckbox
+            checked={method.access}
+            onChange={() =>
+              handleAccessChange(!method.access, catKey, actionKey, key)
+            }
+          />
+        </RightCell>
+      );
+    else return <RightCell key={key} />;
+  });
+  return row;
+}
+
 export default function AccessRightsTable(props) {
   const classes = useStyles();
   const { handleAccessChange, selectedRights, catKey } = props;
-
-  function renderCRUD(methodArray, catKey, actionKey) {
-    let row = methodArray.map((method, key) => {
-      if (method.name == "create")
-        return (
-          <RightCell key={key}>
-            <StyledCheckbox
-              checked={method.access}
-              onChange={() =>
-                handleAccessChange(!method.access, catKey, actionKey, key)
-              }
-            />
-          </RightCell>
-        );
-      else if (method.name == "read")
-        return (
-          <RightCell key={key}>
-            <StyledCheckbox
-              checked={method.access}
-              onChange={() =>
-                handleAccessChange(!method.access, catKey, actionKey, key)
-              }
-            />
-          </RightCell>
-        );
-      else if (method.name == "update")
-        return (
-          <RightCell key={key}>
-            <StyledCheckbox
-              checked={method.access}
-              onChange={() =>
-                handleAccessChange(!method.access, catKey, actionKey, key)
-              }
-            />
-          </RightCell>
-        );
-      else if (method.name == "delete")
-        return (
-          <RightCell key={key}>
-            <StyledCheckbox
-              checked={method.access}
-              onChange={() =>
-                handleAccessChange(!method.access, catKey, actionKey, key)
-              }
-            />
-          </RightCell>
-        );
-      else return <RightCell key={key} />;
-    });
-    return row;
-  }
 
   return (
     <Table size="small">
@@ -102,18 +102,22 @@ export default function AccessRightsTable(props) {
                 <h5 className="mb-0">{action.name}</h5>
                 <p className="text-muted fs-12 mb-0">{action.description}</p>
               </TableCell>
-              {action.method.length > 0 ? (
+              {action.accessRightMethods.length > 0 ? (
                 // CRUD methods
-                renderCRUD(action.method, catKey, key)
+                renderCRUD(action.accessRightMethods, catKey, key)
               ) : (
                 // Custom Methods
                 <React.Fragment>
                   <RightCell colSpan={3}>
                     <Switch
                       size="small"
-                      checked={action.method.access}
+                      checked={action.accessRightMethods.access}
                       onChange={() =>
-                        handleAccessChange(!action.method.access, catKey, key)
+                        handleAccessChange(
+                          !action.accessRightMethods.access,
+                          catKey,
+                          key
+                        )
                       }
                     />
                   </RightCell>

@@ -30,13 +30,13 @@ class RolesLayout extends Component {
   onSelectRole(selectedRole) {
     this.setState({
       selectedRole,
-      selectedRoleAccess: selectedRole.accessRights
+      selectedRoleAccess: selectedRole.accessRightCategories
     });
   }
   handleAccessChange(access, catKey, actionKey, methodKey) {
     const updatedAccess = Object.assign(
       [],
-      this.state.selectedRole.accessRights
+      this.state.selectedRole.accessRightCategories
     );
     methodKey != null
       ? // Crud
@@ -60,7 +60,7 @@ class RolesLayout extends Component {
 
   render() {
     const { loading } = this.props;
-    const { selectedRole, newRoleDialog, selectedRoleAccess } = this.state;
+    const { selectedRole, newRoleDialog } = this.state;
     return (
       <React.Fragment>
         <div className="row">

@@ -15,10 +15,10 @@ import {
   deleteRoleSuccess,
   deleteRoleFailure
 } from "./RolesActions";
-// import api from "Api";
+
 import api from "Api";
 
-import { role1, role2, role3, bestCase } from "./dummy";
+// import { role1, role2, role3, bestCase } from "./dummy";
 
 //=========================
 // REQUESTS
@@ -26,7 +26,7 @@ import { role1, role2, role3, bestCase } from "./dummy";
 
 const getAllRolesRequest = async () => {
   const result = await api.post(`/accessroles/viewall`);
-  console.log(result.data.data);
+  // console.log(result.data.data);
   return result.data.data;
   // return bestCase;
 };
