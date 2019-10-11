@@ -22,9 +22,11 @@ const DateTimePicker = props => {
   const classes = styles();
   return (
     <FormControl className={classes.root}>
-      <InputLabel className="fw-bold" shrink>
-        {label}
-      </InputLabel>
+      {label && (
+        <InputLabel className="fw-bold" shrink>
+          {label}
+        </InputLabel>
+      )}
       <DTPicker
         TextFieldComponent={OverrideInput}
         id="mui-pickers-time"

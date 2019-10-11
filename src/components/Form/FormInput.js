@@ -11,7 +11,6 @@ import BaseInput from "Components/Form/BaseInput";
 
 const styles = theme => ({
   root: {
-    // marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
     width: "100%"
   }
@@ -36,9 +35,11 @@ class FormInput extends PureComponent {
 
     return (
       <FormControl className={classes.root}>
-        <InputLabel className="fw-bold" shrink>
-          {label}
-        </InputLabel>
+        {label && (
+          <InputLabel className="fw-bold" shrink>
+            {label}
+          </InputLabel>
+        )}
         {selectValues ? (
           <Select
             value={value}

@@ -14,6 +14,7 @@ import ProfileTabs from "Components/Layout/ProfileTabs";
 import LeadOverviewTab from "./tabs/Overview";
 import LeadDetailsTab from "./tabs/Details";
 import EventsTab from "../../components/EventsTab";
+import FollowUpTab from "../../components/FollowUp/Tab";
 // Modals
 import ConvertLeadModal from "../components/dialogs/ConvertLead";
 import ConvertSuccessModal from "../components/dialogs/ConvertSuccess";
@@ -155,6 +156,9 @@ class crm_view_lead extends Component {
                 <ProfileTabs loading={sectionLoading}>
                   <div label="Overview">
                     <LeadOverviewTab lead={lead} />
+                  </div>
+                  <div label="Follow Ups">
+                    <FollowUpTab />
                   </div>
                   <div label="Events">
                     <EventsTab

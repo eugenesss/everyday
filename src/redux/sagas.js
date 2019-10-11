@@ -4,18 +4,11 @@
 import { all } from "redux-saga/effects";
 
 // accounting
-// import quoteSagas from "./accounting/Quotation";
-// import invoiceSagas from "./accounting/Invoice";
-// import creditNoteSagas from "./accounting/CreditNote";
-// import paymentSagas from "./accounting/Payment";
-// import accountingSagas from "./accounting/Accounting";
-
-// accounting
 import {
   CreditNoteSaga,
   InvoiceSaga,
   PaymentSaga,
-  QuotationSaga,
+  QuotationSaga
 } from "Ducks/accounting";
 
 //  crm
@@ -26,6 +19,9 @@ import {
   DealSaga,
   CrmFieldSaga
 } from "Ducks/crm";
+
+// follow ups
+import { FollowupSaga } from "Ducks/followUp";
 
 // settings
 import { UserManagementSaga, RolesSaga } from "Ducks/setting";
@@ -46,12 +42,6 @@ import { WidgetSaga } from "Ducks/widget";
 export default function* rootSaga() {
   yield all([
     // Accounting
-    // quoteSagas(),
-    // invoiceSagas(),
-    // accountingSagas(),
-    // creditNoteSagas(),
-    // paymentSagas(),
-    // AccountingSaga(),
     CreditNoteSaga(),
     InvoiceSaga(),
     PaymentSaga(),
@@ -63,6 +53,9 @@ export default function* rootSaga() {
     AccountSaga(),
     DealSaga(),
     CrmFieldSaga(),
+
+    // Follow ups
+    FollowupSaga(),
 
     // Session
     AuthSaga(),

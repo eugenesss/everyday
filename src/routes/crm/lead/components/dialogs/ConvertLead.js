@@ -129,9 +129,7 @@ class ConvertLeadModal extends Component {
                   )}
                 </div>
                 <DialogActions className="mx-0 mt-30 p-0">
-                  <Button onClick={this.props.handleConvertModal}>
-                    Cancel
-                  </Button>
+                  <Button onClick={this.props.handleConvertModal}>Close</Button>
                   <Button
                     variant="contained"
                     onClick={() => this.convertLead(lead.id)}

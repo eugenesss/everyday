@@ -25,9 +25,10 @@ import { role1, role2, role3, bestCase } from "./dummy";
 //=========================
 
 const getAllRolesRequest = async () => {
-  // const result = await api.post(`/accessroles/viewall`);
-  // return result.data.data;
-  return bestCase;
+  const result = await api.post(`/accessroles/viewall`);
+  console.log(result.data.data);
+  return result.data.data;
+  // return bestCase;
 };
 
 const addRoleRequest = async () => {

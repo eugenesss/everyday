@@ -29,16 +29,10 @@
   }
 }
 
-//New Mail widget
+// All Hover Action Buttons
 .hover-action {
   opacity: 0;
   transition: all 0.4s linear 0s;
-  button,
-  a {
-    height: 34px;
-    width: 34px;
-    font-size: 1.3rem;
-  }
 }
 
 .new-mail {
@@ -1187,4 +1181,15 @@ React-Calender
 }
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
+}
+
+/**
+* Follow up feature
+**/
+.followup-log {
+  &:hover {
+    .hover-action {
+      opacity: 1;
+    }
+  }
 }

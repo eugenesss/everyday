@@ -13,6 +13,13 @@ api.interceptors.request.use(config => {
   return config;
 });
 
+// api.interceptors.request.use(config => {
+//   const token =
+//     "ItDZV7qz7RxCOHFwgPNa05OL0QSyOuuWFksmpONdivNVyqmgw6lt0K54RXfPJR09";
+//   config.url = `${config.url}?access_token=${token}`;
+//   return config;
+// });
+
 api.interceptors.response.use(
   response => {
     return response;

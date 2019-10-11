@@ -12,13 +12,6 @@ import {
 } from "Ducks/session";
 
 // accounting
-// import QuotationReducer from "./accounting/QuotationReducer";
-// import InvoiceReducer from "./accounting/InvoiceReducer";
-// import CreditNoteReducer from "./accounting/CreditNoteReducer";
-// import PaymentState from "./accounting/PaymentReducer";
-// import AccountingReducer from "./accounting/AccountingReducer";
-
-// account
 import {
   // AccountingReducer,
   CreditNoteReducer,
@@ -26,7 +19,6 @@ import {
   PaymentReducer,
   QuotationReducer
 } from "Ducks/accounting";
-
 
 // crm
 import {
@@ -36,6 +28,9 @@ import {
   DealReducer,
   CrmFieldReducer
 } from "Ducks/crm";
+
+// follow ups
+import { FollowupReducer } from "Ducks/followUp";
 
 //settings
 import { UserManagementReducer, RolesReducer } from "Ducks/setting";
@@ -62,9 +57,10 @@ const reducers = combineReducers({
     quotationState: QuotationReducer,
     invoiceState: InvoiceReducer,
     creditNoteState: CreditNoteReducer,
-    paymentState: PaymentReducer,
+    paymentState: PaymentReducer
     // accountState: AccountingReducer
   }),
+  followupState: FollowupReducer,
   widgetState: WidgetReducer,
   reportState: ReportReducer,
   calendarState: CalendarReducer,

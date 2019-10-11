@@ -204,18 +204,7 @@
     }
   }
 }
-@media (max-width: 1560px) and (min-width: 320px) {
-  .hover-action button,
-  .hover-action a {
-    min-height: 28px;
-    max-width: 28px;
-    height: 28px !important;
-    font-size: 1rem !important;
-  }
-  .weather-top img {
-    height: 220px;
-  }
-}
+
 @media (max-width: 1460px) and (min-width: 320px) {
   .product-img {
     img {
