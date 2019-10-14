@@ -120,9 +120,9 @@ const handleQuotationAccountsRequest = async () => {
 };
 
 const submitNewQuotationRequest = async payload => {
-  const result = await api.post("/quotations/submitQuotations", {
-    data: payload
-  });
+
+  const result = await api.post("/quotations/submitQuotations", {data: payload})
+
   return result.data;
 };
 

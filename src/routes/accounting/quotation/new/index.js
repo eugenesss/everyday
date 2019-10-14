@@ -14,7 +14,31 @@ class acct_new_quote extends Component {
 
 
   _quotationParent = (item) =>{
-    this.props.submitNewQuotation(item)
+
+    const reminder = {
+        title: "Client ZXY Meeting", // Title of the content
+        description: "SEO & SEM & Digital Consultation", // any description of the notification message 
+        reminderMedium:{
+          "email": "igc14.gianjie@gmail.com",
+          "sms": "",
+        },
+        reminderTime: Date.now(),
+        status: {
+          result: null, // Null || not created // True for success || False for failure,
+          response: null, // Null || not created || Successfully delivered || Error msg
+          send_data: null, // Null || not created || Execution time. 
+        },
+        reminderType : "Quotation", // Leads Template ,
+        isRecurring : false,
+        recurringInterval: ""
+    }
+   
+    const data = {
+      data : item,
+      reminder : reminder
+    }
+
+    this.props.submitNewQuotation(data)
   }
 
 
