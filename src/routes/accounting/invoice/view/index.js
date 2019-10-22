@@ -186,8 +186,44 @@ class acct_view_invoice extends Component {
         
           break;
 
-        case "Confirmed":
+        // case "Confirmed":
+        //     buttonCollection = (
+        //       <PageTitleBar
+        //         title="View Invoice"
+        //         actionGroup={{
+        //           add: { onClick: () => this.newInvoice() },
+        //           mid: { label: "Pay", onClick:() =>  this.launchMakePaymentDialog()},
+        //           more: [
+        //             {
+        //               label: "New Version",
+        //               onClick: () => {
+        //                 this.props.InvoiceHandleStateUpdate(invoice.id, "Current")
+        //               }
+        //             }
+        //           ]
+        //         }}
+        //       />
+        //     )
+        //   break;
 
+        case "Paid":
+
+            buttonCollection = (
+              <PageTitleBar
+                title="View Invoice"
+                actionGroup={{
+                  add: { onClick: () => this.newInvoice() },
+                }}
+              />
+            )
+
+          break;
+
+        case "Cancelled":
+            buttonCollection = null
+            break
+
+        default:
 
             buttonCollection = (
               <PageTitleBar
@@ -206,24 +242,6 @@ class acct_view_invoice extends Component {
                 }}
               />
             )
-
-    
-          break;
-
-        case "Paid":
-
-            buttonCollection = (
-              <PageTitleBar
-                title="View Invoice"
-                actionGroup={{
-                  add: { onClick: () => this.newInvoice() },
-                }}
-              />
-            )
-
-          break;
-
-        default:
           break;
       }
     }
@@ -300,7 +318,7 @@ class acct_view_invoice extends Component {
             <div className="row">
               <div className="col">
                 <MakePayment
-                  reconciledAmount={amount}
+                  reconciledAmount={amount? amount: invoice.totalAmt}
                   invoice={invoice}
                   handleHide={this.launchMakePaymentDialog}
                   makePayment={this.makePayment}

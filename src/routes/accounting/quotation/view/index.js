@@ -7,18 +7,9 @@ import { NavLink } from "react-router-dom";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import MoreButton from "Components/PageTitleBar/MoreButton";
 import { Route, Redirect } from "react-router";
-//buttons
-import MatButton from "@material-ui/core/Button";
 
-// Components
-import TabsWrapper from "Components/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader";
-import BgCard from "Components/BgCard";
 import PageErrorMessage from "Components/Error/PageErrorMessage";
-import AccountingDetails from "Components/Accounting/View/AccountingDetails";
-
-// Quotation Tab
-import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
 
 import QuotationCard from "../components/QuotationCard";
 import ProfileTabs from "Components/Layout/ProfileTabs";

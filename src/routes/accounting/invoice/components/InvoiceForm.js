@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import InvoiceFields from "Components/Form/Inputs/Accounting/InvoiceFields";
 import AddressFormInput from "Components/Form/Inputs/AddressFormInput";
 import InvoiceTotalTableInput from "Components/Form/Inputs/Accounting/InvoiceTotalTableInput";
-import InvoiceProductInput from "Components/Form/Inputs/Accounting/EditInvoiceProductInput";
+import EditInvoiceProductInput from "Components/Form/Inputs/Accounting/EditInvoiceProductInput";
 import Button from '@material-ui/core/Button';
 
 // Form Layout
@@ -25,24 +25,14 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 
 
-
-// Actions
 import { 
-    clearSingleQuotation, 
-    addNewProdQuote, 
-    removeProdQuote, 
-    handleProdQuote,  
-    handleChangeQuote, 
-    getAllAccount, 
-    getAllUsers, 
-    submitNewQuote,
+  restartUploadStatus,
+  clearSingleInvoice
+} from "Ducks/accounting/invoice";
 
-    // accountingClearState,
-    // submitAccountQuotationInvoice,
-    HandleQuotationAccounts,
-    restartUploadStatus
+import { 
+  HandleQuotationAccounts,
 } from "Ducks/accounting/quotation";
-
 
 const formFieldsProducts =  {
   description: "",
@@ -126,6 +116,7 @@ class InvoiceForm extends Component {
           formFieldsProducts: [{...formFieldsProducts}],
           attn_to_array : []
         });
+
         this.props.restartUploadStatus()
       }
   }
@@ -238,21 +229,31 @@ class InvoiceForm extends Component {
     modifiedPostData.quotationLine = quotationLine
     modifiedPostData.sent_date = postData.date,
     modifiedPostData.due_date = duedate,
-    modifiedPostData.companyName = postData.accountId.name,
-    modifiedPostData.accountId = {
-      name: modifiedPostData.accountId.name,
-      value: modifiedPostData.accountId.value
+    modifiedPostData.attn_toId = postData.attn_toId.value
+    // modifiedPostData.account = modifiedPostData.accountId.value
+
+    // delete modifiedPostData.accountId;
+
+    this._ValidityCheck(modifiedPostData)
+  }
+
+  _ValidityCheck = (item) => { 
+    console.log('validity check')
+
+    if(item.accountId && item.attn_toId && item.owner){
+      console.log('submit to database')
+      this.props.handleSubmit(item)
+
+    } else {
+      console.log('input error, fill up fields')
+
     }
-
-    this.props.handleSubmit(modifiedPostData)
-
   }
 
   _restart = () =>{
 
     let restartFormFieldsProducts = this.state.formFieldsProducts
     restartFormFieldsProducts = [{...formFieldsProducts}]
-
 
     let restartFormFields = this.state.formFields
     restartFormFields.subtotal = 0
@@ -267,27 +268,13 @@ class InvoiceForm extends Component {
   }
 
 
-  // checkDisabled() {
-  //   const {
-  //     name,
-  //     userId,
-  //     amount,
-  //     stageId,
-  //     closingDate,
-  //     accountId
-  //   } = this.state.deal;
-  //   const disabled =
-  //     name && userId && amount && stageId && closingDate && accountId;
-  //   return disabled;
-  // }
-
   render() {
 
     // const { products, quotation, attn_to_array } = this.props.quotationForm;
     const {currencyTable, taxTable, discountTable, accountsList, owner} = this.props.quotationList
 
     const {formFields} = this.state;
-    
+        
     return (
 
       <FormWrapper
@@ -328,14 +315,14 @@ class InvoiceForm extends Component {
                   />
                 }
 
-                {this.edit && 
+                {/* {this.edit && 
                   <FormMultiInput
                     label="Attention to"
-                    value={formFields.attn_toId.name}
+                    value={formFields.attn_toId}
                     target="attn_toId"
                     disabled={true}
                   />
-                }
+                } */}
 
                 {!this.edit && 
                   <FormMultiInput
@@ -358,15 +345,17 @@ class InvoiceForm extends Component {
                   value={''}
                 />
 
-                <FormInput
-                  label="Owner"
-                  value={formFields.owner}
-                  required={!formFields.owner}
-                  selectValues={owner}
-                  target="owner"
-                  handleChange={this._handleChangeFormField}
-                />
-
+                {!this.edit && 
+                  <FormInput
+                    label="Owner"
+                    value={formFields.owner}
+                    required={!formFields.owner}
+                    selectValues={owner}
+                    target="owner"
+                    handleChange={this._handleChangeFormField}
+                  />
+                }
+                
               </div>
             </div>
           </FormInputLayout>
@@ -423,7 +412,7 @@ class InvoiceForm extends Component {
           <div className="row py-30 px-30 justify-content-md-center">
             
               <div className="col-11">
-                <InvoiceProductInput
+                <EditInvoiceProductInput
                   products={this.state.formFieldsProducts}
                   quotation={this.state.formFields}
                   taxTable={taxTable}
@@ -489,18 +478,8 @@ const mapStateToProps = ({ accountingState, crmState, usersState }) => {
 export default connect(
   mapStateToProps,
   { 
-    addNewProdQuote, 
-    clearSingleQuotation, 
-    removeProdQuote, 
-    handleProdQuote, 
-    handleChangeQuote, 
-    getAllAccount, 
-    getAllUsers, 
-    submitNewQuote,
-
-    // accountingClearState,
-    // submitAccountQuotationInvoice,
     HandleQuotationAccounts,
+    clearSingleInvoice,
     restartUploadStatus
   }
 )(InvoiceForm);

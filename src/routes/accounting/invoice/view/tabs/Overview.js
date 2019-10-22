@@ -61,7 +61,7 @@ function QuotationOverviewTab(props) {
                             />
                         </div>
 
-                        {quotation.state == "Confirmed" && 
+                        {quotation.state == "Confirmed" || quotation.state == "Payment In Progress" &&
                             <div className="d-flex  justify-content-end">
                                 <EditableInput 
                                     style={{color:'#464d69'}}

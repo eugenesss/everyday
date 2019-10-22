@@ -143,7 +143,7 @@ export default (state = INIT_STATE, action) => {
           ...state.invoiceList,
           deleted: false
         },
-        invoiceToView: INIT_STATE.invoiceList
+        invoiceToView: { loading: false, invoice: null, payment: null, amount: null }            
       };
 
       case types.SUBMIT_INVOICE_SUCCESS:
@@ -260,6 +260,8 @@ export default (state = INIT_STATE, action) => {
           },
         };
       
+
+
     default:
       return { ...state };
   }

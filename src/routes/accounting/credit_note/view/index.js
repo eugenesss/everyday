@@ -3,30 +3,11 @@ import { connect } from "react-redux";
 
 // Global Req
 import { Helmet } from "react-helmet";
-import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // Components
-import TabsWrapper from "Components/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader";
-import AccountingDetails from "Components/Accounting/View/AccountingDetails";
-import BgCard from "Components/BgCard";
 import PageErrorMessage from "Components/Error/PageErrorMessage";
 
-// Credit Note Tab
-import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";
-
-// Invoice Credited Tab
-// import CreditedInvoices from "Components/Accounting/CreditNote/CreditedInvoices";
-
-// Activity Log Tab
-// import ActivityLog from "Components/ActivityLog";
-
-// Notes Tab
-// import NewNote from "Components/Form/Note/NewNote";
-// import DisplayAllNotes from "Components/Everyday/Notes/DisplayAllNotes";
-
-// InvoicePaymentList
-// import ViewInvoicePaymentList from "Components/Accounting/CreditNote/ViewInvoicePaymentList";
 import ViewCredit from "../components/ViewCredit"
 import FormWrapper from "Components/Form/Layout/FormWrapper";
 import FormInputLayout from "Components/Form/Layout/FormInputLayout";

@@ -131,6 +131,7 @@ function* getAllInvoiceFromDB() {
     yield put(actions.getInvoiceFailure(error));
   }
 }
+
 function* getInvoiceFromDB({ payload }) {
   try {
     const data = yield call(getInvoiceRequest, payload);
@@ -226,9 +227,11 @@ export function* revertPreviousVersionQuotationWatcher() {
     revertPreviousVersionStateQuotation
   );
 }
+
 export function* patchInvoiceRequestInvoiceWatcher() {
   yield takeEvery(types.SUBMIT_INVOICE, patchInvoiceRequestFromDB);
 }
+
 export function* submitNewInvoiceWatcher() {
   yield takeEvery(types.SUBMIT_NEW_INVOICE, submitNewInvoiceFromDB);
 }
