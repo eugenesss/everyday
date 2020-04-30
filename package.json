@@ -57,7 +57,7 @@
     "chart.js": "^2.7.3",
     "classnames": "2.2.6",
     "globalize": "^0.1.1",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "material-ui-pickers": "2.2.4",
     "moment": "^2.24.0",
     "mui-datatables": "2.5.0",
